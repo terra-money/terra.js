@@ -1,7 +1,7 @@
 {
   "inputFiles": ["./src"],
   "mode": "file",
-  "out": "doc",
+  "out": "docs",
   "includeDeclarations": true,
   "excludeExternals": true,
   "exclude": "**/*+(index|.spec|.e2e).ts",
