@@ -1,0 +1,10 @@
+import { MsgSend } from './MsgSend';
+import { MsgMultiSend } from './MsgMultiSend';
+
+export * from './MsgSend';
+export * from './MsgMultiSend';
+
+export type BankMsg = MsgSend | MsgMultiSend;
+export namespace BankMsg {
+  export type Data = MsgSend.Data | MsgMultiSend.Data;
+}

@@ -1,0 +1,174 @@
+import { Denom } from '../Denom';
+import { Coins } from '../Coins';
+import { JSONSerializable } from '../../util/json';
+import { Account } from './Account';
+import { Dec } from '../numeric';
+
+/**
+ * Holds information about a Account which has vesting information.
+ */
+export class LazyGradedVestingAccount extends JSONSerializable<
+  LazyGradedVestingAccount.Data
+> {
+  /**
+   *
+   * @param BaseAccount account information
+   * @param original_vesting initial vesting amount
+   * @param delegated_free
+   * @param delegated_vesting
+   * @param end_time  -not used-
+   * @param vesting_schedules Entries that make up vesting
+   */
+  constructor(
+    public BaseAccount: Account,
+    public original_vesting: Coins,
+    public delegated_free: Coins,
+    public delegated_vesting: Coins,
+    public end_time: number,
+    public vesting_schedules: LazyGradedVestingAccount.VestingSchedule[]
+  ) {
+    super();
+  }
+
+  public toData(): LazyGradedVestingAccount.Data {
+    const {
+      BaseAccount,
+      original_vesting,
+      delegated_free,
+      delegated_vesting,
+      end_time,
+      vesting_schedules,
+    } = this;
+    return {
+      type: 'core/LazyGradedVestingAccount',
+      value: {
+        BaseVestingAccount: {
+          BaseAccount: BaseAccount.toData().value,
+          original_vesting: original_vesting.toData(),
+          delegated_free: delegated_free.toData(),
+          delegated_vesting: delegated_vesting.toData(),
+          end_time: end_time.toFixed(),
+        },
+        vesting_schedules: vesting_schedules.map(vs => vs.toData()),
+      },
+    };
+  }
+
+  public static fromData(
+    data: LazyGradedVestingAccount.Data
+  ): LazyGradedVestingAccount {
+    const {
+      value: {
+        BaseVestingAccount: {
+          BaseAccount,
+          original_vesting,
+          delegated_free,
+          delegated_vesting,
+          end_time,
+        },
+        vesting_schedules,
+      },
+    } = data;
+    return new LazyGradedVestingAccount(
+      Account.fromData({
+        type: 'core/Account',
+        value: BaseAccount,
+      }),
+      Coins.fromData(original_vesting),
+      Coins.fromData(delegated_free),
+      Coins.fromData(delegated_vesting),
+      Number.parseInt(end_time),
+      vesting_schedules.map(vs =>
+        LazyGradedVestingAccount.VestingSchedule.fromData(vs)
+      )
+    );
+  }
+}
+
+export namespace LazyGradedVestingAccount {
+  export interface Data {
+    type: 'core/LazyGradedVestingAccount';
+    value: {
+      BaseVestingAccount: {
+        BaseAccount: Account.Value;
+        original_vesting: Coins.Data;
+        delegated_free: Coins.Data;
+        delegated_vesting: Coins.Data;
+        end_time: string;
+      };
+      vesting_schedules: VestingSchedule.Data[];
+    };
+  }
+
+  export class VestingSchedule extends JSONSerializable<VestingSchedule.Data> {
+    constructor(
+      public denom: Denom,
+      public schedules: VestingSchedule.Entry[]
+    ) {
+      super();
+    }
+    public toData(): VestingSchedule.Data {
+      const { denom, schedules } = this;
+      return {
+        denom,
+        schedules: schedules.map(s => s.toData()),
+      };
+    }
+
+    public static fromData(data: VestingSchedule.Data): VestingSchedule {
+      const { denom, schedules } = data;
+      return new VestingSchedule(
+        denom,
+        schedules.map(s => VestingSchedule.Entry.fromData(s))
+      );
+    }
+  }
+
+  export namespace VestingSchedule {
+    export interface Data {
+      denom: Denom;
+      schedules: VestingSchedule.Entry.Data[];
+    }
+
+    export class Entry extends JSONSerializable<Entry.Data> {
+      /**
+       *
+       * @param start_time Starting time (block height)
+       * @param end_time Ending time (block height)
+       * @param ratio Ratio (percentage of vested funds that should be released)
+       */
+      constructor(
+        public start_time: number,
+        public end_time: number,
+        public ratio: Dec
+      ) {
+        super();
+      }
+
+      public static fromData(data: Entry.Data): Entry {
+        const { start_time, end_time, ratio } = data;
+        return new Entry(
+          Number.parseInt(start_time),
+          Number.parseInt(end_time),
+          new Dec(ratio)
+        );
+      }
+
+      public toData(): Entry.Data {
+        return {
+          start_time: this.start_time.toFixed(),
+          end_time: this.end_time.toFixed(),
+          ratio: this.ratio.toString(),
+        };
+      }
+    }
+
+    export namespace Entry {
+      export interface Data {
+        start_time: string;
+        end_time: string;
+        ratio: string;
+      }
+    }
+  }
+}

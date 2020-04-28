@@ -1,0 +1,13 @@
+{
+  "inputFiles": ["./src"],
+  "mode": "file",
+  "out": "doc",
+  "includeDeclarations": true,
+  "excludeExternals": true,
+  "exclude": "**/*+(index|.spec|.e2e).ts",
+  "theme": "minimal",
+  "name": "Terra.js",
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "excludeProtected": true
+}

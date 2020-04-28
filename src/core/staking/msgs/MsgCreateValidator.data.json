@@ -1,0 +1,646 @@
+{
+    "total_count": "6",
+    "count": "6",
+    "page_number": "1",
+    "page_total": "1",
+    "limit": "50",
+    "txs": [{
+            "height": "1412",
+            "txhash": "1E88042378B52EEE7D14BC83C3F9C835C47D6CDC68C43F26EACF33F2E5CB0198",
+
+            "logs": [{
+                "msg_index": 0,
+                "success": true,
+                "log": "",
+                "events": [{
+                        "type": "create_validator",
+                        "attributes": [{
+                                "key": "validator",
+                                "value": "terravaloper1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm32mjxy"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "1000000"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "message",
+                        "attributes": [{
+                                "key": "module",
+                                "value": "staking"
+                            },
+                            {
+                                "key": "sender",
+                                "value": "terra1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm39h0kh"
+                            },
+                            {
+                                "key": "action",
+                                "value": "create_validator"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "gas_wanted": "200000",
+            "gas_used": "120776",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "test",
+                                "identity": "",
+                                "website": "",
+                                "details": ""
+                            },
+                            "commission": {
+                                "rate": "1.000000000000000000",
+                                "max_rate": "1.000000000000000000",
+                                "max_change_rate": "1.000000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm39h0kh",
+                            "validator_address": "terravaloper1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm32mjxy",
+                            "pubkey": "terravalconspub1zcjduepqhnaw7tnafjc094jce2tefymyu5257xygr6vhe5qwlwcx52h70fgs9pt5ua",
+                            "value": {
+                                "denom": "uluna",
+                                "amount": "1000000"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [{
+                            "denom": "uluna",
+                            "amount": "3000"
+                        }],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AjyjqIOTujXB8wmc/fgFfhbEb4hc/lHxot9tvze1zpI5"
+                        },
+                        "signature": "DFqInHCOrcE35sKil8xmFSZ76SXZi1+YVpGkUqREC9JGjdB1kbtzetS+vr87eVI7vtZ0/9e4Lp7poCVbpV3X2A=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2019-12-13T19:35:44Z",
+            "events": [{
+                    "type": "create_validator",
+                    "attributes": [{
+                            "key": "validator",
+                            "value": "terravaloper1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm32mjxy"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "1000000"
+                        }
+                    ]
+                },
+                {
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "staking"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "terra1ewluvhmhm5rpru8vhw6tdvenxfdmvvqm39h0kh"
+                        },
+                        {
+                            "key": "action",
+                            "value": "create_validator"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "47280",
+            "txhash": "5D9B0F07D6DAA08899E000D928F2FB4362CB8DC991B6646F8B8761A7716E64CD",
+
+            "logs": [{
+                "msg_index": 0,
+                "success": true,
+                "log": "",
+                "events": [{
+                        "type": "create_validator",
+                        "attributes": [{
+                                "key": "validator",
+                                "value": "terravaloper1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz7e4uf"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "1000000"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "message",
+                        "attributes": [{
+                                "key": "module",
+                                "value": "staking"
+                            },
+                            {
+                                "key": "sender",
+                                "value": "terra1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz34gv6"
+                            },
+                            {
+                                "key": "action",
+                                "value": "create_validator"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "gas_wanted": "200000",
+            "gas_used": "128498",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "Mr.K",
+                                "identity": "74D3AF53635231D9",
+                                "website": "",
+                                "details": "The first step is to establish taht something is possible; then probability will occur"
+                            },
+                            "commission": {
+                                "rate": "0.010000000000000000",
+                                "max_rate": "0.200000000000000000",
+                                "max_change_rate": "0.100000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz34gv6",
+                            "validator_address": "terravaloper1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz7e4uf",
+                            "pubkey": "terravalconspub1zcjduepqex7zrdp2jcv8we3f0r9zfva356geczxaj5u2p09ygrfvckyzzw7qtf0e54",
+                            "value": {
+                                "denom": "uluna",
+                                "amount": "1000000"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [{
+                            "denom": "uluna",
+                            "amount": "3000"
+                        }],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AnrvGNciRO91FWFreVI4s/l9KBi3WXKx/3GodjAi7aa8"
+                        },
+                        "signature": "+wiv64nVJg6NGQrjLynl4S/ohm1NMongEZkHEPYDWatqbSJaKJBr0l+ttsJQGohzSAdFDyuTcNQBcK8z1/Z8xw=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2019-12-17T07:19:24Z",
+            "events": [{
+                    "type": "create_validator",
+                    "attributes": [{
+                            "key": "validator",
+                            "value": "terravaloper1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz7e4uf"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "1000000"
+                        }
+                    ]
+                },
+                {
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "staking"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "terra1dcrq2xwuhea9hm5xfuydjuwgz6gm7vdjz34gv6"
+                        },
+                        {
+                            "key": "action",
+                            "value": "create_validator"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "299701",
+            "txhash": "D23E3988E51D9558B78B1ECBC2408E209837CCF6AD2B3F8B8FDEE1CB61371BC3",
+            "code": 102,
+
+            "logs": [{
+                "msg_index": 0,
+                "success": false,
+                "log": "{\"codespace\":\"staking\",\"code\":102,\"message\":\"invalid coin denomination\"}",
+                "events": [{
+                    "type": "message",
+                    "attributes": [{
+                        "key": "action",
+                        "value": "create_validator"
+                    }]
+                }]
+            }],
+            "gas_wanted": "200000",
+            "gas_used": "12835",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "topstake",
+                                "identity": "",
+                                "website": "",
+                                "details": ""
+                            },
+                            "commission": {
+                                "rate": "0.100000000000000000",
+                                "max_rate": "0.200000000000000000",
+                                "max_change_rate": "0.010000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra12nunl9fmxgw5cstkdexygj09mdln0sy2q752x5",
+                            "validator_address": "terravaloper12nunl9fmxgw5cstkdexygj09mdln0sy2q3chk8",
+                            "pubkey": "terravalconspub1zcjduepq6xq46c9a5mcf8swgvtfzl8f5sx785emxcgft6epcagd024rtuweqtpnfnt",
+                            "value": {
+                                "denom": "luna",
+                                "amount": "1"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AhSvGst9dE+qzNevhKImjN2hNz0bnR9rkyfzj2Uyu9NQ"
+                        },
+                        "signature": "lcnZITo1i3sjLGisV2RgYXUH4y3ZTvr0oq538LS2MtsyZTsDLDrLnoGPeD326+aJi0E+XFzHPMd4eE+SI+DwgA=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2020-01-05T08:48:25Z",
+            "events": [{
+                "type": "message",
+                "attributes": [{
+                    "key": "action",
+                    "value": "create_validator"
+                }]
+            }]
+        },
+        {
+            "height": "299724",
+            "txhash": "DBD8EEF63E88277BAAD9713528B38991E64CCC998E0B467192B3BB7EE7737481",
+
+            "logs": [{
+                "msg_index": 0,
+                "success": true,
+                "log": "",
+                "events": [{
+                        "type": "create_validator",
+                        "attributes": [{
+                                "key": "validator",
+                                "value": "terravaloper12nunl9fmxgw5cstkdexygj09mdln0sy2q3chk8"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "1000000"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "message",
+                        "attributes": [{
+                                "key": "module",
+                                "value": "staking"
+                            },
+                            {
+                                "key": "sender",
+                                "value": "terra12nunl9fmxgw5cstkdexygj09mdln0sy2q752x5"
+                            },
+                            {
+                                "key": "action",
+                                "value": "create_validator"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "gas_wanted": "200000",
+            "gas_used": "103714",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "topstake",
+                                "identity": "",
+                                "website": "",
+                                "details": ""
+                            },
+                            "commission": {
+                                "rate": "0.100000000000000000",
+                                "max_rate": "0.200000000000000000",
+                                "max_change_rate": "0.010000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra12nunl9fmxgw5cstkdexygj09mdln0sy2q752x5",
+                            "validator_address": "terravaloper12nunl9fmxgw5cstkdexygj09mdln0sy2q3chk8",
+                            "pubkey": "terravalconspub1zcjduepq6xq46c9a5mcf8swgvtfzl8f5sx785emxcgft6epcagd024rtuweqtpnfnt",
+                            "value": {
+                                "denom": "uluna",
+                                "amount": "1000000"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AhSvGst9dE+qzNevhKImjN2hNz0bnR9rkyfzj2Uyu9NQ"
+                        },
+                        "signature": "SOpoUKvtmny7KnKF5UAaz12/34Ctx9da1Cuq3FV/33MCwoVibemGM6tS4yisePwmwmypG19LNz+zWv9lnPJ5eQ=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2020-01-05T08:50:55Z",
+            "events": [{
+                    "type": "create_validator",
+                    "attributes": [{
+                            "key": "validator",
+                            "value": "terravaloper12nunl9fmxgw5cstkdexygj09mdln0sy2q3chk8"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "1000000"
+                        }
+                    ]
+                },
+                {
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "staking"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "terra12nunl9fmxgw5cstkdexygj09mdln0sy2q752x5"
+                        },
+                        {
+                            "key": "action",
+                            "value": "create_validator"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "358198",
+            "txhash": "8934A8296F7AF73D174F69897AE3639022C9FA3ED42A99BECC6F580D02F302FB",
+
+            "logs": [{
+                "msg_index": 0,
+                "success": true,
+                "log": "",
+                "events": [{
+                        "type": "create_validator",
+                        "attributes": [{
+                                "key": "validator",
+                                "value": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "1000000"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "message",
+                        "attributes": [{
+                                "key": "module",
+                                "value": "staking"
+                            },
+                            {
+                                "key": "sender",
+                                "value": "terra1audgfvmgt0js54p3s8kj3r40uwej6vy2trk7na"
+                            },
+                            {
+                                "key": "action",
+                                "value": "create_validator"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "gas_wanted": "118608",
+            "gas_used": "118464",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "freshluna",
+                                "identity": "",
+                                "website": "",
+                                "details": ""
+                            },
+                            "commission": {
+                                "rate": "0.000000000000000000",
+                                "max_rate": "1.000000000000000000",
+                                "max_change_rate": "0.010000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra1audgfvmgt0js54p3s8kj3r40uwej6vy2trk7na",
+                            "validator_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
+                            "pubkey": "terravalconspub1zcjduepqhmmca7s2868xypc05r7mvedd7jckpn837vf85ulw9ksrgfv5rx2s7csdhk",
+                            "value": {
+                                "denom": "uluna",
+                                "amount": "1000000"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [{
+                            "denom": "uluna",
+                            "amount": "35583"
+                        }],
+                        "gas": "118608"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "A0rFacq0V6nWldUqZFwUcB2u7dXTBKCT1IcVj6jsB9FQ"
+                        },
+                        "signature": "2XHvphTc21A61Cwtd+XUWfQblwhi6bbNoEmbXGu28JVxCaMP0ZDzVG0u5/mzTNKwRuMl30ci3Bx1LT+/Adpimg=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2020-01-09T19:21:48Z",
+            "events": [{
+                    "type": "create_validator",
+                    "attributes": [{
+                            "key": "validator",
+                            "value": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "1000000"
+                        }
+                    ]
+                },
+                {
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "staking"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "terra1audgfvmgt0js54p3s8kj3r40uwej6vy2trk7na"
+                        },
+                        {
+                            "key": "action",
+                            "value": "create_validator"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "693380",
+            "txhash": "5724618FEE694056AB0A8593BEBD092F08E0B7AEA783D7E39893CD67AEEC7DEF",
+
+            "logs": [{
+                "msg_index": 0,
+                "success": true,
+                "log": "",
+                "events": [{
+                        "type": "create_validator",
+                        "attributes": [{
+                                "key": "validator",
+                                "value": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "8000000"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "message",
+                        "attributes": [{
+                                "key": "module",
+                                "value": "staking"
+                            },
+                            {
+                                "key": "sender",
+                                "value": "terra1fuj047hmvk2m3m4gjejnmmse3v47rzj579ylx0"
+                            },
+                            {
+                                "key": "action",
+                                "value": "create_validator"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "gas_wanted": "200000",
+            "gas_used": "103958",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                        "type": "staking/MsgCreateValidator",
+                        "value": {
+                            "description": {
+                                "moniker": "onenode",
+                                "identity": "",
+                                "website": "",
+                                "details": ""
+                            },
+                            "commission": {
+                                "rate": "0.050000000000000000",
+                                "max_rate": "0.200000000000000000",
+                                "max_change_rate": "0.050000000000000000"
+                            },
+                            "min_self_delegation": "1",
+                            "delegator_address": "terra1fuj047hmvk2m3m4gjejnmmse3v47rzj579ylx0",
+                            "validator_address": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku",
+                            "pubkey": "terravalconspub1zcjduepq84purdc6svyk5eqz8prwm4zh0vp840y87wy3arumyrs26frhe2psfwnadw",
+                            "value": {
+                                "denom": "uluna",
+                                "amount": "8000000"
+                            }
+                        }
+                    }],
+                    "fee": {
+                        "amount": [],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "Aze7kgEEY3ihA/mrxym1reS3CsSgSmWV9xN5uc2fD+WU"
+                        },
+                        "signature": "7LRpGRa1p3BBnEAjWhZ5YOmtleWx1k73wan5gPiymdd7lKOOhkBl+1amCT7m3jy344nxkXFrjwczKeGkmZkZ9g=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2020-02-04T07:40:56Z",
+            "events": [{
+                    "type": "create_validator",
+                    "attributes": [{
+                            "key": "validator",
+                            "value": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "8000000"
+                        }
+                    ]
+                },
+                {
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "staking"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "terra1fuj047hmvk2m3m4gjejnmmse3v47rzj579ylx0"
+                        },
+                        {
+                            "key": "action",
+                            "value": "create_validator"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

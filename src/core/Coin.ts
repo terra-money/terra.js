@@ -1,0 +1,156 @@
+import { JSONSerializable } from '../util/json';
+import { Denom } from './Denom';
+import { Dec, Int, Numeric } from './numeric';
+
+/**
+ * Captures `sdk.Coin` and `sdk.DecCoin` from Cosmos SDK. A composite value that combines
+ * a denomination with an amount value. Coins are immutable once created, and operations
+ * that return Coin will return a new Coin. See [[Coins]] for a collection of Coin objects.
+ */
+export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
+  public readonly amount: Numeric.Output;
+
+  /**
+   * Creates a new coin. Depending on the type of amount, it will be converted to an
+   * integer coin or decimal coin.
+   *
+   * @param denom denomination
+   * @param amount coin's amount
+   */
+  constructor(public readonly denom: Denom, amount: Numeric.Input) {
+    super();
+    this.amount = Numeric.parse(amount);
+  }
+
+  public static fromData(data: Coin.Data): Coin {
+    const { denom, amount } = data;
+    return new Coin(denom, amount);
+  }
+
+  /**
+   * Checks whether the Coin is an Integer coin.
+   */
+  public isIntCoin(): boolean {
+    // TODO: convert into typeguard
+    return this.amount instanceof Int;
+  }
+
+  /**
+   * Checks whether the Coin is a Decimal coin.
+   */
+  public isDecCoin(): boolean {
+    return this.amount instanceof Dec;
+  }
+
+  /**
+   * Turns the Coin into an Integer coin.
+   */
+  public toIntCoin(): Coin {
+    return new Coin(this.denom, new Int(this.amount));
+  }
+
+  /**
+   * Turns the Coin into a Decimal coin.
+   */
+  public toDecCoin(): Coin {
+    return new Coin(this.denom, new Dec(this.amount));
+  }
+
+  public toData(): Coin.Data {
+    const { denom, amount } = this;
+    return {
+      denom,
+      amount: amount.toString(),
+    };
+  }
+
+  /**
+   * Outputs `<amount><denom>`.
+   *
+   * Eg: `Coin('uluna', 1500) -> 1500uluna`
+   */
+  public toString(): string {
+    return `${this.amount.toFixed()}${this.denom}`;
+  }
+
+  /**
+   * Creates a new Coin adding to the current value.
+   *
+   * @param other
+   */
+  public add(other: Numeric.Input | Coin): Coin {
+    let otherAmount;
+    if (other instanceof Coin) {
+      if (other.denom !== this.denom) {
+        throw new Coin.ArithmeticError(
+          `cannot add two Coins of different denoms: ${this.denom} and ${other.denom}`
+        );
+      }
+      otherAmount = other.amount;
+    } else {
+      otherAmount = other;
+    }
+
+    otherAmount = Numeric.parse(otherAmount);
+    return new Coin(this.denom, this.amount.add(otherAmount));
+  }
+
+  /**
+   * Creates a new Coin subtracting from the current value.
+   * @param other
+   */
+  public sub(other: Numeric.Input | Coin): Coin {
+    let otherAmount;
+    if (other instanceof Coin) {
+      if (other.denom !== this.denom) {
+        throw new Coin.ArithmeticError(
+          `cannot subtract two Coins of different denoms: ${this.denom} and ${other.denom}`
+        );
+      }
+      otherAmount = other.amount;
+    } else {
+      otherAmount = other;
+    }
+
+    otherAmount = Numeric.parse(otherAmount);
+    return new Coin(this.denom, this.amount.sub(otherAmount));
+  }
+
+  /**
+   * Multiplies the current value with an amount.
+   * @param other
+   */
+  public mul(other: Numeric.Input): Coin {
+    const otherAmount = Numeric.parse(other);
+    return new Coin(this.denom, this.amount.mul(otherAmount));
+  }
+
+  /**
+   * Divides the current value with an amount.
+   * @param other
+   */
+  public div(other: Numeric.Input): Coin {
+    const otherAmount = Numeric.parse(other);
+    return new Coin(this.denom, this.amount.div(otherAmount));
+  }
+
+  /**
+   * Modulo the current value with an amount.
+   * @param other
+   */
+  public mod(other: Numeric.Input): Coin {
+    const otherAmount = Numeric.parse(other);
+    return new Coin(this.denom, this.amount.mod(otherAmount));
+  }
+}
+
+export namespace Coin {
+  export interface Data {
+    denom: Denom;
+    amount: string;
+  }
+
+  export class ArithmeticError {
+    constructor(public readonly message: string) {}
+  }
+}

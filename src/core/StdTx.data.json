@@ -1,0 +1,1656 @@
+{
+    "txs": [{
+            "height": "125002",
+            "txhash": "E2969CFC525D852234EAF30F7F2A71ACC1A89261543E0343220FD4030F58A140",
+            "raw_log": "[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":1,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":2,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":3,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":4,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":5,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":6,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]},{\"msg_index\":7,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau\"},{\"key\":\"feeder\",\"value\":\"terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt\"}]}]}]",
+            "logs": [{
+                    "msg_index": 0,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 1,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 2,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 3,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 4,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 5,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 6,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 7,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "gas_wanted": "200000",
+            "gas_used": "135958",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.267872980680898154",
+                                "salt": "9dbc",
+                                "denom": "uusd",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "311.005888030136361522",
+                                "salt": "37cc",
+                                "denom": "ukrw",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.194437746011075385",
+                                "salt": "a0a2",
+                                "denom": "usdr",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "729.953872355447515474",
+                                "salt": "c178",
+                                "denom": "umnt",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "a5720d5a462b7f867af755bfc3fe35627c37382b",
+                                "denom": "uusd",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "8438df91b2e4ccb3784cabd4e84cf20f41800910",
+                                "denom": "ukrw",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "4c20981e0c66098ee39f0e4afbbafbc05136e1ba",
+                                "denom": "usdr",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "bb151947cad1a0abce9cb780a5faa51d0b7f9f50",
+                                "denom": "umnt",
+                                "feeder": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt",
+                                "validator": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                            }
+                        }
+                    ],
+                    "fee": {
+                        "amount": [{
+                            "denom": "ukrw",
+                            "amount": "4000"
+                        }],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "A4RDdgjQPNWfgJswEBNY59qEk6HUFGw17J9h7t/HhUCW"
+                        },
+                        "signature": "kQUa1ysTklSsQPF85BMGNs9Aow3Se+qmQLWFuqQEt5QJWlqXgsj4jDJAMcXU3BAJGAHSTQx6gPhmTPMCHqKDCw=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2019-12-23T03:41:34Z",
+            "events": [{
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        }
+                    ]
+                },
+                {
+                    "type": "prevote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        }
+                    ]
+                },
+                {
+                    "type": "vote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1kprce6kc08a6l03gzzh99hfpazfjeczfpzkkau"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1t0r8ugz3kdg4ucwurppx9vymwkldlexdfvzlyt"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "300001",
+            "txhash": "6E10C3149F75AC998C6E71D3120C2BE703C20AED9B5FA248410E5F1C581B35FA",
+            "raw_log": "[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":1,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":2,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":3,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":4,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":5,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":6,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]},{\"msg_index\":7,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g\"},{\"key\":\"feeder\",\"value\":\"terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90\"}]}]}]",
+            "logs": [{
+                    "msg_index": 0,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 1,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 2,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 3,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 4,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 5,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 6,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 7,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "gas_wanted": "180000",
+            "gas_used": "129954",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "282.000000000000000000",
+                                "salt": "5aae",
+                                "denom": "ukrw",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "662.598168913228050769",
+                                "salt": "5636",
+                                "denom": "umnt",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.175115271433311931",
+                                "salt": "6c16",
+                                "denom": "usdr",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.241881456524177918",
+                                "salt": "a542",
+                                "denom": "uusd",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "423a9d1d80d45570b3689c712f0a72b9e17e043f",
+                                "denom": "ukrw",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "89cd41bc8e8acb4ce0948f44acbffd03bf6badc9",
+                                "denom": "umnt",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "e3eb255f12c877a802c628f339f2ead237dc0c20",
+                                "denom": "usdr",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "530712a66250fe8eacf7583d29d96865fca2ea75",
+                                "denom": "uusd",
+                                "feeder": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90",
+                                "validator": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                            }
+                        }
+                    ],
+                    "fee": {
+                        "amount": [{
+                            "denom": "ukrw",
+                            "amount": "2700"
+                        }],
+                        "gas": "180000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AkzjKhsBYzfTjSS0St8hXxeS3lfU84uEVzTccgYvIDVi"
+                        },
+                        "signature": "P/mIwTUI1WbyV4+FFhQq7uyp7unJtuOwrfLJCOHXtGQMRAEXwEdJlq2yWtlRNK1mKhsIqXbhUd4CcMOC4JkAuw=="
+                    }],
+                    "memo": "Voting from terra feeder"
+                }
+            },
+            "timestamp": "2020-01-05T09:21:07Z",
+            "events": [{
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        }
+                    ]
+                },
+                {
+                    "type": "prevote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        }
+                    ]
+                },
+                {
+                    "type": "vote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper163phlen6dn7sp9khhjar2gqqx6kga0ly8d7h9g"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1uw4244x4ull660gyuft3hzv4mrkw0a50umkx90"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "height": "400001",
+            "txhash": "6739EBB7DBC7C970F581C89D743653D742ACAB742B5098B9F1E3A7A0976864F5",
+            "raw_log": "[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":1,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":2,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":3,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangeratevote\"}]},{\"type\":\"vote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":4,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"uusd\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":5,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"ukrw\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":6,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"usdr\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]},{\"msg_index\":7,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"oracle\"},{\"key\":\"action\",\"value\":\"exchangerateprevote\"}]},{\"type\":\"prevote\",\"attributes\":[{\"key\":\"denom\",\"value\":\"umnt\"},{\"key\":\"voter\",\"value\":\"terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra\"},{\"key\":\"feeder\",\"value\":\"terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw\"}]}]}]",
+            "logs": [{
+                    "msg_index": 0,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 1,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 2,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 3,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangeratevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 4,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "uusd"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 5,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "ukrw"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 6,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "usdr"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "msg_index": 7,
+                    "success": true,
+                    "log": "",
+                    "events": [{
+                            "type": "message",
+                            "attributes": [{
+                                    "key": "module",
+                                    "value": "oracle"
+                                },
+                                {
+                                    "key": "action",
+                                    "value": "exchangerateprevote"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "prevote",
+                            "attributes": [{
+                                    "key": "denom",
+                                    "value": "umnt"
+                                },
+                                {
+                                    "key": "voter",
+                                    "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                                },
+                                {
+                                    "key": "feeder",
+                                    "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "gas_wanted": "200000",
+            "gas_used": "129227",
+            "tx": {
+                "type": "core/StdTx",
+                "value": {
+                    "msg": [{
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.205354754652838284",
+                                "salt": "5242",
+                                "denom": "uusd",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "238.000000000000000000",
+                                "salt": "e983",
+                                "denom": "ukrw",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "0.148874598997385615",
+                                "salt": "a1bf",
+                                "denom": "usdr",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRateVote",
+                            "value": {
+                                "exchange_rate": "560.618480202248520072",
+                                "salt": "8aac",
+                                "denom": "umnt",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "4c408f0ad5ed520fd54728a11a01bcddee3afeae",
+                                "denom": "uusd",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "6a8cb29d6424226cf63385dee25ce0a9b0f6bc87",
+                                "denom": "ukrw",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "ed6d14fbfd99d99ba2b441bcfc00e54e04467611",
+                                "denom": "usdr",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        },
+                        {
+                            "type": "oracle/MsgExchangeRatePrevote",
+                            "value": {
+                                "hash": "a7381019ebabb9adc94266efc7f7e64a8c5475ef",
+                                "denom": "umnt",
+                                "feeder": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw",
+                                "validator": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                            }
+                        }
+                    ],
+                    "fee": {
+                        "amount": [{
+                            "denom": "ukrw",
+                            "amount": "4000"
+                        }],
+                        "gas": "200000"
+                    },
+                    "signatures": [{
+                        "pub_key": {
+                            "type": "tendermint/PubKeySecp256k1",
+                            "value": "AnV9kSupcy8OF7DPOq0oqT542tMrRCn0SOQqbS8yYVX+"
+                        },
+                        "signature": "mMQjLpRadvksFkbY86K4nwTLrJX2EKxBHDJY3lxWhzdXbAhvL1wCViqeXPzzghxB72OCbD5uokRp3YfLfuTrWQ=="
+                    }],
+                    "memo": ""
+                }
+            },
+            "timestamp": "2020-01-12T23:47:13Z",
+            "events": [{
+                    "type": "message",
+                    "attributes": [{
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangeratevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        },
+                        {
+                            "key": "module",
+                            "value": "oracle"
+                        },
+                        {
+                            "key": "action",
+                            "value": "exchangerateprevote"
+                        }
+                    ]
+                },
+                {
+                    "type": "prevote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        }
+                    ]
+                },
+                {
+                    "type": "vote",
+                    "attributes": [{
+                            "key": "denom",
+                            "value": "uusd"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "ukrw"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "usdr"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        },
+                        {
+                            "key": "denom",
+                            "value": "umnt"
+                        },
+                        {
+                            "key": "voter",
+                            "value": "terravaloper1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96yhjra"
+                        },
+                        {
+                            "key": "feeder",
+                            "value": "terra1ya23p5cxtxwcfdrq4dmd2h0p5nc0vcl96tm0nw"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
