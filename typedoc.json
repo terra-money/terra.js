@@ -9,5 +9,6 @@
   "name": "Terra.js",
   "excludeNotExported": true,
   "excludePrivate": true,
-  "excludeProtected": true
+  "excludeProtected": true,
+  "media": "img"
 }
