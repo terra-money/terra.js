@@ -9,7 +9,7 @@ The JavaScript SDK for Terra
 
 <div align="center">
   <h3>
-    <a href="https://jigu.terra.money/docs">
+    <a href="https://terra-project.github.io/terra.js/">
       API Docs
     </a>
     <span> | </span>
