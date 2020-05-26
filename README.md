@@ -7,6 +7,10 @@
 The JavaScript SDK for Terra
 </p>
 
+<br/>
+
+![diagram](./img/terrajs-diagram.png)
+
 <div align="center">
   <h3>
     <a href="https://terra-project.github.io/terra.js/">
