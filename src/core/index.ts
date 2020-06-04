@@ -54,5 +54,8 @@ export * from './staking/Validator';
 export * from './treasury/proposals';
 export * from './treasury/PolicyConstraints';
 
+// WASM
+export * from './wasm/msgs';
+
 // String-based types
 export * from './strings';

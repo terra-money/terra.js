@@ -6,12 +6,12 @@ export * from './MsgStoreCode';
 export * from './MsgInstantiateContract';
 export * from './MsgExecuteContract';
 
-export type WASMMsg =
+export type WasmMsg =
   | MsgStoreCode
   | MsgInstantiateContract
   | MsgExecuteContract;
 
-export namespace WASMMsg {
+export namespace WasmMsg {
   export type Data =
     | MsgStoreCode.Data
     | MsgInstantiateContract.Data

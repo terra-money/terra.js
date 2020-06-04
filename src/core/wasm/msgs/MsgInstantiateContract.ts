@@ -14,7 +14,7 @@ export class MsgInstantiateContract extends JSONSerializable<
   constructor(
     public sender: AccAddress,
     public code_id: number,
-    public init_msg: any,
+    public init_msg: object,
     public init_coins: Coins
   ) {
     super();
@@ -29,7 +29,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     return new MsgInstantiateContract(
       sender,
       Number.parseInt(code_id),
-      JSON.parse(new Buffer(init_msg, 'base64').toString()),
+      JSON.parse(Buffer.from(init_msg, 'base64').toString()),
       Coins.fromData(init_coins)
     );
   }
@@ -41,7 +41,7 @@ export class MsgInstantiateContract extends JSONSerializable<
       value: {
         sender,
         code_id: code_id.toFixed(),
-        init_msg: new Buffer(JSON.stringify(init_msg)).toString('base64'),
+        init_msg: Buffer.from(JSON.stringify(init_msg)).toString('base64'),
         init_coins: init_coins.toData(),
       },
     };

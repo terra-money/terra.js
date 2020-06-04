@@ -79,6 +79,7 @@ export class LCDClient {
   public supply: SupplyAPI;
   public tendermint: TendermintAPI;
   public treasury: TreasuryAPI;
+  public wasm: WasmAPI;
   public tx: TxAPI;
 
   /**
@@ -106,8 +107,8 @@ export class LCDClient {
     this.supply = new SupplyAPI(this.apiRequester);
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
+    this.wasm = new WasmAPI(this.apiRequester);
     this.tx = new TxAPI(this);
-    this.wasm = new WasmAPI(this);
   }
 
   /** Creates a new wallet with the Key. */

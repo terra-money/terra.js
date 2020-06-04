@@ -26,7 +26,7 @@ import {
   MsgStoreCode,
   MsgInstantiateContract,
   MsgExecuteContract,
-  WASMMsg,
+  WasmMsg,
 } from './wasm/msgs';
 
 export type Msg =
@@ -37,7 +37,7 @@ export type Msg =
   | OracleMsg
   | SlashingMsg
   | StakingMsg
-  | WASMMsg;
+  | WasmMsg;
 
 export namespace Msg {
   export type Data =
@@ -48,7 +48,7 @@ export namespace Msg {
     | OracleMsg.Data
     | SlashingMsg.Data
     | StakingMsg.Data
-    | WASMMsg.Data;
+    | WasmMsg.Data;
 
   export function fromData(data: Msg.Data): Msg {
     switch (data.type) {

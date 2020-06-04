@@ -14,7 +14,7 @@ export class MsgExecuteContract extends JSONSerializable<
   constructor(
     public sender: AccAddress,
     public contract: AccAddress,
-    public msg: any,
+    public msg: object,
     public coins: Coins
   ) {
     super();
@@ -27,7 +27,7 @@ export class MsgExecuteContract extends JSONSerializable<
     return new MsgExecuteContract(
       sender,
       contract,
-      JSON.parse(new Buffer(msg, 'base64').toString()),
+      JSON.parse(Buffer.from(msg, 'base64').toString()),
       Coins.fromData(coins)
     );
   }
@@ -39,7 +39,7 @@ export class MsgExecuteContract extends JSONSerializable<
       value: {
         sender,
         contract,
-        msg: new Buffer(JSON.stringify(msg)).toString('base64'),
+        msg: Buffer.from(JSON.stringify(msg)).toString('base64'),
         coins: coins.toData(),
       },
     };
