@@ -37,18 +37,18 @@ export class WasmAPI extends BaseAPI {
         code_id: Number.parseInt(d.code_id),
         address: d.address,
         creator: d.creator,
-        init_msg: JSON.parse(new Buffer(d.init_msg, 'base64').toString()),
+        init_msg: JSON.parse(Buffer.from(d.init_msg, 'base64').toString()),
       }));
   }
 
-  public async contractQuery(
+  public async contractQuery<T>(
     contractAddress: AccAddress,
-    query: any
-  ): Promise<any> {
+    query: object
+  ): Promise<T> {
     return this.c
-      .get<any>(`/wasm/contract/${contractAddress}/store`, {
+      .get<string>(`/wasm/contract/${contractAddress}/store`, {
         query_msg: JSON.stringify(query),
       })
-      .then(d => d.result);
+      .then(d => JSON.parse(d.result));
   }
 }
