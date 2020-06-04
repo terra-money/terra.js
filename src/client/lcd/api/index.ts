@@ -10,3 +10,4 @@ export * from './SupplyAPI';
 export * from './TendermintAPI';
 export * from './TreasuryAPI';
 export * from './TxAPI';
+export * from './WasmAPI';
