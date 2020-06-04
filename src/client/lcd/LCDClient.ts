@@ -12,6 +12,7 @@ import {
   TendermintAPI,
   TreasuryAPI,
   TxAPI,
+  WasmAPI,
 } from './api';
 import { Wallet } from './Wallet';
 import { Numeric, Coins } from '../../core';
@@ -106,6 +107,7 @@ export class LCDClient {
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.tx = new TxAPI(this);
+    this.wasm = new WasmAPI(this);
   }
 
   /** Creates a new wallet with the Key. */

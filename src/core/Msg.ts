@@ -22,6 +22,12 @@ import {
   MsgUndelegate,
   StakingMsg,
 } from './staking/msgs';
+import {
+  MsgStoreCode,
+  MsgInstantiateContract,
+  MsgExecuteContract,
+  WASMMsg,
+} from './wasm/msgs';
 
 export type Msg =
   | BankMsg
@@ -30,7 +36,8 @@ export type Msg =
   | MarketMsg
   | OracleMsg
   | SlashingMsg
-  | StakingMsg;
+  | StakingMsg
+  | WASMMsg;
 
 export namespace Msg {
   export type Data =
@@ -40,7 +47,8 @@ export namespace Msg {
     | MarketMsg.Data
     | OracleMsg.Data
     | SlashingMsg.Data
-    | StakingMsg.Data;
+    | StakingMsg.Data
+    | WASMMsg.Data;
 
   export function fromData(data: Msg.Data): Msg {
     switch (data.type) {
@@ -93,6 +101,14 @@ export namespace Msg {
         return MsgCreateValidator.fromData(data);
       case 'staking/MsgEditValidator':
         return MsgEditValidator.fromData(data);
+
+      // wasm
+      case 'wasm/StoreCode':
+        return MsgStoreCode.fromData(data);
+      case 'wasm/InstantiateContract':
+        return MsgInstantiateContract.fromData(data);
+      case 'wasm/ExecuteContract':
+        return MsgExecuteContract.fromData(data);
     }
   }
 }
