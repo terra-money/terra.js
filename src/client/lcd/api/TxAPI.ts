@@ -104,7 +104,10 @@ export class TxAPI extends BaseAPI {
     const { gasPrices, gasAdjustment } = gasOptions;
 
     const data = {
-      tx: tx instanceof StdSignMsg ? tx.toStdTx().toData() : tx.toData(),
+      tx:
+        tx instanceof StdSignMsg
+          ? tx.toStdTx().toData().value
+          : tx.toData().value,
       gas_prices: gasPrices && new Coins(gasPrices).toData(),
       gas_adjustment: gasAdjustment && gasAdjustment.toString(),
     };
