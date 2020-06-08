@@ -39,7 +39,7 @@ export class MarketAPI extends BaseAPI {
    * @param askDenom denomination to swap into
    */
   public async swapRate(offerCoin: Coin, askDenom: Denom): Promise<Coin> {
-    let params = {
+    const params = {
       offer_coin: offerCoin.toString(),
       ask_denom: askDenom,
     };

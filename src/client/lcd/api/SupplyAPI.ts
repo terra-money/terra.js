@@ -1,4 +1,4 @@
-import { Denom, Coins, Coin } from '../../../core';
+import { Coins } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 
 export class SupplyAPI extends BaseAPI {

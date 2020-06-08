@@ -7,9 +7,7 @@ const bank = new BankAPI(c);
 describe('BankAPI', () => {
   describe('balance', () => {
     it('account exists', async () => {
-      const coins = await bank.balance(
-        'terra1ax7xtll5v6u6vdnymxa4k4648w80zhkggl0u24'
-      );
+      await bank.balance('terra1ax7xtll5v6u6vdnymxa4k4648w80zhkggl0u24');
     });
 
     it('invalid account', async () => {
