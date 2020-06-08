@@ -21,7 +21,7 @@ export class TendermintAPI extends BaseAPI {
    * @param height block height
    */
   public async validatorSet(height?: number): Promise<ValidatorSet> {
-    let url =
+    const url =
       height !== undefined
         ? `/validatorsets/${height}`
         : `/validatorsets/latest`;
@@ -33,7 +33,7 @@ export class TendermintAPI extends BaseAPI {
    * @param height block height.
    */
   public async block(height?: number): Promise<BlockInfo> {
-    let url = height !== undefined ? `/blocks/${height}` : `/blocks/latest`;
+    const url = height !== undefined ? `/blocks/${height}` : `/blocks/latest`;
     return this.c.getRaw<BlockInfo>(url);
   }
 }
