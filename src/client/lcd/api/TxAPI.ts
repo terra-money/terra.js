@@ -91,23 +91,20 @@ export class TxAPI extends BaseAPI {
     tx: StdTx | StdSignMsg,
     options?: { gasPrices?: Coins.Input; gasAdjustment?: Numeric.Input }
   ): Promise<StdFee> {
-    let gasOptions = {
-      gasPrices: this.lcd.config.gasPrices,
-      gasAdjustment: this.lcd.config.gasAdjustment,
+    const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
+    const gasAdjustment =
+      options?.gasAdjustment || this.lcd.config.gasAdjustment;
+
+    const txValue = {
+      ...(tx instanceof StdSignMsg
+        ? tx.toStdTx().toData().value
+        : tx.toData().value),
     };
 
-    gasOptions = {
-      ...gasOptions,
-      ...options,
-    };
-
-    const { gasPrices, gasAdjustment } = gasOptions;
+    txValue.fee.gas = '0';
 
     const data = {
-      tx:
-        tx instanceof StdSignMsg
-          ? tx.toStdTx().toData().value
-          : tx.toData().value,
+      tx: txValue,
       gas_prices: gasPrices && new Coins(gasPrices).toData(),
       gas_adjustment: gasAdjustment && gasAdjustment.toString(),
     };
