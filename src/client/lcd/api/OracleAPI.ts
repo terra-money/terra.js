@@ -62,17 +62,17 @@ export class OracleAPI extends BaseAPI {
     validator?: ValAddress
   ): Promise<ExchangeRateVote[]> {
     if (validator !== undefined && denom !== undefined) {
-      let vote = await this.c.get<ExchangeRateVote.Data>(
+      const vote = await this.c.get<ExchangeRateVote.Data>(
         `/oracle/denoms/${denom}/votes/${validator}`
       );
       return [ExchangeRateVote.fromData(vote.result)];
     } else if (validator !== undefined) {
-      let votes = await this.c.get<ExchangeRateVote.Data[]>(
+      const votes = await this.c.get<ExchangeRateVote.Data[]>(
         `/oracle/voters/${validator}/votes`
       );
       return votes.result.map(ExchangeRateVote.fromData);
     } else if (denom !== undefined) {
-      let votes = await this.c.get<ExchangeRateVote.Data[]>(
+      const votes = await this.c.get<ExchangeRateVote.Data[]>(
         `/oracle/denoms/${denom}/votes`
       );
       return votes.result.map(ExchangeRateVote.fromData);
@@ -93,17 +93,17 @@ export class OracleAPI extends BaseAPI {
     validator?: ValAddress
   ): Promise<ExchangeRatePrevote[]> {
     if (validator !== undefined && denom !== undefined) {
-      let prevote = await this.c.get<ExchangeRatePrevote.Data>(
+      const prevote = await this.c.get<ExchangeRatePrevote.Data>(
         `/oracle/denoms/${denom}/prevotes/${validator}`
       );
       return [ExchangeRatePrevote.fromData(prevote.result)];
     } else if (validator !== undefined) {
-      let prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
+      const prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
         `/oracle/voters/${validator}/prevotes`
       );
       return prevotes.result.map(ExchangeRatePrevote.fromData);
     } else if (denom !== undefined) {
-      let prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
+      const prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
         `/oracle/denoms/${denom}/prevotes`
       );
       return prevotes.result.map(ExchangeRatePrevote.fromData);

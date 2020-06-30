@@ -129,7 +129,7 @@ describe('MnemonicKey', () => {
   });
 
   it('txid', () => {
-    const stdTx = new StdTx(
+    new StdTx(
       [
         new MsgSend(
           'terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv',

@@ -3,7 +3,6 @@ import {
   ValAddress,
   UnbondingDelegation,
   Coin,
-  Coins,
 } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 import { Delegation } from '../../../core/staking/Delegation';
@@ -155,7 +154,7 @@ export class StakingAPI extends BaseAPI {
     validatorSrc?: ValAddress,
     validatorDst?: ValAddress
   ): Promise<Redelegation[]> {
-    let params = {
+    const params = {
       delegator,
       validator_from: validatorSrc,
       validator_to: validatorDst,
@@ -188,7 +187,7 @@ export class StakingAPI extends BaseAPI {
    * Gets the validator information for a specific validator.
    * @param validator validator's operator address
    */
-  public async validator(validator: ValAddress) {
+  public async validator(validator: ValAddress): Promise<Validator> {
     return this.c
       .get<Validator.Data>(`/staking/validators/${validator}`)
       .then(d => Validator.fromData(d.result));

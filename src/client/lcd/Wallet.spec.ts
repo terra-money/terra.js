@@ -1,7 +1,7 @@
-import { MsgSwap, Coin, StdFee } from '../../core';
-import { MnemonicKey } from '../../key';
-import { LCDClient } from './LCDClient';
-import { TreasuryAPI, Broadcast } from './api';
+// import { MsgSwap, Coin, StdFee } from '../../core';
+// import { MnemonicKey } from '../../key';
+// import { LCDClient } from './LCDClient';
+// import { TreasuryAPI, Broadcast } from './api';
 
 describe('Wallet', () => {
   it('sends a MsgSwap transaction', async () => {

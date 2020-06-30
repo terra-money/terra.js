@@ -87,7 +87,7 @@ export class DistributionAPI extends BaseAPI {
       .get<Rewards.Data>(`/distribution/delegators/${delegator}/rewards`)
       .then(d => d.result);
 
-    let rewards: Rewards['rewards'] = {};
+    const rewards: Rewards['rewards'] = {};
     for (const reward of rewardsData.rewards) {
       rewards[reward.validator_address] = Coins.fromData(reward.reward);
     }

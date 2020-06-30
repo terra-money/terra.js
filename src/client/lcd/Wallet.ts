@@ -38,7 +38,7 @@ export class Wallet {
     const gasPrices = this.lcd.config.gasPrices || new Coins({});
     if (fee === undefined) {
       // estimate the fee
-      const stdTx = new StdTx(msgs, new StdFee(1, gasPrices), [], memo);
+      const stdTx = new StdTx(msgs, new StdFee(0, gasPrices), [], memo);
       fee = await this.lcd.tx.estimateFee(stdTx);
     }
 
