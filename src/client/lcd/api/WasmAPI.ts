@@ -24,14 +24,14 @@ export namespace ContractInfo {
 
 export class WasmAPI extends BaseAPI {
   public async codeInfo(codeID: number): Promise<CodeInfo> {
-    return this.c.get<CodeInfo>(`/wasm/code/${codeID}`).then(d => d.result);
+    return this.c.get<CodeInfo>(`/wasm/codes/${codeID}`).then(d => d.result);
   }
 
   public async contractInfo(
     contractAddress: AccAddress
   ): Promise<ContractInfo> {
     return this.c
-      .get<ContractInfo.Data>(`/wasm/contract/${contractAddress}`)
+      .get<ContractInfo.Data>(`/wasm/contracts/${contractAddress}`)
       .then(d => d.result)
       .then(d => ({
         code_id: Number.parseInt(d.code_id),
@@ -46,7 +46,7 @@ export class WasmAPI extends BaseAPI {
     query: object
   ): Promise<T> {
     return this.c
-      .get<string>(`/wasm/contract/${contractAddress}/store`, {
+      .get<string>(`/wasm/contracts/${contractAddress}/store`, {
         query_msg: JSON.stringify(query),
       })
       .then(d => JSON.parse(d.result));
