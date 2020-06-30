@@ -6,7 +6,7 @@ import {
   MsgWithdrawValidatorCommission,
 } from './distribution/msgs';
 import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
-import { MarketMsg, MsgSwap } from './market/msgs';
+import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
 import {
   MsgDelegateFeedConsent,
   MsgExchangeRatePrevote,
@@ -77,6 +77,8 @@ export namespace Msg {
       // market
       case 'market/MsgSwap':
         return MsgSwap.fromData(data);
+      case 'market/MsgSwapSend':
+        return MsgSwapSend.fromData(data);
 
       // oracle
       case 'oracle/MsgExchangeRateVote':
