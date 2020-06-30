@@ -27,7 +27,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "post-checkout": "yarn"
+      "post-checkout": "npm i"
     }
   },
   "prettier": {
