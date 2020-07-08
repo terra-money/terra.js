@@ -26,6 +26,8 @@ import {
   MsgStoreCode,
   MsgInstantiateContract,
   MsgExecuteContract,
+  MsgMigrateContract,
+  MsgUpdateContractOwner,
   WasmMsg,
 } from './wasm/msgs';
 
@@ -105,12 +107,16 @@ export namespace Msg {
         return MsgEditValidator.fromData(data);
 
       // wasm
-      case 'wasm/StoreCode':
+      case 'wasm/MsgStoreCode':
         return MsgStoreCode.fromData(data);
-      case 'wasm/InstantiateContract':
+      case 'wasm/MsgInstantiateContract':
         return MsgInstantiateContract.fromData(data);
-      case 'wasm/ExecuteContract':
+      case 'wasm/MsgExecuteContract':
         return MsgExecuteContract.fromData(data);
+      case 'wasm/MsgMigrateContract':
+        return MsgMigrateContract.fromData(data);
+      case 'wasm/MsgUpdateContractOwner':
+        return MsgUpdateContractOwner.fromData(data);
     }
   }
 }

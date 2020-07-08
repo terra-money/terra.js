@@ -14,7 +14,7 @@ export class MsgExecuteContract extends JSONSerializable<
   constructor(
     public sender: AccAddress,
     public contract: AccAddress,
-    public msg: object,
+    public execute_msg: object,
     public coins: Coins
   ) {
     super();
@@ -22,24 +22,26 @@ export class MsgExecuteContract extends JSONSerializable<
 
   public static fromData(data: MsgExecuteContract.Data): MsgExecuteContract {
     const {
-      value: { sender, contract, msg, coins },
+      value: { sender, contract, execute_msg, coins },
     } = data;
     return new MsgExecuteContract(
       sender,
       contract,
-      JSON.parse(Buffer.from(msg, 'base64').toString()),
+      JSON.parse(Buffer.from(execute_msg, 'base64').toString()),
       Coins.fromData(coins)
     );
   }
 
   public toData(): MsgExecuteContract.Data {
-    const { sender, contract, msg, coins } = this;
+    const { sender, contract, execute_msg, coins } = this;
     return {
-      type: 'wasm/ExecuteContract',
+      type: 'wasm/MsgExecuteContract',
       value: {
         sender,
         contract,
-        msg: Buffer.from(JSON.stringify(msg)).toString('base64'),
+        execute_msg: Buffer.from(JSON.stringify(execute_msg)).toString(
+          'base64'
+        ),
         coins: coins.toData(),
       },
     };
@@ -48,11 +50,11 @@ export class MsgExecuteContract extends JSONSerializable<
 
 export namespace MsgExecuteContract {
   export interface Data {
-    type: 'wasm/ExecuteContract';
+    type: 'wasm/MsgExecuteContract';
     value: {
       sender: AccAddress;
       contract: AccAddress;
-      msg: string;
+      execute_msg: string;
       coins: Coins.Data;
     };
   }
