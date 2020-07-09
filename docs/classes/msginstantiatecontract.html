@@ -2739,7 +2739,10 @@ img {
 					<a href="msginstantiatecontract.html#init_msg" class="tsd-kind-icon">init_<wbr>msg</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-class">
-					<a href="msginstantiatecontract.html#sender" class="tsd-kind-icon">sender</a>
+					<a href="msginstantiatecontract.html#migratable" class="tsd-kind-icon">migratable</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-class">
+					<a href="msginstantiatecontract.html#owner" class="tsd-kind-icon">owner</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a href="msginstantiatecontract.html#todata" class="tsd-kind-icon">to<wbr>Data</a>
@@ -2791,7 +2794,8 @@ img {
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#code_id" class="tsd-kind-icon">code_<wbr>id</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#init_coins" class="tsd-kind-icon">init_<wbr>coins</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#init_msg" class="tsd-kind-icon">init_<wbr>msg</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#sender" class="tsd-kind-icon">sender</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#migratable" class="tsd-kind-icon">migratable</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class"><a href="msginstantiatecontract.html#owner" class="tsd-kind-icon">owner</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
@@ -2811,13 +2815,13 @@ img {
 				<a name="constructor" class="tsd-anchor"></a>
 				<h3>constructor</h3>
 				<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-					<li class="tsd-signature tsd-kind-icon">new <wbr>Msg<wbr>Instantiate<wbr>Contract<span class="tsd-signature-symbol">(</span>sender<span class="tsd-signature-symbol">: </span><a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a>, code_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, init_msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, init_coins<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="msginstantiatecontract.html" class="tsd-signature-type">MsgInstantiateContract</a></li>
+					<li class="tsd-signature tsd-kind-icon">new <wbr>Msg<wbr>Instantiate<wbr>Contract<span class="tsd-signature-symbol">(</span>owner<span class="tsd-signature-symbol">: </span><a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a>, code_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, init_msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, init_coins<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, migratable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="msginstantiatecontract.html" class="tsd-signature-type">MsgInstantiateContract</a></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L7">src/core/wasm/msgs/MsgInstantiateContract.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L7">src/core/wasm/msgs/MsgInstantiateContract.ts:7</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2825,15 +2829,15 @@ img {
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>sender: <a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a></h5>
+								<h5>owner: <a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a></h5>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
-										<p>contract creator</p>
+										<p>contract owner</p>
 									</div>
 								</div>
 							</li>
 							<li>
-								<h5>code_id: <span class="tsd-signature-type">number</span></h5>
+								<h5>code_id: <span class="tsd-signature-type">string</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<div class="lead">
 										<p>reference to the code on the blockchain</p>
@@ -2856,6 +2860,14 @@ img {
 									</div>
 								</div>
 							</li>
+							<li>
+								<h5>migratable: <span class="tsd-signature-type">boolean</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<div class="lead">
+										<p>defines to be migratable or not</p>
+									</div>
+								</div>
+							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <a href="msginstantiatecontract.html" class="tsd-signature-type">MsgInstantiateContract</a></h4>
 					</li>
@@ -2867,10 +2879,10 @@ img {
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 				<a name="code_id" class="tsd-anchor"></a>
 				<h3>code_<wbr>id</h3>
-				<div class="tsd-signature tsd-kind-icon">code_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<div class="tsd-signature tsd-kind-icon">code_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L16">src/core/wasm/msgs/MsgInstantiateContract.ts:16</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L17">src/core/wasm/msgs/MsgInstantiateContract.ts:17</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2885,7 +2897,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">init_<wbr>coins<span class="tsd-signature-symbol">:</span> <a href="coins.html" class="tsd-signature-type">Coins</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L18">src/core/wasm/msgs/MsgInstantiateContract.ts:18</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L19">src/core/wasm/msgs/MsgInstantiateContract.ts:19</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2900,7 +2912,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">init_<wbr>msg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L17">src/core/wasm/msgs/MsgInstantiateContract.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L18">src/core/wasm/msgs/MsgInstantiateContract.ts:18</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2910,17 +2922,32 @@ img {
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-				<a name="sender" class="tsd-anchor"></a>
-				<h3>sender</h3>
-				<div class="tsd-signature tsd-kind-icon">sender<span class="tsd-signature-symbol">:</span> <a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a></div>
+				<a name="migratable" class="tsd-anchor"></a>
+				<h3>migratable</h3>
+				<div class="tsd-signature tsd-kind-icon">migratable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L15">src/core/wasm/msgs/MsgInstantiateContract.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L20">src/core/wasm/msgs/MsgInstantiateContract.ts:20</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>contract creator</p>
+						<p>defines to be migratable or not</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<a name="owner" class="tsd-anchor"></a>
+				<h3>owner</h3>
+				<div class="tsd-signature tsd-kind-icon">owner<span class="tsd-signature-symbol">:</span> <a href="../globals.html#accaddress" class="tsd-signature-type">AccAddress</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L16">src/core/wasm/msgs/MsgInstantiateContract.ts:16</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>contract owner</p>
 					</div>
 				</div>
 			</section>
@@ -2938,7 +2965,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Overrides <a href="jsonserializable.html">JSONSerializable</a>.<a href="jsonserializable.html#todata">toData</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L37">src/core/wasm/msgs/MsgInstantiateContract.ts:37</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L40">src/core/wasm/msgs/MsgInstantiateContract.ts:40</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="../interfaces/msginstantiatecontract.data.html" class="tsd-signature-type">Data</a></h4>
@@ -2956,7 +2983,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="jsonserializable.html">JSONSerializable</a>.<a href="jsonserializable.html#tojson">toJSON</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/util/json.ts#L23">src/util/json.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/util/json.ts#L23">src/util/json.ts:23</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2973,7 +3000,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/0a95c8c/src/core/wasm/msgs/MsgInstantiateContract.ts#L23">src/core/wasm/msgs/MsgInstantiateContract.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/core/wasm/msgs/MsgInstantiateContract.ts#L25">src/core/wasm/msgs/MsgInstantiateContract.ts:25</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>

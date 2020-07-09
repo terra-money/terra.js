@@ -20,7 +20,7 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
   public toData(): MsgStoreCode.Data {
     const { sender, wasm_byte_code } = this;
     return {
-      type: 'wasm/StoreCode',
+      type: 'wasm/MsgStoreCode',
       value: {
         sender,
         wasm_byte_code,
@@ -31,7 +31,7 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
 
 export namespace MsgStoreCode {
   export interface Data {
-    type: 'wasm/StoreCode';
+    type: 'wasm/MsgStoreCode';
     value: {
       sender: AccAddress;
       wasm_byte_code: string;

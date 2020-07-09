@@ -6,16 +6,18 @@ export class MsgInstantiateContract extends JSONSerializable<
   MsgInstantiateContract.Data
 > {
   /**
-   * @param sender contract creator
+   * @param owner contract owner
    * @param code_id reference to the code on the blockchain
    * @param init_msg message to configure the initial state of the contract
    * @param init_coins initial amount of coins to be sent to the contract's address
+   * @param migratable defines to be migratable or not
    */
   constructor(
-    public sender: AccAddress,
-    public code_id: number,
+    public owner: AccAddress,
+    public code_id: string,
     public init_msg: object,
-    public init_coins: Coins
+    public init_coins: Coins,
+    public migratable: boolean
   ) {
     super();
   }
@@ -24,25 +26,27 @@ export class MsgInstantiateContract extends JSONSerializable<
     data: MsgInstantiateContract.Data
   ): MsgInstantiateContract {
     const {
-      value: { sender, code_id, init_msg, init_coins },
+      value: { owner, code_id, init_msg, init_coins, migratable },
     } = data;
     return new MsgInstantiateContract(
-      sender,
-      Number.parseInt(code_id),
+      owner,
+      code_id,
       JSON.parse(Buffer.from(init_msg, 'base64').toString()),
-      Coins.fromData(init_coins)
+      Coins.fromData(init_coins),
+      migratable
     );
   }
 
   public toData(): MsgInstantiateContract.Data {
-    const { sender, code_id, init_msg, init_coins } = this;
+    const { owner, code_id, init_msg, init_coins, migratable } = this;
     return {
-      type: 'wasm/InstantiateContract',
+      type: 'wasm/MsgInstantiateContract',
       value: {
-        sender,
-        code_id: code_id.toFixed(),
+        owner,
+        code_id,
         init_msg: Buffer.from(JSON.stringify(init_msg)).toString('base64'),
         init_coins: init_coins.toData(),
+        migratable,
       },
     };
   }
@@ -50,12 +54,13 @@ export class MsgInstantiateContract extends JSONSerializable<
 
 export namespace MsgInstantiateContract {
   export interface Data {
-    type: 'wasm/InstantiateContract';
+    type: 'wasm/MsgInstantiateContract';
     value: {
-      sender: AccAddress;
+      owner: AccAddress;
       code_id: string;
       init_msg: string;
       init_coins: Coins.Data;
+      migratable: boolean;
     };
   }
 }
