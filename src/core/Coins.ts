@@ -15,12 +15,25 @@ export class Coins extends JSONSerializable<Coins.Data>
   /**
    * Converts the Coins information to a comma-separated list.
    *
-   * Eg: `15000ukrw, 12000uluna`
+   * Eg: `15000ukrw,12000uluna`
    */
   public toString(): string {
     return this.toArray()
       .map(c => c.toString())
-      .join(', ');
+      .join(',');
+  }
+
+  /**
+   * Converts a comma-separated list of coins to a Coins object
+   *
+   * Eg. `1500ukrw,12302uluna`
+   *
+   * @param str comma-separated list of coins
+   */
+  public static fromString(str: string): Coins {
+    const coin_strings = str.split(/,\ */);
+    const coins = coin_strings.map(s => Coin.fromString(s));
+    return new Coins(coins);
   }
 
   /**

@@ -1,10 +1,14 @@
 import { MsgDelegateFeedConsent } from './MsgDelegateFeedConsent';
 import { MsgExchangeRatePrevote } from './MsgExchangeRatePrevote';
 import { MsgExchangeRateVote } from './MsgExchangeRateVote';
+import { MsgAggregateExchangeRatePrevote } from './MsgAggregateExchangeRatePrevote';
+import { MsgAggregateExchangeRateVote } from './MsgAggregateExchangeRateVote';
 
 export * from './MsgDelegateFeedConsent';
 export * from './MsgExchangeRatePrevote';
 export * from './MsgExchangeRateVote';
+export * from './MsgAggregateExchangeRatePrevote';
+export * from './MsgAggregateExchangeRateVote';
 
 export type OracleMsg =
   | MsgExchangeRateVote

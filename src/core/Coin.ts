@@ -73,6 +73,16 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
     return `${this.amount.toFixed()}${this.denom}`;
   }
 
+  public static fromString(str: string): Coin {
+    const m = str.match(/^([0-9]+(\.[0-9]+)?)([a-zA-Z]+)$/);
+    if (m === null) {
+      throw new Error(`failed to parse to Coin: ${str}`);
+    }
+    const amount = m[1];
+    const denom = m[3];
+    return new Coin(denom, amount);
+  }
+
   /**
    * Creates a new Coin adding to the current value.
    *

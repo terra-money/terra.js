@@ -8,6 +8,12 @@ import {
 import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
 import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
 import {
+  MsgGrantAuthorization,
+  MsgRevokeAuthorization,
+  MsgExecAuthorized,
+  MsgAuthMsg,
+} from './msgauth/msgs';
+import {
   MsgDelegateFeedConsent,
   MsgExchangeRatePrevote,
   MsgExchangeRateVote,
@@ -36,6 +42,7 @@ export type Msg =
   | DistributionMsg
   | GovMsg
   | MarketMsg
+  | MsgAuthMsg
   | OracleMsg
   | SlashingMsg
   | StakingMsg
@@ -47,6 +54,7 @@ export namespace Msg {
     | DistributionMsg.Data
     | GovMsg.Data
     | MarketMsg.Data
+    | MsgAuthMsg.Data
     | OracleMsg.Data
     | SlashingMsg.Data
     | StakingMsg.Data
@@ -81,6 +89,14 @@ export namespace Msg {
         return MsgSwap.fromData(data);
       case 'market/MsgSwapSend':
         return MsgSwapSend.fromData(data);
+
+      // msgauth
+      case 'msgauth/MsgGrantAuthorization':
+        return MsgGrantAuthorization.fromData(data);
+      case 'msgauth/MsgRevokeAuthorization':
+        return MsgRevokeAuthorization.fromData(data);
+      case 'msgauth/MsgExecAuthorized':
+        return MsgExecAuthorized.fromData(data);
 
       // oracle
       case 'oracle/MsgExchangeRateVote':
