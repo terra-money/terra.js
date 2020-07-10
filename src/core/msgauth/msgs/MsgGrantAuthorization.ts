@@ -5,14 +5,17 @@ import { Coins } from '../../Coins';
 export class MsgGrantAuthorization extends JSONSerializable<
   MsgGrantAuthorization.Data
 > {
-  public amount: Coins;
   /**
    * @param depositor depositor's account address
    * @param amount coins to fund the community pool
    */
-  constructor(public depositor: AccAddress, amount: Coins.Input) {
+  constructor(
+    public granter: AccAddress,
+    public grantee: AccAddress,
+    public authorization: Authorization,
+    public period: Date
+  ) {
     super();
-    this.amount = new Coins(amount);
   }
 
   public static fromData(
