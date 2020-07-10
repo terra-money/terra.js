@@ -1,16 +1,15 @@
 import { MsgGrantAuthorization } from './MsgGrantAuthorization';
-export * from './MsgGrantAuthorization';
-
 import { MsgRevokeAuthorization } from './MsgRevokeAuthorization';
-export * from './MsgRevokeAuthorization';
-
 import { MsgExecAuthorized } from './MsgExecAuthorized';
+
+export * from './MsgGrantAuthorization';
+export * from './MsgRevokeAuthorization';
 export * from './MsgExecAuthorized';
 
 export type MsgAuthMsg =
-  | MsgExecAuthorized
   | MsgGrantAuthorization
-  | MsgRevokeAuthorization;
+  | MsgRevokeAuthorization
+  | MsgExecAuthorized;
 
 export namespace MsgAuthMsg {
   export type Data =

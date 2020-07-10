@@ -11,7 +11,8 @@ export * from './MsgFundCommunityPool';
 export type DistributionMsg =
   | MsgModifyWithdrawAddress
   | MsgWithdrawDelegationReward
-  | MsgWithdrawValidatorCommission;
+  | MsgWithdrawValidatorCommission
+  | MsgFundCommunityPool;
 
 export namespace DistributionMsg {
   export type Data =

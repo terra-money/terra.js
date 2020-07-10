@@ -7,17 +7,21 @@ import { MsgAggregateExchangeRateVote } from './MsgAggregateExchangeRateVote';
 export * from './MsgDelegateFeedConsent';
 export * from './MsgExchangeRatePrevote';
 export * from './MsgExchangeRateVote';
-export * from './MsgAggregateExchangeRatePrevote';
 export * from './MsgAggregateExchangeRateVote';
+export * from './MsgAggregateExchangeRatePrevote';
 
 export type OracleMsg =
   | MsgExchangeRateVote
   | MsgExchangeRatePrevote
-  | MsgDelegateFeedConsent;
+  | MsgDelegateFeedConsent
+  | MsgAggregateExchangeRateVote
+  | MsgAggregateExchangeRatePrevote;
 
 export namespace OracleMsg {
   export type Data =
     | MsgExchangeRateVote.Data
     | MsgExchangeRatePrevote.Data
-    | MsgDelegateFeedConsent.Data;
+    | MsgDelegateFeedConsent.Data
+    | MsgAggregateExchangeRateVote.Data
+    | MsgAggregateExchangeRatePrevote.Data;
 }

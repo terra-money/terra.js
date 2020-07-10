@@ -4,6 +4,7 @@ import {
   MsgModifyWithdrawAddress,
   MsgWithdrawDelegationReward,
   MsgWithdrawValidatorCommission,
+  MsgFundCommunityPool,
 } from './distribution/msgs';
 import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
 import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
@@ -17,6 +18,8 @@ import {
   MsgDelegateFeedConsent,
   MsgExchangeRatePrevote,
   MsgExchangeRateVote,
+  MsgAggregateExchangeRatePrevote,
+  MsgAggregateExchangeRateVote,
   OracleMsg,
 } from './oracle/msgs';
 import { MsgUnjail, SlashingMsg } from './slashing/msgs';
@@ -75,6 +78,8 @@ export namespace Msg {
         return MsgWithdrawDelegationReward.fromData(data);
       case 'distribution/MsgWithdrawValidatorCommission':
         return MsgWithdrawValidatorCommission.fromData(data);
+      case 'distribution/MsgFundCommunityPool':
+        return MsgFundCommunityPool.fromData(data);
 
       // gov
       case 'gov/MsgDeposit':
@@ -105,6 +110,10 @@ export namespace Msg {
         return MsgExchangeRatePrevote.fromData(data);
       case 'oracle/MsgDelegateFeedConsent':
         return MsgDelegateFeedConsent.fromData(data);
+      case 'oracle/MsgAggregateExchangeRatePrevote':
+        return MsgAggregateExchangeRatePrevote.fromData(data);
+      case 'oracle/MsgAggregateExchangeRateVote':
+        return MsgAggregateExchangeRateVote.fromData(data);
 
       // slashing
       case 'cosmos/MsgUnjail':

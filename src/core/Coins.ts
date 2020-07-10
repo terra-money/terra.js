@@ -1,7 +1,7 @@
 import { Coin } from './Coin';
 import { JSONSerializable } from '../util/json';
 import { Denom } from './Denom';
-import { Numeric } from './numeric';
+import { Dec, Numeric } from './numeric';
 
 /**
  * Analagous to `sdk.Coins` and `sdk.DecCoins` from Cosmos-SDK, and represents a collection
@@ -31,7 +31,7 @@ export class Coins extends JSONSerializable<Coins.Data>
    * @param str comma-separated list of coins
    */
   public static fromString(str: string): Coins {
-    const coin_strings = str.split(/,\ */);
+    const coin_strings = str.split(/,\s*/);
     const coins = coin_strings.map(s => Coin.fromString(s));
     return new Coins(coins);
   }
