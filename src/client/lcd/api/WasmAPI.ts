@@ -22,6 +22,22 @@ export namespace ContractInfo {
   }
 }
 
+export interface WasmParams {
+  max_contract_size: number;
+  max_contract_gas: number;
+  max_contract_msg_size: number;
+  gas_multiplier: number;
+}
+
+export namespace WasmParams {
+  export interface Data {
+    max_contract_size: string;
+    max_contract_gas: string;
+    max_contract_msg_size: string;
+    gas_multiplier: string;
+  }
+}
+
 export class WasmAPI extends BaseAPI {
   public async codeInfo(codeID: number): Promise<CodeInfo> {
     return this.c.get<CodeInfo>(`/wasm/codes/${codeID}`).then(d => d.result);
@@ -50,5 +66,17 @@ export class WasmAPI extends BaseAPI {
         query_msg: JSON.stringify(query),
       })
       .then(d => JSON.parse(d.result));
+  }
+
+  public async parameters(): Promise<WasmParams> {
+    return this.c
+      .get<WasmParams.Data>(`/wasm/parameters`)
+      .then(d => d.result)
+      .then(d => ({
+        max_contract_size: Number.parseInt(d.max_contract_size),
+        max_contract_gas: Number.parseInt(d.max_contract_gas),
+        max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),
+        gas_multiplier: Number.parseInt(d.gas_multiplier),
+      }));
   }
 }
