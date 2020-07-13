@@ -1,0 +1,8 @@
+[{
+    "type": "msgauth/MsgRevokeAuthorization",
+    "value": {
+        "granter": "terra1nty4ku4a79zj45jl0fy5rrjun07ny0nrve7j99",
+        "grantee": "terra1nty4ku4a79zj45jl0fy5rrjun07ny0nrve7j99",
+        "authorization_msg_type": "swap"
+    }
+}]

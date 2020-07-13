@@ -14,7 +14,7 @@ export class MsgInstantiateContract extends JSONSerializable<
    */
   constructor(
     public owner: AccAddress,
-    public code_id: string,
+    public code_id: number,
     public init_msg: object,
     public init_coins: Coins,
     public migratable: boolean
@@ -30,7 +30,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     } = data;
     return new MsgInstantiateContract(
       owner,
-      code_id,
+      Number.parseInt(code_id),
       JSON.parse(Buffer.from(init_msg, 'base64').toString()),
       Coins.fromData(init_coins),
       migratable
@@ -43,7 +43,7 @@ export class MsgInstantiateContract extends JSONSerializable<
       type: 'wasm/MsgInstantiateContract',
       value: {
         owner,
-        code_id,
+        code_id: code_id.toFixed(),
         init_msg: Buffer.from(JSON.stringify(init_msg)).toString('base64'),
         init_coins: init_coins.toData(),
         migratable,

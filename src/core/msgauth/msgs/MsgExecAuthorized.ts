@@ -1,34 +1,35 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
-import { Coins } from '../../Coins';
+import { Msg } from '../../Msg';
 
 export class MsgExecAuthorized extends JSONSerializable<
   MsgExecAuthorized.Data
 > {
-  public amount: Coins;
   /**
-   * @param depositor depositor's account address
-   * @param amount coins to fund the community pool
+   * @param grantee authorization grantee
+   * @param msgs list of messages to execute
    */
-  constructor(public depositor: AccAddress, amount: Coins.Input) {
+  constructor(public grantee: AccAddress, public msgs: Msg[]) {
     super();
-    this.amount = new Coins(amount);
   }
 
   public static fromData(data: MsgExecAuthorized.Data): MsgExecAuthorized {
     const {
-      value: { depositor, amount },
+      value: { grantee, msgs },
     } = data;
-    return new MsgExecAuthorized(depositor, Coins.fromData(amount));
+    return new MsgExecAuthorized(
+      grantee,
+      msgs.map(x => Msg.fromData(x))
+    );
   }
 
   public toData(): MsgExecAuthorized.Data {
-    const { depositor, amount } = this;
+    const { grantee, msgs } = this;
     return {
       type: 'msgauth/MsgExecAuthorized',
       value: {
-        depositor,
-        amount: amount.toData(),
+        grantee,
+        msgs: msgs.map(msg => msg.toData()),
       },
     };
   }
@@ -38,8 +39,8 @@ export namespace MsgExecAuthorized {
   export interface Data {
     type: 'msgauth/MsgExecAuthorized';
     value: {
-      depositor: AccAddress;
-      amount: Coins.Data;
+      grantee: AccAddress;
+      msgs: Msg.Data[];
     };
   }
 }

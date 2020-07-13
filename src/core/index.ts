@@ -31,6 +31,10 @@ export * from './gov/proposals';
 // Market
 export * from './market/msgs';
 
+// MsgAuth
+export * from './msgauth/msgs';
+export * from './msgauth/Authorization';
+
 // Oracle
 export * from './oracle/msgs';
 export * from './oracle/ExchangeRatePrevote';
