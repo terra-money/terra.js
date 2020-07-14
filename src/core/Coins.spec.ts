@@ -1,7 +1,6 @@
 import { Coins } from './Coins';
 import { Coin } from './Coin';
 import { Denom } from './Denom';
-import { Dec } from './numeric';
 
 describe('Coins', () => {
   it('clobbers coins of similar denom', () => {

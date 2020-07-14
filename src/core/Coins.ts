@@ -1,7 +1,7 @@
 import { Coin } from './Coin';
 import { JSONSerializable } from '../util/json';
 import { Denom } from './Denom';
-import { Dec, Numeric } from './numeric';
+import { Numeric } from './numeric';
 
 /**
  * Analagous to `sdk.Coins` and `sdk.DecCoins` from Cosmos-SDK, and represents a collection
