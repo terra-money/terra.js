@@ -2730,6 +2730,12 @@ img {
 					<a href="oracleapi.html#activedenoms" class="tsd-kind-icon">active<wbr>Denoms</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="oracleapi.html#aggregateprevote" class="tsd-kind-icon">aggregate<wbr>Prevote</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="oracleapi.html#aggregatevote" class="tsd-kind-icon">aggregate<wbr>Vote</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="oracleapi.html#exchangerate" class="tsd-kind-icon">exchange<wbr>Rate</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2783,6 +2789,8 @@ img {
 						<h3>Methods</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#activedenoms" class="tsd-kind-icon">active<wbr>Denoms</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#aggregateprevote" class="tsd-kind-icon">aggregate<wbr>Prevote</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#aggregatevote" class="tsd-kind-icon">aggregate<wbr>Vote</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#exchangerate" class="tsd-kind-icon">exchange<wbr>Rate</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#exchangerates" class="tsd-kind-icon">exchange<wbr>Rates</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="oracleapi.html#feederaddress" class="tsd-kind-icon">feeder<wbr>Address</a></li>
@@ -2808,7 +2816,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Inherited from <a href="baseapi.html">BaseAPI</a>.<a href="baseapi.html#constructor">constructor</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2834,7 +2842,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L136">src/client/lcd/api/OracleAPI.ts:136</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L138">src/client/lcd/api/OracleAPI.ts:138</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2843,6 +2851,68 @@ img {
 							</div>
 						</div>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/denom.html" class="tsd-signature-type">Denom</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="aggregateprevote" class="tsd-anchor"></a>
+				<h3>aggregate<wbr>Prevote</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Prevote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><a href="../globals.html#valaddress" class="tsd-signature-type">ValAddress</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="aggregateexchangerateprevote.html" class="tsd-signature-type">AggregateExchangeRatePrevote</a><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L167">src/client/lcd/api/OracleAPI.ts:167</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets the validator&#39;s current submitted aggregate prevote</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>validator: <a href="../globals.html#valaddress" class="tsd-signature-type">ValAddress</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>validator&#39;s operator address</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="aggregateexchangerateprevote.html" class="tsd-signature-type">AggregateExchangeRatePrevote</a><span class="tsd-signature-symbol">&gt;</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="aggregatevote" class="tsd-anchor"></a>
+				<h3>aggregate<wbr>Vote</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Vote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><a href="../globals.html#valaddress" class="tsd-signature-type">ValAddress</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="aggregateexchangeratevote.html" class="tsd-signature-type">AggregateExchangeRateVote</a><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L181">src/client/lcd/api/OracleAPI.ts:181</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Gets the validator&#39;s current submitted aggregate vote</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>validator: <a href="../globals.html#valaddress" class="tsd-signature-type">ValAddress</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>validator&#39;s operator address</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="aggregateexchangeratevote.html" class="tsd-signature-type">AggregateExchangeRateVote</a><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -2856,7 +2926,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L128">src/client/lcd/api/OracleAPI.ts:128</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L130">src/client/lcd/api/OracleAPI.ts:130</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2887,7 +2957,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L118">src/client/lcd/api/OracleAPI.ts:118</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L120">src/client/lcd/api/OracleAPI.ts:120</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2909,7 +2979,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L145">src/client/lcd/api/OracleAPI.ts:145</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L147">src/client/lcd/api/OracleAPI.ts:147</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2941,7 +3011,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L155">src/client/lcd/api/OracleAPI.ts:155</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L157">src/client/lcd/api/OracleAPI.ts:157</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2972,7 +3042,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L164">src/client/lcd/api/OracleAPI.ts:164</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L194">src/client/lcd/api/OracleAPI.ts:194</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2994,7 +3064,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L91">src/client/lcd/api/OracleAPI.ts:91</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L93">src/client/lcd/api/OracleAPI.ts:93</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3032,7 +3102,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/2272505/src/client/lcd/api/OracleAPI.ts#L60">src/client/lcd/api/OracleAPI.ts:60</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/cbca083/src/client/lcd/api/OracleAPI.ts#L62">src/client/lcd/api/OracleAPI.ts:62</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
