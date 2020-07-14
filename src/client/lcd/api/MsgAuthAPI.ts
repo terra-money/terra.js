@@ -1,5 +1,6 @@
-import { AccAddress, Coins } from '../../../core';
+import { AccAddress } from '../../../core';
 import { BaseAPI } from './BaseAPI';
+import { Authorization } from '../../../core/msgauth/Authorization';
 
 export class MsgAuthAPI extends BaseAPI {
   /**
@@ -9,19 +10,24 @@ export class MsgAuthAPI extends BaseAPI {
     granter: AccAddress,
     grantee: AccAddress,
     msgType?: string
-  ): Promise<Coins> {
+  ): Promise<Authorization[]> {
     if (msgType === undefined) {
       return this.c
-        .get<Coins.Data>(
+        .get<Authorization.Data[]>(
           `/msgauth/granters/${granter}/grantees/${grantee}/grants`
         )
-        .then(d => Coins.fromData(d.result));
+        .then(d => d.result.map(Authorization.fromData));
     } else {
       return this.c
-        .get<Coins.Data>(
+        .get<Authorization.Data>(
           `/msgauth/granters/${granter}/grantees/${grantee}/grants/${msgType}`
         )
-        .then(d => Coins.fromData(d.result));
+        .then(d => {
+          if (d.result === null) {
+            return [];
+          }
+          return [Authorization.fromData(d.result)];
+        });
     }
   }
 }
