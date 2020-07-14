@@ -1,6 +1,37 @@
 import { JSONSerializable } from '../../util/json';
 import { Coins } from '../Coins';
 
+export class AuthorizationGrant extends JSONSerializable<
+  AuthorizationGrant.Data
+> {
+  constructor(public authorization: Authorization, public expiration: Date) {
+    super();
+  }
+
+  public static fromData(data: AuthorizationGrant.Data): AuthorizationGrant {
+    const { authorization, expiration } = data;
+    return new AuthorizationGrant(
+      Authorization.fromData(authorization),
+      new Date(expiration)
+    );
+  }
+
+  public toData(): AuthorizationGrant.Data {
+    const { authorization, expiration } = this;
+    return {
+      authorization: authorization.toData(),
+      expiration: expiration.toISOString(),
+    };
+  }
+}
+
+export namespace AuthorizationGrant {
+  export interface Data {
+    authorization: Authorization.Data;
+    expiration: string;
+  }
+}
+
 export type Authorization = SendAuthorization | GenericAuthorization;
 
 export namespace Authorization {
