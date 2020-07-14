@@ -53,4 +53,23 @@ describe('Coins', () => {
       expect(cs).toEqual(ref);
     });
   });
+
+  it('fromString', () => {
+    const int_coins_string = '5ukrw,12uluna';
+    const dec_coins_string = '2.3ukrw,1.45uluna';
+    const int_coins = new Coins({
+      ukrw: 5,
+      uluna: '12',
+    });
+    const dec_coins = new Coins({
+      ukrw: 2.3,
+      uluna: '1.45',
+    });
+
+    const coins1 = Coins.fromString(int_coins_string);
+    const coins2 = Coins.fromString(dec_coins_string);
+
+    expect(coins1).toEqual(int_coins);
+    expect(coins2).toEqual(dec_coins);
+  });
 });

@@ -13,7 +13,7 @@ export class MsgMigrateContract extends JSONSerializable<
   constructor(
     public owner: AccAddress,
     public contract: AccAddress,
-    public new_code_id: string,
+    public new_code_id: number,
     public migrate_msg: string
   ) {
     super();
@@ -26,7 +26,7 @@ export class MsgMigrateContract extends JSONSerializable<
     return new MsgMigrateContract(
       owner,
       contract,
-      new_code_id,
+      Number.parseInt(new_code_id),
       JSON.parse(Buffer.from(migrate_msg, 'base64').toString())
     );
   }
@@ -38,7 +38,7 @@ export class MsgMigrateContract extends JSONSerializable<
       value: {
         owner,
         contract,
-        new_code_id,
+        new_code_id: new_code_id.toFixed(),
         migrate_msg: Buffer.from(JSON.stringify(migrate_msg)).toString(
           'base64'
         ),

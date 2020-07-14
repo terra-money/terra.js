@@ -4,13 +4,22 @@ import {
   MsgModifyWithdrawAddress,
   MsgWithdrawDelegationReward,
   MsgWithdrawValidatorCommission,
+  MsgFundCommunityPool,
 } from './distribution/msgs';
 import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
 import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
 import {
+  MsgGrantAuthorization,
+  MsgRevokeAuthorization,
+  MsgExecAuthorized,
+  MsgAuthMsg,
+} from './msgauth/msgs';
+import {
   MsgDelegateFeedConsent,
   MsgExchangeRatePrevote,
   MsgExchangeRateVote,
+  MsgAggregateExchangeRatePrevote,
+  MsgAggregateExchangeRateVote,
   OracleMsg,
 } from './oracle/msgs';
 import { MsgUnjail, SlashingMsg } from './slashing/msgs';
@@ -36,6 +45,7 @@ export type Msg =
   | DistributionMsg
   | GovMsg
   | MarketMsg
+  | MsgAuthMsg
   | OracleMsg
   | SlashingMsg
   | StakingMsg
@@ -47,6 +57,7 @@ export namespace Msg {
     | DistributionMsg.Data
     | GovMsg.Data
     | MarketMsg.Data
+    | MsgAuthMsg.Data
     | OracleMsg.Data
     | SlashingMsg.Data
     | StakingMsg.Data
@@ -67,6 +78,8 @@ export namespace Msg {
         return MsgWithdrawDelegationReward.fromData(data);
       case 'distribution/MsgWithdrawValidatorCommission':
         return MsgWithdrawValidatorCommission.fromData(data);
+      case 'distribution/MsgFundCommunityPool':
+        return MsgFundCommunityPool.fromData(data);
 
       // gov
       case 'gov/MsgDeposit':
@@ -82,6 +95,14 @@ export namespace Msg {
       case 'market/MsgSwapSend':
         return MsgSwapSend.fromData(data);
 
+      // msgauth
+      case 'msgauth/MsgGrantAuthorization':
+        return MsgGrantAuthorization.fromData(data);
+      case 'msgauth/MsgRevokeAuthorization':
+        return MsgRevokeAuthorization.fromData(data);
+      case 'msgauth/MsgExecAuthorized':
+        return MsgExecAuthorized.fromData(data);
+
       // oracle
       case 'oracle/MsgExchangeRateVote':
         return MsgExchangeRateVote.fromData(data);
@@ -89,6 +110,10 @@ export namespace Msg {
         return MsgExchangeRatePrevote.fromData(data);
       case 'oracle/MsgDelegateFeedConsent':
         return MsgDelegateFeedConsent.fromData(data);
+      case 'oracle/MsgAggregateExchangeRatePrevote':
+        return MsgAggregateExchangeRatePrevote.fromData(data);
+      case 'oracle/MsgAggregateExchangeRateVote':
+        return MsgAggregateExchangeRateVote.fromData(data);
 
       // slashing
       case 'cosmos/MsgUnjail':

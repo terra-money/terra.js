@@ -1,0 +1,32 @@
+[{
+        "type": "msgauth/MsgGrantAuthorization",
+        "value": {
+            "granter": "terra1nty4ku4a79zj45jl0fy5rrjun07ny0nrve7j99",
+            "grantee": "terra1qfqa2eu9wp272ha93lj4yhcenrc6ymng079nu8",
+            "authorization": {
+                "type": "msgauth/SendAuthorization",
+                "value": {
+                    "spend_limit": [{
+                        "denom": "ukrw",
+                        "amount": "1000000"
+                    }]
+                }
+            },
+            "period": "31536000000000000"
+        }
+    },
+    {
+        "type": "msgauth/MsgGrantAuthorization",
+        "value": {
+            "granter": "terra1nty4ku4a79zj45jl0fy5rrjun07ny0nrve7j99",
+            "grantee": "terra1qfqa2eu9wp272ha93lj4yhcenrc6ymng079nu8",
+            "authorization": {
+                "type": "msgauth/GenericAuthorization",
+                "value": {
+                    "grant_msg_type": "swap"
+                }
+            },
+            "period": "31536000000000000"
+        }
+    }
+]

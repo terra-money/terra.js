@@ -5,6 +5,7 @@ import {
   DistributionAPI,
   GovAPI,
   MarketAPI,
+  MsgAuthAPI,
   OracleAPI,
   SlashingAPI,
   StakingAPI,
@@ -73,6 +74,7 @@ export class LCDClient {
   public distribution: DistributionAPI;
   public gov: GovAPI;
   public market: MarketAPI;
+  public msgauth: MsgAuthAPI;
   public oracle: OracleAPI;
   public slashing: SlashingAPI;
   public staking: StakingAPI;
@@ -101,6 +103,7 @@ export class LCDClient {
     this.distribution = new DistributionAPI(this.apiRequester);
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);
+    this.msgauth = new MsgAuthAPI(this.apiRequester);
     this.oracle = new OracleAPI(this.apiRequester);
     this.slashing = new SlashingAPI(this.apiRequester);
     this.staking = new StakingAPI(this.apiRequester);

@@ -8,6 +8,8 @@ import {
   ExchangeRatePrevote,
   AccAddress,
   Dec,
+  AggregateExchangeRatePrevote,
+  AggregateExchangeRateVote,
 } from '../../../core';
 
 export interface OracleParams {
@@ -156,6 +158,34 @@ export class OracleAPI extends BaseAPI {
     return this.c
       .get<string>(`/oracle/voters/${validator}/miss`)
       .then(d => Number.parseInt(d.result));
+  }
+
+  /**
+   * Gets the validator's current submitted aggregate prevote
+   * @param validator validator's operator address
+   */
+  public async aggregatePrevote(
+    validator: ValAddress
+  ): Promise<AggregateExchangeRatePrevote> {
+    return this.c
+      .get<AggregateExchangeRatePrevote.Data>(
+        `/oracle/voters/${validator}/aggregate_prevote`
+      )
+      .then(d => AggregateExchangeRatePrevote.fromData(d.result));
+  }
+
+  /**
+   * Gets the validator's current submitted aggregate vote
+   * @param validator validator's operator address
+   */
+  public async aggregateVote(
+    validator: ValAddress
+  ): Promise<AggregateExchangeRateVote> {
+    return this.c
+      .get<AggregateExchangeRateVote.Data>(
+        `/oracle/voters/${validator}/aggregate_vote`
+      )
+      .then(d => AggregateExchangeRateVote.fromData(d.result));
   }
 
   /**

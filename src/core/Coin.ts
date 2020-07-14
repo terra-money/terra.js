@@ -70,7 +70,21 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
    * Eg: `Coin('uluna', 1500) -> 1500uluna`
    */
   public toString(): string {
-    return `${this.amount.toFixed()}${this.denom}`;
+    const amount = this.amount.toFixed();
+    if (this.isDecCoin() && amount.indexOf('.') === -1) {
+      return `${amount}.0${this.denom}`;
+    }
+    return `${amount}${this.denom}`;
+  }
+
+  public static fromString(str: string): Coin {
+    const m = str.match(/^([0-9]+(\.[0-9]+)?)([a-zA-Z]+)$/);
+    if (m === null) {
+      throw new Error(`failed to parse to Coin: ${str}`);
+    }
+    const amount = m[1];
+    const denom = m[3];
+    return new Coin(denom, amount);
   }
 
   /**

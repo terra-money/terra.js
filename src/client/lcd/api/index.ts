@@ -3,6 +3,7 @@ export * from './BankAPI';
 export * from './DistributionAPI';
 export * from './GovAPI';
 export * from './MarketAPI';
+export * from './MsgAuthAPI';
 export * from './OracleAPI';
 export * from './SlashingAPI';
 export * from './StakingAPI';

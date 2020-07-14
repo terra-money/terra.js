@@ -85,4 +85,18 @@ describe('Coin', () => {
     expect(coin1).toEqual(coin2);
     expect(coin1).not.toEqual(coin3);
   });
+
+  it('toString', () => {
+    const coin1 = new Coin('uluna', 123456);
+    const coin2 = new Coin('uluna', 123456.789);
+    expect(coin1.toString()).toEqual('123456uluna');
+    expect(coin1.toDecCoin().toString()).toEqual('123456.0uluna');
+    expect(coin2.toString()).toEqual('123456.789uluna');
+  });
+
+  it('can parse from string', () => {
+    const coin1 = new Coin('uluna', 1001.5);
+    const coin2 = Coin.fromString('1001.500000000000000000uluna');
+    expect(coin1).toEqual(coin2);
+  });
 });
