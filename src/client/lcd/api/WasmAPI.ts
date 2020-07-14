@@ -11,6 +11,7 @@ export interface ContractInfo {
   address: AccAddress;
   creator: AccAddress;
   init_msg: any; // object
+  migratable: boolean;
 }
 
 export namespace ContractInfo {
@@ -19,6 +20,7 @@ export namespace ContractInfo {
     address: AccAddress;
     creator: AccAddress;
     init_msg: string;
+    migratable: boolean;
   }
 }
 
@@ -54,6 +56,7 @@ export class WasmAPI extends BaseAPI {
         address: d.address,
         creator: d.creator,
         init_msg: JSON.parse(Buffer.from(d.init_msg, 'base64').toString()),
+        migratable: d.migratable,
       }));
   }
 
