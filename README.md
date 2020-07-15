@@ -17,7 +17,7 @@ The JavaScript SDK for Terra
       Docs
     </a>
     <span> | </span>
-    <a href="https://github.com/terra-project/terra.js">
+    <a href="https://terra-project.github.io/terra.js/">
       API
     </a>
     <span> | </span>
@@ -54,7 +54,7 @@ The best way to learn how to use Terra.js is to get started with a quick example
 
 You can play with the complete example on JSFiddle [here](https://jsfiddle.net/wchen298/y6roqbdw/63/).
 
-## Loading Terra.js in the browser
+## Terra.js in the browser
 
 You can access all the objects of the `@terra-money/terra.js` from the global `Terra` object if you load Terra.js with a `<script>` tag.
 
