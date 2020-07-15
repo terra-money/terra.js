@@ -17,7 +17,7 @@ The JavaScript SDK for Terra
       Docs
     </a>
     <span> | </span>
-    <a href="https://github.com/terra-project/terra.js">
+    <a href="https://terra-project.github.io/terra.js/">
       API
     </a>
     <span> | </span>
