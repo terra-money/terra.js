@@ -22,21 +22,21 @@ jobs:
             nodeModules-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
         env:
           CI: true
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
         env:
           CI: true
 
       - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+        run: npm run test --ci --coverage --maxWorkers=2
         env:
           CI: true
 
       - name: Build
-        run: yarn build
+        run: npm run build
         env:
           CI: true
