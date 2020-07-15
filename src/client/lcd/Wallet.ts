@@ -1,6 +1,14 @@
 import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
-import { Account, Msg, StdFee, StdTx, StdSignMsg, Coins } from '../../core';
+import {
+  Account,
+  Msg,
+  StdFee,
+  StdTx,
+  StdSignMsg,
+  Coins,
+  Coin,
+} from '../../core';
 
 export interface CreateTxOptions {
   msgs: Msg[];
@@ -36,9 +44,13 @@ export class Wallet {
     const { msgs } = options;
     memo = memo || '';
     const gasPrices = this.lcd.config.gasPrices || new Coins({});
+    let gasPricesCoins = new Coins(gasPrices);
+    // set each denom in gas prices to 1
+    gasPricesCoins = new Coins(gasPricesCoins.map(c => new Coin(c.denom, 1)));
+
     if (fee === undefined) {
       // estimate the fee
-      const stdTx = new StdTx(msgs, new StdFee(0, gasPrices), [], memo);
+      const stdTx = new StdTx(msgs, new StdFee(0, gasPricesCoins), [], memo);
       fee = await this.lcd.tx.estimateFee(stdTx);
     }
 
