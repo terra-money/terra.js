@@ -9,20 +9,20 @@ The JavaScript SDK for Terra
 
 <br/>
 
-![diagram](./img/terrajs-diagram.png)
+![diagram](https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs-diagram.png)
 
 <div align="center">
   <h3>
-    <a href="https://terra-project.github.io/terra.js/">
-      API Docs
+    <a href="https://github.com/terra-project/terra.js/wiki">
+      Docs
+    </a>
+    <span> | </span>
+    <a href="https://github.com/terra-project/terra.js">
+      API
     </a>
     <span> | </span>
     <a href="https://www.npmjs.com/package/@terra-money/terra.js">
       NPM Package
-    </a>
-    <span> | </span>
-    <a href="https://github.com/terra-project/terra.js">
-      GitHub
     </a>
   </h3>
 </div>
@@ -46,7 +46,7 @@ yarn add @terra-money/terra.js
 
 ## Usage
 
-We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package. Terra.js can be use in Node.js, as well as inside the browser. Currently, React Native is not fully supported, however a version of Terra.js that supports it will soon be made available.
+We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package. Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-project/terra.js/wiki) for notes on how to get up and running.
 
 ## Example
 
