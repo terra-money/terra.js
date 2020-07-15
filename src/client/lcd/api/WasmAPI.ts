@@ -9,7 +9,7 @@ export interface CodeInfo {
 export interface ContractInfo {
   code_id: number;
   address: AccAddress;
-  creator: AccAddress;
+  owner: AccAddress;
   init_msg: any; // object
   migratable: boolean;
 }
@@ -18,7 +18,7 @@ export namespace ContractInfo {
   export interface Data {
     code_id: string;
     address: AccAddress;
-    creator: AccAddress;
+    owner: AccAddress;
     init_msg: string;
     migratable: boolean;
   }
@@ -54,7 +54,7 @@ export class WasmAPI extends BaseAPI {
       .then(d => ({
         code_id: Number.parseInt(d.code_id),
         address: d.address,
-        creator: d.creator,
+        owner: d.owner,
         init_msg: JSON.parse(Buffer.from(d.init_msg, 'base64').toString()),
         migratable: d.migratable,
       }));
