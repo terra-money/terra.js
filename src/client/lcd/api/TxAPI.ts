@@ -36,6 +36,7 @@ export interface BlockTxBroadcastResult {
   gas_wanted: number;
   gas_used: number;
   events: Event;
+  code?: number;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -47,6 +48,7 @@ export namespace BlockTxBroadcastResult {
     gas_wanted: string;
     gas_used: string;
     events: Event;
+    code?: number;
   }
 }
 
@@ -60,12 +62,12 @@ export namespace AsyncTxBroadcastResult {
 
 export type SyncTxBroadcastResult = Pick<
   BlockTxBroadcastResult,
-  'height' | 'txhash' | 'raw_log' | 'logs'
+  'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
 >;
 export namespace SyncTxBroadcastResult {
   export type Data = Pick<
     BlockTxBroadcastResult.Data,
-    'height' | 'txhash' | 'raw_log' | 'logs'
+    'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
   >;
 }
 
@@ -158,6 +160,7 @@ export class TxAPI extends BaseAPI {
       gas_wanted: Number.parseInt(d.gas_wanted),
       gas_used: Number.parseInt(d.gas_used),
       events: d.events,
+      code: d.code,
     }));
   }
 
@@ -175,6 +178,7 @@ export class TxAPI extends BaseAPI {
         txhash: d.txhash,
         logs: d.logs,
         raw_log: d.raw_log,
+        code: d.code,
       })
     );
   }
