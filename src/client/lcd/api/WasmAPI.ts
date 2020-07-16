@@ -65,10 +65,10 @@ export class WasmAPI extends BaseAPI {
     query: object
   ): Promise<T> {
     return this.c
-      .get<string>(`/wasm/contracts/${contractAddress}/store`, {
+      .get<T>(`/wasm/contracts/${contractAddress}/store`, {
         query_msg: JSON.stringify(query),
       })
-      .then(d => JSON.parse(d.result));
+      .then(d => d.result);
   }
 
   public async parameters(): Promise<WasmParams> {
