@@ -64,6 +64,8 @@ export class Coins extends JSONSerializable<Coins.Data>
     super();
     if (arg instanceof Coins) {
       this._coins = { ...arg._coins };
+    } else if (typeof arg === 'string') {
+      this._coins = Coins.fromString(arg)._coins;
     } else {
       this._coins = {};
       let coins: Coin[];
@@ -206,7 +208,7 @@ export class Coins extends JSONSerializable<Coins.Data>
 }
 
 export namespace Coins {
-  export type Input = Coins.DataDict | Coin[] | Coins;
+  export type Input = Coins.DataDict | Coin[] | Coins | string;
   export type Data = Coin.Data[];
   export type DataDict = {
     [denom: string]: Numeric.Input;

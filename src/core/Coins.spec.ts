@@ -49,7 +49,10 @@ describe('Coins', () => {
       uluna: 2,
     });
 
-    [coins1, coins2, coins3].forEach(cs => {
+    // input #4: string
+    const coins4 = new Coins('2uluna,1ukrw');
+
+    [coins1, coins2, coins3, coins4].forEach(cs => {
       expect(cs).toEqual(ref);
     });
   });
