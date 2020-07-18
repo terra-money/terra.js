@@ -8,15 +8,7 @@ import { OracleParamChange, OracleParamChanges } from '../oracle/params';
 import { SlashingParamChange, SlashingParamChanges } from '../slashing/params';
 import { StakingParamChange, StakingParamChanges } from '../staking/params';
 import { TreasuryParamChange, TreasuryParamChanges } from '../treasury/params';
-
-export type ParamChange =
-  | DistributionParamChange
-  | GovParamChange
-  | MarketParamChange
-  | OracleParamChange
-  | SlashingParamChange
-  | StakingParamChange
-  | TreasuryParamChange;
+import { WasmParamChange, WasmParamChanges } from '../wasm/params';
 
 /**
  * Example object:
@@ -95,7 +87,8 @@ export type ParamChanges = DistributionParamChanges &
   OracleParamChanges &
   SlashingParamChanges &
   StakingParamChanges &
-  TreasuryParamChanges;
+  TreasuryParamChanges &
+  WasmParamChanges;
 
 export namespace ParamChanges {
   export const ConversionTable = {
@@ -106,6 +99,7 @@ export namespace ParamChanges {
     ...SlashingParamChanges.ConversionTable,
     ...StakingParamChanges.ConversionTable,
     ...TreasuryParamChanges.ConversionTable,
+    ...WasmParamChanges.ConversionTable,
   };
 
   export function fromData(data: ParamChange.Data[]): ParamChanges {
@@ -143,6 +137,16 @@ export namespace ParamChanges {
   }
 }
 
+export type ParamChange =
+  | DistributionParamChange
+  | GovParamChange
+  | MarketParamChange
+  | OracleParamChange
+  | SlashingParamChange
+  | StakingParamChange
+  | TreasuryParamChange
+  | WasmParamChange;
+
 export namespace ParamChange {
   export type Type<S extends string, K extends string, T> = {
     subspace: S;
@@ -152,12 +156,13 @@ export namespace ParamChange {
 
   export type Data =
     | DistributionParamChange.Data
+    | GovParamChange.Data
     | MarketParamChange.Data
     | OracleParamChange.Data
     | SlashingParamChange.Data
     | StakingParamChange.Data
     | TreasuryParamChange.Data
-    | GovParamChange.Data;
+    | WasmParamChange.Data;
 
   export namespace Data {
     export type Type<P extends ParamChange.Type<any, any, any>> = Pick<
