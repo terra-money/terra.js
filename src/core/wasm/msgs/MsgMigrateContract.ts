@@ -14,7 +14,7 @@ export class MsgMigrateContract extends JSONSerializable<
     public owner: AccAddress,
     public contract: AccAddress,
     public new_code_id: number,
-    public migrate_msg: any // json object
+    public migrate_msg: object // json object
   ) {
     super();
   }
