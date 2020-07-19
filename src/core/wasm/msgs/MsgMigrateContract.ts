@@ -8,13 +8,13 @@ export class MsgMigrateContract extends JSONSerializable<
    * @param owner contract owner
    * @param contract contract address to be migrated from
    * @param new_code_id reference to the new code on the blockchain
-   * @param migrate_msg message to configure the migrate state of the contract
+   * @param migrate_msg JSON message to configure the migrate state of the contract
    */
   constructor(
     public owner: AccAddress,
     public contract: AccAddress,
     public new_code_id: number,
-    public migrate_msg: string
+    public migrate_msg: object // json object
   ) {
     super();
   }
