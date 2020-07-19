@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Msg | Terra.js</title>
+	<title>WasmParamChange | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -2721,10 +2721,7 @@ img {
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
-			<a href="msg.html#data" class="tsd-kind-icon">Data</a>
-		</li>
-		<li class=" tsd-kind-function tsd-parent-kind-namespace">
-			<a href="msg.html#fromdata" class="tsd-kind-icon">from<wbr>Data</a>
+			<a href="wasmparamchange.html#data" class="tsd-kind-icon">Data</a>
 		</li>
 	</ul>
 </nav>
@@ -2737,13 +2734,7 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Type aliases</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-type-alias tsd-parent-kind-namespace"><a href="msg.html#data" class="tsd-kind-icon">Data</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section ">
-						<h3>Functions</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="msg.html#fromdata" class="tsd-kind-icon">from<wbr>Data</a></li>
+							<li class="tsd-kind-type-alias tsd-parent-kind-namespace"><a href="wasmparamchange.html#data" class="tsd-kind-icon">Data</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2754,38 +2745,12 @@ img {
 			<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace">
 				<a name="data" class="tsd-anchor"></a>
 				<h3>Data</h3>
-				<div class="tsd-signature tsd-kind-icon">Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BankMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">DistributionMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">GovMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MarketMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MsgAuthMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">OracleMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">SlashingMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StakingMsg.Data</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WasmMsg.Data</span></div>
+				<div class="tsd-signature tsd-kind-icon">Data<span class="tsd-signature-symbol">:</span> <a href="paramchange.data.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#maxcontractsize" class="tsd-signature-type">MaxContractSize</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="paramchange.data.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#maxcontractgas" class="tsd-signature-type">MaxContractGas</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="paramchange.data.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#maxcontractmsgsize" class="tsd-signature-type">MaxContractMsgSize</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="paramchange.data.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#gasmultiplier" class="tsd-signature-type">GasMultiplier</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a778ee0/src/core/Msg.ts#L55">src/core/Msg.ts:55</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a778ee0/src/core/wasm/params.ts#L23">src/core/wasm/params.ts:23</a></li>
 					</ul>
 				</aside>
-			</section>
-		</section>
-		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Functions</h2>
-			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
-				<a name="fromdata" class="tsd-anchor"></a>
-				<h3>from<wbr>Data</h3>
-				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
-					<li class="tsd-signature tsd-kind-icon">from<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="msg.html#data" class="tsd-signature-type">Data</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="msg.html" class="tsd-signature-type">Msg</a></li>
-				</ul>
-				<ul class="tsd-descriptions">
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a778ee0/src/core/Msg.ts#L66">src/core/Msg.ts:66</a></li>
-							</ul>
-						</aside>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>data: <a href="msg.html#data" class="tsd-signature-type">Data</a></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="msg.html" class="tsd-signature-type">Msg</a></h4>
-					</li>
-				</ul>
 			</section>
 		</section>
 		<footer class="with-border-bottom">
