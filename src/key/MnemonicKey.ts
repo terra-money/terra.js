@@ -103,7 +103,7 @@ export class MnemonicKey extends Key {
     this.mnemonic = mnemonic;
   }
 
-  public sign(payload: Buffer): Buffer {
+  public async sign(payload: Buffer): Promise<Buffer> {
     const hash = Buffer.from(SHA256(payload.toString()).toString(), 'hex');
     const { signature } = secp256k1.ecdsaSign(
       Uint8Array.from(hash),
