@@ -49,7 +49,7 @@ export abstract class Key {
    *
    * @param payload the data to be signed
    */
-  public abstract sign(payload: Buffer): Buffer;
+  public abstract sign(payload: Buffer): Promise<Buffer>;
 
   /**
    * Terra account address. `terra-` prefixed.
@@ -91,8 +91,8 @@ export abstract class Key {
    *
    * @param tx sign-message of the transaction to sign
    */
-  public createSignature(tx: StdSignMsg): StdSignature {
-    const sigData = this.sign(Buffer.from(tx.toJSON()));
+  public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
+    const sigData = await this.sign(Buffer.from(tx.toJSON()));
     return StdSignature.fromData({
       signature: sigData.toString('base64'),
       pub_key: {
@@ -106,8 +106,8 @@ export abstract class Key {
    * Signs a [[StdSignMsg]] and adds the signature to a generated StdTx that is ready to be broadcasted.
    * @param tx
    */
-  public signTx(tx: StdSignMsg): StdTx {
-    const sig = this.createSignature(tx);
+  public async signTx(tx: StdSignMsg): Promise<StdTx> {
+    const sig = await this.createSignature(tx);
     return new StdTx(tx.msgs, tx.fee, [sig], tx.memo);
   }
 }
