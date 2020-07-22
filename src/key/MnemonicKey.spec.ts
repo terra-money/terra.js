@@ -51,7 +51,7 @@ describe('MnemonicKey', () => {
     expect(mk.mnemonic).not.toEqual(mk2.mnemonic);
   });
 
-  it('signature', () => {
+  it('signature', async () => {
     const mk = new MnemonicKey({
       mnemonic:
         'island relax shop such yellow opinion find know caught erode blue dolphin behind coach tattoo light focus snake common size analyst imitate employ walnut',
@@ -69,13 +69,13 @@ describe('MnemonicKey', () => {
       msgSend,
     ]);
 
-    const { signature } = mk.createSignature(stdSignMsg);
+    const { signature } = await mk.createSignature(stdSignMsg);
     expect(signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );
   });
 
-  it('multisig', () => {
+  it('multisig', async () => {
     const receiverAddr = 'terra1ptdx6akgk7wwemlk5j73artt5t6j8am08ql3qv';
     const multisigAddr = 'terra16ddrexknvk2e443jsnle4n6s2ewjc6z3mjcu6d';
     const multisigAccountNumber = 46;
@@ -112,17 +112,17 @@ describe('MnemonicKey', () => {
       [msgSend]
     );
 
-    const a1Signature = a1Key.createSignature(stdSignMsg);
+    const a1Signature = await a1Key.createSignature(stdSignMsg);
     expect(a1Signature.signature).toEqual(
       '/kIFqGnmgOqMzf7guoe1eDTA1W5TjJcelJSRBdN0CTRyyxTMIbsxd+wL4fatHAq4hYOTf/zxD4l5xyU7/POZyg=='
     );
 
-    const a2Signature = a2Key.createSignature(stdSignMsg);
+    const a2Signature = await a2Key.createSignature(stdSignMsg);
     expect(a2Signature.signature).toEqual(
       'hEjv9CnXQa89robHVsHS3GDZJiunnNb8xqziWD8D4aAuBXwxDzUXY14IE7q9Z3Qh0VMb3FBHuogHi7QZn2pM9g=='
     );
 
-    const a3Signature = a3Key.createSignature(stdSignMsg);
+    const a3Signature = await a3Key.createSignature(stdSignMsg);
     expect(a3Signature.signature).toEqual(
       'CwHdmwC9ADtr5cTUdRZEfAcA8d1bgkF8fB+DcbB6MBB6amJz51WQYfVE1VgVTEY8Lyzg8+s8gX6nkqkXPeX72A=='
     );
@@ -151,7 +151,7 @@ describe('MnemonicKey', () => {
     );
   });
 
-  it('multisend', () => {
+  it('multisend', async () => {
     const key = new MnemonicKey({
       mnemonic:
         'spatial fantasy weekend romance entire million celery final moon solid route theory way hockey north trigger advice balcony melody fabric alter bullet twice push',
@@ -190,7 +190,7 @@ describe('MnemonicKey', () => {
       '1234'
     );
 
-    const tx = key.signTx(stdSignMsg);
+    const tx = await key.signTx(stdSignMsg);
     expect(tx.signatures[0].signature).toEqual(
       'YA/ToXLxuuAOQlpm5trbIUu2zv5NfBmeHz2jmXgNrt8jP+odukerfri3DUXAJuhETAMHVVV78t7Q4xC0j+CVkA=='
     );
