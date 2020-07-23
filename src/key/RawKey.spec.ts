@@ -48,7 +48,7 @@ describe('RawKey', () => {
     });
   });
 
-  it('signature', () => {
+  it('signature', async () => {
     const mk = new MnemonicKey({
       mnemonic:
         'island relax shop such yellow opinion find know caught erode blue dolphin behind coach tattoo light focus snake common size analyst imitate employ walnut',
@@ -67,7 +67,7 @@ describe('RawKey', () => {
       msgSend,
     ]);
 
-    const { signature } = rk.createSignature(stdSignMsg);
+    const { signature } = await rk.createSignature(stdSignMsg);
     expect(signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );
