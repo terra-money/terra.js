@@ -5,6 +5,8 @@ import { Coins } from '../../Coins';
 export class MsgExecuteContract extends JSONSerializable<
   MsgExecuteContract.Data
 > {
+  public coins: Coins;
+
   /**
    * @param sender contract user
    * @param contract contract address
@@ -15,9 +17,10 @@ export class MsgExecuteContract extends JSONSerializable<
     public sender: AccAddress,
     public contract: AccAddress,
     public execute_msg: object,
-    public coins: Coins
+    coins: Coins.Input
   ) {
     super();
+    this.coins = new Coins(coins);
   }
 
   public static fromData(data: MsgExecuteContract.Data): MsgExecuteContract {

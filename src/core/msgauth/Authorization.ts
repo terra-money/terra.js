@@ -49,8 +49,10 @@ export namespace Authorization {
 export class SendAuthorization extends JSONSerializable<
   SendAuthorization.Data
 > {
-  constructor(public spend_limit: Coins) {
+  public spend_limit: Coins;
+  constructor(spend_limit: Coins.Input) {
     super();
+    this.spend_limit = new Coins(spend_limit);
   }
 
   public static fromData(data: SendAuthorization.Data): SendAuthorization {
