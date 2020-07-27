@@ -9,6 +9,7 @@ import { AccAddress } from '../../strings';
 export class CommunityPoolSpendProposal extends JSONSerializable<
   CommunityPoolSpendProposal.Data
 > {
+  public amount: Coins;
   /**
    * @param title proposal's title
    * @param description proposal's description
@@ -19,9 +20,10 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     public title: string,
     public description: string,
     public recipient: AccAddress,
-    public amount: Coins
+    amount: Coins.Input
   ) {
     super();
+    this.amount = new Coins(amount);
   }
 
   public static fromData(

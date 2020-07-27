@@ -5,6 +5,8 @@ import { Coins } from '../../Coins';
 export class MsgInstantiateContract extends JSONSerializable<
   MsgInstantiateContract.Data
 > {
+  public init_coins: Coins;
+
   /**
    * @param owner contract owner
    * @param code_id reference to the code on the blockchain
@@ -16,10 +18,11 @@ export class MsgInstantiateContract extends JSONSerializable<
     public owner: AccAddress,
     public code_id: number,
     public init_msg: object,
-    public init_coins: Coins,
+    init_coins: Coins.Input,
     public migratable: boolean
   ) {
     super();
+    this.init_coins = new Coins(init_coins);
   }
 
   public static fromData(

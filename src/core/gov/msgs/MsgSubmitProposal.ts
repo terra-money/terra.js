@@ -9,6 +9,8 @@ import { AccAddress } from '../../strings';
 export class MsgSubmitProposal extends JSONSerializable<
   MsgSubmitProposal.Data
 > {
+  public initial_deposit: Coins;
+
   /**
    * @param content proposal content to submit
    * @param initial_deposit deposit provided
@@ -16,10 +18,11 @@ export class MsgSubmitProposal extends JSONSerializable<
    */
   constructor(
     public content: Proposal.Content,
-    public initial_deposit: Coins,
+    initial_deposit: Coins.Input,
     public proposer: AccAddress
   ) {
     super();
+    this.initial_deposit = new Coins(initial_deposit);
   }
 
   public static fromData(data: MsgSubmitProposal.Data): MsgSubmitProposal {
