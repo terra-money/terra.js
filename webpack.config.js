@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
@@ -12,13 +13,16 @@ const commonConfig = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
+      }
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     plugins: [new TsconfigPathsPlugin()],
   },
+  plugins: [
+    new webpack.IgnorePlugin(/wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese)\.json$/)
+  ]
 };
 
 const webConfig = {
@@ -30,7 +34,7 @@ const webConfig = {
     library: 'Terra',
     path: path.resolve(__dirname, 'dist'),
   },
-  // plugins: [new BundleAnalyzerPlugin()],
+  plugins: [...commonConfig.plugins, new BundleAnalyzerPlugin()],
 };
 
 const nodeConfig = {
