@@ -1,4 +1,5 @@
 <p>&nbsp;</p>
+<br/>
 <p align="center">
 <img src="https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs.svg" width=500>
 </p>
@@ -7,25 +8,27 @@
 The JavaScript SDK for Terra
 </p>
 
-<br/>
-
 ![diagram](https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs-diagram.png)
 
-<div align="center">
-  <h3>
-    <a href="https://github.com/terra-project/terra.js/wiki">
-      Docs
-    </a>
-    <span> | </span>
-    <a href="https://terra-project.github.io/terra.js/">
-      API
-    </a>
-    <span> | </span>
-    <a href="https://www.npmjs.com/package/@terra-money/terra.js">
-      NPM Package
-    </a>
-  </h3>
-</div>
+<br/>
+
+<p align="center">
+  <img alt="GitHub" src="https://img.shields.io/github/license/terra-project/terra.js">
+  <img alt="npm (scoped)" src="https://img.shields.io/npm/v/@terra-money/terra.js">
+</p>
+
+<p align="center">
+  <a href="https://github.com/terra-project/terra.js/wiki"><strong>Explore the Docs »</strong></a>
+  <br />
+  <br/>
+  <a href="https://github.com/terra-project/terra.js/wiki">Examples</a>
+  ·
+  <a href="https://terra-project.github.io/terra.js/">API Reference</a>
+  ·
+  <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM Package</a>
+  ·
+  <a href="https://github.com/terra-project/terra.js">GitHub</a>
+</p>
 
 ## Installation
 
@@ -44,15 +47,82 @@ yarn add @terra-money/terra.js
 - **Simple and consistent API** for converting to/from blockchain data
 - Works in both Node.js and in the browser
 
+We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.
+
 ## Usage
 
-We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package. Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-project/terra.js/wiki) for notes on how to get up and running.
+Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-project/terra.js/wiki) for notes on how to get up and running.
 
-## Example
+### Getting blockchain data
 
-The best way to learn how to use Terra.js is to get started with a quick example and then explore the documentation on your own. Let's create our first transaction by generating a mnemonic, acquiring some testnet tokens, signing a simple transaction, and broadcast it on the network by using just our browser.
+```ts
+import { LCDClient, Coin } from '@terra-money/terra.js';
 
-You can play with the complete example on JSFiddle [here](https://jsfiddle.net/wchen298/y6roqbdw/63/).
+// connect to soju testnet
+const terra = new LCDClient({
+  URL: 'https://soju-lcd.terra.dev',
+  chainId: 'soju-0014',
+});
+
+// To use LocalTerra
+// const terra = new LCDClient({
+//   URL: 'http://localhost:1317',
+//   chainId: 'localterra'
+// });
+
+// get the current swap rate from 1 TerraUSD to TerraKRW
+const offerCoin = new Coin('uusd', '1000000');
+terra.market.swap(offerCoin, 'ukrw').then(c => {
+  console.log(`${offerCoin.toString()} can be swapped for ${c.toString()}`);
+});
+```
+
+### Broadcasting transactions
+
+First, [get](https://faucet.terra.money/) some testnet tokens for `terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v`, or use [LocalTerra](https://www.github.com/terra-project/LocalTerra).
+
+```ts
+import { LCDClient, MsgSend, MnemonicKey } from '@terra-money/terra.js';
+
+// create a key out of a mnemonic
+const mk = new MnemonicKey({
+  mnemonic:
+    'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius',
+});
+
+// connect to soju testnet
+const terra = new LCDClient({
+  URL: 'https://soju-lcd.terra.dev',
+  chainId: 'soju-0014',
+});
+
+// To use LocalTerra
+// const terra = new LCDClient({
+//   URL: 'http://localhost:1317',
+//   chainId: 'localterra'
+// });
+
+// a wallet can be created out of any key
+// wallets abstract transaction building
+const wallet = terra.wallet(mk);
+
+// create a simple message that moves coin balances
+const send = new MsgSend(
+  'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+  'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
+  { uluna: 1000000, ukrw: 1230201, uusd: 1312029 }
+);
+
+wallet
+  .createAndSignTx({
+    msgs: [send],
+    memo: 'test from terra.js!',
+  })
+  .then(terra.tx.broadcast)
+  .then(result => {
+    console.log(`TX hash: ${result.txhash}`);
+  });
+```
 
 ## Terra.js in the browser
 
