@@ -1,5 +1,4 @@
 <p>&nbsp;</p>
-<br/>
 <p align="center">
 <img src="https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs.svg" width=500>
 </p>
