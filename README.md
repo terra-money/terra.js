@@ -30,6 +30,18 @@ The JavaScript SDK for Terra
   <a href="https://github.com/terra-project/terra.js">GitHub</a>
 </p>
 
+Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either a Node.js or browser environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
+
+## Features
+
+- **Written in TypeScript**, with type definitions
+- Versatile support for [key management](https://github.com/terra-project/terra.js/wiki/Keys) solutions
+- Works in both Node.js and in the browser
+- Exposes the Terra API through [`LCDClient`](https://github.com/terra-project/terra.js/wiki/Querying)
+- Parses responses into native JavaScript types
+
+We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.
+
 ## Installation
 
 Grab the latest version off [NPM](https://www.npmjs.com/package/@terra-money/terra.js):
@@ -37,17 +49,6 @@ Grab the latest version off [NPM](https://www.npmjs.com/package/@terra-money/ter
 ```sh
 yarn add @terra-money/terra.js
 ```
-
-## Features
-
-- **Written in TypeScript**, includes type definitions for core data objects
-- Cosmos SDK **compatible** `Int` and `Dec` numeric types
-- Includes BIP39 mnemonic key, with support for **custom key types**
-- **Interoperable:** Supports JSON-format Terra objects and native JavaScript objects
-- **Simple and consistent API** for converting to/from blockchain data
-- Works in both Node.js and in the browser
-
-We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.
 
 ## Usage
 
