@@ -85,6 +85,22 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
+   * Looks up transactions on the blockchain for the block height. If height is undefined,
+   * gets the transactions for the latest block.
+   * @param height block height
+   */
+  public async txInfosByHeight(height: number | undefined): Promise<TxInfo[]> {
+    const blockInfo = await this.lcd.tendermint.blockInfo(height);
+    const { txs } = blockInfo.block.data;
+    if (!txs) {
+      return [];
+    } else {
+      const txhashes = txs.map(txdata => hashAmino(txdata));
+      return Promise.all(txhashes.map(txhash => this.txInfo(txhash)));
+    }
+  }
+
+  /**
    * Estimates the transaction's fee by simulating it within the node
    * @param tx transaction for which to estimate fee
    * @param options options for fee estimation
