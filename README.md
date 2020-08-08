@@ -61,13 +61,13 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 // connect to soju testnet
 const terra = new LCDClient({
   URL: 'https://soju-lcd.terra.dev',
-  chainId: 'soju-0014',
+  chainID: 'soju-0014',
 });
 
 // To use LocalTerra
 // const terra = new LCDClient({
 //   URL: 'http://localhost:1317',
-//   chainId: 'localterra'
+//   chainID: 'localterra'
 // });
 
 // get the current swap rate from 1 TerraUSD to TerraKRW
@@ -93,13 +93,13 @@ const mk = new MnemonicKey({
 // connect to soju testnet
 const terra = new LCDClient({
   URL: 'https://soju-lcd.terra.dev',
-  chainId: 'soju-0014',
+  chainID: 'soju-0014',
 });
 
 // To use LocalTerra
 // const terra = new LCDClient({
 //   URL: 'http://localhost:1317',
-//   chainId: 'localterra'
+//   chainID: 'localterra'
 // });
 
 // a wallet can be created out of any key
