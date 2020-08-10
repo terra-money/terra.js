@@ -118,7 +118,7 @@ wallet
     msgs: [send],
     memo: 'test from terra.js!',
   })
-  .then(terra.tx.broadcast)
+  .then(tx => terra.tx.broadcast(tx))
   .then(result => {
     console.log(`TX hash: ${result.txhash}`);
   });
