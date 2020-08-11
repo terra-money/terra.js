@@ -17,6 +17,7 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
    * @param tx transaction content
    * @param timestamp time of inclusion
    * @param events events
+   * @param code error code
    */
   constructor(
     public height: number,
@@ -27,7 +28,8 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     public gas_used: number,
     public tx: StdTx,
     public timestamp: string,
-    public events: Event[]
+    public events: Event[],
+    public code?: number
   ) {
     super();
   }
@@ -42,7 +44,8 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
       Number.parseInt(data.gas_used),
       StdTx.fromData(data.tx),
       data.timestamp,
-      data.events
+      data.events,
+      data.code ? Number.parseInt(data.code) : undefined
     );
   }
 
@@ -57,6 +60,7 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
       tx: this.tx.toData(),
       timestamp: this.timestamp,
       events: this.events,
+      code: this.code ? this.code.toString() : undefined,
     };
   }
 }
@@ -89,5 +93,6 @@ export namespace TxInfo {
     tx: StdTx.Data;
     timestamp: string;
     events: Event[];
+    code?: string;
   }
 }

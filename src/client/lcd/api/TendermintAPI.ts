@@ -32,7 +32,7 @@ export class TendermintAPI extends BaseAPI {
    * Gets the block information at the specified height. If no height is given, the latest block is returned.
    * @param height block height.
    */
-  public async block(height?: number): Promise<BlockInfo> {
+  public async blockInfo(height?: number): Promise<BlockInfo> {
     const url = height !== undefined ? `/blocks/${height}` : `/blocks/latest`;
     return this.c.getRaw<BlockInfo>(url);
   }
