@@ -14,6 +14,7 @@ import {
 export interface CreateTxOptions {
   msgs: Msg[];
   fee?: StdFee;
+  sourceAddress?: string;
   memo?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
@@ -22,8 +23,9 @@ export interface CreateTxOptions {
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}
 
-  public async accountNumber(): Promise<number> {
-    return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
+  public async accountNumber(sourceAddress?: string): Promise<number> {
+    sourceAddress = sourceAddress || this.key.accAddress;
+    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
       if (d instanceof Account) {
         return d.account_number;
       } else {
@@ -32,8 +34,9 @@ export class Wallet {
     });
   }
 
-  public async sequence(): Promise<number> {
-    return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
+  public async sequence(sourceAddress?: string): Promise<number> {
+    sourceAddress = sourceAddress || this.key.accAddress;
+    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
       if (d instanceof Account) {
         return d.sequence;
       } else {
@@ -43,15 +46,16 @@ export class Wallet {
   }
 
   public async createTx(options: CreateTxOptions): Promise<StdSignMsg> {
-    let { fee, memo } = options;
+    let { fee, memo, sourceAddress } = options;
     const { msgs } = options;
     memo = memo || '';
+    sourceAddress = sourceAddress || this.key.accAddress;
     const estimateFeeOptions = {
       gasPrices: options.gasPrices || this.lcd.config.gasPrices,
       gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
     };
 
-    const balance = await this.lcd.bank.balance(this.key.accAddress);
+    const balance = await this.lcd.bank.balance(sourceAddress);
     const balanceOne = balance.map(c => new Coin(c.denom, 1));
     // create the fake fee
 
@@ -63,8 +67,8 @@ export class Wallet {
 
     return new StdSignMsg(
       this.lcd.config.chainID,
-      await this.accountNumber(),
-      await this.sequence(),
+      await this.accountNumber(sourceAddress),
+      await this.sequence(sourceAddress),
       fee,
       msgs,
       memo
