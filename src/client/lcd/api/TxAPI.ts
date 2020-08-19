@@ -1,8 +1,11 @@
 import { BaseAPI } from './BaseAPI';
 import {
+  Account,
+  Msg,
   StdTx,
   StdSignMsg,
   StdFee,
+  Coin,
   Coins,
   TxInfo,
   Numeric,
@@ -52,6 +55,14 @@ export namespace BlockTxBroadcastResult {
   }
 }
 
+export interface CreateTxOptions {
+  msgs: Msg[];
+  fee?: StdFee;
+  memo?: string;
+  gasPrices?: Coins.Input;
+  gasAdjustment?: Numeric.Input;
+}
+
 export type AsyncTxBroadcastResult = Pick<
   BlockTxBroadcastResult,
   'height' | 'txhash'
@@ -82,6 +93,58 @@ export class TxAPI extends BaseAPI {
    */
   public async txInfo(txHash: string): Promise<TxInfo> {
     return this.c.getRaw<TxInfo.Data>(`/txs/${txHash}`).then(TxInfo.fromData);
+  }
+
+  public async createTx(
+    sourceAddress: string,
+    options: CreateTxOptions
+  ): Promise<StdSignMsg> {
+    let { fee, memo } = options;
+    const { msgs } = options;
+    memo = memo || '';
+    const estimateFeeOptions = {
+      gasPrices: options.gasPrices || this.lcd.config.gasPrices,
+      gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
+    };
+
+    const balance = await this.lcd.bank.balance(sourceAddress);
+    const balanceOne = balance.map(c => new Coin(c.denom, 1));
+    // create the fake fee
+
+    if (fee === undefined) {
+      // estimate the fee
+      const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
+      fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
+    }
+
+    return new StdSignMsg(
+      this.lcd.config.chainID,
+      await this.accountNumber(sourceAddress),
+      await this.sequence(sourceAddress),
+      fee,
+      msgs,
+      memo
+    );
+  }
+
+  private async accountNumber(sourceAddress: string): Promise<number> {
+    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
+      if (d instanceof Account) {
+        return d.account_number;
+      } else {
+        return d.BaseAccount.account_number;
+      }
+    });
+  }
+
+  private async sequence(sourceAddress: string): Promise<number> {
+    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
+      if (d instanceof Account) {
+        return d.sequence;
+      } else {
+        return d.BaseAccount.sequence;
+      }
+    });
   }
 
   /**
