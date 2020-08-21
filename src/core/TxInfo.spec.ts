@@ -1,5 +1,5 @@
 import { TxInfo } from './TxInfo';
-const data = require('./StdTx.data.json');
+const data = require('./TxInfo.data.json');
 
 describe('TxInfo', () => {
   it('deserializes', () => {
