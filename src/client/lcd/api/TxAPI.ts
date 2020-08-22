@@ -95,7 +95,17 @@ export class TxAPI extends BaseAPI {
     return this.c.getRaw<TxInfo.Data>(`/txs/${txHash}`).then(TxInfo.fromData);
   }
 
-  public async createTx(
+  /**
+   * Builds a [[StdSignMsg]] that is ready to be signed by a [[Key]]. The appropriate
+   * account number and sequence will be fetched live from the blockchain and added to
+   * the resultant [[StdSignMsg]]. If no fee is provided, fee will be automatically
+   * estimated using the parameters, simulated using a "dummy fee" with sourceAddress's
+   * nonzero denominations in its balance.
+   *
+   * @param sourceAddress account address of signer
+   * @param options TX generation options
+   */
+  public async create(
     sourceAddress: string,
     options: CreateTxOptions
   ): Promise<StdSignMsg> {
@@ -117,34 +127,24 @@ export class TxAPI extends BaseAPI {
       fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
     }
 
+    let accountNumber, sequence;
+    const account = await this.lcd.auth.accountInfo(sourceAddress);
+    if (account instanceof Account) {
+      accountNumber = account.account_number;
+      sequence = account.sequence;
+    } else {
+      accountNumber = account.BaseAccount.account_number;
+      sequence = account.BaseAccount.sequence;
+    }
+
     return new StdSignMsg(
       this.lcd.config.chainID,
-      await this.accountNumber(sourceAddress),
-      await this.sequence(sourceAddress),
+      accountNumber,
+      sequence,
       fee,
       msgs,
       memo
     );
-  }
-
-  private async accountNumber(sourceAddress: string): Promise<number> {
-    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
-      if (d instanceof Account) {
-        return d.account_number;
-      } else {
-        return d.BaseAccount.account_number;
-      }
-    });
-  }
-
-  private async sequence(sourceAddress: string): Promise<number> {
-    return this.lcd.auth.accountInfo(sourceAddress).then(d => {
-      if (d instanceof Account) {
-        return d.sequence;
-      } else {
-        return d.BaseAccount.sequence;
-      }
-    });
   }
 
   /**
@@ -263,7 +263,7 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
-   * Broadcast the transaction using the "sync" mode, returning after CheckTx() is performed.
+   * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {

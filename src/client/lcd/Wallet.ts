@@ -28,7 +28,7 @@ export class Wallet {
   }
 
   public async createTx(options: CreateTxOptions): Promise<StdSignMsg> {
-    return this.lcd.tx.createTx(this.key.accAddress, options);
+    return this.lcd.tx.create(this.key.accAddress, options);
   }
 
   public async createAndSignTx(options: CreateTxOptions): Promise<StdTx> {
