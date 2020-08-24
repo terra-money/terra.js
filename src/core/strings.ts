@@ -25,7 +25,6 @@ function checkPrefixAndLength(
 ): boolean {
   try {
     const vals = bech32.decode(data);
-    console.log(vals.words);
     return vals.prefix === prefix && data.length == length;
   } catch (e) {
     return false;
@@ -78,6 +77,7 @@ export namespace ValConsAddress {
    * Checks if a string is a Terra validator consensus address
    * @param data string to check
    */
+
   export function validate(data: string): boolean {
     return checkPrefixAndLength('terravalcons', data, 51);
   }
@@ -88,12 +88,13 @@ export namespace AccPubKey {
    * Checks if a string is a Terra validator consensus address
    * @param data string to check
    */
+
   export function validate(data: string): boolean {
     return checkPrefixAndLength('terrapub', data, 76);
   }
 
   /**
-   * Converts a Terra validaotr pubkey to an account pubkey.
+   * Converts a Terra validator pubkey to an account pubkey.
    * @param address validator pubkey to convert
    */
   export function fromValPubKey(pubkey: ValPubKey): AccPubKey {

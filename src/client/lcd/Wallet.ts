@@ -1,23 +1,8 @@
 import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
-import {
-  Account,
-  Msg,
-  StdFee,
-  StdTx,
-  StdSignMsg,
-  Coins,
-  Coin,
-  Numeric,
-} from '../../core';
+import { CreateTxOptions } from '../lcd/api/TxAPI';
 
-export interface CreateTxOptions {
-  msgs: Msg[];
-  fee?: StdFee;
-  memo?: string;
-  gasPrices?: Coins.Input;
-  gasAdjustment?: Numeric.Input;
-}
+import { Account, StdTx, StdSignMsg } from '../../core';
 
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}
@@ -43,32 +28,7 @@ export class Wallet {
   }
 
   public async createTx(options: CreateTxOptions): Promise<StdSignMsg> {
-    let { fee, memo } = options;
-    const { msgs } = options;
-    memo = memo || '';
-    const estimateFeeOptions = {
-      gasPrices: options.gasPrices || this.lcd.config.gasPrices,
-      gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
-    };
-
-    const balance = await this.lcd.bank.balance(this.key.accAddress);
-    const balanceOne = balance.map(c => new Coin(c.denom, 1));
-    // create the fake fee
-
-    if (fee === undefined) {
-      // estimate the fee
-      const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
-      fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
-    }
-
-    return new StdSignMsg(
-      this.lcd.config.chainID,
-      await this.accountNumber(),
-      await this.sequence(),
-      fee,
-      msgs,
-      memo
-    );
+    return this.lcd.tx.create(this.key.accAddress, options);
   }
 
   public async createAndSignTx(options: CreateTxOptions): Promise<StdTx> {

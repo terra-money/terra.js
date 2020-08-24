@@ -1,8 +1,11 @@
 import { BaseAPI } from './BaseAPI';
 import {
+  Account,
+  Msg,
   StdTx,
   StdSignMsg,
   StdFee,
+  Coin,
   Coins,
   TxInfo,
   Numeric,
@@ -52,6 +55,14 @@ export namespace BlockTxBroadcastResult {
   }
 }
 
+export interface CreateTxOptions {
+  msgs: Msg[];
+  fee?: StdFee;
+  memo?: string;
+  gasPrices?: Coins.Input;
+  gasAdjustment?: Numeric.Input;
+}
+
 export type AsyncTxBroadcastResult = Pick<
   BlockTxBroadcastResult,
   'height' | 'txhash'
@@ -82,6 +93,58 @@ export class TxAPI extends BaseAPI {
    */
   public async txInfo(txHash: string): Promise<TxInfo> {
     return this.c.getRaw<TxInfo.Data>(`/txs/${txHash}`).then(TxInfo.fromData);
+  }
+
+  /**
+   * Builds a [[StdSignMsg]] that is ready to be signed by a [[Key]]. The appropriate
+   * account number and sequence will be fetched live from the blockchain and added to
+   * the resultant [[StdSignMsg]]. If no fee is provided, fee will be automatically
+   * estimated using the parameters, simulated using a "dummy fee" with sourceAddress's
+   * nonzero denominations in its balance.
+   *
+   * @param sourceAddress account address of signer
+   * @param options TX generation options
+   */
+  public async create(
+    sourceAddress: string,
+    options: CreateTxOptions
+  ): Promise<StdSignMsg> {
+    let { fee, memo } = options;
+    const { msgs } = options;
+    memo = memo || '';
+    const estimateFeeOptions = {
+      gasPrices: options.gasPrices || this.lcd.config.gasPrices,
+      gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
+    };
+
+    const balance = await this.lcd.bank.balance(sourceAddress);
+    const balanceOne = balance.map(c => new Coin(c.denom, 1));
+    // create the fake fee
+
+    if (fee === undefined) {
+      // estimate the fee
+      const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
+      fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
+    }
+
+    let accountNumber, sequence;
+    const account = await this.lcd.auth.accountInfo(sourceAddress);
+    if (account instanceof Account) {
+      accountNumber = account.account_number;
+      sequence = account.sequence;
+    } else {
+      accountNumber = account.BaseAccount.account_number;
+      sequence = account.BaseAccount.sequence;
+    }
+
+    return new StdSignMsg(
+      this.lcd.config.chainID,
+      accountNumber,
+      sequence,
+      fee,
+      msgs,
+      memo
+    );
   }
 
   /**
@@ -200,7 +263,7 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
-   * Broadcast the transaction using the "sync" mode, returning after CheckTx() is performed.
+   * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {
