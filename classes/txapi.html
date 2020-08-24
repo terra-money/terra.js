@@ -2739,6 +2739,9 @@ img {
 					<a href="txapi.html#broadcastsync" class="tsd-kind-icon">broadcast<wbr>Sync</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="txapi.html#create" class="tsd-kind-icon">create</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="txapi.html#encode" class="tsd-kind-icon">encode</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2794,6 +2797,7 @@ img {
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#broadcast" class="tsd-kind-icon">broadcast</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#broadcastasync" class="tsd-kind-icon">broadcast<wbr>Async</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#broadcastsync" class="tsd-kind-icon">broadcast<wbr>Sync</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#create" class="tsd-kind-icon">create</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#encode" class="tsd-kind-icon">encode</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#estimatefee" class="tsd-kind-icon">estimate<wbr>Fee</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="txapi.html#hash" class="tsd-kind-icon">hash</a></li>
@@ -2817,7 +2821,7 @@ img {
 						<aside class="tsd-sources">
 							<p>Overrides <a href="baseapi.html">BaseAPI</a>.<a href="baseapi.html#constructor">constructor</a></p>
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L74">src/client/lcd/api/TxAPI.ts:74</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L85">src/client/lcd/api/TxAPI.ts:85</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2839,7 +2843,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">lcd<span class="tsd-signature-symbol">:</span> <a href="lcdclient.html" class="tsd-signature-type">LCDClient</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L75">src/client/lcd/api/TxAPI.ts:75</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L86">src/client/lcd/api/TxAPI.ts:86</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2856,7 +2860,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L167">src/client/lcd/api/TxAPI.ts:167</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L230">src/client/lcd/api/TxAPI.ts:230</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2887,12 +2891,12 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L206">src/client/lcd/api/TxAPI.ts:206</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L269">src/client/lcd/api/TxAPI.ts:269</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Broadcast the transaction using the &quot;sync&quot; mode, returning after CheckTx() is performed.</p>
+								<p>Broadcast the transaction using the &quot;async&quot; mode, returning after CheckTx() is performed.</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2918,7 +2922,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L190">src/client/lcd/api/TxAPI.ts:190</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L253">src/client/lcd/api/TxAPI.ts:253</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2942,6 +2946,47 @@ img {
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="create" class="tsd-anchor"></a>
+				<h3>create</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">(</span>sourceAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/createtxoptions.html" class="tsd-signature-type">CreateTxOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignmsg.html" class="tsd-signature-type">StdSignMsg</a><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L108">src/client/lcd/api/TxAPI.ts:108</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Builds a <a href="stdsignmsg.html">StdSignMsg</a> that is ready to be signed by a <a href="key.html">Key</a>. The appropriate
+									account number and sequence will be fetched live from the blockchain and added to
+									the resultant <a href="stdsignmsg.html">StdSignMsg</a>. If no fee is provided, fee will be automatically
+									estimated using the parameters, simulated using a &quot;dummy fee&quot; with sourceAddress&#39;s
+								nonzero denominations in its balance.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>sourceAddress: <span class="tsd-signature-type">string</span></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>account address of signer</p>
+								</div>
+							</li>
+							<li>
+								<h5>options: <a href="../interfaces/createtxoptions.html" class="tsd-signature-type">CreateTxOptions</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>TX generation options</p>
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignmsg.html" class="tsd-signature-type">StdSignMsg</a><span class="tsd-signature-symbol">&gt;</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 				<a name="encode" class="tsd-anchor"></a>
 				<h3>encode</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -2951,7 +2996,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L140">src/client/lcd/api/TxAPI.ts:140</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L203">src/client/lcd/api/TxAPI.ts:203</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2982,7 +3027,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L108">src/client/lcd/api/TxAPI.ts:108</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L171">src/client/lcd/api/TxAPI.ts:171</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3019,7 +3064,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L150">src/client/lcd/api/TxAPI.ts:150</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L213">src/client/lcd/api/TxAPI.ts:213</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3050,7 +3095,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L83">src/client/lcd/api/TxAPI.ts:83</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L94">src/client/lcd/api/TxAPI.ts:94</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3081,7 +3126,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/4b53944/src/client/lcd/api/TxAPI.ts#L92">src/client/lcd/api/TxAPI.ts:92</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/ed15536/src/client/lcd/api/TxAPI.ts#L155">src/client/lcd/api/TxAPI.ts:155</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
