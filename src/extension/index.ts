@@ -23,7 +23,7 @@ export class Extension {
     });
   }
 
-  sendMessage(data: object): void {
+  send(data: object): void {
     this.inpageStream.write(data);
   }
 
