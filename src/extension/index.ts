@@ -1,4 +1,5 @@
 import { Msg } from '../core/Msg';
+import { LCDClientConfig } from '../client';
 
 const LocalMessageDuplexStream = require('post-message-stream');
 
@@ -19,7 +20,6 @@ interface SendData {
 export class Extension {
   static instance: Extension;
   private inpageStream: any;
-  private sequence = 1;
 
   constructor() {
     if (Extension.instance) {
@@ -47,7 +47,7 @@ export class Extension {
   }
 
   connect(): number {
-    const id = this.sequence++;
+    const id = Date.now();
 
     this.send({
       id,
@@ -57,13 +57,14 @@ export class Extension {
     return id;
   }
 
-  post(msgs: Msg[]): number {
-    const id = this.sequence++;
+  post(msgs: Msg[], lcdClientConfig?: LCDClientConfig): number {
+    const id = Date.now();
 
     this.send({
       id,
       type: 'post',
       msgs: msgs.map(msg => msg.toJSON()),
+      lcdClientConfig,
     });
 
     return id;
