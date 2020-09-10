@@ -6,7 +6,13 @@ import { StdFee } from '../core';
 
 describe('RawKey', () => {
   it('derives correct key information', () => {
-    const examples = [
+    const examples: {
+      mnemonic?: string;
+      accAddress: string;
+      accPubKey: string;
+      valAddress: string;
+      valPubKey: string;
+    }[] = [
       {
         mnemonic:
           'wonder caution square unveil april art add hover spend smile proud admit modify old copper throw crew happy nature luggage reopen exhibit ordinary napkin',

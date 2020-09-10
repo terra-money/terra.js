@@ -61,6 +61,8 @@ export interface CreateTxOptions {
   memo?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
+  account_number?: number;
+  sequence?: number;
 }
 
 export type AsyncTxBroadcastResult = Pick<
@@ -127,14 +129,29 @@ export class TxAPI extends BaseAPI {
       fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
     }
 
-    let accountNumber, sequence;
-    const account = await this.lcd.auth.accountInfo(sourceAddress);
-    if (account instanceof Account) {
-      accountNumber = account.account_number;
-      sequence = account.sequence;
-    } else {
-      accountNumber = account.BaseAccount.account_number;
-      sequence = account.BaseAccount.sequence;
+    let accountNumber = options.account_number;
+    let sequence = options.sequence;
+
+    if (!accountNumber || !sequence) {
+      const account = await this.lcd.auth.accountInfo(sourceAddress);
+
+      if (account instanceof Account) {
+        if (!accountNumber) {
+          accountNumber = account.account_number;
+        }
+
+        if (!sequence) {
+          sequence = account.sequence;
+        }
+      } else {
+        if (!accountNumber) {
+          accountNumber = account.BaseAccount.account_number;
+        }
+
+        if (!sequence) {
+          sequence = account.BaseAccount.sequence;
+        }
+      }
     }
 
     return new StdSignMsg(

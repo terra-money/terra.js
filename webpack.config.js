@@ -34,7 +34,10 @@ const webConfig = {
     library: 'Terra',
     path: path.resolve(__dirname, 'dist'),
   },
-  // plugins: [...commonConfig.plugins, new BundleAnalyzerPlugin()],
+  plugins: [
+    ...commonConfig.plugins,
+    // new BundleAnalyzerPlugin(),
+  ],
 };
 
 const nodeConfig = {
