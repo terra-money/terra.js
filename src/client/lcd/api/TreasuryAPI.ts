@@ -102,8 +102,7 @@ export class TreasuryAPI extends BaseAPI {
   public async parameters(): Promise<TreasuryParams> {
     return this.c
       .get<TreasuryParams.Data>(`/treasury/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         tax_policy: PolicyConstraints.fromData(d.tax_policy),
         reward_policy: PolicyConstraints.fromData(d.reward_policy),
         mining_increment: new Dec(d.mining_increment),

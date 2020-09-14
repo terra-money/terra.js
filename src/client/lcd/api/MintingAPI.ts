@@ -1,5 +1,14 @@
-import { Dec, Numeric } from '../../../core';
+import { Dec, Numeric, Denom } from '../../../core';
 import { BaseAPI } from './BaseAPI';
+
+export interface MintingParams {
+  mint_denom: Denom;
+  inflation_rate_change: Dec;
+  inflation_max: Dec;
+  inflation_min: Dec;
+  goal_bonded: Dec;
+  blocks_per_year: number;
+}
 
 export namespace MintingParams {
   export interface Data {
@@ -8,7 +17,7 @@ export namespace MintingParams {
     inflation_max: string;
     inflation_min: string;
     goal_bonded: string;
-    blocks_per_year: number;
+    blocks_per_year: string;
   }
 }
 
@@ -34,9 +43,16 @@ export class MintingAPI extends BaseAPI {
   /**
    * Gets the current minting module's parameters.
    */
-  public async parameters(): Promise<MintingParams.Data> {
+  public async parameters(): Promise<MintingParams> {
     return this.c
       .get<MintingParams.Data>(`/market/parameters`)
-      .then(({ result }) => result);
+      .then(({ result: d }) => ({
+        mint_denom: d.mint_denom,
+        inflation_rate_change: new Dec(d.inflation_rate_change),
+        inflation_max: new Dec(d.inflation_max),
+        inflation_min: new Dec(d.inflation_min),
+        goal_bonded: new Dec(d.goal_bonded),
+        blocks_per_year: Number.parseInt(d.blocks_per_year),
+      }));
   }
 }

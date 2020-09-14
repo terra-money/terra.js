@@ -138,8 +138,7 @@ export class DistributionAPI extends BaseAPI {
   public async parameters(): Promise<DistributionParams> {
     return this.c
       .get<DistributionParams.Data>(`/distribution/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         base_proposer_reward: new Dec(d.base_proposer_reward),
         community_tax: new Dec(d.community_tax),
         bonus_proposer_reward: new Dec(d.bonus_proposer_reward),

@@ -64,8 +64,7 @@ export class MarketAPI extends BaseAPI {
   public async parameters(): Promise<MarketParams> {
     return this.c
       .get<MarketParams.Data>(`/market/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
         base_pool: new Dec(d.base_pool),
         min_spread: new Dec(d.min_spread),

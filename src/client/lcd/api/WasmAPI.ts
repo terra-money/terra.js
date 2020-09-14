@@ -50,8 +50,7 @@ export class WasmAPI extends BaseAPI {
   ): Promise<ContractInfo> {
     return this.c
       .get<ContractInfo.Data>(`/wasm/contracts/${contractAddress}`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         code_id: Number.parseInt(d.code_id),
         address: d.address,
         owner: d.owner,
@@ -74,8 +73,7 @@ export class WasmAPI extends BaseAPI {
   public async parameters(): Promise<WasmParams> {
     return this.c
       .get<WasmParams.Data>(`/wasm/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         max_contract_size: Number.parseInt(d.max_contract_size),
         max_contract_gas: Number.parseInt(d.max_contract_gas),
         max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),

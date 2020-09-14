@@ -194,8 +194,7 @@ export class OracleAPI extends BaseAPI {
   public async parameters(): Promise<OracleParams> {
     return this.c
       .get<OracleParams.Data>(`/oracle/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         vote_period: Number.parseInt(d.vote_period),
         vote_threshold: new Dec(d.vote_threshold),
         reward_band: new Dec(d.reward_band),
