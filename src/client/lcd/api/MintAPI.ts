@@ -21,7 +21,7 @@ export namespace MintingParams {
   }
 }
 
-export class MintingAPI extends BaseAPI {
+export class MintAPI extends BaseAPI {
   /**
    * Gets the current minting inflation value
    */

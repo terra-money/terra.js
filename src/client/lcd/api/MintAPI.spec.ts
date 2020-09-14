@@ -1,11 +1,11 @@
 import { Dec } from '../../../core';
 import { APIRequester } from '../APIRequester';
-import { MintingAPI } from './MintingAPI';
+import { MintAPI } from './MintAPI';
 
 const c = new APIRequester('https://tequila-lcd.terra.dev/');
-const api = new MintingAPI(c);
+const api = new MintAPI(c);
 
-describe('MintingAPI', () => {
+describe('MintAPI', () => {
   it('inflation', async () => {
     await expect(api.inflation()).resolves.toBeInstanceOf(Dec);
   });
