@@ -45,7 +45,7 @@ export class MintingAPI extends BaseAPI {
    */
   public async parameters(): Promise<MintingParams> {
     return this.c
-      .get<MintingParams.Data>(`/market/parameters`)
+      .get<MintingParams.Data>(`/minting/parameters`)
       .then(({ result: d }) => ({
         mint_denom: d.mint_denom,
         inflation_rate_change: new Dec(d.inflation_rate_change),

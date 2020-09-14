@@ -16,7 +16,7 @@ const pcpJSON: ParameterChangeProposal.Data = {
         value: '"123"',
       },
       {
-        subspace: 'minting',
+        subspace: 'mint',
         key: 'InflationMax',
         value: '"0.001"',
       },
@@ -155,7 +155,7 @@ const jiguJSON = {
           '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto":"1232.234000000000000000"}',
       },
       {
-        subspace: 'minting',
+        subspace: 'mint',
         key: 'InflationRateChange',
         value: '"0.010000000000000000"',
       },
@@ -231,7 +231,7 @@ describe('ParamaterChangeProposal', () => {
           veto: new Dec(1232.234),
         },
       },
-      minting: {
+      mint: {
         InflationRateChange: new Dec(0.01),
       },
     });

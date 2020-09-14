@@ -3,18 +3,14 @@ import { ParamChange } from '../params/ParamChange';
 import { Convert } from '../../util/convert';
 import { Dec } from '../numeric';
 
-type MintDenom = ParamChange.Type<'minting', 'MintDenom', Denom>;
-type InflationRateChange = ParamChange.Type<
-  'minting',
-  'InflationRateChange',
-  Dec
->;
-type InflationMax = ParamChange.Type<'minting', 'InflationMax', Dec>;
-type InflationMin = ParamChange.Type<'minting', 'InflationMin', Dec>;
-type GoalBonded = ParamChange.Type<'minting', 'GoalBonded', Dec>;
-type BlocksPerYear = ParamChange.Type<'minting', 'BlocksPerYear', number>;
+type MintDenom = ParamChange.Type<'mint', 'MintDenom', Denom>;
+type InflationRateChange = ParamChange.Type<'mint', 'InflationRateChange', Dec>;
+type InflationMax = ParamChange.Type<'mint', 'InflationMax', Dec>;
+type InflationMin = ParamChange.Type<'mint', 'InflationMin', Dec>;
+type GoalBonded = ParamChange.Type<'mint', 'GoalBonded', Dec>;
+type BlocksPerYear = ParamChange.Type<'mint', 'BlocksPerYear', number>;
 
-export type MintingParamChange =
+export type MintParamChange =
   | MintDenom
   | InflationRateChange
   | InflationMax
@@ -22,7 +18,7 @@ export type MintingParamChange =
   | GoalBonded
   | BlocksPerYear;
 
-export namespace MintingParamChange {
+export namespace MintParamChange {
   export type Data =
     | ParamChange.Data.Type<MintDenom>
     | ParamChange.Data.Type<InflationRateChange>
@@ -32,8 +28,8 @@ export namespace MintingParamChange {
     | ParamChange.Data.Type<BlocksPerYear>;
 }
 
-export interface MintingParamChanges {
-  minting?: {
+export interface MintParamChanges {
+  mint?: {
     MintDenom?: Denom;
     InflationRateChange?: Dec;
     InflationMax?: Dec;
@@ -43,9 +39,9 @@ export interface MintingParamChanges {
   };
 }
 
-export namespace MintingParamChanges {
+export namespace MintParamChanges {
   export const ConversionTable = {
-    minting: {
+    mint: {
       MintDenom: [Convert.id, Convert.id],
       InflationRateChange: [Convert.toDec, Convert.toString],
       InflationMax: [Convert.toDec, Convert.toString],

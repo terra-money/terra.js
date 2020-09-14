@@ -9,7 +9,7 @@ import { SlashingParamChange, SlashingParamChanges } from '../slashing/params';
 import { StakingParamChange, StakingParamChanges } from '../staking/params';
 import { TreasuryParamChange, TreasuryParamChanges } from '../treasury/params';
 import { WasmParamChange, WasmParamChanges } from '../wasm/params';
-import { MintingParamChange, MintingParamChanges } from '../minting/params';
+import { MintParamChange, MintParamChanges } from '../mint/params';
 
 /**
  * Example object:
@@ -79,7 +79,7 @@ import { MintingParamChange, MintingParamChanges } from '../minting/params';
  *        veto: new Dec(1232.234),
  *      },
  *    },
- *    minting: {
+ *    mint: {
  *      MintDenom: 'uluna',
  *      InflationRateChange: "0.000000000000000000",
  *      InflationMax: "0.200000000000000000",
@@ -98,7 +98,7 @@ export type ParamChanges = DistributionParamChanges &
   StakingParamChanges &
   TreasuryParamChanges &
   WasmParamChanges &
-  MintingParamChanges;
+  MintParamChanges;
 
 export namespace ParamChanges {
   export const ConversionTable = {
@@ -110,7 +110,7 @@ export namespace ParamChanges {
     ...StakingParamChanges.ConversionTable,
     ...TreasuryParamChanges.ConversionTable,
     ...WasmParamChanges.ConversionTable,
-    ...MintingParamChanges.ConversionTable,
+    ...MintParamChanges.ConversionTable,
   };
 
   export function fromData(data: ParamChange.Data[]): ParamChanges {
@@ -157,7 +157,7 @@ export type ParamChange =
   | StakingParamChange
   | TreasuryParamChange
   | WasmParamChange
-  | MintingParamChange;
+  | MintParamChange;
 
 export namespace ParamChange {
   export type Type<S extends string, K extends string, T> = {
@@ -175,7 +175,7 @@ export namespace ParamChange {
     | StakingParamChange.Data
     | TreasuryParamChange.Data
     | WasmParamChange.Data
-    | MintingParamChange.Data;
+    | MintParamChange.Data;
 
   export namespace Data {
     export type Type<P extends ParamChange.Type<any, any, any>> = Pick<
