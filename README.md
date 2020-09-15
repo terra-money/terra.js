@@ -139,6 +139,20 @@ Include the following in your browser:
 
 You can find a small JSFiddle example that refreshes current Oracle votes [here](https://jsfiddle.net/tLm1b527/1/).
 
+## Terra.js on React Native environment
+Setup a React Native App and install ```node-libs-react-native``` package. Following instructions were extracted from https://github.com/parshap/node-libs-react-native
+
+You need to register Node.js native modules by:
+```js
+require('node-libs-react-native/globals')
+```
+Add resolver configuration to metro.config.js
+```js
+  resolver: {
+    extraNodeModules: require('node-libs-react-native'),
+  },
+```
+
 ## License
 
 This software is licensed under the MIT license. See [LICENSE](./LICENSE) for full disclosure.
