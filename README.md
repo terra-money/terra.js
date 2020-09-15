@@ -29,13 +29,13 @@ The JavaScript SDK for Terra
   <a href="https://github.com/terra-project/terra.js">GitHub</a>
 </p>
 
-Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either a Node.js or browser environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
+Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
 
 ## Features
 
 - **Written in TypeScript**, with type definitions
 - Versatile support for [key management](https://github.com/terra-project/terra.js/wiki/Keys) solutions
-- Works in both Node.js and in the browser
+- Works in Node.js, in the browser, and React Native
 - Exposes the Terra API through [`LCDClient`](https://github.com/terra-project/terra.js/wiki/Querying)
 - Parses responses into native JavaScript types
 
@@ -139,14 +139,18 @@ Include the following in your browser:
 
 You can find a small JSFiddle example that refreshes current Oracle votes [here](https://jsfiddle.net/tLm1b527/1/).
 
-## Terra.js on React Native environment
-Setup a React Native App and install ```node-libs-react-native``` package. Following instructions were extracted from https://github.com/parshap/node-libs-react-native
+## Terra.js in React Native
 
-You need to register Node.js native modules by:
+Setup a React Native App and install ```node-libs-react-native``` package, following instructions from https://github.com/parshap/node-libs-react-native.
+
+You will need to register Node.js native modules with:
+
 ```js
 require('node-libs-react-native/globals')
 ```
-Add resolver configuration to metro.config.js
+
+Also, add resolvers to your `metro.config.js`
+
 ```js
   resolver: {
     extraNodeModules: require('node-libs-react-native'),
