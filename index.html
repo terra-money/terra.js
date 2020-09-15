@@ -119,6 +119,9 @@
 			<a href="classes/marketapi.html" class="tsd-kind-icon">MarketAPI</a>
 		</li>
 		<li class=" tsd-kind-class">
+			<a href="classes/mintapi.html" class="tsd-kind-icon">MintAPI</a>
+		</li>
+		<li class=" tsd-kind-class">
 			<a href="classes/mnemonickey.html" class="tsd-kind-icon">Mnemonic<wbr>Key</a>
 		</li>
 		<li class=" tsd-kind-class">
@@ -368,6 +371,9 @@
 			<a href="globals.html#baseproposerreward" class="tsd-kind-icon">Base<wbr>Proposer<wbr>Reward</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#blocksperyear" class="tsd-kind-icon">Blocks<wbr>Per<wbr>Year</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#bonddenom" class="tsd-kind-icon">Bond<wbr>Denom</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
@@ -386,7 +392,19 @@
 			<a href="globals.html#gasmultiplier" class="tsd-kind-icon">Gas<wbr>Multiplier</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#goalbonded" class="tsd-kind-icon">Goal<wbr>Bonded</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#illiquidtobintaxlist" class="tsd-kind-icon">Illiquid<wbr>Tobin<wbr>Tax<wbr>List</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#inflationmax" class="tsd-kind-icon">Inflation<wbr>Max</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#inflationmin" class="tsd-kind-icon">Inflation<wbr>Min</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#inflationratechange" class="tsd-kind-icon">Inflation<wbr>Rate<wbr>Change</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#maxcontractgas" class="tsd-kind-icon">Max<wbr>Contract<wbr>Gas</a>
@@ -417,6 +435,12 @@
 		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#miningincrement" class="tsd-kind-icon">Mining<wbr>Increment</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#mintdenom" class="tsd-kind-icon">Mint<wbr>Denom</a>
+		</li>
+		<li class=" tsd-kind-type-alias">
+			<a href="globals.html#oraclewhitelist" class="tsd-kind-icon">Oracle<wbr>Whitelist</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
 			<a href="globals.html#poolrecoveryperiod" class="tsd-kind-icon">Pool<wbr>Recovery<wbr>Period</a>
@@ -690,6 +714,9 @@ wallet
 							<li class="tsd-kind-namespace"><a href="modules/marketparamchange.html" class="tsd-kind-icon">Market<wbr>Param<wbr>Change</a></li>
 							<li class="tsd-kind-namespace"><a href="modules/marketparamchanges.html" class="tsd-kind-icon">Market<wbr>Param<wbr>Changes</a></li>
 							<li class="tsd-kind-namespace"><a href="modules/marketparams.html" class="tsd-kind-icon">Market<wbr>Params</a></li>
+							<li class="tsd-kind-namespace"><a href="modules/mintparamchange.html" class="tsd-kind-icon">Mint<wbr>Param<wbr>Change</a></li>
+							<li class="tsd-kind-namespace"><a href="modules/mintparamchanges.html" class="tsd-kind-icon">Mint<wbr>Param<wbr>Changes</a></li>
+							<li class="tsd-kind-namespace"><a href="modules/mintingparams.html" class="tsd-kind-icon">Minting<wbr>Params</a></li>
 							<li class="tsd-kind-namespace"><a href="modules/msg.html" class="tsd-kind-icon">Msg</a></li>
 							<li class="tsd-kind-namespace"><a href="modules/multisigpublickey.html" class="tsd-kind-icon">Multisig<wbr>Public<wbr>Key</a></li>
 							<li class="tsd-kind-namespace tsd-has-type-parameter"><a href="modules/numeric.html" class="tsd-kind-icon">Numeric</a></li>
@@ -759,6 +786,7 @@ wallet
 							<li class="tsd-kind-class"><a href="classes/lcdclient.html" class="tsd-kind-icon">LCDClient</a></li>
 							<li class="tsd-kind-class"><a href="classes/lazygradedvestingaccount.html" class="tsd-kind-icon">Lazy<wbr>Graded<wbr>Vesting<wbr>Account</a></li>
 							<li class="tsd-kind-class"><a href="classes/marketapi.html" class="tsd-kind-icon">MarketAPI</a></li>
+							<li class="tsd-kind-class"><a href="classes/mintapi.html" class="tsd-kind-icon">MintAPI</a></li>
 							<li class="tsd-kind-class"><a href="classes/mnemonickey.html" class="tsd-kind-icon">Mnemonic<wbr>Key</a></li>
 							<li class="tsd-kind-class"><a href="classes/msgaggregateexchangerateprevote.html" class="tsd-kind-icon">Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a></li>
 							<li class="tsd-kind-class"><a href="classes/msgaggregateexchangeratevote.html" class="tsd-kind-icon">Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a></li>
@@ -852,13 +880,18 @@ wallet
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-type-alias"><a href="globals.html#basepool" class="tsd-kind-icon">Base<wbr>Pool</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#baseproposerreward" class="tsd-kind-icon">Base<wbr>Proposer<wbr>Reward</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#blocksperyear" class="tsd-kind-icon">Blocks<wbr>Per<wbr>Year</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#bonddenom" class="tsd-kind-icon">Bond<wbr>Denom</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#bonusproposerreward" class="tsd-kind-icon">Bonus<wbr>Proposer<wbr>Reward</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#communitytax" class="tsd-kind-icon">Community<wbr>Tax</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#depositparamsparamchange" class="tsd-kind-icon">Deposit<wbr>Params<wbr>Param<wbr>Change</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#downtimejailduration" class="tsd-kind-icon">Downtime<wbr>Jail<wbr>Duration</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#gasmultiplier" class="tsd-kind-icon">Gas<wbr>Multiplier</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#goalbonded" class="tsd-kind-icon">Goal<wbr>Bonded</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#illiquidtobintaxlist" class="tsd-kind-icon">Illiquid<wbr>Tobin<wbr>Tax<wbr>List</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#inflationmax" class="tsd-kind-icon">Inflation<wbr>Max</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#inflationmin" class="tsd-kind-icon">Inflation<wbr>Min</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#inflationratechange" class="tsd-kind-icon">Inflation<wbr>Rate<wbr>Change</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#maxcontractgas" class="tsd-kind-icon">Max<wbr>Contract<wbr>Gas</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#maxcontractmsgsize" class="tsd-kind-icon">Max<wbr>Contract<wbr>Msg<wbr>Size</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#maxcontractsize" class="tsd-kind-icon">Max<wbr>Contract<wbr>Size</a></li>
@@ -869,6 +902,8 @@ wallet
 							<li class="tsd-kind-type-alias"><a href="globals.html#minspread" class="tsd-kind-icon">Min<wbr>Spread</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#minvalidperwindow" class="tsd-kind-icon">Min<wbr>Valid<wbr>Per<wbr>Window</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#miningincrement" class="tsd-kind-icon">Mining<wbr>Increment</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#mintdenom" class="tsd-kind-icon">Mint<wbr>Denom</a></li>
+							<li class="tsd-kind-type-alias"><a href="globals.html#oraclewhitelist" class="tsd-kind-icon">Oracle<wbr>Whitelist</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#poolrecoveryperiod" class="tsd-kind-icon">Pool<wbr>Recovery<wbr>Period</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#rewardband" class="tsd-kind-icon">Reward<wbr>Band</a></li>
 							<li class="tsd-kind-type-alias"><a href="globals.html#rewarddistributionwindow" class="tsd-kind-icon">Reward<wbr>Distribution<wbr>Window</a></li>
@@ -932,7 +967,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Base<wbr>Pool<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"market"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"basepool"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/market/params.ts#L12">src/core/market/params.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/market/params.ts#L12">src/core/market/params.ts:12</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -942,7 +977,17 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Base<wbr>Proposer<wbr>Reward<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"distribution"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"baseproposerreward"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/distribution/params.ts#L7">src/core/distribution/params.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/distribution/params.ts#L7">src/core/distribution/params.ts:7</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="blocksperyear" class="tsd-anchor"></a>
+				<h3>Blocks<wbr>Per<wbr>Year</h3>
+				<div class="tsd-signature tsd-kind-icon">Blocks<wbr>Per<wbr>Year<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"BlocksPerYear"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L11">src/core/mint/params.ts:11</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -952,7 +997,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Bond<wbr>Denom<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"staking"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"BondDenom"</span><span class="tsd-signature-symbol">, </span><a href="modules/denom.html" class="tsd-signature-type">Denom</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/staking/params.ts#L15">src/core/staking/params.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/staking/params.ts#L15">src/core/staking/params.ts:15</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -962,7 +1007,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Bonus<wbr>Proposer<wbr>Reward<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"distribution"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"bonusproposerreward"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/distribution/params.ts#L12">src/core/distribution/params.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/distribution/params.ts#L12">src/core/distribution/params.ts:12</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -972,7 +1017,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Community<wbr>Tax<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"distribution"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"communitytax"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/distribution/params.ts#L5">src/core/distribution/params.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/distribution/params.ts#L5">src/core/distribution/params.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -982,7 +1027,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Deposit<wbr>Params<wbr>Param<wbr>Change<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"gov"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"depositparams"</span><span class="tsd-signature-symbol">, </span><a href="modules/depositparams.html" class="tsd-signature-type">DepositParams</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/gov/params.ts#L51">src/core/gov/params.ts:51</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/gov/params.ts#L51">src/core/gov/params.ts:51</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -992,7 +1037,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Downtime<wbr>Jail<wbr>Duration<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"DowntimeJailDuration"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L23">src/core/slashing/params.ts:23</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L23">src/core/slashing/params.ts:23</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1002,7 +1047,17 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Gas<wbr>Multiplier<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"wasm"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"gasmultiplier"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/wasm/params.ts#L14">src/core/wasm/params.ts:14</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/wasm/params.ts#L14">src/core/wasm/params.ts:14</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="goalbonded" class="tsd-anchor"></a>
+				<h3>Goal<wbr>Bonded</h3>
+				<div class="tsd-signature tsd-kind-icon">Goal<wbr>Bonded<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"GoalBonded"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L10">src/core/mint/params.ts:10</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1012,7 +1067,37 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Illiquid<wbr>Tobin<wbr>Tax<wbr>List<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"market"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"illiquidtobintaxlist"</span><span class="tsd-signature-symbol">, </span><a href="modules/taxrate.html" class="tsd-signature-type">TaxRate</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/market/params.ts#L28">src/core/market/params.ts:28</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/market/params.ts#L28">src/core/market/params.ts:28</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="inflationmax" class="tsd-anchor"></a>
+				<h3>Inflation<wbr>Max</h3>
+				<div class="tsd-signature tsd-kind-icon">Inflation<wbr>Max<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"InflationMax"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L8">src/core/mint/params.ts:8</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="inflationmin" class="tsd-anchor"></a>
+				<h3>Inflation<wbr>Min</h3>
+				<div class="tsd-signature tsd-kind-icon">Inflation<wbr>Min<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"InflationMin"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L9">src/core/mint/params.ts:9</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="inflationratechange" class="tsd-anchor"></a>
+				<h3>Inflation<wbr>Rate<wbr>Change</h3>
+				<div class="tsd-signature tsd-kind-icon">Inflation<wbr>Rate<wbr>Change<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"InflationRateChange"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L7">src/core/mint/params.ts:7</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1022,7 +1107,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Contract<wbr>Gas<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"wasm"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"maxcontractgas"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/wasm/params.ts#L6">src/core/wasm/params.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/wasm/params.ts#L6">src/core/wasm/params.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1032,7 +1117,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Contract<wbr>Msg<wbr>Size<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"wasm"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"maxcontractmsgsize"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/wasm/params.ts#L8">src/core/wasm/params.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/wasm/params.ts#L8">src/core/wasm/params.ts:8</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1042,7 +1127,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Contract<wbr>Size<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"wasm"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"maxcontractsize"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/wasm/params.ts#L4">src/core/wasm/params.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/wasm/params.ts#L4">src/core/wasm/params.ts:4</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1052,7 +1137,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Entries<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"staking"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"KeyMaxEntries"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/staking/params.ts#L9">src/core/staking/params.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/staking/params.ts#L9">src/core/staking/params.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1062,7 +1147,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Evidence<wbr>Age<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"MaxEvidenceAge"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L5">src/core/slashing/params.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L5">src/core/slashing/params.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1072,7 +1157,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Max<wbr>Validators<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"staking"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"MaxValidators"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/staking/params.ts#L7">src/core/staking/params.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/staking/params.ts#L7">src/core/staking/params.ts:7</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1082,7 +1167,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Min<wbr>Signed<wbr>Per<wbr>Window<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"MinSignedPerWindow"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L17">src/core/slashing/params.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L17">src/core/slashing/params.ts:17</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1092,7 +1177,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Min<wbr>Spread<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"market"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"minspread"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/market/params.ts#L14">src/core/market/params.ts:14</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/market/params.ts#L14">src/core/market/params.ts:14</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1102,7 +1187,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Min<wbr>Valid<wbr>Per<wbr>Window<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"minvalidperwindow"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L18">src/core/oracle/params.ts:18</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L18">src/core/oracle/params.ts:18</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1112,7 +1197,27 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Mining<wbr>Increment<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"miningincrement"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L21">src/core/treasury/params.ts:21</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L21">src/core/treasury/params.ts:21</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="mintdenom" class="tsd-anchor"></a>
+				<h3>Mint<wbr>Denom</h3>
+				<div class="tsd-signature tsd-kind-icon">Mint<wbr>Denom<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"mint"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"MintDenom"</span><span class="tsd-signature-symbol">, </span><a href="modules/denom.html" class="tsd-signature-type">Denom</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/mint/params.ts#L6">src/core/mint/params.ts:6</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="oraclewhitelist" class="tsd-anchor"></a>
+				<h3>Oracle<wbr>Whitelist</h3>
+				<div class="tsd-signature tsd-kind-icon">Oracle<wbr>Whitelist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>name<span class="tsd-signature-symbol">: </span><a href="modules/denom.html" class="tsd-signature-type">Denom</a><span class="tsd-signature-symbol">; </span>tobin_tax<span class="tsd-signature-symbol">: </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/client/lcd/api/OracleAPI.ts#L15">src/client/lcd/api/OracleAPI.ts:15</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1122,7 +1227,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Pool<wbr>Recovery<wbr>Period<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"market"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"poolrecoveryperiod"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/market/params.ts#L6">src/core/market/params.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/market/params.ts#L6">src/core/market/params.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1132,7 +1237,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Reward<wbr>Band<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"rewardband"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L8">src/core/oracle/params.ts:8</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L8">src/core/oracle/params.ts:8</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1142,7 +1247,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Reward<wbr>Distribution<wbr>Window<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"rewarddistributionwindow"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L9">src/core/oracle/params.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L9">src/core/oracle/params.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1152,7 +1257,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Reward<wbr>Policy<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"rewardpolicy"</span><span class="tsd-signature-symbol">, </span><a href="classes/policyconstraints.html" class="tsd-signature-type">PolicyConstraints</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L11">src/core/treasury/params.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L11">src/core/treasury/params.ts:11</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1162,7 +1267,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Seigniorage<wbr>Burden<wbr>Target<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"seigniorageburdentarget"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L16">src/core/treasury/params.ts:16</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L16">src/core/treasury/params.ts:16</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1172,7 +1277,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Signed<wbr>Blocks<wbr>Window<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"SignedBlocksWindow"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L11">src/core/slashing/params.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L11">src/core/slashing/params.ts:11</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1182,7 +1287,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Slash<wbr>Fraction<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"slashfraction"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L16">src/core/oracle/params.ts:16</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L16">src/core/oracle/params.ts:16</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1192,7 +1297,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Slash<wbr>Fraction<wbr>Double<wbr>Sign<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"SlashFractionDoubleSign"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L29">src/core/slashing/params.ts:29</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L29">src/core/slashing/params.ts:29</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1202,7 +1307,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Slash<wbr>Fraction<wbr>Downtime<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"slashing"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"SlashFractionDowntime"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/slashing/params.ts#L35">src/core/slashing/params.ts:35</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/slashing/params.ts#L35">src/core/slashing/params.ts:35</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1212,7 +1317,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Slash<wbr>Window<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"slashwindow"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L17">src/core/oracle/params.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L17">src/core/oracle/params.ts:17</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1222,7 +1327,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Tally<wbr>Params<wbr>Param<wbr>Change<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"gov"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"tallyparams"</span><span class="tsd-signature-symbol">, </span><a href="modules/tallyparams.html" class="tsd-signature-type">TallyParams</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/gov/params.ts#L63">src/core/gov/params.ts:63</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/gov/params.ts#L63">src/core/gov/params.ts:63</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1232,7 +1337,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Tax<wbr>Policy<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"taxpolicy"</span><span class="tsd-signature-symbol">, </span><a href="classes/policyconstraints.html" class="tsd-signature-type">PolicyConstraints</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L6">src/core/treasury/params.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L6">src/core/treasury/params.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1242,7 +1347,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Unbonding<wbr>Time<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"staking"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"UnbondingTime"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/staking/params.ts#L5">src/core/staking/params.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/staking/params.ts#L5">src/core/staking/params.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1252,7 +1357,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Vote<wbr>Period<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"voteperiod"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L6">src/core/oracle/params.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L6">src/core/oracle/params.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1262,7 +1367,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Vote<wbr>Threshold<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"votethreshold"</span><span class="tsd-signature-symbol">, </span><a href="classes/dec.html" class="tsd-signature-type">Dec</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L7">src/core/oracle/params.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L7">src/core/oracle/params.ts:7</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1272,7 +1377,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Voting<wbr>Params<wbr>Param<wbr>Change<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"gov"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"votingparams"</span><span class="tsd-signature-symbol">, </span><a href="modules/votingparams.html" class="tsd-signature-type">VotingParams</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/gov/params.ts#L57">src/core/gov/params.ts:57</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/gov/params.ts#L57">src/core/gov/params.ts:57</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1282,7 +1387,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Whitelist<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"oracle"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"whitelist"</span><span class="tsd-signature-symbol">, </span><a href="modules/denom.html" class="tsd-signature-type">Denom</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/params.ts#L15">src/core/oracle/params.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/params.ts#L15">src/core/oracle/params.ts:15</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1292,7 +1397,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Window<wbr>Long<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"windowlong"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L27">src/core/treasury/params.ts:27</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L27">src/core/treasury/params.ts:27</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1302,7 +1407,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Window<wbr>Probation<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"windowprobation"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L28">src/core/treasury/params.ts:28</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L28">src/core/treasury/params.ts:28</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1312,7 +1417,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Window<wbr>Short<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"treasury"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"windowshort"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/treasury/params.ts#L26">src/core/treasury/params.ts:26</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/treasury/params.ts#L26">src/core/treasury/params.ts:26</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1322,7 +1427,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">Withdraw<wbr>Addr<wbr>Enabled<span class="tsd-signature-symbol">:</span> <a href="modules/paramchange.html#type" class="tsd-signature-type">Type</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"distribution"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"withdrawaddrenabled"</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/distribution/params.ts#L18">src/core/distribution/params.ts:18</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/distribution/params.ts#L18">src/core/distribution/params.ts:18</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1335,7 +1440,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">BECH32_<wbr>PUBKEY_<wbr>DATA_<wbr>PREFIX<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"eb5ae98721"</span><span class="tsd-signature-symbol"> = &quot;eb5ae98721&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/Key.ts#L10">src/key/Key.ts:10</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/Key.ts#L10">src/key/Key.ts:10</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1345,7 +1450,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">DEC_<wbr>PRECISION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> = 18</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/numeric.ts#L3">src/core/numeric.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/numeric.ts#L3">src/core/numeric.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1355,7 +1460,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">LUNA_<wbr>COIN_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">330</span><span class="tsd-signature-symbol"> = 330</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/MnemonicKey.ts#L9">src/key/MnemonicKey.ts:9</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/MnemonicKey.ts#L9">src/key/MnemonicKey.ts:9</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1365,7 +1470,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">_<wbr>Dec<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Decimal</span><span class="tsd-signature-symbol"> = Decimal.clone()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/numeric.ts#L4">src/core/numeric.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/numeric.ts#L4">src/core/numeric.ts:4</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1375,7 +1480,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">_<wbr>Int<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Decimal</span><span class="tsd-signature-symbol"> = Decimal.clone()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/numeric.ts#L104">src/core/numeric.ts:104</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/numeric.ts#L104">src/core/numeric.ts:104</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1392,7 +1497,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/Key.ts#L17">src/key/Key.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/Key.ts#L17">src/key/Key.ts:17</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1423,7 +1528,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/msgs/MsgAggregateExchangeRateVote.ts#L13">src/core/oracle/msgs/MsgAggregateExchangeRateVote.ts:13</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/msgs/MsgAggregateExchangeRateVote.ts#L13">src/core/oracle/msgs/MsgAggregateExchangeRateVote.ts:13</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1466,7 +1571,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/strings.ts#L21">src/core/strings.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/strings.ts#L21">src/core/strings.ts:21</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1495,7 +1600,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/util/hash.ts#L17">src/util/hash.ts:17</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/util/hash.ts#L17">src/util/hash.ts:17</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1526,7 +1631,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/util/json.ts#L1">src/util/json.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/util/json.ts#L1">src/util/json.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1549,7 +1654,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/Key.ts#L32">src/key/Key.ts:32</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/Key.ts#L32">src/key/Key.ts:32</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1580,7 +1685,7 @@ wallet
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/core/oracle/msgs/MsgExchangeRateVote.ts#L15">src/core/oracle/msgs/MsgExchangeRateVote.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/core/oracle/msgs/MsgExchangeRateVote.ts#L15">src/core/oracle/msgs/MsgExchangeRateVote.ts:15</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -1628,7 +1733,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>LCD_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/client/lcd/LCDClient.ts#L44">src/client/lcd/LCDClient.ts:44</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/client/lcd/LCDClient.ts#L44">src/client/lcd/LCDClient.ts:44</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1637,7 +1742,7 @@ wallet
 					<div class="tsd-signature tsd-kind-icon">gas<wbr>Adjustment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1.4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/client/lcd/LCDClient.ts#L46">src/client/lcd/LCDClient.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/client/lcd/LCDClient.ts#L46">src/client/lcd/LCDClient.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1647,7 +1752,7 @@ wallet
 					<div class="tsd-signature tsd-kind-icon">gas<wbr>Prices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/client/lcd/LCDClient.ts#L45">src/client/lcd/LCDClient.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/client/lcd/LCDClient.ts#L45">src/client/lcd/LCDClient.ts:45</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1656,7 +1761,7 @@ wallet
 						<div class="tsd-signature tsd-kind-icon">uluna<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.015</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/client/lcd/LCDClient.ts#L45">src/client/lcd/LCDClient.ts:45</a></li>
+								<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/client/lcd/LCDClient.ts#L45">src/client/lcd/LCDClient.ts:45</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1668,7 +1773,7 @@ wallet
 				<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>OPTIONS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/MnemonicKey.ts#L33">src/key/MnemonicKey.ts:33</a></li>
+						<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/MnemonicKey.ts#L33">src/key/MnemonicKey.ts:33</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1677,7 +1782,7 @@ wallet
 					<div class="tsd-signature tsd-kind-icon">account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/MnemonicKey.ts#L34">src/key/MnemonicKey.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/MnemonicKey.ts#L34">src/key/MnemonicKey.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1687,7 +1792,7 @@ wallet
 					<div class="tsd-signature tsd-kind-icon">coin<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = LUNA_COIN_TYPE</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/MnemonicKey.ts#L36">src/key/MnemonicKey.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/MnemonicKey.ts#L36">src/key/MnemonicKey.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1697,7 +1802,7 @@ wallet
 					<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/b5140e9/src/key/MnemonicKey.ts#L35">src/key/MnemonicKey.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/c377675/src/key/MnemonicKey.ts#L35">src/key/MnemonicKey.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
