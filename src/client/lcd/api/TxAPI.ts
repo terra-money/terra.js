@@ -209,8 +209,10 @@ export class TxAPI extends BaseAPI {
 
     return this.c
       .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(d => d.result)
-      .then(d => new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees)));
+      .then(
+        ({ result: d }) =>
+          new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
+      );
   }
 
   /**
