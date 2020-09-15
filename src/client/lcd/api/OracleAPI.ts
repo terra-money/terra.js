@@ -12,6 +12,11 @@ import {
   AggregateExchangeRateVote,
 } from '../../../core';
 
+type OracleWhitelist = {
+  name: Denom;
+  tobin_tax: Dec;
+}[];
+
 export interface OracleParams {
   /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of LUNA. */
   vote_period: number;
@@ -25,8 +30,11 @@ export interface OracleParams {
   /** Number of blocks that define the period over which oracle rewards from non-missed Oracle votes accrue. They are disbursed at the end of these periods. */
   reward_distribution_window: number;
 
-  /** List of active denominations that must be voted on. */
-  whitelist: Denom[];
+  /** List of active denominations that must be voted on.
+   * @returns String[] on Columbus-3
+   * @returns { name: String, tobin_tax: String }[] on Columbus-4 or later
+   */
+  whitelist: Denom[] | OracleWhitelist;
 
   /** Percetange of stake slashed once per slash window. */
   slash_fraction: Dec;
@@ -44,7 +52,7 @@ export namespace OracleParams {
     vote_threshold: string;
     reward_band: string;
     reward_distribution_window: string;
-    whitelist: Denom[];
+    whitelist: Denom[] | OracleWhitelist;
     slash_fraction: string;
     slash_window: string;
     min_valid_per_window: string;
@@ -194,15 +202,17 @@ export class OracleAPI extends BaseAPI {
   public async parameters(): Promise<OracleParams> {
     return this.c
       .get<OracleParams.Data>(`/oracle/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         vote_period: Number.parseInt(d.vote_period),
         vote_threshold: new Dec(d.vote_threshold),
         reward_band: new Dec(d.reward_band),
         reward_distribution_window: Number.parseInt(
           d.reward_distribution_window
         ),
-        whitelist: d.whitelist,
+        whitelist:
+          Array.isArray(d) && d.length && typeof d[0] === 'string'
+            ? (d.whitelist as string[])
+            : (d.whitelist as OracleWhitelist),
         slash_fraction: new Dec(d.slash_fraction),
         slash_window: Number.parseInt(d.slash_window),
         min_valid_per_window: new Dec(d.min_valid_per_window),

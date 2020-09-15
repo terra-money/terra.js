@@ -15,6 +15,11 @@ const pcpJSON: ParameterChangeProposal.Data = {
         key: 'communitytax',
         value: '"123"',
       },
+      {
+        subspace: 'mint',
+        key: 'InflationMax',
+        value: '"0.001"',
+      },
     ],
   },
 };
@@ -149,6 +154,11 @@ const jiguJSON = {
         value:
           '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto":"1232.234000000000000000"}',
       },
+      {
+        subspace: 'mint',
+        key: 'InflationRateChange',
+        value: '"0.010000000000000000"',
+      },
     ],
   },
 };
@@ -220,6 +230,9 @@ describe('ParamaterChangeProposal', () => {
           threshold: new Dec(23423.2323),
           veto: new Dec(1232.234),
         },
+      },
+      mint: {
+        InflationRateChange: new Dec(0.01),
       },
     });
 
