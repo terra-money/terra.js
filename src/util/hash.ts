@@ -1,4 +1,5 @@
-import * as crypto from 'crypto';
+import SHA256 from 'crypto-js/sha256';
+import Base64 from 'crypto-js/enc-base64';
 
 /*
 DEPRECATED (was used by crypto-js)
@@ -15,10 +16,5 @@ function byteArrayToWordArray(ba: Uint8Array): CryptoJS.LibWordArray {
  * @param txData Amino-encoded string (base64)
  */
 export function hashAmino(txData: string): string {
-  return crypto
-    .createHash('sha256')
-    .update(Buffer.from(txData, 'base64'))
-    .digest('hex')
-    .toString()
-    .toUpperCase();
+  return SHA256(Base64.parse(txData)).toString().toUpperCase();
 }

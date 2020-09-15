@@ -1,8 +1,6 @@
 import { Msg } from '../core/Msg';
 import { LCDClientConfig } from '../client';
 
-const LocalMessageDuplexStream = require('post-message-stream');
-
 interface ResponseData {
   name: string;
   payload: object;
@@ -27,6 +25,8 @@ export class Extension {
     }
 
     Extension.instance = this;
+
+    const LocalMessageDuplexStream = require('post-message-stream');
 
     this.inpageStream = new LocalMessageDuplexStream({
       name: 'station:inpage',

@@ -1,8 +1,9 @@
 {
-  "version": "0.4.16",
+  "version": "0.4.17",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "browser": "dist/bundle.js",
   "files": [
     "dist"
   ],
@@ -66,7 +67,7 @@
     "bech32": "^1.1.4",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
-    "crypto-js": "^4",
+    "crypto-js": "3.3.0",
     "decimal.js": "^10.2.0",
     "post-message-stream": "^3.0.0",
     "secp256k1": "^4.0.2"
