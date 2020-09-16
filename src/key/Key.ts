@@ -45,14 +45,13 @@ function pubKeyFromPublicKey(publicKey: Buffer): Buffer {
  */
 export abstract class Key {
   /**
-   * You will need to supply `sign`, which produces a signature for an arbitrary bytes payload
+   * You will need to supply `ecdsaSign`, which produces a signature for an arbitrary bytes payload
    * with the ECDSA curve secp256pk1.
    *
    * @param payload the data to be signed
    */
   public abstract ecdsaSign(
-    payload: Buffer,
-    options?: secp256k1.SignOptions
+    payload: Buffer
   ): { signature: Uint8Array; recid: number };
 
   /**

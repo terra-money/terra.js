@@ -20,15 +20,11 @@ export class RawKey extends Key {
     this.privateKey = privateKey;
   }
 
-  public ecdsaSign(
-    payload: Buffer,
-    options?: secp256k1.SignOptions
-  ): { signature: Uint8Array; recid: number } {
+  public ecdsaSign(payload: Buffer): { signature: Uint8Array; recid: number } {
     const hash = Buffer.from(SHA256(payload.toString()).toString(), 'hex');
     return secp256k1.ecdsaSign(
       Uint8Array.from(hash),
-      Uint8Array.from(this.privateKey),
-      options
+      Uint8Array.from(this.privateKey)
     );
   }
 }
