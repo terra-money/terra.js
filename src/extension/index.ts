@@ -53,8 +53,8 @@ export class Extension {
   /**
    * Request to Station Extension for connecting a wallet
    *
-   * @returns {string}     name    'onConnect'
-   * @returns {AccAddress} payload Terra account address
+   * @returns {string}     name      'onConnect'
+   * @returns {AccAddress} payload   Terra account address
    */
   connect(): number {
     const id = this.generateId();
@@ -77,9 +77,9 @@ export class Extension {
    * @return {string}  payload.origin     origin address
    * @return {Msg[]}   payload.msgs       requested msgs
    * @return {boolean} payload.success
-   * @return {string}  payload.public_key Hex encoded public key
-   * @return {string}  payload.signature  Base64 encoded signature
-   * @return {number}  payload.recid      Recovery id
+   * @return {string}  payload.result.public_key Hex encoded public key
+   * @return {string}  payload.result.signature  Base64 encoded signature
+   * @return {number}  payload.result.recid      Recovery id
    */
   sign(msgs: Msg[]): number {
     const id = this.generateId();
@@ -102,11 +102,13 @@ export class Extension {
    * @return {number}  payload.id             identifier
    * @return {string}  payload.origin         origin address
    * @return {Msg[]}   payload.msgs           requested msgs
-   * @return {LCDClientConfig} payload.lcdClientConfig requested lcdClientConfig
+   * @return {LCDClientConfig} payload.lcdClientConfig
+   *                                          requested lcdClientConfig
    * @return {boolean} payload.success
-   * @return {number}  payload.result.code    Error code. null or undefined with successful tx
-   * @return {string}  payload.result.raw_log Raw log
-   * @return {string}  payload.result.txhash  Transaction hash
+   * @return {number|undefined} payload.result.code
+   *                                          error code. undefined with successful tx
+   * @return {string}  payload.result.raw_log raw log
+   * @return {string}  payload.result.txhash  transaction hash
    */
   post(msgs: Msg[], lcdClientConfig?: LCDClientConfig): number {
     const id = this.generateId();
