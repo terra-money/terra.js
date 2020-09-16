@@ -27,4 +27,9 @@ export class RawKey extends Key {
       Uint8Array.from(this.privateKey)
     );
   }
+
+  public async sign(payload: Buffer): Promise<Buffer> {
+    const { signature } = this.ecdsaSign(payload);
+    return Buffer.from(signature);
+  }
 }

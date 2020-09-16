@@ -45,14 +45,12 @@ function pubKeyFromPublicKey(publicKey: Buffer): Buffer {
  */
 export abstract class Key {
   /**
-   * You will need to supply `ecdsaSign`, which produces a signature for an arbitrary bytes payload
+   * You will need to supply `sign`, which produces a signature for an arbitrary bytes payload
    * with the ECDSA curve secp256pk1.
    *
    * @param payload the data to be signed
    */
-  public abstract ecdsaSign(
-    payload: Buffer
-  ): { signature: Uint8Array; recid: number };
+  public abstract sign(payload: Buffer): Promise<Buffer>;
 
   /**
    * Terra account address. `terra-` prefixed.
@@ -87,16 +85,6 @@ export abstract class Key {
     this.valAddress = bech32.encode('terravaloper', Array.from(rawAddress));
     this.accPubKey = bech32.encode('terrapub', Array.from(rawPubKey));
     this.valPubKey = bech32.encode('terravaloperpub', Array.from(rawPubKey));
-  }
-
-  /**
-   * Signs a data to get signature buffer using ecdsaSign method
-   *
-   * @param payload the data to be signed
-   */
-  public async sign(payload: Buffer): Promise<Buffer> {
-    const { signature } = await this.ecdsaSign(payload);
-    return Buffer.from(signature);
   }
 
   /**
