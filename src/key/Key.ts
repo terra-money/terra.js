@@ -2,6 +2,7 @@ import * as bech32 from 'bech32';
 import * as HEX from 'crypto-js/enc-hex';
 import RIPEMD160 from 'crypto-js/ripemd160';
 import SHA256 from 'crypto-js/sha256';
+import * as secp256k1 from 'secp256k1';
 import { StdSignature } from '../core';
 import { StdTx } from '../core';
 import { StdSignMsg } from '../core';
@@ -49,7 +50,10 @@ export abstract class Key {
    *
    * @param payload the data to be signed
    */
-  public abstract sign(payload: Buffer): Promise<Buffer>;
+  public abstract ecdsaSign(
+    payload: Buffer,
+    options?: secp256k1.SignOptions
+  ): { signature: Uint8Array; recid: number };
 
   /**
    * Terra account address. `terra-` prefixed.
@@ -87,14 +91,25 @@ export abstract class Key {
   }
 
   /**
+   * Signs a data to get signature buffer using ecdsaSign method
+   *
+   * @param payload the data to be signed
+   */
+  public async sign(payload: Buffer): Promise<Buffer> {
+    const { signature } = await this.ecdsaSign(payload);
+    return Buffer.from(signature);
+  }
+
+  /**
    * Signs a [[StdSignMsg]] with the method supplied by the child class.
    *
    * @param tx sign-message of the transaction to sign
    */
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
-    const sigData = await this.sign(Buffer.from(tx.toJSON()));
+    const sigBuffer = await this.sign(Buffer.from(tx.toJSON()));
+
     return StdSignature.fromData({
-      signature: sigData.toString('base64'),
+      signature: sigBuffer.toString('base64'),
       pub_key: {
         type: 'tendermint/PubKeySecp256k1',
         value: this.publicKey.toString('base64'),
