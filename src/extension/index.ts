@@ -71,10 +71,12 @@ export class Extension {
    * Request to Station Extension for signing tx
    *
    * @param msgs transaction messages to be signed
-   * @return {string} name               'onSign'
-   * @return {string} payload.public_key Hex encoded public key
-   * @return {string} payload.signature  Base64 encoded signature
-   * @return {number} payload.recid      Recovery id
+   * @return {string}  name               'onSign'
+   * @return {object}  payload
+   * @return {boolean} payload.success
+   * @return {string}  payload.public_key Hex encoded public key
+   * @return {string}  payload.signature  Base64 encoded signature
+   * @return {number}  payload.recid      Recovery id
    */
   sign(msgs: Msg[]): number {
     const id = this.generateId();
@@ -92,10 +94,12 @@ export class Extension {
    * Request to Station Extension for sign and post to LCD server
    *
    * @param msgs transaction messages to be signed
-   * @return {string} name            'onPost'
-   * @return {number} payload.code    Error code. null or undefined with successful tx
-   * @return {string} payload.raw_log Raw log
-   * @return {string} payload.txhash  Transaction hash
+   * @return {string}  name                   'onPost'
+   * @return {object}  payload
+   * @return {boolean} payload.success
+   * @return {number}  payload.result.code    Error code. null or undefined with successful tx
+   * @return {string}  payload.result.raw_log Raw log
+   * @return {string}  payload.result.txhash  Transaction hash
    */
   post(msgs: Msg[], lcdClientConfig?: LCDClientConfig): number {
     const id = this.generateId();
