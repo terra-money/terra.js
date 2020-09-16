@@ -73,6 +73,9 @@ export class Extension {
    * @param msgs transaction messages to be signed
    * @return {string}  name               'onSign'
    * @return {object}  payload
+   * @return {number}  payload.id         identifier
+   * @return {string}  payload.origin     origin address
+   * @return {Msg[]}   payload.msgs       requested msgs
    * @return {boolean} payload.success
    * @return {string}  payload.public_key Hex encoded public key
    * @return {string}  payload.signature  Base64 encoded signature
@@ -96,6 +99,10 @@ export class Extension {
    * @param msgs transaction messages to be signed
    * @return {string}  name                   'onPost'
    * @return {object}  payload
+   * @return {number}  payload.id             identifier
+   * @return {string}  payload.origin         origin address
+   * @return {Msg[]}   payload.msgs           requested msgs
+   * @return {LCDClientConfig} payload.lcdClientConfig requested lcdClientConfig
    * @return {boolean} payload.success
    * @return {number}  payload.result.code    Error code. null or undefined with successful tx
    * @return {string}  payload.result.raw_log Raw log
