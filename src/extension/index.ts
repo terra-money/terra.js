@@ -71,6 +71,9 @@ export class Extension {
    * Request to Station Extension for signing tx
    *
    * @param msgs transaction messages to be signed
+   * @param account_number account number (optional)
+   * @param sequence sequence (optional)
+   *
    * @return {string}  name               'onSign'
    * @return {object}  payload
    * @return {number}  payload.id         identifier
@@ -81,13 +84,15 @@ export class Extension {
    * @return {string}  payload.result.signature  Base64 encoded signature
    * @return {number}  payload.result.recid      Recovery id
    */
-  sign(msgs: Msg[]): number {
+  sign(msgs: Msg[], account_number?: number, sequence?: number): number {
     const id = this.generateId();
 
     this.send({
       id,
       type: 'sign',
       msgs: msgs.map(msg => msg.toJSON()),
+      account_number,
+      sequence,
     });
 
     return id;
@@ -97,6 +102,8 @@ export class Extension {
    * Request to Station Extension for sign and post to LCD server
    *
    * @param msgs transaction messages to be signed
+   * @param lcdClientConfig LCDClientConfig (optional)
+   *
    * @return {string}  name                   'onPost'
    * @return {object}  payload
    * @return {number}  payload.id             identifier
