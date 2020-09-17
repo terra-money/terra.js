@@ -80,7 +80,7 @@ export class Extension {
    * @return {string}  payload.origin     origin address
    * @return {Msg[]}   payload.msgs       requested msgs
    * @return {boolean} payload.success
-   * @return {string}  payload.result.public_key Hex encoded public key
+   * @return {string}  payload.result.public_key Base64 encoded public key
    * @return {string}  payload.result.signature  Base64 encoded signature
    * @return {number}  payload.result.recid      Recovery id
    */
