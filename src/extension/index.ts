@@ -6,7 +6,13 @@ interface ResponseData {
   payload: object;
 }
 
-type SendDataType = 'connect' | 'post';
+type SendDataType = 'connect' | 'post' | 'sign';
+
+interface SignOptions {
+  lcdClientConfig?: LCDClientConfig;
+  account_number?: number;
+  sequence?: number;
+}
 
 interface SendData {
   id: number | string;
@@ -34,6 +40,10 @@ export class Extension {
     });
   }
 
+  private generateId(): number {
+    return Date.now();
+  }
+
   // low level function for sending message to extension.
   // Do not use this function unless you know what you are doing.
   send(data: SendData): void {
@@ -46,8 +56,14 @@ export class Extension {
     });
   }
 
+  /**
+   * Request to Station Extension for connecting a wallet
+   *
+   * @returns {string}     name      'onConnect'
+   * @returns {AccAddress} payload   Terra account address
+   */
   connect(): number {
-    const id = Date.now();
+    const id = this.generateId();
 
     this.send({
       id,
@@ -57,8 +73,73 @@ export class Extension {
     return id;
   }
 
+  /**
+   * Request to Station Extension for signing tx
+   *
+   * @param msgs transaction messages to be signed
+   * @param account_number account number (optional)
+   * @param sequence sequence (optional)
+   *
+   * @return {string}  name               'onSign'
+   * @return {object}  payload
+   * @return {number}  payload.id         identifier
+   * @return {string}  payload.origin     origin address
+   * @return {Msg[]}   payload.msgs       requested msgs
+   * @return {boolean} payload.success
+   * @return {string}  payload.result.public_key Base64 encoded public key
+   * @return {string}  payload.result.signature  Base64 encoded signature
+   * @return {number}  payload.result.recid      Recovery id
+   * @return {StdSignMsg.Data} payload.result.stdSignMsgData
+   *
+   * @example of broadcasting
+   *
+   * const { signature, public_key, recid, stdSignMsg } = payload.result;
+   *
+   * const sig = StdSignature.fromData({
+   *   signature,
+   *   pub_key: {
+   *    type: 'tendermint/PubKeySecp256k1',
+   *    value: public_key,
+   *  },
+   * });
+   *
+   * const stdSignMsg = StdSignMsg.fromData(payload.result.stdSignMsgData);
+   * terra.tx.broadcast(new StdTx(stdSignMsg.msgs, stdSignMsg.fee, [sig], stdSignMsg.memo));
+   */
+  sign(msgs: Msg[], options?: SignOptions): number {
+    const id = this.generateId();
+
+    this.send({
+      ...options,
+      id,
+      type: 'sign',
+      msgs: msgs.map(msg => msg.toJSON()),
+    });
+
+    return id;
+  }
+
+  /**
+   * Request to Station Extension for sign and post to LCD server
+   *
+   * @param msgs transaction messages to be signed
+   * @param lcdClientConfig LCDClientConfig (optional)
+   *
+   * @return {string}  name                   'onPost'
+   * @return {object}  payload
+   * @return {number}  payload.id             identifier
+   * @return {string}  payload.origin         origin address
+   * @return {Msg[]}   payload.msgs           requested msgs
+   * @return {LCDClientConfig} payload.lcdClientConfig
+   *                                          requested lcdClientConfig
+   * @return {boolean} payload.success
+   * @return {number|undefined} payload.result.code
+   *                                          error code. undefined with successful tx
+   * @return {string}  payload.result.raw_log raw log
+   * @return {string}  payload.result.txhash  transaction hash
+   */
   post(msgs: Msg[], lcdClientConfig?: LCDClientConfig): number {
-    const id = Date.now();
+    const id = this.generateId();
 
     this.send({
       id,
