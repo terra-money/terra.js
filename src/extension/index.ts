@@ -9,7 +9,7 @@ interface ResponseData {
 type SendDataType = 'connect' | 'post' | 'sign';
 
 interface SignOptions {
-  lcdClientConfig: LCDClientConfig;
+  lcdClientConfig?: LCDClientConfig;
   account_number?: number;
   sequence?: number;
 }
@@ -106,7 +106,7 @@ export class Extension {
    * const stdSignMsg = StdSignMsg.fromData(payload.result.stdSignMsgData);
    * terra.tx.broadcast(new StdTx(stdSignMsg.msgs, stdSignMsg.fee, [sig], stdSignMsg.memo));
    */
-  sign(msgs: Msg[], options: SignOptions): number {
+  sign(msgs: Msg[], options?: SignOptions): number {
     const id = this.generateId();
 
     this.send({
