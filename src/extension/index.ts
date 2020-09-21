@@ -44,16 +44,29 @@ export class Extension {
     return Date.now();
   }
 
+  /**
+   * Indicates the Station Extension is installed and availble
+   */
   get isAvailable(): boolean {
     return this.inpageStream._init;
   }
 
-  // low level function for sending message to extension.
-  // Do not use this function unless you know what you are doing.
+  /**
+   * low level function for sending message to extension.
+   * Do not use this function unless you know what you are doing.
+   */
   send(data: SendData): void {
     this.inpageStream.write(data);
   }
 
+  /**
+   * Listen to events from the Extension.
+   * You will receive an event after calling connect, sign, or post.
+   * payload structures are described on each function in @return section.
+   *
+   * @param name name of event
+   * @param callback will be called when `name` event emits
+   */
   on(name: string, callback: (payload: any) => void): void {
     this.inpageStream.on('data', (data: ResponseData) => {
       data.name === name && callback(data.payload);
@@ -63,8 +76,8 @@ export class Extension {
   /**
    * Request to Station Extension for connecting a wallet
    *
-   * @returns {string}     name      'onConnect'
-   * @returns {AccAddress} payload   Terra account address
+   * @return {string}     name      'onConnect'
+   * @return {AccAddress} payload   Terra account address
    */
   connect(): number {
     const id = this.generateId();
