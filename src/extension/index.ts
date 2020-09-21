@@ -52,8 +52,26 @@ export class Extension {
   /**
    * Indicates the Station Extension is installed and availble
    */
-  get isAvailable(): boolean {
-    return this.inpageStream._init;
+  async isAvailable(): Promise<boolean> {
+    const { _init, _sync } = this.inpageStream;
+
+    // Early exit if possible.
+    if (_init || _sync) {
+      return true;
+    }
+
+    // We have to wait for a while
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < 1500) {
+      if (_init || _sync) {
+        return true;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
+
+    return false;
   }
 
   /**
