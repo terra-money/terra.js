@@ -20,11 +20,16 @@ interface SendData {
   [key: string]: any;
 }
 
-// Singleton class for communicating between page and extension
+/**
+ * Extension class is for communicating between page and extension
+ */
 export class Extension {
   static instance: Extension;
   private inpageStream: any;
 
+  /**
+   * Using singleton pattern, hence every instanciation will return same value
+   */
   constructor() {
     if (Extension.instance) {
       return Extension.instance;
