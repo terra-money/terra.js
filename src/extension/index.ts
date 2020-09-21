@@ -44,6 +44,10 @@ export class Extension {
     return Date.now();
   }
 
+  get isAvailable(): boolean {
+    return this.inpageStream._init;
+  }
+
   // low level function for sending message to extension.
   // Do not use this function unless you know what you are doing.
   send(data: SendData): void {
