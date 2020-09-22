@@ -20,11 +20,25 @@ interface SendData {
   [key: string]: any;
 }
 
-// Singleton class for communicating between page and extension
+declare global {
+  interface Window {
+    // add you custom properties and methods
+    Terra: {
+      isAvailable: boolean;
+    };
+  }
+}
+
+/**
+ * Extension class is for communicating between page and extension
+ */
 export class Extension {
   static instance: Extension;
   private inpageStream: any;
 
+  /**
+   * Using singleton pattern, hence every instanciation will return same value
+   */
   constructor() {
     if (Extension.instance) {
       return Extension.instance;
@@ -44,12 +58,29 @@ export class Extension {
     return Date.now();
   }
 
-  // low level function for sending message to extension.
-  // Do not use this function unless you know what you are doing.
+  /**
+   * Indicates the Station Extension is installed and availble (requires extension v1.1 or later)
+   */
+  get isAvailable(): boolean {
+    return window?.Terra?.isAvailable;
+  }
+
+  /**
+   * low level function for sending message to extension.
+   * Do not use this function unless you know what you are doing.
+   */
   send(data: SendData): void {
     this.inpageStream.write(data);
   }
 
+  /**
+   * Listen to events from the Extension.
+   * You will receive an event after calling connect, sign, or post.
+   * payload structures are described on each function in @return section.
+   *
+   * @param name name of event
+   * @param callback will be called when `name` event emits
+   */
   on(name: string, callback: (payload: any) => void): void {
     this.inpageStream.on('data', (data: ResponseData) => {
       data.name === name && callback(data.payload);
@@ -59,8 +90,8 @@ export class Extension {
   /**
    * Request to Station Extension for connecting a wallet
    *
-   * @returns {string}     name      'onConnect'
-   * @returns {AccAddress} payload   Terra account address
+   * @return {string}     name      'onConnect'
+   * @return {AccAddress} payload   Terra account address
    */
   connect(): number {
     const id = this.generateId();
