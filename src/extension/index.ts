@@ -20,6 +20,15 @@ interface SendData {
   [key: string]: any;
 }
 
+declare global {
+  interface Window {
+    // add you custom properties and methods
+    Terra: {
+      isAvailable: boolean;
+    };
+  }
+}
+
 /**
  * Extension class is for communicating between page and extension
  */
@@ -50,28 +59,10 @@ export class Extension {
   }
 
   /**
-   * Indicates the Station Extension is installed and availble
+   * Indicates the Station Extension is installed and availble (requires extension v1.1 or later)
    */
-  async isAvailable(): Promise<boolean> {
-    const { _init, _sync } = this.inpageStream;
-
-    // Early exit if possible.
-    if (_init || _sync) {
-      return true;
-    }
-
-    // We have to wait for a while
-    const startTime = Date.now();
-
-    while (Date.now() - startTime < 1500) {
-      if (_init || _sync) {
-        return true;
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 150));
-    }
-
-    return false;
+  get isAvailable(): boolean {
+    return window?.Terra?.isAvailable;
   }
 
   /**
