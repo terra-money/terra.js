@@ -97,8 +97,7 @@ export class SlashingAPI extends BaseAPI {
   public async parameters(): Promise<SlashingParams> {
     return this.c
       .get<SlashingParams.Data>(`/slashing/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         max_evidence_age: Number.parseInt(d.max_evidence_age),
         signed_blocks_window: Number.parseInt(d.signed_blocks_window),
         min_signed_per_window: new Dec(d.min_signed_per_window),

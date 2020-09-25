@@ -20,12 +20,16 @@ export class RawKey extends Key {
     this.privateKey = privateKey;
   }
 
-  public async sign(payload: Buffer): Promise<Buffer> {
+  public ecdsaSign(payload: Buffer): { signature: Uint8Array; recid: number } {
     const hash = Buffer.from(SHA256(payload.toString()).toString(), 'hex');
-    const { signature } = secp256k1.ecdsaSign(
+    return secp256k1.ecdsaSign(
       Uint8Array.from(hash),
       Uint8Array.from(this.privateKey)
     );
+  }
+
+  public async sign(payload: Buffer): Promise<Buffer> {
+    const { signature } = this.ecdsaSign(payload);
     return Buffer.from(signature);
   }
 }

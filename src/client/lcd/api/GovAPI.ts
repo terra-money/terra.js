@@ -104,8 +104,7 @@ export class GovAPI extends BaseAPI {
   public async tally(proposalId: number): Promise<Tally> {
     return this.c
       .get<Tally.Data>(`/gov/proposals/${proposalId}/tally`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         yes: new Int(d.yes),
         no: new Int(d.no),
         no_with_veto: new Int(d.no_with_veto),
@@ -117,8 +116,7 @@ export class GovAPI extends BaseAPI {
   public async depositParameters(): Promise<DepositParams> {
     return this.c
       .get<DepositParams.Data>(`/gov/parameters/deposit`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         max_deposit_period: Number.parseInt(d.max_deposit_period),
         min_deposit: Coins.fromData(d.min_deposit),
       }));
@@ -128,16 +126,16 @@ export class GovAPI extends BaseAPI {
   public async votingParameters(): Promise<VotingParams> {
     return this.c
       .get<VotingParams.Data>(`/gov/parameters/voting`)
-      .then(d => d.result)
-      .then(d => ({ voting_period: Number.parseInt(d.voting_period) }));
+      .then(({ result: d }) => ({
+        voting_period: Number.parseInt(d.voting_period),
+      }));
   }
 
   /** Gets teh Gov module's tally parameters */
   public async tallyParameters(): Promise<TallyParams> {
     return this.c
       .get<TallyParams.Data>(`/gov/parameters/tallying`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         quorum: new Dec(d.quorum),
         veto: new Dec(d.veto),
         threshold: new Dec(d.threshold),

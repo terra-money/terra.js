@@ -17,17 +17,19 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
    * @param tx transaction content
    * @param timestamp time of inclusion
    * @param events events
+   * @param code error code
    */
   constructor(
     public height: number,
     public txhash: string,
     public raw_log: string,
-    public logs: TxLog[],
+    public logs: TxLog[] | undefined,
     public gas_wanted: number,
     public gas_used: number,
     public tx: StdTx,
     public timestamp: string,
-    public events: Event[]
+    public events?: Event[],
+    public code?: number
   ) {
     super();
   }
@@ -42,22 +44,35 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
       Number.parseInt(data.gas_used),
       StdTx.fromData(data.tx),
       data.timestamp,
-      data.events
+      data.events,
+      data.code
     );
   }
 
   public toData(): TxInfo.Data {
-    return {
+    let data: TxInfo.Data = {
       height: this.height.toFixed(),
       txhash: this.txhash,
       raw_log: this.raw_log,
-      logs: this.logs,
       gas_wanted: this.gas_wanted.toFixed(),
       gas_used: this.gas_used.toFixed(),
       tx: this.tx.toData(),
       timestamp: this.timestamp,
-      events: this.events,
     };
+
+    if (this.logs) {
+      data = { ...data, logs: this.logs };
+    }
+
+    if (this.events) {
+      data = { ...data, events: this.events };
+    }
+
+    if (this.code) {
+      data = { ...data, code: this.code };
+    }
+
+    return data;
   }
 }
 
@@ -83,11 +98,12 @@ export namespace TxInfo {
     height: string;
     txhash: string;
     raw_log: string;
-    logs: TxLog[];
+    logs?: TxLog[];
     gas_wanted: string;
     gas_used: string;
     tx: StdTx.Data;
     timestamp: string;
-    events: Event[];
+    events?: Event[];
+    code?: number;
   }
 }

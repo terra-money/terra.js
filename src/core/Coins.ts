@@ -8,7 +8,8 @@ import { Numeric } from './numeric';
  * of [[Coin]] objects.
  *
  */
-export class Coins extends JSONSerializable<Coins.Data>
+export class Coins
+  extends JSONSerializable<Coins.Data>
   implements Numeric<Coins> {
   private _coins: Coins.ReprDict;
 

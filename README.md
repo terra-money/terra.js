@@ -29,13 +29,13 @@ The JavaScript SDK for Terra
   <a href="https://github.com/terra-project/terra.js">GitHub</a>
 </p>
 
-Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either a Node.js or browser environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
+Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
 
 ## Features
 
 - **Written in TypeScript**, with type definitions
 - Versatile support for [key management](https://github.com/terra-project/terra.js/wiki/Keys) solutions
-- Works in both Node.js and in the browser
+- Works in Node.js, in the browser, and React Native
 - Exposes the Terra API through [`LCDClient`](https://github.com/terra-project/terra.js/wiki/Querying)
 - Parses responses into native JavaScript types
 
@@ -61,13 +61,13 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 // connect to soju testnet
 const terra = new LCDClient({
   URL: 'https://soju-lcd.terra.dev',
-  chainId: 'soju-0014',
+  chainID: 'soju-0014',
 });
 
 // To use LocalTerra
 // const terra = new LCDClient({
 //   URL: 'http://localhost:1317',
-//   chainId: 'localterra'
+//   chainID: 'localterra'
 // });
 
 // get the current swap rate from 1 TerraUSD to TerraKRW
@@ -93,13 +93,13 @@ const mk = new MnemonicKey({
 // connect to soju testnet
 const terra = new LCDClient({
   URL: 'https://soju-lcd.terra.dev',
-  chainId: 'soju-0014',
+  chainID: 'soju-0014',
 });
 
 // To use LocalTerra
 // const terra = new LCDClient({
 //   URL: 'http://localhost:1317',
-//   chainId: 'localterra'
+//   chainID: 'localterra'
 // });
 
 // a wallet can be created out of any key
@@ -118,7 +118,7 @@ wallet
     msgs: [send],
     memo: 'test from terra.js!',
   })
-  .then(terra.tx.broadcast)
+  .then(tx => terra.tx.broadcast(tx))
   .then(result => {
     console.log(`TX hash: ${result.txhash}`);
   });
@@ -138,6 +138,24 @@ Include the following in your browser:
 ```
 
 You can find a small JSFiddle example that refreshes current Oracle votes [here](https://jsfiddle.net/tLm1b527/1/).
+
+## Terra.js in React Native
+
+Setup a React Native App and install ```node-libs-react-native``` package, following instructions from https://github.com/parshap/node-libs-react-native.
+
+You will need to register Node.js native modules with:
+
+```js
+require('node-libs-react-native/globals')
+```
+
+Also, add resolvers to your `metro.config.js`
+
+```js
+  resolver: {
+    extraNodeModules: require('node-libs-react-native'),
+  },
+```
 
 ## License
 

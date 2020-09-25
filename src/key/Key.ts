@@ -92,9 +92,10 @@ export abstract class Key {
    * @param tx sign-message of the transaction to sign
    */
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
-    const sigData = await this.sign(Buffer.from(tx.toJSON()));
+    const sigBuffer = await this.sign(Buffer.from(tx.toJSON()));
+
     return StdSignature.fromData({
-      signature: sigData.toString('base64'),
+      signature: sigBuffer.toString('base64'),
       pub_key: {
         type: 'tendermint/PubKeySecp256k1',
         value: this.publicKey.toString('base64'),

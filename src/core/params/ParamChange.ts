@@ -9,6 +9,7 @@ import { SlashingParamChange, SlashingParamChanges } from '../slashing/params';
 import { StakingParamChange, StakingParamChanges } from '../staking/params';
 import { TreasuryParamChange, TreasuryParamChanges } from '../treasury/params';
 import { WasmParamChange, WasmParamChanges } from '../wasm/params';
+import { MintParamChange, MintParamChanges } from '../mint/params';
 
 /**
  * Example object:
@@ -78,6 +79,14 @@ import { WasmParamChange, WasmParamChanges } from '../wasm/params';
  *        veto: new Dec(1232.234),
  *      },
  *    },
+ *    mint: {
+ *      MintDenom: 'uluna',
+ *      InflationRateChange: "0.000000000000000000",
+ *      InflationMax: "0.200000000000000000",
+ *      InflationMin: "0.070000000000000000",
+ *      GoalBonded: "0.670000000000000000",
+ *      BlocksPerYear: 6311520
+ *    }
  *  }
  * ```
  */
@@ -88,7 +97,8 @@ export type ParamChanges = DistributionParamChanges &
   SlashingParamChanges &
   StakingParamChanges &
   TreasuryParamChanges &
-  WasmParamChanges;
+  WasmParamChanges &
+  MintParamChanges;
 
 export namespace ParamChanges {
   export const ConversionTable = {
@@ -100,6 +110,7 @@ export namespace ParamChanges {
     ...StakingParamChanges.ConversionTable,
     ...TreasuryParamChanges.ConversionTable,
     ...WasmParamChanges.ConversionTable,
+    ...MintParamChanges.ConversionTable,
   };
 
   export function fromData(data: ParamChange.Data[]): ParamChanges {
@@ -145,7 +156,8 @@ export type ParamChange =
   | SlashingParamChange
   | StakingParamChange
   | TreasuryParamChange
-  | WasmParamChange;
+  | WasmParamChange
+  | MintParamChange;
 
 export namespace ParamChange {
   export type Type<S extends string, K extends string, T> = {
@@ -162,7 +174,8 @@ export namespace ParamChange {
     | SlashingParamChange.Data
     | StakingParamChange.Data
     | TreasuryParamChange.Data
-    | WasmParamChange.Data;
+    | WasmParamChange.Data
+    | MintParamChange.Data;
 
   export namespace Data {
     export type Type<P extends ParamChange.Type<any, any, any>> = Pick<

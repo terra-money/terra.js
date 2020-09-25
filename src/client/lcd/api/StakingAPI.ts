@@ -199,8 +199,7 @@ export class StakingAPI extends BaseAPI {
   public async pool(): Promise<StakingPool> {
     return this.c
       .get<StakingPool.Data>(`/staking/pool`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         bonded_tokens: new Coin(Denom.LUNA, d.bonded_tokens),
         not_bonded_tokens: new Coin(Denom.LUNA, d.not_bonded_tokens),
       }));
@@ -212,8 +211,7 @@ export class StakingAPI extends BaseAPI {
   public async parameters(): Promise<StakingParams> {
     return this.c
       .get<StakingParams.Data>(`/staking/parameters`)
-      .then(d => d.result)
-      .then(d => ({
+      .then(({ result: d }) => ({
         unbonding_time: Number.parseInt(d.unbonding_time),
         max_validators: d.max_validators,
         max_entries: d.max_entries,
