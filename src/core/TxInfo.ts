@@ -79,12 +79,36 @@ export interface Event {
   attributes: EventKV[];
 }
 
-export class TxLog extends JSONSerializable<TxLog.Data> {
-  public events: {
-    [type: string]: {
-      [key: string]: string[];
-    };
+export interface Events {
+  [type: string]: {
+    [key: string]: string[];
   };
+}
+
+export namespace Events {
+  export type Data = Event[];
+
+  export function parse(eventData: Event[]): Events {
+    const events: Events = {};
+    eventData.forEach(ev => {
+      ev.attributes.forEach(attr => {
+        if (!(ev.type in events)) {
+          events[ev.type] = {};
+        }
+
+        if (!(attr.key in events[ev.type])) {
+          events[ev.type][attr.key] = [];
+        }
+
+        events[ev.type][attr.key].push(attr.value);
+      });
+    });
+    return events;
+  }
+}
+
+export class TxLog extends JSONSerializable<TxLog.Data> {
+  public events: Events;
 
   constructor(
     public msg_index: number,
@@ -92,24 +116,7 @@ export class TxLog extends JSONSerializable<TxLog.Data> {
     private _eventData: Event[]
   ) {
     super();
-    this.events = {};
-    _eventData.forEach(ev => {
-      ev.attributes.forEach(attr => {
-        this.insertEventAttribute(ev.type, attr.key, attr.value);
-      });
-    });
-  }
-
-  private insertEventAttribute(type: string, key: string, value: string) {
-    if (!(type in this.events)) {
-      this.events[type] = {};
-    }
-
-    if (!(key in this.events[type])) {
-      this.events[type][key] = [];
-    }
-
-    this.events[type][key].push(value);
+    this.events = Events.parse(_eventData);
   }
 
   public static fromData(data: TxLog.Data): TxLog {

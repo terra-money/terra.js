@@ -12,7 +12,7 @@ import {
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { Event, TxLog } from '../../../core';
+import { Event, Events, TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
   gas: string;
@@ -38,7 +38,7 @@ export interface BlockTxBroadcastResult {
   logs: TxLog[];
   gas_wanted: number;
   gas_used: number;
-  events: Event;
+  events: Events;
   code?: number;
 }
 
@@ -47,10 +47,10 @@ export namespace BlockTxBroadcastResult {
     height: string;
     txhash: string;
     raw_log: string;
-    logs: TxLog[];
+    logs: TxLog.Data[];
     gas_wanted: string;
     gas_used: string;
-    events: Event;
+    events: Event[];
     code?: number;
   }
 }
@@ -275,16 +275,18 @@ export class TxAPI extends BaseAPI {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
       Broadcast.BLOCK
-    ).then(d => ({
-      height: Number.parseInt(d.height),
-      txhash: d.txhash,
-      logs: d.logs,
-      raw_log: d.raw_log,
-      gas_wanted: Number.parseInt(d.gas_wanted),
-      gas_used: Number.parseInt(d.gas_used),
-      events: d.events,
-      code: d.code,
-    }));
+    ).then(d => {
+      return {
+        height: Number.parseInt(d.height),
+        txhash: d.txhash,
+        logs: d.logs.map(l => TxLog.fromData(l)),
+        raw_log: d.raw_log,
+        gas_wanted: Number.parseInt(d.gas_wanted),
+        gas_used: Number.parseInt(d.gas_used),
+        events: Events.parse(d.events),
+        code: d.code,
+      };
+    });
   }
 
   /**
@@ -299,7 +301,7 @@ export class TxAPI extends BaseAPI {
       d => ({
         height: Number.parseInt(d.height),
         txhash: d.txhash,
-        logs: d.logs,
+        logs: d.logs.map(l => TxLog.fromData(l)),
         raw_log: d.raw_log,
         code: d.code,
       })
