@@ -11,20 +11,16 @@ type MaxContractMsgSize = ParamChange.Type<
   number
 >;
 
-type GasMultiplier = ParamChange.Type<'wasm', 'gasmultiplier', number>;
-
 export type WasmParamChange =
   | MaxContractSize
   | MaxContractGas
-  | MaxContractMsgSize
-  | GasMultiplier;
+  | MaxContractMsgSize;
 
 export namespace WasmParamChange {
   export type Data =
     | ParamChange.Data.Type<MaxContractSize>
     | ParamChange.Data.Type<MaxContractGas>
-    | ParamChange.Data.Type<MaxContractMsgSize>
-    | ParamChange.Data.Type<GasMultiplier>;
+    | ParamChange.Data.Type<MaxContractMsgSize>;
 }
 
 export interface WasmParamChanges {
@@ -32,7 +28,6 @@ export interface WasmParamChanges {
     maxcontractsize?: number;
     maxcontractgas?: number;
     maxcontractmsgsize?: number;
-    gasmultiplier?: number;
   };
 }
 
@@ -42,7 +37,6 @@ export namespace WasmParamChanges {
       maxcontractsize: [Convert.toNumber, Convert.toFixed],
       maxcontractgas: [Convert.toNumber, Convert.toFixed],
       maxcontractmsgsize: [Convert.toNumber, Convert.toFixed],
-      gasmultiplier: [Convert.toNumber, Convert.toFixed],
     },
   };
 }
