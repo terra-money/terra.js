@@ -16,7 +16,6 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
    * @param gas_used actual gas consumption
    * @param tx transaction content
    * @param timestamp time of inclusion
-   * @param events events
    * @param code error code
    */
   constructor(
@@ -28,7 +27,6 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     public gas_used: number,
     public tx: StdTx,
     public timestamp: string,
-    public events?: Event[],
     public code?: number
   ) {
     super();
@@ -39,12 +37,11 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
       Number.parseInt(data.height),
       data.txhash,
       data.raw_log,
-      data.logs,
+      data.logs && data.logs.map(log => TxLog.fromData(log)),
       Number.parseInt(data.gas_wanted),
       Number.parseInt(data.gas_used),
       StdTx.fromData(data.tx),
       data.timestamp,
-      data.events,
       data.code
     );
   }
@@ -61,11 +58,7 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     };
 
     if (this.logs) {
-      data = { ...data, logs: this.logs };
-    }
-
-    if (this.events) {
-      data = { ...data, events: this.events };
+      data = { ...data, logs: this.logs.map(log => log.toData()) };
     }
 
     if (this.code) {
@@ -76,21 +69,70 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
   }
 }
 
-export interface Event {
-  type: string;
-  attributes: EventKV[];
-}
-
 export interface EventKV {
   key: string;
   value: string;
 }
 
-export interface TxLog {
-  msg_index: number;
-  success: boolean;
-  log: string;
-  events: Event[];
+export interface Event {
+  type: string;
+  attributes: EventKV[];
+}
+
+export class TxLog extends JSONSerializable<TxLog.Data> {
+  public events: {
+    [type: string]: {
+      [key: string]: string[];
+    };
+  };
+
+  constructor(
+    public msg_index: number,
+    public log: string,
+    private _eventData: Event[]
+  ) {
+    super();
+    this.events = {};
+    _eventData.forEach(ev => {
+      ev.attributes.forEach(attr => {
+        this.insertEventAttribute(ev.type, attr.key, attr.value);
+      });
+    });
+  }
+
+  private insertEventAttribute(type: string, key: string, value: string) {
+    if (!(type in this.events)) {
+      this.events[type] = {};
+    }
+
+    if (!(key in this.events[type])) {
+      this.events[type][key] = [];
+    }
+
+    this.events[type][key].push(value);
+  }
+
+  public static fromData(data: TxLog.Data): TxLog {
+    const { msg_index, log, events } = data;
+    return new TxLog(msg_index, log, events);
+  }
+
+  public toData(): TxLog.Data {
+    const { msg_index, log } = this;
+    return {
+      msg_index,
+      log,
+      events: this._eventData,
+    };
+  }
+}
+
+export namespace TxLog {
+  export interface Data {
+    msg_index: number;
+    log: string;
+    events: Event[];
+  }
 }
 
 export namespace TxInfo {
@@ -98,12 +140,11 @@ export namespace TxInfo {
     height: string;
     txhash: string;
     raw_log: string;
-    logs?: TxLog[];
+    logs?: TxLog.Data[];
     gas_wanted: string;
     gas_used: string;
     tx: StdTx.Data;
     timestamp: string;
-    events?: Event[];
     code?: number;
   }
 }
