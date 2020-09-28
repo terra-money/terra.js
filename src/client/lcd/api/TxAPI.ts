@@ -84,6 +84,31 @@ export namespace SyncTxBroadcastResult {
   >;
 }
 
+export interface TxSearchResult {
+  total_count: number;
+  count: number;
+  page_number: number;
+  page_total: number;
+  limit: number;
+  txs: TxInfo[];
+}
+
+export namespace TxSearchResult {
+  export interface Data {
+    total_count: string;
+    count: string;
+    page_number: string;
+    page_total: string;
+    limit: string;
+    txs: TxInfo.Data[];
+  }
+}
+
+export interface TxSearchOptions {
+  page: number;
+  limit: number;
+}
+
 export class TxAPI extends BaseAPI {
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
@@ -292,6 +317,23 @@ export class TxAPI extends BaseAPI {
     ).then(d => ({
       height: Number.parseInt(d.height),
       txhash: d.txhash,
+    }));
+  }
+
+  /**
+   * Search for transactions based on event attributes.
+   * @param options
+   */
+  public async search(
+    options: Partial<TxSearchOptions> | {}
+  ): Promise<TxSearchResult> {
+    return this.c.getRaw<TxSearchResult.Data>(`/txs`, options).then(d => ({
+      total_count: Number.parseInt(d.total_count),
+      count: Number.parseInt(d.count),
+      page_number: Number.parseInt(d.page_number),
+      page_total: Number.parseInt(d.page_total),
+      limit: Number.parseInt(d.limit),
+      txs: d.txs.map(txdata => TxInfo.fromData(txdata)),
     }));
   }
 }
