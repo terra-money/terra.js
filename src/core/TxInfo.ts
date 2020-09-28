@@ -79,17 +79,17 @@ export interface Event {
   attributes: EventKV[];
 }
 
-export interface Events {
+export interface EventsByType {
   [type: string]: {
     [key: string]: string[];
   };
 }
 
-export namespace Events {
+export namespace EventsByType {
   export type Data = Event[];
 
-  export function parse(eventData: Event[]): Events {
-    const events: Events = {};
+  export function parse(eventData: Event[]): EventsByType {
+    const events: EventsByType = {};
     eventData.forEach(ev => {
       ev.attributes.forEach(attr => {
         if (!(ev.type in events)) {
@@ -108,7 +108,7 @@ export namespace Events {
 }
 
 export class TxLog extends JSONSerializable<TxLog.Data> {
-  public events: Events;
+  public events: EventsByType;
 
   constructor(
     public msg_index: number,
@@ -116,7 +116,7 @@ export class TxLog extends JSONSerializable<TxLog.Data> {
     private _eventData: Event[]
   ) {
     super();
-    this.events = Events.parse(_eventData);
+    this.events = EventsByType.parse(_eventData);
   }
 
   public static fromData(data: TxLog.Data): TxLog {
