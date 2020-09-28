@@ -12,7 +12,7 @@ import {
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { Event, Events, TxLog } from '../../../core';
+import { Event, EventsByType, TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
   gas: string;
@@ -38,7 +38,7 @@ export interface BlockTxBroadcastResult {
   logs: TxLog[];
   gas_wanted: number;
   gas_used: number;
-  events: Events;
+  events: EventsByType;
   code?: number;
 }
 
@@ -283,7 +283,7 @@ export class TxAPI extends BaseAPI {
         raw_log: d.raw_log,
         gas_wanted: Number.parseInt(d.gas_wanted),
         gas_used: Number.parseInt(d.gas_used),
-        events: Events.parse(d.events),
+        events: EventsByType.parse(d.events),
         code: d.code,
       };
     });
