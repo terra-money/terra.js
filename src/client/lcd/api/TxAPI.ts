@@ -66,7 +66,7 @@ export interface TxError {
 
 export function isTxError<
   T extends TxBroadcastResult<B, C>,
-  B extends Block | Sync | Sync,
+  B extends Block | Sync,
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
   return (x as T & TxError).code !== undefined;
