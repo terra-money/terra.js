@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TxLog | Terra.js</title>
+	<title>TxSearchOptions | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="txlog.html">TxLog</a>
+					<a href="txsearchoptions.html">TxSearchOptions</a>
 				</li>
 			</ul>
-			<h1>Interface TxLog</h1>
+			<h1>Interface TxSearchOptions</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TxLog</span>
+						<span class="target">TxSearchOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -77,10 +77,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txlog.html#events" class="tsd-kind-icon">events</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txlog.html#log" class="tsd-kind-icon">log</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txlog.html#msg_index" class="tsd-kind-icon">msg_<wbr>index</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txlog.html#success" class="tsd-kind-icon">success</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txsearchoptions.html#limit" class="tsd-kind-icon">limit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="txsearchoptions.html#page" class="tsd-kind-icon">page</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,42 +87,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="events" class="tsd-anchor"></a>
-					<h3>events</h3>
-					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <a href="event.html" class="tsd-signature-type">Event</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="limit" class="tsd-anchor"></a>
+					<h3>limit</h3>
+					<div class="tsd-signature tsd-kind-icon">limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/17126a1/src/core/TxInfo.ts#L93">src/core/TxInfo.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/87948d0/src/client/lcd/api/TxAPI.ts#L109">src/client/lcd/api/TxAPI.ts:109</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="log" class="tsd-anchor"></a>
-					<h3>log</h3>
-					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="page" class="tsd-anchor"></a>
+					<h3>page</h3>
+					<div class="tsd-signature tsd-kind-icon">page<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/17126a1/src/core/TxInfo.ts#L92">src/core/TxInfo.ts:92</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="msg_index" class="tsd-anchor"></a>
-					<h3>msg_<wbr>index</h3>
-					<div class="tsd-signature tsd-kind-icon">msg_<wbr>index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/17126a1/src/core/TxInfo.ts#L90">src/core/TxInfo.ts:90</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="success" class="tsd-anchor"></a>
-					<h3>success</h3>
-					<div class="tsd-signature tsd-kind-icon">success<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/17126a1/src/core/TxInfo.ts#L91">src/core/TxInfo.ts:91</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/87948d0/src/client/lcd/api/TxAPI.ts#L108">src/client/lcd/api/TxAPI.ts:108</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,19 +121,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="txlog.html" class="tsd-kind-icon">Tx<wbr>Log</a>
+						<a href="txsearchoptions.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="txlog.html#events" class="tsd-kind-icon">events</a>
+								<a href="txsearchoptions.html#limit" class="tsd-kind-icon">limit</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="txlog.html#log" class="tsd-kind-icon">log</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="txlog.html#msg_index" class="tsd-kind-icon">msg_<wbr>index</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="txlog.html#success" class="tsd-kind-icon">success</a>
+								<a href="txsearchoptions.html#page" class="tsd-kind-icon">page</a>
 							</li>
 						</ul>
 					</li>
