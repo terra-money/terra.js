@@ -33,6 +33,8 @@ async function main(): Promise<void> {
   });
   const storeCodeTxResult = await terra.tx.broadcast(storeCodeTx);
 
+  console.log(storeCodeTxResult);
+
   if (isTxError(storeCodeTxResult)) {
     throw new Error(
       `store code failed. code: ${storeCodeTxResult.code}, codespace: ${storeCodeTxResult.codespace}, raw_log: ${storeCodeTxResult.raw_log}`
@@ -56,7 +58,9 @@ async function main(): Promise<void> {
   const instantiateTx = await wallet.createAndSignTx({
     msgs: [instantiate],
   });
-  const instantiateTxResult = await terra.tx.broadcastSync(instantiateTx);
+  const instantiateTxResult = await terra.tx.broadcast(instantiateTx);
+
+  console.log(instantiateTxResult);
 
   if (isTxError(instantiateTxResult)) {
     throw new Error(
@@ -76,6 +80,7 @@ async function main(): Promise<void> {
   );
   const executeTx = await wallet.createAndSignTx({
     msgs: [execute],
+    fee: new StdFee(100, { uluna: 1 }),
   });
   const executeTxResult = await terra.tx.broadcast(executeTx);
   console.log(executeTxResult);

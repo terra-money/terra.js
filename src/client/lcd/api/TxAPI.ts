@@ -66,8 +66,8 @@ export interface TxError {
 
 export function isTxError<
   T extends TxBroadcastResult<B, C>,
-  B extends Block | Sync,
-  C extends TxSuccess | TxError
+  B extends Block | Sync | Sync,
+  C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
   return (x as T & TxError).code !== undefined;
 }
@@ -102,7 +102,7 @@ export namespace AsyncTxBroadcastResult {
 export namespace SyncTxBroadcastResult {
   export type Data = Pick<
     BlockTxBroadcastResult.Data,
-    'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
+    'height' | 'txhash' | 'raw_log' | 'code' | 'codespace'
   >;
 }
 
@@ -333,7 +333,7 @@ export class TxAPI extends BaseAPI {
    */
   public async broadcastSync(
     tx: StdTx
-  ): Promise<TxBroadcastResult<Sync, TxSuccess | TxError>> {
+  ): Promise<TxBroadcastResult<Sync, {} | TxError>> {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
       d => {
         const blockResult: any = {
@@ -341,10 +341,6 @@ export class TxAPI extends BaseAPI {
           txhash: d.txhash,
           raw_log: d.raw_log,
         };
-
-        if (d.logs) {
-          blockResult.logs = d.logs.map(l => TxLog.fromData(l));
-        }
 
         if (d.code) {
           blockResult.code = d.code;
