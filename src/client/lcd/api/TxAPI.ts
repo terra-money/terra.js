@@ -31,15 +31,45 @@ export enum Broadcast {
   ASYNC = 'async',
 }
 
-export interface BlockTxBroadcastResult {
+interface Block {
   height: number;
   txhash: string;
   raw_log: string;
   gas_wanted: number;
   gas_used: number;
-  logs?: TxLog[];
-  code?: number;
+}
+
+interface Sync {
+  height: number;
+  txhash: string;
+  raw_log: string;
+}
+
+interface Async {
+  height: number;
+  txhash: string;
+}
+
+export type TxBroadcastResult<
+  B extends Block | Sync | Async,
+  C extends TxSuccess | TxError | {}
+> = B & C;
+
+export interface TxSuccess {
+  logs: TxLog[];
+}
+
+export interface TxError {
+  code: number;
   codespace?: string;
+}
+
+export function isTxError<
+  T extends TxBroadcastResult<B, C>,
+  B extends Block | Sync,
+  C extends TxSuccess | TxError
+>(x: T): x is T & TxBroadcastResult<B, TxError> {
+  return (x as T & TxError).code !== undefined;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -65,18 +95,10 @@ export interface CreateTxOptions {
   sequence?: number;
 }
 
-export type AsyncTxBroadcastResult = Pick<
-  BlockTxBroadcastResult,
-  'height' | 'txhash'
->;
 export namespace AsyncTxBroadcastResult {
   export type Data = Pick<BlockTxBroadcastResult.Data, 'height' | 'txhash'>;
 }
 
-export type SyncTxBroadcastResult = Pick<
-  BlockTxBroadcastResult,
-  'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
->;
 export namespace SyncTxBroadcastResult {
   export type Data = Pick<
     BlockTxBroadcastResult.Data,
@@ -271,12 +293,14 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "block" mode, waiting for its inclusion in the blockchain.
    * @param tx tranasaction to broadcast
    */
-  public async broadcast(tx: StdTx): Promise<BlockTxBroadcastResult> {
+  public async broadcast(
+    tx: StdTx
+  ): Promise<TxBroadcastResult<Block, TxSuccess | TxError>> {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
       Broadcast.BLOCK
     ).then(d => {
-      const blockResult: BlockTxBroadcastResult = {
+      const blockResult: any = {
         height: Number.parseInt(d.height),
         txhash: d.txhash,
         raw_log: d.raw_log,
@@ -307,10 +331,12 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "sync" mode, returning after DeliverTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
+  public async broadcastSync(
+    tx: StdTx
+  ): Promise<TxBroadcastResult<Sync, TxSuccess | TxError>> {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
       d => {
-        const blockResult: SyncTxBroadcastResult = {
+        const blockResult: any = {
           height: Number.parseInt(d.height),
           txhash: d.txhash,
           raw_log: d.raw_log,
@@ -337,7 +363,9 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {
+  public async broadcastAsync(
+    tx: StdTx
+  ): Promise<TxBroadcastResult<Async, {}>> {
     return this._broadcast<AsyncTxBroadcastResult.Data>(
       tx,
       Broadcast.ASYNC
