@@ -108,15 +108,15 @@ export namespace EventsByType {
 }
 
 export class TxLog extends JSONSerializable<TxLog.Data> {
-  public events: EventsByType;
+  public eventsByType: EventsByType;
 
   constructor(
     public msg_index: number,
     public log: string,
-    private _eventData: Event[]
+    public events: Event[]
   ) {
     super();
-    this.events = EventsByType.parse(_eventData);
+    this.eventsByType = EventsByType.parse(this.events);
   }
 
   public static fromData(data: TxLog.Data): TxLog {
@@ -125,11 +125,11 @@ export class TxLog extends JSONSerializable<TxLog.Data> {
   }
 
   public toData(): TxLog.Data {
-    const { msg_index, log } = this;
+    const { msg_index, log, events } = this;
     return {
       msg_index,
       log,
-      events: this._eventData,
+      events,
     };
   }
 }

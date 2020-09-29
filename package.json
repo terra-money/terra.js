@@ -1,6 +1,19 @@
 {
-  "version": "0.4.20",
+  "name": "@terra-money/terra.js",
+  "version": "0.4.21",
+  "description": "The JavaScript SDK for Terra",
   "license": "MIT",
+  "author": "Terraform Labs, PTE.",
+  "keywords": [
+    "terra",
+    "crypto",
+    "blockchain",
+    "smart-contracts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/terra-project/terra.js.git"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "browser": "dist/bundle.js",
@@ -37,8 +50,6 @@
     "trailingComma": "es5",
     "arrowParens": "avoid"
   },
-  "name": "@terra-money/terra.js",
-  "author": "Terraform Labs, PTE.",
   "devDependencies": {
     "@types/bech32": "^1.1.2",
     "@types/crypto-js": "^3.1.47",
