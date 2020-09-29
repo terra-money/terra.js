@@ -99,7 +99,7 @@ describe('TxInfo', () => {
     const {
       message: { action, module },
       instantiate_contract: { owner, code_id, contract_address },
-    } = tx.logs![0].events;
+    } = tx.logs![0].eventsByType;
 
     expect({
       action: action[0],
