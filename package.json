@@ -1,7 +1,9 @@
 {
   "name": "@terra-money/terra.js",
-  "description": "The JavaScript SDK for Terra",
   "version": "0.5.0",
+  "description": "The JavaScript SDK for Terra",
+  "license": "MIT",
+  "author": "Terraform Labs, PTE.",
   "keywords": [
     "terra",
     "crypto",
@@ -12,7 +14,6 @@
     "type": "git",
     "url": "git://github.com/terra-project/terra.js.git"
   },
-  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "browser": "dist/bundle.js",
@@ -49,7 +50,6 @@
     "trailingComma": "es5",
     "arrowParens": "avoid"
   },
-  "author": "Terraform Labs, PTE.",
   "devDependencies": {
     "@types/bech32": "^1.1.2",
     "@types/crypto-js": "^3.1.47",

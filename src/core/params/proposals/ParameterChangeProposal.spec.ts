@@ -159,6 +159,46 @@ const jiguJSON = {
         key: 'InflationRateChange',
         value: '"0.010000000000000000"',
       },
+      {
+        subspace: 'mint',
+        key: 'BlocksPerYear',
+        value: '"1000000"',
+      },
+      {
+        subspace: 'mint',
+        key: 'MintDenom',
+        value: '"uluna"',
+      },
+      {
+        subspace: 'mint',
+        key: 'InflationMin',
+        value: '"0.010000000000000000"',
+      },
+      {
+        subspace: 'mint',
+        key: 'InflationMax',
+        value: '"0.010000000000000000"',
+      },
+      {
+        subspace: 'mint',
+        key: 'GoalBonded',
+        value: '"0.010000000000000000"',
+      },
+      {
+        subspace: 'wasm',
+        key: 'maxcontractgas',
+        value: '"1000000"',
+      },
+      {
+        subspace: 'wasm',
+        key: 'maxcontractmsgsize',
+        value: '"1000000"',
+      },
+      {
+        subspace: 'wasm',
+        key: 'maxcontractsize',
+        value: '"1000000"',
+      },
     ],
   },
 };
@@ -233,6 +273,16 @@ describe('ParamaterChangeProposal', () => {
       },
       mint: {
         InflationRateChange: new Dec(0.01),
+        BlocksPerYear: 1000000,
+        MintDenom: 'uluna',
+        InflationMin: new Dec(0.01),
+        InflationMax: new Dec(0.01),
+        GoalBonded: new Dec(0.01),
+      },
+      wasm: {
+        maxcontractgas: 1000000,
+        maxcontractmsgsize: 1000000,
+        maxcontractsize: 1000000,
       },
     });
 

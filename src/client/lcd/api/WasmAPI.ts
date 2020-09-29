@@ -28,7 +28,6 @@ export interface WasmParams {
   max_contract_size: number;
   max_contract_gas: number;
   max_contract_msg_size: number;
-  gas_multiplier: number;
 }
 
 export namespace WasmParams {
@@ -36,7 +35,6 @@ export namespace WasmParams {
     max_contract_size: string;
     max_contract_gas: string;
     max_contract_msg_size: string;
-    gas_multiplier: string;
   }
 }
 
@@ -77,7 +75,6 @@ export class WasmAPI extends BaseAPI {
         max_contract_size: Number.parseInt(d.max_contract_size),
         max_contract_gas: Number.parseInt(d.max_contract_gas),
         max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),
-        gas_multiplier: Number.parseInt(d.gas_multiplier),
       }));
   }
 }

@@ -42,8 +42,31 @@ export interface LCDClientConfig {
 }
 
 const DEFAULT_LCD_OPTIONS: Partial<LCDClientConfig> = {
-  gasPrices: { uluna: 0.015 },
   gasAdjustment: 1.4,
+};
+
+const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
+  default: {
+    uluna: 0.00506,
+    uusd: 0.0015,
+    usdr: 0.00102,
+    ukrw: 1.7805,
+    umnt: 4.31626,
+  },
+  'columbus-3': {
+    uluna: 0.015,
+    uusd: 0.015,
+    usdr: 0.015,
+    ukrw: 0.015,
+    umnt: 0.015,
+  },
+  'tequila-0004': {
+    uluna: 0.15,
+    uusd: 0.15,
+    usdr: 0.1018,
+    ukrw: 178.05,
+    umnt: 431.6259,
+  },
 };
 
 /**
@@ -92,6 +115,9 @@ export class LCDClient {
   constructor(config: LCDClientConfig) {
     this.config = {
       ...DEFAULT_LCD_OPTIONS,
+      gasPrices:
+        DEFAULT_GAS_PRICES_BY_CHAIN_ID[config.chainID] ||
+        DEFAULT_GAS_PRICES_BY_CHAIN_ID['default'],
       ...config,
     };
 

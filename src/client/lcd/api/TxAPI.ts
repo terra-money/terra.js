@@ -12,7 +12,7 @@ import {
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { Event, TxLog } from '../../../core';
+import { TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
   gas: string;
@@ -35,11 +35,11 @@ export interface BlockTxBroadcastResult {
   height: number;
   txhash: string;
   raw_log: string;
-  logs: TxLog[];
   gas_wanted: number;
   gas_used: number;
-  events: Event;
+  logs?: TxLog[];
   code?: number;
+  codespace?: string;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -47,11 +47,11 @@ export namespace BlockTxBroadcastResult {
     height: string;
     txhash: string;
     raw_log: string;
-    logs: TxLog[];
     gas_wanted: string;
     gas_used: string;
-    events: Event;
+    logs?: TxLog.Data[];
     code?: number;
+    codespace?: string;
   }
 }
 
@@ -75,13 +75,38 @@ export namespace AsyncTxBroadcastResult {
 
 export type SyncTxBroadcastResult = Pick<
   BlockTxBroadcastResult,
-  'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
+  'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
 >;
 export namespace SyncTxBroadcastResult {
   export type Data = Pick<
     BlockTxBroadcastResult.Data,
-    'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
+    'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
   >;
+}
+
+export interface TxSearchResult {
+  total_count: number;
+  count: number;
+  page_number: number;
+  page_total: number;
+  limit: number;
+  txs: TxInfo[];
+}
+
+export namespace TxSearchResult {
+  export interface Data {
+    total_count: string;
+    count: string;
+    page_number: string;
+    page_total: string;
+    limit: string;
+    txs: TxInfo.Data[];
+  }
+}
+
+export interface TxSearchOptions {
+  page: number;
+  limit: number;
 }
 
 export class TxAPI extends BaseAPI {
@@ -250,16 +275,29 @@ export class TxAPI extends BaseAPI {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
       Broadcast.BLOCK
-    ).then(d => ({
-      height: Number.parseInt(d.height),
-      txhash: d.txhash,
-      logs: d.logs,
-      raw_log: d.raw_log,
-      gas_wanted: Number.parseInt(d.gas_wanted),
-      gas_used: Number.parseInt(d.gas_used),
-      events: d.events,
-      code: d.code,
-    }));
+    ).then(d => {
+      const blockResult: BlockTxBroadcastResult = {
+        height: Number.parseInt(d.height),
+        txhash: d.txhash,
+        raw_log: d.raw_log,
+        gas_wanted: Number.parseInt(d.gas_wanted),
+        gas_used: Number.parseInt(d.gas_used),
+      };
+
+      if (d.logs) {
+        blockResult.logs = d.logs.map(l => TxLog.fromData(l));
+      }
+
+      if (d.code) {
+        blockResult.code = d.code;
+      }
+
+      if (d.codespace) {
+        blockResult.codespace = d.codespace;
+      }
+
+      return blockResult;
+    });
   }
 
   /**
@@ -271,13 +309,27 @@ export class TxAPI extends BaseAPI {
    */
   public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
-      d => ({
-        height: Number.parseInt(d.height),
-        txhash: d.txhash,
-        logs: d.logs,
-        raw_log: d.raw_log,
-        code: d.code,
-      })
+      d => {
+        const blockResult: SyncTxBroadcastResult = {
+          height: Number.parseInt(d.height),
+          txhash: d.txhash,
+          raw_log: d.raw_log,
+        };
+
+        if (d.logs) {
+          blockResult.logs = d.logs.map(l => TxLog.fromData(l));
+        }
+
+        if (d.code) {
+          blockResult.code = d.code;
+        }
+
+        if (d.codespace) {
+          blockResult.codespace = d.codespace;
+        }
+
+        return blockResult;
+      }
     );
   }
 
@@ -292,6 +344,23 @@ export class TxAPI extends BaseAPI {
     ).then(d => ({
       height: Number.parseInt(d.height),
       txhash: d.txhash,
+    }));
+  }
+
+  /**
+   * Search for transactions based on event attributes.
+   * @param options
+   */
+  public async search(
+    options: Partial<TxSearchOptions> | {}
+  ): Promise<TxSearchResult> {
+    return this.c.getRaw<TxSearchResult.Data>(`/txs`, options).then(d => ({
+      total_count: Number.parseInt(d.total_count),
+      count: Number.parseInt(d.count),
+      page_number: Number.parseInt(d.page_number),
+      page_total: Number.parseInt(d.page_total),
+      limit: Number.parseInt(d.limit),
+      txs: d.txs.map(txdata => TxInfo.fromData(txdata)),
     }));
   }
 }

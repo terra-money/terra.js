@@ -5,10 +5,11 @@
   "includeDeclarations": true,
   "excludeExternals": true,
   "exclude": "**/*+(index|.spec|.e2e).ts",
-  "theme": "minimal",
+  "theme": "default",
   "name": "Terra.js",
   "excludeNotExported": true,
   "excludePrivate": true,
   "excludeProtected": true,
-  "media": "img"
+  "media": "img",
+  "hideGenerator": true
 }
