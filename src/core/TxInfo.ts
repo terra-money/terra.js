@@ -113,7 +113,7 @@ export class TxLog extends JSONSerializable<TxLog.Data> {
   constructor(
     public msg_index: number,
     public log: string,
-    private events: Event[]
+    public events: Event[]
   ) {
     super();
     this.eventsByType = EventsByType.parse(this.events);
