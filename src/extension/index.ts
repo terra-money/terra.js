@@ -1,5 +1,4 @@
-import { Msg } from '../core/Msg';
-import { LCDClientConfig } from '../client';
+import { CreateTxOptions, LCDClientConfig } from '../client';
 
 interface ResponseData {
   name: string;
@@ -8,16 +7,14 @@ interface ResponseData {
 
 type SendDataType = 'connect' | 'post' | 'sign';
 
-interface SignOptions {
-  lcdClientConfig?: LCDClientConfig;
-  account_number?: number;
-  sequence?: number;
-}
-
 interface SendData {
   id: number | string;
   type: SendDataType;
   [key: string]: any;
+}
+
+interface Option extends CreateTxOptions {
+  lcdClientConfig?: LCDClientConfig;
 }
 
 declare global {
@@ -137,14 +134,21 @@ export class Extension {
    * const stdSignMsg = StdSignMsg.fromData(payload.result.stdSignMsgData);
    * terra.tx.broadcast(new StdTx(stdSignMsg.msgs, stdSignMsg.fee, [sig], stdSignMsg.memo));
    */
-  sign(msgs: Msg[], options?: SignOptions): number {
+  sign(options: Option): number {
     const id = this.generateId();
 
     this.send({
       ...options,
       id,
       type: 'sign',
-      msgs: msgs.map(msg => msg.toJSON()),
+      lcdClientConfig: options.lcdClientConfig,
+      account_number: options.account_number,
+      sequence: options.sequence,
+      memo: options.memo,
+      msgs: options.msgs.map(msg => msg.toJSON()),
+      fee: options.fee?.toJSON(),
+      gasPrices: options.gasPrices?.toString(),
+      gasAdjustment: options.gasAdjustment?.toString(),
     });
 
     return id;
@@ -169,14 +173,20 @@ export class Extension {
    * @return {string}  payload.result.raw_log raw log
    * @return {string}  payload.result.txhash  transaction hash
    */
-  post(msgs: Msg[], lcdClientConfig?: LCDClientConfig): number {
+  post(options: Option): number {
     const id = this.generateId();
 
     this.send({
       id,
       type: 'post',
-      msgs: msgs.map(msg => msg.toJSON()),
-      lcdClientConfig,
+      lcdClientConfig: options.lcdClientConfig,
+      account_number: options.account_number,
+      sequence: options.sequence,
+      memo: options.memo,
+      msgs: options.msgs.map(msg => msg.toJSON()),
+      fee: options.fee?.toJSON(),
+      gasPrices: options.gasPrices?.toString(),
+      gasAdjustment: options.gasAdjustment?.toString(),
     });
 
     return id;
