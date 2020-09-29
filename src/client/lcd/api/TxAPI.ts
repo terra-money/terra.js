@@ -290,6 +290,9 @@ export class TxAPI extends BaseAPI {
 
       if (d.code) {
         blockResult.code = d.code;
+      }
+
+      if (d.codespace) {
         blockResult.codespace = d.codespace;
       }
 
