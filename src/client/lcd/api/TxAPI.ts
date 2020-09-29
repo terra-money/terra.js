@@ -12,7 +12,7 @@ import {
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { Event, TxLog } from '../../../core';
+import { Event, EventsByType, TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
   gas: string;
@@ -38,7 +38,7 @@ export interface BlockTxBroadcastResult {
   logs: TxLog[];
   gas_wanted: number;
   gas_used: number;
-  events: Event;
+  events: EventsByType;
   code?: number;
 }
 
@@ -47,10 +47,10 @@ export namespace BlockTxBroadcastResult {
     height: string;
     txhash: string;
     raw_log: string;
-    logs: TxLog[];
+    logs: TxLog.Data[];
     gas_wanted: string;
     gas_used: string;
-    events: Event;
+    events: Event[];
     code?: number;
   }
 }
@@ -82,6 +82,31 @@ export namespace SyncTxBroadcastResult {
     BlockTxBroadcastResult.Data,
     'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
   >;
+}
+
+export interface TxSearchResult {
+  total_count: number;
+  count: number;
+  page_number: number;
+  page_total: number;
+  limit: number;
+  txs: TxInfo[];
+}
+
+export namespace TxSearchResult {
+  export interface Data {
+    total_count: string;
+    count: string;
+    page_number: string;
+    page_total: string;
+    limit: string;
+    txs: TxInfo.Data[];
+  }
+}
+
+export interface TxSearchOptions {
+  page: number;
+  limit: number;
 }
 
 export class TxAPI extends BaseAPI {
@@ -250,16 +275,18 @@ export class TxAPI extends BaseAPI {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
       Broadcast.BLOCK
-    ).then(d => ({
-      height: Number.parseInt(d.height),
-      txhash: d.txhash,
-      logs: d.logs,
-      raw_log: d.raw_log,
-      gas_wanted: Number.parseInt(d.gas_wanted),
-      gas_used: Number.parseInt(d.gas_used),
-      events: d.events,
-      code: d.code,
-    }));
+    ).then(d => {
+      return {
+        height: Number.parseInt(d.height),
+        txhash: d.txhash,
+        logs: d.logs.map(l => TxLog.fromData(l)),
+        raw_log: d.raw_log,
+        gas_wanted: Number.parseInt(d.gas_wanted),
+        gas_used: Number.parseInt(d.gas_used),
+        events: EventsByType.parse(d.events),
+        code: d.code,
+      };
+    });
   }
 
   /**
@@ -274,7 +301,7 @@ export class TxAPI extends BaseAPI {
       d => ({
         height: Number.parseInt(d.height),
         txhash: d.txhash,
-        logs: d.logs,
+        logs: d.logs.map(l => TxLog.fromData(l)),
         raw_log: d.raw_log,
         code: d.code,
       })
@@ -292,6 +319,23 @@ export class TxAPI extends BaseAPI {
     ).then(d => ({
       height: Number.parseInt(d.height),
       txhash: d.txhash,
+    }));
+  }
+
+  /**
+   * Search for transactions based on event attributes.
+   * @param options
+   */
+  public async search(
+    options: Partial<TxSearchOptions> | {}
+  ): Promise<TxSearchResult> {
+    return this.c.getRaw<TxSearchResult.Data>(`/txs`, options).then(d => ({
+      total_count: Number.parseInt(d.total_count),
+      count: Number.parseInt(d.count),
+      page_number: Number.parseInt(d.page_number),
+      page_total: Number.parseInt(d.page_total),
+      limit: Number.parseInt(d.limit),
+      txs: d.txs.map(txdata => TxInfo.fromData(txdata)),
     }));
   }
 }
