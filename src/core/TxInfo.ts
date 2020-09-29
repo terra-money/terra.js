@@ -27,7 +27,8 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     public gas_used: number,
     public tx: StdTx,
     public timestamp: string,
-    public code?: number
+    public code?: number,
+    public codespace?: string
   ) {
     super();
   }
@@ -42,12 +43,13 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
       Number.parseInt(data.gas_used),
       StdTx.fromData(data.tx),
       data.timestamp,
-      data.code
+      data.code,
+      data.codespace
     );
   }
 
   public toData(): TxInfo.Data {
-    let data: TxInfo.Data = {
+    const data: TxInfo.Data = {
       height: this.height.toFixed(),
       txhash: this.txhash,
       raw_log: this.raw_log,
@@ -58,11 +60,15 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     };
 
     if (this.logs) {
-      data = { ...data, logs: this.logs.map(log => log.toData()) };
+      data.logs = this.logs.map(log => log.toData());
     }
 
     if (this.code) {
-      data = { ...data, code: this.code };
+      data.code = this.code;
+    }
+
+    if (this.codespace) {
+      data.codespace = this.codespace;
     }
 
     return data;
@@ -153,5 +159,6 @@ export namespace TxInfo {
     tx: StdTx.Data;
     timestamp: string;
     code?: number;
+    codespace?: string;
   }
 }

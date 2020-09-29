@@ -12,7 +12,7 @@ import {
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { Event, EventsByType, TxLog } from '../../../core';
+import { TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
   gas: string;
@@ -35,11 +35,11 @@ export interface BlockTxBroadcastResult {
   height: number;
   txhash: string;
   raw_log: string;
-  logs: TxLog[];
   gas_wanted: number;
   gas_used: number;
-  events: EventsByType;
+  logs?: TxLog[];
   code?: number;
+  codespace?: string;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -47,11 +47,11 @@ export namespace BlockTxBroadcastResult {
     height: string;
     txhash: string;
     raw_log: string;
-    logs: TxLog.Data[];
     gas_wanted: string;
     gas_used: string;
-    events: Event[];
+    logs?: TxLog.Data[];
     code?: number;
+    codespace?: string;
   }
 }
 
@@ -75,12 +75,12 @@ export namespace AsyncTxBroadcastResult {
 
 export type SyncTxBroadcastResult = Pick<
   BlockTxBroadcastResult,
-  'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
+  'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
 >;
 export namespace SyncTxBroadcastResult {
   export type Data = Pick<
     BlockTxBroadcastResult.Data,
-    'height' | 'txhash' | 'raw_log' | 'logs' | 'code'
+    'height' | 'txhash' | 'raw_log' | 'logs' | 'code' | 'codespace'
   >;
 }
 
@@ -276,16 +276,27 @@ export class TxAPI extends BaseAPI {
       tx,
       Broadcast.BLOCK
     ).then(d => {
-      return {
+      const blockResult: BlockTxBroadcastResult = {
         height: Number.parseInt(d.height),
         txhash: d.txhash,
-        logs: d.logs.map(l => TxLog.fromData(l)),
         raw_log: d.raw_log,
         gas_wanted: Number.parseInt(d.gas_wanted),
         gas_used: Number.parseInt(d.gas_used),
-        events: EventsByType.parse(d.events),
-        code: d.code,
       };
+
+      if (d.logs) {
+        blockResult.logs = d.logs.map(l => TxLog.fromData(l));
+      }
+
+      if (d.code) {
+        blockResult.code = d.code;
+      }
+
+      if (d.codespace) {
+        blockResult.codespace = d.codespace;
+      }
+
+      return blockResult;
     });
   }
 
@@ -298,13 +309,27 @@ export class TxAPI extends BaseAPI {
    */
   public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
-      d => ({
-        height: Number.parseInt(d.height),
-        txhash: d.txhash,
-        logs: d.logs.map(l => TxLog.fromData(l)),
-        raw_log: d.raw_log,
-        code: d.code,
-      })
+      d => {
+        const blockResult: SyncTxBroadcastResult = {
+          height: Number.parseInt(d.height),
+          txhash: d.txhash,
+          raw_log: d.raw_log,
+        };
+
+        if (d.logs) {
+          blockResult.logs = d.logs.map(l => TxLog.fromData(l));
+        }
+
+        if (d.code) {
+          blockResult.code = d.code;
+        }
+
+        if (d.codespace) {
+          blockResult.codespace = d.codespace;
+        }
+
+        return blockResult;
+      }
     );
   }
 
