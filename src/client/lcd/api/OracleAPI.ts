@@ -12,7 +12,7 @@ import {
   AggregateExchangeRateVote,
 } from '../../../core';
 
-type OracleWhitelist = {
+export type OracleWhitelist = {
   name: Denom;
   tobin_tax: Dec;
 }[];
