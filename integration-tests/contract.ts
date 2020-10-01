@@ -5,6 +5,7 @@ import {
   MsgExecuteContract,
   MnemonicKey,
   StdFee,
+  isTxError,
 } from '../src';
 import * as fs from 'fs';
 
@@ -28,12 +29,16 @@ async function main(): Promise<void> {
     fs.readFileSync('contract.wasm').toString('base64')
   );
   const storeCodeTx = await wallet.createAndSignTx({
-    msgs: [storeCode]
+    msgs: [storeCode],
   });
   const storeCodeTxResult = await terra.tx.broadcast(storeCodeTx);
 
-  if (!storeCodeTxResult.logs) {
-    throw new Error(`store code failed. code: ${storeCodeTxResult.code}, codespace: ${storeCodeTxResult.codespace}, raw_log: ${storeCodeTxResult.raw_log}`);
+  console.log(storeCodeTxResult);
+
+  if (isTxError(storeCodeTxResult)) {
+    throw new Error(
+      `store code failed. code: ${storeCodeTxResult.code}, codespace: ${storeCodeTxResult.codespace}, raw_log: ${storeCodeTxResult.raw_log}`
+    );
   }
 
   const {
@@ -49,12 +54,15 @@ async function main(): Promise<void> {
     { uluna: 10000000, ukrw: 1000000 }, // init coins
     false // migratable
   );
+
   const instantiateTx = await wallet.createAndSignTx({
-    msgs: [instantiate]
+    msgs: [instantiate],
   });
   const instantiateTxResult = await terra.tx.broadcast(instantiateTx);
 
-  if (!instantiateTxResult.logs) {
+  console.log(instantiateTxResult);
+
+  if (isTxError(instantiateTxResult)) {
     throw new Error(
       `instantiate failed. code: ${instantiateTxResult.code}, codespace: ${instantiateTxResult.codespace}, raw_log: ${instantiateTxResult.raw_log}`
     );
@@ -63,6 +71,7 @@ async function main(): Promise<void> {
   const {
     instantiate_contract: { contract_address },
   } = instantiateTxResult.logs[0].eventsByType;
+
   const execute = new MsgExecuteContract(
     wallet.key.accAddress, // sender
     contract_address[0], // contract account address
@@ -71,7 +80,7 @@ async function main(): Promise<void> {
   );
   const executeTx = await wallet.createAndSignTx({
     msgs: [execute],
-    fee: new StdFee(10000000, { uluna: 10000000 }),
+    fee: new StdFee(100, { uluna: 1 }),
   });
   const executeTxResult = await terra.tx.broadcast(executeTx);
   console.log(executeTxResult);
