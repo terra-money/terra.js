@@ -15,6 +15,8 @@ interface SendData {
 
 interface Option extends CreateTxOptions {
   lcdClientConfig?: LCDClientConfig;
+  waitForConfirmation?: boolean; // default false
+  purgeQueue?: boolean; // default true
 }
 
 declare global {
@@ -104,10 +106,6 @@ export class Extension {
   /**
    * Request to Station Extension for signing tx
    *
-   * @param msgs transaction messages to be signed
-   * @param account_number account number (optional)
-   * @param sequence sequence (optional)
-   *
    * @return {string}  name               'onSign'
    * @return {object}  payload
    * @return {number}  payload.id         identifier
@@ -141,14 +139,16 @@ export class Extension {
       ...options,
       id,
       type: 'sign',
-      lcdClientConfig: options.lcdClientConfig,
-      account_number: options.account_number,
-      sequence: options.sequence,
-      memo: options.memo,
       msgs: options.msgs.map(msg => msg.toJSON()),
       fee: options.fee?.toJSON(),
+      memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
+      account_number: options.account_number,
+      sequence: options.sequence,
+      lcdClientConfig: options.lcdClientConfig,
+      waitForConfirmation: options.waitForConfirmation,
+      purgeQueue: options.purgeQueue,
     });
 
     return id;
@@ -156,9 +156,6 @@ export class Extension {
 
   /**
    * Request to Station Extension for sign and post to LCD server
-   *
-   * @param msgs transaction messages to be signed
-   * @param lcdClientConfig LCDClientConfig (optional)
    *
    * @return {string}  name                   'onPost'
    * @return {object}  payload
@@ -179,14 +176,16 @@ export class Extension {
     this.send({
       id,
       type: 'post',
-      lcdClientConfig: options.lcdClientConfig,
-      account_number: options.account_number,
-      sequence: options.sequence,
-      memo: options.memo,
       msgs: options.msgs.map(msg => msg.toJSON()),
       fee: options.fee?.toJSON(),
+      memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
+      account_number: options.account_number,
+      sequence: options.sequence,
+      lcdClientConfig: options.lcdClientConfig,
+      waitForConfirmation: options.waitForConfirmation,
+      purgeQueue: options.purgeQueue,
     });
 
     return id;
