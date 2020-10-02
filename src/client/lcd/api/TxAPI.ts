@@ -64,6 +64,13 @@ export interface TxError {
   codespace?: string;
 }
 
+export type BlockTxBroadcastResult = TxBroadcastResult<
+  Block,
+  TxSuccess | TxError
+>;
+export type SyncTxBroadcastResult = TxBroadcastResult<Sync, TxError | {}>;
+export type AsyncTxBroadcastResult = TxBroadcastResult<Async, {}>;
+
 export function isTxError<
   T extends TxBroadcastResult<B, C>,
   B extends Block | Sync,
@@ -293,9 +300,7 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "block" mode, waiting for its inclusion in the blockchain.
    * @param tx tranasaction to broadcast
    */
-  public async broadcast(
-    tx: StdTx
-  ): Promise<TxBroadcastResult<Block, TxSuccess | TxError>> {
+  public async broadcast(tx: StdTx): Promise<BlockTxBroadcastResult> {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
       Broadcast.BLOCK
@@ -331,9 +336,7 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "sync" mode, returning after DeliverTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastSync(
-    tx: StdTx
-  ): Promise<TxBroadcastResult<Sync, {} | TxError>> {
+  public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
       d => {
         const blockResult: any = {
@@ -359,9 +362,7 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastAsync(
-    tx: StdTx
-  ): Promise<TxBroadcastResult<Async, {}>> {
+  public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {
     return this._broadcast<AsyncTxBroadcastResult.Data>(
       tx,
       Broadcast.ASYNC
