@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
