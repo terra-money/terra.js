@@ -1,34 +1,23 @@
 import {
-  LCDClient,
   MsgStoreCode,
   MsgInstantiateContract,
   MsgExecuteContract,
-  MnemonicKey,
   StdFee,
   isTxError,
+  LocalTerra,
 } from '../src';
 import * as fs from 'fs';
 
 // test1 key from localterra accounts
-const mk = new MnemonicKey({
-  mnemonic:
-    'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius',
-});
-
-// connect to localterra
-const terra = new LCDClient({
-  URL: 'http://localhost:1317',
-  chainID: 'localterra',
-});
-
-const wallet = terra.wallet(mk);
+const terra = new LocalTerra();
+const { test1 } = terra.wallets;
 
 async function main(): Promise<void> {
   const storeCode = new MsgStoreCode(
-    wallet.key.accAddress,
+    test1.key.accAddress,
     fs.readFileSync('contract.wasm').toString('base64')
   );
-  const storeCodeTx = await wallet.createAndSignTx({
+  const storeCodeTx = await test1.createAndSignTx({
     msgs: [storeCode],
   });
   const storeCodeTxResult = await terra.tx.broadcast(storeCodeTx);
@@ -46,7 +35,7 @@ async function main(): Promise<void> {
   } = storeCodeTxResult.logs[0].eventsByType;
 
   const instantiate = new MsgInstantiateContract(
-    wallet.key.accAddress,
+    test1.key.accAddress,
     +code_id[0], // code ID
     {
       count: 0,
@@ -55,7 +44,7 @@ async function main(): Promise<void> {
     false // migratable
   );
 
-  const instantiateTx = await wallet.createAndSignTx({
+  const instantiateTx = await test1.createAndSignTx({
     msgs: [instantiate],
   });
   const instantiateTxResult = await terra.tx.broadcast(instantiateTx);
@@ -73,12 +62,12 @@ async function main(): Promise<void> {
   } = instantiateTxResult.logs[0].eventsByType;
 
   const execute = new MsgExecuteContract(
-    wallet.key.accAddress, // sender
+    test1.key.accAddress, // sender
     contract_address[0], // contract account address
     { increment: {} }, // handle msg
     { uluna: 100000 } // coins
   );
-  const executeTx = await wallet.createAndSignTx({
+  const executeTx = await test1.createAndSignTx({
     msgs: [execute],
     fee: new StdFee(100, { uluna: 1 }),
   });
