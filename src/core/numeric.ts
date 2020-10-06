@@ -183,3 +183,44 @@ export class Int extends _Int implements Numeric<Numeric.Output> {
     }
   }
 }
+
+/**
+ * Template tagged literal for creating new Dec objects out of literal string.
+ * This does not support literal string interpolation  with `${}`.
+ *
+ * Usage is:
+ *
+ * ```ts
+ * import { dec } from "@terra-money/terra.js";
+ *
+ * const dec1 = dec`234.12312`;
+ * const dec2 = new Dec("234.12312");
+ *
+ * dec1.equals(dec2);
+ * ```
+ * @param strings
+ */
+export function dec(strings: TemplateStringsArray): Dec {
+  return new Dec(strings[0]);
+}
+
+/**
+ * Template tagged literal for creating new Int objects out of literal string.
+ * This does not support literal string interpolation  with `${}`.
+ *
+ * Usage is:
+ *
+ * ```ts
+ * import { int } from "@terra-money/terra.js";
+ *
+ * const int1 = int`234`;
+ * const int2 = new Int("234");
+ *
+ * int1.equals(int2);
+ * ```
+ * @param strings
+ */
+
+export function int(strings: TemplateStringsArray): Int {
+  return new Int(strings[0]);
+}

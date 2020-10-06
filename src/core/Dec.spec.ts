@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { Dec } from './numeric';
+import { Dec, dec } from './numeric';
 
 function d(arg: Decimal.Value): Dec {
   // shortcut
@@ -11,6 +11,12 @@ function dwp(arg1: Decimal.Value, arg2: number): Dec {
 }
 
 describe('Decimal', () => {
+  it('tagged literal syntax', () => {
+    const dec1 = dec`123.123456`;
+    const dec2 = new Dec('123.123456');
+    expect(dec1).toEqual(dec2);
+  });
+
   describe('serialization / deserialization', () => {
     it('deserializes regular Dec input', () => {
       const examples = [
@@ -30,7 +36,8 @@ describe('Decimal', () => {
     });
 
     it('serializes zero correctly', () => {
-      const zero = new Dec('0');
+      const a = 0;
+      const zero = dec`0`;
       expect(zero.toString()).toEqual('0.000000000000000000');
     });
 
