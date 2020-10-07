@@ -1,6 +1,12 @@
-import { Int } from './numeric';
+import { Int, int } from './numeric';
 
 describe('Int', () => {
+  it('tagged literal syntax', () => {
+    const int1 = int`1234`;
+    const int2 = new Int(1234);
+    expect(int1).toEqual(int2);
+  });
+
   it('converts into integer value', () => {
     const i = new Int('100');
     const i2 = new Int('100.293');

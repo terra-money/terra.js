@@ -60,6 +60,8 @@ describe('Coins', () => {
   it('fromString', () => {
     const int_coins_string = '5ukrw,12uluna';
     const dec_coins_string = '2.3ukrw,1.45uluna';
+    const neg_dec_coins_string = '-1.0ukrw,2.5uluna';
+
     const int_coins = new Coins({
       ukrw: 5,
       uluna: '12',
@@ -69,10 +71,17 @@ describe('Coins', () => {
       uluna: '1.45',
     });
 
+    const neg_dec_coins = new Coins({
+      ukrw: '-1.0',
+      uluna: 2.5,
+    });
+
     const coins1 = Coins.fromString(int_coins_string);
     const coins2 = Coins.fromString(dec_coins_string);
+    const coins3 = Coins.fromString(neg_dec_coins_string);
 
     expect(coins1).toEqual(int_coins);
     expect(coins2).toEqual(dec_coins);
+    expect(coins3).toEqual(neg_dec_coins);
   });
 });

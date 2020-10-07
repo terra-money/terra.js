@@ -8,58 +8,46 @@ describe('LazyGradedVestingAccount', () => {
     const acct = LazyGradedVestingAccount.fromData({
       type: 'core/LazyGradedVestingAccount',
       value: {
-        BaseVestingAccount: {
-          BaseAccount: {
-            address: 'terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn',
-            coins: [
-              {
-                denom: 'ukrw',
-                amount: '21741046537',
-              },
-              {
-                denom: 'uluna',
-                amount: '58913630',
-              },
-              {
-                denom: 'umnt',
-                amount: '2837600699',
-              },
-              {
-                denom: 'usdr',
-                amount: '9532749',
-              },
-              {
-                denom: 'uusd',
-                amount: '5762512',
-              },
-            ],
-            public_key: {
-              type: 'tendermint/PubKeySecp256k1',
-              value: 'A/38tukG3M+uMPIYKHgib8BG8kKnQKe5CISse0f9F75S',
-            },
-            account_number: '684082',
-            sequence: '37',
+        address: 'terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn',
+        coins: [
+          {
+            denom: 'ukrw',
+            amount: '3952727625434',
           },
-          original_vesting: [
-            {
-              denom: 'uluna',
-              amount: '5000000000000',
-            },
-          ],
-          delegated_free: [
-            {
-              denom: 'uluna',
-              amount: '648778788070',
-            },
-          ],
-          delegated_vesting: [
-            {
-              denom: 'uluna',
-              amount: '4500000000000',
-            },
-          ],
-          end_time: '0',
-        },
+          {
+            denom: 'uluna',
+            amount: '48919046',
+          },
+          {
+            denom: 'umnt',
+            amount: '35243811596',
+          },
+          {
+            denom: 'usdr',
+            amount: '1212381',
+          },
+          {
+            denom: 'uusd',
+            amount: '474532',
+          },
+        ],
+        public_key: null,
+        account_number: '684082',
+        sequence: '0',
+        original_vesting: [
+          {
+            denom: 'uluna',
+            amount: '5000000000000',
+          },
+        ],
+        delegated_free: [],
+        delegated_vesting: [
+          {
+            denom: 'uluna',
+            amount: '1338029091449',
+          },
+        ],
+        end_time: '0',
         vesting_schedules: [
           {
             denom: 'uluna',
@@ -89,6 +77,7 @@ describe('LazyGradedVestingAccount', () => {
         ],
       },
     });
+
     expect(acct.vesting_schedules[0].schedules[0]).toMatchObject({
       start_time: 1558677600,
       end_time: 1561356000,
