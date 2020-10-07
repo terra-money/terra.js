@@ -78,7 +78,7 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
   }
 
   public static fromString(str: string): Coin {
-    const m = str.match(/^([0-9]+(\.[0-9]+)?)([a-zA-Z]+)$/);
+    const m = str.match(/^(-?[0-9]+(\.[0-9]+)?)([a-zA-Z]+)$/);
     if (m === null) {
       throw new Error(`failed to parse to Coin: ${str}`);
     }
