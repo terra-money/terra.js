@@ -20,6 +20,8 @@ export interface StakingParams {
   /** Maximum entries for unbonding delegations and redelegations. */
   max_entries: number;
 
+  historical_entries: number;
+
   /** The denomination used as the staking token (probably Luna). */
   bond_denom: Denom;
 }
@@ -29,6 +31,7 @@ export namespace StakingParams {
     unbonding_time: string;
     max_validators: number;
     max_entries: number;
+    historical_entries: number;
     bond_denom: Denom;
   }
 }
@@ -215,6 +218,7 @@ export class StakingAPI extends BaseAPI {
         unbonding_time: Number.parseInt(d.unbonding_time),
         max_validators: d.max_validators,
         max_entries: d.max_entries,
+        historical_entries: d.historical_entries,
         bond_denom: d.bond_denom,
       }));
   }

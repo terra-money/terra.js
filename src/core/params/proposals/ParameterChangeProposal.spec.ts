@@ -109,7 +109,11 @@ const jiguJSON = {
         key: 'rewarddistributionwindow',
         value: '"345345"',
       },
-      { subspace: 'oracle', key: 'whitelist', value: '["abc","bdc","ttt"]' },
+      {
+        subspace: 'oracle',
+        key: 'whitelist',
+        value: '[{"name":"ukrw","tobin_tax":"0.003500000000000000"}]',
+      },
       {
         subspace: 'oracle',
         key: 'slashfraction',
@@ -131,11 +135,6 @@ const jiguJSON = {
         subspace: 'market',
         key: 'minspread',
         value: '"343434.000000000000000000"',
-      },
-      {
-        subspace: 'market',
-        key: 'illiquidtobintaxlist',
-        value: '[{"denom":"item","tax_rate":"12301.000000000000000000"}]',
       },
       {
         subspace: 'gov',
@@ -246,7 +245,9 @@ describe('ParamaterChangeProposal', () => {
         votethreshold: new Dec('2342.234333'),
         rewardband: new Dec('234343'),
         rewarddistributionwindow: 345345,
-        whitelist: ['abc', 'bdc', 'ttt'],
+        whitelist: [
+          { name: 'ukrw', tobin_tax: new Dec('0.003500000000000000') },
+        ],
         slashfraction: new Dec(23423.232343),
         slashwindow: 343311,
         minvalidperwindow: new Dec(2342.234234),
@@ -255,7 +256,6 @@ describe('ParamaterChangeProposal', () => {
         poolrecoveryperiod: 234234234,
         basepool: new Dec(232323232),
         minspread: new Dec(343434),
-        illiquidtobintaxlist: [{ denom: 'item', tax_rate: new Dec('12301') }],
       },
       gov: {
         depositparams: {

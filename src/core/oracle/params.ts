@@ -2,6 +2,17 @@ import { Denom } from '../Denom';
 import { ParamChange } from '../params/ParamChange';
 import { Convert } from '../../util/convert';
 import { Dec } from '../numeric';
+export type OracleWhitelist = {
+  name: Denom;
+  tobin_tax: Dec;
+}[];
+
+export namespace OracleWhitelist {
+  export type Data = {
+    name: Denom;
+    tobin_tax: string;
+  }[];
+}
 
 type VotePeriod = ParamChange.Type<'oracle', 'voteperiod', number>;
 type VoteThreshold = ParamChange.Type<'oracle', 'votethreshold', Dec>;
@@ -12,7 +23,7 @@ type RewardDistributionWindow = ParamChange.Type<
   number
 >;
 
-type Whitelist = ParamChange.Type<'oracle', 'whitelist', Denom[]>;
+type Whitelist = ParamChange.Type<'oracle', 'whitelist', OracleWhitelist>;
 type SlashFraction = ParamChange.Type<'oracle', 'slashfraction', Dec>;
 type SlashWindow = ParamChange.Type<'oracle', 'slashwindow', number>;
 type MinValidPerWindow = ParamChange.Type<'oracle', 'minvalidperwindow', Dec>;
@@ -45,7 +56,7 @@ export interface OracleParamChanges {
     votethreshold?: Dec;
     rewardband?: Dec;
     rewarddistributionwindow?: number;
-    whitelist?: Denom[];
+    whitelist?: OracleWhitelist;
     slashfraction?: Dec;
     slashwindow?: number;
     minvalidperwindow?: Dec;
@@ -59,7 +70,7 @@ export namespace OracleParamChanges {
       votethreshold: [Convert.toDec, Convert.toString],
       rewardband: [Convert.toDec, Convert.toString],
       rewarddistributionwindow: [Convert.toNumber, Convert.toFixed],
-      whitelist: [Convert.id, Convert.id],
+      whitelist: [Convert.toOracleWhitelist, Convert.serializeOracleWhitelist],
       slashfraction: [Convert.toDec, Convert.toString],
       slashwindow: [Convert.toNumber, Convert.toFixed],
       minvalidperwindow: [Convert.toDec, Convert.toString],

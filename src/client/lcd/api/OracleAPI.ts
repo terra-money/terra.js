@@ -12,10 +12,7 @@ import {
   AggregateExchangeRateVote,
 } from '../../../core';
 
-export type OracleWhitelist = {
-  name: Denom;
-  tobin_tax: Dec;
-}[];
+import { OracleWhitelist } from '../../../core/oracle/params';
 
 export interface OracleParams {
   /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of LUNA. */
@@ -31,10 +28,9 @@ export interface OracleParams {
   reward_distribution_window: number;
 
   /** List of active denominations that must be voted on.
-   * @returns String[] on Columbus-3
    * @returns { name: String, tobin_tax: String }[] on Columbus-4 or later
    */
-  whitelist: Denom[] | OracleWhitelist;
+  whitelist: OracleWhitelist;
 
   /** Percetange of stake slashed once per slash window. */
   slash_fraction: Dec;
@@ -52,7 +48,7 @@ export namespace OracleParams {
     vote_threshold: string;
     reward_band: string;
     reward_distribution_window: string;
-    whitelist: Denom[] | OracleWhitelist;
+    whitelist: OracleWhitelist.Data;
     slash_fraction: string;
     slash_window: string;
     min_valid_per_window: string;
@@ -209,10 +205,10 @@ export class OracleAPI extends BaseAPI {
         reward_distribution_window: Number.parseInt(
           d.reward_distribution_window
         ),
-        whitelist:
-          Array.isArray(d) && d.length && typeof d[0] === 'string'
-            ? (d.whitelist as string[])
-            : (d.whitelist as OracleWhitelist),
+        whitelist: d.whitelist.map(x => ({
+          name: x.name,
+          tobin_tax: new Dec(x.tobin_tax),
+        })),
         slash_fraction: new Dec(d.slash_fraction),
         slash_window: Number.parseInt(d.slash_window),
         min_valid_per_window: new Dec(d.min_valid_per_window),

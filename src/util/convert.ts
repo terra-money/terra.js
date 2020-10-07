@@ -1,9 +1,9 @@
 import { VotingParams, TallyParams, DepositParams } from '../core/gov/params';
 import { Coins } from '../core';
-import { TaxRate } from '../core/market/params';
 import { PolicyConstraints } from '../core/treasury/PolicyConstraints';
 import { JSONSerializable } from './json';
 import { Dec, Numeric } from '../core';
+import { OracleWhitelist } from '../core/oracle/params';
 
 export namespace Convert {
   export const id = (c: any): any => c;
@@ -11,11 +11,12 @@ export namespace Convert {
   export const toString = (c: any): string => c.toString();
   export const toFixed = (c: number): string => c.toFixed();
   export const toNumber = Number.parseInt;
-  export const toTaxRateArray = (c: TaxRate.Data[]): TaxRate[] =>
+  export const toOracleWhitelist = (c: OracleWhitelist.Data): OracleWhitelist =>
     c.map(v => ({
-      denom: v.denom,
-      tax_rate: new Dec(v.tax_rate),
+      name: v.name,
+      tobin_tax: new Dec(v.tobin_tax),
     }));
+
   export const toVotingParams = (c: VotingParams.Data): VotingParams => ({
     voting_period: Number.parseInt(c.voting_period),
   });
@@ -46,9 +47,11 @@ export namespace Convert {
     threshold: c.threshold.toString(),
     veto: c.veto.toString(),
   });
-  export const serializeTaxRateArray = (c: TaxRate[]): TaxRate.Data[] =>
+  export const serializeOracleWhitelist = (
+    c: OracleWhitelist
+  ): OracleWhitelist.Data =>
     c.map(v => ({
-      denom: v.denom,
-      tax_rate: v.tax_rate.toString(),
+      name: v.name,
+      tobin_tax: v.tobin_tax.toString(),
     }));
 }

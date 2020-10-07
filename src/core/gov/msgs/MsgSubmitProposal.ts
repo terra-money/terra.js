@@ -38,7 +38,6 @@ export class MsgSubmitProposal extends JSONSerializable<
 
   public toData(): MsgSubmitProposal.Data {
     const { content, initial_deposit, proposer } = this;
-    console.log(proposer);
     return {
       type: 'gov/MsgSubmitProposal',
       value: {

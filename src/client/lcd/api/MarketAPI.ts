@@ -1,7 +1,5 @@
 import { Coin, Dec, Numeric, Denom } from '../../../core';
 import { BaseAPI } from './BaseAPI';
-import { TaxRate } from '../../../core/market/params';
-import { Convert } from '../../../util/convert';
 
 export interface MarketParams {
   /** Number of blocks it takes for the Terra & Luna pools to naturally "reset" towards
@@ -14,12 +12,6 @@ export interface MarketParams {
 
   /** Minimum spread charged on Terra<>Luna swaps to prevent leaking value from front-running attacks. */
   min_spread: Dec;
-
-  /** A fee added on for swap between Terra currencies (spot-conversion). */
-  tobin_tax: Dec;
-
-  /** List of denominations in which to apply a higher Tobin Tax than normal to account for lack of liquidity. */
-  illiquid_tobin_tax_list: TaxRate[];
 }
 
 export namespace MarketParams {
@@ -27,8 +19,6 @@ export namespace MarketParams {
     pool_recovery_period: string;
     base_pool: string;
     min_spread: string;
-    tobin_tax: string;
-    illiquid_tobin_tax_list: TaxRate.Data[];
   }
 }
 
@@ -68,10 +58,6 @@ export class MarketAPI extends BaseAPI {
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
         base_pool: new Dec(d.base_pool),
         min_spread: new Dec(d.min_spread),
-        tobin_tax: new Dec(d.tobin_tax),
-        illiquid_tobin_tax_list: Convert.toTaxRateArray(
-          d.illiquid_tobin_tax_list
-        ),
       }));
   }
 }
