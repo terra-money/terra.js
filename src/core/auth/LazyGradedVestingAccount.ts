@@ -3,6 +3,8 @@ import { Coins } from '../Coins';
 import { JSONSerializable } from '../../util/json';
 import { Account } from './Account';
 import { Dec } from '../numeric';
+import { AccAddress } from '../strings';
+import { PublicKey } from '../PublicKey';
 
 /**
  * Holds information about a Account which has vesting information.
@@ -20,7 +22,11 @@ export class LazyGradedVestingAccount extends JSONSerializable<
    * @param vesting_schedules Entries that make up vesting
    */
   constructor(
-    public BaseAccount: Account,
+    public address: AccAddress,
+    public coins: Coins,
+    public public_key: PublicKey | null,
+    public account_number: number,
+    public sequence: number,
     public original_vesting: Coins,
     public delegated_free: Coins,
     public delegated_vesting: Coins,
@@ -32,7 +38,11 @@ export class LazyGradedVestingAccount extends JSONSerializable<
 
   public toData(): LazyGradedVestingAccount.Data {
     const {
-      BaseAccount,
+      address,
+      coins,
+      public_key,
+      account_number,
+      sequence,
       original_vesting,
       delegated_free,
       delegated_vesting,
@@ -42,13 +52,15 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     return {
       type: 'core/LazyGradedVestingAccount',
       value: {
-        BaseVestingAccount: {
-          BaseAccount: BaseAccount.toData().value,
-          original_vesting: original_vesting.toData(),
-          delegated_free: delegated_free.toData(),
-          delegated_vesting: delegated_vesting.toData(),
-          end_time: end_time.toFixed(),
-        },
+        address,
+        coins: coins.toData(),
+        public_key: public_key && public_key.toData(),
+        account_number: account_number.toFixed(),
+        sequence: sequence.toFixed(),
+        original_vesting: original_vesting.toData(),
+        delegated_free: delegated_free.toData(),
+        delegated_vesting: delegated_vesting.toData(),
+        end_time: end_time.toFixed(),
         vesting_schedules: vesting_schedules.map(vs => vs.toData()),
       },
     };
@@ -59,21 +71,24 @@ export class LazyGradedVestingAccount extends JSONSerializable<
   ): LazyGradedVestingAccount {
     const {
       value: {
-        BaseVestingAccount: {
-          BaseAccount,
-          original_vesting,
-          delegated_free,
-          delegated_vesting,
-          end_time,
-        },
+        address,
+        coins,
+        public_key,
+        account_number,
+        sequence,
+        original_vesting,
+        delegated_free,
+        delegated_vesting,
+        end_time,
         vesting_schedules,
       },
     } = data;
     return new LazyGradedVestingAccount(
-      Account.fromData({
-        type: 'core/Account',
-        value: BaseAccount,
-      }),
+      address,
+      Coins.fromData(coins),
+      public_key && PublicKey.fromData(public_key),
+      Number.parseInt(account_number),
+      Number.parseInt(sequence),
       Coins.fromData(original_vesting),
       Coins.fromData(delegated_free),
       Coins.fromData(delegated_vesting),
@@ -88,14 +103,11 @@ export class LazyGradedVestingAccount extends JSONSerializable<
 export namespace LazyGradedVestingAccount {
   export interface Data {
     type: 'core/LazyGradedVestingAccount';
-    value: {
-      BaseVestingAccount: {
-        BaseAccount: Account.Value;
-        original_vesting: Coins.Data;
-        delegated_free: Coins.Data;
-        delegated_vesting: Coins.Data;
-        end_time: string;
-      };
+    value: Account.Value & {
+      original_vesting: Coins.Data;
+      delegated_free: Coins.Data;
+      delegated_vesting: Coins.Data;
+      end_time: string;
       vesting_schedules: VestingSchedule.Data[];
     };
   }
