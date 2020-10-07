@@ -188,23 +188,12 @@ export class TxAPI extends BaseAPI {
 
     if (!accountNumber || !sequence) {
       const account = await this.lcd.auth.accountInfo(sourceAddress);
+      if (!accountNumber) {
+        accountNumber = account.account_number;
+      }
 
-      if (account instanceof Account) {
-        if (!accountNumber) {
-          accountNumber = account.account_number;
-        }
-
-        if (!sequence) {
-          sequence = account.sequence;
-        }
-      } else {
-        if (!accountNumber) {
-          accountNumber = account.BaseAccount.account_number;
-        }
-
-        if (!sequence) {
-          sequence = account.BaseAccount.sequence;
-        }
+      if (!sequence) {
+        sequence = account.sequence;
       }
     }
 

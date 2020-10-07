@@ -12,37 +12,22 @@ export class Wallet {
     sequence: number;
   }> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
-      if (d instanceof Account) {
-        return {
-          account_number: d.account_number,
-          sequence: d.sequence,
-        };
-      }
-
       return {
-        account_number: d.BaseAccount.account_number,
-        sequence: d.BaseAccount.sequence,
+        account_number: d.account_number,
+        sequence: d.sequence,
       };
     });
   }
 
   public accountNumber(): Promise<number> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
-      if (d instanceof Account) {
-        return d.account_number;
-      }
-
-      return d.BaseAccount.account_number;
+      return d.account_number;
     });
   }
 
   public sequence(): Promise<number> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
-      if (d instanceof Account) {
-        return d.sequence;
-      }
-
-      return d.BaseAccount.sequence;
+      return d.sequence;
     });
   }
 
