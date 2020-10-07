@@ -107,11 +107,15 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#baseaccount" class="tsd-kind-icon">Base<wbr>Account</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#account_number" class="tsd-kind-icon">account_<wbr>number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#coins" class="tsd-kind-icon">coins</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#delegated_free" class="tsd-kind-icon">delegated_<wbr>free</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#delegated_vesting" class="tsd-kind-icon">delegated_<wbr>vesting</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#end_time" class="tsd-kind-icon">end_<wbr>time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#original_vesting" class="tsd-kind-icon">original_<wbr>vesting</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#public_key" class="tsd-kind-icon">public_<wbr>key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#sequence" class="tsd-kind-icon">sequence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="lazygradedvestingaccount.html#vesting_schedules" class="tsd-kind-icon">vesting_<wbr>schedules</a></li>
 							</ul>
 						</section>
@@ -132,13 +136,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Lazy<wbr>Graded<wbr>Vesting<wbr>Account<span class="tsd-signature-symbol">(</span>BaseAccount<span class="tsd-signature-symbol">: </span><a href="account.html" class="tsd-signature-type">Account</a>, original_vesting<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, delegated_free<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, delegated_vesting<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, vesting_schedules<span class="tsd-signature-symbol">: </span><a href="lazygradedvestingaccount.vestingschedule.html" class="tsd-signature-type">VestingSchedule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="lazygradedvestingaccount.html" class="tsd-signature-type">LazyGradedVestingAccount</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Lazy<wbr>Graded<wbr>Vesting<wbr>Account<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a>, coins<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, public_key<span class="tsd-signature-symbol">: </span><a href="publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, account_number<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, original_vesting<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, delegated_free<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, delegated_vesting<span class="tsd-signature-symbol">: </span><a href="coins.html" class="tsd-signature-type">Coins</a>, end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, vesting_schedules<span class="tsd-signature-symbol">: </span><a href="lazygradedvestingaccount.vestingschedule.html" class="tsd-signature-type">VestingSchedule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="lazygradedvestingaccount.html" class="tsd-signature-type">LazyGradedVestingAccount</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L12">src/core/auth/LazyGradedVestingAccount.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L14">src/core/auth/LazyGradedVestingAccount.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -146,12 +150,19 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>BaseAccount: <a href="account.html" class="tsd-signature-type">Account</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>account information</p>
-										</div>
-									</div>
+									<h5>address: <a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></h5>
+								</li>
+								<li>
+									<h5>coins: <a href="coins.html" class="tsd-signature-type">Coins</a></h5>
+								</li>
+								<li>
+									<h5>public_key: <a href="publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+								<li>
+									<h5>account_number: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>sequence: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
 									<h5>original_vesting: <a href="coins.html" class="tsd-signature-type">Coins</a></h5>
@@ -192,19 +203,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="baseaccount" class="tsd-anchor"></a>
-					<h3>Base<wbr>Account</h3>
-					<div class="tsd-signature tsd-kind-icon">Base<wbr>Account<span class="tsd-signature-symbol">:</span> <a href="account.html" class="tsd-signature-type">Account</a></div>
+					<a name="account_number" class="tsd-anchor"></a>
+					<h3>account_<wbr>number</h3>
+					<div class="tsd-signature tsd-kind-icon">account_<wbr>number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L23">src/core/auth/LazyGradedVestingAccount.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L28">src/core/auth/LazyGradedVestingAccount.ts:28</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>account information</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="address" class="tsd-anchor"></a>
+					<h3>address</h3>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L25">src/core/auth/LazyGradedVestingAccount.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="coins" class="tsd-anchor"></a>
+					<h3>coins</h3>
+					<div class="tsd-signature tsd-kind-icon">coins<span class="tsd-signature-symbol">:</span> <a href="coins.html" class="tsd-signature-type">Coins</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L26">src/core/auth/LazyGradedVestingAccount.ts:26</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="delegated_free" class="tsd-anchor"></a>
@@ -212,7 +238,7 @@
 					<div class="tsd-signature tsd-kind-icon">delegated_<wbr>free<span class="tsd-signature-symbol">:</span> <a href="coins.html" class="tsd-signature-type">Coins</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L25">src/core/auth/LazyGradedVestingAccount.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L31">src/core/auth/LazyGradedVestingAccount.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">delegated_<wbr>vesting<span class="tsd-signature-symbol">:</span> <a href="coins.html" class="tsd-signature-type">Coins</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L26">src/core/auth/LazyGradedVestingAccount.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L32">src/core/auth/LazyGradedVestingAccount.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -232,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">end_<wbr>time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L27">src/core/auth/LazyGradedVestingAccount.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L33">src/core/auth/LazyGradedVestingAccount.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,7 +273,7 @@
 					<div class="tsd-signature tsd-kind-icon">original_<wbr>vesting<span class="tsd-signature-symbol">:</span> <a href="coins.html" class="tsd-signature-type">Coins</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L24">src/core/auth/LazyGradedVestingAccount.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L30">src/core/auth/LazyGradedVestingAccount.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -257,12 +283,32 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="public_key" class="tsd-anchor"></a>
+					<h3>public_<wbr>key</h3>
+					<div class="tsd-signature tsd-kind-icon">public_<wbr>key<span class="tsd-signature-symbol">:</span> <a href="publickey.html" class="tsd-signature-type">PublicKey</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L27">src/core/auth/LazyGradedVestingAccount.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="sequence" class="tsd-anchor"></a>
+					<h3>sequence</h3>
+					<div class="tsd-signature tsd-kind-icon">sequence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L29">src/core/auth/LazyGradedVestingAccount.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="vesting_schedules" class="tsd-anchor"></a>
 					<h3>vesting_<wbr>schedules</h3>
 					<div class="tsd-signature tsd-kind-icon">vesting_<wbr>schedules<span class="tsd-signature-symbol">:</span> <a href="lazygradedvestingaccount.vestingschedule.html" class="tsd-signature-type">VestingSchedule</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L28">src/core/auth/LazyGradedVestingAccount.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L34">src/core/auth/LazyGradedVestingAccount.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -285,7 +331,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="jsonserializable.html">JSONSerializable</a>.<a href="jsonserializable.html#todata">toData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L33">src/core/auth/LazyGradedVestingAccount.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L39">src/core/auth/LazyGradedVestingAccount.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/lazygradedvestingaccount.data.html" class="tsd-signature-type">Data</a></h4>
@@ -303,7 +349,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="jsonserializable.html">JSONSerializable</a>.<a href="jsonserializable.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/util/json.ts#L23">src/util/json.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/util/json.ts#L23">src/util/json.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -320,7 +366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a5640f8/src/core/auth/LazyGradedVestingAccount.ts#L57">src/core/auth/LazyGradedVestingAccount.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/05d37ce/src/core/auth/LazyGradedVestingAccount.ts#L69">src/core/auth/LazyGradedVestingAccount.ts:69</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -360,7 +406,13 @@
 								<a href="lazygradedvestingaccount.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="lazygradedvestingaccount.html#baseaccount" class="tsd-kind-icon">Base<wbr>Account</a>
+								<a href="lazygradedvestingaccount.html#account_number" class="tsd-kind-icon">account_<wbr>number</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lazygradedvestingaccount.html#address" class="tsd-kind-icon">address</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lazygradedvestingaccount.html#coins" class="tsd-kind-icon">coins</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="lazygradedvestingaccount.html#delegated_free" class="tsd-kind-icon">delegated_<wbr>free</a>
@@ -373,6 +425,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="lazygradedvestingaccount.html#original_vesting" class="tsd-kind-icon">original_<wbr>vesting</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lazygradedvestingaccount.html#public_key" class="tsd-kind-icon">public_<wbr>key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="lazygradedvestingaccount.html#sequence" class="tsd-kind-icon">sequence</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="lazygradedvestingaccount.html#vesting_schedules" class="tsd-kind-icon">vesting_<wbr>schedules</a>
