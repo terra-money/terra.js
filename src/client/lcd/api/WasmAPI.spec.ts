@@ -1,6 +1,5 @@
 import { APIRequester } from '../APIRequester';
 import { WasmAPI } from './WasmAPI';
-import { Dec } from '../../../core';
 
 const c = new APIRequester('https://lcd.terra.dev/');
 const wasm = new WasmAPI(c);

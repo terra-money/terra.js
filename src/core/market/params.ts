@@ -1,4 +1,3 @@
-import { Denom } from '../Denom';
 import { ParamChange } from '..';
 import { Convert } from '../../util/convert';
 import { Dec } from '../numeric';

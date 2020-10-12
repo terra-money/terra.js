@@ -36,7 +36,6 @@ describe('Decimal', () => {
     });
 
     it('serializes zero correctly', () => {
-      const a = 0;
       const zero = dec`0`;
       expect(zero.toString()).toEqual('0.000000000000000000');
     });

@@ -1,6 +1,5 @@
 import { BaseAPI } from './BaseAPI';
 import {
-  Account,
   Msg,
   StdTx,
   StdSignMsg,

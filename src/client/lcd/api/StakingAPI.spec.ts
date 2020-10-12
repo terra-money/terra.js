@@ -1,6 +1,5 @@
 import { APIRequester } from '../APIRequester';
 import { StakingAPI } from './StakingAPI';
-import { Dec } from '../../../core/numeric';
 
 const c = new APIRequester('https://lcd.terra.dev/');
 const staking = new StakingAPI(c);
