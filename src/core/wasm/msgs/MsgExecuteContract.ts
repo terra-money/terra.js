@@ -17,7 +17,7 @@ export class MsgExecuteContract extends JSONSerializable<
     public sender: AccAddress,
     public contract: AccAddress,
     public execute_msg: object,
-    coins: Coins.Input
+    coins: Coins.Input = {}
   ) {
     super();
     this.coins = new Coins(coins);
