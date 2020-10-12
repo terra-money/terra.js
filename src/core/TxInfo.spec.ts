@@ -1,3 +1,4 @@
+import { assert } from 'console';
 import { TxInfo } from './TxInfo';
 const data = require('./TxInfo.data.json');
 
@@ -96,10 +97,15 @@ describe('TxInfo', () => {
 
   it('parses events correctly', () => {
     const tx = TxInfo.fromData(instantiateContractTxData as TxInfo.Data);
+
+    if (!tx.logs) {
+      throw new Error('logs undefined');
+    }
+
     const {
       message: { action, module },
       instantiate_contract: { owner, code_id, contract_address },
-    } = tx.logs![0].eventsByType;
+    } = tx.logs[0].eventsByType;
 
     expect({
       action: action[0],
