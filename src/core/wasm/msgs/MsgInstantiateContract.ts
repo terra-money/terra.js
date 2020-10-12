@@ -18,8 +18,8 @@ export class MsgInstantiateContract extends JSONSerializable<
     public owner: AccAddress,
     public code_id: number,
     public init_msg: object,
-    init_coins: Coins.Input,
-    public migratable: boolean
+    init_coins: Coins.Input = {},
+    public migratable: boolean = false
   ) {
     super();
     this.init_coins = new Coins(init_coins);
