@@ -1,4 +1,5 @@
 import WebSocket from 'ws';
+import { hashAmino } from '../util/hash';
 
 export interface WebSocketClientConfig {
   /**
@@ -160,5 +161,16 @@ export class WebSocketClient {
         callback(parsedData.result.data, ws);
       }
     });
+  }
+
+  public subscribeTx(
+    query: TendermintQuery,
+    callback: (data: TendermintSubscriptionResponse, socket: WebSocket) => any
+  ) {
+    const newCallback = (d: TendermintSubscriptionResponse, s: WebSocket) => {
+      d.value.TxResult.txhash = hashAmino(d.value.TxResult.tx);
+      return callback(d, s);
+    };
+    return this.subscribe('Tx', query, newCallback);
   }
 }

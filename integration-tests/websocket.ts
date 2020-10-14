@@ -1,8 +1,11 @@
-import { WebSocketClient } from '../src';
+import { LocalTerra, WebSocketClient } from '../src';
+import { hashAmino } from '../src/util/hash';
 
 const wsclient = new WebSocketClient({
   URL: 'ws://localhost:26657/websocket',
 });
+
+const terra = new LocalTerra();
 
 let count = 0;
 wsclient.subscribe('NewBlock', {}, (_, socket) => {
@@ -21,7 +24,10 @@ wsclient.subscribe('Tx', { 'message.action': 'send' }, data => {
 });
 
 // swap tracker
-wsclient.subscribe('Tx', { 'message.action': 'swap' }, data => {
+wsclient.subscribeTx({ 'message.action': 'swap' }, async data => {
   console.log('Swap occured!');
-  console.log(data.value.TxResult.result.events);
+  const txInfo = await terra.tx.txInfo(data.value.TxResult.txhash);
+  if (txInfo.logs) {
+    console.log(txInfo.logs[0].eventsByType);
+  }
 });
