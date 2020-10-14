@@ -10,7 +10,7 @@ export interface WebSocketClientConfig {
 
 export interface TendermintSubscriptionResponse {
   type: string;
-  value: Record<string, unknown>;
+  value: Record<string, any>;
 }
 
 export type TendermintEventType =
@@ -138,17 +138,17 @@ export class WebSocketClient {
     callback: (data: TendermintSubscriptionResponse, socket: WebSocket) => void
   ): void {
     const ws = new WebSocket(this.config.URL);
+    const queryString = makeQueryString({
+      'tm.event': event,
+      ...query,
+    });
+
     ws.on('open', () => {
       ws.send(
         JSON.stringify({
           jsonrpc: '2.0',
           method: 'subscribe',
-          params: [
-            makeQueryString({
-              'tm.event': event,
-              ...query,
-            }),
-          ],
+          params: [queryString],
           id: 1,
         })
       );
@@ -156,10 +156,7 @@ export class WebSocketClient {
 
     ws.on('message', data => {
       const parsedData = JSON.parse(data.toString());
-      if (
-        parsedData.result &&
-        parsedData.result.query === `tm.event='${event}'`
-      ) {
+      if (parsedData.result && parsedData.result.query === queryString) {
         callback(parsedData.result.data, ws);
       }
     });
