@@ -83,7 +83,6 @@
     "decimal.js": "^10.2.1",
     "post-message-stream": "^3.0.0",
     "secp256k1": "^4.0.2",
-    "websocket": "^1.0.32",
     "ws": "^7.3.1"
   }
 }

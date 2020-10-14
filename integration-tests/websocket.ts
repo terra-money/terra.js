@@ -1,5 +1,4 @@
 import { LocalTerra, WebSocketClient } from '../src';
-import { hashAmino } from '../src/util/hash';
 
 const wsclient = new WebSocketClient({
   URL: 'ws://localhost:26657/websocket',
