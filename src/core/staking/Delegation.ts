@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../../util/json';
-import { Dec, Int } from '../numeric';
+import { Dec } from '../numeric';
 import { AccAddress, ValAddress } from '../strings';
+import { Coin } from '../Coin';
 
 /**
  * Stores information about the status of a delegation between a delegator and validator, fetched from the blockchain.
@@ -16,7 +17,7 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
     public delegator_address: AccAddress,
     public validator_address: ValAddress,
     public shares: Dec,
-    public balance: Int
+    public balance: Coin
   ) {
     super();
   }
@@ -27,7 +28,7 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
       delegator_address,
       validator_address,
       new Dec(shares),
-      new Int(balance)
+      Coin.fromData(balance)
     );
   }
 
@@ -37,7 +38,7 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
       delegator_address,
       validator_address,
       shares: shares.toString(),
-      balance: balance.toString(),
+      balance: balance.toData(),
     };
   }
 }
@@ -47,6 +48,6 @@ export namespace Delegation {
     delegator_address: AccAddress;
     validator_address: ValAddress;
     shares: string;
-    balance: string;
+    balance: Coin.Data;
   }
 }
