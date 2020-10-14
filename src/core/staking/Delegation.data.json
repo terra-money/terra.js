@@ -1,864 +1,235 @@
 [{
-    "delegator_address": "terra1fs7mmpducjf25j70sk3sz6k5phz2fllmyr5gwz",
-    "validator_address": "terravaloper16jsypha5lv6e3mc24veqzfw3rznfqu92d58yfg",
-    "shares": "1800000000000.000000000000000000",
-    "balance": "1800000000000"
+    "delegator_address": "terra1qq4ma4rk9mz4gq22yy8tdz28z9gdcg7dgnse78",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "400000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "400000000"
+    }
   },
   {
-    "delegator_address": "terra1k5dwysuh3dz95spnhzyee53xxpaf88pyr6l4nm",
-    "validator_address": "terravaloper16jsypha5lv6e3mc24veqzfw3rznfqu92d58yfg",
-    "shares": "1000000.000000000000000000",
-    "balance": "1000000"
+    "delegator_address": "terra1q9alhy6waj70jlq08qm6nj8sutd2fkgsyy3v5n",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "4261002785.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "4261002785"
+    }
   },
   {
-    "delegator_address": "terra16jsypha5lv6e3mc24veqzfw3rznfqu92dmteem",
-    "validator_address": "terravaloper16jsypha5lv6e3mc24veqzfw3rznfqu92d58yfg",
-    "shares": "19000000.000000000000000000",
-    "balance": "19000000"
-  }, {
-    "delegator_address": "terra1z43uqwzsgpd9k5vnlfzqga097rjm3mtg7hva5k",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "83001643283.000000000000000000",
-    "balance": "83001643283"
+    "delegator_address": "terra1q8yyzed5432zw8qqtfl0zc6qrgc84q8n429u0y",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "60000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "60000000"
+    }
   },
   {
-    "delegator_address": "terra123gn6j23lmexu0qx5qhmgxgunmjcqsx8g5ueq2",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "5000000000.000000000000000000",
-    "balance": "5000000000"
-  },
-  {
-    "delegator_address": "terra1dp0taj85ruc299rkdvzp4z5pfg6z6swaed74e6",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "6000000000000.000000000000000000",
-    "balance": "6000000000000"
-  },
-  {
-    "delegator_address": "terra1ws3p90cmm0uun5u0cwmd6dxctej6ne8x6wsjqm",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "57232910910.000000000000000000",
-    "balance": "57232910910"
-  },
-  {
-    "delegator_address": "terra1wm25ux06a8l5dtkkvwm0f4u2tpryg8zqr6h82l",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "1.000000000000000000",
-    "balance": "1"
-  },
-  {
-    "delegator_address": "terra154ckhhnmphuscy9jq497p4x669auwculh54e6v",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "20000000.000000000000000000",
-    "balance": "20000000"
-  },
-  {
-    "delegator_address": "terra1uhlfvq7sq30mfgygjz5nrtffdjgcxmmn3g2xyh",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "500000000.000000000000000000",
-    "balance": "500000000"
-  },
-  {
-    "delegator_address": "terra177ljvwul48n0c4cvl8vsuhwkdl4ntafmuwurpr",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "100000000.000000000000000000",
-    "balance": "100000000"
-  },
-  {
-    "delegator_address": "terra1lazdvsssh69fu6mjvak2lypt4hm57fdp0868ph",
-    "validator_address": "terravaloper123gn6j23lmexu0qx5qhmgxgunmjcqsx8gmsyse",
-    "shares": "5000000000.000000000000000000",
-    "balance": "5000000000"
-  },
-  {
-    "delegator_address": "terra1qp5f784c93zv77nsyteyp94algph9nm2e6sz59",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5545000000.000000000000000000",
-    "balance": "5545000000"
-  },
-  {
-    "delegator_address": "terra1q23cdqfeam24w6uuua87kh5cs28hu4wml044gt",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1500000000.000000000000000000",
-    "balance": "1500000000"
-  },
-  {
-    "delegator_address": "terra1q0ammwkr0s9djwfs35zrfvwte2rqn9d5q9fqxq",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "186949324522.000000000000000000",
-    "balance": "186949324522"
-  },
-  {
-    "delegator_address": "terra1q3j9cfceh6hlsvk2u9m99nn54r525ja0wkq90l",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "26638032618.000000000000000000",
-    "balance": "26638032618"
+    "delegator_address": "terra1q4z24pe3tvm0quhmmzydpupx3lrdqljzhqfjyj",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "490000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "490000000"
+    }
   },
   {
     "delegator_address": "terra1qmrzf2hzytf6fpuppl4qjs79mev92c5ecch2j2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "56055350.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "56055350"
+    }
+  },
+  {
+    "delegator_address": "terra1qm2rl35muk7czjzh2wc59kkx9ml4nc0ens65ej",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "3000000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "3000000000"
+    }
+  },
+  {
+    "delegator_address": "terra1qu8md44cqpdd6yvcc9u472wlq6dp9r5q76qt9p",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "67728202887.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "67728202887"
+    }
+  },
+  {
+    "delegator_address": "terra1q7a0y2jel8s4repfzuv3fp36574ds0g2ypm826",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "900000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "900000000"
+    }
+  },
+  {
+    "delegator_address": "terra1ppvgyda0t940e8d6p2whe0z3t9rx9yhz4vtlf7",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
     "shares": "1500000000.000000000000000000",
-    "balance": "1500000000"
+    "balance": {
+      "denom": "uluna",
+      "amount": "1500000000"
+    }
   },
   {
-    "delegator_address": "terra1pw93skgqs2e2hch6nhzux6jnmy9kgxv8hmfvlt",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "12000000.000000000000000000",
-    "balance": "12000000"
+    "delegator_address": "terra1p9qht60pm8pwwgs9g78ukkwv92cw4yqxkr9jj8",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "8472000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "8472000000"
+    }
   },
   {
-    "delegator_address": "terra1p4h50ww8lsfcy2kgr64cetwt40d9zwrq6ypkx9",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "100006000000.000000000000000000",
-    "balance": "100006000000"
+    "delegator_address": "terra1p9vmueyym5a9spvpntkez5dxef57gsxlxy2tft",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "321955796.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "321955796"
+    }
   },
   {
-    "delegator_address": "terra1p4ula432fk3vepl45eat54xt24rtqh6egm4tv3",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4470000000.000000000000000000",
-    "balance": "4470000000"
+    "delegator_address": "terra1p80lqx6uaks4726ygzrsfkhz8aw6634msjj39u",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "7710000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "7710000000"
+    }
   },
   {
-    "delegator_address": "terra1pc6ytgynrlglv5unn9t93u73gmt4ghvcrlqq2q",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
+    "delegator_address": "terra1p2333t6u8htfzfce8snqg6gwh6vcap545zaskd",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "5200000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "5200000000"
+    }
+  },
+  {
+    "delegator_address": "terra1pd58sy6gyanjx3r7f7p3hcu8q5p7yy7l0samx9",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
     "shares": "2000000000.000000000000000000",
-    "balance": "2000000000"
-  },
-  {
-    "delegator_address": "terra1peeym2kv2zenxd36pz38gkds4vs3vckdq70qag",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5500000000.000000000000000000",
-    "balance": "5500000000"
-  },
-  {
-    "delegator_address": "terra1zyqjvl2ly87z95x4l94ytq7hkgpfukkvssshtc",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "46985000000.000000000000000000",
-    "balance": "46985000000"
-  },
-  {
-    "delegator_address": "terra1z8hjjdk8up9hpvlzgc9x08mycjqgsk3x55eurd",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "867436050.000000000000000000",
-    "balance": "867436050"
-  },
-  {
-    "delegator_address": "terra1z2ykgp2syp2yd238hk34yu0swqq7kpr6jkpus6",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "300000000.000000000000000000",
-    "balance": "300000000"
-  },
-  {
-    "delegator_address": "terra1zjkr4t3dglt8mzykhtvrq5wltapstlmpdly87u",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3944855090869.000000000000000000",
-    "balance": "3944855090869"
-  },
-  {
-    "delegator_address": "terra1znwv0k4usxvkvcawetvzegmd3w9akagvpw3uek",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1182513952.000000000000000000",
-    "balance": "1182513952"
-  },
-  {
-    "delegator_address": "terra1rsgr6xstzcyf9ce4sevmnxup7sxwlmmt8eqc42",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "20005733518.000000000000000000",
-    "balance": "20005733518"
-  },
-  {
-    "delegator_address": "terra1rjetaseqwuhcd9s3c2s5zgp8kcr6u4zcj603as",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1786000000.000000000000000000",
-    "balance": "1786000000"
-  },
-  {
-    "delegator_address": "terra1rmt59lnh55dysl3vrqw3j8z3l2nm2lj7kc975r",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2499000000.000000000000000000",
-    "balance": "2499000000"
-  },
-  {
-    "delegator_address": "terra1y9fm7lt8h6pzz554p232txf58kxf57t869n9t8",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "246955999999.000000000000000000",
-    "balance": "246955999999"
-  },
-  {
-    "delegator_address": "terra1y2nfxqz62qacqmnttl35xyq8xxssaty5hhuvln",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4064087004.000000000000000000",
-    "balance": "4064087004"
-  },
-  {
-    "delegator_address": "terra1ydjntynf3zhlv2fwh54cxh37q0qc5ax3zfmajf",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "85002098101.000000000000000000",
-    "balance": "85002098101"
-  },
-  {
-    "delegator_address": "terra1y4umfuqfg76t8mfcff6zzx7elvy93jtp4xcdvw",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1150000000000.000000000000000000",
-    "balance": "1150000000000"
-  },
-  {
-    "delegator_address": "terra1y6w7uj4ykezwq7e82fkm5dw7s5rsatdvmd2y76",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "30241644705.000000000000000000",
-    "balance": "30241644705"
-  },
-  {
-    "delegator_address": "terra1995kefvanw9fpedutx2zupwl4mvz5uz3lp9k63",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "20616000000.000000000000000000",
-    "balance": "20616000000"
-  },
-  {
-    "delegator_address": "terra19nwk7qgt73rf82rarr5e4k04n26nru039z9aye",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "16507565131.000000000000000000",
-    "balance": "16507565131"
-  },
-  {
-    "delegator_address": "terra19nc2fe65ech6wxvthhyey7dka959ph0z3uzcd4",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3116158217.000000000000000000",
-    "balance": "3116158217"
-  },
-  {
-    "delegator_address": "terra194p3nx7mg588092u4thacr4qq5gcudql2f75hq",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2440384186.000000000000000000",
-    "balance": "2440384186"
-  },
-  {
-    "delegator_address": "terra19uyx68e9zqt4kw7mp2d0tfd8l7caxguemc9gd8",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "486671000000.000000000000000000",
-    "balance": "486671000000"
-  },
-  {
-    "delegator_address": "terra1xpsuuasyznh9gsrep2th9ldhj4q5x08npr77ms",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "13628000000.000000000000000000",
-    "balance": "13628000000"
-  },
-  {
-    "delegator_address": "terra1x9r54kh0q0vg5nqnm7eem4dex5tgvka5k9yacg",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "600000000000.000000000000000000",
-    "balance": "600000000000"
-  },
-  {
-    "delegator_address": "terra1xtex7etf2ad3d4ds4dvdzunj33vzumynsmvurg",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5000000.000000000000000000",
-    "balance": "5000000"
-  },
-  {
-    "delegator_address": "terra1xdsxt6pz7v6y6lyrqhexvej9vw6dv994eh0q98",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1341127060.000000000000000000",
-    "balance": "1341127060"
-  },
-  {
-    "delegator_address": "terra1xexh5qshkdjjetfztedeuxengdjy5egyv97p70",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1053004265.000000000000000000",
-    "balance": "1053004265"
-  },
-  {
-    "delegator_address": "terra18y0j4fedhuexsep6z5tddets9tph6nl4prf0x2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "20000000000.000000000000000000",
-    "balance": "20000000000"
-  },
-  {
-    "delegator_address": "terra1822uw0wq372fhpl8wuguezwu7qjynvxw8wttyv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4909137.000000000000000000",
-    "balance": "4909137"
-  },
-  {
-    "delegator_address": "terra182csy894symxcpw2xc3n7kfqcs0hn9zns63euv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "56150058110.000000000000000000",
-    "balance": "56150058110"
-  },
-  {
-    "delegator_address": "terra18d5faqd8zvdesn7zranek93p574t486cv3wtdu",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5305000000.000000000000000000",
-    "balance": "5305000000"
-  },
-  {
-    "delegator_address": "terra1gzcwdmagpqrxu2hcefs5mec9yc5htktk9hpkzx",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2712312811.000000000000000000",
-    "balance": "2712312811"
-  },
-  {
-    "delegator_address": "terra1gxp6nsnf3vlscseyaq4a72laq06d527x26sp9a",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3501533362.000000000000000000",
-    "balance": "3501533362"
-  },
-  {
-    "delegator_address": "terra1g8a3xmvk22jy3dwlsa5uknvseanmhs04xf7u0t",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "36425527737.000000000000000000",
-    "balance": "36425527737"
-  },
-  {
-    "delegator_address": "terra1gv46mpzxkuc68fl6x2735xfe3uzxyna0x98sky",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5676332244.000000000000000000",
-    "balance": "5676332244"
-  },
-  {
-    "delegator_address": "terra1gwsn3fwxf0qwmpda7ujjdzsxj5a446rgwwntl3",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "192458600000.000000000000000000",
-    "balance": "192458600000"
-  },
-  {
-    "delegator_address": "terra1gu88yqvg9mq79308n6d9qf9mf8y0uv7t84ewzf",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "80000620561.000000000000000000",
-    "balance": "80000620561"
-  },
-  {
-    "delegator_address": "terra1fkgfwcd0an2cgk8yyh7jnx35waxapjzf75egd4",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "848000000.000000000000000000",
-    "balance": "848000000"
-  },
-  {
-    "delegator_address": "terra12v9ltjgct6qsaw28j5m26z7ruprhxywkmjfspk",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "200000000000.000000000000000000",
-    "balance": "200000000000"
-  },
-  {
-    "delegator_address": "terra126pwqwszfyhpmdcuzt5evmpgc0ynn6wevrk9el",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "16444025471.000000000000000000",
-    "balance": "16444025471"
-  },
-  {
-    "delegator_address": "terra1tv2j73xnqxgcpmdfl7kvwj3tr05h0ytxw3fu0n",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "857000000.000000000000000000",
-    "balance": "857000000"
-  },
-  {
-    "delegator_address": "terra1tkc5j3w76yde30s4he35ugupf7pgnlssp6ctqs",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1289622464.000000000000000000",
-    "balance": "1289622464"
-  },
-  {
-    "delegator_address": "terra1tevvlwn6ps7w2vckyc6wdw8vx5rw4qzmlsnqls",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "133337000000.000000000000000000",
-    "balance": "133337000000"
-  },
-  {
-    "delegator_address": "terra1vwzu8ax0apk2s50nvh8hec7u8wa2qgdqrdc8mr",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "7318766781.000000000000000000",
-    "balance": "7318766781"
-  },
-  {
-    "delegator_address": "terra1vnt6a6jlduryu0049wsucjkqylwprzgzqk0zjd",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "8870899999.000000000000000000",
-    "balance": "8870899999"
-  },
-  {
-    "delegator_address": "terra1veez3f3mgm27se3dj55k037ykvzmdy08smaztp",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "38240230672.000000000000000000",
-    "balance": "38240230672"
-  },
-  {
-    "delegator_address": "terra1dp0taj85ruc299rkdvzp4z5pfg6z6swaed74e6",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2500000000000.000000000000000000",
-    "balance": "2500000000000"
-  },
-  {
-    "delegator_address": "terra1wneurzk4c5g7pw9hs9s0dnk5c8q0zjr8cts849",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "56117764953.000000000000000000",
-    "balance": "56117764953"
-  },
-  {
-    "delegator_address": "terra1wcr0yxpu56uuzxyc0zeu7xnpept87lzj7mjltg",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "100.000000000000000000",
-    "balance": "100"
-  },
-  {
-    "delegator_address": "terra1wm25ux06a8l5dtkkvwm0f4u2tpryg8zqr6h82l",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1.000000000000000000",
-    "balance": "1"
-  },
-  {
-    "delegator_address": "terra10qu3zracgv4qvewejrj0xr3nfuc88x8k2nzwx8",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "62605870575.000000000000000000",
-    "balance": "62605870575"
-  },
-  {
-    "delegator_address": "terra10zpcjhzwv32mfyll9yr4xlj0fr2jz0lt37yppr",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "921079472.000000000000000000",
-    "balance": "921079472"
-  },
-  {
-    "delegator_address": "terra10f03r7wz59qmljkk8rxqm3dtrpnpk2etpnrd2y",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "51389994341.000000000000000000",
-    "balance": "51389994341"
-  },
-  {
-    "delegator_address": "terra10nxpnrcm78rlevvt28ztucwf6xcqts26yj4vfl",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "111502005616.000000000000000000",
-    "balance": "111502005616"
-  },
-  {
-    "delegator_address": "terra10nu2a4qvy045jj4gy2tn2z49pnt3vw0qw8tats",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "100000000.000000000000000000",
-    "balance": "100000000"
-  },
-  {
-    "delegator_address": "terra1047xahvw4x3plgtyvdyfjxn88pezjzdhd5fef5",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3460000000.000000000000000000",
-    "balance": "3460000000"
-  },
-  {
-    "delegator_address": "terra10hcsxd9qgl560auwggwu6rjwp9q08tj7sj26mx",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4463851044.000000000000000000",
-    "balance": "4463851044"
-  },
-  {
-    "delegator_address": "terra1sdvq7q6aa6suv63jzsqenhgtsuyh6k47pj4g6m",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "657126294670.000000000000000000",
-    "balance": "657126294670"
-  },
-  {
-    "delegator_address": "terra1396z0lq2wdqllsgjtr5g5cxugext6hvag32aty",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "80001000004.000000000000000000",
-    "balance": "80001000004"
-  },
-  {
-    "delegator_address": "terra1304lfjwqymam3hfqy2pzlc3qngyhv0tfls8q36",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4000000000000.000000000000000000",
-    "balance": "4000000000000"
-  },
-  {
-    "delegator_address": "terra13hd8m4t4sudamwmvtaqt3wcfdvprmv8a8gnw8f",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "317659379.000000000000000000",
-    "balance": "317659379"
-  },
-  {
-    "delegator_address": "terra1j0x4m7u8t48dxda0zga7w6m0cvqkvgkkpk4umv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4000000000000.000000000000000000",
-    "balance": "4000000000000"
-  },
-  {
-    "delegator_address": "terra1je9e7mr5av3tvwwwfnmnalnu20lt2ngtk6qzcu",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1276957835661.000000000000000000",
-    "balance": "1276957835661"
-  },
-  {
-    "delegator_address": "terra1nszkvsrwhtdnkmn7etx8u8uuec2jmux2zll4q3",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2081321124.000000000000000000",
-    "balance": "2081321124"
-  },
-  {
-    "delegator_address": "terra15z9mnjnlxwkp8s3fqfmyqmlqgh6jrmazz4xu0n",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "43998317862.000000000000000000",
-    "balance": "43998317862"
-  },
-  {
-    "delegator_address": "terra15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6anwpg",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "50000000.000000000000000000",
-    "balance": "50000000"
-  },
-  {
-    "delegator_address": "terra154ckhhnmphuscy9jq497p4x669auwculh54e6v",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "9832922.000000000000000000",
-    "balance": "9832922"
-  },
-  {
-    "delegator_address": "terra15krj23pg8t4krd7t3lkhjq4jtkgg8mfp3m58l2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "11587099999.000000000000000000",
-    "balance": "11587099999"
-  },
-  {
-    "delegator_address": "terra15l2wxa2452lm2p82ql35z6jkjfaudg4at9vuw0",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "22301523229.000000000000000000",
-    "balance": "22301523229"
-  },
-  {
-    "delegator_address": "terra140ff6n5rqs2skuuwusl3885v5tyj4m8mg2tdh5",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "400000000.000000000000000000",
-    "balance": "400000000"
-  },
-  {
-    "delegator_address": "terra143yu6408qgwuc5g2a0ekpm9p32ae775yg45xhw",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3116111835.000000000000000000",
-    "balance": "3116111835"
-  },
-  {
-    "delegator_address": "terra1478agtln23sgve0s8ndgxvdc9am3jsh7eag8nq",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "6184754352.000000000000000000",
-    "balance": "6184754352"
-  },
-  {
-    "delegator_address": "terra1k9padqj93wvzvvwh30vkhehznkznv58czfyyle",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "802155501612.000000000000000000",
-    "balance": "802155501612"
-  },
-  {
-    "delegator_address": "terra1kfmsrfup8dzl6vlxsfn3v0g6mcx496rndtaa6a",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "670869000000.000000000000000000",
-    "balance": "670869000000"
-  },
-  {
-    "delegator_address": "terra1kwdkdchypdunxfaqgft5rlggh4d22vnsn56trf",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "40000000000.000000000000000000",
-    "balance": "40000000000"
-  },
-  {
-    "delegator_address": "terra1kk86zqhdmyrae8jsznlzkrjxayyvk6vchwf2gx",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "100000000.000000000000000000",
-    "balance": "100000000"
-  },
-  {
-    "delegator_address": "terra1ku3rma9yflpsyp0khkh4wxmz8al46txzm8z95w",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "37423156050.000000000000000000",
-    "balance": "37423156050"
-  },
-  {
-    "delegator_address": "terra1hrrtcyudwnn29cm5mqjt75mkd9uj94x8yc698w",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "31838500000.000000000000000000",
-    "balance": "31838500000"
-  },
-  {
-    "delegator_address": "terra1hr0990vl5f0ewsenkcmz33ndv2ff79mmu2pewc",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "79999000000.000000000000000000",
-    "balance": "79999000000"
-  },
-  {
-    "delegator_address": "terra1hv5dd9wfwv5kns4wx4flq9puvw6qcz0pl03f7d",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "997000.000000000000000000",
-    "balance": "997000"
-  },
-  {
-    "delegator_address": "terra1hugk5nhcx9v7m74gt996zqtvx3m8t4lplj4luv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "86826392102.000000000000000000",
-    "balance": "86826392102"
-  },
-  {
-    "delegator_address": "terra1hu52nrxr69rwfkpfrkynj5tp98gef62fpe85wa",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "263773140.000000000000000000",
-    "balance": "263773140"
-  },
-  {
-    "delegator_address": "terra1c9w5snjunchrt73q9sq3gkgjdvfykjj9flapyj",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "29840000000.000000000000000000",
-    "balance": "29840000000"
-  },
-  {
-    "delegator_address": "terra1c5aczrpm74wfwctrg8c67rl6zz5muwvlqtl8an",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "333336000000.000000000000000000",
-    "balance": "333336000000"
-  },
-  {
-    "delegator_address": "terra1c42e3sp9ynfm56tdrccqku9zgymzh4kjgzh229",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "3515472618.000000000000000000",
-    "balance": "3515472618"
-  },
-  {
-    "delegator_address": "terra1eq73n0u8kgzks84ztuatpvm7et8693cjwezj2r",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "14156878561.000000000000000000",
-    "balance": "14156878561"
-  },
-  {
-    "delegator_address": "terra1e82da9n6jz4t42eh0wn5hrt6hdmf7jyq8sufkp",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "89989999999.000000000000000000",
-    "balance": "89989999999"
-  },
-  {
-    "delegator_address": "terra1e0cnvq2m3t2n7hqrtmadheen2hjvjglght8e0u",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "150000452679.000000000000000000",
-    "balance": "150000452679"
-  },
-  {
-    "delegator_address": "terra1ejqnt875xpjhgkrxdxs8lecjp2euh3vlqzjtwr",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "243600000.000000000000000000",
-    "balance": "243600000"
-  },
-  {
-    "delegator_address": "terra1e5ncelsh4qhqt3s97vn43hxlhmt7zd43yszdnf",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "441787707106.000000000000000000",
-    "balance": "441787707106"
-  },
-  {
-    "delegator_address": "terra1emp8ms80y39hrkjcwl5jgva3eanwm2r3snf5m6",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "5000000.000000000000000000",
-    "balance": "5000000"
-  },
-  {
-    "delegator_address": "terra1em2lad2n3z33f335llfna5nwjvryg2fn3gzqe7",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "25358058595.000000000000000000",
-    "balance": "25358058595"
-  },
-  {
-    "delegator_address": "terra1e7y93fd0z32s2vqhxs272t0e53mp9ra2cf5l96",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1500000000.000000000000000000",
-    "balance": "1500000000"
-  },
-  {
-    "delegator_address": "terra1elejqzy6e3j4maq0x9twatfsgg7wrzfzc6mve2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "4350000000.000000000000000000",
-    "balance": "4350000000"
-  },
-  {
-    "delegator_address": "terra169qj3uhzma34gaqzsdgafmt0wt528y0s9qchpv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "15977842640.000000000000000000",
-    "balance": "15977842640"
-  },
-  {
-    "delegator_address": "terra16xr5kdu5xv7htepnd36q8wn3ayjd7p7kv2eskc",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1500000000000.000000000000000000",
-    "balance": "1500000000000"
-  },
-  {
-    "delegator_address": "terra16xydldjcmsyuasnvzu4q2amshpjxsrjdekdgw8",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "280179000000.000000000000000000",
-    "balance": "280179000000"
-  },
-  {
-    "delegator_address": "terra162t3yqa2mywtvmr6qv22hayjytzqckzylk5lck",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "540194992105.000000000000000000",
-    "balance": "540194992105"
-  },
-  {
-    "delegator_address": "terra160rdhx8ythm4z9v4yhjrt59z8l320yvvsm8jfy",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "620600000.000000000000000000",
-    "balance": "620600000"
-  },
-  {
-    "delegator_address": "terra16huyz5kvw24pfhayuxr6wy48vrf0lfjaxptygd",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "100000000.000000000000000000",
-    "balance": "100000000"
-  },
-  {
-    "delegator_address": "terra1mqwxtvg2kh4wjnnmnk0vr3cl38vh5ul6zp3sry",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2265000000.000000000000000000",
-    "balance": "2265000000"
-  },
-  {
-    "delegator_address": "terra1mp76w954j08dawludu7kj2tftnc6z8nfyxla2l",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "11999999999.000000000000000000",
-    "balance": "11999999999"
-  },
-  {
-    "delegator_address": "terra1mz38gfqk3q62kvxck889nf3xqz7q9jua0maazu",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "527722718.000000000000000000",
-    "balance": "527722718"
-  },
-  {
-    "delegator_address": "terra1mv8khh0wvkkc84ds7r0my64wm2q8yyzm2sl3tw",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "66666000000.000000000000000000",
-    "balance": "66666000000"
-  },
-  {
-    "delegator_address": "terra1muywx4paxhpyn99k7ytepxz26v3jz062kle0as",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "300000000.000000000000000000",
-    "balance": "300000000"
-  },
-  {
-    "delegator_address": "terra1mlnrqj0p6agnc638496d26wgtqe4yfrzsg6rfm",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "470000000.000000000000000000",
-    "balance": "470000000"
-  },
-  {
-    "delegator_address": "terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "75778754659.000000000000000000",
-    "balance": "75778754659"
-  },
-  {
-    "delegator_address": "terra1uwjf55qayjrkt0pgw8w06rsrlqy7jnpfu46uz2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "12906131935.000000000000000000",
-    "balance": "12906131935"
-  },
-  {
-    "delegator_address": "terra1u4wlnyrv2x6uglxg42f7pnqq9gq3z6jzeqhycs",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "6001714.000000000000000000",
-    "balance": "6001714"
-  },
-  {
-    "delegator_address": "terra1u6r30yhxg0pccqjmg2mfjnktnth9tlwfm3vj5w",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "124686614241.000000000000000000",
-    "balance": "124686614241"
-  },
-  {
-    "delegator_address": "terra1a94szaregz75p9qvmq4aha6dpgl682rtuhl7pq",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "500000.000000000000000000",
-    "balance": "500000"
-  },
-  {
-    "delegator_address": "terra1an96a433dtlq5re387nnqe6psgy67rspgtw02e",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "352663000001.000000000000000000",
-    "balance": "352663000001"
-  },
-  {
-    "delegator_address": "terra1a4xyusa48u9cx678cvx23jajh4ca6v8ec2pguu",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "1222013852987.000000000000000000",
-    "balance": "1222013852987"
-  },
-  {
-    "delegator_address": "terra1aan3e7t7p48kupsy3w7jlh0clyfpu7fcl0ztsg",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "520000000000.000000000000000000",
-    "balance": "520000000000"
-  },
-  {
-    "delegator_address": "terra17ysnpmndwa3xqhd4g8d9fzkan8mjc8hn7aa3r8",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "77297989178.000000000000000000",
-    "balance": "77297989178"
-  },
-  {
-    "delegator_address": "terra179pt4lppx9va58ww2lyvyhsvdzafytct5kuks2",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "2041910828.000000000000000000",
-    "balance": "2041910828"
-  },
-  {
-    "delegator_address": "terra17ne9tgk0fatdth272q3n0zkdcrtzagppg9cs7x",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "200000000.000000000000000000",
-    "balance": "200000000"
-  },
-  {
-    "delegator_address": "terra175nethvx40yuhavu43ll80zaduuwd3wzzkvv5c",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "21003959132.000000000000000000",
-    "balance": "21003959132"
-  },
-  {
-    "delegator_address": "terra174x3qjty65drqa7equ5fjq9fk590c3exv3ymuv",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "13001538680.000000000000000000",
-    "balance": "13001538680"
-  },
-  {
-    "delegator_address": "terra17camvxuj6qluw63tllyzn3mqv7hh2ez83xhg60",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "505405903.000000000000000000",
-    "balance": "505405903"
-  },
-  {
-    "delegator_address": "terra17lapk5p993ugazmv2uuc2wdrn3qveqlh7hklpj",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "625407117.000000000000000000",
-    "balance": "625407117"
-  },
-  {
-    "delegator_address": "terra1lfsfr74datwg6p7h0rfuyhlvj6k7dsmlrr0tmh",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "301044000000.000000000000000000",
-    "balance": "301044000000"
-  },
-  {
-    "delegator_address": "terra1lsjc8870ky0f0s6qh2h6emk67fv4kfzsn2whnh",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "351739099999.000000000000000000",
-    "balance": "351739099999"
-  },
-  {
-    "delegator_address": "terra1lh7utjdpev54cgtl7ak54ht0jv7j2e77ru3ms7",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "6370346468.000000000000000000",
-    "balance": "6370346468"
-  },
-  {
-    "delegator_address": "terra1lazdvsssh69fu6mjvak2lypt4hm57fdp0868ph",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "10000000000.000000000000000000",
-    "balance": "10000000000"
-  },
-  {
-    "delegator_address": "terra1lldzghlzhxjzj63xj6vqfx5dddzs3us3lxpcew",
-    "validator_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "shares": "22000000.000000000000000000",
-    "balance": "22000000"
+    "balance": {
+      "denom": "uluna",
+      "amount": "2000000000"
+    }
+  },
+  {
+    "delegator_address": "terra1pwv3tudd9fu22htdd788y5tfxv2xy24630es5r",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "950000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "950000000"
+    }
+  },
+  {
+    "delegator_address": "terra1psk9p4gxz8n8h8umc8a4g6s430yhpftqpazyg8",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "62000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "62000000"
+    }
+  },
+  {
+    "delegator_address": "terra1p3j3dg2q2yf4dm93mekavjng0e5f7xygta640k",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "1700000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "1700000000"
+    }
+  },
+  {
+    "delegator_address": "terra1p372puz2ygpew6a238sl0zu6a5wdqn7v7zts3v",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "875000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "875000000"
+    }
+  },
+  {
+    "delegator_address": "terra1p4arkvvxx7lrt3q70fkg3uvpkc8tmhtmvax6xp",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "4166060599.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "4166060599"
+    }
+  },
+  {
+    "delegator_address": "terra1pejnsfpk0cmw9ga8wd9nherw2s4xunhdapc50k",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "589000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "589000000"
+    }
+  },
+  {
+    "delegator_address": "terra1patyrqygf5uxxkkuyjm4dk53v3j4whr4znqtmk",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "420000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "420000000"
+    }
+  },
+  {
+    "delegator_address": "terra1p7xkzm2auj3tnxlf00gv6n4eyucldfx3095q4w",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "34842055837.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "34842055837"
+    }
+  },
+  {
+    "delegator_address": "terra1zfahlh3s5638q82kw0mvky2ecu879n2ma6dwxs",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "2385949621.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "2385949621"
+    }
+  },
+  {
+    "delegator_address": "terra1z2x363rk5v8sh3gp8hes03ket7j065rj2qedfu",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "4000000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "4000000000"
+    }
+  },
+  {
+    "delegator_address": "terra1ztsl9nezh6gyc0mwg04qguezwsq33cp58gw9gy",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "736000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "736000000"
+    }
+  },
+  {
+    "delegator_address": "terra1zdh7ucs89leyv2vxvyqpwxgmr4jayw8z7hsre6",
+    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+    "shares": "990000000.000000000000000000",
+    "balance": {
+      "denom": "uluna",
+      "amount": "990000000"
+    }
   }
 ]
