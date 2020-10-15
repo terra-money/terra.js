@@ -1,4 +1,3 @@
-import { assert } from 'console';
 import { TxInfo } from './TxInfo';
 const data = require('./TxInfo.data.json');
 
