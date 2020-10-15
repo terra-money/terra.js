@@ -6,8 +6,8 @@ const data = require('./Account.data.json');
 
 describe('Account', () => {
   it('deserializes accounts correctly', () => {
-    const data = {
-      type: 'core/Account' as 'core/Account',
+    const data: Account.Data = {
+      type: 'core/Account',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
         coins: [
@@ -21,7 +21,7 @@ describe('Account', () => {
           },
         ],
         public_key: {
-          type: 'tendermint/PubKeySecp256k1' as 'tendermint/PubKeySecp256k1',
+          type: 'tendermint/PubKeySecp256k1',
           value: 'AvBeqhogW0wd7OtF8M8hJ/P1A/IBY1+uNvBO/tbVlfq2',
         },
         account_number: '251248',

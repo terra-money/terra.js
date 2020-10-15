@@ -166,7 +166,7 @@ export class WebSocketClient {
   public subscribeTx(
     query: TendermintQuery,
     callback: (data: TendermintSubscriptionResponse, socket: WebSocket) => any
-  ) {
+  ): void {
     const newCallback = (d: TendermintSubscriptionResponse, s: WebSocket) => {
       d.value.TxResult.txhash = hashAmino(d.value.TxResult.tx);
       return callback(d, s);
