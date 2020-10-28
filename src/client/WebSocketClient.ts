@@ -2,25 +2,6 @@ import { EventEmitter } from 'events';
 import WebSocket from 'ws';
 import { hashAmino } from '../util/hash';
 
-export interface WebSocketClientConfig {
-  /**
-   * The WebSocket endpoint URL on the Tendermint RPC server.
-   * Ex: ws://localhost:26657/websocket
-   */
-  URL: string;
-  /**
-   * Set 0 for not to attemp reconnect
-   * Set -1 to attempt infinite times
-   * Set > 0 to attempt specified times
-   */
-  reconnectCount: number;
-
-  /**
-   * reconnect interval in millisecond
-   */
-  reconnectInterval: number;
-}
-
 type Callback = (data: TendermintSubscriptionResponse) => void;
 
 export interface TendermintSubscriptionResponse {
@@ -153,6 +134,13 @@ export class WebSocketClient extends EventEmitter {
   private socket!: WebSocket;
   private _reconnectCount: number;
 
+  /**
+   * WebSocketClient constructor
+   * @param URL The WebSocket endpoint URL on the Tendermint RPC server.
+   *            Ex: ws://localhost:26657/websocket
+   * @param reconnectCount 0 for not to attempt reconnect, -1 for infinite, > 0 for number of times to attempt
+   * @param reconnectInterval retry interval in milliseconds
+   */
   constructor(
     private URL: string,
     private reconnectCount = 0,
@@ -164,6 +152,9 @@ export class WebSocketClient extends EventEmitter {
     this.shouldAttemptReconnect = !!this.reconnectInterval;
   }
 
+  /**
+   * Destroys class as well as socket
+   */
   destroy() {
     this.shouldAttemptReconnect = false;
     this.reconnectTimeoutId && clearTimeout(this.reconnectTimeoutId);
