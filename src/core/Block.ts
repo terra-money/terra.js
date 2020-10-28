@@ -1,5 +1,5 @@
 export interface BlockInfo {
-  block_meta: BlockMeta;
+  block_id: BlockID;
   block: Block;
 }
 
@@ -29,12 +29,6 @@ export interface Header {
 
   /** time the block was included */
   time: string;
-
-  /** number of transactions in the block */
-  num_txs: string;
-
-  /** total amount of transactions in blockchain after time of inclusion */
-  total_txs: string;
   last_block_id: BlockID;
   last_commit_hash: string;
   data_hash: string;
@@ -63,22 +57,15 @@ export interface Version {
 }
 
 export interface LastCommit {
-  block_id: BlockID;
-  precommits: Precommit[];
-}
-
-export interface Precommit {
-  type: number;
   height: string;
   round: string;
   block_id: BlockID;
-  timestamp: string;
-  validator_address: string;
-  validator_index: string;
-  signature: string;
+  signatures: Signature[];
 }
 
-export interface BlockMeta {
-  block_id: BlockID;
-  header: Header;
+export interface Signature {
+  block_id_flag: number;
+  validator_address: string;
+  timestamp: string;
+  signature: string;
 }
