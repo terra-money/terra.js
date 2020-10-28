@@ -91,10 +91,10 @@ function makeQueryParams(query: TendermintQuery): string {
  * This allows for subscribing to Tendermint events through WebSocket.
  *
  * ### Events
- * **error** fires when error raises
- * **connect** fires after connection establishment
- * **reconnect** fires upon every attempt of reconnection
- * **destroyed** fires when socket has been destroyed
+ * **error** emitted when error raises
+ * **connect** emitted after connection establishment
+ * **reconnect** emitted upon every attempt of reconnection
+ * **destroyed** emitted when socket has been destroyed
  *
  * ### Example
  *
