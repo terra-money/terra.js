@@ -1,13 +1,8 @@
+import { EventEmitter } from 'events';
 import WebSocket from 'ws';
 import { hashAmino } from '../util/hash';
 
-export interface WebSocketClientConfig {
-  /**
-   * The WebSocket endpoint URL on the Tendermint RPC server.
-   * Ex: ws://localhost:26657/websocket
-   */
-  URL: string;
-}
+type Callback = (data: TendermintSubscriptionResponse) => void;
 
 export interface TendermintSubscriptionResponse {
   type: string;
@@ -35,7 +30,7 @@ export type TendermintEventType =
 
 type TendermintQueryOperand = string | number | Date;
 
-interface TendermintQuery {
+export interface TendermintQuery {
   [k: string]:
     | TendermintQueryOperand
     | ['>', number | Date]
@@ -48,7 +43,7 @@ interface TendermintQuery {
 
 const escapeSingleQuotes = (str: string) => str.replace(/'/g, "\\'");
 
-function makeQueryString(query: TendermintQuery): string {
+function makeQueryParams(query: TendermintQuery): string {
   const queryBuilder: string[] = [];
   for (const key of Object.keys(query)) {
     let queryItem: string;
@@ -95,20 +90,24 @@ function makeQueryString(query: TendermintQuery): string {
  * An object repesenting a connection to a Terra node's WebSocket RPC endpoint.
  * This allows for subscribing to Tendermint events through WebSocket.
  *
+ * ### Events
+ * **error** emitted when error raises
+ * **connect** emitted after connection establishment
+ * **reconnect** emitted upon every attempt of reconnection
+ * **destroyed** emitted when socket has been destroyed
+ *
  * ### Example
  *
  * ```ts
  * import { WebSocketClient } from '@terra-money/terra.js';
  *
- * const wsclient = new WebSocketClient({
- *    URL: "ws://localhost:26657/websocket",
- * });
+ * const wsclient = new WebSocketClient("ws://localhost:26657/websocket");
  *
- * wsclient.subscribe('NewBlock', {}, (data, socket) => {
+ * wsclient.subscribe('NewBlock', {}, (data) => {
  *    console.log(data.value);
  *
  *    // close after receiving one block.
- *    socket.close();
+ *    wsclient.destroy();
  * })
  *
  * wsclient.subscribe(
@@ -117,60 +116,133 @@ function makeQueryString(query: TendermintQuery): string {
  *    'message.action': 'send',
  *    'message.sender': ['CONTAINS', 'terra1...'],
  *  },
- *  (data, socket) => {
+ *  (data) => {
  *    console.log(data.value);
  *
  *   // close after receiving one send Tx
- *   socket.close();
+ *   wsclient.destroy();
  * });
+ *
  * ```
  */
-export class WebSocketClient {
-  public config: WebSocketClientConfig;
-  constructor(config: WebSocketClientConfig) {
-    this.config = {
-      ...config,
-    };
+export class WebSocketClient extends EventEmitter {
+  public isConnected: boolean;
+  private reconnectTimeoutId?: NodeJS.Timeout;
+  private queryParams?: string;
+  private callback?: Callback;
+  private shouldAttemptReconnect: boolean;
+  private socket!: WebSocket;
+  private _reconnectCount: number;
+
+  /**
+   * WebSocketClient constructor
+   * @param URL The WebSocket endpoint URL on the Tendermint RPC server.
+   *            Ex: ws://localhost:26657/websocket
+   * @param reconnectCount 0 for not to attempt reconnect, -1 for infinite, > 0 for number of times to attempt
+   * @param reconnectInterval retry interval in milliseconds
+   */
+  constructor(
+    private URL: string,
+    private reconnectCount = 0,
+    private reconnectInterval = 1000
+  ) {
+    super();
+    this._reconnectCount = this.reconnectCount;
+    this.isConnected = false;
+    this.shouldAttemptReconnect = !!this.reconnectInterval;
+  }
+
+  /**
+   * Destroys class as well as socket
+   */
+  destroy() {
+    this.shouldAttemptReconnect = false;
+    this.reconnectTimeoutId && clearTimeout(this.reconnectTimeoutId);
+    this.socket && this.socket.close();
+  }
+
+  private start() {
+    this.socket = new WebSocket(this.URL);
+
+    this.socket.onopen = this.onOpen.bind(this);
+    this.socket.onmessage = this.onMessage.bind(this);
+    this.socket.onclose = this.onClose.bind(this);
+    this.socket.onerror = () => undefined;
+  }
+
+  private onOpen() {
+    this.isConnected = true;
+    this.emit('connect');
+    // reset reconnectCount after connection establishment
+    this._reconnectCount = this.reconnectCount;
+
+    this.socket.send(
+      JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'subscribe',
+        params: [this.queryParams],
+        id: 1,
+      })
+    );
+  }
+
+  private onMessage(message: WebSocket.MessageEvent) {
+    try {
+      const parsedData = JSON.parse(message.data.toString());
+
+      if (
+        this.callback &&
+        parsedData.result &&
+        parsedData.result.query === this.queryParams
+      ) {
+        // this.emit('message', parsedData.result.data);
+        this.callback(parsedData.result.data);
+      }
+    } catch (err) {
+      this.emit('error', err);
+    }
+  }
+
+  private onClose() {
+    this.isConnected = false;
+
+    if (
+      this.shouldAttemptReconnect &&
+      (this._reconnectCount > 0 || this._reconnectCount === -1)
+    ) {
+      if (this._reconnectCount !== -1) {
+        this._reconnectCount--;
+      }
+
+      this.reconnectTimeoutId && clearTimeout(this.reconnectTimeoutId);
+      this.reconnectTimeoutId = setTimeout(() => {
+        this.emit('reconnect');
+        this.start();
+      }, this.reconnectInterval);
+    } else {
+      this.emit('destroyed');
+    }
   }
 
   public subscribe(
     event: TendermintEventType,
     query: TendermintQuery,
-    callback: (data: TendermintSubscriptionResponse, socket: WebSocket) => void
+    callback: Callback
   ): void {
-    const ws = new WebSocket(this.config.URL);
-    const queryString = makeQueryString({
+    this.queryParams = makeQueryParams({
       'tm.event': event,
       ...query,
     });
-
-    ws.on('open', () => {
-      ws.send(
-        JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'subscribe',
-          params: [queryString],
-          id: 1,
-        })
-      );
-    });
-
-    ws.on('message', data => {
-      const parsedData = JSON.parse(data.toString());
-      if (parsedData.result && parsedData.result.query === queryString) {
-        callback(parsedData.result.data, ws);
-      }
-    });
+    this.callback = callback;
+    this.start();
   }
 
-  public subscribeTx(
-    query: TendermintQuery,
-    callback: (data: TendermintSubscriptionResponse, socket: WebSocket) => any
-  ): void {
-    const newCallback = (d: TendermintSubscriptionResponse, s: WebSocket) => {
+  public subscribeTx(query: TendermintQuery, callback: Callback): void {
+    const newCallback: Callback = d => {
       d.value.TxResult.txhash = hashAmino(d.value.TxResult.tx);
-      return callback(d, s);
+      return callback(d);
     };
-    return this.subscribe('Tx', query, newCallback);
+
+    this.subscribe('Tx', query, newCallback);
   }
 }
