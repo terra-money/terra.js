@@ -51,13 +51,16 @@ export abstract class Key {
    */
   public abstract sign(payload: Buffer): Promise<Buffer>;
 
-  public rawAddress: Buffer;
-  public rawPubKey: Buffer;
+  public rawAddress?: Buffer;
+  public rawPubKey?: Buffer;
 
   /**
    * Terra account address. `terra-` prefixed.
    */
   public get accAddress(): AccAddress {
+    if (!this.rawAddress) {
+      throw new Error('Could not compute accAddress: missing rawAddress');
+    }
     return bech32.encode('terra', Array.from(this.rawAddress));
   }
 
@@ -65,6 +68,9 @@ export abstract class Key {
    * Terra validator address. `terravaloper-` prefixed.
    */
   public get valAddress(): ValAddress {
+    if (!this.rawAddress) {
+      throw new Error('Could not compute valAddress: missing rawAddress');
+    }
     return bech32.encode('terravaloper', Array.from(this.rawAddress));
   }
 
@@ -72,6 +78,9 @@ export abstract class Key {
    * Terra account public key. `terrapub-` prefixed.
    */
   public get accPubKey(): AccPubKey {
+    if (!this.rawPubKey) {
+      throw new Error('Could not compute accPubKey: missing rawPubKey');
+    }
     return bech32.encode('terrapub', Array.from(this.rawPubKey));
   }
 
@@ -79,6 +88,9 @@ export abstract class Key {
    * Terra validator public key. `terravaloperpub-` prefixed.
    */
   public get valPubKey(): ValPubKey {
+    if (!this.rawPubKey) {
+      throw new Error('Could not compute valPubKey: missing rawPubKey');
+    }
     return bech32.encode('terravaloperpub', Array.from(this.rawPubKey));
   }
 
@@ -88,9 +100,11 @@ export abstract class Key {
    *
    * @param publicKey raw compressed bytes public key
    */
-  constructor(public publicKey: Buffer) {
-    this.rawAddress = addressFromPublicKey(publicKey);
-    this.rawPubKey = pubKeyFromPublicKey(publicKey);
+  constructor(public publicKey?: Buffer) {
+    if (publicKey) {
+      this.rawAddress = addressFromPublicKey(publicKey);
+      this.rawPubKey = pubKeyFromPublicKey(publicKey);
+    }
   }
 
   /**
@@ -100,6 +114,12 @@ export abstract class Key {
    */
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
     const sigBuffer = await this.sign(Buffer.from(tx.toJSON()));
+
+    if (!this.publicKey) {
+      throw new Error(
+        'Signature could not be created: Key instance missing publicKey'
+      );
+    }
 
     return StdSignature.fromData({
       signature: sigBuffer.toString('base64'),
