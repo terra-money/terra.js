@@ -1,5 +1,4 @@
 import { Key } from './Key';
-import * as bech32 from 'bech32';
 import {
   StdSignMsg,
   StdSignature,
@@ -9,19 +8,28 @@ import {
   ValPubKey,
 } from '../core';
 
-import { promisify } from 'util';
-import { exec as _exec } from 'child_process';
-
-const exec = promisify(_exec);
+import { execSync } from 'child_process';
+import { fileSync } from 'tmp';
+import { writeFileSync } from 'fs';
 
 export class CLIKey extends Key {
-  private _accAddress: AccAddress = '';
-  private _accPubKey: AccPubKey = '';
+  private _accAddress?: AccAddress;
+  private _accPubKey?: AccPubKey;
+
+  private loadAccountDetails() {
+    const details = execSync(`terracli keys show ${this.keyName}`).toString();
+    this._accAddress = details.match(/terra[a-z0-9]{39}/)![0];
+    this._accPubKey = details.match(/terrapub[a-z0-9]{68}/)![0];
+  }
 
   /**
    * Terra account address. `terra-` prefixed.
    */
   public get accAddress(): AccAddress {
+    if (!this._accAddress) {
+      this.loadAccountDetails();
+      return this.accAddress;
+    }
     return this._accAddress;
   }
 
@@ -29,40 +37,53 @@ export class CLIKey extends Key {
    * Terra validator address. `terravaloper-` prefixed.
    */
   public get valAddress(): ValAddress {
-    return this._accAddress;
+    if (!this._accAddress) {
+      this.loadAccountDetails();
+      return this.valAddress;
+    }
+    return ValAddress.fromAccAddress(this._accAddress);
   }
 
   /**
    * Terra account public key. `terrapub-` prefixed.
    */
   public get accPubKey(): AccPubKey {
-    return this._accAddress;
+    if (!this._accPubKey) {
+      this.loadAccountDetails();
+      return this.accPubKey;
+    }
+    return this._accPubKey;
   }
 
   /**
    * Terra validator public key. `terravaloperpub-` prefixed.
    */
   public get valPubKey(): ValPubKey {
-    return this._accAddress;
+    if (!this._accPubKey) {
+      this.loadAccountDetails();
+      return this.valPubKey;
+    }
+    return ValPubKey.fromAccPubKey(this._accPubKey);
   }
 
   constructor(public keyName: string) {
     super();
   }
 
-  private async _postInit() {
-    console.log((await exec(`terracli keys show ${this.keyName} -a`)).stdout);
-  }
-
+  // @ts-ignore
   public async sign(payload: Buffer): Promise<Buffer> {
-    console.log(payload);
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
     );
   }
 
+  // @ts-ignore
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
-    console.log(tx);
-    throw new Error();
+    const tmpobj = fileSync({ postfix: '.json' });
+    writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
+    const result = execSync(
+      `terracli tx sign ${tmpobj.name} --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence}`
+    ).toString();
+    return StdSignature.fromData(JSON.parse(result));
   }
 }
