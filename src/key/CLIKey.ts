@@ -84,6 +84,7 @@ export class CLIKey extends Key {
     const result = execSync(
       `terracli tx sign ${tmpobj.name} --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence}`
     ).toString();
+    tmpobj.removeCallback();
     return StdSignature.fromData(JSON.parse(result));
   }
 }
