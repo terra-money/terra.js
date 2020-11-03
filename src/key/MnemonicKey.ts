@@ -41,11 +41,6 @@ const DEFAULT_OPTIONS = {
  */
 export class MnemonicKey extends RawKey {
   /**
-   * Raw private key, in bytes.
-   */
-  public privateKey: Buffer;
-
-  /**
    * Space-separated mnemonic phrase.
    */
   public mnemonic: string;
@@ -92,7 +87,6 @@ export class MnemonicKey extends RawKey {
     }
 
     super(privateKey);
-    this.privateKey = privateKey;
     this.mnemonic = mnemonic;
   }
 }
