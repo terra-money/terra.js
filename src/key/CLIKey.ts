@@ -15,8 +15,8 @@ import { exec as _exec } from 'child_process';
 const exec = promisify(_exec);
 
 export class CLIKey extends Key {
-  private _accAddress?: AccAddress;
-  private _accPubKey?: AccPubKey;
+  private _accAddress: AccAddress = '';
+  private _accPubKey: AccPubKey = '';
 
   /**
    * Terra account address. `terra-` prefixed.
@@ -48,25 +48,21 @@ export class CLIKey extends Key {
 
   constructor(public keyName: string) {
     super();
-    this._postInit();
   }
 
   private async _postInit() {
-    this._accAddress = (
-      await exec(`terracli keys show ${this.keyName} -a`)
-    ).stdout;
-    this._accPubKey = (
-      await exec(`terracli keys show ${this.keyName} -p`)
-    ).stdout;
+    console.log((await exec(`terracli keys show ${this.keyName} -a`)).stdout);
   }
 
   public async sign(payload: Buffer): Promise<Buffer> {
+    console.log(payload);
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
     );
   }
 
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
+    console.log(tx);
     throw new Error();
   }
 }

@@ -57,7 +57,7 @@ export abstract class Key {
   /**
    * Terra account address. `terra-` prefixed.
    */
-  public get accAddress(): AccAddress {
+  public get accAddress(): Promise<AccAddress> {
     if (!this.rawAddress) {
       throw new Error('Could not compute accAddress: missing rawAddress');
     }
@@ -67,7 +67,7 @@ export abstract class Key {
   /**
    * Terra validator address. `terravaloper-` prefixed.
    */
-  public get valAddress(): ValAddress {
+  public get valAddress(): Promise<ValAddress> {
     if (!this.rawAddress) {
       throw new Error('Could not compute valAddress: missing rawAddress');
     }
@@ -77,7 +77,7 @@ export abstract class Key {
   /**
    * Terra account public key. `terrapub-` prefixed.
    */
-  public get accPubKey(): AccPubKey {
+  public get accPubKey(): Promise<AccPubKey> {
     if (!this.rawPubKey) {
       throw new Error('Could not compute accPubKey: missing rawPubKey');
     }
@@ -87,7 +87,7 @@ export abstract class Key {
   /**
    * Terra validator public key. `terravaloperpub-` prefixed.
    */
-  public get valPubKey(): ValPubKey {
+  public get valPubKey(): Promise<ValPubKey> {
     if (!this.rawPubKey) {
       throw new Error('Could not compute valPubKey: missing rawPubKey');
     }
