@@ -91,12 +91,16 @@ describe('MnemonicKey', () => {
       mnemonic:
         'service frozen keen unveil luggage initial surge name conduct mesh soup escape weather gas clown brand holiday result protect chat plug false pitch little',
     });
-    expect('terra1jqw25580qljucyy2xkpp7j02kd4mwx69wvfgf9');
+    expect(a2Key.accAddress).toEqual(
+      'terra1jqw25580qljucyy2xkpp7j02kd4mwx69wvfgf9'
+    );
     const a3Key = new MnemonicKey({
       mnemonic:
         'corn peasant blue sight spy three stove confirm night brother vote dish reduce sick observe outside vacant arena laugh devote exotic wasp supply rally',
     });
-    expect('terra13hrg8ul0p7sh85jwalh3leysdrw9swh44dql2h');
+    expect(a3Key.accAddress).toEqual(
+      'terra13hrg8ul0p7sh85jwalh3leysdrw9swh44dql2h'
+    );
 
     const msgSend = new MsgSend(
       multisigAddr,
