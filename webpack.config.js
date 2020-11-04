@@ -36,6 +36,7 @@ const webConfig = {
   },
   plugins: [
     ...commonConfig.plugins,
+    new webpack.IgnorePlugin(/^\.\/CLIKey/)
     // new BundleAnalyzerPlugin(),
   ],
 };
