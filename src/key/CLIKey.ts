@@ -11,14 +11,33 @@ import {
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
-
 export class CLIKey extends Key {
   private _accAddress?: AccAddress;
   private _accPubKey?: AccPubKey;
 
+  /**
+   *
+   * @param keyName name of the key for terracli
+   * @param cliPath (optional) path of terracli
+   * @param home (optional) home option for terracli
+   */
+  constructor(
+    public keyName: string,
+    public cliPath: string = 'terracli',
+    public home: string | null = null
+  ) {
+    super();
+  }
+
+  private generateCommand(args: string) {
+    return `${this.cliPath} ${args} -o json ${
+      this.home ? `--home ${this.home}` : ''
+    }`;
+  }
+
   private loadAccountDetails() {
     const details = JSON.parse(
-      execSync(`terracli keys show ${this.keyName} -o json`).toString()
+      execSync(this.generateCommand(`keys show ${this.keyName}`)).toString()
     );
     this._accAddress = details.address;
     this._accPubKey = details.pubkey;
@@ -68,10 +87,6 @@ export class CLIKey extends Key {
     return ValPubKey.fromAccPubKey(this._accPubKey);
   }
 
-  constructor(public keyName: string) {
-    super();
-  }
-
   public async sign(): Promise<Buffer> {
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
@@ -82,7 +97,9 @@ export class CLIKey extends Key {
     const tmpobj = fileSync({ postfix: '.json' });
     writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
     const result = execSync(
-      `terracli tx sign ${tmpobj.name} --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence}`
+      this.generateCommand(
+        `tx sign ${tmpobj.name} --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence}`
+      )
     ).toString();
     tmpobj.removeCallback();
     return StdSignature.fromData(JSON.parse(result));
