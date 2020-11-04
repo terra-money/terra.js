@@ -17,9 +17,11 @@ export class CLIKey extends Key {
   private _accPubKey?: AccPubKey;
 
   private loadAccountDetails() {
-    const details = execSync(`terracli keys show ${this.keyName}`).toString();
-    this._accAddress = details.match(/terra[a-z0-9]{39}/)![0];
-    this._accPubKey = details.match(/terrapub[a-z0-9]{68}/)![0];
+    const details = JSON.parse(
+      execSync(`terracli keys show ${this.keyName} -o json`).toString()
+    );
+    this._accAddress = details.address;
+    this._accPubKey = details.pubkey;
   }
 
   /**
@@ -70,14 +72,12 @@ export class CLIKey extends Key {
     super();
   }
 
-  // @ts-ignore
-  public async sign(payload: Buffer): Promise<Buffer> {
+  public async sign(): Promise<Buffer> {
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
     );
   }
 
-  // @ts-ignore
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
     const tmpobj = fileSync({ postfix: '.json' });
     writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
