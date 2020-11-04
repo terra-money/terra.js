@@ -11,6 +11,14 @@ import {
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
+
+/**
+ * Key implementation that uses `terracli` to sign transactions. Keys should be registered
+ * in `terracli`'s keystore.
+ *
+ * NOTE: This Key implementation overrides `createSignature()` and only provide a shim
+ * for `sign()`.
+ */
 export class CLIKey extends Key {
   private _accAddress?: AccAddress;
   private _accPubKey?: AccPubKey;
