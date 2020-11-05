@@ -2,9 +2,7 @@
 
 import * as bip32 from 'bip32';
 import * as bip39 from 'bip39';
-import SHA256 from 'crypto-js/sha256';
-import * as secp256k1 from 'secp256k1';
-import { Key } from './Key';
+import { RawKey } from './RawKey';
 
 export const LUNA_COIN_TYPE = 330;
 
@@ -41,12 +39,7 @@ const DEFAULT_OPTIONS = {
  * that this implementation exposes the private key in memory, so it is not advised to use
  * for applications requiring high security.
  */
-export class MnemonicKey extends Key {
-  /**
-   * Raw private key, in bytes.
-   */
-  public privateKey: Buffer;
-
+export class MnemonicKey extends RawKey {
   /**
    * Space-separated mnemonic phrase.
    */
@@ -93,26 +86,7 @@ export class MnemonicKey extends Key {
       throw new Error('Failed to derive key pair');
     }
 
-    const publicKey = secp256k1.publicKeyCreate(
-      new Uint8Array(privateKey),
-      true
-    );
-
-    super(Buffer.from(publicKey));
-    this.privateKey = Buffer.from(privateKey);
+    super(privateKey);
     this.mnemonic = mnemonic;
-  }
-
-  public ecdsaSign(payload: Buffer): { signature: Uint8Array; recid: number } {
-    const hash = Buffer.from(SHA256(payload.toString()).toString(), 'hex');
-    return secp256k1.ecdsaSign(
-      Uint8Array.from(hash),
-      Uint8Array.from(this.privateKey)
-    );
-  }
-
-  public async sign(payload: Buffer): Promise<Buffer> {
-    const { signature } = this.ecdsaSign(payload);
-    return Buffer.from(signature);
   }
 }

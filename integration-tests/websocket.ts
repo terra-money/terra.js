@@ -17,10 +17,14 @@ wsclient.subscribe('NewBlock', {}, (_, socket) => {
 });
 
 // send tracker
-wsclient.subscribe('Tx', { 'message.action': 'send' }, data => {
-  console.log('Send occured!');
-  console.log(data.value);
-});
+wsclient.subscribe(
+  'Tx',
+  { 'message.action': 'send', 'message.e': ['CONTAINS', '3'] },
+  data => {
+    console.log('Send occured!');
+    console.log(data.value);
+  }
+);
 
 // swap tracker
 wsclient.subscribeTx({ 'message.action': 'swap' }, async data => {

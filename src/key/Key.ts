@@ -51,25 +51,48 @@ export abstract class Key {
    */
   public abstract sign(payload: Buffer): Promise<Buffer>;
 
+  public rawAddress?: Buffer;
+  public rawPubKey?: Buffer;
+
   /**
    * Terra account address. `terra-` prefixed.
    */
-  public accAddress: AccAddress;
+  public get accAddress(): AccAddress {
+    if (!this.rawAddress) {
+      throw new Error('Could not compute accAddress: missing rawAddress');
+    }
+    return bech32.encode('terra', Array.from(this.rawAddress));
+  }
 
   /**
    * Terra validator address. `terravaloper-` prefixed.
    */
-  public valAddress: ValAddress;
+  public get valAddress(): ValAddress {
+    if (!this.rawAddress) {
+      throw new Error('Could not compute valAddress: missing rawAddress');
+    }
+    return bech32.encode('terravaloper', Array.from(this.rawAddress));
+  }
 
   /**
    * Terra account public key. `terrapub-` prefixed.
    */
-  public accPubKey: AccPubKey;
+  public get accPubKey(): AccPubKey {
+    if (!this.rawPubKey) {
+      throw new Error('Could not compute accPubKey: missing rawPubKey');
+    }
+    return bech32.encode('terrapub', Array.from(this.rawPubKey));
+  }
 
   /**
    * Terra validator public key. `terravaloperpub-` prefixed.
    */
-  public valPubKey: ValPubKey;
+  public get valPubKey(): ValPubKey {
+    if (!this.rawPubKey) {
+      throw new Error('Could not compute valPubKey: missing rawPubKey');
+    }
+    return bech32.encode('terravaloperpub', Array.from(this.rawPubKey));
+  }
 
   /**
    * Called to derive the relevant account and validator addresses and public keys from
@@ -77,13 +100,11 @@ export abstract class Key {
    *
    * @param publicKey raw compressed bytes public key
    */
-  constructor(public publicKey: Buffer) {
-    const rawAddress = addressFromPublicKey(publicKey);
-    const rawPubKey = pubKeyFromPublicKey(publicKey);
-    this.accAddress = bech32.encode('terra', Array.from(rawAddress));
-    this.valAddress = bech32.encode('terravaloper', Array.from(rawAddress));
-    this.accPubKey = bech32.encode('terrapub', Array.from(rawPubKey));
-    this.valPubKey = bech32.encode('terravaloperpub', Array.from(rawPubKey));
+  constructor(public publicKey?: Buffer) {
+    if (publicKey) {
+      this.rawAddress = addressFromPublicKey(publicKey);
+      this.rawPubKey = pubKeyFromPublicKey(publicKey);
+    }
   }
 
   /**
@@ -93,6 +114,12 @@ export abstract class Key {
    */
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
     const sigBuffer = await this.sign(Buffer.from(tx.toJSON()));
+
+    if (!this.publicKey) {
+      throw new Error(
+        'Signature could not be created: Key instance missing publicKey'
+      );
+    }
 
     return StdSignature.fromData({
       signature: sigBuffer.toString('base64'),
