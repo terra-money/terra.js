@@ -14,7 +14,7 @@ import { writeFileSync } from 'fs';
 
 /**
  * Key implementation that uses `terracli` to sign transactions. Keys should be registered
- * in `terracli`'s keystore.
+ * in `terracli`'s OS keyring.
  *
  * NOTE: This Key implementation overrides `createSignature()` and only provide a shim
  * for `sign()`.
@@ -26,13 +26,15 @@ export class CLIKey extends Key {
   /**
    *
    * @param keyName name of the key for terracli
+   * @param multisig (optional) address of multisig account on behalf of which transaction shall be signed
    * @param cliPath (optional) path of terracli
    * @param home (optional) home option for terracli
    */
   constructor(
     public keyName: string,
+    public multisig?: string,
     public cliPath: string = 'terracli',
-    public home: string | null = null
+    public home?: string
   ) {
     super();
   }
@@ -104,9 +106,13 @@ export class CLIKey extends Key {
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
     const tmpobj = fileSync({ postfix: '.json' });
     writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
+    let msString = ''; // multi-signature
+    if (this.multisig) {
+      msString = `--multisig ${this.multisig}`;
+    }
     const result = execSync(
       this.generateCommand(
-        `tx sign ${tmpobj.name} --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence}`
+        `tx sign ${tmpobj.name} --yes --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ${msString}`
       )
     ).toString();
     tmpobj.removeCallback();
