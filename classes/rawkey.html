@@ -77,6 +77,11 @@
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">RawKey</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="mnemonickey.html" class="tsd-signature-type">MnemonicKey</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -95,12 +100,19 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="rawkey.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="rawkey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -128,7 +140,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/RawKey.ts#L12">src/key/RawKey.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L12">src/key/RawKey.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -144,45 +156,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="accaddress" class="tsd-anchor"></a>
-					<h3>acc<wbr>Address</h3>
-					<div class="tsd-signature tsd-kind-icon">acc<wbr>Address<span class="tsd-signature-symbol">:</span> <a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accaddress">accAddress</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L57">src/key/Key.ts:57</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Terra account address. <code>terra-</code> prefixed.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="accpubkey" class="tsd-anchor"></a>
-					<h3>acc<wbr>Pub<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">acc<wbr>Pub<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="../modules/accpubkey.html" class="tsd-signature-type">AccPubKey</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accpubkey">accPubKey</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L67">src/key/Key.ts:67</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Terra account public key. <code>terrapub-</code> prefixed.</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="privatekey" class="tsd-anchor"></a>
 					<h3>private<wbr>Key</h3>
 					<div class="tsd-signature tsd-kind-icon">private<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/RawKey.ts#L12">src/key/RawKey.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L12">src/key/RawKey.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -193,12 +173,12 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="publickey" class="tsd-anchor"></a>
-					<h3>public<wbr>Key</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> public<wbr>Key</h3>
 					<div class="tsd-signature tsd-kind-icon">public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#publickey">publicKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L80">src/key/Key.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L103">src/key/Key.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -208,36 +188,121 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="valaddress" class="tsd-anchor"></a>
-					<h3>val<wbr>Address</h3>
-					<div class="tsd-signature tsd-kind-icon">val<wbr>Address<span class="tsd-signature-symbol">:</span> <a href="../modules/valaddress.html" class="tsd-signature-type">ValAddress</a></div>
+					<a name="rawaddress" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> raw<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">raw<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valaddress">valAddress</a></p>
+						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#rawaddress">rawAddress</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L62">src/key/Key.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L54">src/key/Key.ts:54</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Terra validator address. <code>terravaloper-</code> prefixed.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="valpubkey" class="tsd-anchor"></a>
-					<h3>val<wbr>Pub<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">val<wbr>Pub<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="../modules/valpubkey.html" class="tsd-signature-type">ValPubKey</a></div>
+					<a name="rawpubkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> raw<wbr>Pub<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">raw<wbr>Pub<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valpubkey">valPubKey</a></p>
+						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#rawpubkey">rawPubKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L72">src/key/Key.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L55">src/key/Key.ts:55</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Terra validator public key. <code>terravaloperpub-</code> prefixed.</p>
-						</div>
-					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="accaddress" class="tsd-anchor"></a>
+					<h3>acc<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> accAddress<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accaddress">accAddress</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L60">src/key/Key.ts:60</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Terra account address. <code>terra-</code> prefixed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="accpubkey" class="tsd-anchor"></a>
+					<h3>acc<wbr>Pub<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> accPubKey<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/accpubkey.html" class="tsd-signature-type">AccPubKey</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accpubkey">accPubKey</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L80">src/key/Key.ts:80</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Terra account public key. <code>terrapub-</code> prefixed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/accpubkey.html" class="tsd-signature-type">AccPubKey</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="valaddress" class="tsd-anchor"></a>
+					<h3>val<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> valAddress<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/valaddress.html" class="tsd-signature-type">ValAddress</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valaddress">valAddress</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L70">src/key/Key.ts:70</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Terra validator address. <code>terravaloper-</code> prefixed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/valaddress.html" class="tsd-signature-type">ValAddress</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="valpubkey" class="tsd-anchor"></a>
+					<h3>val<wbr>Pub<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> valPubKey<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/valpubkey.html" class="tsd-signature-type">ValPubKey</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valpubkey">valPubKey</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L90">src/key/Key.ts:90</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Terra validator public key. <code>terravaloperpub-</code> prefixed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/valpubkey.html" class="tsd-signature-type">ValPubKey</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -253,7 +318,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#createsignature">createSignature</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L94">src/key/Key.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L115">src/key/Key.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -284,7 +349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/RawKey.ts#L23">src/key/RawKey.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L23">src/key/RawKey.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -316,7 +381,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#sign">sign</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/RawKey.ts#L31">src/key/RawKey.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L31">src/key/RawKey.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -340,7 +405,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#signtx">signTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/77f0aaa/src/key/Key.ts#L110">src/key/Key.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L137">src/key/Key.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -380,12 +445,6 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="rawkey.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="rawkey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="rawkey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="rawkey.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a>
 							</li>
@@ -393,9 +452,21 @@
 								<a href="rawkey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="rawkey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a>
+								<a href="rawkey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="rawkey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="rawkey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="rawkey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="rawkey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="rawkey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">

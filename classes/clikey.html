@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MnemonicKey | Terra.js</title>
+	<title>CLIKey | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="mnemonickey.html">MnemonicKey</a>
+					<a href="clikey.html">CLIKey</a>
 				</li>
 			</ul>
-			<h1>Class MnemonicKey</h1>
+			<h1>Class CLIKey</h1>
 		</div>
 	</div>
 </header>
@@ -65,20 +65,21 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Implements a BIP39 mnemonic wallet with standard key derivation from a word list. Note
-							that this implementation exposes the private key in memory, so it is not advised to use
-						for applications requiring high security.</p>
+						<p>Key implementation that uses <code>terracli</code> to sign transactions. Keys should be registered
+						in <code>terracli</code>&#39;s OS keyring.</p>
 					</div>
+					<p>NOTE: This Key implementation overrides <code>createSignature()</code> and only provide a shim
+					for <code>sign()</code>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="rawkey.html" class="tsd-signature-type">RawKey</a>
+						<a href="key.html" class="tsd-signature-type">Key</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">MnemonicKey</span>
+								<span class="target">CLIKey</span>
 							</li>
 						</ul>
 					</li>
@@ -91,35 +92,36 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="mnemonickey.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="mnemonickey.html#mnemonic" class="tsd-kind-icon">mnemonic</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#clipath" class="tsd-kind-icon">cli<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#home" class="tsd-kind-icon">home</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#keyname" class="tsd-kind-icon">key<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#multisig" class="tsd-kind-icon">multisig</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#createsignature" class="tsd-kind-icon">create<wbr>Signature</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#ecdsasign" class="tsd-kind-icon">ecdsa<wbr>Sign</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="mnemonickey.html#sign" class="tsd-kind-icon">sign</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mnemonickey.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#createsignature" class="tsd-kind-icon">create<wbr>Signature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a></li>
 							</ul>
 						</section>
 					</div>
@@ -131,45 +133,54 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Mnemonic<wbr>Key<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/mnemonickeyoptions.html" class="tsd-signature-type">MnemonicKeyOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="mnemonickey.html" class="tsd-signature-type">MnemonicKey</a></li>
+						<li class="tsd-signature tsd-kind-icon">new CLIKey<span class="tsd-signature-symbol">(</span>keyName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, multisig<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, cliPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, home<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="clikey.html" class="tsd-signature-type">CLIKey</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="rawkey.html">RawKey</a>.<a href="rawkey.html#constructor">constructor</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/MnemonicKey.ts#L46">src/key/MnemonicKey.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L24">src/key/CLIKey.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a new signing key from a mnemonic phrase. If no mnemonic is provided, one
-									will be automatically generated.</p>
-								</div>
-								<a href="#providing-a-mnemonic" id="providing-a-mnemonic" style="color: inherit; text-decoration: none;">
-									<h3>Providing a mnemonic</h3>
-								</a>
-								<pre><code class="language-ts"><span class="hljs-keyword">import</span> { MnemonicKey } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;terra.js&#x27;</span>;
-
-<span class="hljs-keyword">const</span> mk = <span class="hljs-keyword">new</span> MnemonicKey({ mnemonic: <span class="hljs-string">&#x27;...&#x27;</span> });
-<span class="hljs-built_in">console</span>.log(mk.accAddress);</code></pre>
-								<a href="#generating-a-random-mnemonic" id="generating-a-random-mnemonic" style="color: inherit; text-decoration: none;">
-									<h3>Generating a random mnemonic</h3>
-								</a>
-								<pre><code class="language-ts"><span class="hljs-keyword">const</span> mk2 = <span class="hljs-keyword">new</span> MnemonicKey();
-<span class="hljs-built_in">console</span>.log(mk2.mnemonic);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/mnemonickeyoptions.html" class="tsd-signature-type">MnemonicKeyOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>keyName: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
+											<p>name of the key for terracli</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> multisig: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>(optional) address of multisig account on behalf of which transaction shall be signed</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> cliPath: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;terracli&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>(optional) path of terracli</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> home: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>(optional) home option for terracli</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="mnemonickey.html" class="tsd-signature-type">MnemonicKey</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="clikey.html" class="tsd-signature-type">CLIKey</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -177,33 +188,62 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="mnemonic" class="tsd-anchor"></a>
-					<h3>mnemonic</h3>
-					<div class="tsd-signature tsd-kind-icon">mnemonic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="clipath" class="tsd-anchor"></a>
+					<h3>cli<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">cli<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/MnemonicKey.ts#L46">src/key/MnemonicKey.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L36">src/key/CLIKey.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Space-separated mnemonic phrase.</p>
+							<p>(optional) path of terracli</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="privatekey" class="tsd-anchor"></a>
-					<h3>private<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">private<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="home" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> home</h3>
+					<div class="tsd-signature tsd-kind-icon">home<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="rawkey.html">RawKey</a>.<a href="rawkey.html#privatekey">privateKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L12">src/key/RawKey.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L37">src/key/CLIKey.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Raw private key, in bytes.</p>
+							<p>(optional) home option for terracli</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="keyname" class="tsd-anchor"></a>
+					<h3>key<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">key<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L34">src/key/CLIKey.ts:34</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>name of the key for terracli</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="multisig" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> multisig</h3>
+					<div class="tsd-signature tsd-kind-icon">multisig<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L35">src/key/CLIKey.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>(optional) address of multisig account on behalf of which transaction shall be signed</p>
 						</div>
 					</div>
 				</section>
@@ -246,20 +286,20 @@
 					</aside>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 					<a name="accaddress" class="tsd-anchor"></a>
 					<h3>acc<wbr>Address</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> accAddress<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/accaddress.html" class="tsd-signature-type">AccAddress</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accaddress">accAddress</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#accaddress">accAddress</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L60">src/key/Key.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L59">src/key/CLIKey.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,18 +311,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 					<a name="accpubkey" class="tsd-anchor"></a>
 					<h3>acc<wbr>Pub<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> accPubKey<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/accpubkey.html" class="tsd-signature-type">AccPubKey</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#accpubkey">accPubKey</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#accpubkey">accPubKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L80">src/key/Key.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L81">src/key/CLIKey.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -294,18 +334,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 					<a name="valaddress" class="tsd-anchor"></a>
 					<h3>val<wbr>Address</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> valAddress<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/valaddress.html" class="tsd-signature-type">ValAddress</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valaddress">valAddress</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#valaddress">valAddress</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L70">src/key/Key.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L70">src/key/CLIKey.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,18 +357,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 					<a name="valpubkey" class="tsd-anchor"></a>
 					<h3>val<wbr>Pub<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> valPubKey<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/valpubkey.html" class="tsd-signature-type">ValPubKey</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#valpubkey">valPubKey</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#valpubkey">valPubKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L90">src/key/Key.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L92">src/key/CLIKey.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,93 +381,46 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="createsignature" class="tsd-anchor"></a>
 					<h3>create<wbr>Signature</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">create<wbr>Signature<span class="tsd-signature-symbol">(</span>tx<span class="tsd-signature-symbol">: </span><a href="stdsignmsg.html" class="tsd-signature-type">StdSignMsg</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#createsignature">createSignature</a></p>
+								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#createsignature">createSignature</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L115">src/key/Key.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L106">src/key/CLIKey.ts:106</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Signs a <a href="stdsignmsg.html">StdSignMsg</a> with the method supplied by the child class.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>tx: <a href="stdsignmsg.html" class="tsd-signature-type">StdSignMsg</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>sign-message of the transaction to sign</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="stdsignature.html" class="tsd-signature-type">StdSignature</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="ecdsasign" class="tsd-anchor"></a>
-					<h3>ecdsa<wbr>Sign</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">ecdsa<wbr>Sign<span class="tsd-signature-symbol">(</span>payload<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>recid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="rawkey.html">RawKey</a>.<a href="rawkey.html#ecdsasign">ecdsaSign</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L23">src/key/RawKey.ts:23</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>payload: <span class="tsd-signature-type">Buffer</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>recid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol"> }</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>recid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li class="tsd-parameter">
-									<h5>signature<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>payload<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="rawkey.html">RawKey</a>.<a href="rawkey.html#sign">sign</a></p>
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#sign">sign</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/RawKey.ts#L31">src/key/RawKey.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L100">src/key/CLIKey.ts:100</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>payload: <span class="tsd-signature-type">Buffer</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -478,49 +471,52 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="mnemonickey.html" class="tsd-kind-icon">Mnemonic<wbr>Key</a>
+						<a href="clikey.html" class="tsd-kind-icon">CLIKey</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="mnemonickey.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="clikey.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="mnemonickey.html#mnemonic" class="tsd-kind-icon">mnemonic</a>
+								<a href="clikey.html#clipath" class="tsd-kind-icon">cli<wbr>Path</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="clikey.html#home" class="tsd-kind-icon">home</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="clikey.html#keyname" class="tsd-kind-icon">key<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="clikey.html#multisig" class="tsd-kind-icon">multisig</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a>
+								<a href="clikey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
+								<a href="clikey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a>
+								<a href="clikey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#accaddress" class="tsd-kind-icon">acc<wbr>Address</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#accpubkey" class="tsd-kind-icon">acc<wbr>Pub<wbr>Key</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#valaddress" class="tsd-kind-icon">val<wbr>Address</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#valpubkey" class="tsd-kind-icon">val<wbr>Pub<wbr>Key</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#createsignature" class="tsd-kind-icon">create<wbr>Signature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="clikey.html#sign" class="tsd-kind-icon">sign</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#createsignature" class="tsd-kind-icon">create<wbr>Signature</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#ecdsasign" class="tsd-kind-icon">ecdsa<wbr>Sign</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="mnemonickey.html#sign" class="tsd-kind-icon">sign</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="mnemonickey.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a>
+								<a href="clikey.html#signtx" class="tsd-kind-icon">sign<wbr>Tx</a>
 							</li>
 						</ul>
 					</li>
