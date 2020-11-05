@@ -12,6 +12,13 @@ import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
 
+interface CLIKeyParams {
+  keyName: string;
+  multisig?: string;
+  cliPath?: string;
+  home?: string;
+}
+
 /**
  * Key implementation that uses `terracli` to sign transactions. Keys should be registered
  * in `terracli`'s OS keyring.
@@ -30,24 +37,22 @@ export class CLIKey extends Key {
    * @param cliPath (optional) path of terracli
    * @param home (optional) home option for terracli
    */
-  constructor(
-    public keyName: string,
-    public multisig?: string,
-    public cliPath: string = 'terracli',
-    public home?: string
-  ) {
+  constructor(private params: CLIKeyParams) {
     super();
+    params.cliPath = params.cliPath || 'terracli';
   }
 
   private generateCommand(args: string) {
-    return `${this.cliPath} ${args} -o json ${
-      this.home ? `--home ${this.home}` : ''
+    return `${this.params.cliPath} ${args} -o json ${
+      this.params.home ? `--home ${this.params.home}` : ''
     }`;
   }
 
   private loadAccountDetails() {
     const details = JSON.parse(
-      execSync(this.generateCommand(`keys show ${this.keyName}`)).toString()
+      execSync(
+        this.generateCommand(`keys show ${this.params.keyName}`)
+      ).toString()
     );
     this._accAddress = details.address;
     this._accPubKey = details.pubkey;
@@ -106,13 +111,12 @@ export class CLIKey extends Key {
   public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
     const tmpobj = fileSync({ postfix: '.json' });
     writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
-    let msString = ''; // multi-signature
-    if (this.multisig) {
-      msString = `--multisig ${this.multisig}`;
-    }
+
     const result = execSync(
       this.generateCommand(
-        `tx sign ${tmpobj.name} --yes --signature-only --from ${this.keyName} --offline --chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ${msString}`
+        `tx sign ${tmpobj.name} --yes --signature-only --from ${this.params.keyName} --offline ` +
+          `--chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ` +
+          `${this.params.multisig ? `--multisig ${this.params.multisig}` : ''}`
       )
     ).toString();
     tmpobj.removeCallback();
