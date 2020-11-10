@@ -95,13 +95,9 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="clikey.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#clipath" class="tsd-kind-icon">cli<wbr>Path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#home" class="tsd-kind-icon">home</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#keyname" class="tsd-kind-icon">key<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="clikey.html#multisig" class="tsd-kind-icon">multisig</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#rawaddress" class="tsd-kind-icon">raw<wbr>Address</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="clikey.html#rawpubkey" class="tsd-kind-icon">raw<wbr>Pub<wbr>Key</a></li>
@@ -133,14 +129,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new CLIKey<span class="tsd-signature-symbol">(</span>keyName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, multisig<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, cliPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, home<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="clikey.html" class="tsd-signature-type">CLIKey</a></li>
+						<li class="tsd-signature tsd-kind-icon">new CLIKey<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/clikeyparams.html" class="tsd-signature-type">CLIKeyParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="clikey.html" class="tsd-signature-type">CLIKey</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L24">src/key/CLIKey.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L31">src/key/CLIKey.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -148,36 +144,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>keyName: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>name of the key for terracli</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> multisig: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>(optional) address of multisig account on behalf of which transaction shall be signed</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> cliPath: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;terracli&quot;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>(optional) path of terracli</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> home: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>(optional) home option for terracli</p>
-										</div>
-									</div>
+									<h5>params: <a href="../interfaces/clikeyparams.html" class="tsd-signature-type">CLIKeyParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="clikey.html" class="tsd-signature-type">CLIKey</a></h4>
@@ -185,68 +152,8 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="clipath" class="tsd-anchor"></a>
-					<h3>cli<wbr>Path</h3>
-					<div class="tsd-signature tsd-kind-icon">cli<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L36">src/key/CLIKey.ts:36</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(optional) path of terracli</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="home" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> home</h3>
-					<div class="tsd-signature tsd-kind-icon">home<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L37">src/key/CLIKey.ts:37</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(optional) home option for terracli</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="keyname" class="tsd-anchor"></a>
-					<h3>key<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">key<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L34">src/key/CLIKey.ts:34</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>name of the key for terracli</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="multisig" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> multisig</h3>
-					<div class="tsd-signature tsd-kind-icon">multisig<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L35">src/key/CLIKey.ts:35</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>(optional) address of multisig account on behalf of which transaction shall be signed</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="publickey" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> public<wbr>Key</h3>
@@ -254,7 +161,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#publickey">publicKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L103">src/key/Key.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/Key.ts#L103">src/key/Key.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -270,7 +177,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#rawaddress">rawAddress</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L54">src/key/Key.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/Key.ts#L54">src/key/Key.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -281,7 +188,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#rawpubkey">rawPubKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L55">src/key/Key.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/Key.ts#L55">src/key/Key.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -299,7 +206,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#accaddress">accAddress</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L59">src/key/CLIKey.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L64">src/key/CLIKey.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -322,7 +229,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#accpubkey">accPubKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L81">src/key/CLIKey.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L86">src/key/CLIKey.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,7 +252,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#valaddress">valAddress</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L70">src/key/CLIKey.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L75">src/key/CLIKey.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -368,7 +275,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#valpubkey">valPubKey</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L92">src/key/CLIKey.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L97">src/key/CLIKey.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -394,7 +301,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#createsignature">createSignature</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L106">src/key/CLIKey.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L111">src/key/CLIKey.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -418,7 +325,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="key.html">Key</a>.<a href="key.html#sign">sign</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/CLIKey.ts#L100">src/key/CLIKey.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/CLIKey.ts#L105">src/key/CLIKey.ts:105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -436,7 +343,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="key.html">Key</a>.<a href="key.html#signtx">signTx</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/f055dd2/src/key/Key.ts#L137">src/key/Key.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/d36f269/src/key/Key.ts#L137">src/key/Key.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -475,18 +382,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="clikey.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="clikey.html#clipath" class="tsd-kind-icon">cli<wbr>Path</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="clikey.html#home" class="tsd-kind-icon">home</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="clikey.html#keyname" class="tsd-kind-icon">key<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="clikey.html#multisig" class="tsd-kind-icon">multisig</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="clikey.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
