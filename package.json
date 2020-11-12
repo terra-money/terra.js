@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git://github.com/terra-project/terra.js.git"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
