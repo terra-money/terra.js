@@ -1,6 +1,6 @@
 import { StdFee, MsgSend } from '../src';
 import { LocalTerra } from '../src';
-import { CLIKey } from '../src';
+import { CLIKey } from '../src/key/CLIKey';
 
 const terra = new LocalTerra();
 const { test1 } = terra.wallets;

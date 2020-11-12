@@ -37,9 +37,6 @@ const webConfig = {
   },
   plugins: [
     ...commonConfig.plugins,
-    new webpack.DefinePlugin({
-      __WEBPACK_BROWSER__: true,
-    }),
     // new BundleAnalyzerPlugin(),
   ],
 };
