@@ -22,9 +22,7 @@ interface Option extends CreateTxOptions {
 declare global {
   interface Window {
     // add you custom properties and methods
-    Terra: {
-      isAvailable: boolean;
-    };
+    isTerraExtensionAvailable: boolean;
   }
 }
 
@@ -61,7 +59,7 @@ export class Extension {
    * Indicates the Station Extension is installed and availble (requires extension v1.1 or later)
    */
   get isAvailable(): boolean {
-    return window?.Terra?.isAvailable;
+    return !!window.isTerraExtensionAvailable;
   }
 
   /**

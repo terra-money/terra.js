@@ -1,8 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const commonConfig = {
   entry: './src/index.ts',
@@ -13,7 +12,7 @@ const commonConfig = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
+      },
     ],
   },
   resolve: {
@@ -21,8 +20,10 @@ const commonConfig = {
     plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
-    new webpack.IgnorePlugin(/wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese)\.json$/)
-  ]
+    new webpack.IgnorePlugin(
+      /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese)\.json$/
+    ),
+  ],
 };
 
 const webConfig = {
@@ -36,7 +37,6 @@ const webConfig = {
   },
   plugins: [
     ...commonConfig.plugins,
-    new webpack.IgnorePlugin(/^\.\/CLIKey/)
     // new BundleAnalyzerPlugin(),
   ],
 };
