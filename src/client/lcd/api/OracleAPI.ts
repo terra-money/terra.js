@@ -122,9 +122,13 @@ export class OracleAPI extends BaseAPI {
    * Gets the Oracle module's currently registered exchange rate for LUNA in all available denominations.
    */
   public async exchangeRates(): Promise<Coins> {
-    return this.c
-      .get<Coins.Data>(`/oracle/denoms/exchange_rates`)
-      .then(d => Coins.fromData(d.result));
+    return this.c.get<Coins.Data>(`/oracle/denoms/exchange_rates`).then(d => {
+      if (d?.result) {
+        return Coins.fromData(d.result);
+      } else {
+        return new Coins({});
+      }
+    });
   }
 
   /**
