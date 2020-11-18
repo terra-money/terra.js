@@ -61,7 +61,7 @@ export class Coins
   /**
    * @param arg coins to input
    */
-  constructor(arg: Coins.Input) {
+  constructor(arg: Coins.Input = {}) {
     super();
     if (arg instanceof Coins) {
       this._coins = { ...arg._coins };
@@ -93,7 +93,9 @@ export class Coins
         !this.toArray().every(c => c.isDecCoin()) &&
         !this.toArray().every(c => c.isIntCoin())
       ) {
-        throw new Error('non-homogenous instantiation of Coins not supported');
+        throw new Error(
+          `non-homogenous instantiation of Coins not supported: ${this.toString()}`
+        );
       }
     }
   }
