@@ -123,7 +123,7 @@ export class OracleAPI extends BaseAPI {
    */
   public async exchangeRates(): Promise<Coins> {
     return this.c.get<Coins.Data>(`/oracle/denoms/exchange_rates`).then(d => {
-      if (d) {
+      if (d?.result) {
         return Coins.fromData(d.result);
       } else {
         return new Coins({});
