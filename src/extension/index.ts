@@ -5,11 +5,9 @@ interface ResponseData {
   payload: object;
 }
 
-type SendDataType = 'connect' | 'post' | 'sign';
+type SendDataType = 'connect' | 'post' | 'sign' | 'info';
 
 interface SendData {
-  id: number | string;
-  type: SendDataType;
   [key: string]: any;
 }
 
@@ -65,8 +63,16 @@ export class Extension {
    * low level function for sending message to extension.
    * Do not use this function unless you know what you are doing.
    */
-  send(data: SendData): void {
-    this.inpageStream.write(data);
+  send(type: SendDataType, data?: SendData): number {
+    const id = this.generateId();
+
+    this.inpageStream.write({
+      ...data,
+      id,
+      type,
+    });
+
+    return id;
   }
 
   /**
@@ -92,8 +98,16 @@ export class Extension {
   /**
    * Request to Station Extension for connecting a wallet
    *
-   * @return {string}  name      'onConnect'
-   * @return {string}  payload.address         Terra account address
+   * @return {string}     name      'onConnect'
+   * @return {AccAddress} payload   Terra account address
+   */
+  connect(): number {
+    return this.send('connect');
+  }
+
+  /**
+   * Request for Station Extension information
+   *
    * @return {object}  payload.network
    * @return {string}  payload.network.name    Name of the network
    * @return {string}  payload.network.chainId Chain ID
@@ -101,19 +115,12 @@ export class Extension {
    * @return {string}  payload.network.fcd     FCD address
    * @return {string}  payload.network.ws      Websocket address
    */
-  connect(): number {
-    const id = this.generateId();
-
-    this.send({
-      id,
-      type: 'connect',
-    });
-
-    return id;
+  info(): number {
+    return this.send('info');
   }
 
   /**
-   * Request to Station Extension for signing tx
+   * Request for signing tx
    *
    * @return {string}  name               'onSign'
    * @return {object}  payload
@@ -142,12 +149,8 @@ export class Extension {
    * terra.tx.broadcast(new StdTx(stdSignMsg.msgs, stdSignMsg.fee, [sig], stdSignMsg.memo));
    */
   sign(options: Option): number {
-    const id = this.generateId();
-
-    this.send({
+    return this.send('sign', {
       ...options,
-      id,
-      type: 'sign',
       msgs: options.msgs.map(msg => msg.toJSON()),
       fee: options.fee?.toJSON(),
       memo: options.memo,
@@ -158,12 +161,10 @@ export class Extension {
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
     });
-
-    return id;
   }
 
   /**
-   * Request to Station Extension for sign and post to LCD server
+   * Request for sign and post to LCD server
    *
    * @return {string}  name                   'onPost'
    * @return {object}  payload
@@ -177,11 +178,7 @@ export class Extension {
    * @return {string}  payload.result.txhash  transaction hash
    */
   post(options: Option): number {
-    const id = this.generateId();
-
-    this.send({
-      id,
-      type: 'post',
+    return this.send('post', {
       msgs: options.msgs.map(msg => msg.toJSON()),
       fee: options.fee?.toJSON(),
       memo: options.memo,
@@ -192,7 +189,5 @@ export class Extension {
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
     });
-
-    return id;
   }
 }
