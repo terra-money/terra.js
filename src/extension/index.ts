@@ -1,4 +1,4 @@
-import { CreateTxOptions, LCDClientConfig } from '../client';
+import { CreateTxOptions } from '../client';
 
 interface ResponseData {
   name: string;
@@ -14,7 +14,6 @@ interface SendData {
 }
 
 interface Option extends CreateTxOptions {
-  lcdClientConfig?: LCDClientConfig;
   waitForConfirmation?: boolean; // default false
   purgeQueue?: boolean; // default true
 }
@@ -75,20 +74,32 @@ export class Extension {
    * You will receive an event after calling connect, sign, or post.
    * payload structures are described on each function in @return section.
    *
-   * @param name name of event
+   * @param name name of event (optional)
    * @param callback will be called when `name` event emits
    */
-  on(name: string, callback: (payload: any) => void): void {
+  on(name: string, callback: (payload: any) => void): void;
+  on(callback: (payload: any) => void): void;
+  on(...args: any[]): void {
     this.inpageStream.on('data', (data: ResponseData) => {
-      data.name === name && callback(data.payload);
+      if (typeof args[0] === 'string') {
+        data.name === args[0] && args[1](data.payload, data.name);
+      } else {
+        args[0](data.payload, data.name);
+      }
     });
   }
 
   /**
    * Request to Station Extension for connecting a wallet
    *
-   * @return {string}     name      'onConnect'
-   * @return {AccAddress} payload   Terra account address
+   * @return {string}  name      'onConnect'
+   * @return {string}  payload.address         Terra account address
+   * @return {object}  payload.network
+   * @return {string}  payload.network.name    Name of the network
+   * @return {string}  payload.network.chainId Chain ID
+   * @return {string}  payload.network.lcd     LCD address
+   * @return {string}  payload.network.fcd     FCD address
+   * @return {string}  payload.network.ws      Websocket address
    */
   connect(): number {
     const id = this.generateId();
@@ -144,7 +155,6 @@ export class Extension {
       gasAdjustment: options.gasAdjustment?.toString(),
       account_number: options.account_number,
       sequence: options.sequence,
-      lcdClientConfig: options.lcdClientConfig,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
     });
@@ -160,8 +170,6 @@ export class Extension {
    * @return {number}  payload.id             identifier
    * @return {string}  payload.origin         origin address
    * @return {Msg[]}   payload.msgs           requested msgs
-   * @return {LCDClientConfig} payload.lcdClientConfig
-   *                                          requested lcdClientConfig
    * @return {boolean} payload.success
    * @return {number|undefined} payload.result.code
    *                                          error code. undefined with successful tx
@@ -181,7 +189,6 @@ export class Extension {
       gasAdjustment: options.gasAdjustment?.toString(),
       account_number: options.account_number,
       sequence: options.sequence,
-      lcdClientConfig: options.lcdClientConfig,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
     });
