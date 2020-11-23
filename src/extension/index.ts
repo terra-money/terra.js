@@ -83,9 +83,9 @@ export class Extension {
     this.inpageStream.on('data', (data: ResponseData) => {
       if (typeof args[0] === 'string') {
         data.name === args[0] && args[1](data.payload);
+      } else {
+        args[0](data.payload);
       }
-
-      args[0](data.payload);
     });
   }
 
