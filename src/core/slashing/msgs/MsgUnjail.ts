@@ -27,7 +27,7 @@ export class MsgUnjail extends JSONSerializable<MsgUnjail.Data> {
   public toData(): MsgUnjail.Data {
     const { address } = this;
     return {
-      type: 'cosmos/MsgUnjail',
+      type: 'slashing/MsgUnjail',
       value: {
         address,
       },
@@ -37,7 +37,7 @@ export class MsgUnjail extends JSONSerializable<MsgUnjail.Data> {
 
 export namespace MsgUnjail {
   export interface Data {
-    type: 'cosmos/MsgUnjail';
+    type: 'slashing/MsgUnjail';
     value: {
       address: ValAddress;
     };

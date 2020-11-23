@@ -35,7 +35,7 @@
         "type": "core/StdTx",
         "value": {
           "msg": [{
-            "type": "cosmos/MsgUnjail",
+            "type": "slashing/MsgUnjail",
             "value": {
               "address": "terravaloper1jsdfyz8uhw2nd7cl45709w40r268phmvxam8eh"
             }
@@ -106,7 +106,7 @@
         "type": "core/StdTx",
         "value": {
           "msg": [{
-            "type": "cosmos/MsgUnjail",
+            "type": "slashing/MsgUnjail",
             "value": {
               "address": "terravaloper13kcwnlafvu4xvy2jr3vhdte9aq9tadwds3lx2d"
             }
@@ -166,7 +166,7 @@
         "type": "core/StdTx",
         "value": {
           "msg": [{
-            "type": "cosmos/MsgUnjail",
+            "type": "slashing/MsgUnjail",
             "value": {
               "address": "terravaloper13kcwnlafvu4xvy2jr3vhdte9aq9tadwds3lx2d"
             }
@@ -228,7 +228,7 @@
         "type": "core/StdTx",
         "value": {
           "msg": [{
-            "type": "cosmos/MsgUnjail",
+            "type": "slashing/MsgUnjail",
             "value": {
               "address": "terravaloper1gkumn82kkj3cww28yp53agy7aluxv06fsuynvd"
             }

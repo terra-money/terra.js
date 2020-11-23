@@ -116,7 +116,7 @@ export namespace Msg {
         return MsgAggregateExchangeRateVote.fromData(data);
 
       // slashing
-      case 'cosmos/MsgUnjail':
+      case 'slashing/MsgUnjail':
         return MsgUnjail.fromData(data);
 
       // staking
