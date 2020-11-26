@@ -40,7 +40,7 @@ export class Extension {
 
     Extension.instance = this;
 
-    const LocalMessageDuplexStream = require('post-message-stream');
+    const LocalMessageDuplexStream = require('./PostMessageStream');
 
     this.inpageStream = new LocalMessageDuplexStream({
       name: 'station:inpage',
@@ -92,6 +92,20 @@ export class Extension {
       } else {
         args[0](data.payload, data.name);
       }
+    });
+  }
+
+  /**
+   * Send a request
+   *
+   * @param {SendDataType} type
+   * @param {SendData} data
+   */
+  async request(type: SendDataType, data?: SendData): Promise<ResponseData> {
+    this.send(type, data);
+
+    return new Promise(resolve => {
+      this.inpageStream.once('data', resolve);
     });
   }
 
