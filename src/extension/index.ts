@@ -48,6 +48,10 @@ export class Extension {
     });
   }
 
+  destroy() {
+    this.inpageStream && this.inpageStream.destroy();
+  }
+
   private generateId(): number {
     return Date.now();
   }
