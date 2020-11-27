@@ -1,4 +1,5 @@
 import { CreateTxOptions } from '../client';
+import PostMessageStream from './PostMessageStream';
 
 interface ResponseData {
   name: string;
@@ -28,7 +29,7 @@ declare global {
  */
 export class Extension {
   static instance: Extension;
-  private inpageStream: any;
+  private inpageStream!: PostMessageStream;
 
   /**
    * Using singleton pattern, hence every instanciation will return same value
@@ -40,9 +41,7 @@ export class Extension {
 
     Extension.instance = this;
 
-    const LocalMessageDuplexStream = require('./PostMessageStream');
-
-    this.inpageStream = new LocalMessageDuplexStream({
+    this.inpageStream = new PostMessageStream({
       name: 'station:inpage',
       target: 'station:content',
     });
@@ -85,12 +84,32 @@ export class Extension {
    * payload structures are described on each function in @return section.
    *
    * @param name name of event (optional)
-   * @param callback will be called when `name` event emits
+   * @param callback will be called when `name` or any event emits
    */
   on(name: string, callback: (payload: any) => void): void;
   on(callback: (payload: any) => void): void;
   on(...args: any[]): void {
     this.inpageStream.on('data', (data: ResponseData) => {
+      if (typeof args[0] === 'string') {
+        data.name === args[0] && args[1](data.payload, data.name);
+      } else {
+        args[0](data.payload, data.name);
+      }
+    });
+  }
+
+  /**
+   * Listen to an event from the Extension once.
+   * You will receive an event after calling each type of messages.
+   * payload structures are described on each function in @return section.
+   *
+   * @param name name of event (optional)
+   * @param callback will be called when `name` or any event emits
+   */
+  once(name: string, callback: (payload: any) => void): void;
+  once(callback: (payload: any) => void): void;
+  once(...args: any[]): void {
+    this.inpageStream.once('data', (data: ResponseData) => {
       if (typeof args[0] === 'string') {
         data.name === args[0] && args[1](data.payload, data.name);
       } else {
