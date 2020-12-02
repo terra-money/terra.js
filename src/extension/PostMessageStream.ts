@@ -43,7 +43,7 @@ export default class PostMessageStream extends Duplex {
   }
 
   _destroy() {
-    console.log('PostMessageStream: destroy');
+    // console.log('PostMessageStream: destroy');
     window.removeEventListener('message', this._onMessage as any, false);
   }
 
