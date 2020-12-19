@@ -72,7 +72,7 @@ const terra = new LCDClient({
 
 // get the current swap rate from 1 TerraUSD to TerraKRW
 const offerCoin = new Coin('uusd', '1000000');
-terra.market.swap(offerCoin, 'ukrw').then(c => {
+terra.market.swapRate(offerCoin, 'ukrw').then(c => {
   console.log(`${offerCoin.toString()} can be swapped for ${c.toString()}`);
 });
 ```
