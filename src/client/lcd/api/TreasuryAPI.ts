@@ -63,9 +63,9 @@ export class TreasuryAPI extends BaseAPI {
   /**
    * Gets the current registered Tax Rate.
    */
-  public async taxRate(): Promise<Dec> {
+  public async taxRate(height?: number): Promise<Dec> {
     return this.c
-      .get<string>(`/treasury/tax_rate`)
+      .get<string>(`/treasury/tax_rate`, height ? { height } : undefined)
       .then(d => new Dec(d.result));
   }
 
