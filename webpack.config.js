@@ -17,7 +17,7 @@ const commonConfig = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    plugins: [new TsconfigPathsPlugin()]
+    plugins: [new TsconfigPathsPlugin()],
   },
   plugins: [
     new webpack.IgnorePlugin({
@@ -39,7 +39,7 @@ const webConfig = {
     fallback: {
       stream: require.resolve('stream-browserify'),
       buffer: require.resolve('buffer'),
-    }
+    },
   },
   plugins: [
     ...commonConfig.plugins,
