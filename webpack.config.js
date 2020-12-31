@@ -17,11 +17,7 @@ const commonConfig = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    plugins: [new TsconfigPathsPlugin()],
-    fallback: {
-      stream: require.resolve('stream-browserify'),
-      buffer: require.resolve('buffer/'),
-    },
+    plugins: [new TsconfigPathsPlugin()]
   },
   plugins: [
     new webpack.IgnorePlugin({
@@ -37,6 +33,13 @@ const webConfig = {
     filename: 'bundle.js',
     libraryTarget: 'umd',
     library: 'Terra',
+  },
+  resolve: {
+    ...commonConfig.resolve,
+    fallback: {
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer'),
+    }
   },
   plugins: [
     ...commonConfig.plugins,
