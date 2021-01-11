@@ -1,5 +1,10 @@
 module.exports = {
   root: true,
+  env: {
+    browser: true,
+    node: true,
+    jasmine: true,
+  },
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: [
