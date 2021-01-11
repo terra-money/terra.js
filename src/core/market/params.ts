@@ -10,22 +10,25 @@ type PoolRecoveryPeriod = ParamChange.Type<
 
 type BasePool = ParamChange.Type<'market', 'basepool', Dec>;
 
-type MinSpread = ParamChange.Type<'market', 'minspread', Dec>;
+type MinStabilitySpread = ParamChange.Type<'market', 'minstabilityspread', Dec>;
 
-export type MarketParamChange = PoolRecoveryPeriod | BasePool | MinSpread;
+export type MarketParamChange =
+  | PoolRecoveryPeriod
+  | BasePool
+  | MinStabilitySpread;
 
 export namespace MarketParamChange {
   export type Data =
     | ParamChange.Data.Type<PoolRecoveryPeriod>
     | ParamChange.Data.Type<BasePool>
-    | ParamChange.Data.Type<MinSpread>;
+    | ParamChange.Data.Type<MinStabilitySpread>;
 }
 
 export interface MarketParamChanges {
   market?: {
     poolrecoveryperiod?: number;
     basepool?: Dec;
-    minspread?: Dec;
+    minstabilityspread?: Dec;
   };
 }
 
@@ -34,7 +37,7 @@ export namespace MarketParamChanges {
     market: {
       poolrecoveryperiod: [Convert.toNumber, Convert.toFixed],
       basepool: [Convert.toDec, Convert.toString],
-      minspread: [Convert.toDec, Convert.toString],
+      minstabilityspread: [Convert.toDec, Convert.toString],
     },
   };
 }

@@ -3,8 +3,59 @@ import { Coin } from '../../Coin';
 import { PolicyConstraints } from '../../treasury/PolicyConstraints';
 import { Coins } from '../../Coins';
 import { Dec } from '../../numeric';
+import { StdTx } from '../../StdTx';
 
-const pcpJSON: ParameterChangeProposal.Data = {
+const pcpJSON1: StdTx.Data = {
+  type: 'core/StdTx',
+  value: {
+    msg: [
+      {
+        type: 'gov/MsgSubmitProposal',
+        value: {
+          content: {
+            type: 'params/ParameterChangeProposal',
+            value: {
+              title: 'Proposal to decrease minspread of Luna to Terra swaps',
+              description:
+                'As the demand for Terra has recently increased, the amount of swapping Luna and Terra has increased. I think spreads should be reduced to stabilize supply of Terra and incinerate Luna. So, I propose to change minspread value of Luna to Terra swaps from 0.5% to 0.1%.',
+              changes: [
+                {
+                  subspace: 'market',
+                  key: 'minstabilityspread',
+                  value: '"0.001"',
+                },
+              ],
+            },
+          },
+          initial_deposit: [],
+          proposer: 'terra1e5ncelsh4qhqt3s97vn43hxlhmt7zd43yszdnf',
+        },
+      },
+    ],
+    fee: {
+      amount: [
+        {
+          denom: 'umnt',
+          amount: '703654',
+        },
+      ],
+      gas: '163024',
+    },
+    signatures: [
+      {
+        pub_key: {
+          type: 'tendermint/PubKeySecp256k1',
+          value: 'A4j7d14sTqP+bnIYUDeOssgXHJcaFSIaDI7yR2j5LGLV',
+        },
+        signature:
+          'X8OuDoWfTcQeF3XNqTGPDAwWj4YggOM3eeD/tGTyA8h850F5XTwCj7SgY2RrYGz6xVop1Z5Q32Ur5I8AmwGPlw==',
+      },
+    ],
+    memo: '',
+  },
+};
+
+const pcpJSON2: ParameterChangeProposal.Data = {
   type: 'params/ParameterChangeProposal',
   value: {
     title: 'testing params',
@@ -133,7 +184,7 @@ const jiguJSON = {
       },
       {
         subspace: 'market',
-        key: 'minspread',
+        key: 'minstabilityspread',
         value: '"343434.000000000000000000"',
       },
       {
@@ -203,8 +254,12 @@ const jiguJSON = {
 };
 
 describe('ParamaterChangeProposal', () => {
+  it('parses StdTx parameter change proposals', () => {
+    ParameterChangeProposal.fromData(pcpJSON2);
+  });
+
   it('parses parameter change proposals', () => {
-    ParameterChangeProposal.fromData(pcpJSON);
+    ParameterChangeProposal.fromData(pcpJSON2);
     const p = new ParameterChangeProposal('testing params', 'yay!', {
       distribution: {
         communitytax: new Dec(0),
@@ -255,7 +310,7 @@ describe('ParamaterChangeProposal', () => {
       market: {
         poolrecoveryperiod: 234234234,
         basepool: new Dec(232323232),
-        minspread: new Dec(343434),
+        minstabilityspread: new Dec(343434),
       },
       gov: {
         depositparams: {
