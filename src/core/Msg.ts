@@ -143,5 +143,7 @@ export namespace Msg {
       case 'wasm/MsgUpdateContractOwner':
         return MsgUpdateContractOwner.fromData(data);
     }
+
+    throw new Error(`unable to parse msg: ${data} unrecognized`);
   }
 }
