@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -47,11 +48,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>Terra.js</h1>
 		</div>
 	</div>
@@ -101,7 +97,8 @@
 					<h2>Installation</h2>
 				</a>
 				<p>Grab the latest version off <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM</a>:</p>
-				<pre><code class="language-sh">yarn add @terra-money/terra.js</code></pre>
+				<pre><code class="language-sh"><span style="color: #000000">yarn add @terra-money/terra.js</span>
+</code></pre>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -109,89 +106,94 @@
 				<a href="#getting-blockchain-data" id="getting-blockchain-data" style="color: inherit; text-decoration: none;">
 					<h3>Getting blockchain data</h3>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LCDClient, Coin } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@terra-money/terra.js&#x27;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">Coin</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// connect to soju testnet</span>
-<span class="hljs-keyword">const</span> terra = <span class="hljs-keyword">new</span> LCDClient({
-  URL: <span class="hljs-string">&#x27;https://soju-lcd.terra.dev&#x27;</span>,
-  chainID: <span class="hljs-string">&#x27;soju-0014&#x27;</span>,
-});
+<span style="color: #008000">// connect to soju testnet</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">terra</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">LCDClient</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://soju-lcd.terra.dev&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">chainID:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;soju-0014&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// To use LocalTerra</span>
-<span class="hljs-comment">// const terra = new LCDClient({</span>
-<span class="hljs-comment">//   URL: &#x27;http://localhost:1317&#x27;,</span>
-<span class="hljs-comment">//   chainID: &#x27;localterra&#x27;</span>
-<span class="hljs-comment">// });</span>
+<span style="color: #008000">// To use LocalTerra</span>
+<span style="color: #008000">// const terra = new LCDClient({</span>
+<span style="color: #008000">//   URL: &#039;http://localhost:1317&#039;,</span>
+<span style="color: #008000">//   chainID: &#039;localterra&#039;</span>
+<span style="color: #008000">// });</span>
 
-<span class="hljs-comment">// get the current swap rate from 1 TerraUSD to TerraKRW</span>
-<span class="hljs-keyword">const</span> offerCoin = <span class="hljs-keyword">new</span> Coin(<span class="hljs-string">&#x27;uusd&#x27;</span>, <span class="hljs-string">&#x27;1000000&#x27;</span>);
-terra.market.swapRate(offerCoin, <span class="hljs-string">&#x27;ukrw&#x27;</span>).then(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${offerCoin.toString()}</span> can be swapped for <span class="hljs-subst">${c.toString()}</span>`</span>);
-});</code></pre>
+<span style="color: #008000">// get the current swap rate from 1 TerraUSD to TerraKRW</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">offerCoin</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Coin</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;uusd&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;1000000&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #001080">market</span><span style="color: #000000">.</span><span style="color: #795E26">swapRate</span><span style="color: #000000">(</span><span style="color: #001080">offerCoin</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;ukrw&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">c</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">offerCoin</span><span style="color: #000000FF">.</span><span style="color: #795E26">toString</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #A31515"> can be swapped for </span><span style="color: #0000FF">${</span><span style="color: #001080">c</span><span style="color: #000000FF">.</span><span style="color: #795E26">toString</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
 				<a href="#broadcasting-transactions" id="broadcasting-transactions" style="color: inherit; text-decoration: none;">
 					<h3>Broadcasting transactions</h3>
 				</a>
 				<p>First, <a href="https://faucet.terra.money/">get</a> some testnet tokens for <code>terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v</code>, or use <a href="https://www.github.com/terra-project/LocalTerra">LocalTerra</a>.</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { LCDClient, MsgSend, MnemonicKey } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@terra-money/terra.js&#x27;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">MsgSend</span><span style="color: #000000">, </span><span style="color: #001080">MnemonicKey</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// create a key out of a mnemonic</span>
-<span class="hljs-keyword">const</span> mk = <span class="hljs-keyword">new</span> MnemonicKey({
-  mnemonic:
-    <span class="hljs-string">&#x27;notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius&#x27;</span>,
-});
+<span style="color: #008000">// create a key out of a mnemonic</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mk</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MnemonicKey</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">mnemonic:</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// connect to soju testnet</span>
-<span class="hljs-keyword">const</span> terra = <span class="hljs-keyword">new</span> LCDClient({
-  URL: <span class="hljs-string">&#x27;https://soju-lcd.terra.dev&#x27;</span>,
-  chainID: <span class="hljs-string">&#x27;soju-0014&#x27;</span>,
-});
+<span style="color: #008000">// connect to soju testnet</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">terra</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">LCDClient</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://soju-lcd.terra.dev&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">chainID:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;soju-0014&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
 
-<span class="hljs-comment">// To use LocalTerra</span>
-<span class="hljs-comment">// const terra = new LCDClient({</span>
-<span class="hljs-comment">//   URL: &#x27;http://localhost:1317&#x27;,</span>
-<span class="hljs-comment">//   chainID: &#x27;localterra&#x27;</span>
-<span class="hljs-comment">// });</span>
+<span style="color: #008000">// To use LocalTerra</span>
+<span style="color: #008000">// const terra = new LCDClient({</span>
+<span style="color: #008000">//   URL: &#039;http://localhost:1317&#039;,</span>
+<span style="color: #008000">//   chainID: &#039;localterra&#039;</span>
+<span style="color: #008000">// });</span>
 
-<span class="hljs-comment">// a wallet can be created out of any key</span>
-<span class="hljs-comment">// wallets abstract transaction building</span>
-<span class="hljs-keyword">const</span> wallet = terra.wallet(mk);
+<span style="color: #008000">// a wallet can be created out of any key</span>
+<span style="color: #008000">// wallets abstract transaction building</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #795E26">wallet</span><span style="color: #000000">(</span><span style="color: #001080">mk</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// create a simple message that moves coin balances</span>
-<span class="hljs-keyword">const</span> send = <span class="hljs-keyword">new</span> MsgSend(
-  <span class="hljs-string">&#x27;terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v&#x27;</span>,
-  <span class="hljs-string">&#x27;terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp&#x27;</span>,
-  { uluna: <span class="hljs-number">1000000</span>, ukrw: <span class="hljs-number">1230201</span>, uusd: <span class="hljs-number">1312029</span> }
-);
+<span style="color: #008000">// create a simple message that moves coin balances</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">send</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgSend</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  { </span><span style="color: #001080">uluna:</span><span style="color: #000000"> </span><span style="color: #098658">1000000</span><span style="color: #000000">, </span><span style="color: #001080">ukrw:</span><span style="color: #000000"> </span><span style="color: #098658">1230201</span><span style="color: #000000">, </span><span style="color: #001080">uusd:</span><span style="color: #000000"> </span><span style="color: #098658">1312029</span><span style="color: #000000"> }</span>
+<span style="color: #000000">);</span>
 
-wallet
-  .createAndSignTx({
-    msgs: [send],
-    memo: <span class="hljs-string">&#x27;test from terra.js!&#x27;</span>,
-  })
-  .then(<span class="hljs-function"><span class="hljs-params">tx</span> =&gt;</span> terra.tx.broadcast(tx))
-  .then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`TX hash: <span class="hljs-subst">${result.txhash}</span>`</span>);
-  });</code></pre>
+<span style="color: #001080">wallet</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">createAndSignTx</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">msgs:</span><span style="color: #000000"> [</span><span style="color: #001080">send</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">memo:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;test from terra.js!&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">tx</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #001080">tx</span><span style="color: #000000">.</span><span style="color: #795E26">broadcast</span><span style="color: #000000">(</span><span style="color: #001080">tx</span><span style="color: #000000">))</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`TX hash: </span><span style="color: #0000FF">${</span><span style="color: #001080">result</span><span style="color: #000000FF">.</span><span style="color: #001080">txhash</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+<span style="color: #000000">  });</span>
+</code></pre>
 				<a href="#terrajs-in-the-browser" id="terrajs-in-the-browser" style="color: inherit; text-decoration: none;">
 					<h2>Terra.js in the browser</h2>
 				</a>
 				<p>You can access all the objects of the <code>@terra-money/terra.js</code> from the global <code>Terra</code> object if you load Terra.js with a <code>&lt;script&gt;</code> tag.</p>
 				<p>Include the following in your browser:</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>
-  <span class="hljs-attr">crossorigin</span>
-  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@terra-money/terra.js/dist/bundle.js&quot;</span>
-&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<pre><code class="language-html"><span style="color: #800000">&lt;script</span>
+<span style="color: #000000FF">  </span><span style="color: #FF0000">crossorigin</span>
+<span style="color: #000000FF">  </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://unpkg.com/@terra-money/terra.js/dist/bundle.js&quot;</span>
+<span style="color: #800000">&gt;&lt;/script&gt;</span>
+</code></pre>
 				<p>You can find a small JSFiddle example that refreshes current Oracle votes <a href="https://jsfiddle.net/tLm1b527/1/">here</a>.</p>
 				<a href="#terrajs-in-react-native" id="terrajs-in-react-native" style="color: inherit; text-decoration: none;">
 					<h2>Terra.js in React Native</h2>
 				</a>
 				<p>Setup a React Native App and install <code>node-libs-react-native</code> package, following instructions from <a href="https://github.com/parshap/node-libs-react-native">https://github.com/parshap/node-libs-react-native</a>.</p>
 				<p>You will need to register Node.js native modules with:</p>
-				<pre><code class="language-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;node-libs-react-native/globals&#x27;</span>)</code></pre>
+				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">)</span>
+</code></pre>
 				<p>Also, add resolvers to your <code>metro.config.js</code></p>
-				<pre><code class="language-js">  resolver: {
-    <span class="hljs-attr">extraNodeModules</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;node-libs-react-native&#x27;</span>),
-  },</code></pre>
+				<pre><code class="language-js"><span style="color: #000000">  resolver: {</span>
+<span style="color: #000000">    extraNodeModules: </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native&#039;</span><span style="color: #000000">),</span>
+<span style="color: #000000">  },</span>
+</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -210,754 +212,316 @@ wallet
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/accaddress.html">Acc<wbr>Address</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_localterra.html">client/<wbr>Local<wbr>Terra</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/accpubkey.html">Acc<wbr>Pub<wbr>Key</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_websocketclient.html">client/<wbr>Web<wbr>Socket<wbr>Client</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/asynctxbroadcastresult.html">Async<wbr>TxBroadcast<wbr>Result</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_apirequester.html">client/lcd/APIRequester</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/authorization.html">Authorization</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_lcdclient.html">client/lcd/LCDClient</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/blocktxbroadcastresult.html">Block<wbr>TxBroadcast<wbr>Result</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_wallet.html">client/lcd/<wbr>Wallet</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/contractinfo.html">Contract<wbr>Info</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_authapi.html">client/lcd/api/<wbr>AuthAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/convert.html">Convert</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_bankapi.html">client/lcd/api/<wbr>BankAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/denom.html">Denom</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_baseapi.html">client/lcd/api/<wbr>BaseAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/depositparams.html">Deposit<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_distributionapi.html">client/lcd/api/<wbr>DistributionAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/distributionparamchange.html">Distribution<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_govapi.html">client/lcd/api/<wbr>GovAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/distributionparamchanges.html">Distribution<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_marketapi.html">client/lcd/api/<wbr>MarketAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/distributionparams.html">Distribution<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_mintapi.html">client/lcd/api/<wbr>MintAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/eventsbytype.html">Events<wbr>ByType</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_msgauthapi.html">client/lcd/api/<wbr>Msg<wbr>AuthAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/govparamchange.html">Gov<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_oracleapi.html">client/lcd/api/<wbr>OracleAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/govparamchanges.html">Gov<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_slashingapi.html">client/lcd/api/<wbr>SlashingAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/govparams.html">Gov<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_stakingapi.html">client/lcd/api/<wbr>StakingAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/marketparamchange.html">Market<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_supplyapi.html">client/lcd/api/<wbr>SupplyAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/marketparamchanges.html">Market<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_tendermintapi.html">client/lcd/api/<wbr>TendermintAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/marketparams.html">Market<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_treasuryapi.html">client/lcd/api/<wbr>TreasuryAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/mintparamchange.html">Mint<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_txapi.html">client/lcd/api/<wbr>TxAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/mintparamchanges.html">Mint<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/client_lcd_api_wasmapi.html">client/lcd/api/<wbr>WasmAPI</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/mintingparams.html">Minting<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_block.html">core/<wbr>Block</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/msg.html">Msg</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_coin.html">core/<wbr>Coin</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/multisigpublickey.html">Multisig<wbr>Public<wbr>Key</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_coins.html">core/<wbr>Coins</a>
 					</li>
-					<li class=" tsd-kind-namespace tsd-has-type-parameter">
-						<a href="modules/numeric.html">Numeric</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_denom.html">core/<wbr>Denom</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/oracleparamchange.html">Oracle<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_msg.html">core/<wbr>Msg</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/oracleparamchanges.html">Oracle<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_proposal.html">core/<wbr>Proposal</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/oracleparams.html">Oracle<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_publickey.html">core/<wbr>Public<wbr>Key</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/oraclewhitelist.html">Oracle<wbr>Whitelist</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_stdfee.html">core/<wbr>Std<wbr>Fee</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/paramchange.html">Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_stdsignmsg.html">core/<wbr>Std<wbr>Sign<wbr>Msg</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/paramchanges.html">Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_stdsignature.html">core/<wbr>Std<wbr>Signature</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/rewards.html">Rewards</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_stdtx.html">core/<wbr>Std<wbr>Tx</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/signinginfo.html">Signing<wbr>Info</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_txinfo.html">core/<wbr>TxInfo</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/simplepublickey.html">Simple<wbr>Public<wbr>Key</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_validatorset.html">core/<wbr>Validator<wbr>Set</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/slashingparamchange.html">Slashing<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_auth_account.html">core/auth/<wbr>Account</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/slashingparamchanges.html">Slashing<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_auth_lazygradedvestingaccount.html">core/auth/<wbr>Lazy<wbr>Graded<wbr>Vesting<wbr>Account</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/slashingparams.html">Slashing<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_bank_msgs_msgmultisend.html">core/bank/msgs/<wbr>Msg<wbr>Multi<wbr>Send</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stakingparamchange.html">Staking<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_bank_msgs_msgsend.html">core/bank/msgs/<wbr>Msg<wbr>Send</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stakingparamchanges.html">Staking<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_msgs_msgfundcommunitypool.html">core/distribution/msgs/<wbr>Msg<wbr>Fund<wbr>Community<wbr>Pool</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stakingparams.html">Staking<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_msgs_msgmodifywithdrawaddress.html">core/distribution/msgs/<wbr>Msg<wbr>Modify<wbr>Withdraw<wbr>Address</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/stakingpool.html">Staking<wbr>Pool</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_msgs_msgwithdrawdelegationreward.html">core/distribution/msgs/<wbr>Msg<wbr>Withdraw<wbr>Delegation<wbr>Reward</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/synctxbroadcastresult.html">Sync<wbr>TxBroadcast<wbr>Result</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_msgs_msgwithdrawvalidatorcommission.html">core/distribution/msgs/<wbr>Msg<wbr>Withdraw<wbr>Validator<wbr>Commission</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/tally.html">Tally</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_params.html">core/distribution/params</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/tallyparams.html">Tally<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_distribution_proposals_communitypoolspendproposal.html">core/distribution/proposals/<wbr>Community<wbr>Pool<wbr>Spend<wbr>Proposal</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/treasuryparamchange.html">Treasury<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_gov_msgs_msgdeposit.html">core/gov/msgs/<wbr>Msg<wbr>Deposit</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/treasuryparamchanges.html">Treasury<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_gov_msgs_msgsubmitproposal.html">core/gov/msgs/<wbr>Msg<wbr>Submit<wbr>Proposal</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/treasuryparams.html">Treasury<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_gov_msgs_msgvote.html">core/gov/msgs/<wbr>Msg<wbr>Vote</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/txsearchresult.html">Tx<wbr>Search<wbr>Result</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_gov_params.html">core/gov/params</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/valaddress.html">Val<wbr>Address</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_gov_proposals_textproposal.html">core/gov/proposals/<wbr>Text<wbr>Proposal</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/valconsaddress.html">Val<wbr>Cons<wbr>Address</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_market_msgs_msgswap.html">core/market/msgs/<wbr>Msg<wbr>Swap</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/valconspubkey.html">Val<wbr>Cons<wbr>Pub<wbr>Key</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_market_msgs_msgswapsend.html">core/market/msgs/<wbr>Msg<wbr>Swap<wbr>Send</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/valpubkey.html">Val<wbr>Pub<wbr>Key</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_market_params.html">core/market/params</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/validatorrewards.html">Validator<wbr>Rewards</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_mint_params.html">core/mint/params</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/votingparams.html">Voting<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_msgauth_authorization.html">core/msgauth/<wbr>Authorization</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/wasmparamchange.html">Wasm<wbr>Param<wbr>Change</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_msgauth_msgs_msgexecauthorized.html">core/msgauth/msgs/<wbr>Msg<wbr>Exec<wbr>Authorized</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/wasmparamchanges.html">Wasm<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_msgauth_msgs_msggrantauthorization.html">core/msgauth/msgs/<wbr>Msg<wbr>Grant<wbr>Authorization</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/wasmparams.html">Wasm<wbr>Params</a>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_msgauth_msgs_msgrevokeauthorization.html">core/msgauth/msgs/<wbr>Msg<wbr>Revoke<wbr>Authorization</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_numeric.html">core/numeric</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_aggregateexchangerateprevote.html">core/oracle/<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_aggregateexchangeratevote.html">core/oracle/<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_exchangerateprevote.html">core/oracle/<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_exchangeratevote.html">core/oracle/<wbr>Exchange<wbr>Rate<wbr>Vote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_msgs_msgaggregateexchangerateprevote.html">core/oracle/msgs/<wbr>Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_msgs_msgaggregateexchangeratevote.html">core/oracle/msgs/<wbr>Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_msgs_msgdelegatefeedconsent.html">core/oracle/msgs/<wbr>Msg<wbr>Delegate<wbr>Feed<wbr>Consent</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_msgs_msgexchangerateprevote.html">core/oracle/msgs/<wbr>Msg<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_msgs_msgexchangeratevote.html">core/oracle/msgs/<wbr>Msg<wbr>Exchange<wbr>Rate<wbr>Vote</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_oracle_params.html">core/oracle/params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_params_paramchange.html">core/params/<wbr>Param<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_params_proposals_parameterchangeproposal.html">core/params/proposals/<wbr>Parameter<wbr>Change<wbr>Proposal</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_slashing_msgs_msgunjail.html">core/slashing/msgs/<wbr>Msg<wbr>Unjail</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_slashing_params.html">core/slashing/params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_delegation.html">core/staking/<wbr>Delegation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_redelegation.html">core/staking/<wbr>Redelegation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_unbondingdelegation.html">core/staking/<wbr>Unbonding<wbr>Delegation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_validator.html">core/staking/<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_msgs_msgbeginredelegate.html">core/staking/msgs/<wbr>Msg<wbr>Begin<wbr>Redelegate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_msgs_msgcreatevalidator.html">core/staking/msgs/<wbr>Msg<wbr>Create<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_msgs_msgdelegate.html">core/staking/msgs/<wbr>Msg<wbr>Delegate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_msgs_msgeditvalidator.html">core/staking/msgs/<wbr>Msg<wbr>Edit<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_msgs_msgundelegate.html">core/staking/msgs/<wbr>Msg<wbr>Undelegate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_staking_params.html">core/staking/params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_strings.html">core/strings</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_treasury_policyconstraints.html">core/treasury/<wbr>Policy<wbr>Constraints</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_treasury_params.html">core/treasury/params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_treasury_proposals_rewardweightupdateproposal.html">core/treasury/proposals/<wbr>Reward<wbr>Weight<wbr>Update<wbr>Proposal</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_treasury_proposals_taxrateupdateproposal.html">core/treasury/proposals/<wbr>Tax<wbr>Rate<wbr>Update<wbr>Proposal</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_msgs_msgexecutecontract.html">core/wasm/msgs/<wbr>Msg<wbr>Execute<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_msgs_msginstantiatecontract.html">core/wasm/msgs/<wbr>Msg<wbr>Instantiate<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_msgs_msgmigratecontract.html">core/wasm/msgs/<wbr>Msg<wbr>Migrate<wbr>Contract</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_msgs_msgstorecode.html">core/wasm/msgs/<wbr>Msg<wbr>Store<wbr>Code</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_msgs_msgupdatecontractowner.html">core/wasm/msgs/<wbr>Msg<wbr>Update<wbr>Contract<wbr>Owner</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/core_wasm_params.html">core/wasm/params</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/extension_postmessagestream.html">extension/<wbr>Post<wbr>Message<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/key_clikey.html">key/CLIKey</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/key_key.html">key/<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/key_mnemonickey.html">key/<wbr>Mnemonic<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/key_rawkey.html">key/<wbr>Raw<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/util_convert.html">util/convert</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/util_hash.html">util/hash</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/util_json.html">util/json</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/broadcast.html" class="tsd-kind-icon">Broadcast</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/apirequester.html" class="tsd-kind-icon">APIRequester</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/account.html" class="tsd-kind-icon">Account</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/aggregateexchangerateprevote.html" class="tsd-kind-icon">Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/aggregateexchangeratevote.html" class="tsd-kind-icon">Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/authapi.html" class="tsd-kind-icon">AuthAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/authorizationgrant.html" class="tsd-kind-icon">Authorization<wbr>Grant</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/bankapi.html" class="tsd-kind-icon">BankAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/baseapi.html" class="tsd-kind-icon">BaseAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/clikey.html" class="tsd-kind-icon">CLIKey</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/coin.html" class="tsd-kind-icon">Coin</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/coins.html" class="tsd-kind-icon">Coins</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/communitypoolspendproposal.html" class="tsd-kind-icon">Community<wbr>Pool<wbr>Spend<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/dec.html" class="tsd-kind-icon">Dec</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/delegation.html" class="tsd-kind-icon">Delegation</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/distributionapi.html" class="tsd-kind-icon">DistributionAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/exchangerateprevote.html" class="tsd-kind-icon">Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/exchangeratevote.html" class="tsd-kind-icon">Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/genericauthorization.html" class="tsd-kind-icon">Generic<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/govapi.html" class="tsd-kind-icon">GovAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/int.html" class="tsd-kind-icon">Int</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/jsonserializable.html" class="tsd-kind-icon">JSONSerializable</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/key.html" class="tsd-kind-icon">Key</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/lcdclient.html" class="tsd-kind-icon">LCDClient</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/lazygradedvestingaccount.html" class="tsd-kind-icon">Lazy<wbr>Graded<wbr>Vesting<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/localterra.html" class="tsd-kind-icon">Local<wbr>Terra</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/marketapi.html" class="tsd-kind-icon">MarketAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/mintapi.html" class="tsd-kind-icon">MintAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/mnemonickey.html" class="tsd-kind-icon">Mnemonic<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgaggregateexchangerateprevote.html" class="tsd-kind-icon">Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgaggregateexchangeratevote.html" class="tsd-kind-icon">Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgauthapi.html" class="tsd-kind-icon">Msg<wbr>AuthAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgbeginredelegate.html" class="tsd-kind-icon">Msg<wbr>Begin<wbr>Redelegate</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgcreatevalidator.html" class="tsd-kind-icon">Msg<wbr>Create<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgdelegate.html" class="tsd-kind-icon">Msg<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgdelegatefeedconsent.html" class="tsd-kind-icon">Msg<wbr>Delegate<wbr>Feed<wbr>Consent</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgdeposit.html" class="tsd-kind-icon">Msg<wbr>Deposit</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgeditvalidator.html" class="tsd-kind-icon">Msg<wbr>Edit<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgexchangerateprevote.html" class="tsd-kind-icon">Msg<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgexchangeratevote.html" class="tsd-kind-icon">Msg<wbr>Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgexecauthorized.html" class="tsd-kind-icon">Msg<wbr>Exec<wbr>Authorized</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgexecutecontract.html" class="tsd-kind-icon">Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgfundcommunitypool.html" class="tsd-kind-icon">Msg<wbr>Fund<wbr>Community<wbr>Pool</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msggrantauthorization.html" class="tsd-kind-icon">Msg<wbr>Grant<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msginstantiatecontract.html" class="tsd-kind-icon">Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgmigratecontract.html" class="tsd-kind-icon">Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgmodifywithdrawaddress.html" class="tsd-kind-icon">Msg<wbr>Modify<wbr>Withdraw<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgmultisend.html" class="tsd-kind-icon">Msg<wbr>Multi<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgrevokeauthorization.html" class="tsd-kind-icon">Msg<wbr>Revoke<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgsend.html" class="tsd-kind-icon">Msg<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgstorecode.html" class="tsd-kind-icon">Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgsubmitproposal.html" class="tsd-kind-icon">Msg<wbr>Submit<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgswap.html" class="tsd-kind-icon">Msg<wbr>Swap</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgswapsend.html" class="tsd-kind-icon">Msg<wbr>Swap<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgundelegate.html" class="tsd-kind-icon">Msg<wbr>Undelegate</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgunjail.html" class="tsd-kind-icon">Msg<wbr>Unjail</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgupdatecontractowner.html" class="tsd-kind-icon">Msg<wbr>Update<wbr>Contract<wbr>Owner</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgvote.html" class="tsd-kind-icon">Msg<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgwithdrawdelegationreward.html" class="tsd-kind-icon">Msg<wbr>Withdraw<wbr>Delegation<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/msgwithdrawvalidatorcommission.html" class="tsd-kind-icon">Msg<wbr>Withdraw<wbr>Validator<wbr>Commission</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/oracleapi.html" class="tsd-kind-icon">OracleAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/parameterchangeproposal.html" class="tsd-kind-icon">Parameter<wbr>Change<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/policyconstraints.html" class="tsd-kind-icon">Policy<wbr>Constraints</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/postmessagestream.html" class="tsd-kind-icon">Post<wbr>Message<wbr>Stream</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/proposal.html" class="tsd-kind-icon">Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/publickey.html" class="tsd-kind-icon">Public<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/rawkey.html" class="tsd-kind-icon">Raw<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/redelegation.html" class="tsd-kind-icon">Redelegation</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/rewardweightupdateproposal.html" class="tsd-kind-icon">Reward<wbr>Weight<wbr>Update<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/sendauthorization.html" class="tsd-kind-icon">Send<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/slashingapi.html" class="tsd-kind-icon">SlashingAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/stakingapi.html" class="tsd-kind-icon">StakingAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/stdfee.html" class="tsd-kind-icon">Std<wbr>Fee</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/stdsignmsg.html" class="tsd-kind-icon">Std<wbr>Sign<wbr>Msg</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/stdsignature.html" class="tsd-kind-icon">Std<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/stdtx.html" class="tsd-kind-icon">Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/supplyapi.html" class="tsd-kind-icon">SupplyAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/taxrateupdateproposal.html" class="tsd-kind-icon">Tax<wbr>Rate<wbr>Update<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/tendermintapi.html" class="tsd-kind-icon">TendermintAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/textproposal.html" class="tsd-kind-icon">Text<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/treasuryapi.html" class="tsd-kind-icon">TreasuryAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/txapi.html" class="tsd-kind-icon">TxAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/txinfo.html" class="tsd-kind-icon">Tx<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/txlog.html" class="tsd-kind-icon">Tx<wbr>Log</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/unbondingdelegation.html" class="tsd-kind-icon">Unbonding<wbr>Delegation</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/validator.html" class="tsd-kind-icon">Validator</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/wallet.html" class="tsd-kind-icon">Wallet</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/wasmapi.html" class="tsd-kind-icon">WasmAPI</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/websocketclient.html" class="tsd-kind-icon">Web<wbr>Socket<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/apiresponse.html" class="tsd-kind-icon">APIResponse</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/async.html" class="tsd-kind-icon">Async</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/block.html" class="tsd-kind-icon">Block</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/blockid.html" class="tsd-kind-icon">BlockID</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/blockinfo.html" class="tsd-kind-icon">Block<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/clikeyparams.html" class="tsd-kind-icon">CLIKey<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/codeinfo.html" class="tsd-kind-icon">Code<wbr>Info</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/createtxoptions.html" class="tsd-kind-icon">Create<wbr>TxOptions</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/data.html" class="tsd-kind-icon">Data</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/delegatevalidator.html" class="tsd-kind-icon">Delegate<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/estimatefeeresponse.html" class="tsd-kind-icon">Estimate<wbr>Fee<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/event.html" class="tsd-kind-icon">Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/eventkv.html" class="tsd-kind-icon">EventKV</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/evidence.html" class="tsd-kind-icon">Evidence</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/exchangeratetuple.html" class="tsd-kind-icon">Exchange<wbr>Rate<wbr>Tuple</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/header.html" class="tsd-kind-icon">Header</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/lcdclientconfig.html" class="tsd-kind-icon">LCDClient<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/lastcommit.html" class="tsd-kind-icon">Last<wbr>Commit</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/message.html" class="tsd-kind-icon">Message</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mnemonickeyoptions.html" class="tsd-kind-icon">Mnemonic<wbr>Key<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/options.html" class="tsd-kind-icon">Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/parts.html" class="tsd-kind-icon">Parts</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/signature.html" class="tsd-kind-icon">Signature</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/sync.html" class="tsd-kind-icon">Sync</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/tendermintquery.html" class="tsd-kind-icon">Tendermint<wbr>Query</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/tendermintsubscriptionresponse.html" class="tsd-kind-icon">Tendermint<wbr>Subscription<wbr>Response</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/txerror.html" class="tsd-kind-icon">Tx<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/txsearchoptions.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/txsuccess.html" class="tsd-kind-icon">Tx<wbr>Success</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/validatorset.html" class="tsd-kind-icon">Validator<wbr>Set</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/version.html" class="tsd-kind-icon">Version</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#basepool" class="tsd-kind-icon">Base<wbr>Pool</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#baseproposerreward" class="tsd-kind-icon">Base<wbr>Proposer<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#blocksperyear" class="tsd-kind-icon">Blocks<wbr>Per<wbr>Year</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#bonddenom" class="tsd-kind-icon">Bond<wbr>Denom</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#bonusproposerreward" class="tsd-kind-icon">Bonus<wbr>Proposer<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#callback" class="tsd-kind-icon">Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#communitytax" class="tsd-kind-icon">Community<wbr>Tax</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#depositparamsparamchange" class="tsd-kind-icon">Deposit<wbr>Params<wbr>Param<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#downtimejailduration" class="tsd-kind-icon">Downtime<wbr>Jail<wbr>Duration</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#goalbonded" class="tsd-kind-icon">Goal<wbr>Bonded</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#inflationmax" class="tsd-kind-icon">Inflation<wbr>Max</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#inflationmin" class="tsd-kind-icon">Inflation<wbr>Min</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#inflationratechange" class="tsd-kind-icon">Inflation<wbr>Rate<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxcontractgas" class="tsd-kind-icon">Max<wbr>Contract<wbr>Gas</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxcontractmsgsize" class="tsd-kind-icon">Max<wbr>Contract<wbr>Msg<wbr>Size</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxcontractsize" class="tsd-kind-icon">Max<wbr>Contract<wbr>Size</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxentries" class="tsd-kind-icon">Max<wbr>Entries</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxevidenceage" class="tsd-kind-icon">Max<wbr>Evidence<wbr>Age</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#maxvalidators" class="tsd-kind-icon">Max<wbr>Validators</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#minsignedperwindow" class="tsd-kind-icon">Min<wbr>Signed<wbr>Per<wbr>Window</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#minstabilityspread" class="tsd-kind-icon">Min<wbr>Stability<wbr>Spread</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#minvalidperwindow" class="tsd-kind-icon">Min<wbr>Valid<wbr>Per<wbr>Window</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#miningincrement" class="tsd-kind-icon">Mining<wbr>Increment</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#mintdenom" class="tsd-kind-icon">Mint<wbr>Denom</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#poolrecoveryperiod" class="tsd-kind-icon">Pool<wbr>Recovery<wbr>Period</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#rewardband" class="tsd-kind-icon">Reward<wbr>Band</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#rewarddistributionwindow" class="tsd-kind-icon">Reward<wbr>Distribution<wbr>Window</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#rewardpolicy" class="tsd-kind-icon">Reward<wbr>Policy</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#seigniorageburdentarget" class="tsd-kind-icon">Seigniorage<wbr>Burden<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#signedblockswindow" class="tsd-kind-icon">Signed<wbr>Blocks<wbr>Window</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#slashfraction" class="tsd-kind-icon">Slash<wbr>Fraction</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#slashfractiondoublesign" class="tsd-kind-icon">Slash<wbr>Fraction<wbr>Double<wbr>Sign</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#slashfractiondowntime" class="tsd-kind-icon">Slash<wbr>Fraction<wbr>Downtime</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#slashwindow" class="tsd-kind-icon">Slash<wbr>Window</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tallyparamsparamchange" class="tsd-kind-icon">Tally<wbr>Params<wbr>Param<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#taxpolicy" class="tsd-kind-icon">Tax<wbr>Policy</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tenderminteventtype" class="tsd-kind-icon">Tendermint<wbr>Event<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#tendermintqueryoperand" class="tsd-kind-icon">Tendermint<wbr>Query<wbr>Operand</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#txbroadcastresult" class="tsd-kind-icon">Tx<wbr>Broadcast<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#unbondingtime" class="tsd-kind-icon">Unbonding<wbr>Time</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#voteperiod" class="tsd-kind-icon">Vote<wbr>Period</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#votethreshold" class="tsd-kind-icon">Vote<wbr>Threshold</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#votingparamsparamchange" class="tsd-kind-icon">Voting<wbr>Params<wbr>Param<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#whitelist" class="tsd-kind-icon">Whitelist</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#windowlong" class="tsd-kind-icon">Window<wbr>Long</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#windowprobation" class="tsd-kind-icon">Window<wbr>Probation</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#windowshort" class="tsd-kind-icon">Window<wbr>Short</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#withdrawaddrenabled" class="tsd-kind-icon">Withdraw<wbr>Addr<wbr>Enabled</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#bech32_pubkey_data_prefix" class="tsd-kind-icon">BECH32_<wbr>PUBKEY_<wbr>DATA_<wbr>PREFIX</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#dec_precision" class="tsd-kind-icon">DEC_<wbr>PRECISION</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#luna_coin_type" class="tsd-kind-icon">LUNA_<wbr>COIN_<wbr>TYPE</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#_dec" class="tsd-kind-icon">_<wbr>Dec</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#_int" class="tsd-kind-icon">_<wbr>Int</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#addressfrompublickey" class="tsd-kind-icon">address<wbr>From<wbr>Public<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#aggregatevotehash" class="tsd-kind-icon">aggregate<wbr>Vote<wbr>Hash</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#checkprefixandlength" class="tsd-kind-icon">check<wbr>Prefix<wbr>And<wbr>Length</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#dec" class="tsd-kind-icon">dec</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#escapesinglequotes" class="tsd-kind-icon">escape<wbr>Single<wbr>Quotes</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#hashamino" class="tsd-kind-icon">hash<wbr>Amino</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#int" class="tsd-kind-icon">int</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#istxerror" class="tsd-kind-icon">is<wbr>TxError</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#makequeryparams" class="tsd-kind-icon">make<wbr>Query<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#noop" class="tsd-kind-icon">noop</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#preparesignbytes" class="tsd-kind-icon">prepare<wbr>Sign<wbr>Bytes</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#pubkeyfrompublickey" class="tsd-kind-icon">pub<wbr>Key<wbr>From<wbr>Public<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#votehash" class="tsd-kind-icon">vote<wbr>Hash</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#default_gas_prices_by_chain_id" class="tsd-kind-icon">DEFAULT_<wbr>GAS_<wbr>PRICES_<wbr>BY_<wbr>CHAIN_<wbr>ID</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#default_lcd_options" class="tsd-kind-icon">DEFAULT_<wbr>LCD_<wbr>OPTIONS</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#default_options" class="tsd-kind-icon">DEFAULT_<wbr>OPTIONS</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#localterra_mnemonics" class="tsd-kind-icon">LOCALTERRA_<wbr>MNEMONICS</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -968,21 +532,23 @@ wallet
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
