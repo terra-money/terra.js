@@ -56,7 +56,7 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
   }
 
   /**
-   * You get get the [[StdTx]] value from a `StdSignMsg` (without the signature).
+   * You get the [[StdTx]] value from a `StdSignMsg` (without the signature).
    */
   public toStdTx(): StdTx {
     const { fee, msgs, memo } = this;

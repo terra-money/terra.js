@@ -63,7 +63,7 @@ const proposal = new ParameterChangeProposal('testing params', 'yay!', {
   market: {
     poolrecoveryperiod: 234234234,
     basepool: new Dec(232323232),
-    minspread: new Dec(343434),
+    minstabilityspread: new Dec(343434),
   },
   gov: {
     depositparams: {
