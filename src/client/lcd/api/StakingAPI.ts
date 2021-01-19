@@ -104,8 +104,8 @@ export class StakingAPI extends BaseAPI {
    * @param validator validator's operator address
    */
   public async unbondingDelegations(
-    delegator: AccAddress,
-    validator: ValAddress
+    delegator?: AccAddress,
+    validator?: ValAddress
   ): Promise<UnbondingDelegation[]> {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
