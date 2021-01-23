@@ -185,15 +185,23 @@
 				<a href="#terrajs-in-react-native" id="terrajs-in-react-native" style="color: inherit; text-decoration: none;">
 					<h2>Terra.js in React Native</h2>
 				</a>
-				<p>Setup a React Native App and install <code>node-libs-react-native</code> package, following instructions from <a href="https://github.com/parshap/node-libs-react-native">https://github.com/parshap/node-libs-react-native</a>.</p>
-				<p>You will need to register Node.js native modules with:</p>
-				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">)</span>
+				<p>In order to use Terra.js inside React Native, you need to add the <code>node-libs-react-native</code> package to your React Native app&#39;s <code>package.json</code>, following instructions from <a href="https://github.com/parshap/node-libs-react-native">https://github.com/parshap/node-libs-react-native</a>.</p>
+				<pre><code class="language-sh"><span style="color: #000000">yarn add node-libs-react-native</span>
+</code></pre>
+				<p>You will need to register Node.js native modules in an entry point of your application, such as <code>index.tsx</code>:</p>
+				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>Also, add resolvers to your <code>metro.config.js</code></p>
-				<pre><code class="language-js"><span style="color: #000000">  resolver: {</span>
+				<pre><code class="language-js"><span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// ...</span>
+<span style="color: #000000">  resolver: {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ...</span>
 <span style="color: #000000">    extraNodeModules: </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native&#039;</span><span style="color: #000000">),</span>
 <span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #008000">// ...</span>
+<span style="color: #000000">}</span>
 </code></pre>
+				<p>There have been many complaints about <code>MnemonicKey</code> of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use <a href="https://github.com/terra-project/react-native-mnemonic-key"><code>react-native-mnemonic-key</code></a> instead for more reliable performance and security.</p>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
