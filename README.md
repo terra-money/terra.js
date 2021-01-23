@@ -141,21 +141,32 @@ You can find a small JSFiddle example that refreshes current Oracle votes [here]
 
 ## Terra.js in React Native
 
-Setup a React Native App and install ```node-libs-react-native``` package, following instructions from https://github.com/parshap/node-libs-react-native.
+In order to use Terra.js inside React Native, you need to add the `node-libs-react-native` package to your React Native app's `package.json`, following instructions from https://github.com/parshap/node-libs-react-native.
 
-You will need to register Node.js native modules with:
+```sh
+yarn add node-libs-react-native
+```
+
+You will need to register Node.js native modules in an entry point of your application, such as `index.tsx`:
 
 ```js
-require('node-libs-react-native/globals')
+require('node-libs-react-native/globals');
 ```
 
 Also, add resolvers to your `metro.config.js`
 
 ```js
+module.exports {
+  // ...
   resolver: {
+    // ...
     extraNodeModules: require('node-libs-react-native'),
   },
+  // ...
+}
 ```
+
+There have been many complaints about `MnemonicKey` of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use [`react-native-mnemonic-key`](https://github.com/terra-project/react-native-mnemonic-key) instead for more reliable performance and security.
 
 ## License
 
