@@ -79,30 +79,30 @@
 					<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">MsgMultiSend</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@terra-money/terra.js&quot;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">inputs</span><span style="color: #000000">: </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Input</span><span style="color: #000000">[] = [</span>
-<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Input</span><span style="color: #000000">(</span>
+<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #795E26">Input</span><span style="color: #000000">(</span>
 <span style="color: #000000">     </span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axf6p&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">     {</span>
 <span style="color: #000000">       </span><span style="color: #001080">ukrw:</span><span style="color: #000000"> </span><span style="color: #098658">123123</span><span style="color: #000000">,</span>
 <span style="color: #000000">     })</span>
 <span style="color: #000000">   ),</span>
-<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Input</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axfad&#039;</span><span style="color: #000000">, [</span>
-<span style="color: #000000">     </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Coin</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;uluna&#039;</span><span style="color: #000000">, </span><span style="color: #098658">123123</span><span style="color: #000000">),</span>
+<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #795E26">Input</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axfad&#039;</span><span style="color: #000000">, [</span>
+<span style="color: #000000">     </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Coin</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;uluna&#039;</span><span style="color: #000000">, </span><span style="color: #098658">123123</span><span style="color: #000000">),</span>
 <span style="color: #000000">   ]),</span>
 <span style="color: #000000"> ];</span>
 <span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">outputs</span><span style="color: #000000">: </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Output</span><span style="color: #000000">[] = [</span>
-<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Output</span><span style="color: #000000">(</span>
+<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #795E26">Output</span><span style="color: #000000">(</span>
 <span style="color: #000000">     </span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axfad&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">       {</span>
 <span style="color: #000000">         </span><span style="color: #001080">ukrw:</span><span style="color: #000000"> </span><span style="color: #098658">123123</span><span style="color: #000000">,</span>
 <span style="color: #000000">       }</span>
 <span style="color: #000000">   ),</span>
-<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #267F99">Output</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axfga&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">   </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">MsgMultiSend</span><span style="color: #000000">.</span><span style="color: #795E26">Output</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;terra105rz2q5a4w7nv7239tl9c4px5cjy7axx3axfga&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">     {</span>
 <span style="color: #000000">       </span><span style="color: #001080">uluna:</span><span style="color: #000000"> </span><span style="color: #098658">123123</span><span style="color: #000000">,</span>
 <span style="color: #000000">     }</span>
 <span style="color: #000000">   ),</span>
 <span style="color: #000000"> ];</span>
-<span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">multisend</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">MsgMultiSend</span><span style="color: #000000">(</span><span style="color: #001080">inputs</span><span style="color: #000000">, </span><span style="color: #001080">outputs</span><span style="color: #000000">);</span>
+<span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">multisend</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MsgMultiSend</span><span style="color: #000000">(</span><span style="color: #001080">inputs</span><span style="color: #000000">, </span><span style="color: #001080">outputs</span><span style="color: #000000">);</span>
 </code></pre>
 				</div>
 			</section>
@@ -160,7 +160,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a88b6f1/src/core/bank/msgs/MsgMultiSend.ts#L45">src/core/bank/msgs/MsgMultiSend.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/9a3f3b5/src/core/bank/msgs/MsgMultiSend.ts#L45">src/core/bank/msgs/MsgMultiSend.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,14 +188,14 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="inputs" class="tsd-anchor"></a>
 					<h3>inputs</h3>
-					<div class="tsd-signature tsd-kind-icon">inputs<span class="tsd-signature-symbol">:</span> <a href="../modules/core_bank_msgs_msgmultisend.msgmultisend.html#input-1" class="tsd-signature-type" data-tsd-kind="Variable">Input</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">inputs<span class="tsd-signature-symbol">:</span> <a href="core_bank_msgs_msgmultisend.msgmultisend.io-1.html" class="tsd-signature-type" data-tsd-kind="Class">IO</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="outputs" class="tsd-anchor"></a>
 					<h3>outputs</h3>
-					<div class="tsd-signature tsd-kind-icon">outputs<span class="tsd-signature-symbol">:</span> <a href="../modules/core_bank_msgs_msgmultisend.msgmultisend.html#output-1" class="tsd-signature-type" data-tsd-kind="Variable">Output</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">outputs<span class="tsd-signature-symbol">:</span> <a href="core_bank_msgs_msgmultisend.msgmultisend.io-1.html" class="tsd-signature-type" data-tsd-kind="Class">IO</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 					</aside>
 				</section>
@@ -213,7 +213,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#todata">toData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a88b6f1/src/core/bank/msgs/MsgMultiSend.ts#L67">src/core/bank/msgs/MsgMultiSend.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/9a3f3b5/src/core/bank/msgs/MsgMultiSend.ts#L67">src/core/bank/msgs/MsgMultiSend.ts:67</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/core_bank_msgs_msgmultisend.msgmultisend.data.html" class="tsd-signature-type" data-tsd-kind="Interface">Data</a></h4>
@@ -231,7 +231,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a88b6f1/src/util/json.ts#L23">src/util/json.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/9a3f3b5/src/util/json.ts#L23">src/util/json.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -248,7 +248,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/a88b6f1/src/core/bank/msgs/MsgMultiSend.ts#L57">src/core/bank/msgs/MsgMultiSend.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/terra-project/terra.js/blob/9a3f3b5/src/core/bank/msgs/MsgMultiSend.ts#L57">src/core/bank/msgs/MsgMultiSend.ts:57</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
