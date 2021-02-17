@@ -3,6 +3,7 @@ import { Coin } from '../../Coin';
 import { PolicyConstraints } from '../../treasury/PolicyConstraints';
 import { Coins } from '../../Coins';
 import { Dec } from '../../numeric';
+/*
 import { StdTx } from '../../StdTx';
 
 const pcpJSON1: StdTx.Data = {
@@ -54,7 +55,7 @@ const pcpJSON1: StdTx.Data = {
     memo: '',
   },
 };
-
+*/
 const pcpJSON2: ParameterChangeProposal.Data = {
   type: 'params/ParameterChangeProposal',
   value: {
