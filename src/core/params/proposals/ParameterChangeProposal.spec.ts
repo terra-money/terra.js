@@ -55,7 +55,7 @@ const pcpJSON1: StdTx.Data = {
     memo: '',
   },
 };
-
+*/
 const pcpJSON2: ParameterChangeProposal.Data = {
   type: 'params/ParameterChangeProposal',
   value: {
@@ -75,7 +75,7 @@ const pcpJSON2: ParameterChangeProposal.Data = {
     ],
   },
 };
-*/
+
 const jiguJSON = {
   type: 'params/ParameterChangeProposal',
   value: {
