@@ -10,4 +10,9 @@ export namespace Denom {
   export const MNT = 'umnt';
   export const SDR = 'usdr';
   export const USD = 'uusd';
+  export const INR = 'uinr';
+  export const CAD = 'ucad';
+  export const CHF = 'uchf';
+  export const AUD = 'uaud';
+  export const SGD = 'usgd';
 }
