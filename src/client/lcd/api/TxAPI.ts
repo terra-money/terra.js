@@ -97,6 +97,7 @@ export interface CreateTxOptions {
   memo?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
+  denoms?: string[];
   account_number?: number;
   sequence?: number;
 }
@@ -170,6 +171,7 @@ export class TxAPI extends BaseAPI {
     const estimateFeeOptions = {
       gasPrices: options.gasPrices || this.lcd.config.gasPrices,
       gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
+      denoms: options.denoms,
     };
 
     const balance = await this.lcd.bank.balance(sourceAddress);
@@ -229,11 +231,16 @@ export class TxAPI extends BaseAPI {
    */
   public async estimateFee(
     tx: StdTx | StdSignMsg,
-    options?: { gasPrices?: Coins.Input; gasAdjustment?: Numeric.Input }
+    options?: {
+      gasPrices?: Coins.Input;
+      gasAdjustment?: Numeric.Input;
+      denoms?: string[];
+    }
   ): Promise<StdFee> {
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
+    const denoms = options?.denoms;
 
     const txValue = {
       ...(tx instanceof StdSignMsg
@@ -251,10 +258,15 @@ export class TxAPI extends BaseAPI {
 
     return this.c
       .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(
-        ({ result: d }) =>
-          new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
-      );
+      .then(({ result: d }) => {
+        if (denoms === undefined)
+          return new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees));
+        else
+          return new StdFee(
+            Number.parseInt(d.gas),
+            Coins.fromData(d.fees).filter(c => c.denom in denoms)
+          );
+      });
   }
 
   /**
