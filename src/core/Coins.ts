@@ -89,13 +89,11 @@ export class Coins
         }
       }
 
-      if (
-        !this.toArray().every(c => c.isDecCoin()) &&
-        !this.toArray().every(c => c.isIntCoin())
-      ) {
-        throw new Error(
-          `non-homogenous instantiation of Coins not supported: ${this.toString()}`
-        );
+      // convert all coins to Dec if one is Dec
+      if (!this.toArray().every(c => c.isIntCoin())) {
+        for (const denom of Object.keys(this._coins)) {
+          this._coins[denom] = this._coins[denom].toDecCoin();
+        }
       }
     }
   }

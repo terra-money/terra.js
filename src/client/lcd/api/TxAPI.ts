@@ -264,7 +264,7 @@ export class TxAPI extends BaseAPI {
         else
           return new StdFee(
             Number.parseInt(d.gas),
-            Coins.fromData(d.fees).filter(c => c.denom in denoms)
+            Coins.fromData(d.fees).filter(c => denoms.includes(c.denom))
           );
       });
   }

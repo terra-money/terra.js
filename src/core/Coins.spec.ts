@@ -22,13 +22,19 @@ describe('Coins', () => {
     }
   });
 
-  it("doesn't allow non-homogenous coin types", () => {
-    expect(() => {
-      new Coins({
-        uluna: 1000,
-        ukrw: 1.234,
-      });
-    }).toThrowError();
+  it('converts to deccoins if at least one id deccoin', () => {
+    const c1 = new Coins({
+      uluna: 1000,
+      ukrw: 1.234,
+    });
+
+    const c2 = new Coins({
+      uluna: 1000,
+      ukrw: 1234,
+    });
+
+    expect(c1.toArray().every(c => c.isDecCoin())).toBe(true);
+    expect(c2.toArray().every(c => c.isDecCoin())).toBe(false);
   });
 
   it('allows coins to be instantiated with a variety of inputs', () => {
@@ -83,5 +89,28 @@ describe('Coins', () => {
     expect(coins1).toEqual(int_coins);
     expect(coins2).toEqual(dec_coins);
     expect(coins3).toEqual(neg_dec_coins);
+  });
+
+  it('filters', () => {
+    const gasPrices = new Coins({
+      uluna: '0.15',
+      usdr: '0.1018',
+      uusd: '0.15',
+      ukrw: '178.05',
+      umnt: '431.6259',
+      ueur: '0.125',
+      ucny: '0.97',
+      ujpy: '16.0',
+      ugbp: '0.11',
+      uinr: '11.0',
+      ucad: '0.19',
+      uchf: '0.13',
+      uaud: '0.19',
+      usgd: '0.2',
+    });
+
+    expect(gasPrices.filter(c => ['ukrw'].includes(c.denom))).toEqual(
+      new Coins({ ukrw: '178.05' })
+    );
   });
 });
