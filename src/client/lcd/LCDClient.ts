@@ -15,6 +15,7 @@ import {
   TxAPI,
   WasmAPI,
 } from './api';
+import { LCDUtils } from './LCDUtils';
 import { Wallet } from './Wallet';
 import { Numeric, Coins } from '../../core';
 import { Key } from '../../key';
@@ -94,6 +95,7 @@ export class LCDClient {
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
   public tx: TxAPI;
+  public utils: LCDUtils;
 
   /**
    * Creates a new LCD client with the specified configuration.
@@ -126,6 +128,8 @@ export class LCDClient {
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);
     this.tx = new TxAPI(this);
+
+    this.utils = new LCDUtils(this);
   }
 
   /** Creates a new wallet with the Key. */
