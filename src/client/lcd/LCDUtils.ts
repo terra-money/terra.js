@@ -5,7 +5,12 @@ import { Int, Dec } from '../../core/numeric';
 export class LCDUtils {
   constructor(public lcd: LCDClient) {}
 
-  public async calcTax(coin: Coin): Promise<Coin> {
+  /**
+   * Calculates the tax that would be applied for the Coin if sent.
+   * Tax = min(taxCap, taxRate * amount)
+   * @param coin
+   */
+  public async calculateTax(coin: Coin): Promise<Coin> {
     const rate = await this.lcd.treasury.taxRate();
     const cap = await this.lcd.treasury.taxCap(coin.denom);
     return new Coin(

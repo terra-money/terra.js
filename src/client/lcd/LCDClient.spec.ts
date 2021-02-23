@@ -7,7 +7,5 @@ describe('LCDClient', () => {
       chainID: 'columbus-4',
       URL: 'https://lcd.terra.dev',
     });
-
-    console.log(await terra.utils.calcTax(new Coin('ukrw', 23209)));
   });
 });
