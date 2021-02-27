@@ -97,7 +97,7 @@ export interface CreateTxOptions {
   memo?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
-  denoms?: string[];
+  feeDenoms?: string[];
   account_number?: number;
   sequence?: number;
 }
@@ -171,13 +171,13 @@ export class TxAPI extends BaseAPI {
     const estimateFeeOptions = {
       gasPrices: options.gasPrices || this.lcd.config.gasPrices,
       gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
-      denoms: options.denoms,
+      feeDenoms: options.feeDenoms,
     };
 
-    const balance = await this.lcd.bank.balance(sourceAddress);
-    const balanceOne = balance.map(c => new Coin(c.denom, 1));
-    // create the fake fee
+    const feeDenoms = options.feeDenoms || [];
+    const balanceOne = feeDenoms.map(denom => new Coin(denom, 1));
 
+    // create the fake fee
     if (fee === undefined) {
       // estimate the fee
       const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
@@ -234,13 +234,13 @@ export class TxAPI extends BaseAPI {
     options?: {
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
-      denoms?: string[];
+      feeDenoms?: string[];
     }
   ): Promise<StdFee> {
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const denoms = options?.denoms;
+    const feeDenoms = options?.feeDenoms;
 
     const txValue = {
       ...(tx instanceof StdSignMsg
@@ -250,23 +250,28 @@ export class TxAPI extends BaseAPI {
 
     txValue.fee.gas = '0';
 
+    let gasPricesCoins: Coins | undefined;
+    if (gasPrices) {
+      gasPricesCoins = new Coins(gasPrices);
+      if (feeDenoms) {
+        gasPricesCoins = gasPricesCoins.filter(c =>
+          feeDenoms.includes(c.denom)
+        );
+      }
+    }
+
     const data = {
       tx: txValue,
-      gas_prices: gasPrices && new Coins(gasPrices).toData(),
+      gas_prices: gasPricesCoins && gasPricesCoins.toData(),
       gas_adjustment: gasAdjustment && gasAdjustment.toString(),
     };
 
     return this.c
       .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(({ result: d }) => {
-        if (denoms === undefined)
-          return new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees));
-        else
-          return new StdFee(
-            Number.parseInt(d.gas),
-            Coins.fromData(d.fees).filter(c => denoms.includes(c.denom))
-          );
-      });
+      .then(
+        ({ result: d }) =>
+          new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
+      );
   }
 
   /**

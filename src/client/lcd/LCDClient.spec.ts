@@ -1,4 +1,4 @@
-import { LCDClient } from './LCDClient';
+// import { LCDClient } from './LCDClient';
 
 describe('LCDClient', () => {
   it('runs', async () => {
