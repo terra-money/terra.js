@@ -1,4 +1,4 @@
-import * as bech32 from 'bech32';
+import { bech32 } from 'bech32';
 import * as HEX from 'crypto-js/enc-hex';
 import RIPEMD160 from 'crypto-js/ripemd160';
 import SHA256 from 'crypto-js/sha256';
