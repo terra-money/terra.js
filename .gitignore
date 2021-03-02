@@ -7,3 +7,4 @@ coverage/
 docs
 .pytest_cache
 yarn.lock
+dist
