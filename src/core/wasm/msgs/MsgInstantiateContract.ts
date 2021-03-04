@@ -2,9 +2,7 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
 
-export class MsgInstantiateContract extends JSONSerializable<
-  MsgInstantiateContract.Data
-> {
+export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
   public init_coins: Coins;
 
   /**
