@@ -1,6 +1,14 @@
 import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
+export function dictToB64(data: any): string {
+  return Buffer.from(JSON.stringify(data)).toString('base64');
+}
+
+export function b64ToDict(data: string): any {
+  return JSON.parse(Buffer.from(data, 'base64').toString());
+}
+
 export function getCodeId(
   txResult: BlockTxBroadcastResult | TxInfo,
   msgIndex = 0

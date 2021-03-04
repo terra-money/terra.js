@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
+import { b64ToDict, dictToB64 } from '../../../util/contract';
 
 export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
   public init_coins: Coins;
@@ -32,7 +33,7 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
     return new MsgInstantiateContract(
       owner,
       Number.parseInt(code_id),
-      JSON.parse(Buffer.from(init_msg, 'base64').toString()),
+      b64ToDict(init_msg),
       Coins.fromData(init_coins),
       migratable
     );
@@ -45,7 +46,7 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
       value: {
         owner,
         code_id: code_id.toFixed(),
-        init_msg: Buffer.from(JSON.stringify(init_msg)).toString('base64'),
+        init_msg: dictToB64(init_msg),
         init_coins: init_coins.toData(),
         migratable,
       },

@@ -1,9 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
-
-export class MsgMigrateContract extends JSONSerializable<
-  MsgMigrateContract.Data
-> {
+import { b64ToDict, dictToB64 } from '../../../util/contract';
+export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data> {
   /**
    * @param owner contract owner
    * @param contract contract address to be migrated from
@@ -27,7 +25,7 @@ export class MsgMigrateContract extends JSONSerializable<
       owner,
       contract,
       Number.parseInt(new_code_id),
-      JSON.parse(Buffer.from(migrate_msg, 'base64').toString())
+      b64ToDict(migrate_msg)
     );
   }
 
@@ -39,9 +37,7 @@ export class MsgMigrateContract extends JSONSerializable<
         owner,
         contract,
         new_code_id: new_code_id.toFixed(),
-        migrate_msg: Buffer.from(JSON.stringify(migrate_msg)).toString(
-          'base64'
-        ),
+        migrate_msg: dictToB64(migrate_msg),
       },
     };
   }
