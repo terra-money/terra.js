@@ -1,10 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
-
-export class MsgExecuteContract extends JSONSerializable<
-  MsgExecuteContract.Data
-> {
+import { b64ToDict, dictToB64 } from '../../../util/contract';
+export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data> {
   public coins: Coins;
 
   /**
@@ -30,7 +28,7 @@ export class MsgExecuteContract extends JSONSerializable<
     return new MsgExecuteContract(
       sender,
       contract,
-      JSON.parse(Buffer.from(execute_msg, 'base64').toString()),
+      b64ToDict(execute_msg),
       Coins.fromData(coins)
     );
   }
@@ -42,9 +40,7 @@ export class MsgExecuteContract extends JSONSerializable<
       value: {
         sender,
         contract,
-        execute_msg: Buffer.from(JSON.stringify(execute_msg)).toString(
-          'base64'
-        ),
+        execute_msg: dictToB64(execute_msg),
         coins: coins.toData(),
       },
     };

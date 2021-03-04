@@ -5,6 +5,8 @@ import {
   StdFee,
   isTxError,
   LocalTerra,
+  getCodeId,
+  getContractAddress,
 } from '../src';
 import * as fs from 'fs';
 
@@ -30,13 +32,11 @@ async function main(): Promise<void> {
     );
   }
 
-  const {
-    store_code: { code_id },
-  } = storeCodeTxResult.logs[0].eventsByType;
+  const codeId = getCodeId(storeCodeTxResult);
 
   const instantiate = new MsgInstantiateContract(
     test1.key.accAddress,
-    +code_id[0], // code ID
+    +codeId, // code ID
     {
       count: 0,
     }, // InitMsg
@@ -57,19 +57,16 @@ async function main(): Promise<void> {
     );
   }
 
-  const {
-    instantiate_contract: { contract_address },
-  } = instantiateTxResult.logs[0].eventsByType;
+  const contractAddress = getContractAddress(instantiateTxResult);
 
   const execute = new MsgExecuteContract(
     test1.key.accAddress, // sender
-    contract_address[0], // contract account address
+    contractAddress, // contract address
     { increment: {} }, // handle msg
     { uluna: 100000 } // coins
   );
   const executeTx = await test1.createAndSignTx({
     msgs: [execute],
-    fee: new StdFee(100, { uluna: 1 }),
   });
   const executeTxResult = await terra.tx.broadcast(executeTx);
   console.log(executeTxResult);
