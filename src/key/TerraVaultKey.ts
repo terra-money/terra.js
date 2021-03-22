@@ -25,20 +25,23 @@ export class TerraVaultKey extends Key {
     address: String,
     token: String
   ): Promise<TerraVaultKey> {
+    return this.requestPubKey(vaultUrl, address, token).then(pubKey => {
+      return new TerraVaultKey(vaultUrl, address, token, pubKey);
+    });
+  }
+
+  public static requestPubKey(
+    vaultUrl: String,
+    address: String,
+    token: String
+  ): Promise<Buffer> {
     return axios
       .get(vaultUrl + '/v1/terra/accounts/' + address, {
         headers: {
           'X-Vault-Token': token,
         },
       })
-      .then(res => {
-        return new TerraVaultKey(
-          vaultUrl,
-          address,
-          token,
-          Buffer.from(res.data.data.publicKey, 'hex')
-        );
-      });
+      .then(res => Buffer.from(res.data.data.publicKey, 'hex'));
   }
 
   public requestSign(payload: Buffer): Promise<Buffer> {
@@ -52,9 +55,7 @@ export class TerraVaultKey extends Key {
           headers: this.headers,
         }
       )
-      .then(res => {
-        return Buffer.from(res.data.data.signed_transaction, 'hex');
-      });
+      .then(res => Buffer.from(res.data.data.signed_transaction, 'hex'));
   }
 
   public async sign(payload: Buffer): Promise<Buffer> {
