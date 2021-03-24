@@ -12,3 +12,4 @@ export * from './TendermintAPI';
 export * from './TreasuryAPI';
 export * from './TxAPI';
 export * from './WasmAPI';
+export * from './MintAPI';
