@@ -59,7 +59,7 @@ export class TerraVaultKey extends Key {
   }
 
   public async sign(payload: Buffer): Promise<Buffer> {
-    const signature = await this.requestSign(payload);
+    const signature = this.requestSign(payload);
     return signature;
   }
 }
