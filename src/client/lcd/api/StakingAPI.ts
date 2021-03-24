@@ -138,8 +138,8 @@ export class StakingAPI extends BaseAPI {
    * @param validator validator's operator address
    */
   public async unbondingDelegation(
-    delegator: AccAddress,
-    validator: ValAddress
+    delegator?: AccAddress,
+    validator?: ValAddress
   ): Promise<UnbondingDelegation> {
     return this.unbondingDelegations(delegator, validator).then(
       udelgs => udelgs[0]
