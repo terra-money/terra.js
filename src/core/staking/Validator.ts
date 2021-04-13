@@ -99,6 +99,9 @@ export namespace Validator {
 
     /** longer description */
     details: string;
+
+    /** validator's contact */
+    security_contact: string;
   }
 
   export class CommissionRates extends JSONSerializable<CommissionRates.Data> {
