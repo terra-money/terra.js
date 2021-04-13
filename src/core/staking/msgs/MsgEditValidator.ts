@@ -61,6 +61,7 @@ export namespace MsgEditValidator {
     website: '[do-not-modify]',
     identity: '[do-not-modify]',
     details: '[do-not-modify]',
+    security_contact: '[do-not-modify]',
   };
 
   export interface Data {
