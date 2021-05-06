@@ -1,5 +1,5 @@
 import { AccAddress, ValAddress, AccPubKey, ValPubKey } from './strings';
-import { bech32 } from 'bech32';
+import * as bech32 from 'bech32';
 
 describe('AccAddress', () => {
   it('validates account address', () => {

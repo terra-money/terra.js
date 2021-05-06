@@ -2,27 +2,6 @@
   "type": "core/LazyGradedVestingAccount",
   "value": {
     "address": "terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn",
-    "coins": [{
-        "denom": "ukrw",
-        "amount": "3952727625434"
-      },
-      {
-        "denom": "uluna",
-        "amount": "48919046"
-      },
-      {
-        "denom": "umnt",
-        "amount": "35243811596"
-      },
-      {
-        "denom": "usdr",
-        "amount": "1212381"
-      },
-      {
-        "denom": "uusd",
-        "amount": "474532"
-      }
-    ],
     "public_key": null,
     "account_number": "684082",
     "sequence": "0",

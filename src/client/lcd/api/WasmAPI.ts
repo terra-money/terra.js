@@ -1,26 +1,26 @@
 import { BaseAPI } from './BaseAPI';
-import { AccAddress } from '../../../core/strings';
+import { EventParams, AccAddress } from '../../../core';
 
 export interface CodeInfo {
   code_hash: string;
-  code_creator: AccAddress;
+  creator: AccAddress;
 }
 
 export interface ContractInfo {
   code_id: number;
   address: AccAddress;
-  owner: AccAddress;
+  creator: AccAddress;
+  admin: AccAddress;
   init_msg: any; // object
-  migratable: boolean;
 }
 
 export namespace ContractInfo {
   export interface Data {
     code_id: string;
     address: AccAddress;
-    owner: AccAddress;
+    creator: AccAddress;
+    admin: AccAddress;
     init_msg: string;
-    migratable: boolean;
   }
 }
 
@@ -28,6 +28,8 @@ export interface WasmParams {
   max_contract_size: number;
   max_contract_gas: number;
   max_contract_msg_size: number;
+  max_contract_data_size: number;
+  event_params: EventParams;
 }
 
 export namespace WasmParams {
@@ -35,6 +37,8 @@ export namespace WasmParams {
     max_contract_size: string;
     max_contract_gas: string;
     max_contract_msg_size: string;
+    max_contract_data_size: string;
+    event_params: EventParams.Data;
   }
 }
 
@@ -51,9 +55,9 @@ export class WasmAPI extends BaseAPI {
       .then(({ result: d }) => ({
         code_id: Number.parseInt(d.code_id),
         address: d.address,
-        owner: d.owner,
+        creator: d.creator,
+        admin: d.admin,
         init_msg: JSON.parse(Buffer.from(d.init_msg, 'base64').toString()),
-        migratable: d.migratable,
       }));
   }
 
@@ -75,6 +79,8 @@ export class WasmAPI extends BaseAPI {
         max_contract_size: Number.parseInt(d.max_contract_size),
         max_contract_gas: Number.parseInt(d.max_contract_gas),
         max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),
+        max_contract_data_size: Number.parseInt(d.max_contract_data_size),
+        event_params: EventParams.fromData(d.event_params),
       }));
   }
 }

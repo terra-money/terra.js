@@ -7,18 +7,22 @@ export interface MarketParams {
    */
   pool_recovery_period: number;
 
-  /** Initial starting size of both Terra and Luna liquidity pools. */
-  base_pool: Dec;
+  /** Initial starting size of both Terra mint liquidity pools. */
+  mint_base_pool: Dec;
+
+  /** Initial starting size of both Terra burn liquidity pools. */
+  burn_base_pool: Dec;
 
   /** Minimum spread charged on Terra<>Luna swaps to prevent leaking value from front-running attacks. */
-  min_spread: Dec;
+  min_stability_spread: Dec;
 }
 
 export namespace MarketParams {
   export interface Data {
     pool_recovery_period: string;
-    base_pool: string;
-    min_spread: string;
+    mint_base_pool: string;
+    burn_base_pool: string;
+    min_stability_spread: string;
   }
 }
 
@@ -40,11 +44,20 @@ export class MarketAPI extends BaseAPI {
   }
 
   /**
-   * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
+   * Gets current value of the mint pool delta, which is used to determine Terra<>Luna swap rates.
    */
-  public async terraPoolDelta(): Promise<Dec> {
+  public async mintPoolDelta(): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/market/terra_pool_delta`)
+      .get<Numeric.Input>(`/market/mint_pool_delta`)
+      .then(d => new Dec(d.result));
+  }
+
+  /**
+   * Gets current value of the burn pool delta, which is used to determine Terra<>Luna swap rates.
+   */
+  public async burnPoolDelta(): Promise<Dec> {
+    return this.c
+      .get<Numeric.Input>(`/market/burn_pool_delta`)
       .then(d => new Dec(d.result));
   }
 
@@ -56,8 +69,9 @@ export class MarketAPI extends BaseAPI {
       .get<MarketParams.Data>(`/market/parameters`)
       .then(({ result: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
-        base_pool: new Dec(d.base_pool),
-        min_spread: new Dec(d.min_spread),
+        mint_base_pool: new Dec(d.mint_base_pool),
+        burn_base_pool: new Dec(d.burn_base_pool),
+        min_stability_spread: new Dec(d.min_stability_spread),
       }));
   }
 }

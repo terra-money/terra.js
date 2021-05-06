@@ -4,7 +4,6 @@ import {
   StdTx,
   StdSignMsg,
   StdFee,
-  Coin,
   Coins,
   TxInfo,
   Numeric,
@@ -14,8 +13,7 @@ import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 
 interface EstimateFeeResponse {
-  gas: string;
-  fees: Coins.Data;
+  fee: StdFee.Data;
 }
 
 /** Transaction broadcasting modes  */
@@ -95,6 +93,7 @@ export interface CreateTxOptions {
   msgs: Msg[];
   fee?: StdFee;
   memo?: string;
+  gas?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
@@ -168,20 +167,21 @@ export class TxAPI extends BaseAPI {
     let { fee, memo } = options;
     const { msgs } = options;
     memo = memo || '';
-    const estimateFeeOptions = {
-      gasPrices: options.gasPrices || this.lcd.config.gasPrices,
-      gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
-      feeDenoms: options.feeDenoms,
-    };
 
-    const feeDenoms = options.feeDenoms || [];
-    const balanceOne = feeDenoms.map(denom => new Coin(denom, 1));
-
-    // create the fake fee
     if (fee === undefined) {
+      const estimateFeeOptions = {
+        gas: options.gas,
+        gasPrices: options.gasPrices || this.lcd.config.gasPrices,
+        gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
+        feeDenoms: options.feeDenoms,
+      };
+
       // estimate the fee
-      const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
-      fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
+      fee = await this.lcd.tx.estimateFee(
+        sourceAddress,
+        msgs,
+        estimateFeeOptions
+      );
     }
 
     let accountNumber = options.account_number;
@@ -230,25 +230,20 @@ export class TxAPI extends BaseAPI {
    * @param options options for fee estimation
    */
   public async estimateFee(
-    tx: StdTx | StdSignMsg,
+    sourceAddress: string,
+    msgs: Msg[],
     options?: {
+      gas?: string;
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
       feeDenoms?: string[];
     }
   ): Promise<StdFee> {
+    const gas = options?.gas || 'auto';
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
     const feeDenoms = options?.feeDenoms;
-
-    const txValue = {
-      ...(tx instanceof StdSignMsg
-        ? tx.toStdTx().toData().value
-        : tx.toData().value),
-    };
-
-    txValue.fee.gas = '0';
 
     let gasPricesCoins: Coins | undefined;
     if (gasPrices) {
@@ -261,17 +256,18 @@ export class TxAPI extends BaseAPI {
     }
 
     const data = {
-      tx: txValue,
-      gas_prices: gasPricesCoins && gasPricesCoins.toData(),
-      gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+      base_req: {
+        from: sourceAddress,
+        gas: gas && gas.toString(),
+        gas_prices: gasPricesCoins && gasPricesCoins.toData(),
+        gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+      },
+      msgs: msgs && msgs.map(m => m.toData()),
     };
 
     return this.c
       .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(
-        ({ result: d }) =>
-          new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
-      );
+      .then(({ result: d }) => StdFee.fromData(d.fee));
   }
 
   /**

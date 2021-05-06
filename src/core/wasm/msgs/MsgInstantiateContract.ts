@@ -3,18 +3,22 @@ import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
 import { b64ToDict, dictToB64 } from '../../../util/contract';
 
-export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
+export class MsgInstantiateContract extends JSONSerializable<
+  MsgInstantiateContract.Data
+> {
   public init_coins: Coins;
 
   /**
-   * @param owner contract owner
+   * @param creator contract creator
+   * @param admin is optional contract admin address who can migrate contract
    * @param code_id reference to the code on the blockchain
    * @param init_msg message to configure the initial state of the contract
    * @param init_coins initial amount of coins to be sent to the contract's address
    * @param migratable defines to be migratable or not
    */
   constructor(
-    public owner: AccAddress,
+    public creator: AccAddress,
+    public admin: AccAddress,
     public code_id: number,
     public init_msg: object,
     init_coins: Coins.Input = {},
@@ -28,10 +32,11 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
     data: MsgInstantiateContract.Data
   ): MsgInstantiateContract {
     const {
-      value: { owner, code_id, init_msg, init_coins, migratable },
+      value: { creator, admin, code_id, init_msg, init_coins, migratable },
     } = data;
     return new MsgInstantiateContract(
-      owner,
+      creator,
+      admin,
       Number.parseInt(code_id),
       b64ToDict(init_msg),
       Coins.fromData(init_coins),
@@ -40,11 +45,12 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
   }
 
   public toData(): MsgInstantiateContract.Data {
-    const { owner, code_id, init_msg, init_coins, migratable } = this;
+    const { creator, admin, code_id, init_msg, init_coins, migratable } = this;
     return {
       type: 'wasm/MsgInstantiateContract',
       value: {
-        owner,
+        creator,
+        admin,
         code_id: code_id.toFixed(),
         init_msg: dictToB64(init_msg),
         init_coins: init_coins.toData(),
@@ -58,7 +64,8 @@ export namespace MsgInstantiateContract {
   export interface Data {
     type: 'wasm/MsgInstantiateContract';
     value: {
-      owner: AccAddress;
+      creator: AccAddress;
+      admin: AccAddress;
       code_id: string;
       init_msg: string;
       init_coins: Coins.Data;

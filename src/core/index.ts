@@ -62,6 +62,7 @@ export * from './treasury/PolicyConstraints';
 
 // WASM
 export * from './wasm/msgs';
+export * from './wasm/EventParams';
 
 // String-based types
 export * from './strings';

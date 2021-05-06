@@ -1,27 +1,35 @@
 import { MsgStoreCode } from './MsgStoreCode';
+import { MsgMigrateCode } from './MsgMigrateCode';
 import { MsgInstantiateContract } from './MsgInstantiateContract';
 import { MsgExecuteContract } from './MsgExecuteContract';
 import { MsgMigrateContract } from './MsgMigrateContract';
-import { MsgUpdateContractOwner } from './MsgUpdateContractOwner';
+import { MsgUpdateContractAdmin } from './MsgUpdateContractAdmin';
+import { MsgClearContractAdmin } from './MsgClearContractAdmin';
 
 export * from './MsgStoreCode';
+export * from './MsgMigrateCode';
 export * from './MsgInstantiateContract';
 export * from './MsgExecuteContract';
 export * from './MsgMigrateContract';
-export * from './MsgUpdateContractOwner';
+export * from './MsgUpdateContractAdmin';
+export * from './MsgClearContractAdmin';
 
 export type WasmMsg =
   | MsgStoreCode
+  | MsgMigrateCode
   | MsgInstantiateContract
   | MsgExecuteContract
   | MsgMigrateContract
-  | MsgUpdateContractOwner;
+  | MsgUpdateContractAdmin
+  | MsgClearContractAdmin;
 
 export namespace WasmMsg {
   export type Data =
     | MsgStoreCode.Data
+    | MsgMigrateCode.Data
     | MsgInstantiateContract.Data
     | MsgExecuteContract.Data
     | MsgMigrateContract.Data
-    | MsgUpdateContractOwner.Data;
+    | MsgUpdateContractAdmin.Data
+    | MsgClearContractAdmin.Data;
 }

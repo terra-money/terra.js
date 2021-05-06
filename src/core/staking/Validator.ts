@@ -92,16 +92,16 @@ export namespace Validator {
     moniker: string;
 
     /** identity from keybase.io */
-    identity: string;
+    identity?: string;
 
     /** validator's website */
-    website: string;
+    website?: string;
 
     /** longer description */
-    details: string;
+    details?: string;
 
     /** validator's contact */
-    security_contact: string;
+    security_contact?: string;
   }
 
   export class CommissionRates extends JSONSerializable<CommissionRates.Data> {

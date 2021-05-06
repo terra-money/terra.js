@@ -33,10 +33,12 @@ import {
 } from './staking/msgs';
 import {
   MsgStoreCode,
+  MsgMigrateCode,
   MsgInstantiateContract,
   MsgExecuteContract,
   MsgMigrateContract,
-  MsgUpdateContractOwner,
+  MsgUpdateContractAdmin,
+  MsgClearContractAdmin,
   WasmMsg,
 } from './wasm/msgs';
 
@@ -134,14 +136,18 @@ export namespace Msg {
       // wasm
       case 'wasm/MsgStoreCode':
         return MsgStoreCode.fromData(data);
+      case 'wasm/MsgMigrateCode':
+        return MsgMigrateCode.fromData(data);
       case 'wasm/MsgInstantiateContract':
         return MsgInstantiateContract.fromData(data);
       case 'wasm/MsgExecuteContract':
         return MsgExecuteContract.fromData(data);
       case 'wasm/MsgMigrateContract':
         return MsgMigrateContract.fromData(data);
-      case 'wasm/MsgUpdateContractOwner':
-        return MsgUpdateContractOwner.fromData(data);
+      case 'wasm/MsgUpdateContractAdmin':
+        return MsgUpdateContractAdmin.fromData(data);
+      case 'wasm/MsgClearContractAdmin':
+        return MsgClearContractAdmin.fromData(data);
     }
 
     throw new Error(`unable to parse msg: ${data} unrecognized`);

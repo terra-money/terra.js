@@ -2,19 +2,6 @@
     "type": "core/Account",
     "value": {
       "address": "terra1h0d5kq5p64jcyqysvja3h2gysxnfudk9h73fnn",
-      "coins": [{
-          "denom": "ukrw",
-          "amount": "3981685437"
-        },
-        {
-          "denom": "uluna",
-          "amount": "2041"
-        },
-        {
-          "denom": "umnt",
-          "amount": "363613"
-        }
-      ],
       "public_key": {
         "type": "tendermint/PubKeySecp256k1",
         "value": "Av0uQ9R72aq0dgu1H+F1+1p2daQLl0JsWhwkA07ftTq/"
@@ -27,10 +14,6 @@
     "type": "core/Account",
     "value": {
       "address": "terra1fex9f78reuwhfsnc8sun6mz8rl9zwqh03fhwf3",
-      "coins": [{
-        "denom": "ukrw",
-        "amount": "15464712273121303"
-      }],
       "public_key": {
         "type": "tendermint/PubKeySecp256k1",
         "value": "AxYEJ7m2BMIzrugTG5Rl8Pz2RNU6eGfnsn2TfMXWEruf"
@@ -43,10 +26,6 @@
     "type": "core/Account",
     "value": {
       "address": "terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2",
-      "coins": [{
-        "denom": "ukrw",
-        "amount": "1077000000"
-      }],
       "public_key": {
         "type": "tendermint/PubKeySecp256k1",
         "value": "AvBeqhogW0wd7OtF8M8hJ/P1A/IBY1+uNvBO/tbVlfq2"
@@ -59,7 +38,6 @@
     "type": "core/Account",
     "value": {
       "address": "terra1kcc65k0ru6qq946ztqljxd67d5wltqstln5d5k",
-      "coins": [],
       "public_key": {
         "type": "tendermint/PubKeySecp256k1",
         "value": "AsPdLO1QwuajkAP/MlVe17WwTimT7gUAE2iXDjaScrxH"
@@ -72,10 +50,6 @@
     "type": "core/Account",
     "value": {
       "address": "terra1ax7xtll5v6u6vdnymxa4k4648w80zhkggl0u24",
-      "coins": [{
-        "denom": "ukrw",
-        "amount": "31999000000"
-      }],
       "public_key": {
         "type": "tendermint/PubKeySecp256k1",
         "value": "A/vzuSK9wCAvmFXorv/KTbUFsF9Av5r9XuplqF+4OLfR"

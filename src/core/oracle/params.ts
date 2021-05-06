@@ -14,19 +14,19 @@ export namespace OracleWhitelist {
   }[];
 }
 
-type VotePeriod = ParamChange.Type<'oracle', 'voteperiod', number>;
-type VoteThreshold = ParamChange.Type<'oracle', 'votethreshold', Dec>;
-type RewardBand = ParamChange.Type<'oracle', 'rewardband', Dec>;
+type VotePeriod = ParamChange.Type<'oracle', 'VotePeriod', number>;
+type VoteThreshold = ParamChange.Type<'oracle', 'VoteThreshold', Dec>;
+type RewardBand = ParamChange.Type<'oracle', 'RewardBand', Dec>;
 type RewardDistributionWindow = ParamChange.Type<
   'oracle',
-  'rewarddistributionwindow',
+  'RewardDistributionWindow',
   number
 >;
 
-type Whitelist = ParamChange.Type<'oracle', 'whitelist', OracleWhitelist>;
-type SlashFraction = ParamChange.Type<'oracle', 'slashfraction', Dec>;
-type SlashWindow = ParamChange.Type<'oracle', 'slashwindow', number>;
-type MinValidPerWindow = ParamChange.Type<'oracle', 'minvalidperwindow', Dec>;
+type Whitelist = ParamChange.Type<'oracle', 'Whitelist', OracleWhitelist>;
+type SlashFraction = ParamChange.Type<'oracle', 'SlashFraction', Dec>;
+type SlashWindow = ParamChange.Type<'oracle', 'SlashWindow', number>;
+type MinValidPerWindow = ParamChange.Type<'oracle', 'MinValidPerWindow', Dec>;
 
 export type OracleParamChange =
   | VotePeriod
@@ -52,28 +52,28 @@ export namespace OracleParamChange {
 
 export interface OracleParamChanges {
   oracle?: {
-    voteperiod?: number;
-    votethreshold?: Dec;
-    rewardband?: Dec;
-    rewarddistributionwindow?: number;
-    whitelist?: OracleWhitelist;
-    slashfraction?: Dec;
-    slashwindow?: number;
-    minvalidperwindow?: Dec;
+    VotePeriod?: number;
+    VoteThreshold?: Dec;
+    RewardBand?: Dec;
+    RewardDistributionWindow?: number;
+    Whitelist?: OracleWhitelist;
+    SlashFraction?: Dec;
+    SlashWindow?: number;
+    MinValidPerWindow?: Dec;
   };
 }
 
 export namespace OracleParamChanges {
   export const ConversionTable = {
     oracle: {
-      voteperiod: [Convert.toNumber, Convert.toFixed],
-      votethreshold: [Convert.toDec, Convert.toString],
-      rewardband: [Convert.toDec, Convert.toString],
-      rewarddistributionwindow: [Convert.toNumber, Convert.toFixed],
-      whitelist: [Convert.toOracleWhitelist, Convert.serializeOracleWhitelist],
-      slashfraction: [Convert.toDec, Convert.toString],
-      slashwindow: [Convert.toNumber, Convert.toFixed],
-      minvalidperwindow: [Convert.toDec, Convert.toString],
+      VotePeriod: [Convert.toNumber, Convert.toFixed],
+      VoteThreshold: [Convert.toDec, Convert.toString],
+      RewardBand: [Convert.toDec, Convert.toString],
+      RewardDistributionWindow: [Convert.toNumber, Convert.toFixed],
+      Whitelist: [Convert.toOracleWhitelist, Convert.serializeOracleWhitelist],
+      SlashFraction: [Convert.toDec, Convert.toString],
+      SlashWindow: [Convert.toNumber, Convert.toFixed],
+      MinValidPerWindow: [Convert.toDec, Convert.toString],
     },
   };
 }
