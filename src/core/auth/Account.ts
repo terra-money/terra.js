@@ -26,7 +26,7 @@ export class Account extends JSONSerializable<Account.Data> {
   public toData(): Account.Data {
     const { address, public_key, account_number, sequence } = this;
     return {
-      type: 'core/Account',
+      type: 'core/BaseAccount',
       value: {
         address,
         public_key: public_key ? public_key.toData() : null,
@@ -59,7 +59,7 @@ export namespace Account {
   }
 
   export interface Data {
-    type: 'core/Account';
+    type: 'core/BaseAccount';
     value: Value;
   }
 }

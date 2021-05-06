@@ -14,7 +14,7 @@ export class AuthAPI extends BaseAPI {
     const { result } = await this.c.get<
       Account.Data | LazyGradedVestingAccount.Data
     >(`/auth/accounts/${address}`);
-    if (result.type === 'core/Account') {
+    if (result.type === 'core/BaseAccount') {
       return Account.fromData(result);
     } else {
       return LazyGradedVestingAccount.fromData(result);

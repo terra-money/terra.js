@@ -6,7 +6,7 @@ const data = require('./Account.data.json');
 describe('Account', () => {
   it('deserializes accounts correctly', () => {
     const data: Account.Data = {
-      type: 'core/Account',
+      type: 'core/BaseAccount',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
         public_key: {
@@ -32,7 +32,7 @@ describe('Account', () => {
   it('deserializes a new account correctly', () => {
     // a new account does not yet have a public key
     const newAccount: Account.Data = {
-      type: 'core/Account',
+      type: 'core/BaseAccount',
       value: {
         address: '',
         public_key: null,
@@ -53,7 +53,7 @@ describe('Account', () => {
     );
 
     expect(acct.toData()).toMatchObject({
-      type: 'core/Account',
+      type: 'core/BaseAccount',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
         public_key: {
