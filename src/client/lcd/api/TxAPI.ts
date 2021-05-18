@@ -257,6 +257,7 @@ export class TxAPI extends BaseAPI {
 
     const data = {
       base_req: {
+        chain_id: this.lcd.config.chainID,
         from: sourceAddress,
         gas: gas && gas.toString(),
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
