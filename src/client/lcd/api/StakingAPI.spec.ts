@@ -1,7 +1,8 @@
 import { APIRequester } from '../APIRequester';
 import { StakingAPI } from './StakingAPI';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+// TODO - restore to https://lcd.terra.dev
+const c = new APIRequester('http://3.34.120.243:1317/');
 const staking = new StakingAPI(c);
 
 describe('StakingAPI', () => {
@@ -12,6 +13,7 @@ describe('StakingAPI', () => {
       max_entries: expect.any(Number),
       historical_entries: expect.any(Number),
       bond_denom: expect.any(String),
+      power_reduction: expect.any(String),
     });
   });
 });

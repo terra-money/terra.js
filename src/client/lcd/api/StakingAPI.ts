@@ -24,6 +24,9 @@ export interface StakingParams {
 
   /** The denomination used as the staking token (probably Luna). */
   bond_denom: Denom;
+
+  /** The amount of staking tokens required for 1 unit of consensus-engine power */
+  power_reduction: string;
 }
 
 export namespace StakingParams {
@@ -33,6 +36,7 @@ export namespace StakingParams {
     max_entries: number;
     historical_entries: number;
     bond_denom: Denom;
+    power_reduction: string;
   }
 }
 
@@ -220,6 +224,7 @@ export class StakingAPI extends BaseAPI {
         max_entries: d.max_entries,
         historical_entries: d.historical_entries,
         bond_denom: d.bond_denom,
+        power_reduction: d.power_reduction,
       }));
   }
 }
