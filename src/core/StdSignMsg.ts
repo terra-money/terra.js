@@ -47,8 +47,8 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
     const { chain_id, account_number, sequence, fee, msgs, memo } = data;
     return new StdSignMsg(
       chain_id,
-      Number.parseInt(account_number),
-      Number.parseInt(sequence),
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0,
       StdFee.fromData(fee),
       msgs.map(m => Msg.fromData(m)),
       memo
