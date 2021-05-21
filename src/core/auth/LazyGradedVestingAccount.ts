@@ -9,9 +9,7 @@ import { PublicKey } from '../PublicKey';
 /**
  * Holds information about a Account which has vesting information.
  */
-export class LazyGradedVestingAccount extends JSONSerializable<
-  LazyGradedVestingAccount.Data
-> {
+export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVestingAccount.Data> {
   /**
    *
    * @param BaseAccount account information
@@ -82,8 +80,8 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     return new LazyGradedVestingAccount(
       address,
       public_key && PublicKey.fromData(public_key),
-      Number.parseInt(account_number),
-      Number.parseInt(sequence),
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0,
       Coins.fromData(original_vesting),
       Coins.fromData(delegated_free),
       Coins.fromData(delegated_vesting),
