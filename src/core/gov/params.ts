@@ -37,14 +37,14 @@ export interface TallyParams {
   threshold: Dec;
 
   /** Ratio of participating votes with `NoWithVeto` (after excluding `Abstain` votes) to veto the proposal. */
-  veto: Dec;
+  veto_threshold: Dec;
 }
 
 export namespace TallyParams {
   export interface Data {
     quorum: string;
     threshold: string;
-    veto: string;
+    veto_threshold: string;
   }
 }
 
