@@ -76,7 +76,7 @@ import { MintParamChange, MintParamChanges } from '../mint/params';
  *      tallyparams: {
  *        quorum: new Dec(234234.2334),
  *        threshold: new Dec(23423.2323),
- *        veto: new Dec(1232.234),
+ *        veto_threshold: new Dec(1232.234),
  *      },
  *    },
  *    mint: {

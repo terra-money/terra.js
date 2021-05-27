@@ -28,7 +28,7 @@ export namespace Convert {
   export const toTallyParams = (c: TallyParams.Data): TallyParams => ({
     quorum: new Dec(c.quorum),
     threshold: new Dec(c.threshold),
-    veto: new Dec(c.veto),
+    veto_threshold: new Dec(c.veto_threshold),
   });
   export const toPolicyConstraints = PolicyConstraints.fromData;
   export const toEventParams = EventParams.fromData;
@@ -47,7 +47,7 @@ export namespace Convert {
   export const serializeTallyParams = (c: TallyParams): TallyParams.Data => ({
     quorum: c.quorum.toString(),
     threshold: c.threshold.toString(),
-    veto: c.veto.toString(),
+    veto_threshold: c.veto_threshold.toString(),
   });
   export const serializeOracleWhitelist = (
     c: OracleWhitelist
