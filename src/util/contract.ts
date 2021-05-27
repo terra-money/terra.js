@@ -1,12 +1,35 @@
 import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
+/**
+ * Serializes a JavaScript object to a Base64-encoded string. If the data passed is
+ * already a string, it will not be serialized and just return as-is.
+ *
+ * @param data object to encode
+ * @returns base64-encoded string
+ */
 export function dictToB64(data: any): string {
-  return Buffer.from(JSON.stringify(data)).toString('base64');
+  // if data is just a plain string, it was not valid Base64-encoded JSON so it could not be parsed
+  if (typeof data === 'string') {
+    return data;
+  } else {
+    return Buffer.from(JSON.stringify(data)).toString('base64');
+  }
 }
 
+/**
+ * Recovers a JavaScript object from a Base64-encoded JSON string. If an error is encountered
+ * while parsing, the string will not be converted and fail by returning the input as-is.
+ *
+ * @param data string
+ * @returns converted object
+ */
 export function b64ToDict(data: string): any {
-  return JSON.parse(Buffer.from(data, 'base64').toString());
+  try {
+    return JSON.parse(Buffer.from(data, 'base64').toString());
+  } catch {
+    return data;
+  }
 }
 
 export function getCodeId(
