@@ -1,7 +1,7 @@
 import { APIRequester } from '../APIRequester';
 import { BankAPI } from './BankAPI';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const bank = new BankAPI(c);
 
 describe('BankAPI', () => {
