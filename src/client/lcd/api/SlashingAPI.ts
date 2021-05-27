@@ -2,9 +2,6 @@ import { BaseAPI } from './BaseAPI';
 import { Dec, ValConsAddress, ValConsPubKey } from '../../../core';
 
 export interface SlashingParams {
-  /** Amount of time in seconds that evidence for validator misbehavior remains valid and can be submitted. */
-  max_evidence_age: number;
-
   /** Number of blocks over which missed blocks are tallied for downtime. */
   signed_blocks_window: number;
 
@@ -23,7 +20,6 @@ export interface SlashingParams {
 
 export namespace SlashingParams {
   export interface Data {
-    max_evidence_age: string;
     signed_blocks_window: string;
     min_signed_per_window: string;
     downtime_jail_duration: string;
@@ -98,7 +94,6 @@ export class SlashingAPI extends BaseAPI {
     return this.c
       .get<SlashingParams.Data>(`/slashing/parameters`)
       .then(({ result: d }) => ({
-        max_evidence_age: Number.parseInt(d.max_evidence_age),
         signed_blocks_window: Number.parseInt(d.signed_blocks_window),
         min_signed_per_window: new Dec(d.min_signed_per_window),
         downtime_jail_duration: Number.parseInt(d.downtime_jail_duration),
