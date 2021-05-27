@@ -1,12 +1,31 @@
 import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
+/**
+ *
+ * @param data string
+ * @returns
+ */
 export function dictToB64(data: any): string {
-  return Buffer.from(JSON.stringify(data)).toString('base64');
+  // if data is just a plain string, it was not valid Base64-encoded JSON so it could not be parsed
+  if (typeof data === 'string') {
+    return data;
+  } else {
+    return Buffer.from(JSON.stringify(data)).toString('base64');
+  }
 }
 
+/**
+ *
+ * @param data string
+ * @returns
+ */
 export function b64ToDict(data: string): any {
-  return JSON.parse(Buffer.from(data, 'base64').toString());
+  try {
+    return JSON.parse(Buffer.from(data, 'base64').toString());
+  } catch {
+    return data;
+  }
 }
 
 export function getCodeId(
