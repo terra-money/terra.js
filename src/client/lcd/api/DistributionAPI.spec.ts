@@ -3,7 +3,7 @@ import { DistributionAPI } from './DistributionAPI';
 
 import { Dec } from '../../../core';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const distribution = new DistributionAPI(c);
 
 describe('DistributionAPI', () => {
