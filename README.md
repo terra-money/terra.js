@@ -1,32 +1,32 @@
 <p>&nbsp;</p>
 <p align="center">
-<img src="https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs.svg" width=500>
+<img src="https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs.svg" width=500>
 </p>
 
 <p align="center">
 The JavaScript SDK for Terra
 </p>
 
-![diagram](https://raw.githubusercontent.com/terra-project/terra.js/master/img/terrajs-diagram.png)
+![diagram](https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs-diagram.png)
 
 <br/>
 
 <p align="center">
-  <img alt="GitHub" src="https://img.shields.io/github/license/terra-project/terra.js">
+  <img alt="GitHub" src="https://img.shields.io/github/license/terra-money/terra.js">
   <img alt="npm (scoped)" src="https://img.shields.io/npm/v/@terra-money/terra.js">
 </p>
 
 <p align="center">
-  <a href="https://github.com/terra-project/terra.js/wiki"><strong>Explore the Docs »</strong></a>
+  <a href="https://github.com/terra-money/terra.js/wiki"><strong>Explore the Docs »</strong></a>
   <br />
   <br/>
-  <a href="https://github.com/terra-project/terra.js/wiki">Examples</a>
+  <a href="https://github.com/terra-money/terra.js/wiki">Examples</a>
   ·
-  <a href="https://terra-project.github.io/terra.js/">API Reference</a>
+  <a href="https://terra-money.github.io/terra.js/">API Reference</a>
   ·
   <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM Package</a>
   ·
-  <a href="https://github.com/terra-project/terra.js">GitHub</a>
+  <a href="https://github.com/terra-money/terra.js">GitHub</a>
 </p>
 
 Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
@@ -34,9 +34,9 @@ Terra.js a JavaScript SDK for writing applications that interact with the Terra 
 ## Features
 
 - **Written in TypeScript**, with type definitions
-- Versatile support for [key management](https://github.com/terra-project/terra.js/wiki/Keys) solutions
+- Versatile support for [key management](https://github.com/terra-money/terra.js/wiki/Keys) solutions
 - Works in Node.js, in the browser, and React Native
-- Exposes the Terra API through [`LCDClient`](https://github.com/terra-project/terra.js/wiki/Querying)
+- Exposes the Terra API through [`LCDClient`](https://github.com/terra-money/terra.js/wiki/Querying)
 - Parses responses into native JavaScript types
 
 We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.
@@ -51,7 +51,7 @@ yarn add @terra-money/terra.js
 
 ## Usage
 
-Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-project/terra.js/wiki) for notes on how to get up and running.
+Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-money/terra.js/wiki) for notes on how to get up and running.
 
 ### Getting blockchain data
 
@@ -79,7 +79,7 @@ terra.market.swapRate(offerCoin, 'ukrw').then(c => {
 
 ### Broadcasting transactions
 
-First, [get](https://faucet.terra.money/) some testnet tokens for `terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v`, or use [LocalTerra](https://www.github.com/terra-project/LocalTerra).
+First, [get](https://faucet.terra.money/) some testnet tokens for `terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v`, or use [LocalTerra](https://www.github.com/terra-money/LocalTerra).
 
 ```ts
 import { LCDClient, MsgSend, MnemonicKey } from '@terra-money/terra.js';
@@ -166,7 +166,7 @@ module.exports {
 }
 ```
 
-There have been many complaints about `MnemonicKey` of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use [`react-native-mnemonic-key`](https://github.com/terra-project/react-native-mnemonic-key) instead for more reliable performance and security.
+There have been many complaints about `MnemonicKey` of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use [`react-native-mnemonic-key`](https://github.com/terra-money/react-native-mnemonic-key) instead for more reliable performance and security.
 
 ## License
 

@@ -1,4 +1,4 @@
-// Adapted from https://github.com/terra-project/terra-js/blob/master/src/utils/keyUtils.ts
+// Adapted from https://github.com/terra-money/terra-js/blob/master/src/utils/keyUtils.ts
 
 import * as bip32 from 'bip32';
 import * as bip39 from 'bip39';
