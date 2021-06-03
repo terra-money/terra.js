@@ -1,10 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
-import {
-  JSONRawMessageToDict,
-  dictToJSONRawMessage,
-} from '../../../util/contract';
 export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data> {
   public coins: Coins;
 
@@ -31,7 +27,7 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
     return new MsgExecuteContract(
       sender,
       contract,
-      JSONRawMessageToDict(execute_msg),
+      execute_msg,
       Coins.fromData(coins)
     );
   }
@@ -43,7 +39,7 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
       value: {
         sender,
         contract,
-        execute_msg: dictToJSONRawMessage(execute_msg),
+        execute_msg,
         coins: coins.toData(),
       },
     };
@@ -56,7 +52,7 @@ export namespace MsgExecuteContract {
     value: {
       sender: AccAddress;
       contract: AccAddress;
-      execute_msg: string;
+      execute_msg: object;
       coins: Coins.Data;
     };
   }

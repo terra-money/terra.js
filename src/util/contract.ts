@@ -1,37 +1,6 @@
 import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
-/**
- * Serializes a JavaScript object to a JSON string. If the data passed is
- * already a string, it will not be serialized and just return as-is.
- *
- * @param data object to encode
- * @returns JSON string
- */
-export function dictToJSONRawMessage(data: any): string {
-  // if data is just a plain string, it was not valid JSON so it could not be parsed
-  if (typeof data === 'string') {
-    return data;
-  } else {
-    return JSON.stringify(data);
-  }
-}
-
-/**
- * Recovers a JavaScript object from a JSON string. If an error is encountered
- * while parsing, the string will not be converted and fail by returning the input as-is.
- *
- * @param data string
- * @returns converted object
- */
-export function JSONRawMessageToDict(data: string): any {
-  try {
-    return JSON.parse(data);
-  } catch {
-    return data;
-  }
-}
-
 export function getCodeId(
   txResult: BlockTxBroadcastResult | TxInfo,
   msgIndex = 0

@@ -1,10 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
 import { Coins } from '../../Coins';
-import {
-  JSONRawMessageToDict,
-  dictToJSONRawMessage,
-} from '../../../util/contract';
 
 export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
   public init_coins: Coins;
@@ -37,7 +33,7 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
       sender,
       admin,
       Number.parseInt(code_id),
-      JSONRawMessageToDict(init_msg),
+      init_msg,
       Coins.fromData(init_coins)
     );
   }
@@ -50,7 +46,7 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
         sender,
         admin,
         code_id: code_id.toFixed(),
-        init_msg: dictToJSONRawMessage(init_msg),
+        init_msg,
         init_coins: init_coins.toData(),
       },
     };
@@ -64,7 +60,7 @@ export namespace MsgInstantiateContract {
       sender: AccAddress;
       admin: AccAddress;
       code_id: string;
-      init_msg: string;
+      init_msg: object;
       init_coins: Coins.Data;
     };
   }

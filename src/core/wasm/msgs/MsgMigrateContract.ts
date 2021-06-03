@@ -1,9 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
-import {
-  JSONRawMessageToDict,
-  dictToJSONRawMessage,
-} from '../../../util/contract';
 export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data> {
   /**
    * @param admin contract admin
@@ -28,7 +24,7 @@ export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data
       admin,
       contract,
       Number.parseInt(new_code_id),
-      JSONRawMessageToDict(migrate_msg)
+      migrate_msg
     );
   }
 
@@ -40,7 +36,7 @@ export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data
         admin,
         contract,
         new_code_id: new_code_id.toFixed(),
-        migrate_msg: dictToJSONRawMessage(migrate_msg),
+        migrate_msg,
       },
     };
   }
@@ -53,7 +49,7 @@ export namespace MsgMigrateContract {
       admin: AccAddress;
       contract: AccAddress;
       new_code_id: string;
-      migrate_msg: string;
+      migrate_msg: object;
     };
   }
 }
