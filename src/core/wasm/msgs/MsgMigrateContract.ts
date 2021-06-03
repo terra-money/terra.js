@@ -1,9 +1,10 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../strings';
-import { b64ToDict, dictToB64 } from '../../../util/contract';
-export class MsgMigrateContract extends JSONSerializable<
-  MsgMigrateContract.Data
-> {
+import {
+  JSONRawMessageToDict,
+  dictToJSONRawMessage,
+} from '../../../util/contract';
+export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data> {
   /**
    * @param admin contract admin
    * @param contract contract address to be migrated from
@@ -27,7 +28,7 @@ export class MsgMigrateContract extends JSONSerializable<
       admin,
       contract,
       Number.parseInt(new_code_id),
-      b64ToDict(migrate_msg)
+      JSONRawMessageToDict(migrate_msg)
     );
   }
 
@@ -39,7 +40,7 @@ export class MsgMigrateContract extends JSONSerializable<
         admin,
         contract,
         new_code_id: new_code_id.toFixed(),
-        migrate_msg: dictToB64(migrate_msg),
+        migrate_msg: dictToJSONRawMessage(migrate_msg),
       },
     };
   }
