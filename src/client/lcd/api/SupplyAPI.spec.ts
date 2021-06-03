@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { SupplyAPI } from './SupplyAPI';
 import { Coins } from '../../../core';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const supply = new SupplyAPI(c);
 
 describe('SupplyAPI', () => {

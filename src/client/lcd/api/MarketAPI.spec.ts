@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { MarketAPI } from './MarketAPI';
 import { Dec } from '../../../core/numeric';
 
-const c = new APIRequester('http://3.34.120.243:1317/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const market = new MarketAPI(c);
 
 describe('MarketAPI', () => {

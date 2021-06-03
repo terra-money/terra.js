@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { TreasuryAPI } from './TreasuryAPI';
 import { Dec, PolicyConstraints } from '../../../core';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const treasury = new TreasuryAPI(c);
 
 describe('TreasuryAPI', () => {

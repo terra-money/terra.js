@@ -57,13 +57,12 @@ const instantiateContractTxData = {
         {
           type: 'wasm/MsgInstantiateContract',
           value: {
-            creator: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+            sender: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
             admin: '',
             code_id: '118',
             init_msg:
               'eyJmZWUiOnsiZGVub20iOiJ1bHVuYSIsImFtb3VudCI6IjEwMCJ9fQ==',
             init_coins: [],
-            migratable: false,
           },
         },
       ],

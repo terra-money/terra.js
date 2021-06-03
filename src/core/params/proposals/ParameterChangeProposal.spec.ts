@@ -125,13 +125,13 @@ const jiguJSON = {
         subspace: 'treasury',
         key: 'TaxPolicy',
         value:
-          '{"rate_min":"0.000000000000000000","rate_max":"100.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_max":"3.000000000000000000"}',
+          '{"rate_min":"0.000000000000000000","rate_max":"100.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_rate_max":"3.000000000000000000"}',
       },
       {
         subspace: 'treasury',
         key: 'RewardPolicy',
         value:
-          '{"rate_min":"0.000000000000000000","rate_max":"1023423340.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_max":"3.000000000000000000"}',
+          '{"rate_min":"0.000000000000000000","rate_max":"1023423340.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_rate_max":"3.000000000000000000"}',
       },
       {
         subspace: 'treasury',
@@ -209,7 +209,7 @@ const jiguJSON = {
         subspace: 'gov',
         key: 'tallyparams',
         value:
-          '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto":"1232.234000000000000000"}',
+          '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto_threshold":"1232.234000000000000000"}',
       },
       {
         subspace: 'mint',
@@ -342,7 +342,7 @@ describe('ParameterChangeProposal', () => {
         tallyparams: {
           quorum: new Dec(234234.2334),
           threshold: new Dec(23423.2323),
-          veto: new Dec(1232.234),
+          veto_threshold: new Dec(1232.234),
         },
       },
       mint: {

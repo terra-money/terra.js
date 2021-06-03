@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { WasmAPI } from './WasmAPI';
 import { EventParams } from '../../../core';
 
-const c = new APIRequester('http://3.34.120.243:1317/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const wasm = new WasmAPI(c);
 
 describe('WasmAPI', () => {

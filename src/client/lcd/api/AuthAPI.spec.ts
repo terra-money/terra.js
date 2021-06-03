@@ -4,7 +4,7 @@ import { Account, LazyGradedVestingAccount } from '../../../core';
 import { MnemonicKey } from '../../../key';
 
 // TODO - restore to https://lcd.terra.dev
-const c = new APIRequester('http://3.34.120.243:1317/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const auth = new AuthAPI(c);
 
 describe('AuthAPI', () => {
