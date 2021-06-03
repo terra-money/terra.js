@@ -60,8 +60,8 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 
 // connect to soju testnet
 const terra = new LCDClient({
-  URL: 'https://soju-lcd.terra.dev',
-  chainID: 'soju-0014',
+  URL: 'http://tequila-lcd.terra.dev/',
+  chainID: 'tequila-0004',
 });
 
 // To use LocalTerra
