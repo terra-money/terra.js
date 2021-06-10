@@ -2,7 +2,7 @@ import { MsgGrantAuthorization } from './MsgGrantAuthorization';
 import { MsgRevokeAuthorization } from './MsgRevokeAuthorization';
 import { MsgExecAuthorized } from './MsgExecAuthorized';
 
-export * from './MsgGrantAuhorization';
+export * from './MsgGrantAuthorization';
 export * from './MsgRevokeAuthorization';
 export * from './MsgExecAuthorized';
 
