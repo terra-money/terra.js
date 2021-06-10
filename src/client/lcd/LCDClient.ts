@@ -51,7 +51,7 @@ const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
   default: {
     uluna: 0.00506,
   },
-  'columbus-3': {
+  'columbus-4': {
     uluna: 0.015,
   },
   'tequila-0004': {
