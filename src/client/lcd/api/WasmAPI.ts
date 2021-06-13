@@ -20,7 +20,7 @@ export namespace ContractInfo {
     address: AccAddress;
     creator: AccAddress;
     admin: AccAddress;
-    init_msg: string;
+    init_msg: any; // object
   }
 }
 
@@ -57,7 +57,7 @@ export class WasmAPI extends BaseAPI {
         address: d.address,
         creator: d.creator,
         admin: d.admin,
-        init_msg: JSON.parse(Buffer.from(d.init_msg, 'base64').toString()),
+        init_msg: d.init_msg,
       }));
   }
 
