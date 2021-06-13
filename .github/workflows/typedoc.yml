@@ -14,10 +14,19 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Build
-        run: |
-          yarn
-          yarn doc
+      - name: Use cached node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Docs
+        run: npm run doc
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
