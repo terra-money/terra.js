@@ -60,8 +60,7 @@ const instantiateContractTxData = {
             sender: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
             admin: '',
             code_id: '118',
-            init_msg:
-              'eyJmZWUiOnsiZGVub20iOiJ1bHVuYSIsImFtb3VudCI6IjEwMCJ9fQ==',
+            init_msg: { fee: { denom: 'uluna', amount: '100' } },
             init_coins: [],
           },
         },
