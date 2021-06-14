@@ -6,12 +6,12 @@ const test1 = lt.wallets.test1;
 
 async function main() {
   const { data: tequilaGasPrices } = await Axios.get(
-    'https://tequila-fcd.terra.dev/v1/txs/gas_prices'
+    'https://bombay-fcd.terra.dev/v1/txs/gas_prices'
   );
 
   const tequila = new LCDClient({
-    chainID: 'tequila-0004',
-    URL: 'https://tequila-fcd.terra.dev',
+    chainID: 'bombay-0007',
+    URL: 'https://bombay-lcd.terra.dev',
     gasPrices: tequilaGasPrices,
   });
 
