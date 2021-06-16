@@ -23,7 +23,10 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
   }
 
   public static fromData(data: Delegation.Data): Delegation {
-    const { delegator_address, validator_address, shares, balance } = data;
+    const {
+      delegation: { delegator_address, validator_address, shares },
+      balance,
+    } = data;
     return new Delegation(
       delegator_address,
       validator_address,
@@ -34,10 +37,13 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
 
   public toData(): Delegation.Data {
     const { delegator_address, validator_address, shares, balance } = this;
+
     return {
-      delegator_address,
-      validator_address,
-      shares: shares.toString(),
+      delegation: {
+        delegator_address,
+        validator_address,
+        shares: shares.toString(),
+      },
       balance: balance.toData(),
     };
   }
@@ -45,9 +51,11 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
 
 export namespace Delegation {
   export interface Data {
-    delegator_address: AccAddress;
-    validator_address: ValAddress;
-    shares: string;
+    delegation: {
+      delegator_address: AccAddress;
+      validator_address: ValAddress;
+      shares: string;
+    };
     balance: Coin.Data;
   }
 }

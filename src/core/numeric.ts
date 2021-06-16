@@ -60,8 +60,8 @@ export namespace Numeric {
  */
 
 export class Dec extends _Dec implements Numeric<Dec> {
-  constructor(arg: Numeric.Input) {
-    super(arg.toString());
+  constructor(arg?: Numeric.Input) {
+    super((arg ?? 0).toString());
   }
 
   public static withPrec(value: Decimal.Value, prec: number): Dec {
@@ -122,8 +122,8 @@ const _Int = Decimal.clone();
  * const int2 = new Int(decimal);
  */
 export class Int extends _Int implements Numeric<Numeric.Output> {
-  constructor(arg: Numeric.Input) {
-    const _arg = new Decimal(arg.toString());
+  constructor(arg?: Numeric.Input) {
+    const _arg = new Decimal((arg ?? 0).toString());
     super(_arg.divToInt(1));
   }
 

@@ -17,7 +17,7 @@ describe('AuthAPI', () => {
       expect(acct instanceof Account).toBe(true);
     });
 
-    // TODO - after merging CosmosSDK@v0.43.x restore vesting account test
+    // TODO: - after merging CosmosSDK@v0.43.x restore vesting account test
     // it('LazyGradedVestingAccount', async () => {
     //   const acct = await auth.accountInfo(
     //     'terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn'

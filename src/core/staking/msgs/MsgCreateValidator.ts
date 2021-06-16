@@ -8,9 +8,7 @@ import { Validator } from '../Validator';
  * For new validators, this message registers a validator address to be a delegate on
  * the blockchain.
  */
-export class MsgCreateValidator extends JSONSerializable<
-  MsgCreateValidator.Data
-> {
+export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data> {
   /**
    *
    * @param description validator's delegate information
@@ -27,7 +25,7 @@ export class MsgCreateValidator extends JSONSerializable<
     public min_self_delegation: Int,
     public delegator_address: AccAddress,
     public validator_address: ValAddress,
-    public pubkey: ValConsPubKey,
+    public pubkey: ValConsPubKey.Data,
     public value: Coin
   ) {
     super();
@@ -90,7 +88,7 @@ export namespace MsgCreateValidator {
       min_self_delegation: string;
       delegator_address: AccAddress;
       validator_address: ValAddress;
-      pubkey: ValConsPubKey;
+      pubkey: ValConsPubKey.Data;
       value: Coin.Data;
     };
   }
