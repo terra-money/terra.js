@@ -1,6 +1,6 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * A delegator can submit this message to send more Luna to be staked through a

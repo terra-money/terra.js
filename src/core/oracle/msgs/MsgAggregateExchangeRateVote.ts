@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 import { MsgAggregateExchangeRatePrevote } from './MsgAggregateExchangeRatePrevote';
 import { Coins } from '../../Coins';
 import SHA256 from 'crypto-js/sha256';
@@ -25,9 +25,7 @@ export function aggregateVoteHash(
  * Aggregate analog of MsgExchangeRateVote: submits an oracle vote for multiple denominations
  * through a single message rather than multiple messages.
  */
-export class MsgAggregateExchangeRateVote extends JSONSerializable<
-  MsgAggregateExchangeRateVote.Data
-> {
+export class MsgAggregateExchangeRateVote extends JSONSerializable<MsgAggregateExchangeRateVote.Data> {
   public exchange_rates: Coins;
 
   /**

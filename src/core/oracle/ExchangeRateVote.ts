@@ -1,7 +1,7 @@
 import { Denom } from '../Denom';
 import { JSONSerializable } from '../../util/json';
 import { Dec } from '../numeric';
-import { ValAddress } from '../strings';
+import { ValAddress } from '../bech32';
 
 /**
  * The following objects capture information from the Oracle API. To submit exchange

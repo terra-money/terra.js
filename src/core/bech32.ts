@@ -52,6 +52,26 @@ export namespace AccAddress {
   }
 }
 
+export namespace AccPubKey {
+  /**
+   * Checks if a string is a Terra account's public key
+   * @param data string to check
+   */
+
+  export function validate(data: string): boolean {
+    return checkPrefixAndLength('terrapub', data, 47);
+  }
+
+  /**
+   * Converts a Terra validator pubkey to an account pubkey.
+   * @param address validator pubkey to convert
+   */
+  export function fromAccAddress(address: AccAddress): AccPubKey {
+    const vals = bech32.decode(address);
+    return bech32.encode('terrapub', vals.words);
+  }
+}
+
 export namespace ValAddress {
   /**
    * Checks if a string is a Terra validator address.
@@ -72,6 +92,25 @@ export namespace ValAddress {
   }
 }
 
+export namespace ValPubKey {
+  /**
+   * Checks if a string is a Terra validator pubkey
+   * @param data string to check
+   */
+  export function validate(data: string): boolean {
+    return checkPrefixAndLength('terravaloperpub', data, 54);
+  }
+
+  /**
+   * Converts a Terra validator operator address to a validator pubkey.
+   * @param valAddress account pubkey
+   */
+  export function fromValAddress(valAddress: ValAddress): ValPubKey {
+    const vals = bech32.decode(valAddress);
+    return bech32.encode('terravaloperpub', vals.words);
+  }
+}
+
 export namespace ValConsAddress {
   /**
    * Checks if a string is a Terra validator consensus address
@@ -83,51 +122,12 @@ export namespace ValConsAddress {
   }
 }
 
-export namespace AccPubKey {
-  /**
-   * Checks if a string is a Terra validator consensus address
-   * @param data string to check
-   */
-
-  export function validate(data: string): boolean {
-    return checkPrefixAndLength('terrapub', data, 76);
-  }
-
-  /**
-   * Converts a Terra validator pubkey to an account pubkey.
-   * @param address validator pubkey to convert
-   */
-  export function fromValPubKey(pubkey: ValPubKey): AccPubKey {
-    const vals = bech32.decode(pubkey);
-    return bech32.encode('terrapub', vals.words);
-  }
-}
-
-export namespace ValPubKey {
-  /**
-   * Checks if a string is a Terra validator pubkey
-   * @param data string to check
-   */
-  export function validate(data: string): boolean {
-    return checkPrefixAndLength('terravaloperpub', data, 83);
-  }
-
-  /**
-   * Converts a Terra account pubkey to a validator pubkey.
-   * @param pubkey account pubkey
-   */
-  export function fromAccPubKey(pubkey: AccPubKey): ValPubKey {
-    const vals = bech32.decode(pubkey);
-    return bech32.encode('terravaloperpub', vals.words);
-  }
-}
-
 export namespace ValConsPubKey {
   /**
    * Checks if string is a valid Terra consensus (node) pubkey.
    * @param data string to check
    */
   export function validate(data: string): boolean {
-    return checkPrefixAndLength('terravalconspub', data, 83);
+    return checkPrefixAndLength('terravalconspub', data, 82);
   }
 }

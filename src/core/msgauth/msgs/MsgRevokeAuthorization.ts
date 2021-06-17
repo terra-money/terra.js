@@ -1,9 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
-export class MsgRevokeAuthorization extends JSONSerializable<
-  MsgRevokeAuthorization.Data
-> {
+export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorization.Data> {
   /**
    * @param granter authorization granter
    * @param grantee authorization grantee

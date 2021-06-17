@@ -1,14 +1,12 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all
  * delegations (not including its self-delegation) into their associated account's
  * withdraw address.
  */
-export class MsgModifyWithdrawAddress extends JSONSerializable<
-  MsgModifyWithdrawAddress.Data
-> {
+export class MsgModifyWithdrawAddress extends JSONSerializable<MsgModifyWithdrawAddress.Data> {
   /**
    * @param delegator_address delegator's account address
    * @param withdraw_address desired new withdraw address

@@ -1,14 +1,12 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * Proposal that disburses funds from the Distribution module's community pool to the
  * specified recipient if passed.
  */
-export class CommunityPoolSpendProposal extends JSONSerializable<
-  CommunityPoolSpendProposal.Data
-> {
+export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSpendProposal.Data> {
   public amount: Coins;
   /**
    * @param title proposal's title

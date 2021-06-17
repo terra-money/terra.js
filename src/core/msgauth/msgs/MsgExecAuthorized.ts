@@ -1,10 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 import { Msg } from '../../Msg';
 
-export class MsgExecAuthorized extends JSONSerializable<
-  MsgExecAuthorized.Data
-> {
+export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> {
   /**
    * @param grantee authorization grantee
    * @param msgs list of messages to execute

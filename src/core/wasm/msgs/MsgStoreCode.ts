@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
   /**

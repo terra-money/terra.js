@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 import { b64ToDict, dictToB64 } from '../../../util/contract';
 export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data> {
   /**

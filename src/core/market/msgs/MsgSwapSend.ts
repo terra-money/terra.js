@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * Executes a market swap send between 2 denominations at the exchange rate registered by the

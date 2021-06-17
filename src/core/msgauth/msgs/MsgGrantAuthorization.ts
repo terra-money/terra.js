@@ -1,11 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 import { Int } from '../../numeric';
 import { Authorization } from '../Authorization';
 
-export class MsgGrantAuthorization extends JSONSerializable<
-  MsgGrantAuthorization.Data
-> {
+export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
   /**
    * @param depositor depositor's account address
    * @param amount coins to fund the community pool

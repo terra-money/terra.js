@@ -1,13 +1,11 @@
 import { Denom } from '../Denom';
 import { JSONSerializable } from '../../util/json';
-import { ValAddress } from '../strings';
+import { ValAddress } from '../bech32';
 
 /**
  * Stores information about data about Oracle prevotes fetched from the blockchain.
  */
-export class ExchangeRatePrevote extends JSONSerializable<
-  ExchangeRatePrevote.Data
-> {
+export class ExchangeRatePrevote extends JSONSerializable<ExchangeRatePrevote.Data> {
   /**
    *
    * @param hash vote hash.

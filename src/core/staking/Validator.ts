@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../util/json';
 import { Dec, Int } from '../numeric';
-import { ValAddress, ValConsPubKey } from '../strings';
+import { ValAddress, ValConsPubKey } from '../bech32';
 
 /**
  * Stores information fetched from the blockchain about the current status of a validator.

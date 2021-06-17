@@ -1,7 +1,7 @@
 import { Denom } from '../../Denom';
 import { JSONSerializable } from '../../../util/json';
 import { Dec, Numeric } from '../../numeric';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 import { MsgExchangeRatePrevote } from './MsgExchangeRatePrevote';
 import SHA256 from 'crypto-js/sha256';
 
@@ -30,9 +30,7 @@ export function voteHash(
  * Votes are registered through submitting a [[MsgExchangeRateVote]] message, which must
  * correspond to a [[MsgExchangeRatePrevote]] submitted in the previous vote period.
  */
-export class MsgExchangeRateVote extends JSONSerializable<
-  MsgExchangeRateVote.Data
-> {
+export class MsgExchangeRateVote extends JSONSerializable<MsgExchangeRateVote.Data> {
   public exchange_rate: Dec;
 
   /**
