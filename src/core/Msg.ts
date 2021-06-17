@@ -16,8 +16,6 @@ import {
 } from './msgauth/msgs';
 import {
   MsgDelegateFeedConsent,
-  MsgExchangeRatePrevote,
-  MsgExchangeRateVote,
   MsgAggregateExchangeRatePrevote,
   MsgAggregateExchangeRateVote,
   OracleMsg,
@@ -106,10 +104,6 @@ export namespace Msg {
         return MsgExecAuthorized.fromData(data);
 
       // oracle
-      case 'oracle/MsgExchangeRateVote':
-        return MsgExchangeRateVote.fromData(data);
-      case 'oracle/MsgExchangeRatePrevote':
-        return MsgExchangeRatePrevote.fromData(data);
       case 'oracle/MsgDelegateFeedConsent':
         return MsgDelegateFeedConsent.fromData(data);
       case 'oracle/MsgAggregateExchangeRatePrevote':

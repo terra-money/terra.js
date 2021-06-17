@@ -37,8 +37,6 @@ export * from './msgauth/Authorization';
 
 // Oracle
 export * from './oracle/msgs';
-export * from './oracle/ExchangeRatePrevote';
-export * from './oracle/ExchangeRateVote';
 export * from './oracle/AggregateExchangeRatePrevote';
 export * from './oracle/AggregateExchangeRateVote';
 
