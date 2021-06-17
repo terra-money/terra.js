@@ -25,7 +25,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
    */
   constructor(
     public operator_address: ValAddress,
-    public consensus_pubkey: ValConsPubKey,
+    public consensus_pubkey: ValConsPubKey.Data,
     public jailed: boolean,
     public status: number,
     public tokens: Int,
@@ -59,8 +59,8 @@ export class Validator extends JSONSerializable<Validator.Data> {
     return new Validator(
       data.operator_address,
       data.consensus_pubkey,
-      data.jailed,
-      data.status,
+      data.jailed || false,
+      data.status || 0,
       new Int(data.tokens),
       new Dec(data.delegator_shares),
       data.description,
@@ -75,7 +75,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
 export namespace Validator {
   export interface Data {
     operator_address: ValAddress;
-    consensus_pubkey: ValConsPubKey;
+    consensus_pubkey: ValConsPubKey.Data;
     jailed: boolean;
     status: number;
     tokens: string;

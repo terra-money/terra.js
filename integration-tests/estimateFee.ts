@@ -5,14 +5,14 @@ const lt = new LocalTerra();
 const test1 = lt.wallets.test1;
 
 async function main() {
-  const { data: tequilaGasPrices } = await Axios.get(
+  const { data: gasPrices } = await Axios.get(
     'https://bombay-fcd.terra.dev/v1/txs/gas_prices'
   );
 
   const tequila = new LCDClient({
     chainID: 'bombay-0007',
     URL: 'https://bombay-lcd.terra.dev',
-    gasPrices: tequilaGasPrices,
+    gasPrices,
   });
 
   const item = await tequila.tx.create(test1.key.accAddress, {
