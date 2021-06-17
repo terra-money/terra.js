@@ -1,9 +1,9 @@
+import { SHA256 } from 'jscrypto/SHA256';
 import { Denom } from '../../Denom';
 import { JSONSerializable } from '../../../util/json';
 import { Dec, Numeric } from '../../numeric';
 import { AccAddress, ValAddress } from '../../bech32';
 import { MsgExchangeRatePrevote } from './MsgExchangeRatePrevote';
-import SHA256 from 'crypto-js/sha256';
 
 /**
  * Calculates the vote hash
@@ -19,7 +19,7 @@ export function voteHash(
   validator: ValAddress
 ): string {
   const payload = `${salt}:${exchangeRate}:${denom}:${validator}`;
-  return SHA256(payload).toString().substring(0, 40);
+  return SHA256.hash(payload).toString().substring(0, 40);
 }
 
 /**
