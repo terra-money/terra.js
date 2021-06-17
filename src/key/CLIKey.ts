@@ -99,7 +99,7 @@ export class CLIKey extends Key {
       this.loadAccountDetails();
       return this.valPubKey;
     }
-    return ValPubKey.fromAccPubKey(this._accPubKey);
+    return ValPubKey.fromValAddress(this.valAddress);
   }
 
   public async sign(): Promise<Buffer> {

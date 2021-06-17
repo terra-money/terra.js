@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { ValAddress } from '../../strings';
+import { ValAddress } from '../../bech32';
 
 /**
  * A validator can be jailed by the blockchain if misbehavior is detected, such as

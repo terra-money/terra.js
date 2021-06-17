@@ -1,16 +1,14 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Int } from '../../numeric';
-import { AccAddress, ValAddress, ValConsPubKey } from '../../strings';
+import { AccAddress, ValAddress, ValConsPubKey } from '../../bech32';
 import { Validator } from '../Validator';
 
 /**
  * For new validators, this message registers a validator address to be a delegate on
  * the blockchain.
  */
-export class MsgCreateValidator extends JSONSerializable<
-  MsgCreateValidator.Data
-> {
+export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data> {
   /**
    *
    * @param description validator's delegate information

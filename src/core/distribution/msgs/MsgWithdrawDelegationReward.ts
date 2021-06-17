@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * A delegator can withdraw currently outstanding rewards accrued from their delegation
@@ -7,9 +7,7 @@ import { AccAddress, ValAddress } from '../../strings';
  *
  * The rewards will be deposited to their Withdraw Address.
  */
-export class MsgWithdrawDelegationReward extends JSONSerializable<
-  MsgWithdrawDelegationReward.Data
-> {
+export class MsgWithdrawDelegationReward extends JSONSerializable<MsgWithdrawDelegationReward.Data> {
   /**
    *
    * @param delegator_address delegator's account address

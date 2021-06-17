@@ -1,7 +1,7 @@
 import { Coins } from '../Coins';
 import { PublicKey } from '../PublicKey';
 import { JSONSerializable } from '../../util/json';
-import { AccAddress } from '../strings';
+import { AccAddress } from '../bech32';
 
 /**
  * Stores information about an account fetched from the blockchain.

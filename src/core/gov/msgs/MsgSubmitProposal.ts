@@ -1,14 +1,12 @@
 import { Coins } from '../../Coins';
 import { Proposal } from '../../Proposal';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * Submit a proposal alongside an initial deposit.
  */
-export class MsgSubmitProposal extends JSONSerializable<
-  MsgSubmitProposal.Data
-> {
+export class MsgSubmitProposal extends JSONSerializable<MsgSubmitProposal.Data> {
   public initial_deposit: Coins;
 
   /**

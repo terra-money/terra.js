@@ -1,15 +1,13 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * A delegator can choose to redelegate their bonded Luna and transfer a delegation
  * amount from one validator to another. Unlike undelegating, redelegations do not incur
  * a 21-day unbonding period and happen immediately.
  */
-export class MsgBeginRedelegate extends JSONSerializable<
-  MsgBeginRedelegate.Data
-> {
+export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data> {
   /**
    *
    * @param delegator_address delegator's account address

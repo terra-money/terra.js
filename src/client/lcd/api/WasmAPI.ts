@@ -1,5 +1,5 @@
 import { BaseAPI } from './BaseAPI';
-import { AccAddress } from '../../../core/strings';
+import { AccAddress } from '../../../core/bech32';
 
 export interface CodeInfo {
   code_hash: string;

@@ -1,6 +1,6 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * A delegator can undelegate an amount of bonded Luna, and will begin the unbonding

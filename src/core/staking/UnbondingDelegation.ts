@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../util/json';
 import { Int } from '../numeric';
-import { AccAddress, ValAddress } from '../strings';
+import { AccAddress, ValAddress } from '../bech32';
 
 /**
  * When a delegator decides to take out their funds from the staking pool, they must
@@ -13,9 +13,7 @@ import { AccAddress, ValAddress } from '../strings';
  * when their unbonding periods are completed and the funds are returned to the
  * delegator's account balance to be spent freely.
  */
-export class UnbondingDelegation extends JSONSerializable<
-  UnbondingDelegation.Data
-> {
+export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Data> {
   constructor(
     public delegator_address: AccAddress,
     public validator_address: ValAddress,
@@ -77,12 +75,8 @@ export namespace UnbondingDelegation {
     }
 
     public static fromData(data: Entry.Data): Entry {
-      const {
-        initial_balance,
-        balance,
-        creation_height,
-        completion_time,
-      } = data;
+      const { initial_balance, balance, creation_height, completion_time } =
+        data;
       return new Entry(
         new Int(initial_balance),
         new Int(balance),

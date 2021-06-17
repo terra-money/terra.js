@@ -1,4 +1,11 @@
-import { AccAddress, ValAddress, AccPubKey, ValPubKey } from './strings';
+import {
+  AccAddress,
+  ValAddress,
+  AccPubKey,
+  ValPubKey,
+  ValConsAddress,
+  ValConsPubKey,
+} from './bech32';
 import { bech32 } from 'bech32';
 
 describe('AccAddress', () => {
@@ -65,20 +72,14 @@ describe('AccPubKey', () => {
 
     expect(AccPubKey.validate(badPubKey)).toBe(false);
     expect(
-      AccPubKey.validate(
-        'terrapub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5nwzrf9'
-      )
+      AccPubKey.validate('terrapub1x46rqay4d3cssq8gxxvqz8xt6nwlz4tdh39t77')
     ).toBe(true);
   });
 
   it('converts from validator pubkey', () => {
     expect(
-      AccPubKey.fromValPubKey(
-        'terravaloperpub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5y7accr'
-      )
-    ).toEqual(
-      'terrapub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5nwzrf9'
-    );
+      AccPubKey.fromAccAddress('terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v')
+    ).toEqual('terrapub1x46rqay4d3cssq8gxxvqz8xt6nwlz4tdh39t77');
   });
 });
 
@@ -86,7 +87,7 @@ describe('ValPubKey', () => {
   it('validates validator pubkey', () => {
     expect(
       ValPubKey.validate(
-        'terravaloperpub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5y7accr'
+        'terravaloperpub12g4nkvsjjnl0t7fvq3hdcw7y8dc9fq69gvd5ag'
       )
     ).toBe(true);
 
@@ -95,19 +96,35 @@ describe('ValPubKey', () => {
 
     expect(ValPubKey.validate(badPubKey)).toBe(false);
     expect(
-      ValPubKey.validate(
-        'terrapub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5nwzrf9'
-      )
+      ValPubKey.validate('terravaloper12g4nkvsjjnl0t7fvq3hdcw7y8dc9fq69nyeu9q')
     ).toBe(false);
   });
 
-  it('converts from account pubkey', () => {
+  it('converts from validator address', () => {
     expect(
-      ValPubKey.fromAccPubKey(
-        'terrapub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5nwzrf9'
+      ValPubKey.fromValAddress(
+        'terravaloper12g4nkvsjjnl0t7fvq3hdcw7y8dc9fq69nyeu9q'
       )
-    ).toEqual(
-      'terravaloperpub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5y7accr'
-    );
+    ).toEqual('terravaloperpub12g4nkvsjjnl0t7fvq3hdcw7y8dc9fq69gvd5ag');
+  });
+});
+
+describe('ValConsAddress', () => {
+  it('validate validator consensus address', () => {
+    expect(
+      ValConsAddress.validate(
+        'terravalcons1relcztayk87c3r529rqf3fwdmn8hr6rhcgyrxd'
+      )
+    ).toBeTruthy();
+  });
+});
+
+describe('ValConsPubKey', () => {
+  it('validate validator consensus public key', () => {
+    expect(
+      ValConsPubKey.validate(
+        'terravalconspub1zcjduepqlnrzpfxsl8vx8mlf9hnjf6y24kczr9ue7k68l82pu23qnjj460ksqy0j0d'
+      )
+    ).toBeTruthy();
   });
 });

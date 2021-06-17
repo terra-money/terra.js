@@ -1,6 +1,6 @@
 import { Coins } from '../../Coins';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * Add a deposit for a proposal

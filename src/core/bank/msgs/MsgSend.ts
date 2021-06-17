@@ -1,6 +1,6 @@
 import { Coins } from '../../Coins';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * A basic message for sending [[Coins]] between Terra accounts.

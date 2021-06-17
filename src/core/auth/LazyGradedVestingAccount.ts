@@ -3,15 +3,13 @@ import { Coins } from '../Coins';
 import { JSONSerializable } from '../../util/json';
 import { Account } from './Account';
 import { Dec } from '../numeric';
-import { AccAddress } from '../strings';
+import { AccAddress } from '../bech32';
 import { PublicKey } from '../PublicKey';
 
 /**
  * Holds information about a Account which has vesting information.
  */
-export class LazyGradedVestingAccount extends JSONSerializable<
-  LazyGradedVestingAccount.Data
-> {
+export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVestingAccount.Data> {
   /**
    *
    * @param BaseAccount account information
