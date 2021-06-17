@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ValConsAddress | Terra.js</title>
+	<title>AccPubKey | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,13 +53,13 @@
 					<a href="../modules.html">Terra.js</a>
 				</li>
 				<li>
-					<a href="core_strings.html">core/strings</a>
+					<a href="core_bech32.html">core/bech32</a>
 				</li>
 				<li>
-					<a href="core_strings.valconsaddress.html">ValConsAddress</a>
+					<a href="core_bech32.accpubkey.html">AccPubKey</a>
 				</li>
 			</ul>
-			<h1>Namespace ValConsAddress</h1>
+			<h1>Namespace AccPubKey</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,8 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="core_strings.valconsaddress.html#validate" class="tsd-kind-icon">validate</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="core_bech32.accpubkey.html#fromaccaddress" class="tsd-kind-icon">from<wbr>Acc<wbr>Address</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="core_bech32.accpubkey.html#validate" class="tsd-kind-icon">validate</a></li>
 							</ul>
 						</section>
 					</div>
@@ -81,6 +82,37 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="fromaccaddress" class="tsd-anchor"></a>
+					<h3>from<wbr>Acc<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">from<wbr>Acc<wbr>Address<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="core_bech32.accaddress.html" class="tsd-signature-type" data-tsd-kind="Namespace">AccAddress</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_bech32.accpubkey.html" class="tsd-signature-type" data-tsd-kind="Namespace">AccPubKey</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/726b67d/src/core/bech32.ts#L69">src/core/bech32.ts:69</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts a Terra validator pubkey to an account pubkey.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>address: <a href="core_bech32.accaddress.html" class="tsd-signature-type" data-tsd-kind="Namespace">AccAddress</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>validator pubkey to convert</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="core_bech32.accpubkey.html" class="tsd-signature-type" data-tsd-kind="Namespace">AccPubKey</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
 					<a name="validate" class="tsd-anchor"></a>
 					<h3>validate</h3>
@@ -91,12 +123,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/bed73d8/src/core/strings.ts#L81">src/core/strings.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/726b67d/src/core/bech32.ts#L61">src/core/bech32.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Checks if a string is a Terra validator consensus address</p>
+									<p>Checks if a string is a Terra account&#39;s public key</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -121,25 +153,25 @@
 						<a href="../modules.html">Exports</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="core_strings.html">core/strings</a>
+						<a href="core_bech32.html">core/bech32</a>
 						<ul>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.accaddress.html">Acc<wbr>Address</a>
-							</li>
-							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.accpubkey.html">Acc<wbr>Pub<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.valaddress.html">Val<wbr>Address</a>
+								<a href="core_bech32.accaddress.html">Acc<wbr>Address</a>
 							</li>
 							<li class="current tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.valconsaddress.html">Val<wbr>Cons<wbr>Address</a>
+								<a href="core_bech32.accpubkey.html">Acc<wbr>Pub<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.valconspubkey.html">Val<wbr>Cons<wbr>Pub<wbr>Key</a>
+								<a href="core_bech32.valaddress.html">Val<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_strings.valpubkey.html">Val<wbr>Pub<wbr>Key</a>
+								<a href="core_bech32.valconsaddress.html">Val<wbr>Cons<wbr>Address</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="core_bech32.valconspubkey.html">Val<wbr>Cons<wbr>Pub<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="core_bech32.valpubkey.html">Val<wbr>Pub<wbr>Key</a>
 							</li>
 						</ul>
 					</li>
@@ -148,7 +180,10 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-namespace">
-						<a href="core_strings.valconsaddress.html#validate" class="tsd-kind-icon">validate</a>
+						<a href="core_bech32.accpubkey.html#fromaccaddress" class="tsd-kind-icon">from<wbr>Acc<wbr>Address</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="core_bech32.accpubkey.html#validate" class="tsd-kind-icon">validate</a>
 					</li>
 				</ul>
 			</nav>
