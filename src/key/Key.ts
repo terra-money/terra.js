@@ -1,7 +1,7 @@
 import { bech32 } from 'bech32';
-import * as HEX from 'crypto-js/enc-hex';
-import RIPEMD160 from 'crypto-js/ripemd160';
-import SHA256 from 'crypto-js/sha256';
+import { Hex } from 'jscrypto/Hex';
+import { RIPEMD160 } from 'jscrypto/RIPEMD160';
+import { SHA256 } from 'jscrypto/SHA256';
 import { StdSignature } from '../core';
 import { StdTx } from '../core';
 import { StdSignMsg } from '../core';
@@ -14,12 +14,13 @@ const BECH32_PUBKEY_DATA_PREFIX = 'eb5ae98721';
  *
  * @param publicKey raw public key
  */
-function addressFromPublicKey(publicKey: Buffer): Buffer {
+export function addressFromPublicKey(publicKey: Buffer): Buffer {
   if (typeof publicKey !== 'object' || !(publicKey instanceof Buffer)) {
     throw new TypeError('parameter must be Buffer that contains public key');
   }
-  const message = HEX.parse(publicKey.toString('hex'));
-  const hash = RIPEMD160(SHA256(message) as any).toString();
+
+  const message = Hex.parse(publicKey.toString('hex'));
+  const hash = RIPEMD160.hash(SHA256.hash(message)).toString();
   const address = Buffer.from(hash, 'hex');
   return Buffer.from(bech32.toWords(address));
 }
@@ -29,7 +30,7 @@ function addressFromPublicKey(publicKey: Buffer): Buffer {
  *
  * @param publicKey raw public key
  */
-function pubKeyFromPublicKey(publicKey: Buffer): Buffer {
+export function pubKeyFromPublicKey(publicKey: Buffer): Buffer {
   const buffer = Buffer.from(BECH32_PUBKEY_DATA_PREFIX, 'hex');
   const combined = Buffer.concat([buffer, publicKey]);
   return Buffer.from(bech32.toWords(combined));

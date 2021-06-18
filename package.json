@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -80,13 +80,11 @@
     "bech32": "^2.0.0",
     "bip32": "^2.0.6",
     "bip39": "^3.0.3",
-    "bufferutil": "^4.0.1",
-    "crypto-js": "3.3.0",
     "decimal.js": "^10.2.1",
+    "jscrypto": "^1.0.0",
     "readable-stream": "^3.6.0",
     "secp256k1": "^4.0.2",
     "tmp": "^0.2.1",
-    "utf-8-validate": "^5.0.2",
     "ws": "^7.4.2"
   }
 }
