@@ -55,7 +55,6 @@ export * from './staking/UnbondingDelegation';
 export * from './staking/Validator';
 
 // Treasury
-export * from './treasury/proposals';
 export * from './treasury/PolicyConstraints';
 
 // WASM

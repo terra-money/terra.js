@@ -1,10 +1,6 @@
 import { Coins } from './Coins';
 import { CommunityPoolSpendProposal } from './distribution/proposals';
 import { TextProposal } from './gov/proposals';
-import {
-  TaxRateUpdateProposal,
-  RewardWeightUpdateProposal,
-} from './treasury/proposals';
 import { JSONSerializable } from '../util/json';
 import { Int } from './numeric';
 import { ParameterChangeProposal } from './params/proposals';
@@ -130,16 +126,12 @@ export namespace Proposal {
   export type Content =
     | TextProposal
     | CommunityPoolSpendProposal
-    | TaxRateUpdateProposal
-    | RewardWeightUpdateProposal
     | ParameterChangeProposal;
 
   export namespace Content {
     export type Data =
       | TextProposal.Data
       | CommunityPoolSpendProposal.Data
-      | TaxRateUpdateProposal.Data
-      | RewardWeightUpdateProposal.Data
       | ParameterChangeProposal.Data;
 
     export function fromData(data: Proposal.Content.Data): Proposal.Content {
@@ -148,12 +140,10 @@ export namespace Proposal {
           return TextProposal.fromData(data);
         case 'distribution/CommunityPoolSpendProposal':
           return CommunityPoolSpendProposal.fromData(data);
-        case 'treasury/TaxRateUpdateProposal':
-          return TaxRateUpdateProposal.fromData(data);
-        case 'treasury/RewardWeightUpdateProposal':
-          return RewardWeightUpdateProposal.fromData(data);
         case 'params/ParameterChangeProposal':
           return ParameterChangeProposal.fromData(data);
+        // case 'upgrade/SoftwareUpgradeProposal':
+        // case 'upgrade/CancelSoftwareUpgradeProposal':
       }
     }
   }
