@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Int } from '../../numeric';
-import { AccAddress, ValAddress, ValConsPubKey } from '../../strings';
+import { AccAddress, ValAddress, ValConsPubKey } from '../../bech32';
 import { Validator } from '../Validator';
 
 /**

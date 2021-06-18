@@ -1,4 +1,4 @@
-import { ValConsAddress, ValConsPubKey } from './strings';
+import { ValConsAddress, ValConsPubKey } from './bech32';
 
 export interface ValidatorSet {
   block_height: string;

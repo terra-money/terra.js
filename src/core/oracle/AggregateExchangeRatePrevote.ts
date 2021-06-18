@@ -1,12 +1,10 @@
 import { JSONSerializable } from '../../util/json';
-import { ValAddress } from '../strings';
+import { ValAddress } from '../bech32';
 
 /**
  * Stores information about data about Oracle aggregate prevotes fetched from the blockchain.
  */
-export class AggregateExchangeRatePrevote extends JSONSerializable<
-  AggregateExchangeRatePrevote.Data
-> {
+export class AggregateExchangeRatePrevote extends JSONSerializable<AggregateExchangeRatePrevote.Data> {
   /**
    * @param hash aggregate vote hash
    * @param voter validator

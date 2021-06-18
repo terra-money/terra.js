@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../util/json';
 import { Dec, Int } from '../numeric';
-import { AccAddress, ValAddress } from '../strings';
+import { AccAddress, ValAddress } from '../bech32';
 
 /**
  * A redelegation is when a delegator decides to stop staking with one validator and

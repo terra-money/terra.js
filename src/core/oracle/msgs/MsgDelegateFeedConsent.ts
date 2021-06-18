@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../../strings';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * A **feeeder** is an account which is responsible for signing transactions with Oracle vote
@@ -10,9 +10,7 @@ import { AccAddress, ValAddress } from '../../strings';
  *
  * The following message registers a validator's feeder address.
  */
-export class MsgDelegateFeedConsent extends JSONSerializable<
-  MsgDelegateFeedConsent.Data
-> {
+export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedConsent.Data> {
   /**
    * @param operator validator's operator address
    * @param delegate account address to set to feeder

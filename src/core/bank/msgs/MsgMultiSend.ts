@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
 /**
  * If you have multiple senders and/or multiple recipients, you can use MsgMultiSend,

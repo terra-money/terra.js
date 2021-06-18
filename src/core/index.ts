@@ -62,5 +62,5 @@ export * from './treasury/PolicyConstraints';
 export * from './wasm/msgs';
 export * from './wasm/EventParams';
 
-// String-based types
-export * from './strings';
+// bech32 types
+export * from './bech32';

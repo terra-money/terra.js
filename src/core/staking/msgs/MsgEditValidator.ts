@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { Dec, Int } from '../../numeric';
-import { ValAddress } from '../../strings';
+import { ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
 
 /**

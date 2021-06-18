@@ -1,9 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 
-export class MsgUpdateContractAdmin extends JSONSerializable<
-  MsgUpdateContractAdmin.Data
-> {
+export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAdmin.Data> {
   /**
    * @param admin contract admin
    * @param new_admin new admin

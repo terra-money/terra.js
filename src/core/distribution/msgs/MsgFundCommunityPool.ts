@@ -1,10 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress } from '../../strings';
+import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
 
-export class MsgFundCommunityPool extends JSONSerializable<
-  MsgFundCommunityPool.Data
-> {
+export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.Data> {
   public amount: Coins;
   /**
    * @param depositor depositor's account address
