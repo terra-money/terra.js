@@ -92,7 +92,7 @@ const instantiateContractTxData = {
 
 describe('TxInfo', () => {
   it('deserializes', () => {
-    data.txs.forEach((txInfo: TxInfo.Data) => {
+    data.forEach((txInfo: TxInfo.Data) => {
       expect(txInfo).toMatchObject(TxInfo.fromData(txInfo).toData());
     });
   });
