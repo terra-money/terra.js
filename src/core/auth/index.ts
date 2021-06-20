@@ -1,10 +1,11 @@
+import { Account } from './Account';
 import { LazyGradedVestingAccount } from './LazyGradedVestingAccount';
 
 export * from './Account';
 export * from './LazyGradedVestingAccount';
 
 export function isVesting(
-  acc: Account | LazyGradedVestingAccount
-): acc is LazyGradedVestingAccount {
-  return acc instanceof LazyGradedVestingAccount;
+  account: Account | LazyGradedVestingAccount
+): account is LazyGradedVestingAccount {
+  return account instanceof LazyGradedVestingAccount;
 }
