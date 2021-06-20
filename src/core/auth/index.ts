@@ -1,3 +1,4 @@
+import { Account } from './Account';
 import { LazyGradedVestingAccount } from './LazyGradedVestingAccount';
 
 export * from './Account';
