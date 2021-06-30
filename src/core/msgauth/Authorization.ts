@@ -1,9 +1,7 @@
 import { JSONSerializable } from '../../util/json';
 import { Coins } from '../Coins';
 
-export class AuthorizationGrant extends JSONSerializable<
-  AuthorizationGrant.Data
-> {
+export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data> {
   constructor(public authorization: Authorization, public expiration: Date) {
     super();
   }
@@ -20,7 +18,7 @@ export class AuthorizationGrant extends JSONSerializable<
     const { authorization, expiration } = this;
     return {
       authorization: authorization.toData(),
-      expiration: expiration.toISOString(),
+      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 }
@@ -46,9 +44,7 @@ export namespace Authorization {
   }
 }
 
-export class SendAuthorization extends JSONSerializable<
-  SendAuthorization.Data
-> {
+export class SendAuthorization extends JSONSerializable<SendAuthorization.Data> {
   public spend_limit: Coins;
   constructor(spend_limit: Coins.Input) {
     super();
@@ -70,9 +66,7 @@ export class SendAuthorization extends JSONSerializable<
   }
 }
 
-export class GenericAuthorization extends JSONSerializable<
-  GenericAuthorization.Data
-> {
+export class GenericAuthorization extends JSONSerializable<GenericAuthorization.Data> {
   constructor(public grant_msg_type: string) {
     super();
   }

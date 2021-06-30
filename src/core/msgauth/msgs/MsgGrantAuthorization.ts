@@ -43,7 +43,7 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
         grantee,
         grant: {
           authorization: authorization.toData(),
-          expiration: expiration.toISOString(),
+          expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
         },
       },
     };

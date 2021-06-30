@@ -10,7 +10,7 @@ const mk = new MnemonicKey({
 const terra = new LCDClient({
   URL: 'http://localhost:1317',
   chainID: 'localterra',
-  gasPrices: '169.77ukrw'
+  gasPrices: '169.77ukrw',
 });
 
 // a wallet can be created out of any key
