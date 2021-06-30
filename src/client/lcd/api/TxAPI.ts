@@ -308,12 +308,15 @@ export class TxAPI extends BaseAPI {
       Broadcast.BLOCK
     ).then(d => {
       const blockResult: any = {
-        height: Number.parseInt(d.height),
         txhash: d.txhash,
         raw_log: d.raw_log,
         gas_wanted: Number.parseInt(d.gas_wanted),
         gas_used: Number.parseInt(d.gas_used),
       };
+
+      if (d.height) {
+        blockResult.height = Number.parseInt(d.height);
+      }
 
       if (d.logs) {
         blockResult.logs = d.logs.map(l => TxLog.fromData(l));

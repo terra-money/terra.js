@@ -234,7 +234,6 @@ export class WebSocketClient extends EventEmitter {
       ...query,
     });
     this.callback = callback;
-    this.start();
   }
 
   public subscribeTx(query: TendermintQuery, callback: Callback): void {
