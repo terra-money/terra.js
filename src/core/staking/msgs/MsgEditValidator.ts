@@ -19,7 +19,7 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
    * @param min_self_delegation new min self delegation
    */
   constructor(
-    public Description: Validator.Description,
+    public description: Validator.Description,
     public address: ValAddress,
     public commission_rate?: Dec,
     public min_self_delegation?: Int
@@ -29,10 +29,10 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
 
   public static fromData(data: MsgEditValidator.Data): MsgEditValidator {
     const {
-      value: { Description, address, commission_rate, min_self_delegation },
+      value: { description, address, commission_rate, min_self_delegation },
     } = data;
     return new MsgEditValidator(
-      Description,
+      Validator.Description.fromData(description),
       address,
       commission_rate ? new Dec(commission_rate) : undefined,
       min_self_delegation ? new Int(min_self_delegation) : undefined
@@ -40,11 +40,11 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
   }
 
   public toData(): MsgEditValidator.Data {
-    const { Description, address, commission_rate, min_self_delegation } = this;
+    const { description, address, commission_rate, min_self_delegation } = this;
     return {
       type: 'staking/MsgEditValidator',
       value: {
-        Description,
+        description: description.toData(),
         address,
         commission_rate: commission_rate ? commission_rate.toString() : null,
         min_self_delegation: min_self_delegation
@@ -67,7 +67,7 @@ export namespace MsgEditValidator {
   export interface Data {
     type: 'staking/MsgEditValidator';
     value: {
-      Description: any;
+      description: any;
       address: ValAddress;
       commission_rate: string | null;
       min_self_delegation: string | null;
