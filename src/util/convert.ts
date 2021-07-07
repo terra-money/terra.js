@@ -1,7 +1,6 @@
 import { VotingParams, TallyParams, DepositParams } from '../core/gov/params';
 import { Coins } from '../core';
 import { PolicyConstraints } from '../core/treasury/PolicyConstraints';
-import { EventParams } from '../core/wasm/EventParams';
 import { JSONSerializable } from './json';
 import { Dec, Numeric } from '../core';
 import { OracleWhitelist } from '../core/oracle/params';
@@ -31,7 +30,6 @@ export namespace Convert {
     veto_threshold: new Dec(c.veto_threshold),
   });
   export const toPolicyConstraints = PolicyConstraints.fromData;
-  export const toEventParams = EventParams.fromData;
   export const toData = (c: JSONSerializable<any>): any => c.toData();
   export const serializeDepositParams = (
     c: DepositParams
