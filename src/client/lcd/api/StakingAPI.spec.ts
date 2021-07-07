@@ -1,8 +1,8 @@
 import { APIRequester } from '../APIRequester';
 import { StakingAPI } from './StakingAPI';
-import { Coin, Dec, Int } from '../../../core';
+import { Dec, Int } from '../../../core/numeric';
+import { Coin } from '../../../core/Coin';
 
-// TODO - restore to https://lcd.terra.dev
 const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const staking = new StakingAPI(c);
 
@@ -18,15 +18,9 @@ describe('StakingAPI', () => {
     });
   });
 
-  // it('validators', async () => {
-  //   await expect(
-  //     staking.validators()
-  //   )
-  // })
-
   it('delegations (delegator)', async () => {
     await expect(
-      staking.delegations('terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v')
+      staking.delegations('terra1940nsxkz62snd3azk3a9j79m4qd3qvwnrf2xvj')
     ).resolves.toContainEqual({
       delegator_address: expect.any(String),
       validator_address: expect.any(String),
@@ -69,7 +63,8 @@ describe('StakingAPI', () => {
   it('unbondingDelegations', async () => {
     await expect(
       staking.unbondingDelegations(
-        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
+        undefined,
+        'terravaloper1vk20anceu6h9s00d27pjlvslz3avetkvnwmr35'
       )
     ).resolves.toContainEqual({
       delegator_address: expect.any(String),
@@ -98,10 +93,10 @@ describe('StakingAPI', () => {
       delegator_shares: expect.any(Dec),
       description: {
         moniker: expect.any(String),
-        // identity: expect.any(String),
-        // website: expect.any(String),
-        // details: expect.any(String),
-        // security_contact: expect.any(String),
+        identity: expect.any(String),
+        website: expect.any(String),
+        details: expect.any(String),
+        security_contact: expect.any(String),
       },
       unbonding_height: expect.any(Number),
       unbonding_time: expect.any(Date),
