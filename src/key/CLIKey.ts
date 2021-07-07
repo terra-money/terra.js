@@ -1,13 +1,7 @@
 import { Key } from './Key';
-import {
-  StdSignMsg,
-  StdSignature,
-  AccPubKey,
-  AccAddress,
-  ValAddress,
-  ValPubKey,
-} from '../core';
-
+import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
+import { StdSignMsg } from '../core/StdSignMsg';
+import { StdSignature } from '../core/StdSignature';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';

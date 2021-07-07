@@ -2,7 +2,8 @@ import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
 import { CreateTxOptions } from '../lcd/api/TxAPI';
 
-import { StdTx, StdSignMsg } from '../../core';
+import { StdTx } from '../../core/StdTx';
+import { StdSignMsg } from '../../core/StdSignMsg';
 
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}

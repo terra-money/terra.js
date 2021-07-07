@@ -1,4 +1,4 @@
-import { Dec } from '../../../core';
+import { Dec } from '../../../core/numeric';
 import { APIRequester } from '../APIRequester';
 import { MintAPI } from './MintAPI';
 

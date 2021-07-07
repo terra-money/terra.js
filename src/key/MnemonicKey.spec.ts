@@ -1,8 +1,10 @@
 import { MnemonicKey } from './MnemonicKey';
 import { MsgSend, MsgMultiSend } from '../core/bank/msgs';
-import { Coins, StdTx, StdSignature } from '../core';
-import { StdSignMsg } from '../core';
-import { StdFee } from '../core';
+import { Coins } from '../core/Coins';
+import { StdFee } from '../core/StdFee';
+import { StdSignature } from '../core/StdSignature';
+import { StdTx } from '../core/StdTx';
+import { StdSignMsg } from '../core/StdSignMsg';
 
 describe('MnemonicKey', () => {
   it('derives correct Key information', () => {

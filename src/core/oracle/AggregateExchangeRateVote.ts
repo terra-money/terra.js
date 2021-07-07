@@ -1,14 +1,13 @@
 import { JSONSerializable } from '../../util/json';
-import { ValAddress, Denom } from '..';
+import { ValAddress } from '../bech32';
+import { Denom } from '../Denom';
 import { Coin } from '../Coin';
 import { Coins } from '../Coins';
 
 /**
  * Stores information about data about Oracle aggregate vote fetched from the blockchain.
  */
-export class AggregateExchangeRateVote extends JSONSerializable<
-  AggregateExchangeRateVote.Data
-> {
+export class AggregateExchangeRateVote extends JSONSerializable<AggregateExchangeRateVote.Data> {
   /**
    * @param exchange_rate_tuples exchange rates for LUNA
    * @param voter validator
