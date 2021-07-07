@@ -2,10 +2,10 @@ import { bech32 } from 'bech32';
 import { Hex } from 'jscrypto/Hex';
 import { RIPEMD160 } from 'jscrypto/RIPEMD160';
 import { SHA256 } from 'jscrypto/SHA256';
-import { StdSignature } from '../core';
-import { StdTx } from '../core';
-import { StdSignMsg } from '../core';
-import { AccAddress, AccPubKey, ValAddress, ValPubKey } from '../core';
+import { StdSignature } from '../core/StdSignature';
+import { StdTx } from '../core/StdTx';
+import { StdSignMsg } from '../core/StdSignMsg';
+import { AccAddress, AccPubKey, ValAddress, ValPubKey } from '../core/bech32';
 
 const BECH32_PUBKEY_DATA_PREFIX = 'eb5ae98721';
 

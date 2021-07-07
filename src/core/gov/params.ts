@@ -1,6 +1,5 @@
 import { Coins } from '../Coins';
-import { ParamChange } from '..';
-import { Convert } from '../../util/convert';
+import { ParamChange } from '../params/ParamChange';
 import { Dec } from '../numeric';
 
 export interface DepositParams {
@@ -89,9 +88,36 @@ export interface GovParamChanges {
 export namespace GovParamChanges {
   export const ConversionTable = {
     gov: {
-      depositparams: [Convert.toDepositParams, Convert.serializeDepositParams],
-      votingparams: [Convert.toVotingParams, Convert.serializeVotingParams],
-      tallyparams: [Convert.toTallyParams, Convert.serializeTallyParams],
+      depositparams: [
+        (c: DepositParams.Data): DepositParams => ({
+          min_deposit: Coins.fromData(c.min_deposit),
+          max_deposit_period: Number.parseInt(c.max_deposit_period),
+        }),
+        (c: DepositParams): DepositParams.Data => ({
+          min_deposit: c.min_deposit.toData(),
+          max_deposit_period: c.max_deposit_period.toFixed(),
+        }),
+      ],
+      votingparams: [
+        (c: VotingParams.Data): VotingParams => ({
+          voting_period: Number.parseInt(c.voting_period),
+        }),
+        (c: VotingParams): VotingParams.Data => ({
+          voting_period: c.voting_period.toFixed(),
+        }),
+      ],
+      tallyparams: [
+        (c: TallyParams.Data): TallyParams => ({
+          quorum: new Dec(c.quorum),
+          threshold: new Dec(c.threshold),
+          veto: new Dec(c.veto),
+        }),
+        (c: TallyParams): TallyParams.Data => ({
+          quorum: c.quorum.toString(),
+          threshold: c.threshold.toString(),
+          veto: c.veto.toString(),
+        }),
+      ],
     },
   };
 }

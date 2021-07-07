@@ -1,13 +1,13 @@
 import { Coins } from './Coins';
+import { Int } from './numeric';
+import { JSONSerializable } from '../util/json';
 import { CommunityPoolSpendProposal } from './distribution/proposals';
-import { TextProposal } from './gov/proposals';
 import {
   TaxRateUpdateProposal,
   RewardWeightUpdateProposal,
 } from './treasury/proposals';
-import { JSONSerializable } from '../util/json';
-import { Int } from './numeric';
 import { ParameterChangeProposal } from './params/proposals';
+import { TextProposal } from './gov/proposals';
 
 /**
  * Stores information pertaining to a submitted proposal, such as its status and time of

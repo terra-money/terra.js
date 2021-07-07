@@ -1,6 +1,6 @@
-import { Denom } from '../..';
+import { Denom } from '../../Denom';
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../..';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * In order to prevent validators from copying each others' price votes, voting occurs
@@ -11,9 +11,7 @@ import { AccAddress, ValAddress } from '../..';
  * The vote hash reported in the prevote must match the hash of the vote's data in order
  * for the vote to count. Otherwise, it is automatically a miss.
  */
-export class MsgExchangeRatePrevote extends JSONSerializable<
-  MsgExchangeRatePrevote.Data
-> {
+export class MsgExchangeRatePrevote extends JSONSerializable<MsgExchangeRatePrevote.Data> {
   /**
    * @param hash vote hash
    * @param denom denom for reporting the exchange rate

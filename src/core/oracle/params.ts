@@ -70,7 +70,18 @@ export namespace OracleParamChanges {
       votethreshold: [Convert.toDec, Convert.toString],
       rewardband: [Convert.toDec, Convert.toString],
       rewarddistributionwindow: [Convert.toNumber, Convert.toFixed],
-      whitelist: [Convert.toOracleWhitelist, Convert.serializeOracleWhitelist],
+      whitelist: [
+        (c: OracleWhitelist.Data): OracleWhitelist =>
+          c.map(v => ({
+            name: v.name,
+            tobin_tax: new Dec(v.tobin_tax),
+          })),
+        (c: OracleWhitelist): OracleWhitelist.Data =>
+          c.map(v => ({
+            name: v.name,
+            tobin_tax: v.tobin_tax.toString(),
+          })),
+      ],
       slashfraction: [Convert.toDec, Convert.toString],
       slashwindow: [Convert.toNumber, Convert.toFixed],
       minvalidperwindow: [Convert.toDec, Convert.toString],
