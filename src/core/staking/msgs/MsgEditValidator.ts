@@ -56,7 +56,7 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
 }
 
 export namespace MsgEditValidator {
-  export const DESC_DO_NOT_MODIFY: Validator.Description = {
+  export const DESC_DO_NOT_MODIFY: Validator.Description.Data = {
     moniker: '[do-not-modify]',
     website: '[do-not-modify]',
     identity: '[do-not-modify]',
