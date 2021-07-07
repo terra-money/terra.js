@@ -33,7 +33,7 @@ describe('AuthAPI', () => {
     it("account doesn't exist (valid but new account)", async () => {
       const mk = new MnemonicKey();
       const acct = await auth.accountInfo(mk.accAddress);
-      expect((acct as Account).address).toBe(undefined);
+      expect((acct as Account).address).toBe('');
     });
   });
 });
