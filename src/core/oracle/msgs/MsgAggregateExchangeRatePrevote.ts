@@ -1,12 +1,10 @@
 import { JSONSerializable } from '../../../util/json';
-import { AccAddress, ValAddress } from '../..';
+import { AccAddress, ValAddress } from '../../bech32';
 
 /**
  * Aggregate analog of MsgExchangeRatePrevote
  */
-export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
-  MsgAggregateExchangeRatePrevote.Data
-> {
+export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggregateExchangeRatePrevote.Data> {
   /**
    * @param hash vote hash
    * @param feeder validator's feeder account address

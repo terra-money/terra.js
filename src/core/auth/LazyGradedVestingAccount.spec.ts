@@ -1,6 +1,6 @@
 import { LazyGradedVestingAccount } from './LazyGradedVestingAccount';
 import { Coins } from '../Coins';
-import { Dec } from '..';
+import { Dec } from '../numeric';
 const data = require('./LazyGradedVestingAccount.data.json');
 
 describe('LazyGradedVestingAccount', () => {

@@ -1,7 +1,7 @@
 import { LCDClient } from './LCDClient';
 import { Coin } from '../../core/Coin';
 import { Int, Dec } from '../../core/numeric';
-import { Validator } from '../../core';
+import { Validator } from '../../core/staking/Validator';
 
 interface ValidatorWithVotingPower {
   validatorInfo: Validator;

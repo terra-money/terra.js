@@ -1,4 +1,4 @@
-import { ParamChange } from '..';
+import { ParamChange } from '../params/ParamChange';
 import { Convert } from '../../util/convert';
 import { Dec } from '../numeric';
 

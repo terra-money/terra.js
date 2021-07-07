@@ -66,8 +66,8 @@ export interface TreasuryParamChanges {
 export namespace TreasuryParamChanges {
   export const ConversionTable = {
     treasury: {
-      TaxPolicy: [Convert.toPolicyConstraints, Convert.toData],
-      RewardPolicy: [Convert.toPolicyConstraints, Convert.toData],
+      TaxPolicy: [PolicyConstraints.fromData, Convert.toData],
+      RewardPolicy: [PolicyConstraints.fromData, Convert.toData],
       SeigniorageBurdenTarget: [Convert.toDec, Convert.toString],
       MiningIncrement: [Convert.toDec, Convert.toString],
       WindowShort: [Convert.toNumber, Convert.toFixed],

@@ -1,5 +1,5 @@
 import { BaseAPI } from './BaseAPI';
-import { EventParams, AccAddress } from '../../../core';
+import { AccAddress } from '../../../core/bech32';
 
 export interface CodeInfo {
   code_hash: string;
@@ -29,7 +29,6 @@ export interface WasmParams {
   max_contract_gas: number;
   max_contract_msg_size: number;
   max_contract_data_size: number;
-  event_params: EventParams;
 }
 
 export namespace WasmParams {
@@ -38,7 +37,6 @@ export namespace WasmParams {
     max_contract_gas: string;
     max_contract_msg_size: string;
     max_contract_data_size: string;
-    event_params: EventParams.Data;
   }
 }
 
@@ -80,7 +78,6 @@ export class WasmAPI extends BaseAPI {
         max_contract_gas: Number.parseInt(d.max_contract_gas),
         max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),
         max_contract_data_size: Number.parseInt(d.max_contract_data_size),
-        event_params: EventParams.fromData(d.event_params),
       }));
   }
 }

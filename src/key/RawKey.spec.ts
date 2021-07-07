@@ -1,8 +1,8 @@
 import { RawKey, MnemonicKey } from '.';
 import { MsgSend } from '../core/bank/msgs';
-import { Coins } from '../core';
-import { StdSignMsg } from '../core';
-import { StdFee } from '../core';
+import { Coins } from '../core/Coins';
+import { StdSignMsg } from '../core/StdSignMsg';
+import { StdFee } from '../core/StdFee';
 
 describe('RawKey', () => {
   it('derives correct key information', () => {
