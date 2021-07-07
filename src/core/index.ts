@@ -59,7 +59,6 @@ export * from './treasury/PolicyConstraints';
 
 // WASM
 export * from './wasm/msgs';
-export * from './wasm/EventParams';
 
 // bech32 types
 export * from './bech32';
