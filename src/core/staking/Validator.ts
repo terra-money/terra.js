@@ -63,7 +63,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
       data.status,
       new Int(data.tokens),
       new Dec(data.delegator_shares),
-      data.description,
+      Validator.Description.fromData(data.description),
       Number.parseInt(data.unbonding_height),
       new Date(data.unbonding_time),
       Validator.Commission.fromData(data.commission),
@@ -80,28 +80,60 @@ export namespace Validator {
     status: number;
     tokens: string;
     delegator_shares: string;
-    description: Description;
+    description: Description.Data;
     unbonding_height: string;
     unbonding_time: string;
     commission: Commission.Data;
     min_self_delegation: string;
   }
 
-  export interface Description {
-    /** Identifying name, e.g. "Hashed */
-    moniker: string;
+  export class Description extends JSONSerializable<Description.Data> {
+    /**
+     * @param moniker Identifying name, e.g. "Hashed"
+     * @param identity time at which commission was last updated
+     * @param website validator's website
+     * @param details long description
+     * @param security_contact validator's contact
+     */
+    constructor(
+      public moniker: string,
+      public identity: string,
+      public website: string,
+      public details: string,
+      public security_contact: string
+    ) {
+      super();
+    }
 
-    /** identity from keybase.io */
-    identity: string;
+    public toData(): Description.Data {
+      return {
+        moniker: this.moniker,
+        identity: this.identity,
+        website: this.website,
+        details: this.details,
+        security_contact: this.security_contact,
+      };
+    }
 
-    /** validator's website */
-    website: string;
+    public static fromData(data: Description.Data): Description {
+      return new Description(
+        data.moniker,
+        data.identity || '',
+        data.website || '',
+        data.details || '',
+        data.security_contact || ''
+      );
+    }
+  }
 
-    /** longer description */
-    details: string;
-
-    /** validator's contact */
-    security_contact: string;
+  export namespace Description {
+    export interface Data {
+      moniker: string;
+      identity: string;
+      website: string;
+      details: string;
+      security_contact: string;
+    }
   }
 
   export class CommissionRates extends JSONSerializable<CommissionRates.Data> {
