@@ -103,9 +103,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#description" class="tsd-kind-icon">Description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#address" class="tsd-kind-icon">address</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#commission_rate" class="tsd-kind-icon">commission_<wbr>rate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#min_self_delegation" class="tsd-kind-icon">min_<wbr>self_<wbr>delegation</a></li>
 							</ul>
 						</section>
@@ -126,23 +126,20 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Msg<wbr>Edit<wbr>Validator<span class="tsd-signature-symbol">(</span>Description<span class="tsd-signature-symbol">: </span><a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, commission_rate<span class="tsd-signature-symbol">?: </span><a href="core_numeric.dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a>, min_self_delegation<span class="tsd-signature-symbol">?: </span><a href="core_numeric.int.html" class="tsd-signature-type" data-tsd-kind="Class">Int</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html" class="tsd-signature-type" data-tsd-kind="Class">MsgEditValidator</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Msg<wbr>Edit<wbr>Validator<span class="tsd-signature-symbol">(</span>description<span class="tsd-signature-symbol">: </span><a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, commission_rate<span class="tsd-signature-symbol">?: </span><a href="core_numeric.dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a>, min_self_delegation<span class="tsd-signature-symbol">?: </span><a href="core_numeric.int.html" class="tsd-signature-type" data-tsd-kind="Class">Int</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html" class="tsd-signature-type" data-tsd-kind="Class">MsgEditValidator</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/eb17a80/src/core/staking/msgs/MsgEditValidator.ts#L14">src/core/staking/msgs/MsgEditValidator.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/22f6d57/src/core/staking/msgs/MsgEditValidator.ts#L14">src/core/staking/msgs/MsgEditValidator.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>Description: <a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>new description to apply</p>
-									</div>
+									<h5>description: <a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a></h5>
 								</li>
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span></h5>
@@ -171,13 +168,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="description" class="tsd-anchor"></a>
-					<h3>Description</h3>
-					<div class="tsd-signature tsd-kind-icon">Description<span class="tsd-signature-symbol">:</span> <a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a></div>
-					<aside class="tsd-sources">
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="address" class="tsd-anchor"></a>
 					<h3>address</h3>
 					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -188,6 +178,13 @@
 					<a name="commission_rate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> commission_<wbr>rate</h3>
 					<div class="tsd-signature tsd-kind-icon">commission_<wbr>rate<span class="tsd-signature-symbol">:</span> <a href="core_numeric.dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="description" class="tsd-anchor"></a>
+					<h3>description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <a href="core_staking_validator.validator.description-1.html" class="tsd-signature-type" data-tsd-kind="Class">Description</a></div>
 					<aside class="tsd-sources">
 					</aside>
 				</section>
@@ -212,7 +209,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#todata">toData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/eb17a80/src/core/staking/msgs/MsgEditValidator.ts#L42">src/core/staking/msgs/MsgEditValidator.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/22f6d57/src/core/staking/msgs/MsgEditValidator.ts#L42">src/core/staking/msgs/MsgEditValidator.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/core_staking_msgs_msgeditvalidator.msgeditvalidator.data.html" class="tsd-signature-type" data-tsd-kind="Interface">Data</a></h4>
@@ -230,7 +227,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="util_json.jsonserializable.html">JSONSerializable</a>.<a href="util_json.jsonserializable.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/eb17a80/src/util/json.ts#L23">src/util/json.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/22f6d57/src/util/json.ts#L23">src/util/json.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -247,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/eb17a80/src/core/staking/msgs/MsgEditValidator.ts#L30">src/core/staking/msgs/MsgEditValidator.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/22f6d57/src/core/staking/msgs/MsgEditValidator.ts#L30">src/core/staking/msgs/MsgEditValidator.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -289,13 +286,13 @@
 								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#description" class="tsd-kind-icon">Description</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#address" class="tsd-kind-icon">address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#commission_rate" class="tsd-kind-icon">commission_<wbr>rate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_staking_msgs_msgeditvalidator.msgeditvalidator-1.html#min_self_delegation" class="tsd-kind-icon">min_<wbr>self_<wbr>delegation</a>
