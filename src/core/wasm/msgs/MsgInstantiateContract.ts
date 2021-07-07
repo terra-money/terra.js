@@ -7,14 +7,14 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
 
   /**
    * @param sender is a sender address
-   * @param admin is an optional contract admin address who can migrate the contract
+   * @param admin is an optional contract admin address who can migrate the contract, put empty string to disable migration
    * @param code_id is the reference to the stored WASM code
    * @param init_msg json encoded message to be passed to the contract on instantiation
    * @param init_coins are transferred to the contract on execution
    */
   constructor(
     public sender: AccAddress,
-    public admin: AccAddress,
+    public admin: AccAddress | undefined,
     public code_id: number,
     public init_msg: object,
     init_coins: Coins.Input = {}
@@ -58,7 +58,7 @@ export namespace MsgInstantiateContract {
     type: 'wasm/MsgInstantiateContract';
     value: {
       sender: AccAddress;
-      admin: AccAddress;
+      admin?: AccAddress;
       code_id: string;
       init_msg: object;
       init_coins: Coins.Data;

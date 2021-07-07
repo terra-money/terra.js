@@ -3,7 +3,6 @@ import { Coin } from '../../Coin';
 import { PolicyConstraints } from '../../treasury/PolicyConstraints';
 import { Coins } from '../../Coins';
 import { Dec } from '../../numeric';
-import { EventParams } from '../../wasm/EventParams';
 /*
 import { StdTx } from '../../StdTx';
 
@@ -256,17 +255,6 @@ const jiguJSON = {
         key: 'MaxContractSize',
         value: '"1000000"',
       },
-      {
-        subspace: 'wasm',
-        key: 'MaxContractDataSize',
-        value: '"1000000"',
-      },
-      {
-        subspace: 'wasm',
-        key: 'EventParams',
-        value:
-          '{"max_attribute_num":"100","max_attribute_key_length":"128","max_attribute_value_length":"256"}',
-      },
     ],
   },
 };
@@ -357,8 +345,6 @@ describe('ParameterChangeProposal', () => {
         MaxContractGas: 1000000,
         MaxContractMsgSize: 1000000,
         MaxContractSize: 1000000,
-        MaxContractDataSize: 1000000,
-        EventParams: new EventParams(100, 128, 256),
       },
     });
 
