@@ -1,4 +1,4 @@
-import { LCDClient, LocalTerra, MsgSwap, Coin } from '../src';
+import { LCDClient, LocalTerra, MsgSwap, Coin, StdTx, StdFee } from '../src';
 import Axios from 'axios';
 
 const lt = new LocalTerra();
@@ -15,6 +15,16 @@ async function main() {
     gasPrices: tequilaGasPrices,
   });
 
+  // Test raw estimate fee function with specified gas
+  const rawFee = await tequila.tx.estimateFee(
+    test1.key.accAddress,
+    [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
+    { gas: '500000' }
+  );
+
+  console.log(rawFee.toJSON());
+
+  // Test automatic fee estimation using create method with specified denom
   const item = await tequila.tx.create(test1.key.accAddress, {
     msgs: [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
     feeDenoms: ['uusd'],

@@ -1,4 +1,9 @@
-import { AccAddress, Account, LazyGradedVestingAccount } from '../../../core';
+import {
+  AccAddress,
+  Account,
+  Coins,
+  LazyGradedVestingAccount,
+} from '../../../core';
 import { BaseAPI } from './BaseAPI';
 
 export class AuthAPI extends BaseAPI {
@@ -14,6 +19,14 @@ export class AuthAPI extends BaseAPI {
     const { result } = await this.c.get<
       Account.Data | LazyGradedVestingAccount.Data
     >(`/auth/accounts/${address}`);
+
+    // Until columbus-4 it used to return coins from /auth/accounts
+    if (!result.value.coins) {
+      result.value.coins = (
+        await this.c.get<Coins.Data>(`/bank/balances/${address}`)
+      ).result;
+    }
+
     if (result.type === 'core/Account') {
       return Account.fromData(result);
     } else {

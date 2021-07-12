@@ -49,8 +49,8 @@ export class Account extends JSONSerializable<Account.Data> {
       address,
       Coins.fromData(coins),
       public_key ? PublicKey.fromData(public_key) : null,
-      Number.parseInt(account_number),
-      Number.parseInt(sequence)
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0
     );
   }
 }
