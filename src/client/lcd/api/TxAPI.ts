@@ -4,7 +4,6 @@ import {
   StdTx,
   StdSignMsg,
   StdFee,
-  Coin,
   Coins,
   TxInfo,
   Numeric,
@@ -12,11 +11,6 @@ import {
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
-
-interface EstimateFeeResponse {
-  gas: string;
-  fees: Coins.Data;
-}
 
 /** Transaction broadcasting modes  */
 export enum Broadcast {
@@ -95,6 +89,7 @@ export interface CreateTxOptions {
   msgs: Msg[];
   fee?: StdFee;
   memo?: string;
+  gas?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
@@ -168,20 +163,10 @@ export class TxAPI extends BaseAPI {
     let { fee, memo } = options;
     const { msgs } = options;
     memo = memo || '';
-    const estimateFeeOptions = {
-      gasPrices: options.gasPrices || this.lcd.config.gasPrices,
-      gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
-      feeDenoms: options.feeDenoms,
-    };
-
-    const feeDenoms = options.feeDenoms || [];
-    const balanceOne = feeDenoms.map(denom => new Coin(denom, 1));
 
     // create the fake fee
     if (fee === undefined) {
-      // estimate the fee
-      const stdTx = new StdTx(msgs, new StdFee(0, balanceOne), [], memo);
-      fee = await this.lcd.tx.estimateFee(stdTx, estimateFeeOptions);
+      fee = await this.lcd.tx.estimateFee(sourceAddress, msgs, options);
     }
 
     let accountNumber = options.account_number;
@@ -226,29 +211,27 @@ export class TxAPI extends BaseAPI {
 
   /**
    * Estimates the transaction's fee by simulating it within the node
-   * @param tx transaction for which to estimate fee
+   * @param sourceAddress address that will pay the bill
+   * @param msgs standard messages
    * @param options options for fee estimation
    */
   public async estimateFee(
-    tx: StdTx | StdSignMsg,
+    sourceAddress: string,
+    msgs: Msg[],
     options?: {
+      memo?: string;
+      gas?: string;
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
       feeDenoms?: string[];
     }
   ): Promise<StdFee> {
+    const memo = options?.memo;
+    const gas = options?.gas;
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options?.feeDenoms;
-
-    const txValue = {
-      ...(tx instanceof StdSignMsg
-        ? tx.toStdTx().toData().value
-        : tx.toData().value),
-    };
-
-    txValue.fee.gas = '0';
+    const feeDenoms = options?.feeDenoms || ['uluna'];
 
     let gasPricesCoins: Coins | undefined;
     if (gasPrices) {
@@ -260,18 +243,39 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    const data = {
-      tx: txValue,
-      gas_prices: gasPricesCoins && gasPricesCoins.toData(),
-      gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-    };
+    if (/^(:?columbus-5|bombay-|localterra)/.test(this.lcd.config.chainID)) {
+      const data = {
+        base_req: {
+          chain_id: this.lcd.config.chainID,
+          memo,
+          from: sourceAddress,
+          gas: gas || 'auto',
+          gas_prices: gasPricesCoins && gasPricesCoins.toData(),
+          gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+        },
+        msgs: msgs.map(m => m.toData()),
+      };
+      return this.c
+        .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
+        .then(({ result: { fee } }) => StdFee.fromData(fee));
+    } else {
+      const data = {
+        tx: {
+          msg: msgs.map(m => m.toData()),
+          fee: { gas: gas || '0' },
+          memo,
+        },
+        gas_prices: gasPricesCoins && gasPricesCoins.toData(),
+        gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+      };
 
-    return this.c
-      .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(
-        ({ result: d }) =>
-          new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
-      );
+      return this.c
+        .post<{ gas: string; fees: Coins.Data }>(`/txs/estimate_fee`, data)
+        .then(
+          ({ result: d }) =>
+            new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
+        );
+    }
   }
 
   /**

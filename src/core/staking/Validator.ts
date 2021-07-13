@@ -59,8 +59,8 @@ export class Validator extends JSONSerializable<Validator.Data> {
     return new Validator(
       data.operator_address,
       data.consensus_pubkey,
-      data.jailed,
-      data.status,
+      data.jailed || false,
+      data.status || 0,
       new Int(data.tokens),
       new Dec(data.delegator_shares),
       Validator.Description.fromData(data.description),
