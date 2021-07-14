@@ -243,7 +243,7 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    if (/^(:?columbus-5|bombay-|localterra)/.test(this.lcd.config.chainID)) {
+    if (/^(?:columbus-5|bombay|localterra)/.test(this.lcd.config.chainID)) {
       const data = {
         base_req: {
           chain_id: this.lcd.config.chainID,
