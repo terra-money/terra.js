@@ -1,3 +1,7 @@
+/**
+ * Total supply API has been moved bank module
+ * This file will be deprecated. DO NOT USE
+ */
 import { Coins } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 

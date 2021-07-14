@@ -1,5 +1,6 @@
 import { APIRequester } from '../APIRequester';
 import { BankAPI } from './BankAPI';
+import { Coins } from '../../../core';
 
 const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const bank = new BankAPI(c);
@@ -13,5 +14,10 @@ describe('BankAPI', () => {
     it('invalid account', async () => {
       await expect(bank.balance('1234')).rejects.toThrow();
     });
+  });
+
+  it('total supply', async () => {
+    const totalSupply = await bank.total();
+    expect(totalSupply).toEqual(expect.any(Coins));
   });
 });
