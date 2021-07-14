@@ -1,8 +1,9 @@
-import { LCDClient, LocalTerra, MsgSwap, Coin, StdTx, StdFee } from '../src';
+import { LCDClient, LocalTerra, MsgSwap, MsgSend, Coin, StdTx, StdFee } from '../src';
 import Axios from 'axios';
 
 const lt = new LocalTerra();
 const test1 = lt.wallets.test1;
+const test2 = lt.wallets.test2;
 
 async function main() {
   const { data: tequilaGasPrices } = await Axios.get(
@@ -22,7 +23,7 @@ async function main() {
     { gas: '500000' }
   );
 
-  console.log(rawFee.toJSON());
+  console.log('MsgSwap(500000 gas): ', rawFee.toJSON());
 
   // Test automatic fee estimation using create method with specified denom
   const item = await tequila.tx.create(test1.key.accAddress, {
@@ -30,7 +31,14 @@ async function main() {
     feeDenoms: ['uusd'],
   });
 
-  console.log(item.fee.toJSON());
+  console.log('MsgSwap(uusd fee)', item.fee.toJSON());
+
+  const send = await tequila.tx.create(test2.key.accAddress, {
+    msgs: [new MsgSend(test2.key.accAddress, test1.key.accAddress, '1234uusd')],
+    feeDenoms: ['uusd'],
+  });
+
+  console.log('MsgSend', send.fee.toJSON());
 }
 
 main().catch(console.error);
