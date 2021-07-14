@@ -14,7 +14,6 @@ describe('StakingAPI', () => {
       max_entries: expect.any(Number),
       historical_entries: expect.any(Number),
       bond_denom: expect.any(String),
-      power_reduction: expect.any(String),
     });
   });
 
