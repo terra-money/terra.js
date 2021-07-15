@@ -14,6 +14,10 @@ describe('AuthAPI', () => {
       );
 
       expect(acct instanceof Account).toBe(true);
+      expect(acct.coins.toData()).toContainEqual({
+        denom: expect.any(String),
+        amount: expect.any(String),
+      });
     });
 
     it('LazyGradedVestingAccount', async () => {

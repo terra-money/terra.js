@@ -82,7 +82,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       },
     } = data;
     return new LazyGradedVestingAccount(
-      address,
+      address || '',
       Coins.fromData(coins),
       public_key && PublicKey.fromData(public_key),
       Number.parseInt(account_number) || 0,
