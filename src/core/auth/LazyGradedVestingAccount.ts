@@ -21,6 +21,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
    */
   constructor(
     public address: AccAddress,
+    public coins: Coins,
     public public_key: PublicKey | null,
     public account_number: number,
     public sequence: number,
@@ -36,6 +37,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
   public toData(): LazyGradedVestingAccount.Data {
     const {
       address,
+      coins,
       public_key,
       account_number,
       sequence,
@@ -49,6 +51,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       type: 'core/LazyGradedVestingAccount',
       value: {
         address,
+        coins: coins.toData(),
         public_key: public_key && public_key.toData(),
         account_number: account_number.toFixed(),
         sequence: sequence.toFixed(),
@@ -67,6 +70,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
     const {
       value: {
         address,
+        coins,
         public_key,
         account_number,
         sequence,
@@ -79,6 +83,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
     } = data;
     return new LazyGradedVestingAccount(
       address || '',
+      Coins.fromData(coins),
       public_key ? PublicKey.fromData(public_key) : null,
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0,
