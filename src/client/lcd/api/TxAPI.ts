@@ -12,10 +12,6 @@ import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 
-interface EstimateFeeResponse {
-  fee: StdFee.Data;
-}
-
 /** Transaction broadcasting modes  */
 export enum Broadcast {
   /** Wait until the transaction has been included in the block */
@@ -169,19 +165,7 @@ export class TxAPI extends BaseAPI {
     memo = memo || '';
 
     if (fee === undefined) {
-      const estimateFeeOptions = {
-        gas: options.gas,
-        gasPrices: options.gasPrices || this.lcd.config.gasPrices,
-        gasAdjustment: options.gasAdjustment || this.lcd.config.gasAdjustment,
-        feeDenoms: options.feeDenoms,
-      };
-
-      // estimate the fee
-      fee = await this.lcd.tx.estimateFee(
-        sourceAddress,
-        msgs,
-        estimateFeeOptions
-      );
+      fee = await this.lcd.tx.estimateFee(sourceAddress, msgs, options);
     }
 
     let accountNumber = options.account_number;
@@ -226,24 +210,27 @@ export class TxAPI extends BaseAPI {
 
   /**
    * Estimates the transaction's fee by simulating it within the node
-   * @param tx transaction for which to estimate fee
+   * @param sourceAddress address that will pay the bill
+   * @param msgs standard messages
    * @param options options for fee estimation
    */
   public async estimateFee(
     sourceAddress: string,
     msgs: Msg[],
     options?: {
+      memo?: string;
       gas?: string;
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
       feeDenoms?: string[];
     }
   ): Promise<StdFee> {
-    const gas = options?.gas || 'auto';
+    const memo = options?.memo;
+    const gas = options?.gas;
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options?.feeDenoms;
+    const feeDenoms = options?.feeDenoms || ['uluna'];
 
     let gasPricesCoins: Coins | undefined;
     if (gasPrices) {
@@ -255,20 +242,39 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    const data = {
-      base_req: {
-        chain_id: this.lcd.config.chainID,
-        from: sourceAddress,
-        gas: gas && gas.toString(),
+    if (/^(?:columbus-5|bombay|localterra)/.test(this.lcd.config.chainID)) {
+      const data = {
+        base_req: {
+          chain_id: this.lcd.config.chainID,
+          memo,
+          from: sourceAddress,
+          gas: gas || 'auto',
+          gas_prices: gasPricesCoins && gasPricesCoins.toData(),
+          gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+        },
+        msgs: msgs.map(m => m.toData()),
+      };
+      return this.c
+        .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
+        .then(({ result: { fee } }) => StdFee.fromData(fee));
+    } else {
+      const data = {
+        tx: {
+          msg: msgs.map(m => m.toData()),
+          fee: { gas: gas || '0' },
+          memo,
+        },
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
         gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-      },
-      msgs: msgs && msgs.map(m => m.toData()),
-    };
+      };
 
-    return this.c
-      .post<EstimateFeeResponse>(`/txs/estimate_fee`, data)
-      .then(({ result: d }) => StdFee.fromData(d.fee));
+      return this.c
+        .post<{ gas: string; fees: Coins.Data }>(`/txs/estimate_fee`, data)
+        .then(
+          ({ result: d }) =>
+            new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
+        );
+    }
   }
 
   /**
