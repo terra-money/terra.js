@@ -141,16 +141,17 @@ You can find a small JSFiddle example that refreshes current Oracle votes [here]
 
 ## Terra.js in React Native
 
-In order to use Terra.js inside React Native, you need to add the `node-libs-react-native` package to your React Native app's `package.json`, following instructions from https://github.com/parshap/node-libs-react-native.
+In order to use Terra.js inside React Native, you need to add the [`node-libs-react-native`](https://github.com/parshap/node-libs-react-native) package and [`react-native-get-random-values`](https://github.com/LinusU/react-native-get-random-values) package to your React Native app's `package.json`.
 
 ```sh
-yarn add node-libs-react-native
+yarn add node-libs-react-native react-native-get-random-values
 ```
 
 You will need to register Node.js native modules in an entry point of your application, such as `index.tsx`:
 
 ```js
-require('node-libs-react-native/globals');
+import 'node-libs-react-native/globals';
+import 'react-native-get-random-values';
 ```
 
 Also, add resolvers to your `metro.config.js`
