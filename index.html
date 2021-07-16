@@ -185,11 +185,12 @@
 				<a href="#terrajs-in-react-native" id="terrajs-in-react-native" style="color: inherit; text-decoration: none;">
 					<h2>Terra.js in React Native</h2>
 				</a>
-				<p>In order to use Terra.js inside React Native, you need to add the <code>node-libs-react-native</code> package to your React Native app&#39;s <code>package.json</code>, following instructions from <a href="https://github.com/parshap/node-libs-react-native">https://github.com/parshap/node-libs-react-native</a>.</p>
-				<pre><code class="language-sh"><span style="color: #000000">yarn add node-libs-react-native</span>
+				<p>In order to use Terra.js inside React Native, you need to add the <a href="https://github.com/parshap/node-libs-react-native"><code>node-libs-react-native</code></a> package and <a href="https://github.com/LinusU/react-native-get-random-values"><code>react-native-get-random-values</code></a> package to your React Native app&#39;s <code>package.json</code>.</p>
+				<pre><code class="language-sh"><span style="color: #000000">yarn add node-libs-react-native react-native-get-random-values</span>
 </code></pre>
 				<p>You will need to register Node.js native modules in an entry point of your application, such as <code>index.tsx</code>:</p>
-				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">);</span>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;react-native-get-random-values&#039;</span><span style="color: #000000">;</span>
 </code></pre>
 				<p>Also, add resolvers to your <code>metro.config.js</code></p>
 				<pre><code class="language-js"><span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> {</span>
