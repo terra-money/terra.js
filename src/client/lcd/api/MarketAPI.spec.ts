@@ -9,8 +9,7 @@ describe('MarketAPI', () => {
   it('parameters', async () => {
     await expect(market.parameters()).resolves.toMatchObject({
       pool_recovery_period: expect.any(Number),
-      mint_base_pool: expect.any(Dec),
-      burn_base_pool: expect.any(Dec),
+      base_pool: expect.any(Dec),
       min_stability_spread: expect.any(Dec),
     });
   });

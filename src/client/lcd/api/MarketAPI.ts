@@ -7,11 +7,8 @@ export interface MarketParams {
    */
   pool_recovery_period: number;
 
-  /** Initial starting size of both Terra mint liquidity pools. */
-  mint_base_pool: Dec;
-
-  /** Initial starting size of both Terra burn liquidity pools. */
-  burn_base_pool: Dec;
+  /** Initial starting size of both Luna and Terra mint liquidity pools. */
+  base_pool: Dec;
 
   /** Minimum spread charged on Terra<>Luna swaps to prevent leaking value from front-running attacks. */
   min_stability_spread: Dec;
@@ -20,8 +17,7 @@ export interface MarketParams {
 export namespace MarketParams {
   export interface Data {
     pool_recovery_period: string;
-    mint_base_pool: string;
-    burn_base_pool: string;
+    base_pool: string;
     min_stability_spread: string;
   }
 }
@@ -69,8 +65,7 @@ export class MarketAPI extends BaseAPI {
       .get<MarketParams.Data>(`/market/parameters`)
       .then(({ result: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
-        mint_base_pool: new Dec(d.mint_base_pool),
-        burn_base_pool: new Dec(d.burn_base_pool),
+        base_pool: new Dec(d.base_pool),
         min_stability_spread: new Dec(d.min_stability_spread),
       }));
   }
