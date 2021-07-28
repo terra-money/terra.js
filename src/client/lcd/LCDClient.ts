@@ -21,6 +21,7 @@ import { Wallet } from './Wallet';
 import { Numeric } from '../../core/numeric';
 import { Coins } from '../../core/Coins';
 import { Key } from '../../key';
+import { setContractEncoding } from '../../util/contract';
 
 export interface LCDClientConfig {
   /**
@@ -113,6 +114,13 @@ export class LCDClient {
         DEFAULT_GAS_PRICES_BY_CHAIN_ID['default'],
       ...config,
     };
+
+    // TODO: Deprcate this after columbus-5/bombay
+    // Make wasm module compatible with bombay network. Because it is a global flag,
+    // it doesn't support columbus-4/tequila and columbus-5/bombay at the same time
+    setContractEncoding(
+      !/^(?:columbus-5|bombay|localterra)/.test(config.chainID)
+    );
 
     this.apiRequester = new APIRequester(this.config.URL);
 
