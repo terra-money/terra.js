@@ -237,9 +237,12 @@ export class TxAPI extends BaseAPI {
     if (gasPrices) {
       gasPricesCoins = new Coins(gasPrices);
       if (feeDenoms) {
-        gasPricesCoins = gasPricesCoins.filter(c =>
+        const gasPricesCoinsFiltered = gasPricesCoins.filter(c =>
           feeDenoms.includes(c.denom)
         );
+        if (gasPricesCoinsFiltered.toArray().length > 0) {
+          gasPricesCoins = gasPricesCoinsFiltered;
+        }
       }
     }
 
