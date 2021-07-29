@@ -1,6 +1,17 @@
 import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
+let useEncoding = true;
+
+/**
+ * columbus-5/bombay doesn't encode msgs into base64 string.
+ * This function is for making main branch to be compatible with the change.
+ * Will be deprecated after bombay branch is merged into main branch
+ */
+export function setContractEncoding(flag: boolean) {
+  useEncoding = flag;
+}
+
 /**
  * Serializes a JavaScript object to a Base64-encoded string. If the data passed is
  * already a string, it will not be serialized and just return as-is.
@@ -9,6 +20,10 @@ import { TxInfo } from '../core/TxInfo';
  * @returns base64-encoded string
  */
 export function dictToB64(data: any): string {
+  if (!useEncoding) {
+    return data;
+  }
+
   // if data is just a plain string, it was not valid Base64-encoded JSON so it could not be parsed
   if (typeof data === 'string') {
     return data;
@@ -24,7 +39,11 @@ export function dictToB64(data: any): string {
  * @param data string
  * @returns converted object
  */
-export function b64ToDict(data: string): any {
+export function b64ToDict(data: any): any {
+  if (!useEncoding) {
+    return data;
+  }
+
   try {
     return JSON.parse(Buffer.from(data, 'base64').toString());
   } catch {

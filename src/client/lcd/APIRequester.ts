@@ -13,6 +13,7 @@ export class APIRequester {
       headers: {
         Accept: 'application/json',
       },
+      timeout: 30000,
     });
   }
 
