@@ -1,5 +1,13 @@
 import { BaseAPI } from './BaseAPI';
-import { Proposal, AccAddress, Coins, Dec, Int } from '../../../core';
+import {
+  Proposal,
+  AccAddress,
+  Coins,
+  Dec,
+  Int,
+  Deposit,
+  Vote,
+} from '../../../core';
 import {
   DepositParams,
   VotingParams,
@@ -81,20 +89,20 @@ export class GovAPI extends BaseAPI {
    * Get the deposits for a proposal
    * @param proposalId proposal's ID
    */
-  public async deposits(proposalId: number): Promise<any> {
+  public async deposits(proposalId: number): Promise<Deposit> {
     return this.c
-      .get(`/gov/proposals/${proposalId}/deposits`)
-      .then(d => d.result);
+      .get<Deposit.Data>(`/gov/proposals/${proposalId}/deposits`)
+      .then(d => Deposit.fromData(d.result));
   }
 
   /**
    * Get the current votes for a proposal
    * @param proposalId proposal's ID
    */
-  public async votes(proposalId: number): Promise<any> {
+  public async votes(proposalId: number): Promise<Vote> {
     return this.c
-      .get(`/gov/proposals/${proposalId}/deposits`)
-      .then(d => d.result);
+      .get<Vote.Data>(`/gov/proposals/${proposalId}/votes`, { limit: 100 })
+      .then(d => Vote.fromData(d.result));
   }
 
   /**
