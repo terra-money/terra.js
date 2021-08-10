@@ -1,5 +1,6 @@
 import { BaseAPI } from './BaseAPI';
 import { Coins, AccAddress, Dec, ValAddress } from '../../../core';
+import { APIParams } from '../APIRequester';
 
 export interface DistributionParams {
   /**
@@ -82,9 +83,15 @@ export class DistributionAPI extends BaseAPI {
    * Gets a delegator's rewards.
    * @param delegator delegator's account address
    */
-  public async rewards(delegator: AccAddress): Promise<Rewards> {
+  public async rewards(
+    delegator: AccAddress,
+    params: APIParams = {}
+  ): Promise<Rewards> {
     const rewardsData = await this.c
-      .get<Rewards.Data>(`/distribution/delegators/${delegator}/rewards`)
+      .get<Rewards.Data>(
+        `/distribution/delegators/${delegator}/rewards`,
+        params
+      )
       .then(d => d.result);
 
     const rewards: Rewards['rewards'] = {};
@@ -102,10 +109,14 @@ export class DistributionAPI extends BaseAPI {
    * @param validator validator's operator address
    */
   public async validatorRewards(
-    validator: ValAddress
+    validator: ValAddress,
+    params: APIParams = {}
   ): Promise<ValidatorRewards> {
     return this.c
-      .get<ValidatorRewards.Data>(`/distribution/validators/${validator}`)
+      .get<ValidatorRewards.Data>(
+        `/distribution/validators/${validator}`,
+        params
+      )
       .then(d => d.result)
       .then(d => ({
         self_bond_rewards: Coins.fromData(d.self_bond_rewards),
@@ -117,27 +128,33 @@ export class DistributionAPI extends BaseAPI {
    * Gets the withdraw address of a delegator, the address to which rewards are withdrawn.
    * @param delegator
    */
-  public async withdrawAddress(delegator: AccAddress): Promise<AccAddress> {
+  public async withdrawAddress(
+    delegator: AccAddress,
+    params: APIParams = {}
+  ): Promise<AccAddress> {
     return this.c
-      .get<AccAddress>(`/distribution/delegators/${delegator}/withdraw_address`)
+      .get<AccAddress>(
+        `/distribution/delegators/${delegator}/withdraw_address`,
+        params
+      )
       .then(d => d.result);
   }
 
   /**
    * Gets the current value of the community pool.
    */
-  public async communityPool(): Promise<Coins> {
+  public async communityPool(params: APIParams = {}): Promise<Coins> {
     return this.c
-      .get<Coins.Data>(`/distribution/community_pool`)
+      .get<Coins.Data>(`/distribution/community_pool`, params)
       .then(d => Coins.fromData(d.result));
   }
 
   /**
    * Gets the current distribution parameters.
    */
-  public async parameters(): Promise<DistributionParams> {
+  public async parameters(params: APIParams = {}): Promise<DistributionParams> {
     return this.c
-      .get<DistributionParams.Data>(`/distribution/parameters`)
+      .get<DistributionParams.Data>(`/distribution/parameters`, params)
       .then(({ result: d }) => ({
         base_proposer_reward: new Dec(d.base_proposer_reward),
         community_tax: new Dec(d.community_tax),

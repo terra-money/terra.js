@@ -5,6 +5,7 @@ import {
   LazyGradedVestingAccount,
 } from '../../../core';
 import { BaseAPI } from './BaseAPI';
+import { APIParams } from '../APIRequester';
 
 export class AuthAPI extends BaseAPI {
   /**
@@ -14,16 +15,17 @@ export class AuthAPI extends BaseAPI {
    * @param address address of account to look up
    */
   public async accountInfo(
-    address: AccAddress
+    address: AccAddress,
+    params: APIParams = {}
   ): Promise<Account | LazyGradedVestingAccount> {
     const { result } = await this.c.get<
       Account.Data | LazyGradedVestingAccount.Data
-    >(`/auth/accounts/${address}`);
+    >(`/auth/accounts/${address}`, params);
 
     // Until columbus-4 it used to return coins from /auth/accounts
     if (!result.value.coins) {
       result.value.coins = (
-        await this.c.get<Coins.Data>(`/bank/balances/${address}`)
+        await this.c.get<Coins.Data>(`/bank/balances/${address}`, params)
       ).result;
     }
 
