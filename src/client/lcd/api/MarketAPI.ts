@@ -40,20 +40,11 @@ export class MarketAPI extends BaseAPI {
   }
 
   /**
-   * Gets current value of the mint pool delta, which is used to determine Terra<>Luna swap rates.
+   * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
    */
-  public async mintPoolDelta(): Promise<Dec> {
+  public async poolDelta(): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/market/mint_pool_delta`)
-      .then(d => new Dec(d.result));
-  }
-
-  /**
-   * Gets current value of the burn pool delta, which is used to determine Terra<>Luna swap rates.
-   */
-  public async burnPoolDelta(): Promise<Dec> {
-    return this.c
-      .get<Numeric.Input>(`/market/burn_pool_delta`)
+      .get<Numeric.Input>(`/market/terra_pool_delta`)
       .then(d => new Dec(d.result));
   }
 
