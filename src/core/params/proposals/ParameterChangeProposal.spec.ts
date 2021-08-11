@@ -180,12 +180,7 @@ const jiguJSON = {
       { subspace: 'market', key: 'PoolRecoveryPeriod', value: '"234234234"' },
       {
         subspace: 'market',
-        key: 'MintBasePool',
-        value: '"232323232.000000000000000000"',
-      },
-      {
-        subspace: 'market',
-        key: 'BurnBasePool',
+        key: 'BasePool',
         value: '"232323232.000000000000000000"',
       },
       {
@@ -315,8 +310,7 @@ describe('ParameterChangeProposal', () => {
       },
       market: {
         PoolRecoveryPeriod: 234234234,
-        MintBasePool: new Dec(232323232),
-        BurnBasePool: new Dec(232323232),
+        BasePool: new Dec(232323232),
         MinStabilitySpread: new Dec(343434),
       },
       gov: {
