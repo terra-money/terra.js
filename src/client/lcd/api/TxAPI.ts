@@ -324,7 +324,7 @@ export class TxAPI extends BaseAPI {
       };
 
       if (d.height) {
-        blockResult.height = Number.parseInt(d.height);
+        blockResult.height = +d.height;
       }
 
       if (d.logs) {
@@ -354,7 +354,7 @@ export class TxAPI extends BaseAPI {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
       d => {
         const blockResult: any = {
-          height: Number.parseInt(d.height),
+          height: +d.height,
           txhash: d.txhash,
           raw_log: d.raw_log,
         };
@@ -381,7 +381,7 @@ export class TxAPI extends BaseAPI {
       tx,
       Broadcast.ASYNC
     ).then(d => ({
-      height: Number.parseInt(d.height),
+      height: +d.height,
       txhash: d.txhash,
     }));
   }
