@@ -10,7 +10,8 @@ import { Numeric } from './numeric';
  */
 export class Coins
   extends JSONSerializable<Coins.Data>
-  implements Numeric<Coins> {
+  implements Numeric<Coins>
+{
   private _coins: Coins.ReprDict;
 
   /**
@@ -126,8 +127,8 @@ export class Coins
     this._coins[denom] = val;
   }
 
-  public static fromData(data: Coins.Data): Coins {
-    return new Coins(data.map(Coin.fromData));
+  public static fromData(data: Coins.Data | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromData));
   }
 
   /**

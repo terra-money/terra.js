@@ -12,6 +12,8 @@ export * from './StdSignMsg';
 export * from './StdTx';
 export * from './TxInfo';
 export * from './ValidatorSet';
+export * from './Deposit';
+export * from './Vote';
 
 // Auth
 export * from './auth/Account';
