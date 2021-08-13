@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 
 import { OracleWhitelist } from '../../../core/oracle/params';
+import { APIParams } from '../APIRequester';
 
 export interface OracleParams {
   /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of LUNA. */
@@ -57,14 +58,16 @@ export class OracleAPI extends BaseAPI {
   /**
    * Gets the Oracle module's currently registered exchange rate for LUNA in all available denominations.
    */
-  public async exchangeRates(): Promise<Coins> {
-    return this.c.get<Coins.Data>(`/oracle/denoms/exchange_rates`).then(d => {
-      if (d?.result) {
-        return Coins.fromData(d.result);
-      } else {
-        return new Coins({});
-      }
-    });
+  public async exchangeRates(params: APIParams = {}): Promise<Coins> {
+    return this.c
+      .get<Coins.Data>(`/oracle/denoms/exchange_rates`, params)
+      .then(d => {
+        if (d?.result) {
+          return Coins.fromData(d.result);
+        } else {
+          return new Coins({});
+        }
+      });
   }
 
   /**
@@ -79,8 +82,10 @@ export class OracleAPI extends BaseAPI {
   /**
    * Gets the current list of active denominations.
    */
-  public async activeDenoms(): Promise<Denom[]> {
-    return this.c.get<Denom[]>(`/oracle/denoms/actives`).then(d => d.result);
+  public async activeDenoms(params: APIParams = {}): Promise<Denom[]> {
+    return this.c
+      .get<Denom[]>(`/oracle/denoms/actives`, params)
+      .then(d => d.result);
   }
 
   /**
@@ -88,9 +93,12 @@ export class OracleAPI extends BaseAPI {
    * Terra account that is permitted to sign Oracle vote messages in the validator's name.
    * @param validator validator's operator address
    */
-  public async feederAddress(validator: ValAddress): Promise<AccAddress> {
+  public async feederAddress(
+    validator: ValAddress,
+    params: APIParams = {}
+  ): Promise<AccAddress> {
     return this.c
-      .get<AccAddress>(`/oracle/voters/${validator}/feeder`)
+      .get<AccAddress>(`/oracle/voters/${validator}/feeder`, params)
       .then(d => d.result);
   }
 
@@ -98,9 +106,12 @@ export class OracleAPI extends BaseAPI {
    * Gets the number of missed oracle votes for the validator over the current slash window.
    * @param validator validator's operator address
    */
-  public async misses(validator: ValAddress): Promise<number> {
+  public async misses(
+    validator: ValAddress,
+    params: APIParams = {}
+  ): Promise<number> {
     return this.c
-      .get<string>(`/oracle/voters/${validator}/miss`)
+      .get<string>(`/oracle/voters/${validator}/miss`, params)
       .then(d => Number.parseInt(d.result));
   }
 
@@ -109,11 +120,13 @@ export class OracleAPI extends BaseAPI {
    * @param validator validator's operator address
    */
   public async aggregatePrevote(
-    validator: ValAddress
+    validator: ValAddress,
+    params: APIParams = {}
   ): Promise<AggregateExchangeRatePrevote> {
     return this.c
       .get<AggregateExchangeRatePrevote.Data>(
-        `/oracle/voters/${validator}/aggregate_prevote`
+        `/oracle/voters/${validator}/aggregate_prevote`,
+        params
       )
       .then(d => AggregateExchangeRatePrevote.fromData(d.result));
   }
@@ -123,11 +136,13 @@ export class OracleAPI extends BaseAPI {
    * @param validator validator's operator address
    */
   public async aggregateVote(
-    validator: ValAddress
+    validator: ValAddress,
+    params: APIParams = {}
   ): Promise<AggregateExchangeRateVote> {
     return this.c
       .get<AggregateExchangeRateVote.Data>(
-        `/oracle/voters/${validator}/aggregate_vote`
+        `/oracle/voters/${validator}/aggregate_vote`,
+        params
       )
       .then(d => AggregateExchangeRateVote.fromData(d.result));
   }
@@ -135,9 +150,9 @@ export class OracleAPI extends BaseAPI {
   /**
    * Gets the current Oracle module's parameters.
    */
-  public async parameters(): Promise<OracleParams> {
+  public async parameters(params: APIParams = {}): Promise<OracleParams> {
     return this.c
-      .get<OracleParams.Data>(`/oracle/parameters`)
+      .get<OracleParams.Data>(`/oracle/parameters`, params)
       .then(({ result: d }) => ({
         vote_period: Number.parseInt(d.vote_period),
         vote_threshold: new Dec(d.vote_threshold),

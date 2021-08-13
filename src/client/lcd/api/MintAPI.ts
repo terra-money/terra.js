@@ -1,4 +1,5 @@
 import { Dec, Numeric, Denom } from '../../../core';
+import { APIParams } from '../APIRequester';
 import { BaseAPI } from './BaseAPI';
 
 export interface MintingParams {
@@ -25,27 +26,27 @@ export class MintAPI extends BaseAPI {
   /**
    * Gets the current minting inflation value
    */
-  public async inflation(): Promise<Dec> {
+  public async inflation(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/minting/inflation`)
+      .get<Numeric.Input>(`/minting/inflation`, params)
       .then(d => new Dec(d.result));
   }
 
   /**
    * Gets the current minting annaul provisions value
    */
-  public async annualProvisions(): Promise<Dec> {
+  public async annualProvisions(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`minting/annual-provisions`)
+      .get<Numeric.Input>(`minting/annual-provisions`, params)
       .then(d => new Dec(d.result));
   }
 
   /**
    * Gets the current minting module's parameters.
    */
-  public async parameters(): Promise<MintingParams> {
+  public async parameters(params: APIParams = {}): Promise<MintingParams> {
     return this.c
-      .get<MintingParams.Data>(`/minting/parameters`)
+      .get<MintingParams.Data>(`/minting/parameters`, params)
       .then(({ result: d }) => ({
         mint_denom: d.mint_denom,
         inflation_rate_change: new Dec(d.inflation_rate_change),

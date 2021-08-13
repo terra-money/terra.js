@@ -1,4 +1,5 @@
 import { Coin, Dec, Numeric, Denom } from '../../../core';
+import { APIParams } from '../APIRequester';
 import { BaseAPI } from './BaseAPI';
 
 export interface MarketParams {
@@ -28,8 +29,13 @@ export class MarketAPI extends BaseAPI {
    * @param offerCoin coin to convert
    * @param askDenom denomination to swap into
    */
-  public async swapRate(offerCoin: Coin, askDenom: Denom): Promise<Coin> {
+  public async swapRate(
+    offerCoin: Coin,
+    askDenom: Denom,
+    _params: APIParams = {}
+  ): Promise<Coin> {
     const params = {
+      ..._params,
       offer_coin: offerCoin.toString(),
       ask_denom: askDenom,
     };
@@ -42,18 +48,18 @@ export class MarketAPI extends BaseAPI {
   /**
    * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
    */
-  public async poolDelta(): Promise<Dec> {
+  public async poolDelta(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/market/terra_pool_delta`)
+      .get<Numeric.Input>(`/market/terra_pool_delta`, params)
       .then(d => new Dec(d.result));
   }
 
   /**
    * Gets the current Market module's parameters.
    */
-  public async parameters(): Promise<MarketParams> {
+  public async parameters(params: APIParams = {}): Promise<MarketParams> {
     return this.c
-      .get<MarketParams.Data>(`/market/parameters`)
+      .get<MarketParams.Data>(`/market/parameters`, params)
       .then(({ result: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
         base_pool: new Dec(d.base_pool),

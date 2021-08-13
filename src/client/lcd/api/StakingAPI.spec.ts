@@ -63,7 +63,7 @@ describe('StakingAPI', () => {
     await expect(
       staking.unbondingDelegations(
         undefined,
-        'terravaloper1vk20anceu6h9s00d27pjlvslz3avetkvnwmr35'
+        'terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy' // Terra.one node
       )
     ).resolves.toContainEqual({
       delegator_address: expect.any(String),
