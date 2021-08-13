@@ -11,7 +11,7 @@ async function main() {
   );
 
   const tequila = new LCDClient({
-    chainID: 'bombay-0007',
+    chainID: 'bombay-9',
     URL: 'https://bombay-lcd.terra.dev',
     gasPrices,
   });
