@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { GovAPI } from './GovAPI';
 import { Coins, Dec } from '../../../core';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const gov = new GovAPI(c);
 
 describe('GovAPI', () => {
@@ -18,7 +18,7 @@ describe('GovAPI', () => {
       tally_params: {
         quorum: expect.any(Dec),
         threshold: expect.any(Dec),
-        veto: expect.any(Dec),
+        veto_threshold: expect.any(Dec),
       },
     });
   });

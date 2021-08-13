@@ -2,7 +2,7 @@ import { APIRequester } from '../APIRequester';
 import { OracleAPI } from './OracleAPI';
 import { Dec } from '../../../core/numeric';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const oracle = new OracleAPI(c);
 
 describe('OracleAPI', () => {

@@ -167,7 +167,6 @@ export class TxAPI extends BaseAPI {
     const { msgs } = options;
     memo = memo || '';
 
-    // create the fake fee
     if (fee === undefined) {
       fee = await this.lcd.tx.estimateFee(sourceAddress, msgs, options);
     }
@@ -321,12 +320,15 @@ export class TxAPI extends BaseAPI {
       Broadcast.BLOCK
     ).then(d => {
       const blockResult: any = {
-        height: Number.parseInt(d.height),
         txhash: d.txhash,
         raw_log: d.raw_log,
         gas_wanted: Number.parseInt(d.gas_wanted),
         gas_used: Number.parseInt(d.gas_used),
       };
+
+      if (d.height) {
+        blockResult.height = +d.height;
+      }
 
       if (d.logs) {
         blockResult.logs = d.logs.map(l => TxLog.fromData(l));
@@ -355,7 +357,7 @@ export class TxAPI extends BaseAPI {
     return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
       d => {
         const blockResult: any = {
-          height: Number.parseInt(d.height),
+          height: +d.height,
           txhash: d.txhash,
           raw_log: d.raw_log,
         };
@@ -382,7 +384,7 @@ export class TxAPI extends BaseAPI {
       tx,
       Broadcast.ASYNC
     ).then(d => ({
-      height: Number.parseInt(d.height),
+      height: +d.height,
       txhash: d.txhash,
     }));
   }

@@ -6,14 +6,14 @@ const test1 = lt.wallets.test1;
 const test2 = lt.wallets.test2;
 
 async function main() {
-  const { data: tequilaGasPrices } = await Axios.get(
-    'https://tequila-fcd.terra.dev/v1/txs/gas_prices'
+  const { data: gasPrices } = await Axios.get(
+    'https://bombay-fcd.terra.dev/v1/txs/gas_prices'
   );
 
   const tequila = new LCDClient({
-    chainID: 'tequila-0004',
-    URL: 'https://tequila-fcd.terra.dev',
-    gasPrices: tequilaGasPrices,
+    chainID: 'bombay-9',
+    URL: 'https://bombay-lcd.terra.dev',
+    gasPrices,
   });
 
   // Test raw estimate fee function with specified gas

@@ -1,7 +1,7 @@
 import { APIRequester } from '../APIRequester';
 import { WasmAPI } from './WasmAPI';
 
-const c = new APIRequester('https://lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const wasm = new WasmAPI(c);
 
 describe('WasmAPI', () => {

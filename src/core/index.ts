@@ -37,8 +37,6 @@ export * from './msgauth/Authorization';
 
 // Oracle
 export * from './oracle/msgs';
-export * from './oracle/ExchangeRatePrevote';
-export * from './oracle/ExchangeRateVote';
 export * from './oracle/AggregateExchangeRatePrevote';
 export * from './oracle/AggregateExchangeRateVote';
 
@@ -57,7 +55,6 @@ export * from './staking/UnbondingDelegation';
 export * from './staking/Validator';
 
 // Treasury
-export * from './treasury/proposals';
 export * from './treasury/PolicyConstraints';
 
 // WASM

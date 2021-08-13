@@ -25,7 +25,7 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
     public min_self_delegation: Int,
     public delegator_address: AccAddress,
     public validator_address: ValAddress,
-    public pubkey: ValConsPubKey,
+    public pubkey: ValConsPubKey.Data,
     public value: Coin
   ) {
     super();
@@ -88,7 +88,7 @@ export namespace MsgCreateValidator {
       min_self_delegation: string;
       delegator_address: AccAddress;
       validator_address: ValAddress;
-      pubkey: ValConsPubKey;
+      pubkey: ValConsPubKey.Data;
       value: Coin.Data;
     };
   }

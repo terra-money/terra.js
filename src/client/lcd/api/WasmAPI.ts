@@ -1,28 +1,27 @@
 import { BaseAPI } from './BaseAPI';
 import { AccAddress } from '../../../core/bech32';
-import { b64ToDict } from '../../../util/contract';
 import { APIParams } from '../APIRequester';
 
 export interface CodeInfo {
   code_hash: string;
-  code_creator: AccAddress;
+  creator: AccAddress;
 }
 
 export interface ContractInfo {
   code_id: number;
   address: AccAddress;
-  owner: AccAddress;
+  creator: AccAddress;
+  admin: AccAddress;
   init_msg: any; // object
-  migratable: boolean;
 }
 
 export namespace ContractInfo {
   export interface Data {
     code_id: string;
     address: AccAddress;
-    owner: AccAddress;
-    init_msg: string;
-    migratable: boolean;
+    creator: AccAddress;
+    admin: AccAddress;
+    init_msg: any; // object
   }
 }
 
@@ -59,9 +58,9 @@ export class WasmAPI extends BaseAPI {
       .then(({ result: d }) => ({
         code_id: Number.parseInt(d.code_id),
         address: d.address,
-        owner: d.owner,
-        init_msg: b64ToDict(d.init_msg),
-        migratable: d.migratable,
+        creator: d.creator,
+        admin: d.admin,
+        init_msg: d.init_msg,
       }));
   }
 

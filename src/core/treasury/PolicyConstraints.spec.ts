@@ -14,14 +14,14 @@ describe('PolicyConstraints', () => {
     const tr = Dec.withPrec(1, 3);
 
     let prevRate = tr;
-    let newRate = prevRate.add(pc.change_max.mul(2));
+    let newRate = prevRate.add(pc.change_rate_max.mul(2));
     let clampedRate = pc.clamp(prevRate, newRate);
-    expect(prevRate.add(pc.change_max)).toEqual(clampedRate);
+    expect(prevRate.add(pc.change_rate_max)).toEqual(clampedRate);
 
     prevRate = tr;
-    newRate = prevRate.sub(pc.change_max.mul(2));
+    newRate = prevRate.sub(pc.change_rate_max.mul(2));
     clampedRate = pc.clamp(prevRate, newRate);
-    expect(prevRate.sub(pc.change_max)).toEqual(clampedRate);
+    expect(prevRate.sub(pc.change_rate_max)).toEqual(clampedRate);
 
     prevRate = pc.rate_max;
     newRate = prevRate.add(Dec.withPrec(1, 3));

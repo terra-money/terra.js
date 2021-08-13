@@ -20,7 +20,7 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
    */
   constructor(
     public description: Validator.Description,
-    public address: ValAddress,
+    public validator_address: ValAddress,
     public commission_rate?: Dec,
     public min_self_delegation?: Int
   ) {
@@ -29,27 +29,39 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
 
   public static fromData(data: MsgEditValidator.Data): MsgEditValidator {
     const {
-      value: { description, address, commission_rate, min_self_delegation },
+      value: {
+        description,
+        validator_address,
+        commission_rate,
+        min_self_delegation,
+      },
     } = data;
     return new MsgEditValidator(
-      Validator.Description.fromData(description),
-      address,
+      description,
+      validator_address,
       commission_rate ? new Dec(commission_rate) : undefined,
       min_self_delegation ? new Int(min_self_delegation) : undefined
     );
   }
 
   public toData(): MsgEditValidator.Data {
-    const { description, address, commission_rate, min_self_delegation } = this;
+    const {
+      description,
+      validator_address,
+      commission_rate,
+      min_self_delegation,
+    } = this;
     return {
       type: 'staking/MsgEditValidator',
       value: {
-        description: description.toData(),
-        address,
-        commission_rate: commission_rate ? commission_rate.toString() : null,
+        description,
+        validator_address,
+        commission_rate: commission_rate
+          ? commission_rate.toString()
+          : undefined,
         min_self_delegation: min_self_delegation
           ? min_self_delegation.toString()
-          : null,
+          : undefined,
       },
     };
   }
@@ -68,9 +80,9 @@ export namespace MsgEditValidator {
     type: 'staking/MsgEditValidator';
     value: {
       description: any;
-      address: ValAddress;
-      commission_rate: string | null;
-      min_self_delegation: string | null;
+      validator_address: ValAddress;
+      commission_rate?: string;
+      min_self_delegation?: string;
     };
   }
 }

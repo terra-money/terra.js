@@ -4,13 +4,13 @@ import { Dec } from '../numeric';
 
 type PoolRecoveryPeriod = ParamChange.Type<
   'market',
-  'poolrecoveryperiod',
+  'PoolRecoveryPeriod',
   number
 >;
 
-type BasePool = ParamChange.Type<'market', 'basepool', Dec>;
+type BasePool = ParamChange.Type<'market', 'BasePool', Dec>;
 
-type MinStabilitySpread = ParamChange.Type<'market', 'minstabilityspread', Dec>;
+type MinStabilitySpread = ParamChange.Type<'market', 'MinStabilitySpread', Dec>;
 
 export type MarketParamChange =
   | PoolRecoveryPeriod
@@ -26,18 +26,18 @@ export namespace MarketParamChange {
 
 export interface MarketParamChanges {
   market?: {
-    poolrecoveryperiod?: number;
-    basepool?: Dec;
-    minstabilityspread?: Dec;
+    PoolRecoveryPeriod?: number;
+    BasePool?: Dec;
+    MinStabilitySpread?: Dec;
   };
 }
 
 export namespace MarketParamChanges {
   export const ConversionTable = {
     market: {
-      poolrecoveryperiod: [Convert.toNumber, Convert.toFixed],
-      basepool: [Convert.toDec, Convert.toString],
-      minstabilityspread: [Convert.toDec, Convert.toString],
+      PoolRecoveryPeriod: [Convert.toNumber, Convert.toFixed],
+      BasePool: [Convert.toDec, Convert.toString],
+      MinStabilitySpread: [Convert.toDec, Convert.toString],
     },
   };
 }

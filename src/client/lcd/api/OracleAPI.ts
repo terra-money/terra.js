@@ -2,10 +2,8 @@ import { BaseAPI } from './BaseAPI';
 import {
   ValAddress,
   Denom,
-  ExchangeRateVote,
   Coin,
   Coins,
-  ExchangeRatePrevote,
   AccAddress,
   Dec,
   AggregateExchangeRatePrevote,
@@ -57,76 +55,6 @@ export namespace OracleParams {
 }
 
 export class OracleAPI extends BaseAPI {
-  /**
-   * Query the currently casted votes for the exchange rate of LUNA, filterable by validator or denom.
-   *
-   * At least one of the parameters **must** be provided.
-   * @param denom denomination to query votes for
-   * @param validator validator operator address to query votes for
-   */
-  public async votes(
-    denom?: Denom,
-    validator?: ValAddress,
-    params: APIParams = {}
-  ): Promise<ExchangeRateVote[]> {
-    if (validator !== undefined && denom !== undefined) {
-      const vote = await this.c.get<ExchangeRateVote.Data>(
-        `/oracle/denoms/${denom}/votes/${validator}`,
-        params
-      );
-      return [ExchangeRateVote.fromData(vote.result)];
-    } else if (validator !== undefined) {
-      const votes = await this.c.get<ExchangeRateVote.Data[]>(
-        `/oracle/voters/${validator}/votes`,
-        params
-      );
-      return votes.result.map(ExchangeRateVote.fromData);
-    } else if (denom !== undefined) {
-      const votes = await this.c.get<ExchangeRateVote.Data[]>(
-        `/oracle/denoms/${denom}/votes`,
-        params
-      );
-      return votes.result.map(ExchangeRateVote.fromData);
-    } else {
-      throw new Error('both denom and validator cannot both be undefined');
-    }
-  }
-
-  /**
-   * Query the currently casted vprevotes, filterable by validator or denom.
-   *
-   * At least one of the parameters **must** be provided.
-   * @param denom denomination to query prevotes for
-   * @param validator validator operator address to query prevotes for
-   */
-  public async prevotes(
-    denom?: Denom,
-    validator?: ValAddress,
-    params: APIParams = {}
-  ): Promise<ExchangeRatePrevote[]> {
-    if (validator !== undefined && denom !== undefined) {
-      const prevote = await this.c.get<ExchangeRatePrevote.Data>(
-        `/oracle/denoms/${denom}/prevotes/${validator}`,
-        params
-      );
-      return [ExchangeRatePrevote.fromData(prevote.result)];
-    } else if (validator !== undefined) {
-      const prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
-        `/oracle/voters/${validator}/prevotes`,
-        params
-      );
-      return prevotes.result.map(ExchangeRatePrevote.fromData);
-    } else if (denom !== undefined) {
-      const prevotes = await this.c.get<ExchangeRatePrevote.Data[]>(
-        `/oracle/denoms/${denom}/prevotes`,
-        params
-      );
-      return prevotes.result.map(ExchangeRatePrevote.fromData);
-    } else {
-      throw new Error('both denom and validator cannot both be undefined');
-    }
-  }
-
   /**
    * Gets the Oracle module's currently registered exchange rate for LUNA in all available denominations.
    */

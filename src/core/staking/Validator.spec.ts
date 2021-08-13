@@ -5,8 +5,10 @@ describe('Validator', () => {
   it('deserializes', () => {
     const validatorData = {
       operator_address: 'terravaloper1ptyzewnns2kn37ewtmv6ppsvhdnmeapvgk6d65',
-      consensus_pubkey:
-        'terravalconspub1zcjduepqtcng29gnnhs8sv6dvv7cc0szyg3mu3tzzzjsw5x3x6pwgd2uqkkqes8fs5',
+      consensus_pubkey: {
+        type: 'tendermint/PubKeyEd25519',
+        value: '1v2BCLSLYe9tQ9JXMuYURf3UIQ/uE+RUVcYfTDVM1ec=',
+      },
       jailed: false,
       status: 2,
       tokens: '111401100001',
@@ -34,8 +36,10 @@ describe('Validator', () => {
     const validator = Validator.fromData(validatorData);
     expect(validator).toMatchObject({
       operator_address: 'terravaloper1ptyzewnns2kn37ewtmv6ppsvhdnmeapvgk6d65',
-      consensus_pubkey:
-        'terravalconspub1zcjduepqtcng29gnnhs8sv6dvv7cc0szyg3mu3tzzzjsw5x3x6pwgd2uqkkqes8fs5',
+      consensus_pubkey: {
+        type: 'tendermint/PubKeyEd25519',
+        value: '1v2BCLSLYe9tQ9JXMuYURf3UIQ/uE+RUVcYfTDVM1ec=',
+      },
       jailed: false,
       status: 2,
       tokens: new Int(111401100001),
