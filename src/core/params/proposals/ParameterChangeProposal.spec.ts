@@ -122,70 +122,70 @@ const jiguJSON = {
       },
       {
         subspace: 'treasury',
-        key: 'taxpolicy',
+        key: 'TaxPolicy',
         value:
-          '{"rate_min":"0.000000000000000000","rate_max":"100.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_max":"3.000000000000000000"}',
+          '{"rate_min":"0.000000000000000000","rate_max":"100.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_rate_max":"3.000000000000000000"}',
       },
       {
         subspace: 'treasury',
-        key: 'rewardpolicy',
+        key: 'RewardPolicy',
         value:
-          '{"rate_min":"0.000000000000000000","rate_max":"1023423340.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_max":"3.000000000000000000"}',
+          '{"rate_min":"0.000000000000000000","rate_max":"1023423340.000000000000000000","cap":{"denom":"unused","amount":"0"},"change_rate_max":"3.000000000000000000"}',
       },
       {
         subspace: 'treasury',
-        key: 'seigniorageburdentarget',
+        key: 'SeigniorageBurdenTarget',
         value: '"2342.234234000000000000"',
       },
       {
         subspace: 'treasury',
-        key: 'miningincrement',
+        key: 'MiningIncrement',
         value: '"23423423423.234234000000000000"',
       },
-      { subspace: 'treasury', key: 'windowshort', value: '"50"' },
-      { subspace: 'treasury', key: 'windowlong', value: '"2"' },
-      { subspace: 'treasury', key: 'windowprobation', value: '"30"' },
-      { subspace: 'oracle', key: 'voteperiod', value: '"345345"' },
+      { subspace: 'treasury', key: 'WindowShort', value: '"50"' },
+      { subspace: 'treasury', key: 'WindowLong', value: '"2"' },
+      { subspace: 'treasury', key: 'WindowProbation', value: '"30"' },
+      { subspace: 'oracle', key: 'VotePeriod', value: '"345345"' },
       {
         subspace: 'oracle',
-        key: 'votethreshold',
+        key: 'VoteThreshold',
         value: '"2342.234333000000000000"',
       },
       {
         subspace: 'oracle',
-        key: 'rewardband',
+        key: 'RewardBand',
         value: '"234343.000000000000000000"',
       },
       {
         subspace: 'oracle',
-        key: 'rewarddistributionwindow',
+        key: 'RewardDistributionWindow',
         value: '"345345"',
       },
       {
         subspace: 'oracle',
-        key: 'whitelist',
+        key: 'Whitelist',
         value: '[{"name":"ukrw","tobin_tax":"0.003500000000000000"}]',
       },
       {
         subspace: 'oracle',
-        key: 'slashfraction',
+        key: 'SlashFraction',
         value: '"23423.232343000000000000"',
       },
-      { subspace: 'oracle', key: 'slashwindow', value: '"343311"' },
+      { subspace: 'oracle', key: 'SlashWindow', value: '"343311"' },
       {
         subspace: 'oracle',
-        key: 'minvalidperwindow',
+        key: 'MinValidPerWindow',
         value: '"2342.234234000000000000"',
       },
-      { subspace: 'market', key: 'poolrecoveryperiod', value: '"234234234"' },
+      { subspace: 'market', key: 'PoolRecoveryPeriod', value: '"234234234"' },
       {
         subspace: 'market',
-        key: 'basepool',
+        key: 'BasePool',
         value: '"232323232.000000000000000000"',
       },
       {
         subspace: 'market',
-        key: 'minstabilityspread',
+        key: 'MinStabilitySpread',
         value: '"343434.000000000000000000"',
       },
       {
@@ -203,7 +203,7 @@ const jiguJSON = {
         subspace: 'gov',
         key: 'tallyparams',
         value:
-          '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto":"1232.234000000000000000"}',
+          '{"quorum":"234234.233400000000000000","threshold":"23423.232300000000000000","veto_threshold":"1232.234000000000000000"}',
       },
       {
         subspace: 'mint',
@@ -237,24 +237,24 @@ const jiguJSON = {
       },
       {
         subspace: 'wasm',
-        key: 'maxcontractgas',
+        key: 'MaxContractGas',
         value: '"1000000"',
       },
       {
         subspace: 'wasm',
-        key: 'maxcontractmsgsize',
+        key: 'MaxContractMsgSize',
         value: '"1000000"',
       },
       {
         subspace: 'wasm',
-        key: 'maxcontractsize',
+        key: 'MaxContractSize',
         value: '"1000000"',
       },
     ],
   },
 };
 
-describe('ParamaterChangeProposal', () => {
+describe('ParameterChangeProposal', () => {
   it('parses StdTx parameter change proposals', () => {
     ParameterChangeProposal.fromData(pcpJSON2);
   });
@@ -283,35 +283,35 @@ describe('ParamaterChangeProposal', () => {
         SlashFractionDowntime: new Dec(213.123),
       },
       treasury: {
-        taxpolicy: new PolicyConstraints(0, 100, new Coin('unused', 0), 3),
-        rewardpolicy: new PolicyConstraints(
+        TaxPolicy: new PolicyConstraints(0, 100, new Coin('unused', 0), 3),
+        RewardPolicy: new PolicyConstraints(
           0,
           1023423340,
           new Coin('unused', 0),
           3
         ),
-        seigniorageburdentarget: new Dec('2342.234234'),
-        miningincrement: new Dec(23423423423.234234234234982),
-        windowshort: 50,
-        windowlong: 2,
-        windowprobation: 30,
+        SeigniorageBurdenTarget: new Dec('2342.234234'),
+        MiningIncrement: new Dec(23423423423.234234234234982),
+        WindowShort: 50,
+        WindowLong: 2,
+        WindowProbation: 30,
       },
       oracle: {
-        voteperiod: 345345,
-        votethreshold: new Dec('2342.234333'),
-        rewardband: new Dec('234343'),
-        rewarddistributionwindow: 345345,
-        whitelist: [
+        VotePeriod: 345345,
+        VoteThreshold: new Dec('2342.234333'),
+        RewardBand: new Dec('234343'),
+        RewardDistributionWindow: 345345,
+        Whitelist: [
           { name: 'ukrw', tobin_tax: new Dec('0.003500000000000000') },
         ],
-        slashfraction: new Dec(23423.232343),
-        slashwindow: 343311,
-        minvalidperwindow: new Dec(2342.234234),
+        SlashFraction: new Dec(23423.232343),
+        SlashWindow: 343311,
+        MinValidPerWindow: new Dec(2342.234234),
       },
       market: {
-        poolrecoveryperiod: 234234234,
-        basepool: new Dec(232323232),
-        minstabilityspread: new Dec(343434),
+        PoolRecoveryPeriod: 234234234,
+        BasePool: new Dec(232323232),
+        MinStabilitySpread: new Dec(343434),
       },
       gov: {
         depositparams: {
@@ -324,7 +324,7 @@ describe('ParamaterChangeProposal', () => {
         tallyparams: {
           quorum: new Dec(234234.2334),
           threshold: new Dec(23423.2323),
-          veto: new Dec(1232.234),
+          veto_threshold: new Dec(1232.234),
         },
       },
       mint: {
@@ -336,9 +336,9 @@ describe('ParamaterChangeProposal', () => {
         GoalBonded: new Dec(0.01),
       },
       wasm: {
-        maxcontractgas: 1000000,
-        maxcontractmsgsize: 1000000,
-        maxcontractsize: 1000000,
+        MaxContractGas: 1000000,
+        MaxContractMsgSize: 1000000,
+        MaxContractSize: 1000000,
       },
     });
 

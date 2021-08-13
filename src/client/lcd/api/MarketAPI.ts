@@ -7,18 +7,18 @@ export interface MarketParams {
    */
   pool_recovery_period: number;
 
-  /** Initial starting size of both Terra and Luna liquidity pools. */
+  /** Initial starting size of both Luna and Terra mint liquidity pools. */
   base_pool: Dec;
 
   /** Minimum spread charged on Terra<>Luna swaps to prevent leaking value from front-running attacks. */
-  min_spread: Dec;
+  min_stability_spread: Dec;
 }
 
 export namespace MarketParams {
   export interface Data {
     pool_recovery_period: string;
     base_pool: string;
-    min_spread: string;
+    min_stability_spread: string;
   }
 }
 
@@ -42,7 +42,7 @@ export class MarketAPI extends BaseAPI {
   /**
    * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
    */
-  public async terraPoolDelta(): Promise<Dec> {
+  public async poolDelta(): Promise<Dec> {
     return this.c
       .get<Numeric.Input>(`/market/terra_pool_delta`)
       .then(d => new Dec(d.result));
@@ -57,7 +57,7 @@ export class MarketAPI extends BaseAPI {
       .then(({ result: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
         base_pool: new Dec(d.base_pool),
-        min_spread: new Dec(d.min_spread),
+        min_stability_spread: new Dec(d.min_stability_spread),
       }));
   }
 }

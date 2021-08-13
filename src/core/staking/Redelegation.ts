@@ -33,9 +33,11 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
 
   public static fromData(data: Redelegation.Data): Redelegation {
     const {
-      delegator_address,
-      validator_src_address,
-      validator_dst_address,
+      redelegation: {
+        delegator_address,
+        validator_src_address,
+        validator_dst_address,
+      },
       entries,
     } = data;
     return new Redelegation(
@@ -54,9 +56,11 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
       entries,
     } = this;
     return {
-      delegator_address,
-      validator_src_address,
-      validator_dst_address,
+      redelegation: {
+        delegator_address,
+        validator_src_address,
+        validator_dst_address,
+      },
       entries: entries.map(e => e.toData()),
     };
   }
@@ -64,9 +68,11 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
 
 export namespace Redelegation {
   export interface Data {
-    delegator_address: AccAddress;
-    validator_src_address: ValAddress;
-    validator_dst_address: ValAddress;
+    redelegation: {
+      delegator_address: AccAddress;
+      validator_src_address: ValAddress;
+      validator_dst_address: ValAddress;
+    };
     entries: Redelegation.Entry.Data[];
   }
 
@@ -91,21 +97,25 @@ export namespace Redelegation {
 
     public toData(): Entry.Data {
       return {
-        initial_balance: this.initial_balance.toString(),
+        redelegation_entry: {
+          initial_balance: this.initial_balance.toString(),
+          shares_dst: this.shares_dst.toString(),
+          creation_height: this.creation_height,
+          completion_time: this.completion_time.toISOString(),
+        },
         balance: this.balance.toString(),
-        shares_dst: this.shares_dst.toString(),
-        creation_height: this.creation_height,
-        completion_time: this.completion_time.toISOString(),
       };
     }
 
     public static fromData(data: Entry.Data): Entry {
       const {
-        initial_balance,
+        redelegation_entry: {
+          initial_balance,
+          shares_dst,
+          creation_height,
+          completion_time,
+        },
         balance,
-        shares_dst,
-        creation_height,
-        completion_time,
       } = data;
       return new Entry(
         new Int(initial_balance),
@@ -119,11 +129,13 @@ export namespace Redelegation {
 
   export namespace Entry {
     export interface Data {
-      initial_balance: string;
+      redelegation_entry: {
+        creation_height: number;
+        completion_time: string;
+        initial_balance: string;
+        shares_dst: string;
+      };
       balance: string;
-      shares_dst: string;
-      creation_height: number;
-      completion_time: string;
     }
   }
 }

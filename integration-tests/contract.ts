@@ -36,12 +36,10 @@ async function main(): Promise<void> {
 
   const instantiate = new MsgInstantiateContract(
     test1.key.accAddress,
+    null,
     +codeId, // code ID
-    {
-      count: 0,
-    }, // InitMsg
-    { uluna: 10000000, ukrw: 1000000 }, // init coins
-    false // migratable
+    { count: 0, }, // InitMsg
+    { uluna: 10000000, ukrw: 1000000 } // init coins
   );
 
   const instantiateTx = await test1.createAndSignTx({

@@ -36,14 +36,14 @@ export interface TallyParams {
   threshold: Dec;
 
   /** Ratio of participating votes with `NoWithVeto` (after excluding `Abstain` votes) to veto the proposal. */
-  veto: Dec;
+  veto_threshold: Dec;
 }
 
 export namespace TallyParams {
   export interface Data {
     quorum: string;
     threshold: string;
-    veto: string;
+    veto_threshold: string;
   }
 }
 
@@ -110,12 +110,12 @@ export namespace GovParamChanges {
         (c: TallyParams.Data): TallyParams => ({
           quorum: new Dec(c.quorum),
           threshold: new Dec(c.threshold),
-          veto: new Dec(c.veto),
+          veto_threshold: new Dec(c.veto_threshold),
         }),
         (c: TallyParams): TallyParams.Data => ({
           quorum: c.quorum.toString(),
           threshold: c.threshold.toString(),
-          veto: c.veto.toString(),
+          veto_threshold: c.veto_threshold.toString(),
         }),
       ],
     },

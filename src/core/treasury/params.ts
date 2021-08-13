@@ -5,29 +5,29 @@ import { Dec } from '../numeric';
 
 export type TaxPolicy = ParamChange.Type<
   'treasury',
-  'taxpolicy',
+  'TaxPolicy',
   PolicyConstraints
 >;
 export type RewardPolicy = ParamChange.Type<
   'treasury',
-  'rewardpolicy',
+  'RewardPolicy',
   PolicyConstraints
 >;
 export type SeigniorageBurdenTarget = ParamChange.Type<
   'treasury',
-  'seigniorageburdentarget',
+  'SeigniorageBurdenTarget',
   Dec
 >;
 export type MiningIncrement = ParamChange.Type<
   'treasury',
-  'miningincrement',
+  'MiningIncrement',
   Dec
 >;
-export type WindowShort = ParamChange.Type<'treasury', 'windowshort', number>;
-export type WindowLong = ParamChange.Type<'treasury', 'windowlong', number>;
+export type WindowShort = ParamChange.Type<'treasury', 'WindowShort', number>;
+export type WindowLong = ParamChange.Type<'treasury', 'WindowLong', number>;
 export type WindowProbation = ParamChange.Type<
   'treasury',
-  'windowprobation',
+  'WindowProbation',
   number
 >;
 
@@ -53,26 +53,26 @@ export namespace TreasuryParamChange {
 
 export interface TreasuryParamChanges {
   treasury?: {
-    taxpolicy?: PolicyConstraints;
-    rewardpolicy?: PolicyConstraints;
-    seigniorageburdentarget?: Dec;
-    miningincrement?: Dec;
-    windowshort?: number;
-    windowlong?: number;
-    windowprobation?: number;
+    TaxPolicy?: PolicyConstraints;
+    RewardPolicy?: PolicyConstraints;
+    SeigniorageBurdenTarget?: Dec;
+    MiningIncrement?: Dec;
+    WindowShort?: number;
+    WindowLong?: number;
+    WindowProbation?: number;
   };
 }
 
 export namespace TreasuryParamChanges {
   export const ConversionTable = {
     treasury: {
-      taxpolicy: [PolicyConstraints.fromData, Convert.toData],
-      rewardpolicy: [PolicyConstraints.fromData, Convert.toData],
-      seigniorageburdentarget: [Convert.toDec, Convert.toString],
-      miningincrement: [Convert.toDec, Convert.toString],
-      windowshort: [Convert.toNumber, Convert.toFixed],
-      windowlong: [Convert.toNumber, Convert.toFixed],
-      windowprobation: [Convert.toNumber, Convert.toFixed],
+      TaxPolicy: [PolicyConstraints.fromData, Convert.toData],
+      RewardPolicy: [PolicyConstraints.fromData, Convert.toData],
+      SeigniorageBurdenTarget: [Convert.toDec, Convert.toString],
+      MiningIncrement: [Convert.toDec, Convert.toString],
+      WindowShort: [Convert.toNumber, Convert.toFixed],
+      WindowLong: [Convert.toNumber, Convert.toFixed],
+      WindowProbation: [Convert.toNumber, Convert.toFixed],
     },
   };
 }

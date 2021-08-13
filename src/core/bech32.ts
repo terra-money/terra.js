@@ -123,11 +123,18 @@ export namespace ValConsAddress {
 }
 
 export namespace ValConsPubKey {
+  export interface Data {
+    type: string;
+    value: string;
+  }
+
   /**
    * Checks if string is a valid Terra consensus (node) pubkey.
    * @param data string to check
    */
-  export function validate(data: string): boolean {
-    return checkPrefixAndLength('terravalconspub', data, 82);
+  export function validate(data: ValConsPubKey.Data): boolean {
+    return (
+      data.type === 'tendermint/PubKeyEd25519' && typeof data.value === 'string'
+    );
   }
 }

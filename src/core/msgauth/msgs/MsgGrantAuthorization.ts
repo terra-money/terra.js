@@ -1,6 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Int } from '../../numeric';
 import { Authorization } from '../Authorization';
 
 export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
@@ -12,7 +11,7 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
     public granter: AccAddress,
     public grantee: AccAddress,
     public authorization: Authorization,
-    public period: Int
+    public expiration: Date
   ) {
     super();
   }
@@ -21,25 +20,31 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
     data: MsgGrantAuthorization.Data
   ): MsgGrantAuthorization {
     const {
-      value: { granter, grantee, authorization, period },
+      value: {
+        granter,
+        grantee,
+        grant: { authorization, expiration },
+      },
     } = data;
     return new MsgGrantAuthorization(
       granter,
       grantee,
       Authorization.fromData(authorization),
-      new Int(period)
+      new Date(expiration)
     );
   }
 
   public toData(): MsgGrantAuthorization.Data {
-    const { granter, grantee, authorization, period } = this;
+    const { granter, grantee, authorization, expiration } = this;
     return {
       type: 'msgauth/MsgGrantAuthorization',
       value: {
         granter,
         grantee,
-        authorization: authorization.toData(),
-        period: period.toFixed(),
+        grant: {
+          authorization: authorization.toData(),
+          expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+        },
       },
     };
   }
@@ -51,8 +56,10 @@ export namespace MsgGrantAuthorization {
     value: {
       granter: AccAddress;
       grantee: AccAddress;
-      authorization: Authorization.Data;
-      period: string;
+      grant: {
+        authorization: Authorization.Data;
+        expiration: string;
+      };
     };
   }
 }

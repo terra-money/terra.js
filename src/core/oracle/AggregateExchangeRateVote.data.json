@@ -1,0 +1,77 @@
+{
+  "exchange_rate_tuples": [
+    {
+      "denom": "uaud",
+      "exchange_rate": "8.099497011452464082"
+    },
+    {
+      "denom": "ucad",
+      "exchange_rate": "7.577173472450800448"
+    },
+    {
+      "denom": "uchf",
+      "exchange_rate": "5.606272651951189670"
+    },
+    {
+      "denom": "ucny",
+      "exchange_rate": "39.452837979258993140"
+    },
+    {
+      "denom": "udkk",
+      "exchange_rate": "38.241047368775133511"
+    },
+    {
+      "denom": "ueur",
+      "exchange_rate": "5.139663623776370157"
+    },
+    {
+      "denom": "ugbp",
+      "exchange_rate": "4.408410669174041069"
+    },
+    {
+      "denom": "uhkd",
+      "exchange_rate": "47.879657741819166432"
+    },
+    {
+      "denom": "uinr",
+      "exchange_rate": "455.278089535410089886"
+    },
+    {
+      "denom": "ujpy",
+      "exchange_rate": "682.913652146188456601"
+    },
+    {
+      "denom": "ukrw",
+      "exchange_rate": "7212.006856855468600762"
+    },
+    {
+      "denom": "umnt",
+      "exchange_rate": "17546.449467252153327358"
+    },
+    {
+      "denom": "unok",
+      "exchange_rate": "52.260211155579785444"
+    },
+    {
+      "denom": "usdr",
+      "exchange_rate": "4.283053019813641797"
+    },
+    {
+      "denom": "usek",
+      "exchange_rate": "52.204496644752941323"
+    },
+    {
+      "denom": "usgd",
+      "exchange_rate": "8.238783288519574384"
+    },
+    {
+      "denom": "uthb",
+      "exchange_rate": "193.148280408961856289"
+    },
+    {
+      "denom": "uusd",
+      "exchange_rate": "6.170382074072986394"
+    }
+  ],
+  "voter": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy"
+}

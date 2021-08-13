@@ -35,14 +35,14 @@ export class LCDUtils {
     const validatorSetResponse = await this.lcd.tendermint.validatorSet();
     const validators = await this.lcd.staking.validators();
     const validatorSet = validatorSetResponse.validators.reduce((m: any, o) => {
-      m[o.pub_key] = o;
+      m[o.pub_key.value] = o;
       return m;
     }, {});
 
     const res: { [k: string]: ValidatorWithVotingPower } = {};
 
     for (const v of validators) {
-      const delegateInfo = validatorSet[v.consensus_pubkey];
+      const delegateInfo = validatorSet[v.consensus_pubkey.value];
       if (delegateInfo === undefined) continue;
       res[v.operator_address] = {
         validatorInfo: v,

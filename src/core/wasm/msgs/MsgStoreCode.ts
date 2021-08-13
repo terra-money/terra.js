@@ -3,7 +3,7 @@ import { AccAddress } from '../../bech32';
 
 export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
   /**
-   * @param sender contract creator
+   * @param sender code creator
    * @param wasm_byte_code base64-encoded bytecode contents
    */
   constructor(public sender: AccAddress, public wasm_byte_code: string) {
