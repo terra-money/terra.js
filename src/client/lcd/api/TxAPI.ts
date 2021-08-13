@@ -11,6 +11,7 @@ import {
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
+import { APIParams } from '../APIRequester';
 
 /** Transaction broadcasting modes  */
 export enum Broadcast {
@@ -142,8 +143,10 @@ export class TxAPI extends BaseAPI {
    * Looks up a transaction on the blockchain, addressed by its hash
    * @param txHash transaction's hash
    */
-  public async txInfo(txHash: string): Promise<TxInfo> {
-    return this.c.getRaw<TxInfo.Data>(`/txs/${txHash}`).then(TxInfo.fromData);
+  public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
+    return this.c
+      .getRaw<TxInfo.Data>(`/txs/${txHash}`, params)
+      .then(TxInfo.fromData);
   }
 
   /**

@@ -5,6 +5,8 @@ export interface APIResponse<T> {
   result: T;
 }
 
+export type APIParams = Record<string, string | number | null | undefined>;
+
 export class APIRequester {
   private axios: AxiosInstance;
   constructor(baseURL: string) {
@@ -17,11 +19,14 @@ export class APIRequester {
     });
   }
 
-  public async getRaw<T>(endpoint: string, params?: any): Promise<T> {
+  public async getRaw<T>(endpoint: string, params: APIParams = {}): Promise<T> {
     return this.axios.get(endpoint, { params }).then(d => d.data);
   }
 
-  public async get<T>(endpoint: string, params?: any): Promise<APIResponse<T>> {
+  public async get<T>(
+    endpoint: string,
+    params: APIParams = {}
+  ): Promise<APIResponse<T>> {
     return this.axios.get(endpoint, { params }).then(d => d.data);
   }
 

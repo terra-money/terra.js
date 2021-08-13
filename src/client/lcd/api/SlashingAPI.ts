@@ -1,5 +1,6 @@
 import { BaseAPI } from './BaseAPI';
 import { Dec, ValConsAddress, ValConsPubKey } from '../../../core';
+import { APIParams } from '../APIRequester';
 
 export interface SlashingParams {
   /** Number of blocks over which missed blocks are tallied for downtime. */
@@ -66,7 +67,8 @@ export class SlashingAPI extends BaseAPI {
    * @param valConsPubKey validator's consensus public key
    */
   public async signingInfos(
-    valConsPubKey?: ValConsPubKey
+    valConsPubKey?: ValConsPubKey,
+    params: APIParams = {}
   ): Promise<SigningInfo[]> {
     let url;
     if (valConsPubKey !== undefined) {
@@ -75,7 +77,7 @@ export class SlashingAPI extends BaseAPI {
       url = `/slashing/signing_infos`;
     }
 
-    return this.c.get<SigningInfo.Data[]>(url).then(d =>
+    return this.c.get<SigningInfo.Data[]>(url, params).then(d =>
       d.result.map(x => ({
         address: x.address,
         start_height: Number.parseInt(x.start_height),
@@ -90,9 +92,9 @@ export class SlashingAPI extends BaseAPI {
   /**
    * Gets the current Slashing module's parameters.
    */
-  public async parameters(): Promise<SlashingParams> {
+  public async parameters(params: APIParams = {}): Promise<SlashingParams> {
     return this.c
-      .get<SlashingParams.Data>(`/slashing/parameters`)
+      .get<SlashingParams.Data>(`/slashing/parameters`, params)
       .then(({ result: d }) => ({
         signed_blocks_window: Number.parseInt(d.signed_blocks_window),
         min_signed_per_window: new Dec(d.min_signed_per_window),

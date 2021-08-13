@@ -9,6 +9,7 @@ import { Delegation } from '../../../core/staking/Delegation';
 import { Validator } from '../../../core/staking/Validator';
 import { Redelegation } from '../../../core/staking/Redelegation';
 import { Denom } from '../../../core/Denom';
+import { APIParams } from '../APIRequester';
 
 export interface StakingParams {
   /** Amount of time, in seconds, for bonded staking tokens to be unbonded. */
@@ -65,21 +66,29 @@ export class StakingAPI extends BaseAPI {
    */
   public async delegations(
     delegator?: AccAddress,
-    validator?: ValAddress
+    validator?: ValAddress,
+    params: APIParams = {}
   ): Promise<Delegation[]> {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
         .get<Delegation.Data>(
-          `/staking/delegators/${delegator}/delegations/${validator}`
+          `/staking/delegators/${delegator}/delegations/${validator}`,
+          params
         )
         .then(data => [Delegation.fromData(data.result)]);
     } else if (delegator !== undefined) {
       return this.c
-        .get<Delegation.Data[]>(`/staking/delegators/${delegator}/delegations`)
+        .get<Delegation.Data[]>(
+          `/staking/delegators/${delegator}/delegations`,
+          params
+        )
         .then(data => data.result.map(Delegation.fromData));
     } else if (validator !== undefined) {
       return this.c
-        .get<Delegation.Data[]>(`/staking/validators/${validator}/delegations`)
+        .get<Delegation.Data[]>(
+          `/staking/validators/${validator}/delegations`,
+          params
+        )
         .then(data => data.result.map(Delegation.fromData));
     } else {
       throw new TypeError(
@@ -109,24 +118,28 @@ export class StakingAPI extends BaseAPI {
    */
   public async unbondingDelegations(
     delegator?: AccAddress,
-    validator?: ValAddress
+    validator?: ValAddress,
+    params: APIParams = {}
   ): Promise<UnbondingDelegation[]> {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
         .get<UnbondingDelegation.Data>(
-          `/staking/delegators/${delegator}/unbonding_delegations/${validator}`
+          `/staking/delegators/${delegator}/unbonding_delegations/${validator}`,
+          params
         )
         .then(data => [UnbondingDelegation.fromData(data.result)]);
     } else if (delegator !== undefined) {
       return this.c
         .get<UnbondingDelegation.Data[]>(
-          `/staking/delegators/${delegator}/unbonding_delegations`
+          `/staking/delegators/${delegator}/unbonding_delegations`,
+          params
         )
         .then(data => data.result.map(UnbondingDelegation.fromData));
     } else if (validator !== undefined) {
       return this.c
         .get<UnbondingDelegation.Data[]>(
-          `/staking/validators/${validator}/unbonding_delegations`
+          `/staking/validators/${validator}/unbonding_delegations`,
+          params
         )
         .then(data => data.result.map(UnbondingDelegation.fromData));
     } else {
@@ -159,9 +172,11 @@ export class StakingAPI extends BaseAPI {
   public async redelegations(
     delegator?: AccAddress,
     validatorSrc?: ValAddress,
-    validatorDst?: ValAddress
+    validatorDst?: ValAddress,
+    _params: APIParams = {}
   ): Promise<Redelegation[]> {
     const params = {
+      ..._params,
       delegator,
       validator_from: validatorSrc,
       validator_to: validatorDst,
@@ -175,18 +190,24 @@ export class StakingAPI extends BaseAPI {
    * Gets all bonded validators for a delegator given its address.
    * @param delegator delegator's account address
    */
-  public async bondedValidators(delegator: AccAddress): Promise<Validator[]> {
+  public async bondedValidators(
+    delegator: AccAddress,
+    params: APIParams = {}
+  ): Promise<Validator[]> {
     return this.c
-      .get<Validator.Data[]>(`/staking/delegators/${delegator}/validators`)
+      .get<Validator.Data[]>(
+        `/staking/delegators/${delegator}/validators`,
+        params
+      )
       .then(d => d.result.map(Validator.fromData));
   }
 
   /**
    * Get all current registered validators, including validators that are not currently in the validating set.
    */
-  public async validators(): Promise<Validator[]> {
+  public async validators(params: APIParams = {}): Promise<Validator[]> {
     return this.c
-      .get<Validator.Data[]>(`/staking/validators`)
+      .get<Validator.Data[]>(`/staking/validators`, params)
       .then(d => d.result.map(Validator.fromData));
   }
 
@@ -194,18 +215,21 @@ export class StakingAPI extends BaseAPI {
    * Gets the validator information for a specific validator.
    * @param validator validator's operator address
    */
-  public async validator(validator: ValAddress): Promise<Validator> {
+  public async validator(
+    validator: ValAddress,
+    params: APIParams = {}
+  ): Promise<Validator> {
     return this.c
-      .get<Validator.Data>(`/staking/validators/${validator}`)
+      .get<Validator.Data>(`/staking/validators/${validator}`, params)
       .then(d => Validator.fromData(d.result));
   }
 
   /**
    * Gets the current staking pool.
    */
-  public async pool(): Promise<StakingPool> {
+  public async pool(params: APIParams = {}): Promise<StakingPool> {
     return this.c
-      .get<StakingPool.Data>(`/staking/pool`)
+      .get<StakingPool.Data>(`/staking/pool`, params)
       .then(({ result: d }) => ({
         bonded_tokens: new Coin(Denom.LUNA, d.bonded_tokens),
         not_bonded_tokens: new Coin(Denom.LUNA, d.not_bonded_tokens),
@@ -215,9 +239,9 @@ export class StakingAPI extends BaseAPI {
   /**
    * Gets the current Staking module's parameters.
    */
-  public async parameters(): Promise<StakingParams> {
+  public async parameters(params: APIParams = {}): Promise<StakingParams> {
     return this.c
-      .get<StakingParams.Data>(`/staking/parameters`)
+      .get<StakingParams.Data>(`/staking/parameters`, params)
       .then(({ result: d }) => ({
         unbonding_time: Number.parseInt(d.unbonding_time),
         max_validators: d.max_validators,

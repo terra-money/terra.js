@@ -13,6 +13,7 @@ import {
   VotingParams,
   TallyParams,
 } from '../../../core/gov/params';
+import { APIParams } from '../APIRequester';
 
 export interface GovParams {
   /**
@@ -59,9 +60,9 @@ export class GovAPI extends BaseAPI {
   /**
    * Gets all proposals.
    */
-  public async proposals(): Promise<Proposal[]> {
+  public async proposals(params: APIParams = {}): Promise<Proposal[]> {
     return this.c
-      .get<Proposal.Data[]>(`/gov/proposals`)
+      .get<Proposal.Data[]>(`/gov/proposals`, params)
       .then(d => d.result.map(Proposal.fromData));
   }
 
@@ -69,9 +70,12 @@ export class GovAPI extends BaseAPI {
    * Get a specific proposal by its ID
    * @param proposalId proposal's ID
    */
-  public async proposal(proposalId: number): Promise<Proposal> {
+  public async proposal(
+    proposalId: number,
+    params: APIParams = {}
+  ): Promise<Proposal> {
     return this.c
-      .get<Proposal.Data>(`/gov/proposals/${proposalId}`)
+      .get<Proposal.Data>(`/gov/proposals/${proposalId}`, params)
       .then(d => Proposal.fromData(d.result));
   }
 
@@ -79,9 +83,15 @@ export class GovAPI extends BaseAPI {
    * Get the proposal's proposer
    * @param proposalId proposal's ID
    */
-  public async proposer(proposalId: number): Promise<AccAddress> {
+  public async proposer(
+    proposalId: number,
+    params: APIParams = {}
+  ): Promise<AccAddress> {
     return this.c
-      .get<{ proposer: AccAddress }>(`/gov/proposals/${proposalId}/proposer`)
+      .get<{ proposer: AccAddress }>(
+        `/gov/proposals/${proposalId}/proposer`,
+        params
+      )
       .then(d => d.result.proposer);
   }
 
@@ -89,9 +99,12 @@ export class GovAPI extends BaseAPI {
    * Get the deposits for a proposal
    * @param proposalId proposal's ID
    */
-  public async deposits(proposalId: number): Promise<Deposit> {
+  public async deposits(
+    proposalId: number,
+    params: APIParams = {}
+  ): Promise<Deposit> {
     return this.c
-      .get<Deposit.Data>(`/gov/proposals/${proposalId}/deposits`)
+      .get<Deposit.Data>(`/gov/proposals/${proposalId}/deposits`, params)
       .then(d => Deposit.fromData(d.result));
   }
 
@@ -99,9 +112,12 @@ export class GovAPI extends BaseAPI {
    * Get the current votes for a proposal
    * @param proposalId proposal's ID
    */
-  public async votes(proposalId: number): Promise<Vote> {
+  public async votes(
+    proposalId: number,
+    params: APIParams = {}
+  ): Promise<Vote> {
     return this.c
-      .get<Vote.Data>(`/gov/proposals/${proposalId}/votes`, { limit: 100 })
+      .get<Vote.Data>(`/gov/proposals/${proposalId}/votes`, params)
       .then(d => Vote.fromData(d.result));
   }
 
@@ -109,9 +125,12 @@ export class GovAPI extends BaseAPI {
    * Gets the current tally for a proposal.
    * @param proposalId proposal's ID
    */
-  public async tally(proposalId: number): Promise<Tally> {
+  public async tally(
+    proposalId: number,
+    params: APIParams = {}
+  ): Promise<Tally> {
     return this.c
-      .get<Tally.Data>(`/gov/proposals/${proposalId}/tally`)
+      .get<Tally.Data>(`/gov/proposals/${proposalId}/tally`, params)
       .then(({ result: d }) => ({
         yes: new Int(d.yes),
         no: new Int(d.no),
@@ -121,9 +140,11 @@ export class GovAPI extends BaseAPI {
   }
 
   /** Gets the Gov module's deposit parameters */
-  public async depositParameters(): Promise<DepositParams> {
+  public async depositParameters(
+    params: APIParams = {}
+  ): Promise<DepositParams> {
     return this.c
-      .get<DepositParams.Data>(`/gov/parameters/deposit`)
+      .get<DepositParams.Data>(`/gov/parameters/deposit`, params)
       .then(({ result: d }) => ({
         max_deposit_period: Number.parseInt(d.max_deposit_period),
         min_deposit: Coins.fromData(d.min_deposit),
@@ -131,18 +152,18 @@ export class GovAPI extends BaseAPI {
   }
 
   /** Gets the Gov module's voting parameters */
-  public async votingParameters(): Promise<VotingParams> {
+  public async votingParameters(params: APIParams = {}): Promise<VotingParams> {
     return this.c
-      .get<VotingParams.Data>(`/gov/parameters/voting`)
+      .get<VotingParams.Data>(`/gov/parameters/voting`, params)
       .then(({ result: d }) => ({
         voting_period: Number.parseInt(d.voting_period),
       }));
   }
 
   /** Gets teh Gov module's tally parameters */
-  public async tallyParameters(): Promise<TallyParams> {
+  public async tallyParameters(params: APIParams = {}): Promise<TallyParams> {
     return this.c
-      .get<TallyParams.Data>(`/gov/parameters/tallying`)
+      .get<TallyParams.Data>(`/gov/parameters/tallying`, params)
       .then(({ result: d }) => ({
         quorum: new Dec(d.quorum),
         veto_threshold: new Dec(d.veto_threshold),
@@ -151,11 +172,11 @@ export class GovAPI extends BaseAPI {
   }
 
   /** Gets the Gov module's current parameters  */
-  public async parameters(): Promise<GovParams> {
+  public async parameters(params: APIParams = {}): Promise<GovParams> {
     const [deposit_params, voting_params, tally_params] = await Promise.all([
-      this.depositParameters(),
-      this.votingParameters(),
-      this.tallyParameters(),
+      this.depositParameters(params),
+      this.votingParameters(params),
+      this.tallyParameters(params),
     ]);
     return {
       deposit_params,

@@ -4,6 +4,7 @@
  */
 import { Coins } from '../../../core';
 import { BaseAPI } from './BaseAPI';
+import { APIParams } from '../APIRequester';
 
 export interface SupplyResponse {
   supply: Coins;
@@ -19,9 +20,9 @@ export class SupplyAPI extends BaseAPI {
   /**
    * Get the total supply of tokens in circulation for all denominations.
    */
-  public async total(): Promise<Coins> {
+  public async total(params: APIParams = {}): Promise<Coins> {
     return this.c
-      .get<SupplyResponse.Data>(`/bank/total`)
+      .get<SupplyResponse.Data>(`/bank/total`, params)
       .then(d => Coins.fromData(d.result.supply));
   }
 }
