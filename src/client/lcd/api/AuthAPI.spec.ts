@@ -1,6 +1,6 @@
 import { APIRequester } from '../APIRequester';
 import { AuthAPI } from './AuthAPI';
-import { Account, LazyGradedVestingAccount } from '../../../core';
+import { Account } from '../../../core';
 import { MnemonicKey } from '../../../key';
 
 // TODO - restore to https://lcd.terra.dev
