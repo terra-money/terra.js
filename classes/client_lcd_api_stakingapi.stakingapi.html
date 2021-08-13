@@ -120,7 +120,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="client_lcd_api_baseapi.baseapi.html">BaseAPI</a>.<a href="client_lcd_api_baseapi.baseapi.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,13 +140,13 @@
 					<a name="bondedvalidators" class="tsd-anchor"></a>
 					<h3>bonded<wbr>Validators</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">bonded<wbr>Validators<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">bonded<wbr>Validators<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L178">src/client/lcd/api/StakingAPI.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L193">src/client/lcd/api/StakingAPI.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -161,6 +161,9 @@
 									<div class="tsd-comment tsd-typography">
 										<p>delegator&#39;s account address</p>
 									</div>
+								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -177,7 +180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L96">src/client/lcd/api/StakingAPI.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L105">src/client/lcd/api/StakingAPI.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -208,13 +211,13 @@
 					<a name="delegations" class="tsd-anchor"></a>
 					<h3>delegations</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_delegation.delegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Delegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_delegation.delegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Delegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L66">src/client/lcd/api/StakingAPI.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L67">src/client/lcd/api/StakingAPI.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -237,6 +240,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_delegation.delegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Delegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -246,13 +252,13 @@
 					<a name="parameters" class="tsd-anchor"></a>
 					<h3>parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L218">src/client/lcd/api/StakingAPI.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L242">src/client/lcd/api/StakingAPI.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -260,6 +266,12 @@
 									<p>Gets the current Staking module&#39;s parameters.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -268,13 +280,13 @@
 					<a name="pool" class="tsd-anchor"></a>
 					<h3>pool</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">pool<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingpool-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingPool</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">pool<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingpool-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingPool</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L206">src/client/lcd/api/StakingAPI.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L230">src/client/lcd/api/StakingAPI.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,6 +294,12 @@
 									<p>Gets the current staking pool.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_stakingapi.stakingpool-1.html" class="tsd-signature-type" data-tsd-kind="Interface">StakingPool</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -290,13 +308,13 @@
 					<a name="redelegations" class="tsd-anchor"></a>
 					<h3>redelegations</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">redelegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validatorSrc<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validatorDst<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_redelegation.redelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Redelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">redelegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validatorSrc<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validatorDst<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, _params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_redelegation.redelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Redelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L159">src/client/lcd/api/StakingAPI.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L172">src/client/lcd/api/StakingAPI.ts:172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,6 +342,9 @@
 										<p>destination validator&#39;s operator address (to).</p>
 									</div>
 								</li>
+								<li>
+									<h5>_params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_redelegation.redelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">Redelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -339,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L144">src/client/lcd/api/StakingAPI.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L157">src/client/lcd/api/StakingAPI.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,13 +391,13 @@
 					<a name="unbondingdelegations" class="tsd-anchor"></a>
 					<h3>unbonding<wbr>Delegations</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">unbonding<wbr>Delegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_unbondingdelegation.unbondingdelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">UnbondingDelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">unbonding<wbr>Delegations<span class="tsd-signature-symbol">(</span>delegator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, validator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_unbondingdelegation.unbondingdelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">UnbondingDelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L110">src/client/lcd/api/StakingAPI.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L119">src/client/lcd/api/StakingAPI.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,6 +420,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_unbondingdelegation.unbondingdelegation-1.html" class="tsd-signature-type" data-tsd-kind="Class">UnbondingDelegation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -408,13 +432,13 @@
 					<a name="validator" class="tsd-anchor"></a>
 					<h3>validator</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">validator<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">validator<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L197">src/client/lcd/api/StakingAPI.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L218">src/client/lcd/api/StakingAPI.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -430,6 +454,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -439,13 +466,13 @@
 					<a name="validators" class="tsd-anchor"></a>
 					<h3>validators</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">validators<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">validators<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/StakingAPI.ts#L187">src/client/lcd/api/StakingAPI.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/StakingAPI.ts#L208">src/client/lcd/api/StakingAPI.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -453,6 +480,12 @@
 									<p>Get all current registered validators, including validators that are not currently in the validating set.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_staking_validator.validator-1.html" class="tsd-signature-type" data-tsd-kind="Class">Validator</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>

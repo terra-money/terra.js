@@ -120,7 +120,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="client_lcd_api_baseapi.baseapi.html">BaseAPI</a>.<a href="client_lcd_api_baseapi.baseapi.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -140,13 +140,13 @@
 					<a name="depositparameters" class="tsd-anchor"></a>
 					<h3>deposit<wbr>Parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">deposit<wbr>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.depositparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">DepositParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">deposit<wbr>Parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.depositparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">DepositParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L116">src/client/lcd/api/GovAPI.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L132">src/client/lcd/api/GovAPI.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -154,6 +154,12 @@
 									<p>Gets the Gov module&#39;s deposit parameters</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.depositparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">DepositParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -162,13 +168,13 @@
 					<a name="deposits" class="tsd-anchor"></a>
 					<h3>deposits</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">deposits<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">deposits<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L84">src/client/lcd/api/GovAPI.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L94">src/client/lcd/api/GovAPI.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -184,6 +190,9 @@
 										<p>proposal&#39;s ID</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -193,13 +202,13 @@
 					<a name="parameters" class="tsd-anchor"></a>
 					<h3>parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.govparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">GovParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.govparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">GovParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L146">src/client/lcd/api/GovAPI.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L164">src/client/lcd/api/GovAPI.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,6 +216,12 @@
 									<p>Gets the Gov module&#39;s current parameters</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.govparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">GovParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -215,13 +230,13 @@
 					<a name="proposal" class="tsd-anchor"></a>
 					<h3>proposal</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">proposal<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">proposal<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L64">src/client/lcd/api/GovAPI.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L65">src/client/lcd/api/GovAPI.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -237,6 +252,9 @@
 										<p>proposal&#39;s ID</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -246,13 +264,13 @@
 					<a name="proposals" class="tsd-anchor"></a>
 					<h3>proposals</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">proposals<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">proposals<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L54">src/client/lcd/api/GovAPI.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L55">src/client/lcd/api/GovAPI.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -260,6 +278,12 @@
 									<p>Gets all proposals.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_proposal.proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -268,13 +292,13 @@
 					<a name="proposer" class="tsd-anchor"></a>
 					<h3>proposer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">proposer<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">proposer<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L74">src/client/lcd/api/GovAPI.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L78">src/client/lcd/api/GovAPI.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -290,6 +314,9 @@
 										<p>proposal&#39;s ID</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -299,13 +326,13 @@
 					<a name="tally" class="tsd-anchor"></a>
 					<h3>tally</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">tally<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.tally-1.html" class="tsd-signature-type" data-tsd-kind="Interface">Tally</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">tally<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.tally-1.html" class="tsd-signature-type" data-tsd-kind="Interface">Tally</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L104">src/client/lcd/api/GovAPI.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L117">src/client/lcd/api/GovAPI.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -321,6 +348,9 @@
 										<p>proposal&#39;s ID</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_govapi.tally-1.html" class="tsd-signature-type" data-tsd-kind="Interface">Tally</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -330,13 +360,13 @@
 					<a name="tallyparameters" class="tsd-anchor"></a>
 					<h3>tally<wbr>Parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">tally<wbr>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.tallyparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">TallyParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">tally<wbr>Parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.tallyparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">TallyParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L135">src/client/lcd/api/GovAPI.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L153">src/client/lcd/api/GovAPI.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -344,6 +374,12 @@
 									<p>Gets teh Gov module&#39;s tally parameters</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.tallyparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">TallyParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -352,13 +388,13 @@
 					<a name="votes" class="tsd-anchor"></a>
 					<h3>votes</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">votes<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">votes<span class="tsd-signature-symbol">(</span>proposalId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L94">src/client/lcd/api/GovAPI.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L107">src/client/lcd/api/GovAPI.ts:107</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -374,6 +410,9 @@
 										<p>proposal&#39;s ID</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -383,13 +422,13 @@
 					<a name="votingparameters" class="tsd-anchor"></a>
 					<h3>voting<wbr>Parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">voting<wbr>Parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.votingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">VotingParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">voting<wbr>Parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.votingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">VotingParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/GovAPI.ts#L126">src/client/lcd/api/GovAPI.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/GovAPI.ts#L144">src/client/lcd/api/GovAPI.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,6 +436,12 @@
 									<p>Gets the Gov module&#39;s voting parameters</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_gov_params.votingparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">VotingParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>

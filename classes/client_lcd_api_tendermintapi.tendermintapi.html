@@ -114,7 +114,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="client_lcd_api_baseapi.baseapi.html">BaseAPI</a>.<a href="client_lcd_api_baseapi.baseapi.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -134,13 +134,13 @@
 					<a name="blockinfo" class="tsd-anchor"></a>
 					<h3>block<wbr>Info</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">block<wbr>Info<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_block.blockinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">block<wbr>Info<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_block.blockinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockInfo</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/TendermintAPI.ts#L35">src/client/lcd/api/TendermintAPI.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/TendermintAPI.ts#L41">src/client/lcd/api/TendermintAPI.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -156,6 +156,9 @@
 										<p>block height.</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_block.blockinfo.html" class="tsd-signature-type" data-tsd-kind="Interface">BlockInfo</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -165,13 +168,13 @@
 					<a name="nodeinfo" class="tsd-anchor"></a>
 					<h3>node<wbr>Info</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">node<wbr>Info<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">node<wbr>Info<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/TendermintAPI.ts#L8">src/client/lcd/api/TendermintAPI.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/TendermintAPI.ts#L9">src/client/lcd/api/TendermintAPI.ts:9</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -179,6 +182,12 @@
 									<p>Gets the node&#39;s information.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -187,13 +196,13 @@
 					<a name="syncing" class="tsd-anchor"></a>
 					<h3>syncing</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">syncing<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">syncing<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/TendermintAPI.ts#L15">src/client/lcd/api/TendermintAPI.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/TendermintAPI.ts#L16">src/client/lcd/api/TendermintAPI.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,6 +210,12 @@
 									<p>Gets whether the node is currently in syncing mode to catch up with blocks.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -209,13 +224,13 @@
 					<a name="validatorset" class="tsd-anchor"></a>
 					<h3>validator<wbr>Set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">validator<wbr>Set<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_validatorset.validatorset.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidatorSet</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">validator<wbr>Set<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_validatorset.validatorset.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidatorSet</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/TendermintAPI.ts#L23">src/client/lcd/api/TendermintAPI.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/TendermintAPI.ts#L26">src/client/lcd/api/TendermintAPI.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,6 +245,9 @@
 									<div class="tsd-comment tsd-typography">
 										<p>block height</p>
 									</div>
+								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/core_validatorset.validatorset.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidatorSet</a><span class="tsd-signature-symbol">&gt;</span></h4>

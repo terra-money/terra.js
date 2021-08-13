@@ -118,7 +118,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="client_lcd_api_baseapi.baseapi.html">BaseAPI</a>.<a href="client_lcd_api_baseapi.baseapi.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/BaseAPI.ts#L3">src/client/lcd/api/BaseAPI.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -138,13 +138,13 @@
 					<a name="activedenoms" class="tsd-anchor"></a>
 					<h3>active<wbr>Denoms</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">active<wbr>Denoms<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">active<wbr>Denoms<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L82">src/client/lcd/api/OracleAPI.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L85">src/client/lcd/api/OracleAPI.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -152,6 +152,12 @@
 									<p>Gets the current list of active denominations.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -160,13 +166,13 @@
 					<a name="aggregateprevote" class="tsd-anchor"></a>
 					<h3>aggregate<wbr>Prevote</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Prevote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangerateprevote.aggregateexchangerateprevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRatePrevote</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Prevote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangerateprevote.aggregateexchangerateprevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRatePrevote</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L111">src/client/lcd/api/OracleAPI.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L122">src/client/lcd/api/OracleAPI.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -182,6 +188,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangerateprevote.aggregateexchangerateprevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRatePrevote</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -191,13 +200,13 @@
 					<a name="aggregatevote" class="tsd-anchor"></a>
 					<h3>aggregate<wbr>Vote</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Vote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangeratevote.aggregateexchangeratevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRateVote</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">aggregate<wbr>Vote<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangeratevote.aggregateexchangeratevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRateVote</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L125">src/client/lcd/api/OracleAPI.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L138">src/client/lcd/api/OracleAPI.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,6 +221,9 @@
 									<div class="tsd-comment tsd-typography">
 										<p>validator&#39;s operator address</p>
 									</div>
+								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_oracle_aggregateexchangeratevote.aggregateexchangeratevote-1.html" class="tsd-signature-type" data-tsd-kind="Class">AggregateExchangeRateVote</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -228,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L74">src/client/lcd/api/OracleAPI.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L77">src/client/lcd/api/OracleAPI.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -253,13 +265,13 @@
 					<a name="exchangerates" class="tsd-anchor"></a>
 					<h3>exchange<wbr>Rates</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">exchange<wbr>Rates<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_coins.coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">exchange<wbr>Rates<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_coins.coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L60">src/client/lcd/api/OracleAPI.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L61">src/client/lcd/api/OracleAPI.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,6 +279,12 @@
 									<p>Gets the Oracle module&#39;s currently registered exchange rate for LUNA in all available denominations.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core_coins.coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -275,13 +293,13 @@
 					<a name="feederaddress" class="tsd-anchor"></a>
 					<h3>feeder<wbr>Address</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">feeder<wbr>Address<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">feeder<wbr>Address<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L91">src/client/lcd/api/OracleAPI.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L96">src/client/lcd/api/OracleAPI.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,6 +316,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -307,13 +328,13 @@
 					<a name="misses" class="tsd-anchor"></a>
 					<h3>misses</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">misses<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">misses<span class="tsd-signature-symbol">(</span>validator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L101">src/client/lcd/api/OracleAPI.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L109">src/client/lcd/api/OracleAPI.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,6 +350,9 @@
 										<p>validator&#39;s operator address</p>
 									</div>
 								</li>
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -338,13 +362,13 @@
 					<a name="parameters" class="tsd-anchor"></a>
 					<h3>parameters</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_oracleapi.oracleparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">OracleParams</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">parameters<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_oracleapi.oracleparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">OracleParams</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/34fb928/src/client/lcd/api/OracleAPI.ts#L138">src/client/lcd/api/OracleAPI.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/b17807d/src/client/lcd/api/OracleAPI.ts#L153">src/client/lcd/api/OracleAPI.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -352,6 +376,12 @@
 									<p>Gets the current Oracle module&#39;s parameters.</p>
 								</div>
 							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../modules/client_lcd_apirequester.html#apiparams" class="tsd-signature-type" data-tsd-kind="Type alias">APIParams</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/client_lcd_api_oracleapi.oracleparams-1.html" class="tsd-signature-type" data-tsd-kind="Interface">OracleParams</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
