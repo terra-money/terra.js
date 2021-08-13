@@ -137,7 +137,7 @@ export class GovAPI extends BaseAPI {
       .get<TallyParams.Data>(`/gov/parameters/tallying`)
       .then(({ result: d }) => ({
         quorum: new Dec(d.quorum),
-        veto: new Dec(d.veto),
+        veto_threshold: new Dec(d.veto_threshold),
         threshold: new Dec(d.threshold),
       }));
   }

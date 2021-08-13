@@ -122,9 +122,10 @@ describe('ValConsAddress', () => {
 describe('ValConsPubKey', () => {
   it('validate validator consensus public key', () => {
     expect(
-      ValConsPubKey.validate(
-        'terravalconspub1zcjduepqlnrzpfxsl8vx8mlf9hnjf6y24kczr9ue7k68l82pu23qnjj460ksqy0j0d'
-      )
+      ValConsPubKey.validate({
+        type: 'tendermint/PubKeyEd25519',
+        value: 'abcdef',
+      })
     ).toBeTruthy();
   });
 });

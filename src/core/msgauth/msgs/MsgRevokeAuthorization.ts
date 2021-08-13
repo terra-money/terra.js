@@ -10,7 +10,7 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
   constructor(
     public granter: AccAddress,
     public grantee: AccAddress,
-    public authorization_msg_type: string
+    public msg_type_url: string
   ) {
     super();
   }
@@ -19,19 +19,19 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
     data: MsgRevokeAuthorization.Data
   ): MsgRevokeAuthorization {
     const {
-      value: { granter, grantee, authorization_msg_type },
+      value: { granter, grantee, msg_type_url },
     } = data;
-    return new MsgRevokeAuthorization(granter, grantee, authorization_msg_type);
+    return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
   }
 
   public toData(): MsgRevokeAuthorization.Data {
-    const { granter, grantee, authorization_msg_type } = this;
+    const { granter, grantee, msg_type_url } = this;
     return {
       type: 'msgauth/MsgRevokeAuthorization',
       value: {
         granter,
         grantee,
-        authorization_msg_type,
+        msg_type_url,
       },
     };
   }
@@ -43,7 +43,7 @@ export namespace MsgRevokeAuthorization {
     value: {
       granter: AccAddress;
       grantee: AccAddress;
-      authorization_msg_type: string;
+      msg_type_url: string;
     };
   }
 }

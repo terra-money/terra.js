@@ -2,7 +2,7 @@ import { Dec } from '../../../core/numeric';
 import { APIRequester } from '../APIRequester';
 import { MintAPI } from './MintAPI';
 
-const c = new APIRequester('https://tequila-lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const api = new MintAPI(c);
 
 describe('MintAPI', () => {

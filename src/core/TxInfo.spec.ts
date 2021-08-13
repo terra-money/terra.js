@@ -15,8 +15,12 @@ const instantiateContractTxData = {
           type: 'instantiate_contract',
           attributes: [
             {
-              key: 'owner',
+              key: 'creator',
               value: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+            },
+            {
+              key: 'admin',
+              value: '',
             },
             {
               key: 'code_id',
@@ -53,12 +57,11 @@ const instantiateContractTxData = {
         {
           type: 'wasm/MsgInstantiateContract',
           value: {
-            owner: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+            sender: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+            admin: '',
             code_id: '118',
-            init_msg:
-              'eyJmZWUiOnsiZGVub20iOiJ1bHVuYSIsImFtb3VudCI6IjEwMCJ9fQ==',
+            init_msg: { fee: { denom: 'uluna', amount: '100' } },
             init_coins: [],
-            migratable: false,
           },
         },
       ],
@@ -89,7 +92,7 @@ const instantiateContractTxData = {
 
 describe('TxInfo', () => {
   it('deserializes', () => {
-    data.txs.forEach((txInfo: TxInfo.Data) => {
+    data.forEach((txInfo: TxInfo.Data) => {
       expect(txInfo).toMatchObject(TxInfo.fromData(txInfo).toData());
     });
   });
@@ -103,19 +106,21 @@ describe('TxInfo', () => {
 
     const {
       message: { action, module },
-      instantiate_contract: { owner, code_id, contract_address },
+      instantiate_contract: { creator, admin, code_id, contract_address },
     } = tx.logs[0].eventsByType;
 
     expect({
       action: action[0],
       module: module[0],
-      owner: owner[0],
+      creator: creator[0],
+      admin: admin[0],
       code_id: code_id[0],
       contract_address: contract_address[0],
     }).toMatchObject({
       action: 'instantiate_contract',
       module: 'wasm',
-      owner: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+      creator: 'terra1t72mplryz3n2y953w44fc3rj0yp4m82qvkhrz3',
+      admin: '',
       code_id: '118',
       contract_address: 'terra1emf0rwa3nfljdn6mq0mycy8vxcdaklgmzwam2s',
     });

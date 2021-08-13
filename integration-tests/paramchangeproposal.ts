@@ -38,32 +38,32 @@ const proposal = new ParameterChangeProposal('testing params', 'yay!', {
     SlashFractionDowntime: new Dec(213.123),
   },
   treasury: {
-    taxpolicy: new PolicyConstraints(0, 100, new Coin('unused', 0), 3),
-    rewardpolicy: new PolicyConstraints(
+    TaxPolicy: new PolicyConstraints(0, 100, new Coin('unused', 0), 3),
+    RewardPolicy: new PolicyConstraints(
       0,
       1023423340,
       new Coin('unused', 0),
       3
     ),
-    seigniorageburdentarget: new Dec('2342.234234'),
-    miningincrement: new Dec(23423423423.234234234234982),
-    windowshort: 50,
-    windowlong: 2,
-    windowprobation: 30,
+    SeigniorageBurdenTarget: new Dec('2342.234234'),
+    MiningIncrement: new Dec(23423423423.234234234234982),
+    WindowShort: 50,
+    WindowLong: 2,
+    WindowProbation: 30,
   },
   oracle: {
-    voteperiod: 345345,
-    votethreshold: new Dec('2342.234333'),
-    rewardband: new Dec('234343'),
-    rewarddistributionwindow: 345345,
-    slashfraction: new Dec(23423.232343),
-    slashwindow: 343311,
-    minvalidperwindow: new Dec(2342.234234),
+    VotePeriod: 345345,
+    VoteThreshold: new Dec('2342.234333'),
+    RewardBand: new Dec('234343'),
+    RewardDistributionWindow: 345345,
+    SlashFraction: new Dec(23423.232343),
+    SlashWindow: 343311,
+    MinValidPerWindow: new Dec(2342.234234),
   },
   market: {
-    poolrecoveryperiod: 234234234,
-    basepool: new Dec(232323232),
-    minstabilityspread: new Dec(343434),
+    PoolRecoveryPeriod: 234234234,
+    BasePool: new Dec(232323232),
+    MinStabilitySpread: new Dec(343434),
   },
   gov: {
     depositparams: {
@@ -76,7 +76,7 @@ const proposal = new ParameterChangeProposal('testing params', 'yay!', {
     tallyparams: {
       quorum: new Dec(234234.2334),
       threshold: new Dec(23423.2323),
-      veto: new Dec(1232.234),
+      veto_threshold: new Dec(1232.234),
     },
   },
   mint: {
@@ -88,9 +88,9 @@ const proposal = new ParameterChangeProposal('testing params', 'yay!', {
     GoalBonded: new Dec(0.01),
   },
   wasm: {
-    maxcontractgas: 1000000,
-    maxcontractmsgsize: 1000000,
-    maxcontractsize: 1000000,
+    MaxContractGas: 1000000,
+    MaxContractMsgSize: 1000000,
+    MaxContractSize: 1000000,
   },
 });
 

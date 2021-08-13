@@ -1,389 +1,58 @@
-[{
-    "delegator_address": "terra1rgdwkjzjwhs5d2xypj30njf5ly3cu0cup67dgk",
-    "validator_src_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "validator_dst_address": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku",
-    "entries": [{
-      "creation_height": 698634,
-      "completion_time": "2020-02-25T17:19:58.572119114Z",
-      "initial_balance": "104689381153",
-      "shares_dst": "104689381153.000000000000000000",
-      "balance": "104689381153"
-    }]
-  },
+[
   {
-    "delegator_address": "terra1rv6z5pkn5qf799d5ajhy50muxnghk7j6q9rgs9",
-    "validator_src_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "validator_dst_address": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku",
-    "entries": [{
-      "creation_height": 693970,
-      "completion_time": "2020-02-25T08:46:00.020722341Z",
-      "initial_balance": "30000000",
-      "shares_dst": "30000000.000000000000000000",
-      "balance": "30000000"
-    }]
-  },
-  {
-    "delegator_address": "terra1y4umfuqfg76t8mfcff6zzx7elvy93jtp4xcdvw",
-    "validator_src_address": "terravaloper1lda78gzrjx0rsadtdk0zn4v7awtz6m9lrd5ez9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 678188,
-      "completion_time": "2020-02-24T03:48:05.955658822Z",
-      "initial_balance": "1150000000000",
-      "shares_dst": "1150000000000.000000000000000000",
-      "balance": "1150000000000"
-    }]
-  },
-  {
-    "delegator_address": "terra19nwk7qgt73rf82rarr5e4k04n26nru039z9aye",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 459380,
-      "completion_time": "2020-02-07T12:41:42.636901023Z",
-      "initial_balance": "3000706300",
-      "shares_dst": "3000706300.000000000000000000",
-      "balance": "3000706300"
-    }]
-  },
-  {
-    "delegator_address": "terra1xu5dep9lfz4v9yjyl0zxv8tc32gwg6ltc9memf",
-    "validator_src_address": "terravaloper1t0z9y2p26qzsh06f2l2kn2v8hqtkyd33s409ey",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-      "creation_height": 615355,
-      "completion_time": "2020-02-19T09:09:19.208212588Z",
-      "initial_balance": "62282011608",
-      "shares_dst": "62282011608.000000000000000000",
-      "balance": "62282011608"
-    }]
-  },
-  {
-    "delegator_address": "terra1xu5dep9lfz4v9yjyl0zxv8tc32gwg6ltc9memf",
-    "validator_src_address": "terravaloper1uhjx34pfsxk9xh34yn8p2w4469uqdz067rqu5g",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-      "creation_height": 615364,
-      "completion_time": "2020-02-19T09:10:18.616150331Z",
-      "initial_balance": "50000000000",
-      "shares_dst": "50000000000.000000000000000000",
-      "balance": "50000000000"
-    }]
-  },
-  {
-    "delegator_address": "terra1xu5dep9lfz4v9yjyl0zxv8tc32gwg6ltc9memf",
-    "validator_src_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-      "creation_height": 615361,
-      "completion_time": "2020-02-19T09:09:58.739968Z",
-      "initial_balance": "40000000000",
-      "shares_dst": "40000000000.000000000000000000",
-      "balance": "40000000000"
-    }]
-  },
-  {
-    "delegator_address": "terra1vnt6a6jlduryu0049wsucjkqylwprzgzqk0zjd",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 677559,
-      "completion_time": "2020-02-24T02:39:00.393584059Z",
-      "initial_balance": "8806199999",
-      "shares_dst": "8806199999.000000000000000000",
-      "balance": "8806199999"
-    }]
-  },
-  {
-    "delegator_address": "terra10qu3zracgv4qvewejrj0xr3nfuc88x8k2nzwx8",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 510323,
-      "completion_time": "2020-02-11T09:44:11.617342554Z",
-      "initial_balance": "1000000",
-      "shares_dst": "1000000.000000000000000000",
-      "balance": "1000000"
-    }]
-  },
-  {
-    "delegator_address": "terra10qu3zracgv4qvewejrj0xr3nfuc88x8k2nzwx8",
-    "validator_src_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 679879,
-      "completion_time": "2020-02-24T06:54:06.087203435Z",
-      "initial_balance": "264786439",
-      "shares_dst": "264786439.000000000000000000",
-      "balance": "264786439"
-    }]
-  },
-  {
-    "delegator_address": "terra10f03r7wz59qmljkk8rxqm3dtrpnpk2etpnrd2y",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 579994,
-      "completion_time": "2020-02-16T16:41:37.873767991Z",
-      "initial_balance": "999999998",
-      "shares_dst": "999999998.000000000000000000",
-      "balance": "999999998"
-    }]
-  },
-  {
-    "delegator_address": "terra1j30w8jey9ug02xnvyqj03qvx2dxaz58y3v6ldm",
-    "validator_src_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "validator_dst_address": "terravaloper1fuj047hmvk2m3m4gjejnmmse3v47rzj572gzku",
-    "entries": [{
-      "creation_height": 694011,
-      "completion_time": "2020-02-25T08:50:30.684910412Z",
-      "initial_balance": "2000000",
-      "shares_dst": "2000000.000000000000000000",
-      "balance": "2000000"
-    }]
-  },
-  {
-    "delegator_address": "terra1nszkvsrwhtdnkmn7etx8u8uuec2jmux2zll4q3",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 650432,
-      "completion_time": "2020-02-22T01:05:40.237854065Z",
-      "initial_balance": "2074321124",
-      "shares_dst": "2074321124.000000000000000000",
-      "balance": "2074321124"
-    }]
-  },
-  {
-    "delegator_address": "terra15krj23pg8t4krd7t3lkhjq4jtkgg8mfp3m58l2",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 513976,
-      "completion_time": "2020-02-11T16:24:14.831261543Z",
-      "initial_balance": "9999999999",
-      "shares_dst": "9999999999.000000000000000000",
-      "balance": "9999999999"
-    }]
-  },
-  {
-    "delegator_address": "terra15krj23pg8t4krd7t3lkhjq4jtkgg8mfp3m58l2",
-    "validator_src_address": "terravaloper1c6gve6zhye5690563wxmvns7mugz6plu4aj7d3",
-    "validator_dst_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "entries": [{
-      "creation_height": 622823,
-      "completion_time": "2020-02-19T22:45:16.449890261Z",
-      "initial_balance": "14710000000",
-      "shares_dst": "14710000000.000000000000000000",
-      "balance": "14710000000"
-    }]
-  },
-  {
-    "delegator_address": "terra143yu6408qgwuc5g2a0ekpm9p32ae775yg45xhw",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 444679,
-      "completion_time": "2020-02-06T09:39:27.044712055Z",
-      "initial_balance": "2884969999",
-      "shares_dst": "2884969999.000000000000000000",
-      "balance": "2884969999"
-    }]
-  },
-  {
-    "delegator_address": "terra143yu6408qgwuc5g2a0ekpm9p32ae775yg45xhw",
-    "validator_src_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 444690,
-      "completion_time": "2020-02-06T09:40:39.596804087Z",
-      "initial_balance": "7292579",
-      "shares_dst": "7292579.000000000000000000",
-      "balance": "7292579"
-    }]
-  },
-  {
-    "delegator_address": "terra1478agtln23sgve0s8ndgxvdc9am3jsh7eag8nq",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 677600,
-      "completion_time": "2020-02-24T02:43:31.331419239Z",
-      "initial_balance": "6158464034",
-      "shares_dst": "6158464034.000000000000000000",
-      "balance": "6158464034"
-    }]
-  },
-  {
-    "delegator_address": "terra1krvdnpgndl9e00w5vfs7avg9gff9c4qzj03e5t",
-    "validator_src_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-      "creation_height": 702684,
-      "completion_time": "2020-02-26T00:45:51.165057176Z",
-      "initial_balance": "147195725032",
-      "shares_dst": "147195725032.000000000000000000",
-      "balance": "147195725032"
-    }]
-  },
-  {
-    "delegator_address": "terra1e82da9n6jz4t42eh0wn5hrt6hdmf7jyq8sufkp",
-    "validator_src_address": "terravaloper1h0d5kq5p64jcyqysvja3h2gysxnfudk9h3a5rq",
-    "validator_dst_address": "terravaloper1vqnhgc6d0jyggtytzqrnsc40r4zez6tx99382w",
-    "entries": [{
-      "creation_height": 441514,
-      "completion_time": "2020-02-06T03:42:56.651370305Z",
-      "initial_balance": "200000000000",
-      "shares_dst": "200020002000.200020002000199788",
-      "balance": "200000000000"
-    }]
-  },
-  {
-    "delegator_address": "terra1e82da9n6jz4t42eh0wn5hrt6hdmf7jyq8sufkp",
-    "validator_src_address": "terravaloper1h0d5kq5p64jcyqysvja3h2gysxnfudk9h3a5rq",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-      "creation_height": 441519,
-      "completion_time": "2020-02-06T03:43:29.837168915Z",
-      "initial_balance": "50000000000",
-      "shares_dst": "50000000000.000000000000000000",
-      "balance": "50000000000"
-    }]
-  },
-  {
-    "delegator_address": "terra169qj3uhzma34gaqzsdgafmt0wt528y0s9qchpv",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 510350,
-      "completion_time": "2020-02-11T09:47:09.136040568Z",
-      "initial_balance": "300000000",
-      "shares_dst": "300000000.000000000000000000",
-      "balance": "300000000"
-    }]
-  },
-  {
-    "delegator_address": "terra169qj3uhzma34gaqzsdgafmt0wt528y0s9qchpv",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "entries": [{
-      "creation_height": 623939,
-      "completion_time": "2020-02-20T00:47:14.606896776Z",
-      "initial_balance": "999999999",
-      "shares_dst": "999999999.000000000000000000",
-      "balance": "999999999"
-    }]
-  },
-  {
-    "delegator_address": "terra162t3yqa2mywtvmr6qv22hayjytzqckzylk5lck",
-    "validator_src_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 711013,
-      "completion_time": "2020-02-26T16:12:15.841400702Z",
-      "initial_balance": "340181601932",
-      "shares_dst": "340181601932.000000000000000000",
-      "balance": "340181601932"
-    }]
-  },
-  {
-    "delegator_address": "terra1mp76w954j08dawludu7kj2tftnc6z8nfyxla2l",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 703612,
-      "completion_time": "2020-02-26T02:28:35.672869879Z",
-      "initial_balance": "4005999999",
-      "shares_dst": "4005999999.000000000000000000",
-      "balance": "4005999999"
-    }]
-  },
-  {
-    "delegator_address": "terra1mz38gfqk3q62kvxck889nf3xqz7q9jua0maazu",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 514023,
-      "completion_time": "2020-02-11T16:29:23.817030552Z",
-      "initial_balance": "524065132",
-      "shares_dst": "524065132.000000000000000000",
-      "balance": "524065132"
-    }]
-  },
-  {
-    "delegator_address": "terra1u6r30yhxg0pccqjmg2mfjnktnth9tlwfm3vj5w",
-    "validator_src_address": "terravaloper1jsdfyz8uhw2nd7cl45709w40r268phmvxam8eh",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-        "creation_height": 681354,
-        "completion_time": "2020-02-24T09:36:53.602987953Z",
-        "initial_balance": "20023632930",
-        "shares_dst": "20023632930.000000000000000000",
-        "balance": "20023632930"
+    "redelegation": {
+      "delegator_address": "terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v",
+      "validator_src_address": "terravaloper14un92kpq0pvflyjd8sxmrsswglhn8mf5hkruc2",
+      "validator_dst_address": "terravaloper18t8mtyvxlxf2gjh4x5r06gjfg0nk6gqs974uxh",
+      "entries": null
+    },
+    "entries": [
+      {
+        "redelegation_entry": {
+          "creation_height": 4288713,
+          "completion_time": "2021-06-17T08:20:51.859505136Z",
+          "initial_balance": "11999999",
+          "shares_dst": "12121209.863287294700189881"
+        },
+        "balance": "11999999"
       },
       {
-        "creation_height": 707371,
-        "completion_time": "2020-02-26T09:25:06.897714014Z",
-        "initial_balance": "10000000001",
-        "shares_dst": "10000000001.000000000000000000",
-        "balance": "10000000001"
+        "redelegation_entry": {
+          "creation_height": 4288750,
+          "completion_time": "2021-06-17T08:24:15.433539611Z",
+          "initial_balance": "11000000",
+          "shares_dst": "11111109.967272517414550508"
+        },
+        "balance": "10999999"
+      },
+      {
+        "redelegation_entry": {
+          "creation_height": 4289208,
+          "completion_time": "2021-06-17T09:06:10.093949554Z",
+          "initial_balance": "10000000",
+          "shares_dst": "10101009.061156834013227735"
+        },
+        "balance": "10000000"
       }
     ]
   },
   {
-    "delegator_address": "terra1u6r30yhxg0pccqjmg2mfjnktnth9tlwfm3vj5w",
-    "validator_src_address": "terravaloper1jsdfyz8uhw2nd7cl45709w40r268phmvxam8eh",
-    "validator_dst_address": "terravaloper1audgfvmgt0js54p3s8kj3r40uwej6vy2tv6rrw",
-    "entries": [{
-        "creation_height": 681365,
-        "completion_time": "2020-02-24T09:38:05.453827196Z",
-        "initial_balance": "19999999999",
-        "shares_dst": "19999999999.000000000000000000",
-        "balance": "19999999999"
-      },
+    "redelegation": {
+      "delegator_address": "terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v",
+      "validator_src_address": "terravaloper14un92kpq0pvflyjd8sxmrsswglhn8mf5hkruc2",
+      "validator_dst_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
+      "entries": null
+    },
+    "entries": [
       {
-        "creation_height": 707377,
-        "completion_time": "2020-02-26T09:25:46.316108615Z",
-        "initial_balance": "10000000000",
-        "shares_dst": "10000000000.000000000000000000",
-        "balance": "10000000000"
+        "redelegation_entry": {
+          "creation_height": 4289212,
+          "completion_time": "2021-06-17T09:06:31.632048465Z",
+          "initial_balance": "5000000",
+          "shares_dst": "5205622.236075405701241331"
+        },
+        "balance": "5000000"
       }
     ]
-  },
-  {
-    "delegator_address": "terra1an96a433dtlq5re387nnqe6psgy67rspgtw02e",
-    "validator_src_address": "terravaloper13kcwnlafvu4xvy2jr3vhdte9aq9tadwds3lx2d",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 443700,
-      "completion_time": "2020-02-06T07:49:16.110802028Z",
-      "initial_balance": "349965000001",
-      "shares_dst": "349965000001.000000000000000000",
-      "balance": "349965000001"
-    }]
-  },
-  {
-    "delegator_address": "terra1a4xyusa48u9cx678cvx23jajh4ca6v8ec2pguu",
-    "validator_src_address": "terravaloper1aw0znxtlq0wrayyz7wppz3qnw94hfrmnnrcxja",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 558378,
-      "completion_time": "2020-02-15T01:16:13.635412998Z",
-      "initial_balance": "1203100695515",
-      "shares_dst": "1203100695515.000000000000000000",
-      "balance": "1203100695515"
-    }]
-  },
-  {
-    "delegator_address": "terra174x3qjty65drqa7equ5fjq9fk590c3exv3ymuv",
-    "validator_src_address": "terravaloper1p54hc4yy2ajg67j645dn73w3378j6k05vmx9r9",
-    "validator_dst_address": "terravaloper15zcjduavxc5mkp8qcqs9eyhwlqwdlrzy6jln3m",
-    "entries": [{
-      "creation_height": 706719,
-      "completion_time": "2020-02-26T08:12:42.900829644Z",
-      "initial_balance": "12972078072",
-      "shares_dst": "12972078072.000000000000000000",
-      "balance": "12972078072"
-    }]
   }
 ]

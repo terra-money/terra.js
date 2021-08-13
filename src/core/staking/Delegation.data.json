@@ -1,235 +1,46 @@
-[{
-    "delegator_address": "terra1qq4ma4rk9mz4gq22yy8tdz28z9gdcg7dgnse78",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "400000000.000000000000000000",
+[
+  {
+    "delegation": {
+      "delegator_address": "terra1rk6tvacasnnyssfnn00zl7wz43pjnpn7vayqv6",
+      "validator_address": "terravaloper1vze7n65ccq08auu2xwmptlymu3gdlx0z5j033m",
+      "shares": "0.362811214041104489"
+    },
     "balance": {
       "denom": "uluna",
-      "amount": "400000000"
+      "amount": "0"
     }
   },
   {
-    "delegator_address": "terra1q9alhy6waj70jlq08qm6nj8sutd2fkgsyy3v5n",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "4261002785.000000000000000000",
+    "delegation": {
+      "delegator_address": "terra1rk6tvacasnnyssfnn00zl7wz43pjnpn7vayqv6",
+      "validator_address": "terravaloper1062zkmnlqhcpwsryk5kjf345x6njzzksqk9ljl",
+      "shares": "1041435300584.646580892301867080"
+    },
     "balance": {
       "denom": "uluna",
-      "amount": "4261002785"
+      "amount": "970201986983"
     }
   },
   {
-    "delegator_address": "terra1q8yyzed5432zw8qqtfl0zc6qrgc84q8n429u0y",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "60000000.000000000000000000",
+    "delegation": {
+      "delegator_address": "terra1rk6tvacasnnyssfnn00zl7wz43pjnpn7vayqv6",
+      "validator_address": "terravaloper14un92kpq0pvflyjd8sxmrsswglhn8mf5hkruc2",
+      "shares": "0.317889676069212335"
+    },
     "balance": {
       "denom": "uluna",
-      "amount": "60000000"
+      "amount": "0"
     }
   },
   {
-    "delegator_address": "terra1q4z24pe3tvm0quhmmzydpupx3lrdqljzhqfjyj",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "490000000.000000000000000000",
+    "delegation": {
+      "delegator_address": "terra1rk6tvacasnnyssfnn00zl7wz43pjnpn7vayqv6",
+      "validator_address": "terravaloper1kcux5ht2jslsyfzgs5wtfg4hx9dha8z4tes7xh",
+      "shares": "937199434798.716278082038875955"
+    },
     "balance": {
       "denom": "uluna",
-      "amount": "490000000"
-    }
-  },
-  {
-    "delegator_address": "terra1qmrzf2hzytf6fpuppl4qjs79mev92c5ecch2j2",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "56055350.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "56055350"
-    }
-  },
-  {
-    "delegator_address": "terra1qm2rl35muk7czjzh2wc59kkx9ml4nc0ens65ej",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "3000000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "3000000000"
-    }
-  },
-  {
-    "delegator_address": "terra1qu8md44cqpdd6yvcc9u472wlq6dp9r5q76qt9p",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "67728202887.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "67728202887"
-    }
-  },
-  {
-    "delegator_address": "terra1q7a0y2jel8s4repfzuv3fp36574ds0g2ypm826",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "900000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "900000000"
-    }
-  },
-  {
-    "delegator_address": "terra1ppvgyda0t940e8d6p2whe0z3t9rx9yhz4vtlf7",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "1500000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "1500000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p9qht60pm8pwwgs9g78ukkwv92cw4yqxkr9jj8",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "8472000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "8472000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p9vmueyym5a9spvpntkez5dxef57gsxlxy2tft",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "321955796.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "321955796"
-    }
-  },
-  {
-    "delegator_address": "terra1p80lqx6uaks4726ygzrsfkhz8aw6634msjj39u",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "7710000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "7710000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p2333t6u8htfzfce8snqg6gwh6vcap545zaskd",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "5200000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "5200000000"
-    }
-  },
-  {
-    "delegator_address": "terra1pd58sy6gyanjx3r7f7p3hcu8q5p7yy7l0samx9",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "2000000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "2000000000"
-    }
-  },
-  {
-    "delegator_address": "terra1pwv3tudd9fu22htdd788y5tfxv2xy24630es5r",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "950000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "950000000"
-    }
-  },
-  {
-    "delegator_address": "terra1psk9p4gxz8n8h8umc8a4g6s430yhpftqpazyg8",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "62000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "62000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p3j3dg2q2yf4dm93mekavjng0e5f7xygta640k",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "1700000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "1700000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p372puz2ygpew6a238sl0zu6a5wdqn7v7zts3v",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "875000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "875000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p4arkvvxx7lrt3q70fkg3uvpkc8tmhtmvax6xp",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "4166060599.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "4166060599"
-    }
-  },
-  {
-    "delegator_address": "terra1pejnsfpk0cmw9ga8wd9nherw2s4xunhdapc50k",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "589000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "589000000"
-    }
-  },
-  {
-    "delegator_address": "terra1patyrqygf5uxxkkuyjm4dk53v3j4whr4znqtmk",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "420000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "420000000"
-    }
-  },
-  {
-    "delegator_address": "terra1p7xkzm2auj3tnxlf00gv6n4eyucldfx3095q4w",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "34842055837.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "34842055837"
-    }
-  },
-  {
-    "delegator_address": "terra1zfahlh3s5638q82kw0mvky2ecu879n2ma6dwxs",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "2385949621.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "2385949621"
-    }
-  },
-  {
-    "delegator_address": "terra1z2x363rk5v8sh3gp8hes03ket7j065rj2qedfu",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "4000000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "4000000000"
-    }
-  },
-  {
-    "delegator_address": "terra1ztsl9nezh6gyc0mwg04qguezwsq33cp58gw9gy",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "736000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "736000000"
-    }
-  },
-  {
-    "delegator_address": "terra1zdh7ucs89leyv2vxvyqpwxgmr4jayw8z7hsre6",
-    "validator_address": "terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy",
-    "shares": "990000000.000000000000000000",
-    "balance": {
-      "denom": "uluna",
-      "amount": "990000000"
+      "amount": "891000004719"
     }
   }
 ]

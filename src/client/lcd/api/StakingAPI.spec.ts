@@ -3,7 +3,7 @@ import { StakingAPI } from './StakingAPI';
 import { Dec, Int } from '../../../core/numeric';
 import { Coin } from '../../../core/Coin';
 
-const c = new APIRequester('https://tequila-lcd.terra.dev/');
+const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const staking = new StakingAPI(c);
 
 describe('StakingAPI', () => {
@@ -82,7 +82,10 @@ describe('StakingAPI', () => {
   it('validators', async () => {
     await expect(staking.validators()).resolves.toContainEqual({
       operator_address: expect.any(String),
-      consensus_pubkey: expect.any(String),
+      consensus_pubkey: {
+        type: expect.any(String),
+        value: expect.any(String),
+      },
       jailed: expect.any(Boolean),
       status: expect.any(Number),
       tokens: expect.any(Int),

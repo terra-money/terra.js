@@ -7,15 +7,21 @@ describe('MsgExecuteContract', () => {
       value: {
         sender: 'terra16xw94u0jgmuaz8zs54xn9x96lxew74gs05gs4h',
         contract: 'terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6',
-        execute_msg:
-          'eyJ0cmFuc2ZlciI6eyJyZWNpcGllbnQiOnRlcnJhMTNqcWdydHF3dWN4NGpkdmhnMGQ0dGM4MDg5MmZzY3g1NDI5OHl0LCJhbW91bnQiOjEwMDAwfX0=',
+        execute_msg: {
+          transfer: {
+            recipient: 'terra13jqgrtqwucx4jdvhg0d4tc80892fscx54298yt',
+            amount: 10000,
+          },
+        },
         coins: [],
       },
     });
 
-    expect(typeof msg1.execute_msg).toBe('string');
-    expect(msg1.execute_msg).toEqual(
-      'eyJ0cmFuc2ZlciI6eyJyZWNpcGllbnQiOnRlcnJhMTNqcWdydHF3dWN4NGpkdmhnMGQ0dGM4MDg5MmZzY3g1NDI5OHl0LCJhbW91bnQiOjEwMDAwfX0='
-    );
+    expect(msg1.execute_msg).toMatchObject({
+      transfer: {
+        recipient: 'terra13jqgrtqwucx4jdvhg0d4tc80892fscx54298yt',
+        amount: 10000,
+      },
+    });
   });
 });
