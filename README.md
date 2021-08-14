@@ -49,6 +49,12 @@ Grab the latest version off [NPM](https://www.npmjs.com/package/@terra-money/ter
 yarn add @terra-money/terra.js
 ```
 
+For columbus-4 and tequila network, use v1.x
+
+```sh
+yarn add @terra-money/terra.js@^1
+```
+
 ## Usage
 
 Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-money/terra.js/wiki) for notes on how to get up and running.
