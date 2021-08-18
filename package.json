@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "1.8.9",
+  "version": "1.8.10",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -54,7 +54,7 @@
     "arrowParens": "avoid"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^27.0.1",
     "@types/node": "^15.12.4",
     "@types/readable-stream": "^2.3.9",
     "@types/secp256k1": "^4.0.1",
