@@ -14,11 +14,13 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
    * @param migratable defines to be migratable or not
    */
   constructor(
-    public owner: AccAddress,
+    public owner: AccAddress | undefined,
     public code_id: number,
     public init_msg: object,
     init_coins: Coins.Input = {},
-    public migratable: boolean = false
+    public migratable: boolean = false,
+    public sender: string | undefined,
+    public admin: string | undefined
   ) {
     super();
     this.init_coins = new Coins(init_coins);
@@ -28,19 +30,46 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
     data: MsgInstantiateContract.Data
   ): MsgInstantiateContract {
     const {
-      value: { owner, code_id, init_msg, init_coins, migratable },
+      value: {
+        owner,
+        code_id,
+        init_msg,
+        init_coins,
+        migratable,
+        sender,
+        admin,
+      },
     } = data;
+
     return new MsgInstantiateContract(
       owner,
       Number.parseInt(code_id),
       b64ToDict(init_msg),
       Coins.fromData(init_coins),
-      migratable
+      migratable,
+      sender,
+      admin
     );
   }
 
   public toData(): MsgInstantiateContract.Data {
-    const { owner, code_id, init_msg, init_coins, migratable } = this;
+    const { owner, code_id, init_msg, init_coins, migratable, sender, admin } =
+      this;
+
+    if (typeof sender !== 'undefined') {
+      // for bombay
+      return {
+        type: 'wasm/MsgInstantiateContract',
+        value: {
+          sender,
+          admin,
+          code_id: code_id.toFixed(),
+          init_msg,
+          init_coins: init_coins.toData(),
+        },
+      };
+    }
+
     return {
       type: 'wasm/MsgInstantiateContract',
       value: {
@@ -58,11 +87,14 @@ export namespace MsgInstantiateContract {
   export interface Data {
     type: 'wasm/MsgInstantiateContract';
     value: {
-      owner: AccAddress;
+      // For bombay compatibility, owner and migratable are optional. sender and admin are for bombay only
+      owner?: AccAddress;
       code_id: string;
-      init_msg: string;
+      init_msg: string | object;
       init_coins: Coins.Data;
-      migratable: boolean;
+      migratable?: boolean;
+      sender?: AccAddress;
+      admin?: AccAddress;
     };
   }
 }
