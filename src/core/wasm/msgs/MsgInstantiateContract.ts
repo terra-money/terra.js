@@ -1,4 +1,4 @@
-import { JSONSerializable } from '../../../util/json';
+import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
 
@@ -44,9 +44,9 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
       type: 'wasm/MsgInstantiateContract',
       value: {
         sender,
-        admin,
+        admin: admin === '' || admin === null ? undefined : admin,
         code_id: code_id.toFixed(),
-        init_msg,
+        init_msg: removeNull(init_msg),
         init_coins: init_coins.toData(),
       },
     };

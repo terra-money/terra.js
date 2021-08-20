@@ -1,4 +1,4 @@
-import { JSONSerializable } from '../../../util/json';
+import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data> {
   /**
@@ -36,7 +36,7 @@ export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data
         admin,
         contract,
         new_code_id: new_code_id.toFixed(),
-        migrate_msg,
+        migrate_msg: removeNull(migrate_msg),
       },
     };
   }
