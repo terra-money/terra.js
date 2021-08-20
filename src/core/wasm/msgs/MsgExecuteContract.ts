@@ -1,4 +1,4 @@
-import { JSONSerializable } from '../../../util/json';
+import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
 export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data> {
@@ -34,12 +34,13 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
 
   public toData(): MsgExecuteContract.Data {
     const { sender, contract, execute_msg, coins } = this;
+
     return {
       type: 'wasm/MsgExecuteContract',
       value: {
         sender,
         contract,
-        execute_msg,
+        execute_msg: removeNull(execute_msg),
         coins: coins.toData(),
       },
     };

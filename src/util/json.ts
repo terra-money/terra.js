@@ -24,3 +24,17 @@ export abstract class JSONSerializable<T> {
     return JSON.stringify(prepareSignBytes(this.toData()));
   }
 }
+
+export function removeNull(obj: any): any {
+  if (obj !== null && typeof obj === 'object') {
+    Object.keys(obj).forEach(function (key) {
+      if (obj[key] === null) {
+        delete obj[key];
+      } else if (typeof obj[key] === 'object') {
+        removeNull(obj[key]);
+      }
+    });
+  }
+
+  return obj;
+}
