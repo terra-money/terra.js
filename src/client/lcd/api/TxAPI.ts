@@ -125,7 +125,7 @@ export namespace TxSearchResult {
     page_number: string;
     page_total: string;
     limit: string;
-    txs: TxInfo.Data[];
+    txs?: TxInfo.Data[];
   }
 }
 
@@ -402,7 +402,7 @@ export class TxAPI extends BaseAPI {
       page_number: Number.parseInt(d.page_number),
       page_total: Number.parseInt(d.page_total),
       limit: Number.parseInt(d.limit),
-      txs: d.txs.map(txdata => TxInfo.fromData(txdata)),
+      txs: d.txs ? d.txs.map(txdata => TxInfo.fromData(txdata)) : [],
     }));
   }
 }
