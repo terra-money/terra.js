@@ -78,7 +78,7 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
     };
   }
 
-  public static fromProto(data: MsgCreateValidator.Proto): MsgCreateValidator {
+  public static fromProto(proto: MsgCreateValidator.Proto): MsgCreateValidator {
     const {
       description,
       commission,
@@ -87,7 +87,7 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
       validator_address,
       pubkey,
       value,
-    } = data;
+    } = proto;
     return new MsgCreateValidator(
       description,
       Validator.CommissionRates.fromData(commission),

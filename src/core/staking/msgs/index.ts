@@ -24,4 +24,11 @@ export namespace StakingMsg {
     | MsgBeginRedelegate.Data
     | MsgCreateValidator.Data
     | MsgEditValidator.Data;
+
+  export type Proto =
+    | MsgDelegate.Proto
+    | MsgUndelegate.Proto
+    | MsgBeginRedelegate.Proto
+    | MsgCreateValidator.Proto
+    | MsgEditValidator.Proto;
 }

@@ -73,6 +73,21 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
 
     return data;
   }
+
+  public static fromProto(data: TxInfo.Proto): TxInfo {
+    return new TxInfo(
+      Number.parseInt(data.height),
+      data.txhash,
+      data.raw_log,
+      data.logs && data.logs.map(log => TxLog.fromData(log)),
+      Number.parseInt(data.gas_wanted),
+      Number.parseInt(data.gas_used),
+      StdTx.fromProto(data.tx),
+      data.timestamp,
+      data.code,
+      data.codespace
+    );
+  }
 }
 
 export interface EventKV {
@@ -160,5 +175,20 @@ export namespace TxInfo {
     timestamp: string;
     code?: number;
     codespace?: string;
+  }
+
+  export interface Proto {
+    height: string;
+    txhash: string;
+    codespace: string;
+    code: number;
+    data: string;
+    raw_log: string;
+    logs: TxLog.Data[];
+    info: string;
+    gas_wanted: string;
+    gas_used: string;
+    tx: StdTx.Proto;
+    timestamp: string;
   }
 }

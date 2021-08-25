@@ -58,7 +58,7 @@ export class MsgSubmitProposal extends JSONSerializable<MsgSubmitProposal.Data> 
   public toProto(): MsgSubmitProposal.Proto {
     const { content, initial_deposit, proposer } = this;
     return {
-      type: '/cosmos.gov.v1beta1.MsgSubmitProposal',
+      '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal',
       content: content.toProto(),
       initial_deposit: initial_deposit.toData(),
       proposer,
@@ -77,7 +77,7 @@ export namespace MsgSubmitProposal {
   }
 
   export interface Proto {
-    type: '/cosmos.gov.v1beta1.MsgSubmitProposal';
+    '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal';
     content: Proposal.Content.Proto;
     initial_deposit: Coins.Data;
     proposer: AccAddress;

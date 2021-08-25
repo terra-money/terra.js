@@ -12,6 +12,7 @@ import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { ProtoTx } from 'core/ProtoTx';
 
 /** Transaction broadcasting modes  */
 export enum Broadcast {
@@ -126,6 +127,15 @@ export namespace TxSearchResult {
     page_total: string;
     limit: string;
     txs?: TxInfo.Data[];
+  }
+
+  export interface Proto {
+    txs: ProtoTx.Proto[];
+    tx_responses: TxInfo.Proto[];
+    pagination: {
+      next_key: any;
+      total: string;
+    };
   }
 }
 
@@ -248,39 +258,20 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    if (/^(?:columbus-5|bombay|localterra)/.test(this.lcd.config.chainID)) {
-      const data = {
-        base_req: {
-          chain_id: this.lcd.config.chainID,
-          memo,
-          from: sourceAddress,
-          gas: gas || 'auto',
-          gas_prices: gasPricesCoins && gasPricesCoins.toData(),
-          gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-        },
-        msgs: msgs.map(m => m.toData()),
-      };
-      return this.c
-        .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
-        .then(({ result: { fee } }) => StdFee.fromData(fee));
-    } else {
-      const data = {
-        tx: {
-          msg: msgs.map(m => m.toData()),
-          fee: { gas: gas || '0' },
-          memo,
-        },
+    const data = {
+      base_req: {
+        chain_id: this.lcd.config.chainID,
+        memo,
+        from: sourceAddress,
+        gas: gas || 'auto',
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
         gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-      };
-
-      return this.c
-        .post<{ gas: string; fees: Coins.Data }>(`/txs/estimate_fee`, data)
-        .then(
-          ({ result: d }) =>
-            new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
-        );
-    }
+      },
+      msgs: msgs.map(m => m.toData()),
+    };
+    return this.c
+      .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
+      .then(({ result: { fee } }) => StdFee.fromData(fee));
   }
 
   /**
@@ -396,13 +387,15 @@ export class TxAPI extends BaseAPI {
   public async search(
     options: Partial<TxSearchOptions> | {}
   ): Promise<TxSearchResult> {
-    return this.c.getRaw<TxSearchResult.Data>(`/txs`, options).then(d => ({
-      total_count: Number.parseInt(d.total_count),
-      count: Number.parseInt(d.count),
-      page_number: Number.parseInt(d.page_number),
-      page_total: Number.parseInt(d.page_total),
-      limit: Number.parseInt(d.limit),
-      txs: d.txs ? d.txs.map(txdata => TxInfo.fromData(txdata)) : [],
-    }));
+    return this.c
+      .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, options)
+      .then(d => ({
+        total_count: Number.parseInt(d.total_count),
+        count: Number.parseInt(d.count),
+        page_number: Number.parseInt(d.page_number),
+        page_total: Number.parseInt(d.page_total),
+        limit: Number.parseInt(d.limit),
+        txs: d.txs ? d.txs.map(txdata => TxInfo.fromData(txdata)) : [],
+      }));
   }
 }

@@ -27,10 +27,21 @@ export class StdSignature extends JSONSerializable<StdSignature.Data> {
       pub_key: pub_key.toData(),
     };
   }
+
+  public static fromProto(proto: StdSignature.Proto): StdSignature {
+    const { signature, pub_key } = proto;
+    return new StdSignature(signature, PublicKey.fromProto(pub_key));
+  }
 }
+
 export namespace StdSignature {
   export interface Data {
     signature: string;
     pub_key: PublicKey.Data;
+  }
+
+  export interface Proto {
+    signature: string;
+    pub_key: PublicKey.Proto;
   }
 }

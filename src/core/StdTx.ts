@@ -2,6 +2,7 @@ import { StdSignature } from './StdSignature';
 import { JSONSerializable } from '../util/json';
 import { StdFee } from './StdFee';
 import { Msg } from './Msg';
+import { TxBody, AuthInfo } from './ProtoTx';
 
 /**
  * The StdTx data structure contains the signatures from [[StdSignMsg]] with the same
@@ -18,25 +19,27 @@ export class StdTx extends JSONSerializable<StdTx.Data> {
     public msg: Msg[],
     public fee: StdFee,
     public signatures: StdSignature[],
-    public memo: string = ''
+    public memo: string = '',
+    public timeout_height: string
   ) {
     super();
   }
 
   public static fromData(data: StdTx.Data): StdTx {
     const {
-      value: { msg, fee, signatures, memo },
+      value: { msg, fee, signatures, memo, timeout_height },
     } = data;
     return new StdTx(
       msg.map(m => Msg.fromData(m)),
       StdFee.fromData(fee),
       signatures.map(s => StdSignature.fromData(s)),
-      memo
+      memo,
+      timeout_height
     );
   }
 
   public toData(): StdTx.Data {
-    const { msg, fee, signatures, memo } = this;
+    const { msg, fee, signatures, memo, timeout_height } = this;
     return {
       type: 'core/StdTx',
       value: {
@@ -44,10 +47,35 @@ export class StdTx extends JSONSerializable<StdTx.Data> {
         fee: fee.toData(),
         signatures: signatures.map(s => s.toData()),
         memo,
+        timeout_height,
       },
     };
   }
+
+  public static fromProto(proto: StdTx.Proto): StdTx {
+    const {
+      body: { messages, memo, timeout_height },
+      auth_info: { fee, signer_infos },
+      signatures,
+    } = proto;
+    return new StdTx(
+      messages.map(m => Msg.fromProto(m)),
+      StdFee.fromData({
+        gas: fee.gas_limit,
+        amount: fee.amount,
+      }),
+      signatures.map((sig, i) =>
+        StdSignature.fromProto({
+          pub_key: signer_infos[i].public_key,
+          signature: sig,
+        })
+      ),
+      memo,
+      timeout_height
+    );
+  }
 }
+
 export namespace StdTx {
   export interface Data {
     type: 'core/StdTx';
@@ -56,6 +84,13 @@ export namespace StdTx {
       fee: StdFee.Data;
       signatures: StdSignature.Data[];
       memo: string;
+      timeout_height: string;
     };
+  }
+
+  export interface Proto {
+    body: TxBody.Proto;
+    auth_info: AuthInfo.Proto;
+    signatures: string[];
   }
 }

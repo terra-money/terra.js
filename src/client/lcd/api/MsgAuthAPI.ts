@@ -1,6 +1,6 @@
 import { AccAddress } from '../../../core';
 import { BaseAPI } from './BaseAPI';
-import { AuthorizationGrant } from '../../../core/msgauth/Authorization';
+import { AuthorizationGrant } from '../../../core/authz/Authorization';
 import { APIParams } from '../APIRequester';
 
 export class MsgAuthAPI extends BaseAPI {

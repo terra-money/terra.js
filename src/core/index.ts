@@ -34,8 +34,8 @@ export * from './gov/proposals';
 export * from './market/msgs';
 
 // MsgAuth
-export * from './msgauth/msgs';
-export * from './msgauth/Authorization';
+export * from './authz/msgs';
+export * from './authz/Authorization';
 
 // Oracle
 export * from './oracle/msgs';

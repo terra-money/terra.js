@@ -86,7 +86,7 @@ export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
   public toProto(): MsgMultiSend.Proto {
     const { inputs, outputs } = this;
     return {
-      type: '/cosmos.bank.v1beta1.MsgMultiSend',
+      '@type': '/cosmos.bank.v1beta1.MsgMultiSend',
       inputs: inputs.map(i => i.toData()),
       outputs: outputs.map(o => o.toData()),
     };
@@ -103,7 +103,7 @@ export namespace MsgMultiSend {
   }
 
   export interface Proto {
-    type: '/cosmos.bank.v1beta1.MsgMultiSend';
+    '@type': '/cosmos.bank.v1beta1.MsgMultiSend';
     inputs: IO.Data[];
     outputs: IO.Data[];
   }

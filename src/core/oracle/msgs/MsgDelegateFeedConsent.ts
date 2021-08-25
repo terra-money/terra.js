@@ -49,7 +49,7 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
   public toProto(): MsgDelegateFeedConsent.Proto {
     const { operator, delegate } = this;
     return {
-      '@type': '/terra.v1beta1.oracle.MsgDelegateFeedConsent',
+      '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
       operator,
       delegate,
     };
@@ -66,7 +66,7 @@ export namespace MsgDelegateFeedConsent {
   }
 
   export interface Proto {
-    '@type': '/terra.v1beta1.oracle.MsgDelegateFeedConsent';
+    '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent';
     operator: ValAddress;
     delegate: AccAddress;
   }

@@ -35,6 +35,23 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
       },
     };
   }
+
+  public static fromProto(
+    data: MsgRevokeAuthorization.Proto
+  ): MsgRevokeAuthorization {
+    const { granter, grantee, msg_type_url } = data;
+    return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
+  }
+
+  public toProto(): MsgRevokeAuthorization.Proto {
+    const { granter, grantee, msg_type_url } = this;
+    return {
+      '@type': '/cosmos.authz.v1beta1.MsgRevoke',
+      granter,
+      grantee,
+      msg_type_url,
+    };
+  }
 }
 
 export namespace MsgRevokeAuthorization {
@@ -45,5 +62,12 @@ export namespace MsgRevokeAuthorization {
       grantee: AccAddress;
       msg_type_url: string;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.authz.v1beta1.MsgRevoke';
+    granter: AccAddress;
+    grantee: AccAddress;
+    msg_type_url: string;
   }
 }

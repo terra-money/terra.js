@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Authorization } from '../Authorization';
+import { AuthorizationGrant } from '../Authorization';
 
 export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
   /**
@@ -10,8 +10,7 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
   constructor(
     public granter: AccAddress,
     public grantee: AccAddress,
-    public authorization: Authorization,
-    public expiration: Date
+    public grant: AuthorizationGrant
   ) {
     super();
   }
@@ -20,32 +19,45 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
     data: MsgGrantAuthorization.Data
   ): MsgGrantAuthorization {
     const {
-      value: {
-        granter,
-        grantee,
-        grant: { authorization, expiration },
-      },
+      value: { granter, grantee, grant },
     } = data;
     return new MsgGrantAuthorization(
       granter,
       grantee,
-      Authorization.fromData(authorization),
-      new Date(expiration)
+      AuthorizationGrant.fromData(grant)
     );
   }
 
   public toData(): MsgGrantAuthorization.Data {
-    const { granter, grantee, authorization, expiration } = this;
+    const { granter, grantee, grant } = this;
     return {
       type: 'msgauth/MsgGrantAuthorization',
       value: {
         granter,
         grantee,
-        grant: {
-          authorization: authorization.toData(),
-          expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
-        },
+        grant: grant.toData(),
       },
+    };
+  }
+
+  public static fromProto(
+    data: MsgGrantAuthorization.Proto
+  ): MsgGrantAuthorization {
+    const { granter, grantee, grant } = data;
+    return new MsgGrantAuthorization(
+      granter,
+      grantee,
+      AuthorizationGrant.fromProto(grant)
+    );
+  }
+
+  public toProto(): MsgGrantAuthorization.Proto {
+    const { granter, grantee, grant } = this;
+    return {
+      '@type': '/cosmos.authz.v1beta1.MsgGrant',
+      granter,
+      grantee,
+      grant: grant.toProto(),
     };
   }
 }
@@ -56,10 +68,14 @@ export namespace MsgGrantAuthorization {
     value: {
       granter: AccAddress;
       grantee: AccAddress;
-      grant: {
-        authorization: Authorization.Data;
-        expiration: string;
-      };
+      grant: AuthorizationGrant.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.authz.v1beta1.MsgGrant';
+    granter: AccAddress;
+    grantee: AccAddress;
+    grant: AuthorizationGrant.Proto;
   }
 }

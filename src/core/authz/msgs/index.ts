@@ -16,4 +16,9 @@ export namespace MsgAuthMsg {
     | MsgGrantAuthorization.Data
     | MsgRevokeAuthorization.Data
     | MsgExecAuthorized.Data;
+
+  export type Proto =
+    | MsgGrantAuthorization.Proto
+    | MsgRevokeAuthorization.Proto
+    | MsgExecAuthorized.Proto;
 }

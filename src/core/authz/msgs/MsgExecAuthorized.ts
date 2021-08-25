@@ -31,6 +31,23 @@ export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> 
       },
     };
   }
+
+  public static fromProto(proto: MsgExecAuthorized.Proto): MsgExecAuthorized {
+    const { grantee, msgs } = proto;
+    return new MsgExecAuthorized(
+      grantee,
+      msgs.map(x => Msg.fromProto(x))
+    );
+  }
+
+  public toProto(): MsgExecAuthorized.Proto {
+    const { grantee, msgs } = this;
+    return {
+      '@type': '/cosmos.authz.v1beta1.MsgExec',
+      grantee,
+      msgs: msgs.map(msg => msg.toProto()),
+    };
+  }
 }
 
 export namespace MsgExecAuthorized {
@@ -40,5 +57,11 @@ export namespace MsgExecAuthorized {
       grantee: AccAddress;
       msgs: Msg.Data[];
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.authz.v1beta1.MsgExec';
+    grantee: AccAddress;
+    msgs: Msg.Proto[];
   }
 }
