@@ -33,6 +33,19 @@ export class MsgUnjail extends JSONSerializable<MsgUnjail.Data> {
       },
     };
   }
+
+  public static fromProto(proto: MsgUnjail.Proto): MsgUnjail {
+    const { address } = proto;
+    return new MsgUnjail(address);
+  }
+
+  public toProto(): MsgUnjail.Proto {
+    const { address } = this;
+    return {
+      '@type': '/cosmos.slashing.v1beta1.MsgUnjail',
+      address,
+    };
+  }
 }
 
 export namespace MsgUnjail {
@@ -41,5 +54,10 @@ export namespace MsgUnjail {
     value: {
       address: ValAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.slashing.v1beta1.MsgUnjail';
+    address: ValAddress;
   }
 }

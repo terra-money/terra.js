@@ -36,6 +36,21 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
       },
     };
   }
+
+  public static fromProto(proto: MsgVote.Proto): MsgVote {
+    const { proposal_id, voter, option } = proto;
+    return new MsgVote(Number.parseInt(proposal_id), voter, option);
+  }
+
+  public toProto(): MsgVote.Proto {
+    const { proposal_id, voter, option } = this;
+    return {
+      '@type': '/cosmos.gov.v1beta1.MsgVote',
+      proposal_id: proposal_id.toFixed(),
+      voter,
+      option,
+    };
+  }
 }
 
 export namespace MsgVote {
@@ -63,5 +78,12 @@ export namespace MsgVote {
       voter: AccAddress;
       option: Option;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.gov.v1beta1.MsgVote';
+    proposal_id: string;
+    voter: AccAddress;
+    option: Option;
   }
 }

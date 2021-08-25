@@ -40,6 +40,21 @@ export class MsgSwap extends JSONSerializable<MsgSwap.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgSwap.Proto): MsgSwap {
+    const { trader, offer_coin, ask_denom } = data;
+    return new MsgSwap(trader, Coin.fromData(offer_coin), ask_denom);
+  }
+
+  public toProto(): MsgSwap.Proto {
+    const { trader, offer_coin, ask_denom } = this;
+    return {
+      '@type': '/terra.market.v1beta1.MsgSwap',
+      trader,
+      offer_coin: offer_coin.toData(),
+      ask_denom,
+    };
+  }
 }
 
 export namespace MsgSwap {
@@ -50,5 +65,12 @@ export namespace MsgSwap {
       offer_coin: Coin.Data;
       ask_denom: Denom;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.market.v1beta1.MsgSwap';
+    trader: AccAddress;
+    offer_coin: Coin.Data;
+    ask_denom: Denom;
   }
 }

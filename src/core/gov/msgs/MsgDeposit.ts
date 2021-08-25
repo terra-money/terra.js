@@ -43,6 +43,27 @@ export class MsgDeposit extends JSONSerializable<MsgDeposit.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgDeposit.Proto): MsgDeposit {
+    const { proposal_id, depositor, amount } = data;
+    return new MsgDeposit(
+      Number.parseInt(proposal_id),
+      depositor,
+      Coins.fromData(amount)
+    );
+  }
+
+  public toProto(): MsgDeposit.Data {
+    const { proposal_id, depositor, amount } = this;
+    return {
+      type: 'gov/MsgDeposit',
+      value: {
+        proposal_id: proposal_id.toString(),
+        depositor,
+        amount: amount.toData(),
+      },
+    };
+  }
 }
 
 export namespace MsgDeposit {
@@ -53,5 +74,12 @@ export namespace MsgDeposit {
       depositor: AccAddress;
       amount: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.gov.v1beta1.MsgDeposit';
+    proposal_id: string;
+    depositor: AccAddress;
+    amount: Coins.Data;
   }
 }

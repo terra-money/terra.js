@@ -38,6 +38,22 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
       },
     };
   }
+
+  public static fromProto(
+    data: MsgDelegateFeedConsent.Proto
+  ): MsgDelegateFeedConsent {
+    const { operator, delegate } = data;
+    return new MsgDelegateFeedConsent(operator, delegate);
+  }
+
+  public toProto(): MsgDelegateFeedConsent.Proto {
+    const { operator, delegate } = this;
+    return {
+      '@type': '/terra.v1beta1.oracle.MsgDelegateFeedConsent',
+      operator,
+      delegate,
+    };
+  }
 }
 
 export namespace MsgDelegateFeedConsent {
@@ -47,5 +63,11 @@ export namespace MsgDelegateFeedConsent {
       operator: ValAddress;
       delegate: AccAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.v1beta1.oracle.MsgDelegateFeedConsent';
+    operator: ValAddress;
+    delegate: AccAddress;
   }
 }

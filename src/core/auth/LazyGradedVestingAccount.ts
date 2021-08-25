@@ -96,6 +96,62 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       )
     );
   }
+
+  public toProto(): LazyGradedVestingAccount.Proto {
+    const {
+      address,
+      public_key,
+      account_number,
+      sequence,
+      original_vesting,
+      delegated_free,
+      delegated_vesting,
+      end_time,
+      vesting_schedules,
+    } = this;
+    return {
+      '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount',
+      address,
+      public_key: public_key && public_key.toProto(),
+      account_number: account_number.toFixed(),
+      sequence: sequence.toFixed(),
+      original_vesting: original_vesting.toData(),
+      delegated_free: delegated_free.toData(),
+      delegated_vesting: delegated_vesting.toData(),
+      end_time: end_time.toFixed(),
+      vesting_schedules: vesting_schedules.map(vs => vs.toData()),
+    };
+  }
+
+  public static fromProto(
+    proto: LazyGradedVestingAccount.Proto
+  ): LazyGradedVestingAccount {
+    const {
+      address,
+      public_key,
+      account_number,
+      sequence,
+      original_vesting,
+      delegated_free,
+      delegated_vesting,
+      end_time,
+      vesting_schedules,
+    } = proto;
+    return new LazyGradedVestingAccount(
+      address || '',
+      new Coins(),
+      public_key ? PublicKey.fromProto(public_key) : null,
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0,
+      Coins.fromData(original_vesting),
+      Coins.fromData(delegated_free),
+      Coins.fromData(delegated_vesting),
+      Number.parseInt(end_time),
+      vesting_schedules.map(vs =>
+        LazyGradedVestingAccount.VestingSchedule.fromData(vs)
+      )
+    );
+  }
 }
 
 export namespace LazyGradedVestingAccount {
@@ -108,6 +164,19 @@ export namespace LazyGradedVestingAccount {
       end_time: string;
       vesting_schedules: VestingSchedule.Data[];
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount';
+    address: AccAddress;
+    public_key: PublicKey.Proto | null;
+    account_number: string;
+    sequence: string;
+    original_vesting: Coins.Data;
+    delegated_free: Coins.Data;
+    delegated_vesting: Coins.Data;
+    end_time: string;
+    vesting_schedules: VestingSchedule.Data[];
   }
 
   export class VestingSchedule extends JSONSerializable<VestingSchedule.Data> {

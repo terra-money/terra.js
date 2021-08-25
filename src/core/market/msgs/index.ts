@@ -8,4 +8,5 @@ export type MarketMsg = MsgSwap | MsgSwapSend;
 
 export namespace MarketMsg {
   export type Data = MsgSwap.Data | MsgSwapSend.Data;
+  export type Proto = MsgSwap.Proto | MsgSwapSend.Proto;
 }

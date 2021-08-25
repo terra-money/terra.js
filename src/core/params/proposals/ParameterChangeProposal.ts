@@ -28,9 +28,7 @@ import { ParamChange, ParamChanges } from '../ParamChange';
  * const msg = new MsgSubmitProposal();
  * ```
  */
-export class ParameterChangeProposal extends JSONSerializable<
-  ParameterChangeProposal.Data
-> {
+export class ParameterChangeProposal extends JSONSerializable<ParameterChangeProposal.Data> {
   changes: ParamChanges;
 
   /**
@@ -76,6 +74,27 @@ export class ParameterChangeProposal extends JSONSerializable<
       },
     };
   }
+
+  public static fromProto(
+    proto: ParameterChangeProposal.Proto
+  ): ParameterChangeProposal {
+    const { title, description, changes } = proto;
+    return new ParameterChangeProposal(
+      title,
+      description,
+      ParamChanges.fromData(changes)
+    );
+  }
+
+  public toProto(): ParameterChangeProposal.Proto {
+    const { title, description, changes } = this;
+    return {
+      '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
+      title,
+      description,
+      changes: ParamChanges.toData(changes),
+    };
+  }
 }
 
 export namespace ParameterChangeProposal {
@@ -86,5 +105,12 @@ export namespace ParameterChangeProposal {
       description: string;
       changes: ParamChange.Data[];
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.params.v1beta1.ParameterChangeProposal';
+    title: string;
+    description: string;
+    changes: ParamChange.Data[];
   }
 }

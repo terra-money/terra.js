@@ -16,4 +16,9 @@ export namespace OracleMsg {
     | MsgDelegateFeedConsent.Data
     | MsgAggregateExchangeRateVote.Data
     | MsgAggregateExchangeRatePrevote.Data;
+
+  export type Proto =
+    | MsgDelegateFeedConsent.Proto
+    | MsgAggregateExchangeRateVote.Proto
+    | MsgAggregateExchangeRatePrevote.Proto;
 }

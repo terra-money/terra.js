@@ -134,6 +134,11 @@ export namespace Proposal {
       | CommunityPoolSpendProposal.Data
       | ParameterChangeProposal.Data;
 
+    export type Proto =
+      | TextProposal.Proto
+      | CommunityPoolSpendProposal.Proto
+      | ParameterChangeProposal.Proto;
+
     export function fromData(data: Proposal.Content.Data): Proposal.Content {
       switch (data.type) {
         case 'gov/TextProposal':
@@ -142,6 +147,19 @@ export namespace Proposal {
           return CommunityPoolSpendProposal.fromData(data);
         case 'params/ParameterChangeProposal':
           return ParameterChangeProposal.fromData(data);
+        // case 'upgrade/SoftwareUpgradeProposal':
+        // case 'upgrade/CancelSoftwareUpgradeProposal':
+      }
+    }
+
+    export function fromProto(data: Proposal.Content.Proto): Proposal.Content {
+      switch (data['@type']) {
+        case '/cosmos.gov.v1beta1.TextProposal':
+          return TextProposal.fromProto(data);
+        case '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal':
+          return CommunityPoolSpendProposal.fromProto(data);
+        case '/cosmos.params.v1beta1.ParameterChangeProposal':
+          return ParameterChangeProposal.fromProto(data);
         // case 'upgrade/SoftwareUpgradeProposal':
         // case 'upgrade/CancelSoftwareUpgradeProposal':
       }

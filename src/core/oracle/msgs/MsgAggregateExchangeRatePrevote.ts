@@ -38,6 +38,23 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
       },
     };
   }
+
+  public static fromProto(
+    data: MsgAggregateExchangeRatePrevote.Proto
+  ): MsgAggregateExchangeRatePrevote {
+    const { hash, feeder, validator } = data;
+    return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
+  }
+
+  public toProto(): MsgAggregateExchangeRatePrevote.Proto {
+    const { hash, feeder, validator } = this;
+    return {
+      '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
+      hash,
+      feeder,
+      validator,
+    };
+  }
 }
 
 export namespace MsgAggregateExchangeRatePrevote {
@@ -48,5 +65,12 @@ export namespace MsgAggregateExchangeRatePrevote {
       feeder: AccAddress;
       validator: ValAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote';
+    hash: string;
+    feeder: AccAddress;
+    validator: ValAddress;
   }
 }

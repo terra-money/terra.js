@@ -10,4 +10,8 @@ export type GovMsg = MsgDeposit | MsgSubmitProposal | MsgVote;
 
 export namespace GovMsg {
   export type Data = MsgDeposit.Data | MsgSubmitProposal.Data | MsgVote.Data;
+  export type Proto =
+    | MsgDeposit.Proto
+    | MsgSubmitProposal.Proto
+    | MsgVote.Proto;
 }

@@ -13,7 +13,7 @@ import {
   MsgRevokeAuthorization,
   MsgExecAuthorized,
   MsgAuthMsg,
-} from './msgauth/msgs';
+} from './authz/msgs';
 import {
   MsgDelegateFeedConsent,
   MsgAggregateExchangeRatePrevote,

@@ -45,6 +45,25 @@ export class MsgSubmitProposal extends JSONSerializable<MsgSubmitProposal.Data> 
       },
     };
   }
+
+  public static fromProto(data: MsgSubmitProposal.Proto): MsgSubmitProposal {
+    const { content, initial_deposit, proposer } = data;
+    return new MsgSubmitProposal(
+      Proposal.Content.fromProto(content),
+      Coins.fromData(initial_deposit),
+      proposer
+    );
+  }
+
+  public toProto(): MsgSubmitProposal.Proto {
+    const { content, initial_deposit, proposer } = this;
+    return {
+      type: '/cosmos.gov.v1beta1.MsgSubmitProposal',
+      content: content.toProto(),
+      initial_deposit: initial_deposit.toData(),
+      proposer,
+    };
+  }
 }
 
 export namespace MsgSubmitProposal {
@@ -55,5 +74,12 @@ export namespace MsgSubmitProposal {
       initial_deposit: Coins.Data;
       proposer: AccAddress;
     };
+  }
+
+  export interface Proto {
+    type: '/cosmos.gov.v1beta1.MsgSubmitProposal';
+    content: Proposal.Content.Proto;
+    initial_deposit: Coins.Data;
+    proposer: AccAddress;
   }
 }

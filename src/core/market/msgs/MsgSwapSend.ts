@@ -48,6 +48,27 @@ export class MsgSwapSend extends JSONSerializable<MsgSwapSend.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgSwapSend.Proto): MsgSwapSend {
+    const { from_address, to_address, offer_coin, ask_denom } = data;
+    return new MsgSwapSend(
+      from_address,
+      to_address,
+      Coin.fromData(offer_coin),
+      ask_denom
+    );
+  }
+
+  public toProto(): MsgSwapSend.Proto {
+    const { from_address, to_address, offer_coin, ask_denom } = this;
+    return {
+      '@type': '/terra.market.v1beta1.MsgSwapSend',
+      from_address,
+      to_address,
+      offer_coin: offer_coin.toData(),
+      ask_denom,
+    };
+  }
 }
 
 export namespace MsgSwapSend {
@@ -59,5 +80,13 @@ export namespace MsgSwapSend {
       offer_coin: Coin.Data;
       ask_denom: Denom;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.market.v1beta1.MsgSwapSend';
+    from_address: AccAddress;
+    to_address: AccAddress;
+    offer_coin: Coin.Data;
+    ask_denom: Denom;
   }
 }

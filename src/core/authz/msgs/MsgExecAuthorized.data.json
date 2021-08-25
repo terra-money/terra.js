@@ -1,0 +1,27 @@
+[{
+    "type": "msgauth/MsgExecAuthorized",
+    "value": {
+        "grantee": "terra...",
+        "msgs": [{
+            "type": "bank/MsgSend",
+            "value": {
+                "from_address": "terra...",
+                "to_address": "terra...",
+                "amount": [{
+                    "denom": "ukrw",
+                    "amount": "999"
+                }]
+            }
+        }, {
+            "type": "market/MsgSwap",
+            "value": {
+                "trader": "terra...",
+                "offer_coin": {
+                    "denom": "uusd",
+                    "amount": "120391203"
+                },
+                "ask_denom": "ukrw"
+            }
+        }]
+    }
+}]

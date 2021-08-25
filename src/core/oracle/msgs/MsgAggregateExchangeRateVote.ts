@@ -67,6 +67,25 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<MsgAggregateE
     };
   }
 
+  public static fromProto(
+    proto: MsgAggregateExchangeRateVote.Proto
+  ): MsgAggregateExchangeRateVote {
+    const { exchange_rates, salt, feeder, validator } = proto;
+    const xrs = Coins.fromString(exchange_rates);
+    return new MsgAggregateExchangeRateVote(xrs, salt, feeder, validator);
+  }
+
+  public toProto(): MsgAggregateExchangeRateVote.Proto {
+    const { exchange_rates, salt, feeder, validator } = this;
+    return {
+      '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote',
+      exchange_rates: exchange_rates.toDecCoins().toString(),
+      salt,
+      feeder,
+      validator,
+    };
+  }
+
   /**
    * Gets the aggregate vote hash for the MsgAggregateExchangeRateVote, for the creation of
    *  the corresponding prevote message.
@@ -100,5 +119,13 @@ export namespace MsgAggregateExchangeRateVote {
       feeder: AccAddress;
       validator: ValAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote';
+    exchange_rates: string;
+    salt: string;
+    feeder: AccAddress;
+    validator: ValAddress;
   }
 }

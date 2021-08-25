@@ -31,6 +31,20 @@ export class TextProposal extends JSONSerializable<TextProposal.Data> {
       },
     };
   }
+
+  public static fromProto(proto: TextProposal.Proto): TextProposal {
+    const { title, description } = proto;
+    return new TextProposal(title, description);
+  }
+
+  public toProto(): TextProposal.Proto {
+    const { title, description } = this;
+    return {
+      '@type': '/cosmos.gov.v1beta1.TextProposal',
+      title,
+      description,
+    };
+  }
 }
 
 export namespace TextProposal {
@@ -40,5 +54,11 @@ export namespace TextProposal {
       title: string;
       description: string;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.gov.v1beta1.TextProposal';
+    title: string;
+    description: string;
   }
 }

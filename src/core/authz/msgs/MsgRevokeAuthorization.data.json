@@ -1,0 +1,8 @@
+[{
+    "type": "msgauth/MsgRevokeAuthorization",
+    "value": {
+        "grantee": "terra1ruz7ugyh8sazpswsvt2fj54xcp68zu7wwsrsf4",
+        "granter": "terra1na2r5d5ele6hh2fz44avgzw5cxvem2j0aaz0nk",
+        "msg_type_url": "/cosmos.bank.v1beta1.MsgSend"
+    }
+}]
