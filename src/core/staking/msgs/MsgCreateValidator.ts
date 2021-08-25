@@ -77,6 +77,49 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
       },
     };
   }
+
+  public static fromProto(data: MsgCreateValidator.Proto): MsgCreateValidator {
+    const {
+      description,
+      commission,
+      min_self_delegation,
+      delegator_address,
+      validator_address,
+      pubkey,
+      value,
+    } = data;
+    return new MsgCreateValidator(
+      description,
+      Validator.CommissionRates.fromData(commission),
+      new Int(min_self_delegation),
+      delegator_address,
+      validator_address,
+      pubkey,
+      Coin.fromData(value)
+    );
+  }
+
+  public toProto(): MsgCreateValidator.Proto {
+    const {
+      description,
+      commission,
+      min_self_delegation,
+      delegator_address,
+      validator_address,
+      pubkey,
+      value,
+    } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgCreateValidator',
+      description,
+      commission: commission.toData(),
+      min_self_delegation: min_self_delegation.toString(),
+      delegator_address,
+      validator_address,
+      pubkey,
+      value: value.toData(),
+    };
+  }
 }
 
 export namespace MsgCreateValidator {
@@ -91,5 +134,16 @@ export namespace MsgCreateValidator {
       pubkey: ValConsPubKey.Data;
       value: Coin.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.staking.v1beta1.MsgCreateValidator';
+    description: Validator.Description;
+    commission: Validator.CommissionRates.Data;
+    min_self_delegation: string;
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    pubkey: ValConsPubKey.Data;
+    value: Coin.Data;
   }
 }

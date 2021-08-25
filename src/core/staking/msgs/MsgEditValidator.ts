@@ -37,7 +37,7 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
       },
     } = data;
     return new MsgEditValidator(
-      description,
+      Validator.Description.fromData(description),
       validator_address,
       commission_rate ? new Dec(commission_rate) : undefined,
       min_self_delegation ? new Int(min_self_delegation) : undefined
@@ -65,6 +65,41 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgEditValidator.Proto): MsgEditValidator {
+    const {
+      description,
+      validator_address,
+      commission_rate,
+      min_self_delegation,
+    } = data;
+    return new MsgEditValidator(
+      Validator.Description.fromData(description),
+      validator_address,
+      commission_rate ? new Dec(commission_rate) : undefined,
+      min_self_delegation ? new Int(min_self_delegation) : undefined
+    );
+  }
+
+  public toProto(): MsgEditValidator.Proto {
+    const {
+      description,
+      validator_address,
+      commission_rate,
+      min_self_delegation,
+    } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgEditValidator',
+      description,
+      validator_address,
+      commission_rate: commission_rate
+        ? commission_rate.toString()
+        : undefined,
+      min_self_delegation: min_self_delegation
+        ? min_self_delegation.toString()
+        : undefined,
+    };
+  }
 }
 
 export namespace MsgEditValidator {
@@ -79,10 +114,18 @@ export namespace MsgEditValidator {
   export interface Data {
     type: 'staking/MsgEditValidator';
     value: {
-      description: any;
+      description: Validator.Description.Data;
       validator_address: ValAddress;
       commission_rate?: string;
       min_self_delegation?: string;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.staking.v1beta1.MsgEditValidator';
+    description: Validator.Description.Data;
+    validator_address: ValAddress;
+    commission_rate?: string;
+    min_self_delegation?: string;
   }
 }

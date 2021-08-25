@@ -43,6 +43,27 @@ export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgDelegate.Proto): MsgDelegate {
+    const {
+      delegator_address, validator_address, amount
+    } = data;
+    return new MsgDelegate(
+      delegator_address,
+      validator_address,
+      Coin.fromData(amount)
+    );
+  }
+
+  public toProto(): MsgDelegate.Proto {
+    const { delegator_address, validator_address, amount } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgDelegate',
+      delegator_address,
+      validator_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgDelegate {
@@ -53,5 +74,12 @@ export namespace MsgDelegate {
       validator_address: ValAddress;
       amount: Coin.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.staking.v1beta1.MsgDelegate';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    amount: Coin.Data;
   }
 }

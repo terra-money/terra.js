@@ -43,6 +43,25 @@ export class MsgUndelegate extends JSONSerializable<MsgUndelegate.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgUndelegate.Proto): MsgUndelegate {
+    const { delegator_address, validator_address, amount } = data;
+    return new MsgUndelegate(
+      delegator_address,
+      validator_address,
+      Coin.fromData(amount)
+    );
+  }
+
+  public toProto(): MsgUndelegate.Proto {
+    const { delegator_address, validator_address, amount } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgUndelegate',
+      delegator_address,
+      validator_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgUndelegate {
@@ -53,5 +72,12 @@ export namespace MsgUndelegate {
       validator_address: ValAddress;
       amount: Coin.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.staking.v1beta1.MsgUndelegate';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    amount: Coin.Data;
   }
 }

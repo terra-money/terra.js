@@ -58,6 +58,37 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
       },
     };
   }
+
+  public static fromProto(data: MsgBeginRedelegate.Proto): MsgBeginRedelegate {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount,
+    } = data;
+    return new MsgBeginRedelegate(
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      Coin.fromData(amount)
+    );
+  }
+
+  public toProto(): MsgBeginRedelegate.Proto {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount,
+    } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate',
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgBeginRedelegate {
@@ -69,5 +100,13 @@ export namespace MsgBeginRedelegate {
       validator_dst_address: ValAddress;
       amount: Coin.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate';
+    delegator_address: AccAddress;
+    validator_src_address: ValAddress;
+    validator_dst_address: ValAddress;
+    amount: Coin.Data;
   }
 }
