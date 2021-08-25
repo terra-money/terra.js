@@ -30,6 +30,19 @@ export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmi
       },
     };
   }
+
+  public static fromProto(data: MsgClearContractAdmin.Proto): MsgClearContractAdmin {
+    const { admin, contract } = data
+    return new MsgClearContractAdmin(admin, contract)
+  }
+
+  public toProto(): MsgClearContractAdmin.Proto {
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
+      admin: this.admin,
+      contract: this.contract
+    }
+  }
 }
 
 export namespace MsgClearContractAdmin {
@@ -39,5 +52,11 @@ export namespace MsgClearContractAdmin {
       admin: AccAddress;
       contract: AccAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin';
+    admin: string;
+    contract: string;
   }
 }

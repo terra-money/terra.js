@@ -27,6 +27,20 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgStoreCode.Proto): MsgStoreCode {
+    const { sender, wasm_byte_code } = data;
+    return new MsgStoreCode(sender, wasm_byte_code);
+  }
+
+  public toProto(): MsgStoreCode.Proto {
+    const { sender, wasm_byte_code } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgStoreCode',
+      sender,
+      wasm_byte_code,
+    };
+  }
 }
 
 export namespace MsgStoreCode {
@@ -36,5 +50,11 @@ export namespace MsgStoreCode {
       sender: AccAddress;
       wasm_byte_code: string;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgStoreCode';
+    sender: AccAddress;
+    wasm_byte_code: string;
   }
 }
