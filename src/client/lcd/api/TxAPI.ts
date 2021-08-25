@@ -110,6 +110,21 @@ export namespace SyncTxBroadcastResult {
   >;
 }
 
+export interface TxResult {
+  tx: TxInfo;
+}
+
+export namespace TxResult {
+  export interface Data {
+    txs: TxInfo.Data;
+  }
+
+  export interface Proto {
+    tx: ProtoTx.Proto;
+    tx_response: TxInfo.Proto;
+  }
+}
+
 export interface TxSearchResult {
   total_count: number;
   count: number;
@@ -162,8 +177,8 @@ export class TxAPI extends BaseAPI {
    */
   public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
     return this.c
-      .getRaw<TxInfo.Data>(`/txs/${txHash}`, params)
-      .then(TxInfo.fromData);
+      .getRaw<TxResult.Proto>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
+      .then(v => TxInfo.fromProto(v.tx_response));
   }
 
   /**
