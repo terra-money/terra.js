@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../util/json';
 import { Coins } from '../Coins';
-import { Coin } from 'core/Coin';
+import { Coin } from '../Coin';
 import { AccAddress } from 'core/bech32';
 
 export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data> {

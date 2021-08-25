@@ -73,7 +73,8 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
-    | WasmMsg.Proto;
+    | WasmMsg.Proto
+    | any;
 
   export function fromData(data: Msg.Data): Msg {
     switch (data.type) {

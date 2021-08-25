@@ -19,27 +19,25 @@ export class StdTx extends JSONSerializable<StdTx.Data> {
     public msg: Msg[],
     public fee: StdFee,
     public signatures: StdSignature[],
-    public memo: string = '',
-    public timeout_height: string
+    public memo: string = ''
   ) {
     super();
   }
 
   public static fromData(data: StdTx.Data): StdTx {
     const {
-      value: { msg, fee, signatures, memo, timeout_height },
+      value: { msg, fee, signatures, memo },
     } = data;
     return new StdTx(
       msg.map(m => Msg.fromData(m)),
       StdFee.fromData(fee),
       signatures.map(s => StdSignature.fromData(s)),
-      memo,
-      timeout_height
+      memo
     );
   }
 
   public toData(): StdTx.Data {
-    const { msg, fee, signatures, memo, timeout_height } = this;
+    const { msg, fee, signatures, memo } = this;
     return {
       type: 'core/StdTx',
       value: {
@@ -47,14 +45,13 @@ export class StdTx extends JSONSerializable<StdTx.Data> {
         fee: fee.toData(),
         signatures: signatures.map(s => s.toData()),
         memo,
-        timeout_height,
       },
     };
   }
 
   public static fromProto(proto: StdTx.Proto): StdTx {
     const {
-      body: { messages, memo, timeout_height },
+      body: { messages, memo },
       auth_info: { fee, signer_infos },
       signatures,
     } = proto;
@@ -70,8 +67,7 @@ export class StdTx extends JSONSerializable<StdTx.Data> {
           signature: sig,
         })
       ),
-      memo,
-      timeout_height
+      memo
     );
   }
 }
@@ -84,7 +80,6 @@ export namespace StdTx {
       fee: StdFee.Data;
       signatures: StdSignature.Data[];
       memo: string;
-      timeout_height: string;
     };
   }
 

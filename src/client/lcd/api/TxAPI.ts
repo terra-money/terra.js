@@ -142,6 +142,13 @@ export namespace TxSearchResult {
 export interface TxSearchOptions {
   page: number;
   limit: number;
+  [key: string]: any;
+}
+
+export interface PaginationOptions {
+  'pagination.limit': string;
+  'pagination.offset': string;
+  [key: string]: any;
 }
 
 export class TxAPI extends BaseAPI {
@@ -385,17 +392,38 @@ export class TxAPI extends BaseAPI {
    * @param options
    */
   public async search(
-    options: Partial<TxSearchOptions> | {}
+    options: Partial<TxSearchOptions>
   ): Promise<TxSearchResult> {
+    const page_number = options.page || 1;
+    const limit = options.limit || 100;
+    const offset = (page_number - 1) * (options.limit || 100);
+
+    // remove already spend items
+    delete options['page'];
+    delete options['limit'];
+
+    const pagination_options: Partial<PaginationOptions> = {
+      'pagination.limit': limit.toString(),
+      'pagination.offset': offset.toString(),
+      events: Object.entries(options)
+        .map(v => `${v[0]}=${v[1]}`)
+        .reduce((prev, cur) => `${prev},${cur}`),
+    };
+
     return this.c
-      .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, options)
-      .then(d => ({
-        total_count: Number.parseInt(d.total_count),
-        count: Number.parseInt(d.count),
-        page_number: Number.parseInt(d.page_number),
-        page_total: Number.parseInt(d.page_total),
-        limit: Number.parseInt(d.limit),
-        txs: d.txs ? d.txs.map(txdata => TxInfo.fromData(txdata)) : [],
-      }));
+      .getRaw<TxSearchResult.Proto>(`cosmos/tx/v1beta1/txs`, pagination_options)
+      .then(d => {
+        const total_count = Number.parseInt(d.pagination.total);
+        const page_total =
+          Math.floor(total_count / limit) + (total_count % limit == 0 ? 0 : 1);
+        return {
+          total_count: total_count,
+          count: d.txs.length,
+          page_number,
+          page_total,
+          limit,
+          txs: d.tx_responses.map(tx_response => TxInfo.fromProto(tx_response)),
+        };
+      });
   }
 }
