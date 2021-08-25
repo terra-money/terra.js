@@ -32,6 +32,22 @@ export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.
       },
     };
   }
+
+  public static fromProto(
+    proto: MsgFundCommunityPool.Proto
+  ): MsgFundCommunityPool {
+    const { depositor, amount } = proto;
+    return new MsgFundCommunityPool(depositor, Coins.fromData(amount));
+  }
+
+  public toProto(): MsgFundCommunityPool.Proto {
+    const { depositor, amount } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
+      depositor,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgFundCommunityPool {
@@ -41,5 +57,11 @@ export namespace MsgFundCommunityPool {
       depositor: AccAddress;
       amount: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool';
+    depositor: AccAddress;
+    amount: Coins.Data;
   }
 }

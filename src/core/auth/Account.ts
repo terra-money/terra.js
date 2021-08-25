@@ -53,6 +53,29 @@ export class Account extends JSONSerializable<Account.Data> {
       Number.parseInt(sequence) || 0
     );
   }
+
+  public toProto(): Account.Proto {
+    const { address, public_key, account_number, sequence } = this;
+    return {
+      '@type': '/cosmos.auth.v1beta1.BaseAccount',
+      address,
+      public_key: public_key ? public_key.toProto() : null,
+      account_number: account_number.toFixed(),
+      sequence: sequence.toFixed(),
+    };
+  }
+
+  public static fromProto(data: Account.Proto): Account {
+    const { address, public_key, account_number, sequence } = data;
+
+    return new Account(
+      address || '',
+      new Coins(),
+      public_key ? PublicKey.fromProto(public_key) : null,
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0
+    );
+  }
 }
 
 export namespace Account {
@@ -67,5 +90,13 @@ export namespace Account {
   export interface Data {
     type: 'core/Account';
     value: Value;
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.auth.v1beta1.BaseAccount';
+    address: AccAddress;
+    public_key: PublicKey.Proto | null;
+    account_number: string;
+    sequence: string;
   }
 }

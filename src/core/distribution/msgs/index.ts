@@ -20,4 +20,10 @@ export namespace DistributionMsg {
     | MsgWithdrawDelegationReward.Data
     | MsgWithdrawValidatorCommission.Data
     | MsgFundCommunityPool.Data;
+
+  export type Proto =
+    | MsgModifyWithdrawAddress.Proto
+    | MsgWithdrawDelegationReward.Proto
+    | MsgWithdrawValidatorCommission.Proto
+    | MsgFundCommunityPool.Proto;
 }

@@ -42,6 +42,25 @@ export class MsgWithdrawDelegationReward extends JSONSerializable<MsgWithdrawDel
       },
     };
   }
+
+  public static fromProto(
+    proto: MsgWithdrawDelegationReward.Proto
+  ): MsgWithdrawDelegationReward {
+    const { delegator_address, validator_address } = proto;
+    return new MsgWithdrawDelegationReward(
+      delegator_address,
+      validator_address
+    );
+  }
+
+  public toProto(): MsgWithdrawDelegationReward.Proto {
+    const { delegator_address, validator_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+      delegator_address,
+      validator_address,
+    };
+  }
 }
 
 export namespace MsgWithdrawDelegationReward {
@@ -51,5 +70,11 @@ export namespace MsgWithdrawDelegationReward {
       delegator_address: AccAddress;
       validator_address: ValAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
   }
 }

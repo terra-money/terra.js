@@ -37,6 +37,22 @@ export class MsgModifyWithdrawAddress extends JSONSerializable<MsgModifyWithdraw
       },
     };
   }
+
+  public static fromProto(
+    proto: MsgModifyWithdrawAddress.Proto
+  ): MsgModifyWithdrawAddress {
+    const { delegator_address, withdraw_address } = proto;
+    return new MsgModifyWithdrawAddress(delegator_address, withdraw_address);
+  }
+
+  public toProto(): MsgModifyWithdrawAddress.Proto {
+    const { delegator_address, withdraw_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
+      delegator_address,
+      withdraw_address,
+    };
+  }
 }
 
 export namespace MsgModifyWithdrawAddress {
@@ -46,5 +62,11 @@ export namespace MsgModifyWithdrawAddress {
       delegator_address: AccAddress;
       withdraw_address: AccAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress';
+    delegator_address: AccAddress;
+    withdraw_address: AccAddress;
   }
 }

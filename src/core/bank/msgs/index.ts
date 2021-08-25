@@ -7,4 +7,5 @@ export * from './MsgMultiSend';
 export type BankMsg = MsgSend | MsgMultiSend;
 export namespace BankMsg {
   export type Data = MsgSend.Data | MsgMultiSend.Data;
+  export type Proto = MsgSend.Proto | MsgMultiSend.Proto;
 }

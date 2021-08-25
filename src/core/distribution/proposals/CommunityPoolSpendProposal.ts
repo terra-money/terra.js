@@ -50,6 +50,29 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
       },
     };
   }
+
+  public static fromProto(
+    proto: CommunityPoolSpendProposal.Proto
+  ): CommunityPoolSpendProposal {
+    const { title, description, recipient, amount } = proto;
+    return new CommunityPoolSpendProposal(
+      title,
+      description,
+      recipient,
+      Coins.fromData(amount)
+    );
+  }
+
+  public toProto(): CommunityPoolSpendProposal.Proto {
+    const { title, description, recipient, amount } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
+      title,
+      description,
+      recipient,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace CommunityPoolSpendProposal {
@@ -61,5 +84,13 @@ export namespace CommunityPoolSpendProposal {
       recipient: AccAddress;
       amount: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal';
+    title: string;
+    description: string;
+    recipient: AccAddress;
+    amount: Coins.Data;
   }
 }

@@ -32,6 +32,21 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
       },
     };
   }
+
+  public static fromProto(
+    proto: MsgWithdrawValidatorCommission.Proto
+  ): MsgWithdrawValidatorCommission {
+    const { validator_address } = proto;
+    return new MsgWithdrawValidatorCommission(validator_address);
+  }
+
+  public toProto(): MsgWithdrawValidatorCommission.Proto {
+    const { validator_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
+      validator_address,
+    };
+  }
 }
 
 export namespace MsgWithdrawValidatorCommission {
@@ -40,5 +55,10 @@ export namespace MsgWithdrawValidatorCommission {
     value: {
       validator_address: ValAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission';
+    validator_address: ValAddress;
   }
 }

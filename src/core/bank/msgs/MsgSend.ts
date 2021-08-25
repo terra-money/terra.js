@@ -43,6 +43,22 @@ export class MsgSend extends JSONSerializable<MsgSend.Data> {
       },
     };
   }
+
+  public static fromProto(proto: MsgSend.Proto): MsgSend {
+    const { from_address, to_address, amount } = proto;
+
+    return new MsgSend(from_address, to_address, Coins.fromData(amount));
+  }
+
+  public toProto(): MsgSend.Proto {
+    const { from_address, to_address, amount } = this;
+    return {
+      '@type': '/cosmos.bank.v1beta1.MsgSend',
+      from_address,
+      to_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgSend {
@@ -53,5 +69,12 @@ export namespace MsgSend {
       to_address: AccAddress;
       amount: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/cosmos.bank.v1beta1.MsgSend';
+    from_address: AccAddress;
+    to_address: AccAddress;
+    amount: Coins.Data;
   }
 }
