@@ -44,11 +44,36 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
       type: 'wasm/MsgInstantiateContract',
       value: {
         sender,
-        admin: admin === '' || admin === null ? undefined : admin,
+        admin: admin || '',
         code_id: code_id.toFixed(),
         init_msg: removeNull(init_msg),
         init_coins: init_coins.toData(),
       },
+    };
+  }
+
+  public static fromProto(
+    data: MsgInstantiateContract.Proto
+  ): MsgInstantiateContract {
+    const { sender, admin, code_id, init_msg, init_coins } = data;
+    return new MsgInstantiateContract(
+      sender,
+      admin,
+      Number.parseInt(code_id),
+      init_msg,
+      Coins.fromData(init_coins)
+    );
+  }
+
+  public toProto(): MsgInstantiateContract.Proto {
+    const { sender, admin, code_id, init_msg, init_coins } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgInstantiateContract',
+      sender,
+      admin: admin || '',
+      code_id: code_id.toFixed(),
+      init_msg: removeNull(init_msg),
+      init_coins: init_coins.toData(),
     };
   }
 }
@@ -58,10 +83,19 @@ export namespace MsgInstantiateContract {
     type: 'wasm/MsgInstantiateContract';
     value: {
       sender: AccAddress;
-      admin?: AccAddress;
+      admin: AccAddress;
       code_id: string;
       init_msg: object;
       init_coins: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgInstantiateContract';
+    sender: AccAddress;
+    admin: AccAddress;
+    code_id: string;
+    init_msg: object;
+    init_coins: Coins.Data;
   }
 }

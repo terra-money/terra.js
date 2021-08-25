@@ -33,15 +33,37 @@ export class MsgMigrateCode extends JSONSerializable<MsgMigrateCode.Data> {
       },
     };
   }
+
+  public static fromProto(data: MsgMigrateCode.Proto): MsgMigrateCode {
+    const { sender, code_id, wasm_byte_code } = data;
+    return new MsgMigrateCode(sender, Number.parseInt(code_id), wasm_byte_code);
+  }
+
+  public toProto(): MsgMigrateCode.Proto {
+    const { sender, code_id, wasm_byte_code } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgMigrateCode',
+      sender,
+      code_id: code_id.toFixed(),
+      wasm_byte_code,
+    };
+  }
 }
 
 export namespace MsgMigrateCode {
   export interface Data {
     type: 'wasm/MsgMigrateCode';
     value: {
-      sender: AccAddress;
       code_id: string;
+      sender: AccAddress;
       wasm_byte_code: string;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgMigrateCode';
+    code_id: string;
+    sender: AccAddress;
+    wasm_byte_code: string;
   }
 }

@@ -40,6 +40,27 @@ export class MsgMigrateContract extends JSONSerializable<MsgMigrateContract.Data
       },
     };
   }
+
+  public static fromProto(data: MsgMigrateContract.Proto): MsgMigrateContract {
+    const { admin, contract, new_code_id, migrate_msg } = data;
+    return new MsgMigrateContract(
+      admin,
+      contract,
+      Number.parseInt(new_code_id),
+      migrate_msg
+    );
+  }
+
+  public toProto(): MsgMigrateContract.Proto {
+    const { admin, contract, new_code_id, migrate_msg } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgMigrateContract',
+      admin,
+      contract,
+      new_code_id: new_code_id.toFixed(),
+      migrate_msg: removeNull(migrate_msg),
+    };
+  }
 }
 
 export namespace MsgMigrateContract {
@@ -51,5 +72,13 @@ export namespace MsgMigrateContract {
       new_code_id: string;
       migrate_msg: object;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgMigrateContract';
+    admin: AccAddress;
+    contract: AccAddress;
+    new_code_id: string;
+    migrate_msg: object;
   }
 }

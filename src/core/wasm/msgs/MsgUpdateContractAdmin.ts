@@ -35,6 +35,23 @@ export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAd
       },
     };
   }
+
+  public static fromProto(
+    data: MsgUpdateContractAdmin.Proto
+  ): MsgUpdateContractAdmin {
+    const { admin, new_admin, contract } = data;
+    return new MsgUpdateContractAdmin(admin, new_admin, contract);
+  }
+
+  public toProto(): MsgUpdateContractAdmin.Proto {
+    const { admin, new_admin, contract } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
+      admin,
+      new_admin,
+      contract,
+    };
+  }
 }
 
 export namespace MsgUpdateContractAdmin {
@@ -45,5 +62,12 @@ export namespace MsgUpdateContractAdmin {
       new_admin: AccAddress;
       contract: AccAddress;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin';
+    admin: AccAddress;
+    new_admin: AccAddress;
+    contract: AccAddress;
   }
 }

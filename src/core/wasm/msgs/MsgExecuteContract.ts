@@ -45,6 +45,27 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
       },
     };
   }
+
+  public static fromProto(data: MsgExecuteContract.Proto): MsgExecuteContract {
+    const { sender, contract, execute_msg, coins } = data;
+    return new MsgExecuteContract(
+      sender,
+      contract,
+      execute_msg,
+      Coins.fromData(coins)
+    )
+  }
+
+  public toProto(): MsgExecuteContract.Proto {
+    const { sender, contract, execute_msg, coins } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgExecuteContract',
+      sender,
+      contract,
+      execute_msg,
+      coins: coins.toData()
+    }
+  }
 }
 
 export namespace MsgExecuteContract {
@@ -56,5 +77,13 @@ export namespace MsgExecuteContract {
       execute_msg: object;
       coins: Coins.Data;
     };
+  }
+
+  export interface Proto {
+    '@type': '/terra.wasm.v1beta1.MsgExecuteContract';
+    sender: AccAddress;
+    contract: AccAddress;
+    execute_msg: object;
+    coins: Coins.Data;
   }
 }
