@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { AuthorizationGrant } from '../Authorization';
+import { AuthorizationGrant } from '../authorizations';
 
 export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
   /**

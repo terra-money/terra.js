@@ -26,6 +26,10 @@ export * from './bank/msgs';
 export * from './distribution/msgs';
 export * from './distribution/proposals';
 
+// FeeGrant
+export * from './feegrant/msgs';
+export * from './feegrant/allowances';
+
 // Governance
 export * from './gov/msgs';
 export * from './gov/proposals';
@@ -35,7 +39,7 @@ export * from './market/msgs';
 
 // MsgAuth
 export * from './authz/msgs';
-export * from './authz/Authorization';
+export * from './authz/authorizations';
 
 // Oracle
 export * from './oracle/msgs';

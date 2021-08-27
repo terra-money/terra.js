@@ -6,6 +6,11 @@ import {
   MsgWithdrawValidatorCommission,
   MsgFundCommunityPool,
 } from './distribution/msgs';
+import {
+  MsgGrantAllowance,
+  MsgRevokeAllowance,
+  FeeGrantMsg,
+} from './feegrant/msgs';
 import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
 import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
 import {
@@ -43,6 +48,7 @@ import {
 export type Msg =
   | BankMsg
   | DistributionMsg
+  | FeeGrantMsg
   | GovMsg
   | MarketMsg
   | MsgAuthMsg
@@ -56,6 +62,7 @@ export namespace Msg {
   export type Data =
     | BankMsg.Data
     | DistributionMsg.Data
+    | FeeGrantMsg.Data
     | GovMsg.Data
     | MarketMsg.Data
     | MsgAuthMsg.Data
@@ -67,6 +74,7 @@ export namespace Msg {
   export type Proto =
     | BankMsg.Proto
     | DistributionMsg.Proto
+    | FeeGrantMsg.Proto
     | GovMsg.Proto
     | MarketMsg.Proto
     | MsgAuthMsg.Proto
@@ -93,6 +101,12 @@ export namespace Msg {
         return MsgWithdrawValidatorCommission.fromData(data);
       case 'distribution/MsgFundCommunityPool':
         return MsgFundCommunityPool.fromData(data);
+
+      // feegrant
+      case 'feegrant/MsgGrantAllowance':
+        return MsgGrantAllowance.fromData(data);
+      case 'feegrant/MsgRevokeAllowance':
+        return MsgRevokeAllowance.fromData(data);
 
       // gov
       case 'gov/MsgDeposit':
@@ -177,6 +191,12 @@ export namespace Msg {
         return MsgWithdrawValidatorCommission.fromProto(proto);
       case '/cosmos.distribution.v1beta1.MsgFundCommunityPool':
         return MsgFundCommunityPool.fromProto(proto);
+
+      // feegrant
+      case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
+        return MsgGrantAllowance.fromProto(proto);
+      case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
+        return MsgRevokeAllowance.fromProto(proto);
 
       // gov
       case '/cosmos.gov.v1beta1.MsgDeposit':
