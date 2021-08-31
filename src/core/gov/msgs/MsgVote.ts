@@ -13,7 +13,7 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
   constructor(
     public proposal_id: number,
     public voter: AccAddress,
-    public option: MsgVote.Option
+    public option: number // 0: empty, 1: yes, 2: no, 3: no, 4: no_with_veto
   ) {
     super();
   }
@@ -39,29 +39,12 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
 }
 
 export namespace MsgVote {
-  /** Voting options */
-  export enum Option {
-    /** - */
-    EMPTY = 'Empty',
-
-    /** Vote yes */
-    YES = 'Yes',
-
-    /** Do not vote */
-    ABSTAIN = 'Abstain',
-
-    /** Vote no */
-    NO = 'No',
-
-    /** Vote No with the option to veto if passed */
-    NO_WITH_VETO = 'NoWithVeto',
-  }
   export interface Data {
     type: 'gov/MsgVote';
     value: {
       proposal_id: string;
       voter: AccAddress;
-      option: Option;
+      option: number;
     };
   }
 }

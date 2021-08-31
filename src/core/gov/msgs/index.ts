@@ -5,6 +5,7 @@ import { MsgDeposit } from './MsgDeposit';
 export * from './MsgDeposit';
 export * from './MsgSubmitProposal';
 export * from './MsgVote';
+export * from './MsgVoteWeighted';
 
 export type GovMsg = MsgDeposit | MsgSubmitProposal | MsgVote;
 

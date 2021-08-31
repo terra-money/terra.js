@@ -1,9 +1,9 @@
-import { Coins } from './Coins';
-import { Int } from './numeric';
-import { JSONSerializable } from '../util/json';
-import { CommunityPoolSpendProposal } from './distribution/proposals';
-import { ParameterChangeProposal } from './params/proposals';
-import { TextProposal } from './gov/proposals';
+import { Coins } from '../Coins';
+import { Int } from '../numeric';
+import { JSONSerializable } from '../../util/json';
+import { CommunityPoolSpendProposal } from '../distribution/proposals';
+import { ParameterChangeProposal } from '../params/proposals';
+import { TextProposal } from './proposals';
 
 /**
  * Stores information pertaining to a submitted proposal, such as its status and time of
@@ -70,7 +70,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return new Proposal(
       Number.parseInt(id),
       Proposal.Content.fromData(content),
-      proposal_status,
+      StatusMapping[proposal_status],
       ftr,
       new Date(submit_time),
       new Date(deposit_end_time),
@@ -104,7 +104,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return {
       id: this.id.toFixed(),
       content: this.content.toData(),
-      proposal_status: proposal_status,
+      proposal_status: Object.keys(StatusMapping).indexOf(proposal_status),
       final_tally_result: ftr,
       submit_time: this.submit_time.toISOString(),
       deposit_end_time: this.deposit_end_time.toISOString(),
@@ -114,6 +114,15 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     };
   }
 }
+
+const StatusMapping: { [key: number]: Proposal.Status } = {
+  0: Proposal.Status.NIL,
+  1: Proposal.Status.DEPOSIT_PERIOD,
+  2: Proposal.Status.VOTING_PERIOD,
+  3: Proposal.Status.PASSED,
+  4: Proposal.Status.REJECTED,
+  5: Proposal.Status.FAILED,
+};
 
 export namespace Proposal {
   export interface FinalTallyResult {
@@ -160,7 +169,7 @@ export namespace Proposal {
   export interface Data {
     content: Content.Data;
     id: string;
-    proposal_status: Status;
+    proposal_status: number;
     final_tally_result?: {
       yes: string;
       abstain: string;
