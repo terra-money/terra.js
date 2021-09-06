@@ -6,6 +6,12 @@ import {
   TallyParams,
 } from '../../../core/gov/params';
 
+interface GovProposalsParam {
+  voter?: string;
+  depositor?: string;
+  status?: 'deposit_period' | 'voting_period' | 'passed' | 'rejected';
+}
+
 export interface GovParams {
   /**
    * Current deposit parameters
@@ -51,9 +57,9 @@ export class GovAPI extends BaseAPI {
   /**
    * Gets all proposals.
    */
-  public async proposals(): Promise<Proposal[]> {
+  public async proposals(params: GovProposalsParam = {}): Promise<Proposal[]> {
     return this.c
-      .get<Proposal.Data[]>(`/gov/proposals`)
+      .get<Proposal.Data[]>(`/gov/proposals`, params)
       .then(d => d.result.map(Proposal.fromData));
   }
 
