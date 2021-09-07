@@ -70,7 +70,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return new Proposal(
       Number.parseInt(id),
       Proposal.Content.fromData(content),
-      StatusMapping[proposal_status],
+      Proposal.StatusMapping[proposal_status],
       ftr,
       new Date(submit_time),
       new Date(deposit_end_time),
@@ -104,7 +104,9 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return {
       id: this.id.toFixed(),
       content: this.content.toData(),
-      proposal_status: Object.keys(StatusMapping).indexOf(proposal_status),
+      proposal_status: Object.keys(Proposal.StatusMapping).indexOf(
+        proposal_status
+      ),
       final_tally_result: ftr,
       submit_time: this.submit_time.toISOString(),
       deposit_end_time: this.deposit_end_time.toISOString(),
@@ -114,15 +116,6 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     };
   }
 }
-
-const StatusMapping: { [key: number]: Proposal.Status } = {
-  0: Proposal.Status.NIL,
-  1: Proposal.Status.DEPOSIT_PERIOD,
-  2: Proposal.Status.VOTING_PERIOD,
-  3: Proposal.Status.PASSED,
-  4: Proposal.Status.REJECTED,
-  5: Proposal.Status.FAILED,
-};
 
 export namespace Proposal {
   export interface FinalTallyResult {
@@ -165,6 +158,15 @@ export namespace Proposal {
     REJECTED = 'Rejected',
     FAILED = 'Failed',
   }
+
+  export const StatusMapping: { [key: number]: Status } = {
+    0: Status.NIL,
+    1: Status.DEPOSIT_PERIOD,
+    2: Status.VOTING_PERIOD,
+    3: Status.PASSED,
+    4: Status.REJECTED,
+    5: Status.FAILED,
+  };
 
   export interface Data {
     content: Content.Data;

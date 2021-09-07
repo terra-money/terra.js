@@ -26,10 +26,10 @@ export class Vote extends JSONSerializable<Vote.Data> {
       parseInt(proposal_id),
       voter,
       options.map(({ option, weight }) => ({
-        option: OptionMapping[option],
+        option: Vote.OptionMapping[option],
         weight,
       })),
-      option ? OptionMapping[option] : undefined
+      option ? Vote.OptionMapping[option] : undefined
     );
   }
 
@@ -40,26 +40,18 @@ export class Vote extends JSONSerializable<Vote.Data> {
       proposal_id: proposal_id.toFixed(),
       voter,
       options: options.map(({ option, weight }) => ({
-        option: Object.keys(OptionMapping).indexOf(option),
+        option: Object.keys(Vote.OptionMapping).indexOf(option),
         weight,
       })),
     };
 
     if (option) {
-      res.option = Object.keys(OptionMapping).indexOf(option);
+      res.option = Object.keys(Vote.OptionMapping).indexOf(option);
     }
 
     return res;
   }
 }
-
-const OptionMapping: { [key: number]: Vote.Option } = {
-  0: Vote.Option.EMPTY,
-  1: Vote.Option.YES,
-  2: Vote.Option.ABSTAIN,
-  3: Vote.Option.NO,
-  4: Vote.Option.NO_WITH_VETO,
-};
 
 export namespace Vote {
   export type Options = {
@@ -84,6 +76,14 @@ export namespace Vote {
     /** Vote No with the option to veto if passed */
     NO_WITH_VETO = 'NoWithVeto',
   }
+
+  export const OptionMapping: { [key: number]: Option } = {
+    0: Option.EMPTY,
+    1: Option.YES,
+    2: Option.ABSTAIN,
+    3: Option.NO,
+    4: Option.NO_WITH_VETO,
+  };
 
   export interface Data {
     proposal_id: string;
