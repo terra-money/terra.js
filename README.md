@@ -46,13 +46,13 @@ We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor
 Grab the latest version off [NPM](https://www.npmjs.com/package/@terra-money/terra.js):
 
 ```sh
-yarn add @terra-money/terra.js
+npm install @terra-money/terra.js
 ```
 
 For columbus-4 and tequila network, use v1.x
 
 ```sh
-yarn add @terra-money/terra.js@^1
+npm install @terra-money/terra.js@^1
 ```
 
 ## Usage
@@ -66,8 +66,8 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 
 // connect to soju testnet
 const terra = new LCDClient({
-  URL: 'https://tequila-lcd.terra.dev',
-  chainID: 'tequila-0004',
+  URL: 'https://bombay-lcd.terra.dev',
+  chainID: 'bombay-10',
 });
 
 // To use LocalTerra
