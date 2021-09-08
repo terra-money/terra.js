@@ -54,23 +54,14 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
 }
 
 export namespace MsgVote {
-  /** Voting options */
   export enum Option {
-    /** - */
-    EMPTY = 'Empty',
-
-    /** Vote yes */
-    YES = 'Yes',
-
-    /** Do not vote */
-    ABSTAIN = 'Abstain',
-
-    /** Vote no */
-    NO = 'No',
-
-    /** Vote No with the option to veto if passed */
-    NO_WITH_VETO = 'NoWithVeto',
+    EMPTY = 0,
+    YES = 1,
+    ABSTAIN = 2,
+    NO = 3,
+    NO_WITH_VETO = 4,
   }
+
   export interface Data {
     type: 'gov/MsgVote';
     value: {
