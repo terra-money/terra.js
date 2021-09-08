@@ -64,7 +64,7 @@ Terra.js can be use in Node.js, as well as inside the browser. Please check the 
 ```ts
 import { LCDClient, Coin } from '@terra-money/terra.js';
 
-// connect to soju testnet
+// connect to bombay testnet
 const terra = new LCDClient({
   URL: 'https://bombay-lcd.terra.dev',
   chainID: 'bombay-10',
@@ -96,10 +96,10 @@ const mk = new MnemonicKey({
     'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius',
 });
 
-// connect to soju testnet
+// connect to bombay testnet
 const terra = new LCDClient({
-  URL: 'https://soju-lcd.terra.dev',
-  chainID: 'soju-0014',
+  URL: 'https://bombay-lcd.terra.dev',
+  chainID: 'bombay-10',
 });
 
 // To use LocalTerra
