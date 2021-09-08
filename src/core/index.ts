@@ -4,7 +4,6 @@ export * from './Coins';
 export * from './Denom';
 export * from './Msg';
 export * from './numeric';
-export * from './Proposal';
 export * from './PublicKey';
 export * from './StdFee';
 export * from './StdSignature';
@@ -13,7 +12,6 @@ export * from './StdTx';
 export * from './TxInfo';
 export * from './ValidatorSet';
 export * from './Deposit';
-export * from './Vote';
 
 // Auth
 export * from './auth/Account';
@@ -29,6 +27,8 @@ export * from './distribution/proposals';
 // Governance
 export * from './gov/msgs';
 export * from './gov/proposals';
+export * from './gov/Proposal';
+export * from './gov/Vote';
 
 // Market
 export * from './market/msgs';
