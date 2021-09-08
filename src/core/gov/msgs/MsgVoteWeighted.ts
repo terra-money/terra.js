@@ -1,5 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
+import { MsgVote } from './MsgVote';
 
 /**
  * Weighted vote for a proposal
@@ -40,7 +41,7 @@ export class MsgVoteWeighted extends JSONSerializable<MsgVoteWeighted.Data> {
 
 export namespace MsgVoteWeighted {
   export type Options = {
-    option: number;
+    option: MsgVote.Option;
     weight: string;
   }[];
 

@@ -13,7 +13,7 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
   constructor(
     public proposal_id: number,
     public voter: AccAddress,
-    public option: number // 0: empty, 1: yes, 2: no, 3: no, 4: no_with_veto
+    public option: MsgVote.Option
   ) {
     super();
   }
@@ -39,6 +39,14 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
 }
 
 export namespace MsgVote {
+  export enum Option {
+    EMPTY = 0,
+    YES = 1,
+    ABSTAIN = 2,
+    NO = 3,
+    NO_WITH_VETO = 4,
+  }
+
   export interface Data {
     type: 'gov/MsgVote';
     value: {
