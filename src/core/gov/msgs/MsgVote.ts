@@ -52,7 +52,7 @@ export namespace MsgVote {
     value: {
       proposal_id: string;
       voter: AccAddress;
-      option: number;
+      option: Option;
     };
   }
 }
