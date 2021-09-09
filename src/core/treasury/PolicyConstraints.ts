@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../../util/json';
 import { Coin } from '../Coin';
 import { Dec, Numeric } from '../numeric';
+import { PolicyConstraints as PolicyConstraints_pb } from '@terra-money/terra.proto/src/terra/treasury/v1beta1/treasury_pb';
 
 /**
  * This captures the Treasury module's `tax_policy` and `reward_policy` parameters, which
@@ -61,6 +62,25 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
     };
   }
 
+  public static fromProto(proto: PolicyConstraints.Proto): PolicyConstraints {
+    return new PolicyConstraints(
+      proto.getRateMax(),
+      proto.getRateMin(),
+      Coin.fromProto(proto.getCap() as Coin.Proto),
+      proto.getChangeRateMax()
+    );
+  }
+
+  public toProto(): PolicyConstraints.Proto {
+    const { rate_min, rate_max, cap, change_rate_max } = this;
+    const policyConstraintsProto = new PolicyConstraints_pb();
+    policyConstraintsProto.setRateMax(rate_max.toString());
+    policyConstraintsProto.setRateMin(rate_min.toString());
+    policyConstraintsProto.setCap(cap.toProto());
+    policyConstraintsProto.setChangeRateMax(change_rate_max.toString());
+    return policyConstraintsProto;
+  }
+
   /**
    * You can simulate the result of the clamping algorithm, which subjects updates in
    * rate to the rules defined by the `PolicyConstraints`.
@@ -100,4 +120,6 @@ export namespace PolicyConstraints {
     cap: Coin.Data;
     change_rate_max: string;
   }
+
+  export type Proto = PolicyConstraints_pb;
 }

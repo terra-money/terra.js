@@ -1,6 +1,11 @@
 import { JSONSerializable } from '../../util/json';
 import { Int } from '../numeric';
 import { AccAddress, ValAddress } from '../bech32';
+import {
+  UnbondingDelegation as UnbondingDelegation_pb,
+  UnbondingDelegationEntry as UnbondingDelegationEntry_pb,
+} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
 /**
  * When a delegator decides to take out their funds from the staking pool, they must
@@ -31,6 +36,25 @@ export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Da
     );
   }
 
+  public toProto(): UnbondingDelegation.Proto {
+    const { delegator_address, validator_address, entries } = this;
+    const unbondingDelegationProto = new UnbondingDelegation_pb();
+    unbondingDelegationProto.setDelegatorAddress(delegator_address);
+    unbondingDelegationProto.setValidatorAddress(validator_address);
+    unbondingDelegationProto.setEntriesList(entries.map(e => e.toProto()));
+    return unbondingDelegationProto;
+  }
+
+  public static fromProto(
+    proto: UnbondingDelegation.Proto
+  ): UnbondingDelegation {
+    return new UnbondingDelegation(
+      proto.getDelegatorAddress(),
+      proto.getValidatorAddress(),
+      proto.getEntriesList().map(e => UnbondingDelegation.Entry.fromProto(e))
+    );
+  }
+
   public toData(): UnbondingDelegation.Data {
     const { delegator_address, validator_address, entries } = this;
     return {
@@ -47,6 +71,8 @@ export namespace UnbondingDelegation {
     validator_address: ValAddress;
     entries: UnbondingDelegation.Entry.Data[];
   }
+
+  export type Proto = UnbondingDelegation_pb;
 
   export class Entry extends JSONSerializable<Entry.Data> {
     /**
@@ -84,6 +110,26 @@ export namespace UnbondingDelegation {
         new Date(completion_time)
       );
     }
+
+    public toProto(): Entry.Proto {
+      const { initial_balance, balance, creation_height, completion_time } =
+        this;
+      const entryProto = new UnbondingDelegationEntry_pb();
+      entryProto.setInitialBalance(initial_balance.toString());
+      entryProto.setBalance(balance.toString());
+      entryProto.setCreationHeight(creation_height);
+      entryProto.setCompletionTime(Timestamp.fromDate(completion_time));
+      return entryProto;
+    }
+
+    public static fromProto(proto: Entry.Proto): Entry {
+      return new Entry(
+        new Int(proto.getInitialBalance()),
+        new Int(proto.getBalance()),
+        proto.getCreationHeight(),
+        proto.getCompletionTime()?.toDate() as Date
+      );
+    }
   }
 
   export namespace Entry {
@@ -93,5 +139,7 @@ export namespace UnbondingDelegation {
       creation_height: string;
       completion_time: string;
     }
+
+    export type Proto = UnbondingDelegationEntry_pb;
   }
 }

@@ -5,6 +5,7 @@ import { AllowedMsgAllowance } from './AllowedMsgAllowance';
 export * from './BasicAllowance';
 export * from './PeriodicAllowance';
 export * from './AllowedMsgAllowance';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
 
 export type Allowance =
   | BasicAllowance
@@ -33,14 +34,16 @@ export namespace Allowance {
     }
   }
 
-  export function fromProto(proto: Allowance.Proto): Allowance {
-    switch (proto['@type']) {
+  export function fromProto(proto: Any): Allowance {
+    switch (proto.getTypeUrl()) {
       case '/cosmos.feegrant.v1beta1.PeriodicAllowance':
-        return PeriodicAllowance.fromProto(proto);
+        return PeriodicAllowance.unpackAny(proto);
       case '/cosmos.feegrant.v1beta1.BasicAllowance':
-        return BasicAllowance.fromProto(proto);
+        return BasicAllowance.unpackAny(proto);
       case '/cosmos.feegrant.v1beta1.AllowedMsgAllowance':
-        return AllowedMsgAllowance.fromProto(proto);
+        return AllowedMsgAllowance.unpackAny(proto);
     }
+
+    throw new Error('');
   }
 }

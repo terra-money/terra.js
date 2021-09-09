@@ -127,10 +127,6 @@ export class Coins
     this._coins[denom] = val;
   }
 
-  public static fromData(data: Coins.Data | null): Coins {
-    return new Coins((data ?? []).map(Coin.fromData));
-  }
-
   /**
    * Gets the individual elements of the collection.
    */
@@ -138,10 +134,6 @@ export class Coins
     return Object.values(this._coins).sort((a, b) =>
       a.denom.localeCompare(b.denom)
     );
-  }
-
-  public toData(): Coins.Data {
-    return this.toArray().map(c => c.toData());
   }
 
   /**
@@ -207,11 +199,28 @@ export class Coins
   public filter(fn: (c: Coin) => boolean): Coins {
     return new Coins(this.toArray().filter(fn));
   }
+
+  public static fromData(data: Coins.Data | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromData));
+  }
+
+  public toData(): Coins.Data {
+    return this.toArray().map(c => c.toData());
+  }
+
+  public static fromProto(data: Coins.Proto | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromProto));
+  }
+
+  public toProto(): Coins.Proto {
+    return this.toArray().map(c => c.toProto());
+  }
 }
 
 export namespace Coins {
   export type Input = Coins.DataDict | Coin[] | Coins | string;
   export type Data = Coin.Data[];
+  export type Proto = Coin.Proto[];
   export type DataDict = {
     [denom: string]: Numeric.Input;
   };

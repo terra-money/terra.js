@@ -8,11 +8,7 @@ import {
   Deposit,
   Vote,
 } from '../../../core';
-import {
-  DepositParams,
-  VotingParams,
-  TallyParams,
-} from '../../../core/gov/params';
+
 import { APIParams } from '../APIRequester';
 
 export interface GovParams {
@@ -37,6 +33,51 @@ export namespace GovParams {
     deposit_params: DepositParams.Data;
     voting_params: VotingParams.Data;
     tally_params: TallyParams.Data;
+  }
+}
+
+export interface DepositParams {
+  /** Minimum deposit to enter voting. */
+  min_deposit: Coins;
+
+  /** Amount of time (in seconds) a proposal can take to acquire the necessary deposits to enter voting stage, after being submitted. */
+  max_deposit_period: number;
+}
+
+export namespace DepositParams {
+  export interface Data {
+    min_deposit: Coins.Data;
+    max_deposit_period: string;
+  }
+}
+
+export interface VotingParams {
+  /** Amount of time (in seconds) a proposal can take to get votes once voting has begun. */
+  voting_period: number;
+}
+
+export namespace VotingParams {
+  export interface Data {
+    voting_period: string;
+  }
+}
+
+export interface TallyParams {
+  /** Ratio of total staked tokens that need to have participated in the vote. */
+  quorum: Dec;
+
+  /** Ratio of participating tokens that have voted in favor of the proposal. */
+  threshold: Dec;
+
+  /** Ratio of participating votes with `NoWithVeto` (after excluding `Abstain` votes) to veto the proposal. */
+  veto_threshold: Dec;
+}
+
+export namespace TallyParams {
+  export interface Data {
+    quorum: string;
+    threshold: string;
+    veto_threshold: string;
   }
 }
 

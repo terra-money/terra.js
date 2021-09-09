@@ -1,6 +1,13 @@
 import { JSONSerializable } from '../../util/json';
 import { Dec, Int } from '../numeric';
 import { AccAddress, ValAddress } from '../bech32';
+import {
+  RedelegationResponse as RedelegationResponse_pb,
+  Redelegation as Redelegation_pb,
+  RedelegationEntry as RedelegationEntry_pb,
+  RedelegationEntryResponse as RedelegationEntryResponse_pb,
+} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
 /**
  * A redelegation is when a delegator decides to stop staking with one validator and
@@ -64,6 +71,39 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
       entries: entries.map(e => e.toData()),
     };
   }
+
+  public static fromProto(data: Redelegation.Proto): Redelegation {
+    const redelegationProto = data.getRedelegation() as Redelegation_pb;
+    return new Redelegation(
+      redelegationProto.getDelegatorAddress(),
+      redelegationProto.getValidatorDstAddress(),
+      redelegationProto.getValidatorDstAddress(),
+      data.getEntriesList().map(e => Redelegation.Entry.fromProto(e))
+    );
+  }
+
+  public toProto(): Redelegation.Proto {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      entries,
+    } = this;
+    const redelegationProto = new Redelegation_pb();
+    redelegationProto.setDelegatorAddress(delegator_address);
+    redelegationProto.setValidatorDstAddress(validator_dst_address);
+    redelegationProto.setValidatorSrcAddress(validator_src_address);
+    redelegationProto.setEntriesList(
+      entries.map(
+        e => e.toProto().getRedelegationEntry() as RedelegationEntry_pb
+      )
+    );
+
+    const redelegationResponseProto = new RedelegationResponse_pb();
+    redelegationResponseProto.setEntriesList(entries.map(e => e.toProto()));
+    redelegationResponseProto.setRedelegation(redelegationProto);
+    return redelegationResponseProto;
+  }
 }
 
 export namespace Redelegation {
@@ -76,11 +116,12 @@ export namespace Redelegation {
     entries: Redelegation.Entry.Data[];
   }
 
+  export type Proto = RedelegationResponse_pb;
+
   export class Entry extends JSONSerializable<Entry.Data> {
     /**
      *
      * @param initial_balance balance of delegation prior to initiating redelegation
-     * @param balance 	balance of delegation after initiating redelegation
      * @param shares_dst
      * @param creation_height 	height of blockchain when entry was created
      * @param completion_time time when redelegation entry will be removed
@@ -125,6 +166,45 @@ export namespace Redelegation {
         new Date(completion_time)
       );
     }
+
+    public toProto(): Entry.Proto {
+      const {
+        initial_balance,
+        balance,
+        shares_dst,
+        creation_height,
+        completion_time,
+      } = this;
+
+      const redelegationEntryProto = new RedelegationEntry_pb();
+      redelegationEntryProto.setCompletionTime(
+        Timestamp.fromDate(completion_time)
+      );
+      redelegationEntryProto.setCreationHeight(creation_height);
+      redelegationEntryProto.setSharesDst(shares_dst.toString());
+      redelegationEntryProto.setInitialBalance(initial_balance.toString());
+
+      const redelegationEntryResponseProto = new RedelegationEntryResponse_pb();
+      redelegationEntryResponseProto.setBalance(balance.toString());
+      redelegationEntryResponseProto.setRedelegationEntry(
+        redelegationEntryProto
+      );
+
+      return redelegationEntryResponseProto;
+    }
+
+    public static fromProto(proto: Entry.Proto): Entry {
+      const redelegationEntryProto =
+        proto.getRedelegationEntry() as RedelegationEntry_pb;
+
+      return new Entry(
+        new Int(redelegationEntryProto.getInitialBalance()),
+        new Int(proto.getBalance()),
+        new Dec(redelegationEntryProto.getSharesDst()),
+        redelegationEntryProto.getCreationHeight(),
+        redelegationEntryProto.getCompletionTime()?.toDate() as Date
+      );
+    }
   }
 
   export namespace Entry {
@@ -137,5 +217,7 @@ export namespace Redelegation {
       };
       balance: string;
     }
+
+    export type Proto = RedelegationEntryResponse_pb;
   }
 }

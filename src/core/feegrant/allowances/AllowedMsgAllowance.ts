@@ -1,6 +1,10 @@
 import { JSONSerializable } from '../../../util/json';
 import { BasicAllowance } from './BasicAllowance';
 import { PeriodicAllowance } from './PeriodicAllowance';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { AllowedMsgAllowance as AllowedMsgAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/feegrant_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import { Allowance } from '.';
 
 /**
  * AllowedMsgAllowance creates allowance only for specified message types.
@@ -44,22 +48,34 @@ export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Da
   public static fromProto(
     proto: AllowedMsgAllowance.Proto
   ): AllowedMsgAllowance {
-    const { allowance, allowed_messages } = proto;
+    const allowance = proto.getAllowance() as Any;
     return new AllowedMsgAllowance(
-      allowance['@type'] === '/cosmos.feegrant.v1beta1.BasicAllowance'
-        ? BasicAllowance.fromProto(allowance)
-        : PeriodicAllowance.fromProto(allowance),
-      allowed_messages
+      allowance?.getTypeUrl() === '/cosmos.feegrant.v1beta1.BasicAllowance'
+        ? BasicAllowance.unpackAny(allowance)
+        : PeriodicAllowance.unpackAny(allowance),
+      proto.getAllowedMessagesList()
     );
   }
 
   public toProto(): AllowedMsgAllowance.Proto {
     const { allowance, allowed_messages } = this;
-    return {
-      '@type': '/cosmos.feegrant.v1beta1.AllowedMsgAllowance',
-      allowance: allowance.toProto(),
-      allowed_messages,
-    };
+    const proto = new AllowedMsgAllowance_pb();
+    proto.setAllowance(allowance.packAny() as any);
+    proto.setAllowedMessagesList(allowed_messages);
+    return proto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.AllowedMsgAllowance');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): AllowedMsgAllowance {
+    return AllowedMsgAllowance.fromProto(
+      AllowedMsgAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -72,9 +88,5 @@ export namespace AllowedMsgAllowance {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.feegrant.v1beta1.AllowedMsgAllowance';
-    allowance: BasicAllowance.Proto | PeriodicAllowance.Proto;
-    allowed_messages: string[];
-  }
+  export type Proto = AllowedMsgAllowance_pb;
 }

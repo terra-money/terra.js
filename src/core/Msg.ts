@@ -1,8 +1,8 @@
 import { BankMsg, MsgMultiSend, MsgSend } from './bank/msgs';
 import {
   DistributionMsg,
-  MsgModifyWithdrawAddress,
-  MsgWithdrawDelegationReward,
+  MsgSetWithdrawAddress,
+  MsgWithdrawDelegatorReward,
   MsgWithdrawValidatorCommission,
   MsgFundCommunityPool,
 } from './distribution/msgs';
@@ -44,6 +44,7 @@ import {
   MsgClearContractAdmin,
   WasmMsg,
 } from './wasm/msgs';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
 
 export type Msg =
   | BankMsg
@@ -81,8 +82,8 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
-    | WasmMsg.Proto
-    | any;
+    | WasmMsg.Proto;
+  // | any;
 
   export function fromData(data: Msg.Data): Msg {
     switch (data.type) {
@@ -94,9 +95,9 @@ export namespace Msg {
 
       // distribution
       case 'distribution/MsgModifyWithdrawAddress':
-        return MsgModifyWithdrawAddress.fromData(data);
+        return MsgSetWithdrawAddress.fromData(data);
       case 'distribution/MsgWithdrawDelegationReward':
-        return MsgWithdrawDelegationReward.fromData(data);
+        return MsgWithdrawDelegatorReward.fromData(data);
       case 'distribution/MsgWithdrawValidatorCommission':
         return MsgWithdrawValidatorCommission.fromData(data);
       case 'distribution/MsgFundCommunityPool':
@@ -174,91 +175,91 @@ export namespace Msg {
     }
   }
 
-  export function fromProto(proto: Msg.Proto): Msg {
-    switch (proto['@type']) {
+  export function fromProto(proto: Any): Msg {
+    switch (proto.getTypeUrl()) {
       // bank
       case '/cosmos.bank.v1beta1.MsgSend':
-        return MsgSend.fromProto(proto);
+        return MsgSend.unpackAny(proto);
       case '/cosmos.bank.v1beta1.MsgMultiSend':
-        return MsgMultiSend.fromProto(proto);
+        return MsgMultiSend.unpackAny(proto);
 
       // distribution
       case '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress':
-        return MsgModifyWithdrawAddress.fromProto(proto);
+        return MsgSetWithdrawAddress.unpackAny(proto);
       case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
-        return MsgWithdrawDelegationReward.fromProto(proto);
+        return MsgWithdrawDelegatorReward.unpackAny(proto);
       case '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission':
-        return MsgWithdrawValidatorCommission.fromProto(proto);
+        return MsgWithdrawValidatorCommission.unpackAny(proto);
       case '/cosmos.distribution.v1beta1.MsgFundCommunityPool':
-        return MsgFundCommunityPool.fromProto(proto);
+        return MsgFundCommunityPool.unpackAny(proto);
 
       // feegrant
       case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
-        return MsgGrantAllowance.fromProto(proto);
+        return MsgGrantAllowance.unpackAny(proto);
       case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
-        return MsgRevokeAllowance.fromProto(proto);
+        return MsgRevokeAllowance.unpackAny(proto);
 
       // gov
       case '/cosmos.gov.v1beta1.MsgDeposit':
-        return MsgDeposit.fromProto(proto);
+        return MsgDeposit.unpackAny(proto);
       case '/cosmos.gov.v1beta1.MsgSubmitProposal':
-        return MsgSubmitProposal.fromProto(proto);
+        return MsgSubmitProposal.unpackAny(proto);
       case '/cosmos.gov.v1beta1.MsgVote':
-        return MsgVote.fromProto(proto);
+        return MsgVote.unpackAny(proto);
 
       // market
       case '/terra.market.v1beta1.MsgSwap':
-        return MsgSwap.fromProto(proto);
+        return MsgSwap.unpackAny(proto);
       case '/terra.market.v1beta1.MsgSwapSend':
-        return MsgSwapSend.fromProto(proto);
+        return MsgSwapSend.unpackAny(proto);
 
       // authz
       case '/cosmos.authz.v1beta1.MsgGrant':
-        return MsgGrantAuthorization.fromProto(proto);
+        return MsgGrantAuthorization.unpackAny(proto);
       case '/cosmos.authz.v1beta1.MsgRevoke':
-        return MsgRevokeAuthorization.fromProto(proto);
+        return MsgRevokeAuthorization.unpackAny(proto);
       case '/cosmos.authz.v1beta1.MsgExec':
-        return MsgExecAuthorized.fromProto(proto);
+        return MsgExecAuthorized.unpackAny(proto);
 
       // oracle
       case '/terra.oracle.v1beta1.MsgDelegateFeedConsent':
-        return MsgDelegateFeedConsent.fromProto(proto);
+        return MsgDelegateFeedConsent.unpackAny(proto);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote':
-        return MsgAggregateExchangeRatePrevote.fromProto(proto);
+        return MsgAggregateExchangeRatePrevote.unpackAny(proto);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote':
-        return MsgAggregateExchangeRateVote.fromProto(proto);
+        return MsgAggregateExchangeRateVote.unpackAny(proto);
 
       // slashing
       case '/cosmos.slashing.v1beta1.MsgUnjail':
-        return MsgUnjail.fromProto(proto);
+        return MsgUnjail.unpackAny(proto);
 
       // staking
       case '/cosmos.staking.v1beta1.MsgDelegate':
-        return MsgDelegate.fromProto(proto);
+        return MsgDelegate.unpackAny(proto);
       case '/cosmos.staking.v1beta1.MsgUndelegate':
-        return MsgUndelegate.fromProto(proto);
+        return MsgUndelegate.unpackAny(proto);
       case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
-        return MsgBeginRedelegate.fromProto(proto);
+        return MsgBeginRedelegate.unpackAny(proto);
       case '/cosmos.staking.v1beta1.MsgCreateValidator':
-        return MsgCreateValidator.fromProto(proto);
+        return MsgCreateValidator.unpackAny(proto);
       case '/cosmos.staking.v1beta1.MsgEditValidator':
-        return MsgEditValidator.fromProto(proto);
+        return MsgEditValidator.unpackAny(proto);
 
       // wasm
       case '/terra.wasm.v1beta1.MsgStoreCode':
-        return MsgStoreCode.fromProto(proto);
+        return MsgStoreCode.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgMigrateCode':
-        return MsgMigrateCode.fromProto(proto);
+        return MsgMigrateCode.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgInstantiateContract':
-        return MsgInstantiateContract.fromProto(proto);
+        return MsgInstantiateContract.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgExecuteContract':
-        return MsgExecuteContract.fromProto(proto);
+        return MsgExecuteContract.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgMigrateContract':
-        return MsgMigrateContract.fromProto(proto);
+        return MsgMigrateContract.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
-        return MsgUpdateContractAdmin.fromProto(proto);
+        return MsgUpdateContractAdmin.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
-        return MsgClearContractAdmin.fromProto(proto);
+        return MsgClearContractAdmin.unpackAny(proto);
       default:
         return proto;
     }

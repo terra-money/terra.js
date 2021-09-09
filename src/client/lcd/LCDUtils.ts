@@ -42,7 +42,8 @@ export class LCDUtils {
     const res: { [k: string]: ValidatorWithVotingPower } = {};
 
     for (const v of validators) {
-      const delegateInfo = validatorSet[v.consensus_pubkey.value];
+      const delegateInfo =
+        validatorSet[v.consensus_pubkey.toData().value as string];
       if (delegateInfo === undefined) continue;
       res[v.operator_address] = {
         validatorInfo: v,

@@ -1,6 +1,7 @@
 import { Coins } from './Coins';
 import { JSONSerializable } from '../util/json';
 import { AccAddress } from './bech32';
+import { Deposit as Deposit_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/gov_pb';
 
 /**
  * Stores deposit information for a proposal
@@ -38,6 +39,23 @@ export class Deposit extends JSONSerializable<Deposit.Data> {
       amount: amount.toData(),
     };
   }
+
+  public static fromProto(data: Deposit.Proto): Deposit {
+    return new Deposit(
+      data.getProposalId(),
+      data.getDepositor(),
+      Coins.fromProto(data.getAmountList())
+    );
+  }
+
+  public toProto(): Deposit.Proto {
+    const { proposal_id, depositor, amount } = this;
+    const deposit = new Deposit_pb();
+    deposit.setProposalId(proposal_id);
+    deposit.setDepositor(depositor);
+    deposit.setAmountList(amount.toProto());
+    return deposit;
+  }
 }
 
 export namespace Deposit {
@@ -46,4 +64,6 @@ export namespace Deposit {
     depositor: AccAddress;
     amount: Coins.Data;
   }
+
+  export type Proto = Deposit_pb;
 }

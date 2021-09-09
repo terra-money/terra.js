@@ -1,7 +1,6 @@
 import { JSONSerializable } from '../util/json';
 import { Coins } from './Coins';
 import { Int } from './numeric';
-import { AccAddress } from './bech32';
 
 /**
  * A transaction must include a fee, otherwise it will be rejected.

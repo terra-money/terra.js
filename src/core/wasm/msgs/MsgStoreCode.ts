@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgStoreCode as MsgStoreCode_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
 
 export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
   /**
@@ -28,18 +30,29 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
     };
   }
 
-  public static fromProto(data: MsgStoreCode.Proto): MsgStoreCode {
-    const { sender, wasm_byte_code } = data;
-    return new MsgStoreCode(sender, wasm_byte_code);
+  public static fromProto(proto: MsgStoreCode.Proto): MsgStoreCode {
+    return new MsgStoreCode(proto.getSender(), proto.getWasmByteCode_asB64());
   }
 
   public toProto(): MsgStoreCode.Proto {
     const { sender, wasm_byte_code } = this;
-    return {
-      '@type': '/terra.wasm.v1beta1.MsgStoreCode',
-      sender,
-      wasm_byte_code,
-    };
+    const msgStoreCodeProto = new MsgStoreCode_pb();
+    msgStoreCodeProto.setSender(sender);
+    msgStoreCodeProto.setWasmByteCode(wasm_byte_code);
+    return msgStoreCodeProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgStoreCode');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgStoreCode {
+    return MsgStoreCode.fromProto(
+      MsgStoreCode_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -52,9 +65,5 @@ export namespace MsgStoreCode {
     };
   }
 
-  export interface Proto {
-    '@type': '/terra.wasm.v1beta1.MsgStoreCode';
-    sender: AccAddress;
-    wasm_byte_code: string;
-  }
+  export type Proto = MsgStoreCode_pb;
 }

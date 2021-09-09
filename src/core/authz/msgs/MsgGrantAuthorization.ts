@@ -1,6 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { AuthorizationGrant } from '../authorizations';
+import { MsgGrant as MsgGrant_pb } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { Grant } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/authz_pb';
 
 export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
   /**
@@ -43,22 +46,33 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
   public static fromProto(
     data: MsgGrantAuthorization.Proto
   ): MsgGrantAuthorization {
-    const { granter, grantee, grant } = data;
     return new MsgGrantAuthorization(
-      granter,
-      grantee,
-      AuthorizationGrant.fromProto(grant)
+      data.getGranter(),
+      data.getGrantee(),
+      AuthorizationGrant.fromProto(data.getGrant() as Grant)
     );
   }
 
   public toProto(): MsgGrantAuthorization.Proto {
-    const { granter, grantee, grant } = this;
-    return {
-      '@type': '/cosmos.authz.v1beta1.MsgGrant',
-      granter,
-      grantee,
-      grant: grant.toProto(),
-    };
+    const { grant, granter, grantee } = this;
+    const msgGrantAuthorizedProto = new MsgGrant_pb();
+    msgGrantAuthorizedProto.setGrantee(grantee);
+    msgGrantAuthorizedProto.setGranter(granter);
+    msgGrantAuthorizedProto.setGrant(grant.toProto());
+    return msgGrantAuthorizedProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.authz.v1beta1.MsgGrant');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgGrantAuthorization {
+    return MsgGrantAuthorization.fromProto(
+      MsgGrant_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -72,10 +86,5 @@ export namespace MsgGrantAuthorization {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.authz.v1beta1.MsgGrant';
-    granter: AccAddress;
-    grantee: AccAddress;
-    grant: AuthorizationGrant.Proto;
-  }
+  export type Proto = MsgGrant_pb;
 }

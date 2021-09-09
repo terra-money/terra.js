@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgAggregateExchangeRatePrevote as MsgAggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/tx_pb';
 
 /**
  * Aggregate analog of MsgExchangeRatePrevote
@@ -40,20 +42,37 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
   }
 
   public static fromProto(
-    data: MsgAggregateExchangeRatePrevote.Proto
+    proto: MsgAggregateExchangeRatePrevote.Proto
   ): MsgAggregateExchangeRatePrevote {
-    const { hash, feeder, validator } = data;
-    return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
+    return new MsgAggregateExchangeRatePrevote(
+      proto.getHash(),
+      proto.getFeeder(),
+      proto.getValidator()
+    );
   }
 
   public toProto(): MsgAggregateExchangeRatePrevote.Proto {
     const { hash, feeder, validator } = this;
-    return {
-      '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
-      hash,
-      feeder,
-      validator,
-    };
+    const proto = new MsgAggregateExchangeRatePrevote_pb();
+    proto.setHash(hash);
+    proto.setFeeder(feeder);
+    proto.setValidator(validator);
+    return proto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgAggregateExchangeRatePrevote {
+    return MsgAggregateExchangeRatePrevote.fromProto(
+      MsgAggregateExchangeRatePrevote_pb.deserializeBinary(
+        msgAny.getValue_asU8()
+      )
+    );
   }
 }
 
@@ -67,10 +86,5 @@ export namespace MsgAggregateExchangeRatePrevote {
     };
   }
 
-  export interface Proto {
-    '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote';
-    hash: string;
-    feeder: AccAddress;
-    validator: ValAddress;
-  }
+  export type Proto = MsgAggregateExchangeRatePrevote_pb;
 }

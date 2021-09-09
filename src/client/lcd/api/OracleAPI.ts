@@ -10,7 +10,6 @@ import {
   AggregateExchangeRateVote,
 } from '../../../core';
 
-import { OracleWhitelist } from '../../../core/oracle/params';
 import { APIParams } from '../APIRequester';
 
 export interface OracleParams {
@@ -29,7 +28,7 @@ export interface OracleParams {
   /** List of active denominations that must be voted on.
    * @returns { name: String, tobin_tax: String }[] on Columbus-4 or later
    */
-  whitelist: OracleWhitelist;
+  whitelist: OracleWhitelist[];
 
   /** Percetange of stake slashed once per slash window. */
   slash_fraction: Dec;
@@ -47,10 +46,22 @@ export namespace OracleParams {
     vote_threshold: string;
     reward_band: string;
     reward_distribution_window: string;
-    whitelist: OracleWhitelist.Data;
+    whitelist: OracleWhitelist.Data[];
     slash_fraction: string;
     slash_window: string;
     min_valid_per_window: string;
+  }
+}
+
+export interface OracleWhitelist {
+  name: string;
+  tobin_tax: Dec;
+}
+
+export namespace OracleWhitelist {
+  export interface Data {
+    name: string;
+    tobin_tax: string;
   }
 }
 

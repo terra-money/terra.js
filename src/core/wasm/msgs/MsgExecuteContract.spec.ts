@@ -37,7 +37,7 @@ describe('MsgExecuteContract', () => {
         },
       },
       coins: [],
-    })
+    });
 
     expect(msg1.execute_msg).toMatchObject({
       transfer: {
@@ -45,5 +45,5 @@ describe('MsgExecuteContract', () => {
         amount: 10000,
       },
     });
-  })
+  });
 });

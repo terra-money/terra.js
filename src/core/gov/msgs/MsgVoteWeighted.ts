@@ -1,6 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { MsgVote } from './MsgVote';
+import { WeightedVoteOption } from '../Vote';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgVoteWeighted as MsgVoteWeighted_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
 
 /**
  * Weighted vote for a proposal
@@ -37,13 +39,40 @@ export class MsgVoteWeighted extends JSONSerializable<MsgVoteWeighted.Data> {
       },
     };
   }
+
+  public static fromProto(proto: MsgVoteWeighted.Proto): MsgVoteWeighted {
+    return new MsgVoteWeighted(
+      proto.getProposalId(),
+      proto.getVoter(),
+      proto.getOptionsList().map(o => WeightedVoteOption.fromProto(o))
+    );
+  }
+
+  public toProto(): MsgVoteWeighted.Proto {
+    const { proposal_id, voter, options } = this;
+    const msgVoteProto = new MsgVoteWeighted_pb();
+    msgVoteProto.setProposalId(proposal_id);
+    msgVoteProto.setVoter(voter);
+    msgVoteProto.setOptionsList(options.map(o => o.toProto()));
+    return msgVoteProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgVoteWeighted');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgVoteWeighted {
+    return MsgVoteWeighted.fromProto(
+      MsgVoteWeighted_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
+  }
 }
 
 export namespace MsgVoteWeighted {
-  export type Options = {
-    option: MsgVote.Option;
-    weight: string;
-  }[];
+  export type Options = WeightedVoteOption[];
 
   export interface Data {
     type: 'gov/MsgVoteWeighted';
@@ -53,4 +82,6 @@ export namespace MsgVoteWeighted {
       options: Options;
     };
   }
+
+  export type Proto = MsgVoteWeighted_pb;
 }

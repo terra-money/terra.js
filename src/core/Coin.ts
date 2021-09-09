@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../util/json';
 import { Denom } from './Denom';
 import { Dec, Int, Numeric } from './numeric';
+import { Coin as Coin_pb } from '@terra-money/terra.proto/src/cosmos/base/v1beta1/coin_pb';
 
 /**
  * Captures `sdk.Coin` and `sdk.DecCoin` from Cosmos SDK. A composite value that combines
@@ -20,11 +21,6 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
   constructor(public readonly denom: Denom, amount: Numeric.Input) {
     super();
     this.amount = Numeric.parse(amount);
-  }
-
-  public static fromData(data: Coin.Data): Coin {
-    const { denom, amount } = data;
-    return new Coin(denom, amount);
   }
 
   /**
@@ -54,14 +50,6 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
    */
   public toDecCoin(): Coin {
     return new Coin(this.denom, new Dec(this.amount));
-  }
-
-  public toData(): Coin.Data {
-    const { denom, amount } = this;
-    return {
-      denom,
-      amount: amount.toString(),
-    };
   }
 
   /**
@@ -156,6 +144,31 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
     const otherAmount = Numeric.parse(other);
     return new Coin(this.denom, this.amount.mod(otherAmount));
   }
+
+  public static fromData(data: Coin.Data): Coin {
+    const { denom, amount } = data;
+    return new Coin(denom, amount);
+  }
+
+  public toData(): Coin.Data {
+    const { denom, amount } = this;
+    return {
+      denom,
+      amount: amount.toString(),
+    };
+  }
+
+  public static fromProto(proto: Coin.Proto): Coin {
+    return new Coin(proto.getDenom(), Numeric.parse(proto.getAmount()));
+  }
+
+  public toProto(): Coin.Proto {
+    const coin = new Coin_pb();
+    coin.setDenom(this.denom);
+    coin.setAmount(this.amount.toString());
+
+    return coin;
+  }
 }
 
 export namespace Coin {
@@ -167,4 +180,6 @@ export namespace Coin {
   export class ArithmeticError {
     constructor(public readonly message: string) {}
   }
+
+  export type Proto = Coin_pb;
 }

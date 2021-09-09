@@ -1,6 +1,8 @@
 import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgInstantiateContract as MsgInstantiateContract_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
 
 export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
   public init_coins: Coins;
@@ -53,28 +55,39 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
   }
 
   public static fromProto(
-    data: MsgInstantiateContract.Proto
+    proto: MsgInstantiateContract.Proto
   ): MsgInstantiateContract {
-    const { sender, admin, code_id, init_msg, init_coins } = data;
     return new MsgInstantiateContract(
-      sender,
-      admin,
-      Number.parseInt(code_id),
-      init_msg,
-      Coins.fromData(init_coins)
+      proto.getSender(),
+      proto.getAdmin() !== '' ? proto.getAdmin() : undefined,
+      proto.getCodeId(),
+      JSON.parse(atob(proto.getInitMsg_asB64())),
+      Coins.fromProto(proto.getInitCoinsList())
     );
   }
 
   public toProto(): MsgInstantiateContract.Proto {
     const { sender, admin, code_id, init_msg, init_coins } = this;
-    return {
-      '@type': '/terra.wasm.v1beta1.MsgInstantiateContract',
-      sender,
-      admin: admin || '',
-      code_id: code_id.toFixed(),
-      init_msg: removeNull(init_msg),
-      init_coins: init_coins.toData(),
-    };
+    const msgInstantiateContractProto = new MsgInstantiateContract_pb();
+    msgInstantiateContractProto.setSender(sender);
+    msgInstantiateContractProto.setAdmin(admin || '');
+    msgInstantiateContractProto.setCodeId(code_id);
+    msgInstantiateContractProto.setInitMsg(btoa(JSON.stringify(init_msg)));
+    msgInstantiateContractProto.setInitCoinsList(init_coins.toProto());
+    return msgInstantiateContractProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgInstantiateContract');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgInstantiateContract {
+    return MsgInstantiateContract.fromProto(
+      MsgInstantiateContract_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -90,12 +103,5 @@ export namespace MsgInstantiateContract {
     };
   }
 
-  export interface Proto {
-    '@type': '/terra.wasm.v1beta1.MsgInstantiateContract';
-    sender: AccAddress;
-    admin: AccAddress;
-    code_id: string;
-    init_msg: object;
-    init_coins: Coins.Data;
-  }
+  export type Proto = MsgInstantiateContract_pb;
 }

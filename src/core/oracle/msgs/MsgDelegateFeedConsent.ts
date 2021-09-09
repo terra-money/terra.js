@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/tx_pb';
 
 /**
  * A **feeeder** is an account which is responsible for signing transactions with Oracle vote
@@ -40,19 +42,30 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
   }
 
   public static fromProto(
-    data: MsgDelegateFeedConsent.Proto
+    proto: MsgDelegateFeedConsent.Proto
   ): MsgDelegateFeedConsent {
-    const { operator, delegate } = data;
-    return new MsgDelegateFeedConsent(operator, delegate);
+    return new MsgDelegateFeedConsent(proto.getOperator(), proto.getDelegate());
   }
 
   public toProto(): MsgDelegateFeedConsent.Proto {
     const { operator, delegate } = this;
-    return {
-      '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
-      operator,
-      delegate,
-    };
+    const msgDelegateFeedConsentProto = new MsgDelegateFeedConsent_pb();
+    msgDelegateFeedConsentProto.setOperator(operator);
+    msgDelegateFeedConsentProto.setDelegate(delegate);
+    return msgDelegateFeedConsentProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/terra.oracle.v1beta1.MsgDelegateFeedConsent');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgDelegateFeedConsent {
+    return MsgDelegateFeedConsent.fromProto(
+      MsgDelegateFeedConsent_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -65,9 +78,5 @@ export namespace MsgDelegateFeedConsent {
     };
   }
 
-  export interface Proto {
-    '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent';
-    operator: ValAddress;
-    delegate: AccAddress;
-  }
+  export type Proto = MsgDelegateFeedConsent_pb;
 }

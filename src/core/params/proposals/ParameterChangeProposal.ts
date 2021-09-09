@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ParamChange, ParamChanges } from '../ParamChange';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { ParameterChangeProposal as ParameterChangeProposal_pb } from '@terra-money/terra.proto/src/cosmos/params/v1beta1/params_pb';
 
 /**
  * Describes a proposal for directly altering the value of the module parameters.
@@ -70,7 +72,7 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
       value: {
         title,
         description,
-        changes: ParamChanges.toData(changes),
+        changes: changes.toData(),
       },
     };
   }
@@ -78,22 +80,34 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
   public static fromProto(
     proto: ParameterChangeProposal.Proto
   ): ParameterChangeProposal {
-    const { title, description, changes } = proto;
     return new ParameterChangeProposal(
-      title,
-      description,
-      ParamChanges.fromData(changes)
+      proto.getTitle(),
+      proto.getDescription(),
+      ParamChanges.fromProto(proto.getChangesList())
     );
   }
 
   public toProto(): ParameterChangeProposal.Proto {
     const { title, description, changes } = this;
-    return {
-      '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
-      title,
-      description,
-      changes: ParamChanges.toData(changes),
-    };
+    const paramChangeProposalProto = new ParameterChangeProposal_pb();
+    paramChangeProposalProto.setTitle(title);
+    paramChangeProposalProto.setDescription(description);
+    paramChangeProposalProto.setChangesList(changes.toProto());
+
+    return paramChangeProposalProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.params.v1beta1.ParameterChangeProposal');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): ParameterChangeProposal {
+    return ParameterChangeProposal.fromProto(
+      ParameterChangeProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -107,10 +121,5 @@ export namespace ParameterChangeProposal {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.params.v1beta1.ParameterChangeProposal';
-    title: string;
-    description: string;
-    changes: ParamChange.Data[];
-  }
+  export type Proto = ParameterChangeProposal_pb;
 }

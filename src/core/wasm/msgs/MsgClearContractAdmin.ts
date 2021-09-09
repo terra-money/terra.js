@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgClearContractAdmin as MsgClearContractAdmin_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
 
 export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmin.Data> {
   /**
@@ -31,17 +33,30 @@ export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmi
     };
   }
 
-  public static fromProto(data: MsgClearContractAdmin.Proto): MsgClearContractAdmin {
-    const { admin, contract } = data
-    return new MsgClearContractAdmin(admin, contract)
+  public static fromProto(
+    data: MsgClearContractAdmin.Proto
+  ): MsgClearContractAdmin {
+    return new MsgClearContractAdmin(data.getAdmin(), data.getContract());
   }
 
   public toProto(): MsgClearContractAdmin.Proto {
-    return {
-      '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
-      admin: this.admin,
-      contract: this.contract
-    }
+    const msgClearContractAdminProto = new MsgClearContractAdmin_pb();
+    msgClearContractAdminProto.setAdmin(this.admin);
+    msgClearContractAdminProto.setContract(this.contract);
+    return msgClearContractAdminProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgClearContractAdmin');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgClearContractAdmin {
+    return MsgClearContractAdmin.fromProto(
+      MsgClearContractAdmin_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -54,9 +69,5 @@ export namespace MsgClearContractAdmin {
     };
   }
 
-  export interface Proto {
-    '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin';
-    admin: string;
-    contract: string;
-  }
+  export type Proto = MsgClearContractAdmin_pb;
 }

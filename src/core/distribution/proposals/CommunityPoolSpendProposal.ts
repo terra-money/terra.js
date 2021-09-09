@@ -1,6 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { AccAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/distribution_pb';
 
 /**
  * Proposal that disburses funds from the Distribution module's community pool to the
@@ -54,24 +56,37 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
   public static fromProto(
     proto: CommunityPoolSpendProposal.Proto
   ): CommunityPoolSpendProposal {
-    const { title, description, recipient, amount } = proto;
     return new CommunityPoolSpendProposal(
-      title,
-      description,
-      recipient,
-      Coins.fromData(amount)
+      proto.getTitle(),
+      proto.getDescription(),
+      proto.getRecipient(),
+      Coins.fromProto(proto.getAmountList())
     );
   }
 
   public toProto(): CommunityPoolSpendProposal.Proto {
     const { title, description, recipient, amount } = this;
-    return {
-      '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
-      title,
-      description,
-      recipient,
-      amount: amount.toData(),
-    };
+    const communityPoolSpendProposalProto = new CommunityPoolSpendProposal_pb();
+    communityPoolSpendProposalProto.setTitle(title);
+    communityPoolSpendProposalProto.setDescription(description);
+    communityPoolSpendProposalProto.setRecipient(recipient);
+    communityPoolSpendProposalProto.setAmountList(amount.toProto());
+    return communityPoolSpendProposalProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl(
+      '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal'
+    );
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): CommunityPoolSpendProposal {
+    return CommunityPoolSpendProposal.fromProto(
+      CommunityPoolSpendProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -86,11 +101,5 @@ export namespace CommunityPoolSpendProposal {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal';
-    title: string;
-    description: string;
-    recipient: AccAddress;
-    amount: Coins.Data;
-  }
+  export type Proto = CommunityPoolSpendProposal_pb;
 }

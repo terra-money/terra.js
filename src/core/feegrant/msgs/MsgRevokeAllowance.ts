@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgRevokeAllowance as MsgRevokeAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/tx_pb';
 
 /**
  * MsgRevokeAllowance remove permission any existing Allowance from Granter to Grantee.
@@ -33,17 +35,28 @@ export class MsgRevokeAllowance extends JSONSerializable<MsgRevokeAllowance.Data
   }
 
   public static fromProto(proto: MsgRevokeAllowance.Proto): MsgRevokeAllowance {
-    const { granter, grantee } = proto;
-    return new MsgRevokeAllowance(granter, grantee);
+    return new MsgRevokeAllowance(proto.getGranter(), proto.getGrantee());
   }
 
   public toProto(): MsgRevokeAllowance.Proto {
     const { granter, grantee } = this;
-    return {
-      '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
-      granter,
-      grantee,
-    };
+    const proto = new MsgRevokeAllowance_pb();
+    proto.setGrantee(grantee);
+    proto.setGranter(granter);
+    return proto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.MsgRevokeAllowance');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgRevokeAllowance {
+    return MsgRevokeAllowance.fromProto(
+      MsgRevokeAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -56,9 +69,5 @@ export namespace MsgRevokeAllowance {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance';
-    granter: AccAddress;
-    grantee: AccAddress;
-  }
+  export type Proto = MsgRevokeAllowance_pb;
 }

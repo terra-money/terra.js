@@ -1,6 +1,8 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgDelegate as MsgDelegate_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
 
 /**
  * A delegator can submit this message to send more Luna to be staked through a
@@ -44,25 +46,34 @@ export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
     };
   }
 
-  public static fromProto(data: MsgDelegate.Proto): MsgDelegate {
-    const {
-      delegator_address, validator_address, amount
-    } = data;
+  public static fromProto(proto: MsgDelegate.Proto): MsgDelegate {
     return new MsgDelegate(
-      delegator_address,
-      validator_address,
-      Coin.fromData(amount)
+      proto.getDelegatorAddress(),
+      proto.getValidatorAddress(),
+      Coin.fromProto(proto.getAmount() as Coin.Proto)
     );
   }
 
   public toProto(): MsgDelegate.Proto {
     const { delegator_address, validator_address, amount } = this;
-    return {
-      '@type': '/cosmos.staking.v1beta1.MsgDelegate',
-      delegator_address,
-      validator_address,
-      amount: amount.toData(),
-    };
+    const msgDelegateProto = new MsgDelegate_pb();
+    msgDelegateProto.setDelegatorAddress(delegator_address);
+    msgDelegateProto.setValidatorAddress(validator_address);
+    msgDelegateProto.setAmount(amount.toProto());
+    return msgDelegateProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgDelegate');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgDelegate {
+    return MsgDelegate.fromProto(
+      MsgDelegate_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -76,10 +87,5 @@ export namespace MsgDelegate {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.staking.v1beta1.MsgDelegate';
-    delegator_address: AccAddress;
-    validator_address: ValAddress;
-    amount: Coin.Data;
-  }
+  export type Proto = MsgDelegate_pb;
 }

@@ -1,7 +1,16 @@
 import { JSONSerializable } from '../../util/json';
 import { Dec, Int } from '../numeric';
-import { ValAddress, ValConsPubKey } from '../bech32';
-
+import { ValAddress } from '../bech32';
+import { ValConsPublicKey } from '../PublicKey';
+import {
+  Validator as Validator_pb,
+  Description as Description_pb,
+  Commission as Commission_pb,
+  CommissionRates as CommissionRates_pb,
+  BondStatusMap,
+  BondStatus,
+} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 /**
  * Stores information fetched from the blockchain about the current status of a validator.
  * As an end user, you will not have to create an instance of this class, one will be
@@ -25,9 +34,9 @@ export class Validator extends JSONSerializable<Validator.Data> {
    */
   constructor(
     public operator_address: ValAddress,
-    public consensus_pubkey: ValConsPubKey.Data,
+    public consensus_pubkey: ValConsPublicKey,
     public jailed: boolean,
-    public status: number,
+    public status: BondStatusMap[keyof BondStatusMap],
     public tokens: Int,
     public delegator_shares: Dec,
     public description: Validator.Description,
@@ -42,7 +51,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
   public toData(): Validator.Data {
     return {
       operator_address: this.operator_address,
-      consensus_pubkey: this.consensus_pubkey,
+      consensus_pubkey: this.consensus_pubkey.toData(),
       jailed: this.jailed,
       status: this.status,
       tokens: this.tokens.toString(),
@@ -58,7 +67,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
   public static fromData(data: Validator.Data): Validator {
     return new Validator(
       data.operator_address,
-      data.consensus_pubkey,
+      ValConsPublicKey.fromData(data.consensus_pubkey),
       data.jailed || false,
       data.status || 0,
       new Int(data.tokens),
@@ -70,14 +79,64 @@ export class Validator extends JSONSerializable<Validator.Data> {
       new Int(data.min_self_delegation)
     );
   }
+
+  public toProto(): Validator.Proto {
+    const {
+      operator_address,
+      consensus_pubkey,
+      jailed,
+      status,
+      tokens,
+      delegator_shares,
+      description,
+      unbonding_height,
+      unbonding_time,
+      commission,
+      min_self_delegation,
+    } = this;
+    const validatorProto = new Validator_pb();
+    validatorProto.setOperatorAddress(operator_address);
+    validatorProto.setConsensusPubkey(consensus_pubkey.packAny() as any);
+    validatorProto.setJailed(jailed);
+    validatorProto.setStatus(status);
+    validatorProto.setTokens(tokens.toString());
+    validatorProto.setDelegatorShares(delegator_shares.toString());
+    validatorProto.setDescription(description.toProto());
+    validatorProto.setUnbondingHeight(unbonding_height);
+    validatorProto.setUnbondingTime(Timestamp.fromDate(unbonding_time));
+    validatorProto.setCommission(commission.toProto());
+    validatorProto.setMinSelfDelegation(min_self_delegation.toString());
+    return validatorProto;
+  }
+
+  public static fromProto(data: Validator.Proto): Validator {
+    return new Validator(
+      data.getOperatorAddress(),
+      ValConsPublicKey.unpackAny(data.getConsensusPubkey() as any),
+      data.getJailed(),
+      data.getStatus(),
+      new Int(data.getTokens()),
+      new Dec(data.getDelegatorShares()),
+      Validator.Description.fromProto(
+        data.getDescription() as Validator.Description.Proto
+      ),
+      data.getUnbondingHeight(),
+      data.getUnbondingTime()?.toDate() as Date,
+      Validator.Commission.fromProto(
+        data.getCommission() as Validator.Commission.Proto
+      ),
+      new Int(data.getMinSelfDelegation())
+    );
+  }
 }
 
 export namespace Validator {
+  export const Status: BondStatusMap = BondStatus;
   export interface Data {
     operator_address: ValAddress;
-    consensus_pubkey: ValConsPubKey.Data;
+    consensus_pubkey: ValConsPublicKey.Data;
     jailed: boolean;
-    status: number;
+    status: BondStatusMap[keyof BondStatusMap];
     tokens: string;
     delegator_shares: string;
     description: Description.Data;
@@ -86,6 +145,8 @@ export namespace Validator {
     commission: Commission.Data;
     min_self_delegation: string;
   }
+
+  export type Proto = Validator_pb;
 
   export class Description extends JSONSerializable<Description.Data> {
     /**
@@ -124,6 +185,28 @@ export namespace Validator {
         data.security_contact || ''
       );
     }
+
+    public toProto(): Description.Proto {
+      const { moniker, identity, website, details, security_contact } = this;
+
+      const descriptionProto = new Description_pb();
+      descriptionProto.setMoniker(moniker);
+      descriptionProto.setIdentity(identity);
+      descriptionProto.setWebsite(website);
+      descriptionProto.setDetails(details);
+      descriptionProto.setSecurityContact(security_contact);
+      return descriptionProto;
+    }
+
+    public static fromProto(proto: Description.Proto): Description {
+      return new Description(
+        proto.getMoniker(),
+        proto.getIdentity(),
+        proto.getWebsite(),
+        proto.getDetails(),
+        proto.getSecurityContact()
+      );
+    }
   }
 
   export namespace Description {
@@ -134,6 +217,8 @@ export namespace Validator {
       details: string;
       security_contact: string;
     }
+
+    export type Proto = Description_pb;
   }
 
   export class CommissionRates extends JSONSerializable<CommissionRates.Data> {
@@ -167,6 +252,23 @@ export namespace Validator {
         max_change_rate: max_change_rate.toString(),
       };
     }
+
+    public static fromProto(proto: CommissionRates.Proto): CommissionRates {
+      return new CommissionRates(
+        new Dec(proto.getRate()),
+        new Dec(proto.getMaxRate()),
+        new Dec(proto.getMaxChangeRate())
+      );
+    }
+
+    public toProto(): Validator.CommissionRates.Proto {
+      const { rate, max_rate, max_change_rate } = this;
+      const commissionRatesProto = new CommissionRates_pb();
+      commissionRatesProto.setRate(rate.toString());
+      commissionRatesProto.setMaxRate(max_rate.toString());
+      commissionRatesProto.setMaxChangeRate(max_change_rate.toString());
+      return commissionRatesProto;
+    }
   }
 
   export namespace CommissionRates {
@@ -175,6 +277,8 @@ export namespace Validator {
       max_rate: string;
       max_change_rate: string;
     }
+
+    export type Proto = CommissionRates_pb;
   }
 
   export class Commission extends JSONSerializable<Commission.Data> {
@@ -202,6 +306,23 @@ export namespace Validator {
         new Date(data.update_time)
       );
     }
+
+    public toProto(): Commission.Proto {
+      const { commission_rates, update_time } = this;
+      const commissionProto = new Commission_pb();
+      commissionProto.setCommissionRates(commission_rates.toProto());
+      commissionProto.setUpdateTime(Timestamp.fromDate(update_time));
+      return commissionProto;
+    }
+
+    public static fromProto(proto: Commission.Proto): Commission {
+      return new Commission(
+        CommissionRates.fromProto(
+          proto.getCommissionRates() as CommissionRates.Proto
+        ),
+        proto.getUpdateTime()?.toDate() as Date
+      );
+    }
   }
 
   export namespace Commission {
@@ -209,5 +330,7 @@ export namespace Validator {
       commission_rates: CommissionRates.Data;
       update_time: string;
     }
+
+    export type Proto = Commission_pb;
   }
 }

@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/tx_pb';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all
@@ -36,16 +38,32 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
   public static fromProto(
     proto: MsgWithdrawValidatorCommission.Proto
   ): MsgWithdrawValidatorCommission {
-    const { validator_address } = proto;
-    return new MsgWithdrawValidatorCommission(validator_address);
+    return new MsgWithdrawValidatorCommission(proto.getValidatorAddress());
   }
 
   public toProto(): MsgWithdrawValidatorCommission.Proto {
     const { validator_address } = this;
-    return {
-      '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
-      validator_address,
-    };
+    const msgWithdrawValidatorCommissionProto =
+      new MsgWithdrawValidatorCommission_pb();
+    msgWithdrawValidatorCommissionProto.setValidatorAddress(validator_address);
+    return msgWithdrawValidatorCommissionProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl(
+      '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission'
+    );
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgWithdrawValidatorCommission {
+    return MsgWithdrawValidatorCommission.fromProto(
+      MsgWithdrawValidatorCommission_pb.deserializeBinary(
+        msgAny.getValue_asU8()
+      )
+    );
   }
 }
 
@@ -57,8 +75,5 @@ export namespace MsgWithdrawValidatorCommission {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission';
-    validator_address: ValAddress;
-  }
+  export type Proto = MsgWithdrawValidatorCommission_pb;
 }

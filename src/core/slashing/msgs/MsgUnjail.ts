@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgUnjail as MsgUnjail_pb } from '@terra-money/terra.proto/src/cosmos/slashing/v1beta1/tx_pb';
 
 /**
  * A validator can be jailed by the blockchain if misbehavior is detected, such as
@@ -35,16 +37,27 @@ export class MsgUnjail extends JSONSerializable<MsgUnjail.Data> {
   }
 
   public static fromProto(proto: MsgUnjail.Proto): MsgUnjail {
-    const { address } = proto;
-    return new MsgUnjail(address);
+    return new MsgUnjail(proto.getValidatorAddr());
   }
 
   public toProto(): MsgUnjail.Proto {
     const { address } = this;
-    return {
-      '@type': '/cosmos.slashing.v1beta1.MsgUnjail',
-      address,
-    };
+    const msgUnjailProto = new MsgUnjail_pb();
+    msgUnjailProto.setValidatorAddr(address);
+    return msgUnjailProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.slashing.v1beta1.MsgUnjail');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgUnjail {
+    return MsgUnjail.fromProto(
+      MsgUnjail_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -56,8 +69,5 @@ export namespace MsgUnjail {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.slashing.v1beta1.MsgUnjail';
-    address: ValAddress;
-  }
+  export type Proto = MsgUnjail_pb;
 }

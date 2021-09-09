@@ -1,5 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { BasicAllowance as BasicAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/feegrant_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
 /**
  * BasicAllowance implements Allowance with a one-time grant of tokens
@@ -41,20 +44,31 @@ export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
   }
 
   public static fromProto(proto: BasicAllowance.Proto): BasicAllowance {
-    const { spend_limit, expiration } = proto;
     return new BasicAllowance(
-      Coins.fromData(spend_limit),
-      new Date(expiration)
+      Coins.fromProto(proto.getSpendLimitList()),
+      proto.getExpiration()?.toDate() as Date
     );
   }
 
   public toProto(): BasicAllowance.Proto {
     const { spend_limit, expiration } = this;
-    return {
-      '@type': '/cosmos.feegrant.v1beta1.BasicAllowance',
-      spend_limit: spend_limit.toData(),
-      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
-    };
+    const proto = new BasicAllowance_pb();
+    proto.setSpendLimitList(spend_limit.toProto());
+    proto.setExpiration(Timestamp.fromDate(expiration));
+    return proto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.BasicAllowance');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): BasicAllowance {
+    return BasicAllowance.fromProto(
+      BasicAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -67,9 +81,5 @@ export namespace BasicAllowance {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.feegrant.v1beta1.BasicAllowance';
-    spend_limit: Coins.Data;
-    expiration: string;
-  }
+  export type Proto = BasicAllowance_pb;
 }

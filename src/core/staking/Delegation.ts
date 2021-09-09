@@ -2,6 +2,10 @@ import { JSONSerializable } from '../../util/json';
 import { Dec } from '../numeric';
 import { AccAddress, ValAddress } from '../bech32';
 import { Coin } from '../Coin';
+import {
+  DelegationResponse as DelegationResponse_pb,
+  Delegation as Delegation_pb,
+} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
 
 /**
  * Stores information about the status of a delegation between a delegator and validator, fetched from the blockchain.
@@ -47,6 +51,29 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
       balance: balance.toData(),
     };
   }
+
+  public static fromProto(proto: Delegation.Proto): Delegation {
+    const delegationProto = proto.getDelegation() as Delegation_pb;
+    return new Delegation(
+      delegationProto.getDelegatorAddress(),
+      delegationProto.getValidatorAddress(),
+      new Dec(delegationProto.getShares()),
+      Coin.fromProto(proto.getBalance() as Coin.Proto)
+    );
+  }
+
+  public toProto(): Delegation.Proto {
+    const { delegator_address, validator_address, shares, balance } = this;
+    const delegationProto = new Delegation_pb();
+    delegationProto.setDelegatorAddress(delegator_address);
+    delegationProto.setValidatorAddress(validator_address);
+    delegationProto.setShares(shares.toString());
+
+    const delegationResponseProto = new DelegationResponse_pb();
+    delegationResponseProto.setDelegation(delegationProto);
+    delegationResponseProto.setBalance(balance.toProto());
+    return delegationResponseProto;
+  }
 }
 
 export namespace Delegation {
@@ -58,4 +85,6 @@ export namespace Delegation {
     };
     balance: Coin.Data;
   }
+
+  export type Proto = DelegationResponse_pb;
 }

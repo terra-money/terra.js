@@ -2,6 +2,8 @@ import { Coins } from '../../Coins';
 import { Proposal } from '../Proposal';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgSubmitProposal as MsgSubmitProposal_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
 
 /**
  * Submit a proposal alongside an initial deposit.
@@ -46,23 +48,34 @@ export class MsgSubmitProposal extends JSONSerializable<MsgSubmitProposal.Data> 
     };
   }
 
-  public static fromProto(data: MsgSubmitProposal.Proto): MsgSubmitProposal {
-    const { content, initial_deposit, proposer } = data;
+  public static fromProto(proto: MsgSubmitProposal.Proto): MsgSubmitProposal {
     return new MsgSubmitProposal(
-      Proposal.Content.fromProto(content),
-      Coins.fromData(initial_deposit),
-      proposer
+      Proposal.Content.fromProto(proto.getContent() as any),
+      Coins.fromProto(proto.getInitialDepositList()),
+      proto.getProposer()
     );
   }
 
   public toProto(): MsgSubmitProposal.Proto {
     const { content, initial_deposit, proposer } = this;
-    return {
-      '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal',
-      content: content.toProto(),
-      initial_deposit: initial_deposit.toData(),
-      proposer,
-    };
+    const msgSubmitProposalProto = new MsgSubmitProposal_pb();
+    msgSubmitProposalProto.setContent(content.packAny() as any);
+    msgSubmitProposalProto.setInitialDepositList(initial_deposit.toProto());
+    msgSubmitProposalProto.setProposer(proposer);
+    return msgSubmitProposalProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgSubmitProposal');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgSubmitProposal {
+    return MsgSubmitProposal.fromProto(
+      MsgSubmitProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -76,10 +89,5 @@ export namespace MsgSubmitProposal {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal';
-    content: Proposal.Content.Proto;
-    initial_deposit: Coins.Data;
-    proposer: AccAddress;
-  }
+  export type Proto = MsgSubmitProposal_pb;
 }

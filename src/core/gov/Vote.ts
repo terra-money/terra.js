@@ -1,5 +1,11 @@
 import { JSONSerializable } from '../../util/json';
 import { AccAddress } from '../bech32';
+import {
+  Vote as Vote_pb,
+  VoteOptionMap,
+  WeightedVoteOption as WeightedVoteOption_pb,
+} from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/gov_pb';
+import { Dec, Numeric } from 'core/numeric';
 
 /**
  * Stores vote information for a proposal
@@ -13,8 +19,8 @@ export class Vote extends JSONSerializable<Vote.Data> {
   constructor(
     public proposal_id: number,
     public voter: AccAddress,
-    public options: Vote.Options,
-    public option?: Vote.Option // undefined except proposals in voting status
+    public options: WeightedVoteOption[],
+    public option?: VoteOptionMap[keyof VoteOptionMap] // undefined except proposals in voting status
   ) {
     super();
   }
@@ -22,15 +28,7 @@ export class Vote extends JSONSerializable<Vote.Data> {
   public static fromData(data: Vote.Data): Vote {
     const { proposal_id, voter, options, option } = data;
 
-    return new Vote(
-      parseInt(proposal_id),
-      voter,
-      options.map(({ option, weight }) => ({
-        option: Vote.OptionMapping[option],
-        weight,
-      })),
-      option ? Vote.OptionMapping[option] : undefined
-    );
+    return new Vote(parseInt(proposal_id), voter, options, option);
   }
 
   public toData(): Vote.Data {
@@ -39,59 +37,85 @@ export class Vote extends JSONSerializable<Vote.Data> {
     const res: Vote.Data = {
       proposal_id: proposal_id.toFixed(),
       voter,
-      options: options.map(({ option, weight }) => ({
-        option: Object.keys(Vote.OptionMapping).indexOf(option),
-        weight,
-      })),
+      options,
+      option,
     };
 
-    if (option) {
-      res.option = Object.keys(Vote.OptionMapping).indexOf(option);
-    }
-
     return res;
+  }
+
+  public static fromProto(proto: Vote.Proto): Vote {
+    return new Vote(
+      proto.getProposalId(),
+      proto.getVoter(),
+      proto.getOptionsList().map(o => WeightedVoteOption.fromProto(o)),
+      proto.getOption()
+    );
+  }
+
+  public toProto(): Vote.Proto {
+    const { proposal_id, voter, options, option } = this;
+    const voteProto = new Vote_pb();
+    voteProto.setProposalId(proposal_id);
+    voteProto.setVoter(voter);
+    voteProto.setOptionsList(options.map(o => o.toProto()));
+    voteProto.setOption(option ?? 0);
+    return voteProto;
   }
 }
 
 export namespace Vote {
-  export type Options = {
-    option: Option;
-    weight: string;
-  }[];
-
-  /** Voting options */
-  export enum Option {
-    /** - */
-    EMPTY = 'Empty',
-
-    /** Vote yes */
-    YES = 'Yes',
-
-    /** Do not vote */
-    ABSTAIN = 'Abstain',
-
-    /** Vote no */
-    NO = 'No',
-
-    /** Vote No with the option to veto if passed */
-    NO_WITH_VETO = 'NoWithVeto',
-  }
-
-  export const OptionMapping: { [key: number]: Option } = {
-    0: Option.EMPTY,
-    1: Option.YES,
-    2: Option.ABSTAIN,
-    3: Option.NO,
-    4: Option.NO_WITH_VETO,
-  };
-
   export interface Data {
     proposal_id: string;
     voter: AccAddress;
-    option?: number; // undefined except proposals in voting status
-    options: {
-      option: number;
-      weight: string; // Dec
-    }[];
+    option?: VoteOptionMap[keyof VoteOptionMap]; // undefined except proposals in voting status
+    options: WeightedVoteOption[];
   }
+
+  export type Proto = Vote_pb;
+}
+
+export class WeightedVoteOption extends JSONSerializable<WeightedVoteOption.Data> {
+  public weight: Dec;
+  constructor(
+    public option: VoteOptionMap[keyof VoteOptionMap],
+    weight: Numeric.Input
+  ) {
+    super();
+    this.weight = new Dec(weight);
+  }
+
+  public static fromData(data: WeightedVoteOption.Data): WeightedVoteOption {
+    const { option, weight } = data;
+    return new WeightedVoteOption(option, weight);
+  }
+
+  public toData(): WeightedVoteOption.Data {
+    const { option, weight } = this;
+    return {
+      option,
+      weight: weight.toString(),
+    };
+  }
+
+  public static fromProto(proto: WeightedVoteOption.Proto): WeightedVoteOption {
+    return new WeightedVoteOption(proto.getOption(), proto.getWeight());
+  }
+
+  public toProto(): WeightedVoteOption.Proto {
+    const { option, weight } = this;
+    const msgVoteProto = new WeightedVoteOption_pb();
+    msgVoteProto.setOption(option);
+    msgVoteProto.setWeight(weight.toString());
+    return msgVoteProto;
+  }
+}
+
+export namespace WeightedVoteOption {
+  export interface Data {
+    option: VoteOptionMap[keyof VoteOptionMap];
+    weight: string;
+  }
+
+  export type Proto = WeightedVoteOption_pb;
 }

@@ -1,7 +1,7 @@
-import { Msg } from './Msg';
 import { PublicKey } from './PublicKey';
 import { Coins } from './Coins';
 import { AccAddress } from './bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
 
 export namespace ProtoTx {
   export interface Proto {
@@ -13,7 +13,7 @@ export namespace ProtoTx {
 
 export namespace TxBody {
   export interface Proto {
-    messages: Msg.Proto[];
+    messages: Any[];
     memo: string;
     timeout_height: string;
   }
@@ -45,7 +45,7 @@ export class SignerInfo {
   public toProto(): SignerInfo.Proto {
     const { public_key, sequence, mode_info } = this;
     return {
-      public_key: public_key.toProto(),
+      public_key: public_key.packAny(),
       sequence,
       mode_info: mode_info.toProto(),
     };
@@ -54,7 +54,7 @@ export class SignerInfo {
 
 export namespace SignerInfo {
   export interface Proto {
-    public_key: PublicKey.Proto;
+    public_key: Any;
     sequence: string;
     mode_info: ModeInfo.Proto;
   }

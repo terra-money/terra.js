@@ -2,6 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Dec, Int } from '../../numeric';
 import { ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgEditValidator as MsgEditValidator_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
 
 /**
  * A validator can edit its delegate information, such as moniker, website, commission
@@ -67,17 +69,17 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
   }
 
   public static fromProto(data: MsgEditValidator.Proto): MsgEditValidator {
-    const {
-      description,
-      validator_address,
-      commission_rate,
-      min_self_delegation,
-    } = data;
     return new MsgEditValidator(
-      Validator.Description.fromData(description),
-      validator_address,
-      commission_rate ? new Dec(commission_rate) : undefined,
-      min_self_delegation ? new Int(min_self_delegation) : undefined
+      Validator.Description.fromProto(
+        data.getDescription() as Validator.Description.Proto
+      ),
+      data.getValidatorAddress(),
+      data.getCommissionRate() !== ''
+        ? new Dec(data.getCommissionRate())
+        : undefined,
+      data.getMinSelfDelegation() !== ''
+        ? new Int(data.getMinSelfDelegation())
+        : undefined
     );
   }
 
@@ -88,17 +90,27 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
       commission_rate,
       min_self_delegation,
     } = this;
-    return {
-      '@type': '/cosmos.staking.v1beta1.MsgEditValidator',
-      description,
-      validator_address,
-      commission_rate: commission_rate
-        ? commission_rate.toString()
-        : undefined,
-      min_self_delegation: min_self_delegation
-        ? min_self_delegation.toString()
-        : undefined,
-    };
+    const msgEditValidatorProto = new MsgEditValidator_pb();
+    msgEditValidatorProto.setDescription(description.toProto());
+    msgEditValidatorProto.setValidatorAddress(validator_address);
+    msgEditValidatorProto.setCommissionRate(commission_rate?.toString() || '');
+    msgEditValidatorProto.setMinSelfDelegation(
+      min_self_delegation?.toString() || ''
+    );
+    return msgEditValidatorProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgEditValidator');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgEditValidator {
+    return MsgEditValidator.fromProto(
+      MsgEditValidator_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -121,11 +133,5 @@ export namespace MsgEditValidator {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.staking.v1beta1.MsgEditValidator';
-    description: Validator.Description.Data;
-    validator_address: ValAddress;
-    commission_rate?: string;
-    min_self_delegation?: string;
-  }
+  export type Proto = MsgEditValidator_pb;
 }

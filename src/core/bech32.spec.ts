@@ -4,7 +4,6 @@ import {
   AccPubKey,
   ValPubKey,
   ValConsAddress,
-  ValConsPubKey,
 } from './bech32';
 import { bech32 } from 'bech32';
 
@@ -115,17 +114,6 @@ describe('ValConsAddress', () => {
       ValConsAddress.validate(
         'terravalcons1relcztayk87c3r529rqf3fwdmn8hr6rhcgyrxd'
       )
-    ).toBeTruthy();
-  });
-});
-
-describe('ValConsPubKey', () => {
-  it('validate validator consensus public key', () => {
-    expect(
-      ValConsPubKey.validate({
-        type: 'tendermint/PubKeyEd25519',
-        value: 'abcdef',
-      })
     ).toBeTruthy();
   });
 });

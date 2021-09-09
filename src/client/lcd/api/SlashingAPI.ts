@@ -1,5 +1,5 @@
 import { BaseAPI } from './BaseAPI';
-import { Dec, ValConsAddress, ValConsPubKey } from '../../../core';
+import { Dec, ValConsAddress, ValConsPublicKey } from '../../../core';
 import { APIParams } from '../APIRequester';
 
 export interface SlashingParams {
@@ -67,7 +67,7 @@ export class SlashingAPI extends BaseAPI {
    * @param valConsPubKey validator's consensus public key
    */
   public async signingInfos(
-    valConsPubKey?: ValConsPubKey,
+    valConsPubKey?: ValConsPublicKey,
     params: APIParams = {}
   ): Promise<SigningInfo[]> {
     let url;

@@ -1,4 +1,5 @@
-import { ValConsAddress, ValConsPubKey } from './bech32';
+import { ValConsAddress } from './bech32';
+import { ValConsPublicKey } from './PublicKey';
 
 export interface ValidatorSet {
   block_height: string;
@@ -7,7 +8,7 @@ export interface ValidatorSet {
 
 export interface DelegateValidator {
   address: ValConsAddress;
-  pub_key: ValConsPubKey.Data;
+  pub_key: ValConsPublicKey.Data;
   proposer_priority: string;
   voting_power: string;
 }

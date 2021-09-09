@@ -1,6 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { AccAddress, ValAddress } from '../../bech32';
+import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgBeginRedelegate as MsgBeginRedelegate_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
 
 /**
  * A delegator can choose to redelegate their bonded Luna and transfer a delegation
@@ -59,18 +61,12 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
     };
   }
 
-  public static fromProto(data: MsgBeginRedelegate.Proto): MsgBeginRedelegate {
-    const {
-      delegator_address,
-      validator_src_address,
-      validator_dst_address,
-      amount,
-    } = data;
+  public static fromProto(proto: MsgBeginRedelegate.Proto): MsgBeginRedelegate {
     return new MsgBeginRedelegate(
-      delegator_address,
-      validator_src_address,
-      validator_dst_address,
-      Coin.fromData(amount)
+      proto.getDelegatorAddress(),
+      proto.getValidatorSrcAddress(),
+      proto.getValidatorDstAddress(),
+      Coin.fromProto(proto.getAmount() as Coin.Proto)
     );
   }
 
@@ -81,13 +77,25 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
       validator_dst_address,
       amount,
     } = this;
-    return {
-      '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate',
-      delegator_address,
-      validator_src_address,
-      validator_dst_address,
-      amount: amount.toData(),
-    };
+    const msgBeginRedelegateProto = new MsgBeginRedelegate_pb();
+    msgBeginRedelegateProto.setDelegatorAddress(delegator_address);
+    msgBeginRedelegateProto.setValidatorDstAddress(validator_dst_address);
+    msgBeginRedelegateProto.setValidatorSrcAddress(validator_src_address);
+    msgBeginRedelegateProto.setAmount(amount.toProto());
+    return msgBeginRedelegateProto;
+  }
+
+  public packAny(): Any {
+    const msgAny = new Any();
+    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgBeginRedelegate');
+    msgAny.setValue(this.toProto().serializeBinary());
+    return msgAny;
+  }
+
+  public static unpackAny(msgAny: Any): MsgBeginRedelegate {
+    return MsgBeginRedelegate.fromProto(
+      MsgBeginRedelegate_pb.deserializeBinary(msgAny.getValue_asU8())
+    );
   }
 }
 
@@ -102,11 +110,5 @@ export namespace MsgBeginRedelegate {
     };
   }
 
-  export interface Proto {
-    '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate';
-    delegator_address: AccAddress;
-    validator_src_address: ValAddress;
-    validator_dst_address: ValAddress;
-    amount: Coin.Data;
-  }
+  export type Proto = MsgBeginRedelegate_pb;
 }
