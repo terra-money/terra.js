@@ -22,4 +22,8 @@ describe('GovAPI', () => {
       },
     });
   });
+
+  it('proposals', async () => {
+    await expect(gov.proposals()).resolves.not.toThrowError();
+  });
 });
