@@ -38,6 +38,8 @@ export namespace MarketParamChanges {
       poolrecoveryperiod: [Convert.toNumber, Convert.toFixed],
       basepool: [Convert.toDec, Convert.toString],
       minstabilityspread: [Convert.toDec, Convert.toString],
+      tobintax: [Convert.toDec, Convert.toString],
+      minspread: [Convert.toDec, Convert.toString],
     },
   };
 }

@@ -120,9 +120,14 @@ export namespace ParamChanges {
         result[pc.subspace] = {};
       }
       // @ts-ignore
-      const converter = ParamChanges.ConversionTable[pc.subspace][pc.key][0];
+      const conversion = ParamChanges.ConversionTable[pc.subspace][pc.key];
+      if (!Array.isArray(conversion)) {
+        throw new TypeError(
+          `cannot find ${pc.key} in ${pc.subspace} ParamChange conversion table`
+        );
+      }
       // @ts-ignore
-      result[pc.subspace][pc.key] = converter(JSON.parse(pc.value));
+      result[pc.subspace][pc.key] = conversion[0](JSON.parse(pc.value));
     }
     return result;
   }
