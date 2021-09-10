@@ -1,11 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgVote as MsgVote_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
-import {
-  VoteOption,
-  VoteOptionMap,
-} from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/gov_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgVote as MsgVote_pb } from '@terra-money/terra.proto/cosmos/gov/v1beta1/tx';
+import { VoteOption } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
+import * as Long from 'long';
 
 /**
  * Vote for a proposal
@@ -19,7 +17,7 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
   constructor(
     public proposal_id: number,
     public voter: AccAddress,
-    public option: VoteOptionMap[keyof VoteOptionMap]
+    public option: VoteOption
   ) {
     super();
   }
@@ -44,44 +42,38 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
   }
 
   public static fromProto(proto: MsgVote.Proto): MsgVote {
-    return new MsgVote(
-      proto.getProposalId(),
-      proto.getVoter(),
-      proto.getOption()
-    );
+    return new MsgVote(proto.proposalId.toNumber(), proto.voter, proto.option);
   }
 
   public toProto(): MsgVote.Proto {
     const { proposal_id, voter, option } = this;
-    const msgVoteProto = new MsgVote_pb();
-    msgVoteProto.setProposalId(proposal_id);
-    msgVoteProto.setVoter(voter);
-    msgVoteProto.setOption(option);
-    return msgVoteProto;
+    return MsgVote_pb.fromPartial({
+      option,
+      proposalId: Long.fromNumber(proposal_id),
+      voter,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgVote');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.gov.v1beta1.MsgVote',
+      value: MsgVote_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgVote {
-    return MsgVote.fromProto(
-      MsgVote_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgVote.fromProto(MsgVote_pb.decode(msgAny.value));
   }
 }
 
 export namespace MsgVote {
-  export const Option: VoteOptionMap = VoteOption;
+  export type Option = VoteOption;
   export interface Data {
     type: 'gov/MsgVote';
     value: {
       proposal_id: string;
       voter: AccAddress;
-      option: VoteOptionMap[keyof VoteOptionMap];
+      option: VoteOption;
     };
   }
 

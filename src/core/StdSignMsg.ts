@@ -1,7 +1,8 @@
 import { StdFee } from './StdFee';
 import { Msg } from './Msg';
 import { JSONSerializable } from '../util/json';
-import { StdTx } from './StdTx';
+import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
+import * as Long from 'long';
 
 /**
  * A sign message is a data structure that is used to create a [[StdSignature]] to be later
@@ -38,7 +39,15 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
       account_number: account_number.toString(),
       sequence: sequence.toString(),
       fee: fee.toData(),
-      msgs: msgs.map(m => m.toData()),
+      msgs: msgs.map(m => {
+        if ('toData' in m) {
+          return m.toData();
+        }
+
+        throw new Error(
+          `amino is not supported for "${m.packAny().typeUrl}" Msg`
+        );
+      }),
       memo,
     };
   }
@@ -55,12 +64,22 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
     );
   }
 
-  /**
-   * You get the [[StdTx]] value from a `StdSignMsg` (without the signature).
-   */
-  public toStdTx(): StdTx {
-    const { fee, msgs, memo } = this;
-    return new StdTx(msgs, fee, [], memo);
+  public toTxProto(): Tx_pb {
+    return Tx_pb.fromPartial({
+      body: {
+        memo: this.memo,
+        messages: this.msgs.map(m => m.packAny()),
+      },
+      authInfo: {
+        signerInfos: [],
+        fee: {
+          amount: this.fee.amount.toProto(),
+          gasLimit: Long.fromNumber(this.fee.gas),
+          granter: '',
+          payer: '',
+        },
+      },
+    });
   }
 }
 

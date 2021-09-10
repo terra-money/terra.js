@@ -1,11 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { BasicAllowance } from './BasicAllowance';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { PeriodicAllowance as PeriodicAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/feegrant_pb';
-import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { PeriodicAllowance as PeriodicAllowance_pb } from '@terra-money/terra.proto/cosmos/feegrant/v1beta1/feegrant';
+import * as Long from 'long';
 /**
  * PeriodicAllowance extends Allowance to allow for both a maximum cap,
  * as well as a limit per time period.
@@ -76,11 +74,11 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
 
   public static fromProto(proto: PeriodicAllowance.Proto): PeriodicAllowance {
     return new PeriodicAllowance(
-      BasicAllowance.fromProto(proto.getBasic() as BasicAllowance.Proto),
-      proto.getPeriod()?.getSeconds() as number,
-      Coins.fromProto(proto.getPeriodSpendLimitList()),
-      Coins.fromProto(proto.getPeriodCanSpendList()),
-      proto.getPeriodReset()?.toDate() as Date
+      BasicAllowance.fromProto(proto.basic as BasicAllowance.Proto),
+      proto.period?.seconds.toNumber() as number,
+      Coins.fromProto(proto.periodSpendLimit),
+      Coins.fromProto(proto.periodCanSpend),
+      proto.periodReset as Date
     );
   }
 
@@ -92,26 +90,26 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
       period_can_spend,
       period_reset,
     } = this;
-    const proto = new PeriodicAllowance_pb();
-    proto.setBasic(basic.toProto()),
-      proto.setPeriod(new Duration().setSeconds(period));
-    proto.setPeriodSpendLimitList(period_spend_limit.toProto());
-    proto.setPeriodCanSpendList(period_can_spend.toProto());
-    proto.setPeriodReset(Timestamp.fromDate(period_reset));
 
-    return proto;
+    return PeriodicAllowance_pb.fromPartial({
+      basic,
+      period: { seconds: Long.fromNumber(period) },
+      periodCanSpend: period_can_spend.toProto(),
+      periodReset: period_reset,
+      periodSpendLimit: period_spend_limit.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.PeriodicAllowance');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.feegrant.v1beta1.PeriodicAllowance',
+      value: PeriodicAllowance_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): PeriodicAllowance {
     return PeriodicAllowance.fromProto(
-      PeriodicAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+      PeriodicAllowance_pb.decode(msgAny.value)
     );
   }
 }

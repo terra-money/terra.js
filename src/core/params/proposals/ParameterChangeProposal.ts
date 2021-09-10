@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ParamChange, ParamChanges } from '../ParamChange';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { ParameterChangeProposal as ParameterChangeProposal_pb } from '@terra-money/terra.proto/src/cosmos/params/v1beta1/params_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { ParameterChangeProposal as ParameterChangeProposal_pb } from '@terra-money/terra.proto/cosmos/params/v1beta1/params';
 
 /**
  * Describes a proposal for directly altering the value of the module parameters.
@@ -81,32 +81,31 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
     proto: ParameterChangeProposal.Proto
   ): ParameterChangeProposal {
     return new ParameterChangeProposal(
-      proto.getTitle(),
-      proto.getDescription(),
-      ParamChanges.fromProto(proto.getChangesList())
+      proto.title,
+      proto.description,
+      ParamChanges.fromProto(proto.changes)
     );
   }
 
   public toProto(): ParameterChangeProposal.Proto {
     const { title, description, changes } = this;
-    const paramChangeProposalProto = new ParameterChangeProposal_pb();
-    paramChangeProposalProto.setTitle(title);
-    paramChangeProposalProto.setDescription(description);
-    paramChangeProposalProto.setChangesList(changes.toProto());
-
-    return paramChangeProposalProto;
+    return ParameterChangeProposal_pb.fromPartial({
+      changes: changes.toProto(),
+      description,
+      title,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.params.v1beta1.ParameterChangeProposal');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.params.v1beta1.ParameterChangeProposal',
+      value: ParameterChangeProposal_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): ParameterChangeProposal {
     return ParameterChangeProposal.fromProto(
-      ParameterChangeProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+      ParameterChangeProposal_pb.decode(msgAny.value)
     );
   }
 }

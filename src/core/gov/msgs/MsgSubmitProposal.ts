@@ -2,8 +2,8 @@ import { Coins } from '../../Coins';
 import { Proposal } from '../Proposal';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgSubmitProposal as MsgSubmitProposal_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgSubmitProposal as MsgSubmitProposal_pb } from '@terra-money/terra.proto/cosmos/gov/v1beta1/tx';
 
 /**
  * Submit a proposal alongside an initial deposit.
@@ -50,31 +50,31 @@ export class MsgSubmitProposal extends JSONSerializable<MsgSubmitProposal.Data> 
 
   public static fromProto(proto: MsgSubmitProposal.Proto): MsgSubmitProposal {
     return new MsgSubmitProposal(
-      Proposal.Content.fromProto(proto.getContent() as any),
-      Coins.fromProto(proto.getInitialDepositList()),
-      proto.getProposer()
+      Proposal.Content.fromProto(proto.content as any),
+      Coins.fromProto(proto.initialDeposit),
+      proto.proposer
     );
   }
 
   public toProto(): MsgSubmitProposal.Proto {
     const { content, initial_deposit, proposer } = this;
-    const msgSubmitProposalProto = new MsgSubmitProposal_pb();
-    msgSubmitProposalProto.setContent(content.packAny() as any);
-    msgSubmitProposalProto.setInitialDepositList(initial_deposit.toProto());
-    msgSubmitProposalProto.setProposer(proposer);
-    return msgSubmitProposalProto;
+    return MsgSubmitProposal_pb.fromPartial({
+      content: content.packAny(),
+      initialDeposit: initial_deposit.toProto(),
+      proposer,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgSubmitProposal');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal',
+      value: MsgSubmitProposal_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgSubmitProposal {
     return MsgSubmitProposal.fromProto(
-      MsgSubmitProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgSubmitProposal_pb.decode(msgAny.value)
     );
   }
 }

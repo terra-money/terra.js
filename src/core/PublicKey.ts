@@ -1,7 +1,8 @@
 import { JSONSerializable } from '../util/json';
-import { LegacyAminoPubKey as LegacyAminoPubKey_pb } from '@terra-money/terra.proto/src/cosmos/crypto/multisig/keys_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { PubKey as PubKey_pb } from '@terra-money/terra.proto/src/cosmos/crypto/secp256k1/keys_pb';
+import { LegacyAminoPubKey as LegacyAminoPubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/multisig/keys';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { PubKey as PubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/secp256k1/keys';
+import { PubKey as ValConsPubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/ed25519/keys';
 
 export type PublicKey =
   | SimplePublicKey
@@ -27,7 +28,7 @@ export namespace PublicKey {
   }
 
   export function fromProto(pubkeyAny: PublicKey.Proto): PublicKey {
-    const typeUrl = pubkeyAny.getTypeUrl();
+    const typeUrl = pubkeyAny.typeUrl;
     if (typeUrl === '/cosmos.crypto.secp256k1.PubKey') {
       return SimplePublicKey.unpackAny(pubkeyAny);
     } else if (typeUrl === '/cosmos.crypto.multisig.LegacyAminoPubKey') {
@@ -57,26 +58,24 @@ export class SimplePublicKey extends JSONSerializable<SimplePublicKey.Data> {
   }
 
   public static fromProto(pubkeyProto: SimplePublicKey.Proto): SimplePublicKey {
-    return new SimplePublicKey(pubkeyProto.getKey_asB64());
+    return new SimplePublicKey(Buffer.from(pubkeyProto.key).toString('base64'));
   }
 
   public toProto(): SimplePublicKey.Proto {
-    const pubkeyProto = new PubKey_pb();
-    pubkeyProto.setKey(this.key);
-    return pubkeyProto;
+    return PubKey_pb.fromPartial({
+      key: Buffer.from(this.key, 'base64'),
+    });
   }
 
   public packAny(): Any {
-    const pubkeyAny = new Any();
-    pubkeyAny.setTypeUrl('/cosmos.crypto.secp256k1.PubKey');
-    pubkeyAny.setValue(this.toProto().serializeBinary());
-    return pubkeyAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.crypto.secp256k1.PubKey',
+      value: PubKey_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(pubkeyAny: Any): SimplePublicKey {
-    return SimplePublicKey.fromProto(
-      PubKey_pb.deserializeBinary(pubkeyAny.getValue_asU8())
-    );
+    return SimplePublicKey.fromProto(PubKey_pb.decode(pubkeyAny.value));
   }
 }
 
@@ -117,28 +116,28 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<LegacyAminoMu
     pubkeyProto: LegacyAminoMultisigPublicKey.Proto
   ): LegacyAminoMultisigPublicKey {
     return new LegacyAminoMultisigPublicKey(
-      pubkeyProto.getThreshold(),
-      pubkeyProto.getPublicKeysList().map(v => SimplePublicKey.unpackAny(v))
+      pubkeyProto.threshold,
+      pubkeyProto.publicKeys.map(v => SimplePublicKey.unpackAny(v))
     );
   }
 
   public toProto(): LegacyAminoMultisigPublicKey.Proto {
-    const pubkeyProto = new LegacyAminoPubKey_pb();
-    pubkeyProto.setThreshold(this.threshold);
-    pubkeyProto.setPublicKeysList(this.pubkeys.map(v => v.packAny() as any));
-    return pubkeyProto;
+    return LegacyAminoPubKey_pb.fromPartial({
+      threshold: this.threshold,
+      publicKeys: this.pubkeys.map(v => v.packAny()),
+    });
   }
 
   public packAny(): Any {
-    const pubkeyAny = new Any();
-    pubkeyAny.setTypeUrl('/cosmos.crypto.multisig.LegacyAminoPubKey');
-    pubkeyAny.setValue(this.toProto().serializeBinary());
-    return pubkeyAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.crypto.multisig.LegacyAminoPubKey',
+      value: LegacyAminoPubKey_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(pubkeyAny: Any): LegacyAminoMultisigPublicKey {
     return LegacyAminoMultisigPublicKey.fromProto(
-      LegacyAminoPubKey_pb.deserializeBinary(pubkeyAny.getValue_asU8())
+      LegacyAminoPubKey_pb.decode(pubkeyAny.value)
     );
   }
 }
@@ -174,26 +173,26 @@ export class ValConsPublicKey extends JSONSerializable<ValConsPublicKey.Data> {
   public static fromProto(
     pubkeyProto: ValConsPublicKey.Proto
   ): ValConsPublicKey {
-    return new ValConsPublicKey(pubkeyProto.getKey_asB64());
+    return new ValConsPublicKey(
+      Buffer.from(pubkeyProto.key).toString('base64')
+    );
   }
 
   public toProto(): ValConsPublicKey.Proto {
-    const pubkeyProto = new PubKey_pb();
-    pubkeyProto.setKey(this.key);
-    return pubkeyProto;
+    return PubKey_pb.fromPartial({
+      key: Buffer.from(this.key, 'base64'),
+    });
   }
 
   public packAny(): Any {
-    const pubkeyAny = new Any();
-    pubkeyAny.setTypeUrl('/cosmos.crypto.ed25519.PubKey');
-    pubkeyAny.setValue(this.toProto().serializeBinary());
-    return pubkeyAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.crypto.ed25519.PubKey',
+      value: ValConsPubKey_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(pubkeyAny: Any): ValConsPublicKey {
-    return ValConsPublicKey.fromProto(
-      PubKey_pb.deserializeBinary(pubkeyAny.getValue_asU8())
-    );
+    return ValConsPublicKey.fromProto(ValConsPubKey_pb.decode(pubkeyAny.value));
   }
 }
 

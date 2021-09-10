@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
-import { SendAuthorization as SendAuthorization_pb } from '@terra-money/terra.proto/src/cosmos/bank/v1beta1/authz_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { SendAuthorization as SendAuthorization_pb } from '@terra-money/terra.proto/cosmos/bank/v1beta1/authz';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export class SendAuthorization extends JSONSerializable<SendAuthorization.Data> {
   public spend_limit: Coins;
@@ -25,26 +25,25 @@ export class SendAuthorization extends JSONSerializable<SendAuthorization.Data> 
   }
 
   public static fromProto(proto: SendAuthorization.Proto): SendAuthorization {
-    return new SendAuthorization(Coins.fromProto(proto.getSpendLimitList()));
+    return new SendAuthorization(Coins.fromProto(proto.spendLimit));
   }
 
   public toProto(): SendAuthorization.Proto {
-    const { spend_limit } = this;
-    const sendAuthorizationProto = new SendAuthorization_pb();
-    sendAuthorizationProto.setSpendLimitList(spend_limit.toProto());
-    return sendAuthorizationProto;
+    return SendAuthorization_pb.fromPartial({
+      spendLimit: this.spend_limit.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.bank.v1beta1.SendAuthorization');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.bank.v1beta1.SendAuthorization',
+      value: SendAuthorization_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): SendAuthorization {
     return SendAuthorization.fromProto(
-      SendAuthorization_pb.deserializeBinary(msgAny.getValue_asU8())
+      SendAuthorization_pb.decode(msgAny.value)
     );
   }
 }

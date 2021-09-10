@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/tx';
 
 /**
  * A **feeeder** is an account which is responsible for signing transactions with Oracle vote
@@ -44,27 +44,27 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
   public static fromProto(
     proto: MsgDelegateFeedConsent.Proto
   ): MsgDelegateFeedConsent {
-    return new MsgDelegateFeedConsent(proto.getOperator(), proto.getDelegate());
+    return new MsgDelegateFeedConsent(proto.operator, proto.delegate);
   }
 
   public toProto(): MsgDelegateFeedConsent.Proto {
     const { operator, delegate } = this;
-    const msgDelegateFeedConsentProto = new MsgDelegateFeedConsent_pb();
-    msgDelegateFeedConsentProto.setOperator(operator);
-    msgDelegateFeedConsentProto.setDelegate(delegate);
-    return msgDelegateFeedConsentProto;
+    return MsgDelegateFeedConsent_pb.fromPartial({
+      delegate,
+      operator,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.oracle.v1beta1.MsgDelegateFeedConsent');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
+      value: MsgDelegateFeedConsent_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgDelegateFeedConsent {
     return MsgDelegateFeedConsent.fromProto(
-      MsgDelegateFeedConsent_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgDelegateFeedConsent_pb.decode(msgAny.value)
     );
   }
 }

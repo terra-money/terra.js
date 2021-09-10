@@ -1,7 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgMigrateCode as MsgMigrateCode_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgMigrateCode as MsgMigrateCode_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
+import * as Long from 'long';
 
 export class MsgMigrateCode extends JSONSerializable<MsgMigrateCode.Data> {
   /**
@@ -38,32 +39,30 @@ export class MsgMigrateCode extends JSONSerializable<MsgMigrateCode.Data> {
 
   public static fromProto(proto: MsgMigrateCode.Proto): MsgMigrateCode {
     return new MsgMigrateCode(
-      proto.getSender(),
-      proto.getCodeId(),
-      proto.getWasmByteCode_asB64()
+      proto.sender,
+      proto.codeId.toNumber(),
+      Buffer.from(proto.wasmByteCode).toString('base64')
     );
   }
 
   public toProto(): MsgMigrateCode.Proto {
     const { sender, code_id, wasm_byte_code } = this;
-    const msgMigrateCodeProto = new MsgMigrateCode_pb();
-    msgMigrateCodeProto.setSender(sender);
-    msgMigrateCodeProto.setCodeId(code_id);
-    msgMigrateCodeProto.setWasmByteCode(wasm_byte_code);
-    return msgMigrateCodeProto;
+    return MsgMigrateCode_pb.fromPartial({
+      codeId: Long.fromNumber(code_id),
+      sender,
+      wasmByteCode: Buffer.from(wasm_byte_code, 'base64'),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgMigrateCode');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.wasm.v1beta1.MsgMigrateCode',
+      value: MsgMigrateCode_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgMigrateCode {
-    return MsgMigrateCode.fromProto(
-      MsgMigrateCode_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgMigrateCode.fromProto(MsgMigrateCode_pb.decode(msgAny.value));
   }
 }
 

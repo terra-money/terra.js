@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgBeginRedelegate as MsgBeginRedelegate_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgBeginRedelegate as MsgBeginRedelegate_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 
 /**
  * A delegator can choose to redelegate their bonded Luna and transfer a delegation
@@ -63,10 +63,10 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
 
   public static fromProto(proto: MsgBeginRedelegate.Proto): MsgBeginRedelegate {
     return new MsgBeginRedelegate(
-      proto.getDelegatorAddress(),
-      proto.getValidatorSrcAddress(),
-      proto.getValidatorDstAddress(),
-      Coin.fromProto(proto.getAmount() as Coin.Proto)
+      proto.delegatorAddress,
+      proto.validatorSrcAddress,
+      proto.validatorDstAddress,
+      Coin.fromProto(proto.amount as Coin.Proto)
     );
   }
 
@@ -77,24 +77,24 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
       validator_dst_address,
       amount,
     } = this;
-    const msgBeginRedelegateProto = new MsgBeginRedelegate_pb();
-    msgBeginRedelegateProto.setDelegatorAddress(delegator_address);
-    msgBeginRedelegateProto.setValidatorDstAddress(validator_dst_address);
-    msgBeginRedelegateProto.setValidatorSrcAddress(validator_src_address);
-    msgBeginRedelegateProto.setAmount(amount.toProto());
-    return msgBeginRedelegateProto;
+    return MsgBeginRedelegate_pb.fromPartial({
+      amount: amount.toProto(),
+      delegatorAddress: delegator_address,
+      validatorDstAddress: validator_dst_address,
+      validatorSrcAddress: validator_src_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgBeginRedelegate');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate',
+      value: MsgBeginRedelegate_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgBeginRedelegate {
     return MsgBeginRedelegate.fromProto(
-      MsgBeginRedelegate_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgBeginRedelegate_pb.decode(msgAny.value)
     );
   }
 }

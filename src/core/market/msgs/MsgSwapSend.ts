@@ -2,8 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgSwapSend as MsgSwapSend_pb } from '@terra-money/terra.proto/src/terra/market/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgSwapSend as MsgSwapSend_pb } from '@terra-money/terra.proto/terra/market/v1beta1/tx';
 
 /**
  * Executes a market swap send between 2 denominations at the exchange rate registered by the
@@ -53,34 +53,32 @@ export class MsgSwapSend extends JSONSerializable<MsgSwapSend.Data> {
 
   public static fromProto(proto: MsgSwapSend.Proto): MsgSwapSend {
     return new MsgSwapSend(
-      proto.getFromAddress(),
-      proto.getToAddress(),
-      Coin.fromProto(proto.getOfferCoin() as Coin.Proto),
-      proto.getAskDenom()
+      proto.fromAddress,
+      proto.toAddress,
+      Coin.fromProto(proto.offerCoin as Coin.Proto),
+      proto.askDenom
     );
   }
 
   public toProto(): MsgSwapSend.Proto {
     const { from_address, to_address, offer_coin, ask_denom } = this;
-    const msgSwapSendProto = new MsgSwapSend_pb();
-    msgSwapSendProto.setFromAddress(from_address);
-    msgSwapSendProto.setToAddress(to_address);
-    msgSwapSendProto.setOfferCoin(offer_coin.toProto());
-    msgSwapSendProto.setAskDenom(ask_denom);
-    return msgSwapSendProto;
+    return MsgSwapSend_pb.fromPartial({
+      askDenom: ask_denom,
+      fromAddress: from_address,
+      offerCoin: offer_coin.toProto(),
+      toAddress: to_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.market.v1beta1.MsgSwapSend');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.market.v1beta1.MsgSwapSend',
+      value: MsgSwapSend_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgSwapSend {
-    return MsgSwapSend.fromProto(
-      MsgSwapSend_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgSwapSend.fromProto(MsgSwapSend_pb.decode(msgAny.value));
   }
 }
 

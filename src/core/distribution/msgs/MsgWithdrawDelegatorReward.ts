@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
  * A delegator can withdraw currently outstanding rewards accrued from their delegation
@@ -46,31 +46,29 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDele
     proto: MsgWithdrawDelegatorReward.Proto
   ): MsgWithdrawDelegatorReward {
     return new MsgWithdrawDelegatorReward(
-      proto.getDelegatorAddress(),
-      proto.getValidatorAddress()
+      proto.delegatorAddress,
+      proto.validatorAddress
     );
   }
 
   public toProto(): MsgWithdrawDelegatorReward.Proto {
     const { delegator_address, validator_address } = this;
-    const msgWithdrawDelegatorRewardProto = new MsgWithdrawDelegatorReward_pb();
-    msgWithdrawDelegatorRewardProto.setDelegatorAddress(delegator_address);
-    msgWithdrawDelegatorRewardProto.setValidatorAddress(validator_address);
-    return msgWithdrawDelegatorRewardProto;
+    return MsgWithdrawDelegatorReward_pb.fromPartial({
+      delegatorAddress: delegator_address,
+      validatorAddress: validator_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl(
-      '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward'
-    );
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+      value: MsgWithdrawDelegatorReward_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgWithdrawDelegatorReward {
     return MsgWithdrawDelegatorReward.fromProto(
-      MsgWithdrawDelegatorReward_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgWithdrawDelegatorReward_pb.decode(msgAny.value)
     );
   }
 }

@@ -1,8 +1,8 @@
 import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgExecuteContract as MsgExecuteContract_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgExecuteContract as MsgExecuteContract_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
 export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data> {
   public coins: Coins;
@@ -51,35 +51,36 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
 
   public static fromProto(data: MsgExecuteContract.Proto): MsgExecuteContract {
     return new MsgExecuteContract(
-      data.getSender(),
-      data.getContract(),
-      JSON.parse(atob(data.getExecuteMsg_asB64())),
-      Coins.fromProto(data.getCoinsList())
+      data.sender,
+      data.contract,
+      JSON.parse(atob(Buffer.from(data.executeMsg).toString('base64'))),
+      Coins.fromProto(data.coins)
     );
   }
 
   public toProto(): MsgExecuteContract.Proto {
     const { sender, contract, execute_msg, coins } = this;
-    const msgExecuteContractProto = new MsgExecuteContract_pb();
-    msgExecuteContractProto.setSender(sender);
-    msgExecuteContractProto.setContract(contract);
-    msgExecuteContractProto.setExecuteMsg(
-      btoa(JSON.stringify(removeNull(execute_msg)))
-    );
-    msgExecuteContractProto.setCoinsList(coins.toProto());
-    return msgExecuteContractProto;
+    return MsgExecuteContract_pb.fromPartial({
+      coins: coins.toProto(),
+      contract,
+      sender,
+      executeMsg: Buffer.from(
+        btoa(JSON.stringify(removeNull(execute_msg))),
+        'base64'
+      ),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgExecuteContract');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.wasm.v1beta1.MsgExecuteContract',
+      value: MsgExecuteContract_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgExecuteContract {
     return MsgExecuteContract.fromProto(
-      MsgExecuteContract_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgExecuteContract_pb.decode(msgAny.value)
     );
   }
 }

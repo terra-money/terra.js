@@ -6,8 +6,8 @@ import {
   Redelegation as Redelegation_pb,
   RedelegationEntry as RedelegationEntry_pb,
   RedelegationEntryResponse as RedelegationEntryResponse_pb,
-} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+} from '@terra-money/terra.proto/cosmos/staking/v1beta1/staking';
+import * as Long from 'long';
 
 /**
  * A redelegation is when a delegator decides to stop staking with one validator and
@@ -73,12 +73,12 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
   }
 
   public static fromProto(data: Redelegation.Proto): Redelegation {
-    const redelegationProto = data.getRedelegation() as Redelegation_pb;
+    const redelegationProto = data.redelegation as Redelegation_pb;
     return new Redelegation(
-      redelegationProto.getDelegatorAddress(),
-      redelegationProto.getValidatorDstAddress(),
-      redelegationProto.getValidatorDstAddress(),
-      data.getEntriesList().map(e => Redelegation.Entry.fromProto(e))
+      redelegationProto.delegatorAddress,
+      redelegationProto.validatorDstAddress,
+      redelegationProto.validatorDstAddress,
+      data.entries.map(e => Redelegation.Entry.fromProto(e))
     );
   }
 
@@ -89,20 +89,18 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
       validator_dst_address,
       entries,
     } = this;
-    const redelegationProto = new Redelegation_pb();
-    redelegationProto.setDelegatorAddress(delegator_address);
-    redelegationProto.setValidatorDstAddress(validator_dst_address);
-    redelegationProto.setValidatorSrcAddress(validator_src_address);
-    redelegationProto.setEntriesList(
-      entries.map(
-        e => e.toProto().getRedelegationEntry() as RedelegationEntry_pb
-      )
-    );
 
-    const redelegationResponseProto = new RedelegationResponse_pb();
-    redelegationResponseProto.setEntriesList(entries.map(e => e.toProto()));
-    redelegationResponseProto.setRedelegation(redelegationProto);
-    return redelegationResponseProto;
+    return RedelegationResponse_pb.fromPartial({
+      entries: entries.map(e => e.toProto()),
+      redelegation: Redelegation_pb.fromPartial({
+        delegatorAddress: delegator_address,
+        entries: entries.map(
+          e => e.toProto().redelegationEntry as RedelegationEntry_pb
+        ),
+        validatorDstAddress: validator_dst_address,
+        validatorSrcAddress: validator_src_address,
+      }),
+    });
   }
 }
 
@@ -176,33 +174,27 @@ export namespace Redelegation {
         completion_time,
       } = this;
 
-      const redelegationEntryProto = new RedelegationEntry_pb();
-      redelegationEntryProto.setCompletionTime(
-        Timestamp.fromDate(completion_time)
-      );
-      redelegationEntryProto.setCreationHeight(creation_height);
-      redelegationEntryProto.setSharesDst(shares_dst.toString());
-      redelegationEntryProto.setInitialBalance(initial_balance.toString());
-
-      const redelegationEntryResponseProto = new RedelegationEntryResponse_pb();
-      redelegationEntryResponseProto.setBalance(balance.toString());
-      redelegationEntryResponseProto.setRedelegationEntry(
-        redelegationEntryProto
-      );
-
-      return redelegationEntryResponseProto;
+      return RedelegationEntryResponse_pb.fromPartial({
+        balance: balance.toString(),
+        redelegationEntry: RedelegationEntry_pb.fromPartial({
+          completionTime: completion_time,
+          creationHeight: Long.fromNumber(creation_height),
+          initialBalance: initial_balance.toString(),
+          sharesDst: shares_dst.toString(),
+        }),
+      });
     }
 
     public static fromProto(proto: Entry.Proto): Entry {
       const redelegationEntryProto =
-        proto.getRedelegationEntry() as RedelegationEntry_pb;
+        proto.redelegationEntry as RedelegationEntry_pb;
 
       return new Entry(
-        new Int(redelegationEntryProto.getInitialBalance()),
-        new Int(proto.getBalance()),
-        new Dec(redelegationEntryProto.getSharesDst()),
-        redelegationEntryProto.getCreationHeight(),
-        redelegationEntryProto.getCompletionTime()?.toDate() as Date
+        new Int(redelegationEntryProto.initialBalance),
+        new Int(proto.balance),
+        new Dec(redelegationEntryProto.sharesDst),
+        redelegationEntryProto.creationHeight.toNumber(),
+        redelegationEntryProto.completionTime as Date
       );
     }
   }

@@ -1,8 +1,8 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgUndelegate as MsgUndelegate_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgUndelegate as MsgUndelegate_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 
 /**
  * A delegator can undelegate an amount of bonded Luna, and will begin the unbonding
@@ -48,32 +48,30 @@ export class MsgUndelegate extends JSONSerializable<MsgUndelegate.Data> {
 
   public static fromProto(proto: MsgUndelegate.Proto): MsgUndelegate {
     return new MsgUndelegate(
-      proto.getDelegatorAddress(),
-      proto.getValidatorAddress(),
-      Coin.fromProto(proto.getAmount() as Coin.Proto)
+      proto.delegatorAddress,
+      proto.validatorAddress,
+      Coin.fromProto(proto.amount as Coin.Proto)
     );
   }
 
   public toProto(): MsgUndelegate.Proto {
     const { delegator_address, validator_address, amount } = this;
-    const msgUndelegateProto = new MsgUndelegate_pb();
-    msgUndelegateProto.setDelegatorAddress(delegator_address);
-    msgUndelegateProto.setValidatorAddress(validator_address);
-    msgUndelegateProto.setAmount(amount.toProto());
-    return msgUndelegateProto;
+    return MsgUndelegate_pb.fromPartial({
+      amount: amount.toProto(),
+      delegatorAddress: delegator_address,
+      validatorAddress: validator_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgUndelegate');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
+      value: MsgUndelegate_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgUndelegate {
-    return MsgUndelegate.fromProto(
-      MsgUndelegate_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgUndelegate.fromProto(MsgUndelegate_pb.decode(msgAny.value));
   }
 }
 

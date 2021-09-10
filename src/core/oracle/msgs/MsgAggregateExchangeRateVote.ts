@@ -3,8 +3,8 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { MsgAggregateExchangeRatePrevote } from './MsgAggregateExchangeRatePrevote';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/tx';
 
 /**
  * Calculates the aggregate vote hash
@@ -72,26 +72,23 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<MsgAggregateE
   public static fromProto(
     proto: MsgAggregateExchangeRateVote.Proto
   ): MsgAggregateExchangeRateVote {
-    const xrs = Coins.fromString(proto.getExchangeRates());
+    const xrs = Coins.fromString(proto.exchangeRates);
     return new MsgAggregateExchangeRateVote(
       xrs,
-      proto.getSalt(),
-      proto.getFeeder(),
-      proto.getValidator()
+      proto.salt,
+      proto.feeder,
+      proto.validator
     );
   }
 
   public toProto(): MsgAggregateExchangeRateVote.Proto {
     const { exchange_rates, salt, feeder, validator } = this;
-    const msgAggregateExchangeRateVoteProto =
-      new MsgAggregateExchangeRateVote_pb();
-    msgAggregateExchangeRateVoteProto.setExchangeRates(
-      exchange_rates.toDecCoins().toString()
-    );
-    msgAggregateExchangeRateVoteProto.setSalt(salt);
-    msgAggregateExchangeRateVoteProto.setFeeder(feeder);
-    msgAggregateExchangeRateVoteProto.setValidator(validator);
-    return msgAggregateExchangeRateVoteProto;
+    return MsgAggregateExchangeRateVote_pb.fromPartial({
+      exchangeRates: exchange_rates.toString(),
+      feeder,
+      salt,
+      validator,
+    });
   }
 
   /**
@@ -118,15 +115,15 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<MsgAggregateE
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.oracle.v1beta1.MsgAggregateExchangeRateVote');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote',
+      value: MsgAggregateExchangeRateVote_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgAggregateExchangeRateVote {
     return MsgAggregateExchangeRateVote.fromProto(
-      MsgAggregateExchangeRateVote_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgAggregateExchangeRateVote_pb.decode(msgAny.value)
     );
   }
 }

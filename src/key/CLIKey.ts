@@ -1,10 +1,11 @@
 import { Key } from './Key';
 import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
-import { StdSignMsg } from '../core/StdSignMsg';
 import { StdSignature } from '../core/StdSignature';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
+import { Tx, StdSignMsg } from 'core';
+import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 
 interface CLIKeyParams {
   keyName: string;
@@ -33,7 +34,7 @@ export class CLIKey extends Key {
    */
   constructor(private params: CLIKeyParams) {
     super();
-    params.cliPath = params.cliPath || 'terracli';
+    params.cliPath = params.cliPath || 'terrad';
   }
 
   private generateCommand(args: string) {
@@ -102,9 +103,9 @@ export class CLIKey extends Key {
     );
   }
 
-  public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
+  public async createSignature(tx: StdSignMsg): Promise<string> {
     const tmpobj = fileSync({ postfix: '.json' });
-    writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
+    writeFileSync(tmpobj.fd, JSON.stringify(Tx_pb.toJSON(tx.toTxProto())));
 
     const result = execSync(
       this.generateCommand(
@@ -114,6 +115,6 @@ export class CLIKey extends Key {
       )
     ).toString();
     tmpobj.removeCallback();
-    return StdSignature.fromData(JSON.parse(result));
+    return StdSignature.fromData(JSON.parse(result)).signature;
   }
 }

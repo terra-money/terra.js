@@ -1,8 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { BasicAllowance as BasicAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/feegrant_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { BasicAllowance as BasicAllowance_pb } from '@terra-money/terra.proto/cosmos/feegrant/v1beta1/feegrant';
 
 /**
  * BasicAllowance implements Allowance with a one-time grant of tokens
@@ -45,30 +44,28 @@ export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
 
   public static fromProto(proto: BasicAllowance.Proto): BasicAllowance {
     return new BasicAllowance(
-      Coins.fromProto(proto.getSpendLimitList()),
-      proto.getExpiration()?.toDate() as Date
+      Coins.fromProto(proto.spendLimit),
+      proto.expiration as Date
     );
   }
 
   public toProto(): BasicAllowance.Proto {
     const { spend_limit, expiration } = this;
-    const proto = new BasicAllowance_pb();
-    proto.setSpendLimitList(spend_limit.toProto());
-    proto.setExpiration(Timestamp.fromDate(expiration));
-    return proto;
+    return BasicAllowance_pb.fromPartial({
+      expiration,
+      spendLimit: spend_limit.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.BasicAllowance');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.feegrant.v1beta1.BasicAllowance',
+      value: BasicAllowance_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): BasicAllowance {
-    return BasicAllowance.fromProto(
-      BasicAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return BasicAllowance.fromProto(BasicAllowance_pb.decode(msgAny.value));
   }
 }
 

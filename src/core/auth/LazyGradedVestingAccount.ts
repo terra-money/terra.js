@@ -6,13 +6,14 @@ import { BaseVestingAccount } from './BaseVestingAccount';
 import { Dec } from '../numeric';
 import { AccAddress } from '../bech32';
 import { PublicKey } from '../PublicKey';
-import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/src/cosmos/vesting/v1beta1/vesting_pb';
+import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/cosmos/vesting/v1beta1/vesting';
 import {
   LazyGradedVestingAccount as LazyGradedVestingAccount_pb,
   Schedule as Schedule_pb,
   VestingSchedule as VestingSchedule_pb,
-} from '@terra-money/terra.proto/src/terra/vesting/v1beta1/vesting_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+} from '@terra-money/terra.proto/terra/vesting/v1beta1/vesting';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import * as Long from 'long';
 
 /**
  * Holds information about a Account which has vesting information.
@@ -29,7 +30,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
    */
   constructor(
     public address: AccAddress,
-    public coins: Coins,
     public public_key: PublicKey | null,
     public account_number: number,
     public sequence: number,
@@ -45,7 +45,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
   public toData(): LazyGradedVestingAccount.Data {
     const {
       address,
-      coins,
       public_key,
       account_number,
       sequence,
@@ -59,7 +58,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       type: 'core/LazyGradedVestingAccount',
       value: {
         address,
-        coins: coins.toData(),
         public_key: public_key && public_key.toData(),
         account_number: account_number.toFixed(),
         sequence: sequence.toFixed(),
@@ -78,7 +76,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
     const {
       value: {
         address,
-        coins,
         public_key,
         account_number,
         sequence,
@@ -91,7 +88,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
     } = data;
     return new LazyGradedVestingAccount(
       address || '',
-      Coins.fromData(coins),
       public_key ? PublicKey.fromData(public_key) : null,
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0,
@@ -110,7 +106,6 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       address,
       public_key,
       account_number,
-      coins,
       sequence,
       original_vesting,
       delegated_free,
@@ -118,10 +113,9 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       end_time,
       vesting_schedules,
     } = this;
-    const lazyGradedVestingAccountProto = new LazyGradedVestingAccount_pb();
+
     const baseVestingAccount = new BaseVestingAccount(
       address,
-      coins,
       public_key,
       account_number,
       sequence,
@@ -131,26 +125,21 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       end_time
     );
 
-    lazyGradedVestingAccountProto.setBaseVestingAccount(
-      baseVestingAccount.toProto()
-    );
-    lazyGradedVestingAccountProto.setVestingSchedulesList(
-      vesting_schedules.map(s => s.toProto())
-    );
-
-    return lazyGradedVestingAccountProto;
+    return LazyGradedVestingAccount_pb.fromPartial({
+      baseVestingAccount: baseVestingAccount.toProto(),
+      vestingSchedules: vesting_schedules.map(s => s.toProto()),
+    });
   }
 
   public static fromProto(
     lazyGradedVestingAccountProto: LazyGradedVestingAccount.Proto
   ): LazyGradedVestingAccount {
     const baseVestingAccount = BaseVestingAccount.fromProto(
-      lazyGradedVestingAccountProto.getBaseVestingAccount() as BaseVestingAccount_pb
+      lazyGradedVestingAccountProto.baseVestingAccount as BaseVestingAccount_pb
     );
 
     return new LazyGradedVestingAccount(
       baseVestingAccount.address,
-      baseVestingAccount.coins,
       baseVestingAccount.public_key,
       baseVestingAccount.account_number,
       baseVestingAccount.sequence,
@@ -158,22 +147,22 @@ export class LazyGradedVestingAccount extends JSONSerializable<LazyGradedVesting
       baseVestingAccount.delegated_free,
       baseVestingAccount.delegated_vesting,
       baseVestingAccount.end_time,
-      lazyGradedVestingAccountProto
-        .getVestingSchedulesList()
-        .map(s => this.VestingSchedule.fromProto(s))
+      lazyGradedVestingAccountProto.vestingSchedules.map(s =>
+        this.VestingSchedule.fromProto(s)
+      )
     );
   }
 
   public packAny(): Any {
-    const pubkeyAny = new Any();
-    pubkeyAny.setTypeUrl('/terra.vesting.v1beta1.LazyGradedVestingAccount');
-    pubkeyAny.setValue(this.toProto().serializeBinary());
-    return pubkeyAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.vesting.v1beta1.LazyGradedVestingAccount',
+      value: LazyGradedVestingAccount_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(pubkeyAny: Any): LazyGradedVestingAccount {
     return LazyGradedVestingAccount.fromProto(
-      LazyGradedVestingAccount_pb.deserializeBinary(pubkeyAny.getValue_asU8())
+      LazyGradedVestingAccount_pb.decode(pubkeyAny.value)
     );
   }
 }
@@ -213,20 +202,20 @@ export namespace LazyGradedVestingAccount {
 
     public toProto(): VestingSchedule.Proto {
       const { denom, schedules } = this;
-      const vestingScheduleProto = new VestingSchedule_pb();
-      vestingScheduleProto.setDenom(denom);
-      vestingScheduleProto.setSchedulesList(schedules.map(s => s.toProto()));
-      return vestingScheduleProto;
+      return VestingSchedule_pb.fromPartial({
+        denom,
+        schedules: schedules.map(s => s.toProto()),
+      });
     }
 
     public static fromProto(
       vestingScheduleProto: VestingSchedule.Proto
     ): VestingSchedule {
       return new VestingSchedule(
-        vestingScheduleProto.getDenom(),
-        vestingScheduleProto
-          .getSchedulesList()
-          .map(s => VestingSchedule.Entry.fromProto(s))
+        vestingScheduleProto.denom,
+        vestingScheduleProto.schedules.map(s =>
+          VestingSchedule.Entry.fromProto(s)
+        )
       );
     }
   }
@@ -273,18 +262,18 @@ export namespace LazyGradedVestingAccount {
 
       public static fromProto(entryProto: Entry.Proto): Entry {
         return new Entry(
-          entryProto.getEndTime(),
-          entryProto.getStartTime(),
-          new Dec(entryProto.getRatio())
+          entryProto.endTime.toNumber(),
+          entryProto.startTime.toNumber(),
+          new Dec(entryProto.ratio)
         );
       }
 
       public toProto(): Entry.Proto {
-        const entryProto = new Schedule_pb();
-        entryProto.setEndTime(this.end_time);
-        entryProto.setRatio(this.ratio.toString());
-        entryProto.setStartTime(this.start_time);
-        return entryProto;
+        return Schedule_pb.fromPartial({
+          endTime: Long.fromNumber(this.end_time),
+          ratio: this.ratio.toString(),
+          startTime: Long.fromNumber(this.start_time),
+        });
       }
     }
 

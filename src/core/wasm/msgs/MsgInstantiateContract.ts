@@ -1,8 +1,9 @@
 import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgInstantiateContract as MsgInstantiateContract_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgInstantiateContract as MsgInstantiateContract_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
+import * as Long from 'long';
 
 export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContract.Data> {
   public init_coins: Coins;
@@ -58,35 +59,35 @@ export class MsgInstantiateContract extends JSONSerializable<MsgInstantiateContr
     proto: MsgInstantiateContract.Proto
   ): MsgInstantiateContract {
     return new MsgInstantiateContract(
-      proto.getSender(),
-      proto.getAdmin() !== '' ? proto.getAdmin() : undefined,
-      proto.getCodeId(),
-      JSON.parse(atob(proto.getInitMsg_asB64())),
-      Coins.fromProto(proto.getInitCoinsList())
+      proto.sender,
+      proto.admin !== '' ? proto.admin : undefined,
+      proto.codeId.toNumber(),
+      JSON.parse(atob(Buffer.from(proto.initMsg).toString('base64'))),
+      Coins.fromProto(proto.initCoins)
     );
   }
 
   public toProto(): MsgInstantiateContract.Proto {
     const { sender, admin, code_id, init_msg, init_coins } = this;
-    const msgInstantiateContractProto = new MsgInstantiateContract_pb();
-    msgInstantiateContractProto.setSender(sender);
-    msgInstantiateContractProto.setAdmin(admin || '');
-    msgInstantiateContractProto.setCodeId(code_id);
-    msgInstantiateContractProto.setInitMsg(btoa(JSON.stringify(init_msg)));
-    msgInstantiateContractProto.setInitCoinsList(init_coins.toProto());
-    return msgInstantiateContractProto;
+    return MsgInstantiateContract_pb.fromPartial({
+      admin,
+      codeId: Long.fromNumber(code_id),
+      initCoins: init_coins.toProto(),
+      initMsg: Buffer.from(btoa(JSON.stringify(init_msg))),
+      sender,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgInstantiateContract');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.wasm.v1beta1.MsgInstantiateContract',
+      value: MsgInstantiateContract_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgInstantiateContract {
     return MsgInstantiateContract.fromProto(
-      MsgInstantiateContract_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgInstantiateContract_pb.decode(msgAny.value)
     );
   }
 }

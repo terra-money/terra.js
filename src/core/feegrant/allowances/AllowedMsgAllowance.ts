@@ -1,10 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { BasicAllowance } from './BasicAllowance';
 import { PeriodicAllowance } from './PeriodicAllowance';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { AllowedMsgAllowance as AllowedMsgAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/feegrant_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { Allowance } from '.';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { AllowedMsgAllowance as AllowedMsgAllowance_pb } from '@terra-money/terra.proto/cosmos/feegrant/v1beta1/feegrant';
 
 /**
  * AllowedMsgAllowance creates allowance only for specified message types.
@@ -48,33 +46,33 @@ export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Da
   public static fromProto(
     proto: AllowedMsgAllowance.Proto
   ): AllowedMsgAllowance {
-    const allowance = proto.getAllowance() as Any;
+    const allowance = proto.allowance as Any;
     return new AllowedMsgAllowance(
-      allowance?.getTypeUrl() === '/cosmos.feegrant.v1beta1.BasicAllowance'
+      allowance?.typeUrl === '/cosmos.feegrant.v1beta1.BasicAllowance'
         ? BasicAllowance.unpackAny(allowance)
         : PeriodicAllowance.unpackAny(allowance),
-      proto.getAllowedMessagesList()
+      proto.allowedMessages
     );
   }
 
   public toProto(): AllowedMsgAllowance.Proto {
     const { allowance, allowed_messages } = this;
-    const proto = new AllowedMsgAllowance_pb();
-    proto.setAllowance(allowance.packAny() as any);
-    proto.setAllowedMessagesList(allowed_messages);
-    return proto;
+    return AllowedMsgAllowance_pb.fromPartial({
+      allowance: allowance.packAny(),
+      allowedMessages: allowed_messages,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.AllowedMsgAllowance');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.feegrant.v1beta1.AllowedMsgAllowance',
+      value: AllowedMsgAllowance_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): AllowedMsgAllowance {
     return AllowedMsgAllowance.fromProto(
-      AllowedMsgAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+      AllowedMsgAllowance_pb.decode(msgAny.value)
     );
   }
 }

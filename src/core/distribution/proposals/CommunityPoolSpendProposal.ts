@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/distribution_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/distribution';
 
 /**
  * Proposal that disburses funds from the Distribution module's community pool to the
@@ -57,35 +57,33 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
     proto: CommunityPoolSpendProposal.Proto
   ): CommunityPoolSpendProposal {
     return new CommunityPoolSpendProposal(
-      proto.getTitle(),
-      proto.getDescription(),
-      proto.getRecipient(),
-      Coins.fromProto(proto.getAmountList())
+      proto.title,
+      proto.description,
+      proto.recipient,
+      Coins.fromProto(proto.amount)
     );
   }
 
   public toProto(): CommunityPoolSpendProposal.Proto {
     const { title, description, recipient, amount } = this;
-    const communityPoolSpendProposalProto = new CommunityPoolSpendProposal_pb();
-    communityPoolSpendProposalProto.setTitle(title);
-    communityPoolSpendProposalProto.setDescription(description);
-    communityPoolSpendProposalProto.setRecipient(recipient);
-    communityPoolSpendProposalProto.setAmountList(amount.toProto());
-    return communityPoolSpendProposalProto;
+    return CommunityPoolSpendProposal_pb.fromPartial({
+      amount: amount.toProto(),
+      description,
+      recipient,
+      title,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl(
-      '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal'
-    );
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
+      value: CommunityPoolSpendProposal_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): CommunityPoolSpendProposal {
     return CommunityPoolSpendProposal.fromProto(
-      CommunityPoolSpendProposal_pb.deserializeBinary(msgAny.getValue_asU8())
+      CommunityPoolSpendProposal_pb.decode(msgAny.value)
     );
   }
 }

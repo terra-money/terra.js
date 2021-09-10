@@ -2,8 +2,9 @@ import { Coins } from '../Coins';
 import { BaseAccount } from './BaseAccount';
 import { AccAddress } from '../bech32';
 import { PublicKey } from '../PublicKey';
-import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/src/cosmos/auth/v1beta1/auth_pb';
-import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/src/cosmos/vesting/v1beta1/vesting_pb';
+import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/cosmos/auth/v1beta1/auth';
+import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/cosmos/vesting/v1beta1/vesting';
+import * as Long from 'long';
 
 /**
  * Holds information about a Account which has vesting information.
@@ -20,7 +21,6 @@ export class BaseVestingAccount {
    */
   constructor(
     public address: AccAddress,
-    public coins: Coins,
     public public_key: PublicKey | null,
     public account_number: number,
     public sequence: number,
@@ -35,49 +35,44 @@ export class BaseVestingAccount {
       address,
       public_key,
       account_number,
-      coins,
       sequence,
       original_vesting,
       delegated_free,
       delegated_vesting,
       end_time,
     } = this;
-    const baseVestingAccountProto = new BaseVestingAccount_pb();
+
     const baseAccount = new BaseAccount(
       address,
-      coins,
       public_key,
       account_number,
       sequence
     );
-    baseVestingAccountProto.setBaseAccount(baseAccount.toProto());
-    baseVestingAccountProto.setOriginalVestingList(original_vesting.toProto());
-    baseVestingAccountProto.setDelegatedFreeList(delegated_free.toProto());
-    baseVestingAccountProto.setDelegatedVestingList(
-      delegated_vesting.toProto()
-    );
-    baseVestingAccountProto.setEndTime(end_time);
-
-    return baseVestingAccountProto;
+    return BaseVestingAccount_pb.fromPartial({
+      baseAccount: baseAccount.toProto(),
+      delegatedFree: delegated_free.toProto(),
+      delegatedVesting: delegated_vesting.toProto(),
+      endTime: Long.fromNumber(end_time),
+      originalVesting: original_vesting.toProto(),
+    });
   }
 
   public static fromProto(
     baseVestingAccountProto: BaseVestingAccount.Proto
   ): BaseVestingAccount {
     const baseAccount = BaseAccount.fromProto(
-      baseVestingAccountProto.getBaseAccount() as BaseAccount_pb
+      baseVestingAccountProto.baseAccount as BaseAccount_pb
     );
 
     return new BaseVestingAccount(
       baseAccount.address,
-      baseAccount.coins,
       baseAccount.public_key,
       baseAccount.account_number,
       baseAccount.sequence,
-      Coins.fromProto(baseVestingAccountProto.getOriginalVestingList()),
-      Coins.fromProto(baseVestingAccountProto.getDelegatedFreeList()),
-      Coins.fromProto(baseVestingAccountProto.getDelegatedVestingList()),
-      baseVestingAccountProto.getEndTime()
+      Coins.fromProto(baseVestingAccountProto.originalVesting),
+      Coins.fromProto(baseVestingAccountProto.delegatedFree),
+      Coins.fromProto(baseVestingAccountProto.delegatedVesting),
+      baseVestingAccountProto.endTime.toNumber()
     );
   }
 }

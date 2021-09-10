@@ -6,19 +6,17 @@ import { ParameterChangeProposal } from '../params/proposals';
 import { TextProposal } from './proposals';
 import {
   Proposal as Proposal_pb,
-  ProposalStatusMap,
+  ProposalStatus,
   TallyResult,
-} from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/gov_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+} from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import * as Long from 'long';
 
 /**
  * Stores information pertaining to a submitted proposal, such as its status and time of
  * the voting period
  */
 export class Proposal extends JSONSerializable<Proposal.Data> {
-  static Status: ProposalStatusMap;
-
   /**
    *
    * @param id proposal's ID
@@ -124,15 +122,15 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
   }
 
   public static fromProto(data: Proposal.Proto): Proposal {
-    const id = data.getProposalId();
-    const content = data.getContent();
-    const proposal_status = data.getStatus();
-    const final_tally_result = data.getFinalTallyResult();
-    const submit_time = data.getSubmitTime();
-    const deposit_end_time = data.getDepositEndTime();
-    const total_deposit = data.getTotalDepositList();
-    const voting_start_time = data.getVotingStartTime();
-    const voting_end_time = data.getVotingEndTime();
+    const id = data.proposalId;
+    const content = data.content;
+    const proposal_status = data.status;
+    const final_tally_result = data.finalTallyResult;
+    const submit_time = data.submitTime;
+    const deposit_end_time = data.depositEndTime;
+    const total_deposit = data.totalDeposit;
+    const voting_start_time = data.votingStartTime;
+    const voting_end_time = data.votingEndTime;
 
     let ftr:
       | {
@@ -145,23 +143,23 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
 
     if (final_tally_result) {
       ftr = {
-        yes: new Int(final_tally_result.getYes()),
-        no: new Int(final_tally_result.getNo()),
-        abstain: new Int(final_tally_result.getAbstain()),
-        no_with_veto: new Int(final_tally_result.getNoWithVeto()),
+        yes: new Int(final_tally_result.yes),
+        no: new Int(final_tally_result.no),
+        abstain: new Int(final_tally_result.abstain),
+        no_with_veto: new Int(final_tally_result.noWithVeto),
       };
     }
 
     return new Proposal(
-      id,
-      Proposal.Content.fromProto(content as any),
+      id.toNumber(),
+      Proposal.Content.fromProto(content as Any),
       proposal_status,
       ftr,
-      submit_time?.toDate() as Date,
-      deposit_end_time?.toDate() as Date,
+      submit_time as Date,
+      deposit_end_time as Date,
       Coins.fromProto(total_deposit),
-      voting_start_time?.toDate() as Date,
-      voting_end_time?.toDate() as Date
+      voting_start_time as Date,
+      voting_end_time as Date
     );
   }
 
@@ -170,30 +168,31 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
 
     let ftr: TallyResult | undefined;
     if (final_tally_result) {
-      ftr = new TallyResult();
-      ftr.setYes(final_tally_result.yes.toString());
-      ftr.setNo(final_tally_result.no.toString());
-      ftr.setAbstain(final_tally_result.abstain.toString());
-      ftr.setNoWithVeto(final_tally_result.no_with_veto.toString());
+      ftr = TallyResult.fromPartial({
+        yes: final_tally_result.yes.toString(),
+        no: final_tally_result.no.toString(),
+        abstain: final_tally_result.abstain.toString(),
+        noWithVeto: final_tally_result.no_with_veto.toString(),
+      });
     }
 
-    const proposal = new Proposal_pb();
-    proposal.setProposalId(this.id);
-    proposal.setContent(this.content.packAny() as any);
-    proposal.setStatus(proposal_status as any);
-    proposal.setFinalTallyResult(ftr);
-    proposal.setSubmitTime(Timestamp.fromDate(this.submit_time));
-    proposal.setDepositEndTime(Timestamp.fromDate(this.deposit_end_time));
-    proposal.setVotingStartTime(Timestamp.fromDate(this.voting_start_time));
-    proposal.setVotingEndTime(Timestamp.fromDate(this.voting_end_time));
-    proposal.setTotalDepositList(this.total_deposit.toProto());
-
-    return proposal;
+    return Proposal_pb.fromPartial({
+      proposalId: Long.fromNumber(this.id),
+      content: this.content.packAny(),
+      status: proposal_status,
+      finalTallyResult: ftr,
+      submitTime: this.submit_time,
+      depositEndTime: this.deposit_end_time,
+      totalDeposit: this.total_deposit.toProto(),
+      votingEndTime: this.voting_end_time,
+      votingStartTime: this.voting_start_time,
+    });
   }
 }
 
 export namespace Proposal {
-  export type Status = ProposalStatusMap;
+  export const Status = ProposalStatus;
+  export type Status = ProposalStatus;
 
   export interface FinalTallyResult {
     yes: Int;
@@ -232,7 +231,7 @@ export namespace Proposal {
     }
 
     export function fromProto(anyProto: Any): Proposal.Content {
-      const typeUrl = anyProto.getTypeUrl();
+      const typeUrl = anyProto.typeUrl;
       switch (typeUrl) {
         case '/cosmos.gov.v1beta1.TextProposal':
           return TextProposal.unpackAny(anyProto);

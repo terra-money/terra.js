@@ -2,59 +2,52 @@ import { Coin } from '../../Coin';
 import { AccAddress } from '../../bech32';
 import {
   StakeAuthorization as StakeAuthorization_pb,
-  AuthorizationTypeMap,
   AuthorizationType,
-} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/authz_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+  StakeAuthorization_Validators as StakeAuthorizationValidators_pb,
+} from '@terra-money/terra.proto/cosmos/staking/v1beta1/authz';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export class StakeAuthorization {
   constructor(
-    public authorization_type: AuthorizationTypeMap[keyof AuthorizationTypeMap],
+    public authorization_type: AuthorizationType,
     public max_tokens?: Coin,
     public allow_list?: StakeAuthorizationValidators,
     public deny_list?: StakeAuthorizationValidators
-  ) {
-    if (!(authorization_type in StakeAuthorization.Type)) {
-      throw new Error(
-        'not recognized stake authorization type, please check StakeAuthorization.Type'
-      );
-    }
-  }
+  ) {}
 
   public static fromProto(proto: StakeAuthorization.Proto): StakeAuthorization {
-    const maxTokens = proto.getMaxTokens();
-    const allowList = proto.getAllowList();
-    const denyList = proto.getDenyList();
-
     return new StakeAuthorization(
-      proto.getAuthorizationType(),
-      maxTokens ? Coin.fromProto(maxTokens) : undefined,
-      allowList ? StakeAuthorizationValidators.fromProto(allowList) : undefined,
-      denyList ? StakeAuthorizationValidators.fromProto(denyList) : undefined
+      proto.authorizationType,
+      proto.maxTokens ? Coin.fromProto(proto.maxTokens) : undefined,
+      proto.allowList
+        ? StakeAuthorizationValidators.fromProto(proto.allowList)
+        : undefined,
+      proto.denyList
+        ? StakeAuthorizationValidators.fromProto(proto.denyList)
+        : undefined
     );
   }
 
   public toProto(): StakeAuthorization.Proto {
     const { max_tokens, allow_list, deny_list, authorization_type } = this;
-    const stakeAuthorizationProto = new StakeAuthorization_pb();
-    stakeAuthorizationProto.setAllowList(allow_list?.toProto());
-    stakeAuthorizationProto.setDenyList(deny_list?.toProto());
-    stakeAuthorizationProto.setMaxTokens(max_tokens?.toProto());
-    stakeAuthorizationProto.setAuthorizationType(authorization_type);
-
-    return stakeAuthorizationProto;
+    return StakeAuthorization_pb.fromPartial({
+      allowList: allow_list?.toProto(),
+      authorizationType: authorization_type,
+      denyList: deny_list?.toProto(),
+      maxTokens: max_tokens?.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.staking.v1beta1.StakeAuthorization');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.staking.v1beta1.StakeAuthorization',
+      value: StakeAuthorization_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): StakeAuthorization {
     return StakeAuthorization.fromProto(
-      StakeAuthorization_pb.deserializeBinary(msgAny.getValue_asU8())
+      StakeAuthorization_pb.decode(msgAny.value)
     );
   }
 }
@@ -65,21 +58,22 @@ export class StakeAuthorizationValidators {
   public static fromProto(
     validatorsProto: StakeAuthorizationValidators.Proto
   ): StakeAuthorizationValidators {
-    return new StakeAuthorizationValidators(validatorsProto.getAddressList());
+    return new StakeAuthorizationValidators(validatorsProto.address);
   }
 
   public toProto(): StakeAuthorizationValidators.Proto {
-    const validatorsProto = new StakeAuthorization_pb.Validators();
-    validatorsProto.setAddressList(this.address);
-    return validatorsProto;
+    return StakeAuthorizationValidators_pb.fromPartial({
+      address: this.address,
+    });
   }
 }
 
 export namespace StakeAuthorizationValidators {
-  export type Proto = StakeAuthorization_pb.Validators;
+  export type Proto = StakeAuthorizationValidators_pb;
 }
 
 export namespace StakeAuthorization {
-  export const Type: AuthorizationTypeMap = AuthorizationType;
+  export type Type = AuthorizationType;
+  export const Type = AuthorizationType;
   export type Proto = StakeAuthorization_pb;
 }

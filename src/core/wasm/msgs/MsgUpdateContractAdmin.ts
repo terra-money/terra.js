@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgUpdateContractAdmin as MsgUpdateContractAdmin_pb } from '@terra-money/terra.proto/src/terra/wasm/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgUpdateContractAdmin as MsgUpdateContractAdmin_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
 export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAdmin.Data> {
   /**
@@ -42,31 +42,31 @@ export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAd
     proto: MsgUpdateContractAdmin.Proto
   ): MsgUpdateContractAdmin {
     return new MsgUpdateContractAdmin(
-      proto.getAdmin(),
-      proto.getNewAdmin(),
-      proto.getContract()
+      proto.admin,
+      proto.newAdmin,
+      proto.contract
     );
   }
 
   public toProto(): MsgUpdateContractAdmin.Proto {
     const { admin, new_admin, contract } = this;
-    const proto = new MsgUpdateContractAdmin_pb();
-    proto.setAdmin(admin);
-    proto.setNewAdmin(new_admin);
-    proto.setContract(contract);
-    return proto;
+    return MsgUpdateContractAdmin_pb.fromPartial({
+      admin,
+      contract,
+      newAdmin: new_admin,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.wasm.v1beta1.MsgUpdateContractAdmin');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
+      value: MsgUpdateContractAdmin_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgUpdateContractAdmin {
     return MsgUpdateContractAdmin.fromProto(
-      MsgUpdateContractAdmin_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgUpdateContractAdmin_pb.decode(msgAny.value)
     );
   }
 }

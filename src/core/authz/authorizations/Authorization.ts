@@ -2,9 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { GenericAuthorization } from './GenericAuthorization';
 import { SendAuthorization } from './SendAuthorization';
 import { StakeAuthorization } from './StakeAuthorization';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { Grant as Grant_pb } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/authz_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Grant as Grant_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
 
 export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data> {
   constructor(public authorization: Authorization, public expiration: Date) {
@@ -29,25 +28,25 @@ export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data
     }
 
     throw new Error(
-      `amino is not supported for "${authorization
-        .packAny()
-        .getTypeUrl()}" authorization`
+      `amino is not supported for "${
+        authorization.packAny().typeUrl
+      }" authorization`
     );
   }
 
   public static fromProto(proto: AuthorizationGrant.Proto): AuthorizationGrant {
     return new AuthorizationGrant(
-      Authorization.fromProto(proto.getAuthorization() as Any),
-      proto.getExpiration()?.toDate() as Date
+      Authorization.fromProto(proto.authorization as Any),
+      proto.expiration as Date
     );
   }
 
   public toProto(): AuthorizationGrant.Proto {
     const { authorization, expiration } = this;
-    const grantProto = new Grant_pb();
-    grantProto.setAuthorization(authorization.packAny() as any);
-    grantProto.setExpiration(Timestamp.fromDate(expiration));
-    return grantProto;
+    return Grant_pb.fromPartial({
+      authorization: authorization.packAny(),
+      expiration,
+    });
   }
 }
 
@@ -78,7 +77,7 @@ export namespace Authorization {
   }
 
   export function fromProto(proto: Authorization.Proto): Authorization {
-    const typeUrl = proto.getTypeUrl();
+    const typeUrl = proto.typeUrl;
     switch (typeUrl) {
       case '/cosmos.authz.v1beta1.GenericAuthorization':
         return GenericAuthorization.unpackAny(proto);

@@ -2,10 +2,17 @@ import { bech32 } from 'bech32';
 import { Hex } from 'jscrypto/Hex';
 import { RIPEMD160 } from 'jscrypto/RIPEMD160';
 import { SHA256 } from 'jscrypto/SHA256';
-import { StdSignature } from '../core/StdSignature';
-import { StdTx } from '../core/StdTx';
-import { StdSignMsg } from '../core/StdSignMsg';
-import { AccAddress, AccPubKey, ValAddress, ValPubKey } from '../core/bech32';
+import {
+  AccAddress,
+  AccPubKey,
+  ValAddress,
+  ValPubKey,
+  Tx,
+  SignDoc,
+  StdSignMsg,
+  SimplePublicKey,
+} from '../core';
+import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 const BECH32_PUBKEY_DATA_PREFIX = 'eb5ae98721';
 
@@ -113,30 +120,65 @@ export abstract class Key {
    *
    * @param tx sign-message of the transaction to sign
    */
-  public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
-    const sigBuffer = await this.sign(Buffer.from(tx.toJSON()));
+  public async createSignature(tx: StdSignMsg): Promise<string> {
+    return (await this.sign(Buffer.from(tx.toJSON()))).toString('base64');
+  }
 
-    if (!this.publicKey) {
+  /**
+   * Signs a [[StdSignMsg]] with the method supplied by the child class.
+   *
+   * @param tx sign-message of the transaction to sign
+   */
+  public async createSignatureV2(tx: SignDoc): Promise<string> {
+    return (await this.sign(Buffer.from(tx.toBytes()))).toString('base64');
+  }
+
+  /**
+   * Signs a [[Tx]] and adds the signature to a generated StdTx that is ready to be broadcasted.
+   * @param tx
+   */
+  public async signTx(tx: Tx, options: SignOptions): Promise<Tx> {
+    let signature: string;
+    if (options.signMode === SignMode.SIGN_MODE_LEGACY_AMINO_JSON) {
+      signature = await this.createSignature(
+        new StdSignMsg(
+          options.chainID,
+          options.accountNumber,
+          options.sequence,
+          tx.auth_info.fee.toStdFee(),
+          tx.body.messages,
+          tx.body.memo
+        )
+      );
+    }
+
+    signature = await this.createSignatureV2(
+      new SignDoc(
+        tx.body.toBytes(),
+        tx.auth_info.toBytes(),
+        options.chainID,
+        options.accountNumber
+      )
+    );
+
+    if (!this.rawPubKey) {
       throw new Error(
         'Signature could not be created: Key instance missing publicKey'
       );
     }
 
-    return StdSignature.fromData({
-      signature: sigBuffer.toString('base64'),
-      pub_key: {
-        type: 'tendermint/PubKeySecp256k1',
-        value: this.publicKey.toString('base64'),
-      },
-    });
-  }
+    tx.auth_info.signer_infos[0].public_key = new SimplePublicKey(
+      this.rawPubKey.toString('base64')
+    );
+    tx.signatures.push(signature);
 
-  /**
-   * Signs a [[StdSignMsg]] and adds the signature to a generated StdTx that is ready to be broadcasted.
-   * @param tx
-   */
-  public async signTx(tx: StdSignMsg): Promise<StdTx> {
-    const sig = await this.createSignature(tx);
-    return new StdTx(tx.msgs, tx.fee, [sig], tx.memo);
+    return tx;
   }
+}
+
+export interface SignOptions {
+  accountNumber: number;
+  sequence: number;
+  signMode: SignMode;
+  chainID: string;
 }

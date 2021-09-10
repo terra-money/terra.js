@@ -1,8 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { WeightedVoteOption } from '../Vote';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgVoteWeighted as MsgVoteWeighted_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgVoteWeighted as MsgVoteWeighted_pb } from '@terra-money/terra.proto/cosmos/gov/v1beta1/tx';
+import * as Long from 'long';
 
 /**
  * Weighted vote for a proposal
@@ -42,32 +43,30 @@ export class MsgVoteWeighted extends JSONSerializable<MsgVoteWeighted.Data> {
 
   public static fromProto(proto: MsgVoteWeighted.Proto): MsgVoteWeighted {
     return new MsgVoteWeighted(
-      proto.getProposalId(),
-      proto.getVoter(),
-      proto.getOptionsList().map(o => WeightedVoteOption.fromProto(o))
+      proto.proposalId.toNumber(),
+      proto.voter,
+      proto.options.map(o => WeightedVoteOption.fromProto(o))
     );
   }
 
   public toProto(): MsgVoteWeighted.Proto {
     const { proposal_id, voter, options } = this;
-    const msgVoteProto = new MsgVoteWeighted_pb();
-    msgVoteProto.setProposalId(proposal_id);
-    msgVoteProto.setVoter(voter);
-    msgVoteProto.setOptionsList(options.map(o => o.toProto()));
-    return msgVoteProto;
+    return MsgVoteWeighted_pb.fromPartial({
+      options: options.map(o => o.toProto()),
+      proposalId: Long.fromNumber(proposal_id),
+      voter,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgVoteWeighted');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted',
+      value: MsgVoteWeighted_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgVoteWeighted {
-    return MsgVoteWeighted.fromProto(
-      MsgVoteWeighted_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgVoteWeighted.fromProto(MsgVoteWeighted_pb.decode(msgAny.value));
   }
 }
 

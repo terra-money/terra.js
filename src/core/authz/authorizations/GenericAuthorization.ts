@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
-import { GenericAuthorization as GenericAuthorization_pb } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/authz_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { GenericAuthorization as GenericAuthorization_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export class GenericAuthorization extends JSONSerializable<GenericAuthorization.Data> {
   constructor(public msg: string) {
@@ -26,26 +26,25 @@ export class GenericAuthorization extends JSONSerializable<GenericAuthorization.
   public static fromProto(
     data: GenericAuthorization.Proto
   ): GenericAuthorization {
-    return new GenericAuthorization(data.getMsg());
+    return new GenericAuthorization(data.msg);
   }
 
   public toProto(): GenericAuthorization.Proto {
-    const { msg } = this;
-    const genericAuthorization = new GenericAuthorization_pb();
-    genericAuthorization.setMsg(msg);
-    return genericAuthorization;
+    return GenericAuthorization_pb.fromPartial({
+      msg: this.msg,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.authz.v1beta1.GenericAuthorization');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.authz.v1beta1.GenericAuthorization',
+      value: GenericAuthorization_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): GenericAuthorization {
     return GenericAuthorization.fromProto(
-      GenericAuthorization_pb.deserializeBinary(msgAny.getValue_asU8())
+      GenericAuthorization_pb.decode(msgAny.value)
     );
   }
 }

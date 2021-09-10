@@ -1,4 +1,4 @@
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { BaseAccount } from './BaseAccount';
 import { LazyGradedVestingAccount } from './LazyGradedVestingAccount';
 
@@ -20,7 +20,7 @@ export namespace Account {
   }
 
   export function fromProto(accountAny: Account.Proto): Account {
-    const typeUrl = accountAny.getTypeUrl();
+    const typeUrl = accountAny.typeUrl;
     if (typeUrl === '/cosmos.auth.v1beta1.BaseAccount') {
       return BaseAccount.unpackAny(accountAny);
     } else if (typeUrl === '/terra.vesting.v1beta1.LazyGradedVestingAccount') {

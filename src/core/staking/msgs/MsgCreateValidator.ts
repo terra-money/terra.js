@@ -3,9 +3,9 @@ import { Coin } from '../../Coin';
 import { Int } from '../../numeric';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
-import { ValConsPublicKey, PublicKey } from 'core/PublicKey';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
+import { ValConsPublicKey, PublicKey } from '../../PublicKey';
 
 /**
  * For new validators, this message registers a validator address to be a delegate on
@@ -84,16 +84,16 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
   public static fromProto(proto: MsgCreateValidator.Proto): MsgCreateValidator {
     return new MsgCreateValidator(
       Validator.Description.fromProto(
-        proto.getDescription() as Validator.Description.Proto
+        proto.description as Validator.Description.Proto
       ),
       Validator.CommissionRates.fromProto(
-        proto.getCommission() as Validator.CommissionRates.Proto
+        proto.commission as Validator.CommissionRates.Proto
       ),
-      new Int(proto.getMinSelfDelegation()),
-      proto.getDelegatorAddress(),
-      proto.getValidatorAddress(),
-      PublicKey.fromProto(proto.getPubkey() as any) as ValConsPublicKey,
-      Coin.fromProto(proto.getValue() as Coin.Proto)
+      new Int(proto.minSelfDelegation),
+      proto.delegatorAddress,
+      proto.validatorAddress,
+      PublicKey.fromProto(proto.pubkey as Any) as ValConsPublicKey,
+      Coin.fromProto(proto.value as Coin.Proto)
     );
   }
 
@@ -107,29 +107,27 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
       pubkey,
       value,
     } = this;
-    const msgCreateValidatorProto = new MsgCreateValidator_pb();
-    msgCreateValidatorProto.setDescription(description.toProto());
-    msgCreateValidatorProto.setCommission(commission.toProto());
-    msgCreateValidatorProto.setMinSelfDelegation(
-      min_self_delegation.toString()
-    );
-    msgCreateValidatorProto.setDelegatorAddress(delegator_address);
-    msgCreateValidatorProto.setValidatorAddress(validator_address);
-    msgCreateValidatorProto.setPubkey(pubkey.packAny() as any);
-    msgCreateValidatorProto.setValue(value.toProto());
-    return msgCreateValidatorProto;
+    return MsgCreateValidator_pb.fromPartial({
+      commission: commission.toProto(),
+      delegatorAddress: delegator_address,
+      description: description.toProto(),
+      minSelfDelegation: min_self_delegation.toString(),
+      pubkey: pubkey.packAny(),
+      validatorAddress: validator_address,
+      value: value.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgCreateValidator');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator',
+      value: MsgCreateValidator_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgCreateValidator {
     return MsgCreateValidator.fromProto(
-      MsgCreateValidator_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgCreateValidator_pb.decode(msgAny.value)
     );
   }
 }

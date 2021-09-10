@@ -44,7 +44,7 @@ import {
   MsgClearContractAdmin,
   WasmMsg,
 } from './wasm/msgs';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export type Msg =
   | BankMsg
@@ -57,7 +57,7 @@ export type Msg =
   | SlashingMsg
   | StakingMsg
   | WasmMsg
-  | any; // TODO: support all message type gracefully
+  | NotSupportedMsg;
 
 export namespace Msg {
   export type Data =
@@ -82,8 +82,8 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
-    | WasmMsg.Proto;
-  // | any;
+    | WasmMsg.Proto
+    | NotSupportedMsg.Proto;
 
   export function fromData(data: Msg.Data): Msg {
     switch (data.type) {
@@ -176,7 +176,7 @@ export namespace Msg {
   }
 
   export function fromProto(proto: Any): Msg {
-    switch (proto.getTypeUrl()) {
+    switch (proto.typeUrl) {
       // bank
       case '/cosmos.bank.v1beta1.MsgSend':
         return MsgSend.unpackAny(proto);
@@ -261,7 +261,37 @@ export namespace Msg {
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
         return MsgClearContractAdmin.unpackAny(proto);
       default:
-        return proto;
+        return NotSupportedMsg.unpackAny(proto);
     }
   }
+}
+
+export class NotSupportedMsg {
+  constructor(public typeUrl: string, public value: string) {}
+
+  public static fromProto(msgAny: NotSupportedMsg.Proto): NotSupportedMsg {
+    return new NotSupportedMsg(
+      msgAny.typeUrl,
+      Buffer.from(msgAny.value).toString('base64')
+    );
+  }
+
+  public toProto(): NotSupportedMsg.Proto {
+    return Any.fromPartial({
+      typeUrl: this.typeUrl,
+      value: Buffer.from(this.value, 'base64'),
+    });
+  }
+
+  public static unpackAny(msgAny: Any): NotSupportedMsg {
+    return NotSupportedMsg.fromProto(msgAny);
+  }
+
+  public packAny(): Any {
+    return this.toProto();
+  }
+}
+
+export namespace NotSupportedMsg {
+  export type Proto = Any;
 }

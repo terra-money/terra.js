@@ -1,12 +1,12 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgMultiSend as MsgMultiSend_pb } from '@terra-money/terra.proto/src/cosmos/bank/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgMultiSend as MsgMultiSend_pb } from '@terra-money/terra.proto/cosmos/bank/v1beta1/tx';
 import {
   Input as Input_pb,
   Output as Output_pb,
-} from '@terra-money/terra.proto/src/cosmos/bank/v1beta1/bank_pb';
+} from '@terra-money/terra.proto/cosmos/bank/v1beta1/bank';
 
 /**
  * If you have multiple senders and/or multiple recipients, you can use MsgMultiSend,
@@ -83,30 +83,28 @@ export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
 
   public static fromProto(proto: MsgMultiSend.Proto): MsgMultiSend {
     return new MsgMultiSend(
-      proto.getInputsList().map(i => MsgMultiSend.Input.fromProto(i)),
-      proto.getOutputsList().map(o => MsgMultiSend.Output.fromProto(o))
+      proto.inputs.map(i => MsgMultiSend.Input.fromProto(i)),
+      proto.outputs.map(o => MsgMultiSend.Output.fromProto(o))
     );
   }
 
   public toProto(): MsgMultiSend.Proto {
     const { inputs, outputs } = this;
-    const msgMultiSendProto = new MsgMultiSend_pb();
-    msgMultiSendProto.setInputsList(inputs.map(i => i.toProto()));
-    msgMultiSendProto.setOutputsList(outputs.map(i => i.toProto()));
-    return msgMultiSendProto;
+    return MsgMultiSend_pb.fromPartial({
+      inputs: inputs.map(i => i.toProto()),
+      outputs: outputs.map(i => i.toProto()),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.bank.v1beta1.MsgMultiSend');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend',
+      value: MsgMultiSend_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgMultiSend {
-    return MsgMultiSend.fromProto(
-      MsgMultiSend_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgMultiSend.fromProto(MsgMultiSend_pb.decode(msgAny.value));
   }
 }
 
@@ -151,17 +149,14 @@ export namespace MsgMultiSend {
 
     public toProto(): Input.Proto {
       const { address, coins } = this;
-      const inputProto = new Input_pb();
-      inputProto.setAddress(address);
-      inputProto.setCoinsList(coins.toProto());
-      return inputProto;
+      return Input_pb.fromPartial({
+        address,
+        coins: coins.toProto(),
+      });
     }
 
     public static fromProto(proto: Input.Proto): Input {
-      return new Input(
-        proto.getAddress(),
-        Coins.fromProto(proto.getCoinsList())
-      );
+      return new Input(proto.address, Coins.fromProto(proto.coins));
     }
   }
 
@@ -195,17 +190,14 @@ export namespace MsgMultiSend {
 
     public toProto(): Output.Proto {
       const { address, coins } = this;
-      const inputProto = new Output_pb();
-      inputProto.setAddress(address);
-      inputProto.setCoinsList(coins.toProto());
-      return inputProto;
+      return Output_pb.fromPartial({
+        address,
+        coins: coins.toProto(),
+      });
     }
 
     public static fromProto(proto: Output.Proto): Output {
-      return new Output(
-        proto.getAddress(),
-        Coins.fromProto(proto.getCoinsList())
-      );
+      return new Output(proto.address, Coins.fromProto(proto.coins));
     }
   }
 

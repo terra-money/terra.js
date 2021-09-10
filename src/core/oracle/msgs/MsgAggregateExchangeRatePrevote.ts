@@ -1,7 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgAggregateExchangeRatePrevote as MsgAggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgAggregateExchangeRatePrevote as MsgAggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/tx';
+import * as Long from 'long';
 
 /**
  * Aggregate analog of MsgExchangeRatePrevote
@@ -45,33 +46,31 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
     proto: MsgAggregateExchangeRatePrevote.Proto
   ): MsgAggregateExchangeRatePrevote {
     return new MsgAggregateExchangeRatePrevote(
-      proto.getHash(),
-      proto.getFeeder(),
-      proto.getValidator()
+      proto.hash,
+      proto.feeder,
+      proto.validator
     );
   }
 
   public toProto(): MsgAggregateExchangeRatePrevote.Proto {
     const { hash, feeder, validator } = this;
-    const proto = new MsgAggregateExchangeRatePrevote_pb();
-    proto.setHash(hash);
-    proto.setFeeder(feeder);
-    proto.setValidator(validator);
-    return proto;
+    return MsgAggregateExchangeRatePrevote_pb.fromPartial({
+      hash,
+      feeder,
+      validator,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
+      value: MsgAggregateExchangeRatePrevote_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgAggregateExchangeRatePrevote {
     return MsgAggregateExchangeRatePrevote.fromProto(
-      MsgAggregateExchangeRatePrevote_pb.deserializeBinary(
-        msgAny.getValue_asU8()
-      )
+      MsgAggregateExchangeRatePrevote_pb.decode(msgAny.value)
     );
   }
 }

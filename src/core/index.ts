@@ -8,7 +8,7 @@ export * from './PublicKey';
 export * from './StdFee';
 export * from './StdSignature';
 export * from './StdSignMsg';
-export * from './StdTx';
+export * from './Tx';
 export * from './TxInfo';
 export * from './ValidatorSet';
 export * from './Deposit';

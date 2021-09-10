@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../util/json';
 import { Denom } from './Denom';
 import { Dec, Int, Numeric } from './numeric';
-import { Coin as Coin_pb } from '@terra-money/terra.proto/src/cosmos/base/v1beta1/coin_pb';
+import { Coin as Coin_pb } from '@terra-money/terra.proto/cosmos/base/v1beta1/coin';
 
 /**
  * Captures `sdk.Coin` and `sdk.DecCoin` from Cosmos SDK. A composite value that combines
@@ -159,15 +159,14 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
   }
 
   public static fromProto(proto: Coin.Proto): Coin {
-    return new Coin(proto.getDenom(), Numeric.parse(proto.getAmount()));
+    return new Coin(proto.denom, Numeric.parse(proto.amount));
   }
 
   public toProto(): Coin.Proto {
-    const coin = new Coin_pb();
-    coin.setDenom(this.denom);
-    coin.setAmount(this.amount.toString());
-
-    return coin;
+    return Coin_pb.fromPartial({
+      denom: this.denom,
+      amount: this.amount.toString(),
+    });
   }
 }
 

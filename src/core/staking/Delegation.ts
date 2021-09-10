@@ -5,7 +5,7 @@ import { Coin } from '../Coin';
 import {
   DelegationResponse as DelegationResponse_pb,
   Delegation as Delegation_pb,
-} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
+} from '@terra-money/terra.proto/cosmos/staking/v1beta1/staking';
 
 /**
  * Stores information about the status of a delegation between a delegator and validator, fetched from the blockchain.
@@ -53,26 +53,25 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
   }
 
   public static fromProto(proto: Delegation.Proto): Delegation {
-    const delegationProto = proto.getDelegation() as Delegation_pb;
+    const delegationProto = proto.delegation as Delegation_pb;
     return new Delegation(
-      delegationProto.getDelegatorAddress(),
-      delegationProto.getValidatorAddress(),
-      new Dec(delegationProto.getShares()),
-      Coin.fromProto(proto.getBalance() as Coin.Proto)
+      delegationProto.delegatorAddress,
+      delegationProto.validatorAddress,
+      new Dec(delegationProto.shares),
+      Coin.fromProto(proto.balance as Coin.Proto)
     );
   }
 
   public toProto(): Delegation.Proto {
     const { delegator_address, validator_address, shares, balance } = this;
-    const delegationProto = new Delegation_pb();
-    delegationProto.setDelegatorAddress(delegator_address);
-    delegationProto.setValidatorAddress(validator_address);
-    delegationProto.setShares(shares.toString());
-
-    const delegationResponseProto = new DelegationResponse_pb();
-    delegationResponseProto.setDelegation(delegationProto);
-    delegationResponseProto.setBalance(balance.toProto());
-    return delegationResponseProto;
+    return DelegationResponse_pb.fromPartial({
+      delegation: Delegation_pb.fromPartial({
+        delegatorAddress: delegator_address,
+        shares: shares.toString(),
+        validatorAddress: validator_address,
+      }),
+      balance: balance.toProto(),
+    });
   }
 }
 

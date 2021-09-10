@@ -1,11 +1,15 @@
-import { JSONSerializable } from '../util/json';
-import { StdTx } from './StdTx';
+import { Tx } from './Tx';
+import {
+  ABCIMessageLog as ABCIMessageLog_pb,
+  TxResponse as TxResponse_pb,
+} from '@terra-money/terra.proto/cosmos/base/abci/v1beta1/abci';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 /**
  * A TxInfo data structure is used to capture information from a transaction lookup for
  * a transaction already included in a block
  */
-export class TxInfo extends JSONSerializable<TxInfo.Data> {
+export class TxInfo {
   /**
    *
    * @param height height of the block in which the transaction was included.
@@ -25,67 +29,24 @@ export class TxInfo extends JSONSerializable<TxInfo.Data> {
     public logs: TxLog[] | undefined,
     public gas_wanted: number,
     public gas_used: number,
-    public tx: StdTx,
+    public tx: Tx,
     public timestamp: string,
     public code?: number,
     public codespace?: string
-  ) {
-    super();
-  }
+  ) {}
 
-  public static fromData(data: TxInfo.Data): TxInfo {
+  public static fromProto(proto: TxInfo.Proto): TxInfo {
     return new TxInfo(
-      Number.parseInt(data.height),
-      data.txhash,
-      data.raw_log,
-      data.logs && data.logs.map(log => TxLog.fromData(log)),
-      Number.parseInt(data.gas_wanted),
-      Number.parseInt(data.gas_used),
-      StdTx.fromData(data.tx),
-      data.timestamp,
-      data.code,
-      data.codespace
-    );
-  }
-
-  public toData(): TxInfo.Data {
-    const data: TxInfo.Data = {
-      height: this.height.toFixed(),
-      txhash: this.txhash,
-      raw_log: this.raw_log,
-      gas_wanted: this.gas_wanted.toFixed(),
-      gas_used: this.gas_used.toFixed(),
-      tx: this.tx.toData(),
-      timestamp: this.timestamp,
-    };
-
-    if (this.logs) {
-      data.logs = this.logs.map(log => log.toData());
-    }
-
-    if (this.code) {
-      data.code = this.code;
-    }
-
-    if (this.codespace) {
-      data.codespace = this.codespace;
-    }
-
-    return data;
-  }
-
-  public static fromProto(data: TxInfo.Proto): TxInfo {
-    return new TxInfo(
-      Number.parseInt(data.height),
-      data.txhash,
-      data.raw_log,
-      data.logs && data.logs.map(log => TxLog.fromData(log)),
-      Number.parseInt(data.gas_wanted),
-      Number.parseInt(data.gas_used),
-      StdTx.fromProto(data.tx),
-      data.timestamp,
-      data.code,
-      data.codespace
+      proto.height.toNumber(),
+      proto.txhash,
+      proto.rawLog,
+      proto.logs.map(log => TxLog.fromProto(log)),
+      proto.gasWanted.toNumber(),
+      proto.gasUsed.toNumber(),
+      Tx.unpackAny(proto.tx as Any),
+      proto.timestamp,
+      proto.code,
+      proto.codespace
     );
   }
 }
@@ -107,8 +68,6 @@ export interface EventsByType {
 }
 
 export namespace EventsByType {
-  export type Data = Event[];
-
   export function parse(eventData: Event[]): EventsByType {
     const events: EventsByType = {};
     eventData.forEach(ev => {
@@ -128,7 +87,7 @@ export namespace EventsByType {
   }
 }
 
-export class TxLog extends JSONSerializable<TxLog.Data> {
+export class TxLog {
   public eventsByType: EventsByType;
 
   constructor(
@@ -136,59 +95,41 @@ export class TxLog extends JSONSerializable<TxLog.Data> {
     public log: string,
     public events: Event[]
   ) {
-    super();
     this.eventsByType = EventsByType.parse(this.events);
   }
 
-  public static fromData(data: TxLog.Data): TxLog {
-    const { msg_index, log, events } = data;
-    return new TxLog(msg_index, log, events);
+  public static fromProto(proto: TxLog.Proto): TxLog {
+    return new TxLog(
+      proto.msgIndex,
+      proto.log,
+      proto.events.map(e => {
+        return {
+          type: e.type,
+          attributes: e.attributes.map(attr => {
+            return {
+              key: attr.key,
+              value: attr.value,
+            };
+          }),
+        };
+      })
+    );
   }
 
-  public toData(): TxLog.Data {
+  public toProto(): TxLog.Proto {
     const { msg_index, log, events } = this;
-    return {
-      msg_index,
-      log,
+    return ABCIMessageLog_pb.fromPartial({
+      msgIndex: msg_index,
+      log: log,
       events,
-    };
+    });
   }
 }
 
 export namespace TxLog {
-  export interface Data {
-    msg_index: number;
-    log: string;
-    events: Event[];
-  }
+  export type Proto = ABCIMessageLog_pb;
 }
 
 export namespace TxInfo {
-  export interface Data {
-    height: string;
-    txhash: string;
-    raw_log: string;
-    logs?: TxLog.Data[];
-    gas_wanted: string;
-    gas_used: string;
-    tx: StdTx.Data;
-    timestamp: string;
-    code?: number;
-    codespace?: string;
-  }
-
-  export interface Proto {
-    height: string;
-    txhash: string;
-    codespace: string;
-    code: number;
-    data: string;
-    raw_log: string;
-    logs: TxLog.Data[];
-    info: string;
-    gas_wanted: string;
-    gas_used: string;
-    tx: StdTx.Proto;
-    timestamp: string;
-  }
+  export type Proto = TxResponse_pb;
 }

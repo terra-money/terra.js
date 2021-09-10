@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Allowance } from '../allowances';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgGrantAllowance as MsgGrantAllowance_pb } from '@terra-money/terra.proto/src/cosmos/feegrant/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgGrantAllowance as MsgGrantAllowance_pb } from '@terra-money/terra.proto/cosmos/feegrant/v1beta1/tx';
 
 /**
  * MsgGrantAllowance adds permission for Grantee to spend up to Allowance
@@ -48,31 +48,31 @@ export class MsgGrantAllowance extends JSONSerializable<MsgGrantAllowance.Data> 
 
   public static fromProto(proto: MsgGrantAllowance.Proto): MsgGrantAllowance {
     return new MsgGrantAllowance(
-      proto.getGranter(),
-      proto.getGrantee(),
-      Allowance.fromProto(proto.getAllowance() as Any)
+      proto.granter,
+      proto.grantee,
+      Allowance.fromProto(proto.allowance as Any)
     );
   }
 
   public toProto(): MsgGrantAllowance.Proto {
     const { granter, grantee, allowance } = this;
-    const proto = new MsgGrantAllowance_pb();
-    proto.setGranter(granter);
-    proto.setGrantee(grantee);
-    proto.setAllowance(allowance.packAny() as any);
-    return proto;
+    return MsgGrantAllowance_pb.fromPartial({
+      allowance: allowance.packAny(),
+      grantee,
+      granter,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.feegrant.v1beta1.MsgGrantAllowance');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance',
+      value: MsgGrantAllowance_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgGrantAllowance {
     return MsgGrantAllowance.fromProto(
-      MsgGrantAllowance_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgGrantAllowance_pb.decode(msgAny.value)
     );
   }
 }

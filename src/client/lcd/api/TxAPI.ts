@@ -1,30 +1,39 @@
 import { BaseAPI } from './BaseAPI';
 import {
   Msg,
-  StdTx,
+  Tx,
   StdSignMsg,
-  StdFee,
   Coins,
   TxInfo,
   Numeric,
+  TxBody,
+  AuthInfo,
+  SignerInfo,
+  SimplePublicKey,
+  ModeInfo,
+  Fee,
+  Dec,
+  PublicKey,
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { TxLog } from '../../../core';
+import { TxLog, SignDoc } from '../../../core';
 import { APIParams } from '../APIRequester';
-import { ProtoTx } from 'core/ProtoTx';
+import {
+  BroadcastTxResponse as BroadcastTxResponse_pb,
+  GetTxsEventResponse as GetTxsEventResponse_pb,
+  BroadcastMode,
+  SimulateResponse,
+  SimulateRequest,
+} from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { TxResponse as TxResponse_pb } from '@terra-money/terra.proto/cosmos/base/abci/v1beta1/abci';
+import {
+  ComputeTaxResponse,
+  ComputeTaxRequest,
+} from '@terra-money/terra.proto/terra/tx/v1beta1/service';
 
 /** Transaction broadcasting modes  */
-export enum Broadcast {
-  /** Wait until the transaction has been included in the block */
-  BLOCK = 'block',
-
-  /** Return after DeliverTx() */
-  SYNC = 'sync',
-
-  /** Return after CheckTx() */
-  ASYNC = 'async',
-}
+export type Broadcast = BroadcastMode;
 
 interface Block {
   height: number;
@@ -75,39 +84,29 @@ export function isTxError<
 }
 
 export namespace BlockTxBroadcastResult {
-  export interface Data {
-    height: string;
-    txhash: string;
-    raw_log: string;
-    gas_wanted: string;
-    gas_used: string;
-    logs?: TxLog.Data[];
-    code?: number;
-    codespace?: string;
-  }
+  export type Proto = BroadcastTxResponse_pb;
+}
+
+export namespace AsyncTxBroadcastResult {
+  export type Proto = BlockTxBroadcastResult.Proto;
+}
+
+export namespace SyncTxBroadcastResult {
+  export type Proto = BlockTxBroadcastResult.Proto;
 }
 
 export interface CreateTxOptions {
   msgs: Msg[];
-  fee?: StdFee;
+  fee?: Fee;
   memo?: string;
   gas?: string;
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
-  account_number?: number;
+  accountNumber?: number;
   sequence?: number;
-}
-
-export namespace AsyncTxBroadcastResult {
-  export type Data = Pick<BlockTxBroadcastResult.Data, 'height' | 'txhash'>;
-}
-
-export namespace SyncTxBroadcastResult {
-  export type Data = Pick<
-    BlockTxBroadcastResult.Data,
-    'height' | 'txhash' | 'raw_log' | 'code' | 'codespace'
-  >;
+  timeoutHeight?: number;
+  signMode?: ModeInfo.SignMode;
 }
 
 export interface TxResult {
@@ -115,12 +114,8 @@ export interface TxResult {
 }
 
 export namespace TxResult {
-  export interface Data {
-    txs: TxInfo.Data;
-  }
-
   export interface Proto {
-    tx: ProtoTx.Proto;
+    tx: Tx.Proto;
     tx_response: TxInfo.Proto;
   }
 }
@@ -135,23 +130,7 @@ export interface TxSearchResult {
 }
 
 export namespace TxSearchResult {
-  export interface Data {
-    total_count: string;
-    count: string;
-    page_number: string;
-    page_total: string;
-    limit: string;
-    txs?: TxInfo.Data[];
-  }
-
-  export interface Proto {
-    txs: ProtoTx.Proto[];
-    tx_responses: TxInfo.Proto[];
-    pagination: {
-      next_key: any;
-      total: string;
-    };
-  }
+  export type Proto = GetTxsEventResponse_pb;
 }
 
 export interface TxSearchOptions {
@@ -194,16 +173,12 @@ export class TxAPI extends BaseAPI {
   public async create(
     sourceAddress: string,
     options: CreateTxOptions
-  ): Promise<StdSignMsg> {
+  ): Promise<Tx> {
     let { fee, memo } = options;
     const { msgs } = options;
     memo = memo || '';
 
-    if (fee === undefined) {
-      fee = await this.lcd.tx.estimateFee(sourceAddress, msgs, options);
-    }
-
-    let accountNumber = options.account_number;
+    let accountNumber = options.accountNumber;
     let sequence = options.sequence;
 
     if (!accountNumber || !sequence) {
@@ -217,13 +192,30 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    return new StdSignMsg(
-      this.lcd.config.chainID,
-      accountNumber,
-      sequence,
-      fee,
-      msgs,
-      memo
+    options.sequence = sequence;
+    options.accountNumber = accountNumber;
+
+    if (fee === undefined) {
+      fee = await this.lcd.tx.estimateFee(msgs, options);
+    }
+
+    return new Tx(
+      new TxBody(msgs, memo || '', options.timeoutHeight || 0),
+      new AuthInfo(
+        [
+          new SignerInfo(
+            new SimplePublicKey(''),
+            sequence,
+            new ModeInfo(
+              new ModeInfo.Single(
+                options?.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
+              )
+            )
+          ),
+        ],
+        fee
+      ),
+      []
     );
   }
 
@@ -250,7 +242,6 @@ export class TxAPI extends BaseAPI {
    * @param options options for fee estimation
    */
   public async estimateFee(
-    sourceAddress: string,
     msgs: Msg[],
     options?: {
       memo?: string;
@@ -258,10 +249,12 @@ export class TxAPI extends BaseAPI {
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
       feeDenoms?: string[];
+      signMode?: ModeInfo.SignMode;
+      sequence?: number;
     }
-  ): Promise<StdFee> {
+  ): Promise<Fee> {
     const memo = options?.memo;
-    const gas = options?.gas;
+    let gas = options?.gas;
     const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
@@ -280,79 +273,108 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    const data = {
-      base_req: {
-        chain_id: this.lcd.config.chainID,
-        memo,
-        from: sourceAddress,
-        gas: gas || 'auto',
-        gas_prices: gasPricesCoins && gasPricesCoins.toData(),
-        gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-      },
-      msgs: msgs.map(m => m.toData()),
-    };
-    return this.c
-      .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
-      .then(({ result: { fee } }) => StdFee.fromData(fee));
+    // fill empty signature
+    const signerInfo = new SignerInfo(
+      new SimplePublicKey(''),
+      options?.sequence || 0,
+      new ModeInfo(
+        new ModeInfo.Single(
+          options?.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
+        )
+      )
+    );
+    const txBody = new TxBody(msgs, memo || '', 0);
+    const authInfo = new AuthInfo(
+      [signerInfo],
+      new Fee(0, new Coins(), '', '')
+    );
+    const tx = new Tx(txBody, authInfo, ['']);
+
+    // simulate gas
+    if (!gas || gas === 'auto' || gas === '0') {
+      const simulateRes = await this.c.post<SimulateResponse>(
+        `/cosmos/tx/v1beta1/simulate`,
+        SimulateRequest.toJSON(
+          SimulateRequest.fromPartial({ txBytes: tx.toBytes() })
+        )
+      );
+      gas = new Dec(gasAdjustment)
+        .mul(simulateRes.result.gasInfo?.gasUsed.toNumber() || 0)
+        .toString();
+    }
+
+    const computeTaxRes = await this.c.post<ComputeTaxResponse>(
+      `/terra/tx/v1beta1/compute_tax`,
+      ComputeTaxRequest.toJSON(
+        ComputeTaxRequest.fromPartial({
+          tx: tx.toProto(),
+        })
+      )
+    );
+    const taxAmount = Coins.fromProto(computeTaxRes.result.taxAmount);
+    const feeAmount = gasPricesCoins
+      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCoins())
+      : taxAmount;
+    return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
 
   /**
    * Encode a transaction to Amino-encoding
    * @param tx transaction to encode
    */
-  public async encode(tx: StdTx): Promise<string> {
-    return this.c
-      .postRaw<{ tx: string }>(`/txs/encode`, tx.toData())
-      .then(d => d.tx);
+  public async encode(tx: Tx): Promise<string> {
+    return Buffer.from(tx.toBytes()).toString('base64');
   }
 
   /**
    * Get the transaction's hash
    * @param tx transaction to hash
    */
-  public async hash(tx: StdTx): Promise<string> {
-    const amino = await this.encode(tx);
-    return hashAmino(amino);
+  public async hash(tx: Tx): Promise<string> {
+    const txBytes = await this.encode(tx);
+    return hashAmino(txBytes);
   }
 
-  private async _broadcast<T>(tx: StdTx, mode: Broadcast): Promise<T> {
+  private async _broadcast<T>(tx: Tx, mode: Broadcast): Promise<T> {
     const data = {
-      tx: tx.toData().value,
+      tx_bytes: this.encode(tx),
       mode,
     };
-    return this.c.postRaw<any>(`/txs`, data);
+
+    return this.c.postRaw<any>(`/cosmos/tx/v1beta1/txs`, data);
   }
 
   /**
    * Broadcast the transaction using the "block" mode, waiting for its inclusion in the blockchain.
-   * @param tx tranasaction to broadcast
+   * @param tx transaction to broadcast
    */
-  public async broadcast(tx: StdTx): Promise<BlockTxBroadcastResult> {
-    return this._broadcast<BlockTxBroadcastResult.Data>(
+  public async broadcast(tx: Tx): Promise<BlockTxBroadcastResult> {
+    return this._broadcast<BlockTxBroadcastResult.Proto>(
       tx,
-      Broadcast.BLOCK
+      BroadcastMode.BROADCAST_MODE_BLOCK
     ).then(d => {
+      const txResponse = d.txResponse as TxResponse_pb;
       const blockResult: any = {
-        txhash: d.txhash,
-        raw_log: d.raw_log,
-        gas_wanted: Number.parseInt(d.gas_wanted),
-        gas_used: Number.parseInt(d.gas_used),
+        txhash: txResponse.txhash,
+        raw_log: txResponse.rawLog,
+        gas_wanted: txResponse.gasWanted.toNumber(),
+        gas_used: txResponse.gasUsed,
       };
 
-      if (d.height) {
-        blockResult.height = +d.height;
+      if (txResponse.height) {
+        blockResult.height = +txResponse.height;
       }
 
-      if (d.logs) {
-        blockResult.logs = d.logs.map(l => TxLog.fromData(l));
+      if (txResponse.logs) {
+        blockResult.logs = txResponse.logs.map(l => TxLog.fromProto(l));
       }
 
-      if (d.code) {
-        blockResult.code = d.code;
+      if (txResponse.code) {
+        blockResult.code = txResponse.code;
       }
 
-      if (d.codespace) {
-        blockResult.codespace = d.codespace;
+      if (txResponse.codespace) {
+        blockResult.codespace = txResponse.codespace;
       }
 
       return blockResult;
@@ -366,40 +388,45 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "sync" mode, returning after DeliverTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
-      d => {
-        const blockResult: any = {
-          height: +d.height,
-          txhash: d.txhash,
-          raw_log: d.raw_log,
-        };
+  public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
+    return this._broadcast<SyncTxBroadcastResult.Proto>(
+      tx,
+      BroadcastMode.BROADCAST_MODE_SYNC
+    ).then(d => {
+      const txResponse = d.txResponse as TxResponse_pb;
+      const blockResult: any = {
+        height: +txResponse.height,
+        txhash: txResponse.txhash,
+        raw_log: txResponse.rawLog,
+      };
 
-        if (d.code) {
-          blockResult.code = d.code;
-        }
-
-        if (d.codespace) {
-          blockResult.codespace = d.codespace;
-        }
-
-        return blockResult;
+      if (txResponse.code) {
+        blockResult.code = txResponse.code;
       }
-    );
+
+      if (txResponse.codespace) {
+        blockResult.codespace = txResponse.codespace;
+      }
+
+      return blockResult;
+    });
   }
 
   /**
    * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {
-    return this._broadcast<AsyncTxBroadcastResult.Data>(
+  public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
+    return this._broadcast<AsyncTxBroadcastResult.Proto>(
       tx,
-      Broadcast.ASYNC
-    ).then(d => ({
-      height: +d.height,
-      txhash: d.txhash,
-    }));
+      BroadcastMode.BROADCAST_MODE_ASYNC
+    ).then(d => {
+      const txResponse = d.txResponse as TxResponse_pb;
+      return {
+        height: +txResponse.height,
+        txhash: txResponse.txhash,
+      };
+    });
   }
 
   /**
@@ -428,7 +455,7 @@ export class TxAPI extends BaseAPI {
     return this.c
       .getRaw<TxSearchResult.Proto>(`cosmos/tx/v1beta1/txs`, pagination_options)
       .then(d => {
-        const total_count = Number.parseInt(d.pagination.total);
+        const total_count = d.pagination?.total.toNumber() || 0;
         const page_total =
           Math.floor(total_count / limit) + (total_count % limit == 0 ? 0 : 1);
         return {
@@ -437,7 +464,7 @@ export class TxAPI extends BaseAPI {
           page_number,
           page_total,
           limit,
-          txs: d.tx_responses.map(tx_response => TxInfo.fromProto(tx_response)),
+          txs: d.txResponses.map(tx_response => TxInfo.fromProto(tx_response)),
         };
       });
   }

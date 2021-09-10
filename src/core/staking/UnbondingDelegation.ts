@@ -4,8 +4,8 @@ import { AccAddress, ValAddress } from '../bech32';
 import {
   UnbondingDelegation as UnbondingDelegation_pb,
   UnbondingDelegationEntry as UnbondingDelegationEntry_pb,
-} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+} from '@terra-money/terra.proto/cosmos/staking/v1beta1/staking';
+import * as Long from 'long';
 
 /**
  * When a delegator decides to take out their funds from the staking pool, they must
@@ -38,20 +38,20 @@ export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Da
 
   public toProto(): UnbondingDelegation.Proto {
     const { delegator_address, validator_address, entries } = this;
-    const unbondingDelegationProto = new UnbondingDelegation_pb();
-    unbondingDelegationProto.setDelegatorAddress(delegator_address);
-    unbondingDelegationProto.setValidatorAddress(validator_address);
-    unbondingDelegationProto.setEntriesList(entries.map(e => e.toProto()));
-    return unbondingDelegationProto;
+    return UnbondingDelegation_pb.fromPartial({
+      delegatorAddress: delegator_address,
+      entries: entries.map(e => e.toProto()),
+      validatorAddress: validator_address,
+    });
   }
 
   public static fromProto(
     proto: UnbondingDelegation.Proto
   ): UnbondingDelegation {
     return new UnbondingDelegation(
-      proto.getDelegatorAddress(),
-      proto.getValidatorAddress(),
-      proto.getEntriesList().map(e => UnbondingDelegation.Entry.fromProto(e))
+      proto.delegatorAddress,
+      proto.validatorAddress,
+      proto.entries.map(e => UnbondingDelegation.Entry.fromProto(e))
     );
   }
 
@@ -114,20 +114,20 @@ export namespace UnbondingDelegation {
     public toProto(): Entry.Proto {
       const { initial_balance, balance, creation_height, completion_time } =
         this;
-      const entryProto = new UnbondingDelegationEntry_pb();
-      entryProto.setInitialBalance(initial_balance.toString());
-      entryProto.setBalance(balance.toString());
-      entryProto.setCreationHeight(creation_height);
-      entryProto.setCompletionTime(Timestamp.fromDate(completion_time));
-      return entryProto;
+      return UnbondingDelegationEntry_pb.fromPartial({
+        balance: balance.toString(),
+        completionTime: completion_time,
+        creationHeight: Long.fromNumber(creation_height),
+        initialBalance: initial_balance.toString(),
+      });
     }
 
     public static fromProto(proto: Entry.Proto): Entry {
       return new Entry(
-        new Int(proto.getInitialBalance()),
-        new Int(proto.getBalance()),
-        proto.getCreationHeight(),
-        proto.getCompletionTime()?.toDate() as Date
+        new Int(proto.initialBalance),
+        new Int(proto.balance),
+        proto.creationHeight.toNumber(),
+        proto.completionTime as Date
       );
     }
   }

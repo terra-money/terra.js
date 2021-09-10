@@ -1,9 +1,8 @@
 import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
 import { CreateTxOptions } from '../lcd/api/TxAPI';
-
-import { StdTx } from '../../core/StdTx';
-import { StdSignMsg } from '../../core/StdSignMsg';
+import { Tx } from 'core';
+import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}
@@ -32,12 +31,34 @@ export class Wallet {
     });
   }
 
-  public createTx(options: CreateTxOptions): Promise<StdSignMsg> {
+  public async createTx(options: CreateTxOptions): Promise<Tx> {
     return this.lcd.tx.create(this.key.accAddress, options);
   }
 
-  public async createAndSignTx(options: CreateTxOptions): Promise<StdTx> {
-    const stdSignMsg = await this.createTx(options);
-    return this.key.signTx(stdSignMsg);
+  public async createAndSignTx(options: CreateTxOptions): Promise<Tx> {
+    let accountNumber = options.accountNumber;
+    let sequence = options.sequence;
+
+    if (!accountNumber || !sequence) {
+      const account = await this.lcd.auth.accountInfo(this.key.accAddress);
+      if (!accountNumber) {
+        accountNumber = account.account_number;
+      }
+
+      if (!sequence) {
+        sequence = account.sequence;
+      }
+    }
+
+    options.sequence = sequence;
+    options.accountNumber = accountNumber;
+
+    const tx = await this.createTx(options);
+    return this.key.signTx(tx, {
+      accountNumber,
+      sequence,
+      chainID: this.lcd.config.chainID,
+      signMode: options.signMode || SignMode.SIGN_MODE_DIRECT,
+    });
   }
 }

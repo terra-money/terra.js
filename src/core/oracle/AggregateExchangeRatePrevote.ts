@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../../util/json';
 import { ValAddress } from '../bech32';
-import { AggregateExchangeRatePrevote as AggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/src/terra/oracle/v1beta1/oracle_pb';
+import { AggregateExchangeRatePrevote as AggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/oracle';
+import * as Long from 'long';
 
 /**
  * Stores information about data about Oracle aggregate prevotes fetched from the blockchain.
@@ -43,20 +44,19 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<AggregateExch
     data: AggregateExchangeRatePrevote.Proto
   ): AggregateExchangeRatePrevote {
     return new AggregateExchangeRatePrevote(
-      data.getHash(),
-      data.getVoter(),
-      data.getSubmitBlock()
+      data.hash,
+      data.voter,
+      data.submitBlock.toNumber()
     );
   }
 
   public toProto(): AggregateExchangeRatePrevote.Proto {
     const { hash, voter, submit_block } = this;
-    const aggregateExchangeRatePrevoteProto =
-      new AggregateExchangeRatePrevote_pb();
-    aggregateExchangeRatePrevoteProto.setHash(hash);
-    aggregateExchangeRatePrevoteProto.setVoter(voter);
-    aggregateExchangeRatePrevoteProto.setSubmitBlock(submit_block);
-    return aggregateExchangeRatePrevoteProto;
+    return AggregateExchangeRatePrevote_pb.fromPartial({
+      hash,
+      submitBlock: Long.fromNumber(submit_block),
+      voter,
+    });
   }
 }
 

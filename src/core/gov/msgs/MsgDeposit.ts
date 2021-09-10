@@ -1,8 +1,9 @@
 import { Coins } from '../../Coins';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgDeposit as MsgDeposit_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgDeposit as MsgDeposit_pb } from '@terra-money/terra.proto/cosmos/gov/v1beta1/tx';
+import * as Long from 'long';
 
 /**
  * Add a deposit for a proposal
@@ -48,32 +49,30 @@ export class MsgDeposit extends JSONSerializable<MsgDeposit.Data> {
 
   public static fromProto(proto: MsgDeposit.Proto): MsgDeposit {
     return new MsgDeposit(
-      proto.getProposalId(),
-      proto.getDepositor(),
-      Coins.fromProto(proto.getAmountList())
+      proto.proposalId.toNumber(),
+      proto.depositor,
+      Coins.fromProto(proto.amount)
     );
   }
 
   public toProto(): MsgDeposit.Proto {
     const { proposal_id, depositor, amount } = this;
-    const msgDepositProto = new MsgDeposit_pb();
-    msgDepositProto.setProposalId(proposal_id);
-    msgDepositProto.setDepositor(depositor);
-    msgDepositProto.setAmountList(amount.toProto());
-    return msgDepositProto;
+    return MsgDeposit_pb.fromPartial({
+      amount: amount.toProto(),
+      depositor,
+      proposalId: Long.fromNumber(proposal_id),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgDeposit');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
+      value: MsgDeposit_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgDeposit {
-    return MsgDeposit.fromProto(
-      MsgDeposit_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value));
   }
 }
 

@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { TextProposal as TextProposal_pb } from '@terra-money/terra.proto/src/cosmos/gov/v1beta1/gov_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { TextProposal as TextProposal_pb } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
 
 /**
  * Basic proposal which describes the candidate proposition that must be put into effect
@@ -35,28 +35,26 @@ export class TextProposal extends JSONSerializable<TextProposal.Data> {
   }
 
   public static fromProto(proto: TextProposal.Proto): TextProposal {
-    return new TextProposal(proto.getTitle(), proto.getDescription());
+    return new TextProposal(proto.title, proto.description);
   }
 
   public toProto(): TextProposal.Proto {
     const { title, description } = this;
-    const textProposalProto = new TextProposal_pb();
-    textProposalProto.setTitle(title);
-    textProposalProto.setDescription(description);
-    return textProposalProto;
+    return TextProposal_pb.fromPartial({
+      description,
+      title,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.TextProposal');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.gov.v1beta1.TextProposal',
+      value: TextProposal_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): TextProposal {
-    return TextProposal.fromProto(
-      TextProposal_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value));
   }
 }
 

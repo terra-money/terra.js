@@ -1,8 +1,8 @@
 import { Coins } from '../../Coins';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgSend as MsgSend_pb } from '@terra-money/terra.proto/src/cosmos/bank/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgSend as MsgSend_pb } from '@terra-money/terra.proto/cosmos/bank/v1beta1/tx';
 
 /**
  * A basic message for sending [[Coins]] between Terra accounts.
@@ -48,32 +48,30 @@ export class MsgSend extends JSONSerializable<MsgSend.Data> {
 
   public static fromProto(proto: MsgSend.Proto): MsgSend {
     return new MsgSend(
-      proto.getFromAddress(),
-      proto.getToAddress(),
-      Coins.fromProto(proto.getAmountList())
+      proto.fromAddress,
+      proto.toAddress,
+      Coins.fromProto(proto.amount)
     );
   }
 
   public toProto(): MsgSend.Proto {
     const { from_address, to_address, amount } = this;
-    const msgSendProto = new MsgSend_pb();
-    msgSendProto.setFromAddress(from_address);
-    msgSendProto.setToAddress(to_address);
-    msgSendProto.setAmountList(amount.toProto());
-    return msgSendProto;
+    return MsgSend_pb.fromPartial({
+      fromAddress: from_address,
+      toAddress: to_address,
+      amount: amount.toProto(),
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.bank.v1beta1.MsgSend');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+      value: MsgSend_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgSend {
-    return MsgSend.fromProto(
-      MsgSend_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgSend.fromProto(MsgSend_pb.decode(msgAny.value));
   }
 }
 

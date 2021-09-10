@@ -1,5 +1,5 @@
-import { JSONSerializable } from 'util/json';
-import { ParamChange as ParamChange_pb } from '@terra-money/terra.proto/src/cosmos/params/v1beta1/params_pb';
+import { JSONSerializable } from '../../util/json';
+import { ParamChange as ParamChange_pb } from '@terra-money/terra.proto/cosmos/params/v1beta1/params';
 
 export class ParamChanges extends JSONSerializable<ParamChanges.Data> {
   constructor(public paramChanges: ParamChange[]) {
@@ -52,20 +52,16 @@ export class ParamChange extends JSONSerializable<ParamChange.Data> {
   }
 
   public static fromProto(proto: ParamChange.Proto): ParamChange {
-    return new ParamChange(
-      proto.getSubspace(),
-      proto.getKey(),
-      proto.getValue()
-    );
+    return new ParamChange(proto.subspace, proto.key, proto.value);
   }
 
   public toProto(): ParamChange.Proto {
     const { subspace, key, value } = this;
-    const paramChangeProto = new ParamChange_pb();
-    paramChangeProto.setSubspace(subspace);
-    paramChangeProto.setKey(key);
-    paramChangeProto.setValue(value);
-    return paramChangeProto;
+    return ParamChange_pb.fromPartial({
+      key,
+      subspace,
+      value,
+    });
   }
 }
 

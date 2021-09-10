@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgFundCommunityPool as MsgFundCommunityPool_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgFundCommunityPool as MsgFundCommunityPool_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.Data> {
   public amount: Coins;
@@ -39,29 +39,29 @@ export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.
     proto: MsgFundCommunityPool.Proto
   ): MsgFundCommunityPool {
     return new MsgFundCommunityPool(
-      proto.getDepositor(),
-      Coins.fromProto(proto.getAmountList())
+      proto.depositor,
+      Coins.fromProto(proto.amount)
     );
   }
 
   public toProto(): MsgFundCommunityPool.Proto {
     const { depositor, amount } = this;
-    const msgFundCommunityPool = new MsgFundCommunityPool_pb();
-    msgFundCommunityPool.setDepositor(depositor);
-    msgFundCommunityPool.setAmountList(amount.toProto());
-    return msgFundCommunityPool;
+    return MsgFundCommunityPool_pb.fromPartial({
+      amount: amount.toProto(),
+      depositor,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.distribution.v1beta1.MsgFundCommunityPool');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
+      value: MsgFundCommunityPool_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgFundCommunityPool {
     return MsgFundCommunityPool.fromProto(
-      MsgFundCommunityPool_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgFundCommunityPool_pb.decode(msgAny.value)
     );
   }
 }

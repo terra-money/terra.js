@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgSetWithdrawAddress as MsgSetWithdrawAddress_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgSetWithdrawAddress as MsgSetWithdrawAddress_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all
@@ -44,29 +44,29 @@ export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddres
     proto: MsgSetWithdrawAddress.Proto
   ): MsgSetWithdrawAddress {
     return new MsgSetWithdrawAddress(
-      proto.getDelegatorAddress(),
-      proto.getWithdrawAddress()
+      proto.delegatorAddress,
+      proto.withdrawAddress
     );
   }
 
   public toProto(): MsgSetWithdrawAddress.Proto {
     const { delegator_address, withdraw_address } = this;
-    const msgSetWithdrawAddressProto = new MsgSetWithdrawAddress_pb();
-    msgSetWithdrawAddressProto.setDelegatorAddress(delegator_address);
-    msgSetWithdrawAddressProto.setWithdrawAddress(withdraw_address);
-    return msgSetWithdrawAddressProto;
+    return MsgSetWithdrawAddress_pb.fromPartial({
+      delegatorAddress: delegator_address,
+      withdrawAddress: withdraw_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.distribution.v1beta1.MsgSetWithdrawAddress');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
+      value: MsgSetWithdrawAddress_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgSetWithdrawAddress {
     return MsgSetWithdrawAddress.fromProto(
-      MsgSetWithdrawAddress_pb.deserializeBinary(msgAny.getValue_asU8())
+      MsgSetWithdrawAddress_pb.decode(msgAny.value)
     );
   }
 }

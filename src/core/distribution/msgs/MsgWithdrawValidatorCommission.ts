@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/terra.proto/src/cosmos/distribution/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all
@@ -38,31 +38,26 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
   public static fromProto(
     proto: MsgWithdrawValidatorCommission.Proto
   ): MsgWithdrawValidatorCommission {
-    return new MsgWithdrawValidatorCommission(proto.getValidatorAddress());
+    return new MsgWithdrawValidatorCommission(proto.validatorAddress);
   }
 
   public toProto(): MsgWithdrawValidatorCommission.Proto {
     const { validator_address } = this;
-    const msgWithdrawValidatorCommissionProto =
-      new MsgWithdrawValidatorCommission_pb();
-    msgWithdrawValidatorCommissionProto.setValidatorAddress(validator_address);
-    return msgWithdrawValidatorCommissionProto;
+    return MsgWithdrawValidatorCommission_pb.fromPartial({
+      validatorAddress: validator_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl(
-      '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission'
-    );
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
+      value: MsgWithdrawValidatorCommission_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgWithdrawValidatorCommission {
     return MsgWithdrawValidatorCommission.fromProto(
-      MsgWithdrawValidatorCommission_pb.deserializeBinary(
-        msgAny.getValue_asU8()
-      )
+      MsgWithdrawValidatorCommission_pb.decode(msgAny.value)
     );
   }
 }

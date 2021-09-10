@@ -7,10 +7,11 @@ import {
   Description as Description_pb,
   Commission as Commission_pb,
   CommissionRates as CommissionRates_pb,
-  BondStatusMap,
   BondStatus,
-} from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/staking_pb';
-import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+} from '@terra-money/terra.proto/cosmos/staking/v1beta1/staking';
+import * as Long from 'long';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+
 /**
  * Stores information fetched from the blockchain about the current status of a validator.
  * As an end user, you will not have to create an instance of this class, one will be
@@ -36,7 +37,7 @@ export class Validator extends JSONSerializable<Validator.Data> {
     public operator_address: ValAddress,
     public consensus_pubkey: ValConsPublicKey,
     public jailed: boolean,
-    public status: BondStatusMap[keyof BondStatusMap],
+    public status: BondStatus,
     public tokens: Int,
     public delegator_shares: Dec,
     public description: Validator.Description,
@@ -94,49 +95,50 @@ export class Validator extends JSONSerializable<Validator.Data> {
       commission,
       min_self_delegation,
     } = this;
-    const validatorProto = new Validator_pb();
-    validatorProto.setOperatorAddress(operator_address);
-    validatorProto.setConsensusPubkey(consensus_pubkey.packAny() as any);
-    validatorProto.setJailed(jailed);
-    validatorProto.setStatus(status);
-    validatorProto.setTokens(tokens.toString());
-    validatorProto.setDelegatorShares(delegator_shares.toString());
-    validatorProto.setDescription(description.toProto());
-    validatorProto.setUnbondingHeight(unbonding_height);
-    validatorProto.setUnbondingTime(Timestamp.fromDate(unbonding_time));
-    validatorProto.setCommission(commission.toProto());
-    validatorProto.setMinSelfDelegation(min_self_delegation.toString());
-    return validatorProto;
+    return Validator_pb.fromPartial({
+      commission: commission.toProto(),
+      consensusPubkey: consensus_pubkey.packAny(),
+      delegatorShares: delegator_shares.toString(),
+      description: description.toProto(),
+      jailed,
+      minSelfDelegation: min_self_delegation.toString(),
+      operatorAddress: operator_address,
+      status,
+      tokens: tokens.toString(),
+      unbondingHeight: Long.fromNumber(unbonding_height),
+      unbondingTime: unbonding_time,
+    });
   }
 
   public static fromProto(data: Validator.Proto): Validator {
     return new Validator(
-      data.getOperatorAddress(),
-      ValConsPublicKey.unpackAny(data.getConsensusPubkey() as any),
-      data.getJailed(),
-      data.getStatus(),
-      new Int(data.getTokens()),
-      new Dec(data.getDelegatorShares()),
+      data.operatorAddress,
+      ValConsPublicKey.unpackAny(data.consensusPubkey as Any),
+      data.jailed,
+      data.status,
+      new Int(data.tokens),
+      new Dec(data.delegatorShares),
       Validator.Description.fromProto(
-        data.getDescription() as Validator.Description.Proto
+        data.description as Validator.Description.Proto
       ),
-      data.getUnbondingHeight(),
-      data.getUnbondingTime()?.toDate() as Date,
+      data.unbondingHeight.toNumber(),
+      data.unbondingTime as Date,
       Validator.Commission.fromProto(
-        data.getCommission() as Validator.Commission.Proto
+        data.commission as Validator.Commission.Proto
       ),
-      new Int(data.getMinSelfDelegation())
+      new Int(data.minSelfDelegation)
     );
   }
 }
 
 export namespace Validator {
-  export const Status: BondStatusMap = BondStatus;
+  export const Status = BondStatus;
+  export type Status = BondStatus;
   export interface Data {
     operator_address: ValAddress;
     consensus_pubkey: ValConsPublicKey.Data;
     jailed: boolean;
-    status: BondStatusMap[keyof BondStatusMap];
+    status: BondStatus;
     tokens: string;
     delegator_shares: string;
     description: Description.Data;
@@ -189,22 +191,22 @@ export namespace Validator {
     public toProto(): Description.Proto {
       const { moniker, identity, website, details, security_contact } = this;
 
-      const descriptionProto = new Description_pb();
-      descriptionProto.setMoniker(moniker);
-      descriptionProto.setIdentity(identity);
-      descriptionProto.setWebsite(website);
-      descriptionProto.setDetails(details);
-      descriptionProto.setSecurityContact(security_contact);
-      return descriptionProto;
+      return Description_pb.fromPartial({
+        details,
+        identity,
+        moniker,
+        securityContact: security_contact,
+        website,
+      });
     }
 
     public static fromProto(proto: Description.Proto): Description {
       return new Description(
-        proto.getMoniker(),
-        proto.getIdentity(),
-        proto.getWebsite(),
-        proto.getDetails(),
-        proto.getSecurityContact()
+        proto.moniker,
+        proto.identity,
+        proto.website,
+        proto.details,
+        proto.securityContact
       );
     }
   }
@@ -255,19 +257,19 @@ export namespace Validator {
 
     public static fromProto(proto: CommissionRates.Proto): CommissionRates {
       return new CommissionRates(
-        new Dec(proto.getRate()),
-        new Dec(proto.getMaxRate()),
-        new Dec(proto.getMaxChangeRate())
+        new Dec(proto.rate),
+        new Dec(proto.maxRate),
+        new Dec(proto.maxChangeRate)
       );
     }
 
     public toProto(): Validator.CommissionRates.Proto {
       const { rate, max_rate, max_change_rate } = this;
-      const commissionRatesProto = new CommissionRates_pb();
-      commissionRatesProto.setRate(rate.toString());
-      commissionRatesProto.setMaxRate(max_rate.toString());
-      commissionRatesProto.setMaxChangeRate(max_change_rate.toString());
-      return commissionRatesProto;
+      return CommissionRates_pb.fromPartial({
+        maxChangeRate: max_change_rate.toString(),
+        maxRate: max_rate.toString(),
+        rate: rate.toString(),
+      });
     }
   }
 
@@ -309,18 +311,18 @@ export namespace Validator {
 
     public toProto(): Commission.Proto {
       const { commission_rates, update_time } = this;
-      const commissionProto = new Commission_pb();
-      commissionProto.setCommissionRates(commission_rates.toProto());
-      commissionProto.setUpdateTime(Timestamp.fromDate(update_time));
-      return commissionProto;
+      return Commission_pb.fromPartial({
+        commissionRates: commission_rates.toProto(),
+        updateTime: update_time,
+      });
     }
 
     public static fromProto(proto: Commission.Proto): Commission {
       return new Commission(
         CommissionRates.fromProto(
-          proto.getCommissionRates() as CommissionRates.Proto
+          proto.commissionRates as CommissionRates.Proto
         ),
-        proto.getUpdateTime()?.toDate() as Date
+        proto.updateTime as Date
       );
     }
   }

@@ -4,8 +4,8 @@ import { Denom } from '../Denom';
 import {
   ExchangeRateTuple as ExchangeRateTuple_pb,
   AggregateExchangeRateVote as AggregateExchangeRateVote_pb,
-} from '@terra-money/terra.proto/src/terra/oracle/v1beta1/oracle_pb';
-import { Numeric, Dec } from 'core/numeric';
+} from '@terra-money/terra.proto/terra/oracle/v1beta1/oracle';
+import { Numeric, Dec } from '../numeric';
 
 /**
  * Stores information about data about Oracle aggregate vote fetched from the blockchain.
@@ -44,19 +44,17 @@ export class AggregateExchangeRateVote extends JSONSerializable<AggregateExchang
     data: AggregateExchangeRateVote.Proto
   ): AggregateExchangeRateVote {
     return new AggregateExchangeRateVote(
-      data.getExchangeRateTuplesList().map(t => ExchangeRateTuple.fromProto(t)),
-      data.getVoter()
+      data.exchangeRateTuples.map(t => ExchangeRateTuple.fromProto(t)),
+      data.voter
     );
   }
 
   public toProto(): AggregateExchangeRateVote.Proto {
     const { exchange_rate_tuples, voter } = this;
-    const aggregateExchangeRateVoteProto = new AggregateExchangeRateVote_pb();
-    aggregateExchangeRateVoteProto.setExchangeRateTuplesList(
-      exchange_rate_tuples.map(c => c.toProto())
-    );
-    aggregateExchangeRateVoteProto.setVoter(voter);
-    return aggregateExchangeRateVoteProto;
+    return AggregateExchangeRateVote_pb.fromPartial({
+      exchangeRateTuples: exchange_rate_tuples.map(t => t.toProto()),
+      voter,
+    });
   }
 }
 
@@ -89,15 +87,15 @@ export class ExchangeRateTuple extends JSONSerializable<ExchangeRateTuple.Data> 
   }
 
   public static fromProto(proto: ExchangeRateTuple.Proto): ExchangeRateTuple {
-    return new ExchangeRateTuple(proto.getDenom(), proto.getExchangeRate());
+    return new ExchangeRateTuple(proto.denom, proto.exchangeRate);
   }
 
   public toProto(): ExchangeRateTuple.Proto {
     const { denom, exchange_rate } = this;
-    const exchangeRateTupleProto = new ExchangeRateTuple_pb();
-    exchangeRateTupleProto.setDenom(denom);
-    exchangeRateTupleProto.setExchangeRate(exchange_rate.toString());
-    return exchangeRateTupleProto;
+    return ExchangeRateTuple_pb.fromPartial({
+      denom,
+      exchangeRate: exchange_rate.toString(),
+    });
   }
 }
 

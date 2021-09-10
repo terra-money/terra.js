@@ -1,8 +1,8 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { MsgDelegate as MsgDelegate_pb } from '@terra-money/terra.proto/src/cosmos/staking/v1beta1/tx_pb';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgDelegate as MsgDelegate_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 
 /**
  * A delegator can submit this message to send more Luna to be staked through a
@@ -48,32 +48,30 @@ export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
 
   public static fromProto(proto: MsgDelegate.Proto): MsgDelegate {
     return new MsgDelegate(
-      proto.getDelegatorAddress(),
-      proto.getValidatorAddress(),
-      Coin.fromProto(proto.getAmount() as Coin.Proto)
+      proto.delegatorAddress,
+      proto.validatorAddress,
+      Coin.fromProto(proto.amount as Coin.Proto)
     );
   }
 
   public toProto(): MsgDelegate.Proto {
     const { delegator_address, validator_address, amount } = this;
-    const msgDelegateProto = new MsgDelegate_pb();
-    msgDelegateProto.setDelegatorAddress(delegator_address);
-    msgDelegateProto.setValidatorAddress(validator_address);
-    msgDelegateProto.setAmount(amount.toProto());
-    return msgDelegateProto;
+    return MsgDelegate_pb.fromPartial({
+      amount: amount.toProto(),
+      delegatorAddress: delegator_address,
+      validatorAddress: validator_address,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.staking.v1beta1.MsgDelegate');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
+      value: MsgDelegate_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgDelegate {
-    return MsgDelegate.fromProto(
-      MsgDelegate_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgDelegate.fromProto(MsgDelegate_pb.decode(msgAny.value));
   }
 }
 

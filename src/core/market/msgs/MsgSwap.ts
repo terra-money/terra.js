@@ -2,8 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { MsgSwap as MsgSwap_pb } from '@terra-money/terra.proto/src/terra/market/v1beta1/tx_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { MsgSwap as MsgSwap_pb } from '@terra-money/terra.proto/terra/market/v1beta1/tx';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 /**
  * Executes a market swap between 2 denominations at the exchange rate registered by the
@@ -45,32 +45,30 @@ export class MsgSwap extends JSONSerializable<MsgSwap.Data> {
 
   public static fromProto(proto: MsgSwap.Proto): MsgSwap {
     return new MsgSwap(
-      proto.getTrader(),
-      Coin.fromProto(proto.getOfferCoin() as Coin.Proto),
-      proto.getAskDenom()
+      proto.trader,
+      Coin.fromProto(proto.offerCoin as Coin.Proto),
+      proto.askDenom
     );
   }
 
   public toProto(): MsgSwap.Proto {
     const { trader, offer_coin, ask_denom } = this;
-    const msgSwapProto = new MsgSwap_pb();
-    msgSwapProto.setTrader(trader);
-    msgSwapProto.setOfferCoin(offer_coin.toProto());
-    msgSwapProto.setAskDenom(ask_denom);
-    return msgSwapProto;
+    return MsgSwap_pb.fromPartial({
+      askDenom: ask_denom,
+      offerCoin: offer_coin.toProto(),
+      trader,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.gov.v1beta1.MsgVoteWeighted');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/terra.market.v1beta1.MsgSwap',
+      value: MsgSwap_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgSwap {
-    return MsgSwap.fromProto(
-      MsgSwap_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgSwap.fromProto(MsgSwap_pb.decode(msgAny.value));
   }
 }
 

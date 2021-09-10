@@ -2,8 +2,9 @@ import { Coins } from '../Coins';
 import { PublicKey } from '../PublicKey';
 import { JSONSerializable } from '../../util/json';
 import { AccAddress } from '../bech32';
-import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/src/cosmos/auth/v1beta1/auth_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
+import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/cosmos/auth/v1beta1/auth';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import * as Long from 'long';
 
 /**
  * Stores information about an account fetched from the blockchain.
@@ -20,7 +21,6 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
    */
   constructor(
     public address: AccAddress,
-    public coins: Coins,
     public public_key: PublicKey | null,
     public account_number: number,
     public sequence: number
@@ -29,12 +29,11 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
   }
 
   public toData(): BaseAccount.Data {
-    const { address, coins, public_key, account_number, sequence } = this;
+    const { address, public_key, account_number, sequence } = this;
     return {
       type: 'core/Account',
       value: {
         address,
-        coins: coins.toData(),
         public_key: public_key ? public_key.toData() : null,
         account_number: account_number.toFixed(),
         sequence: sequence.toFixed(),
@@ -44,12 +43,11 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
 
   public static fromData(data: BaseAccount.Data): BaseAccount {
     const {
-      value: { address, coins, public_key, account_number, sequence },
+      value: { address, public_key, account_number, sequence },
     } = data;
 
     return new BaseAccount(
       address || '',
-      Coins.fromData(coins),
       public_key ? PublicKey.fromData(public_key) : null,
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0
@@ -58,45 +56,39 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
 
   public toProto(): BaseAccount.Proto {
     const { address, public_key, account_number, sequence } = this;
-    const baseAccountProto: BaseAccount_pb = new BaseAccount_pb();
-
-    baseAccountProto.setAddress(address);
-    baseAccountProto.setPubKey(public_key?.toProto() as any);
-    baseAccountProto.setAccountNumber(account_number);
-    baseAccountProto.setSequence(sequence);
-
-    return baseAccountProto;
+    return BaseAccount_pb.fromPartial({
+      address,
+      pubKey: public_key?.packAny(),
+      accountNumber: Long.fromNumber(account_number),
+      sequence: Long.fromNumber(sequence),
+    });
   }
 
   public static fromProto(baseAccountProto: BaseAccount.Proto): BaseAccount {
-    const pubkey = baseAccountProto.getPubKey();
+    const pubkey = baseAccountProto.pubKey;
     return new BaseAccount(
-      baseAccountProto.getAddress(),
-      new Coins(),
+      baseAccountProto.address,
       pubkey ? PublicKey.fromProto(pubkey) : null,
-      baseAccountProto.getAccountNumber(),
-      baseAccountProto.getSequence()
+      baseAccountProto.accountNumber.toNumber(),
+      baseAccountProto.sequence.toNumber()
     );
   }
 
   public packAny(): Any {
-    const pubkeyAny = new Any();
-    pubkeyAny.setTypeUrl('/cosmos.auth.v1beta1.BaseAccount');
-    pubkeyAny.setValue(this.toProto().serializeBinary());
-    return pubkeyAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.auth.v1beta1.BaseAccount',
+      value: BaseAccount_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(pubkeyAny: Any): BaseAccount {
-    return BaseAccount.fromProto(
-      BaseAccount_pb.deserializeBinary(pubkeyAny.getValue_asU8())
-    );
+    return BaseAccount.fromProto(BaseAccount_pb.decode(pubkeyAny.value));
   }
 }
 
 export namespace BaseAccount {
   export interface Value {
     address: AccAddress;
-    coins: Coins.Data;
     public_key: PublicKey.Data | null;
     account_number: string;
     sequence: string;

@@ -1,9 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { AuthorizationGrant } from '../authorizations';
-import { MsgGrant as MsgGrant_pb } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/tx_pb';
-import { Any } from '@terra-money/terra.proto/src/google/protobuf/any_pb';
-import { Grant } from '@terra-money/terra.proto/src/cosmos/authz/v1beta1/authz_pb';
+import { MsgGrant as MsgGrant_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/tx';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Grant as Grant_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
 
 export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
   /**
@@ -47,32 +47,30 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
     data: MsgGrantAuthorization.Proto
   ): MsgGrantAuthorization {
     return new MsgGrantAuthorization(
-      data.getGranter(),
-      data.getGrantee(),
-      AuthorizationGrant.fromProto(data.getGrant() as Grant)
+      data.granter,
+      data.grantee,
+      AuthorizationGrant.fromProto(data.grant as Grant_pb)
     );
   }
 
   public toProto(): MsgGrantAuthorization.Proto {
     const { grant, granter, grantee } = this;
-    const msgGrantAuthorizedProto = new MsgGrant_pb();
-    msgGrantAuthorizedProto.setGrantee(grantee);
-    msgGrantAuthorizedProto.setGranter(granter);
-    msgGrantAuthorizedProto.setGrant(grant.toProto());
-    return msgGrantAuthorizedProto;
+    return MsgGrant_pb.fromPartial({
+      grant: grant.toProto(),
+      grantee,
+      granter,
+    });
   }
 
   public packAny(): Any {
-    const msgAny = new Any();
-    msgAny.setTypeUrl('/cosmos.authz.v1beta1.MsgGrant');
-    msgAny.setValue(this.toProto().serializeBinary());
-    return msgAny;
+    return Any.fromPartial({
+      typeUrl: '/cosmos.authz.v1beta1.MsgGrant',
+      value: MsgGrant_pb.encode(this.toProto()).finish(),
+    });
   }
 
   public static unpackAny(msgAny: Any): MsgGrantAuthorization {
-    return MsgGrantAuthorization.fromProto(
-      MsgGrant_pb.deserializeBinary(msgAny.getValue_asU8())
-    );
+    return MsgGrantAuthorization.fromProto(MsgGrant_pb.decode(msgAny.value));
   }
 }
 
