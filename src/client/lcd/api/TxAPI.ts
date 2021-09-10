@@ -18,13 +18,15 @@ import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams } from '../APIRequester';
 import {
-  BroadcastTxResponse as BroadcastTxResponse_pb,
   GetTxsEventResponse as GetTxsEventResponse_pb,
   BroadcastMode,
   SimulateResponse,
   SimulateRequest,
   ServiceClient,
+  BroadcastTxRequest,
+  BroadcastTxResponse,
 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 import {
   ServiceClient as TerraServiceClient,
   ComputeTaxRequest,
@@ -85,7 +87,7 @@ export function isTxError<
 }
 
 export namespace BlockTxBroadcastResult {
-  export type Proto = BroadcastTxResponse_pb;
+  export type Proto = BroadcastTxResponse;
 }
 
 export namespace AsyncTxBroadcastResult {
@@ -202,20 +204,7 @@ export class TxAPI extends BaseAPI {
 
     return new Tx(
       new TxBody(msgs, memo || '', options.timeoutHeight || 0),
-      new AuthInfo(
-        [
-          new SignerInfo(
-            new SimplePublicKey(''),
-            sequence,
-            new ModeInfo(
-              new ModeInfo.Single(
-                options?.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
-              )
-            )
-          ),
-        ],
-        fee
-      ),
+      new AuthInfo([], fee),
       []
     );
   }
@@ -359,13 +348,31 @@ export class TxAPI extends BaseAPI {
     return hashAmino(txBytes);
   }
 
-  private async _broadcast<T>(tx: Tx, mode: Broadcast): Promise<T> {
-    const data = {
-      tx_bytes: this.encode(tx),
-      mode,
-    };
+  private async _broadcast(
+    tx: Tx,
+    mode: Broadcast
+  ): Promise<BroadcastTxResponse> {
+    const client = new ServiceClient(
+      '3.34.120.243:9090',
+      ChannelCredentials.createInsecure()
+    );
+    console.log(JSON.stringify(Tx_pb.toJSON(tx.toProto())));
+    const broadcastTxRes: BroadcastTxResponse = await new Promise(
+      (resolve, reject) => {
+        client.broadcastTx(
+          BroadcastTxRequest.fromPartial({ txBytes: tx.toBytes(), mode }),
+          (err, res) => {
+            if (err !== null) {
+              return reject(err);
+            }
 
-    return this.c.postRaw<any>(`/cosmos/tx/v1beta1/txs`, data);
+            return resolve(res);
+          }
+        );
+      }
+    );
+
+    return broadcastTxRes;
   }
 
   /**
@@ -373,10 +380,8 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcast(tx: Tx): Promise<BlockTxBroadcastResult> {
-    return this._broadcast<BlockTxBroadcastResult.Proto>(
-      tx,
-      BroadcastMode.BROADCAST_MODE_BLOCK
-    ).then(d => {
+    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_BLOCK).then(d => {
+      console.log(d);
       const txResponse = d.txResponse as TxResponse_pb;
       const blockResult: any = {
         txhash: txResponse.txhash,
@@ -413,10 +418,7 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast<SyncTxBroadcastResult.Proto>(
-      tx,
-      BroadcastMode.BROADCAST_MODE_SYNC
-    ).then(d => {
+    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_SYNC).then(d => {
       const txResponse = d.txResponse as TxResponse_pb;
       const blockResult: any = {
         height: +txResponse.height,
@@ -441,10 +443,7 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
-    return this._broadcast<AsyncTxBroadcastResult.Proto>(
-      tx,
-      BroadcastMode.BROADCAST_MODE_ASYNC
-    ).then(d => {
+    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_ASYNC).then(d => {
       const txResponse = d.txResponse as TxResponse_pb;
       return {
         height: +txResponse.height,

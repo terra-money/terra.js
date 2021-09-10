@@ -11,7 +11,7 @@ async function main() {
   const bombay = new LCDClient({
     chainID: 'bombay-10',
     URL: 'https://bombay-lcd.terra.dev',
-    gasPrices: {uusd: 0.38},
+    gasPrices: { uusd: 0.38 },
   });
 
   // a wallet can be created out of any key
@@ -29,7 +29,8 @@ async function main() {
     .createAndSignTx({
       msgs: [send],
       memo: 'test from terra.js!',
-      gas: '109504'
+      gas: '109504',
+      signMode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
     })
     .then(tx => bombay.tx.broadcast(tx))
     .then(result => {

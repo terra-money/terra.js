@@ -11,6 +11,8 @@ import {
   SignDoc,
   StdSignMsg,
   SimplePublicKey,
+  SignerInfo,
+  ModeInfo,
 } from '../core';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
@@ -138,6 +140,21 @@ export abstract class Key {
    * @param tx
    */
   public async signTx(tx: Tx, options: SignOptions): Promise<Tx> {
+    if (!this.publicKey) {
+      throw new Error(
+        'Signature could not be created: Key instance missing publicKey'
+      );
+    }
+
+    // set signer info
+    tx.auth_info.signer_infos.push(
+      new SignerInfo(
+        new SimplePublicKey(this.publicKey.toString('base64')),
+        options.sequence,
+        new ModeInfo(new ModeInfo.Single(options.signMode))
+      )
+    );
+
     let signature: string;
     if (options.signMode === SignMode.SIGN_MODE_LEGACY_AMINO_JSON) {
       signature = await this.createSignature(
@@ -150,26 +167,17 @@ export abstract class Key {
           tx.body.memo
         )
       );
-    }
-
-    signature = await this.createSignatureV2(
-      new SignDoc(
-        tx.body.toBytes(),
-        tx.auth_info.toBytes(),
-        options.chainID,
-        options.accountNumber
-      )
-    );
-
-    if (!this.rawPubKey) {
-      throw new Error(
-        'Signature could not be created: Key instance missing publicKey'
+    } else {
+      signature = await this.createSignatureV2(
+        new SignDoc(
+          tx.body.toBytes(),
+          tx.auth_info.toBytes(),
+          options.chainID,
+          options.accountNumber
+        )
       );
     }
 
-    tx.auth_info.signer_infos[0].public_key = new SimplePublicKey(
-      this.rawPubKey.toString('base64')
-    );
     tx.signatures.push(signature);
 
     return tx;
