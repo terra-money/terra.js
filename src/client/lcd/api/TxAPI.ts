@@ -2,7 +2,6 @@ import { BaseAPI } from './BaseAPI';
 import {
   Msg,
   Tx,
-  StdSignMsg,
   Coins,
   TxInfo,
   Numeric,
@@ -13,11 +12,10 @@ import {
   ModeInfo,
   Fee,
   Dec,
-  PublicKey,
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
-import { TxLog, SignDoc } from '../../../core';
+import { TxLog } from '../../../core';
 import { APIParams } from '../APIRequester';
 import {
   BroadcastTxResponse as BroadcastTxResponse_pb,
@@ -25,12 +23,15 @@ import {
   BroadcastMode,
   SimulateResponse,
   SimulateRequest,
+  ServiceClient,
 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
-import { TxResponse as TxResponse_pb } from '@terra-money/terra.proto/cosmos/base/abci/v1beta1/abci';
 import {
-  ComputeTaxResponse,
+  ServiceClient as TerraServiceClient,
   ComputeTaxRequest,
+  ComputeTaxResponse,
 } from '@terra-money/terra.proto/terra/tx/v1beta1/service';
+import { TxResponse as TxResponse_pb } from '@terra-money/terra.proto/cosmos/base/abci/v1beta1/abci';
+import { ChannelCredentials } from '@grpc/grpc-js';
 
 /** Transaction broadcasting modes  */
 export type Broadcast = BroadcastMode;
@@ -292,26 +293,49 @@ export class TxAPI extends BaseAPI {
 
     // simulate gas
     if (!gas || gas === 'auto' || gas === '0') {
-      const simulateRes = await this.c.post<SimulateResponse>(
-        `/cosmos/tx/v1beta1/simulate`,
-        SimulateRequest.toJSON(
-          SimulateRequest.fromPartial({ txBytes: tx.toBytes() })
-        )
+      const client = new ServiceClient(
+        '3.34.120.243:9090',
+        ChannelCredentials.createInsecure()
       );
+      const simulateRes: SimulateResponse = await new Promise(
+        (resolve, reject) => {
+          client.simulate(
+            SimulateRequest.fromPartial({ txBytes: tx.toBytes() }),
+            (err, res) => {
+              if (err !== null) {
+                return reject(err);
+              }
+
+              return resolve(res);
+            }
+          );
+        }
+      );
+
       gas = new Dec(gasAdjustment)
-        .mul(simulateRes.result.gasInfo?.gasUsed.toNumber() || 0)
+        .mul(simulateRes.gasInfo?.gasUsed.toNumber() || 0)
         .toString();
     }
 
-    const computeTaxRes = await this.c.post<ComputeTaxResponse>(
-      `/terra/tx/v1beta1/compute_tax`,
-      ComputeTaxRequest.toJSON(
-        ComputeTaxRequest.fromPartial({
-          tx: tx.toProto(),
-        })
-      )
+    const client = new TerraServiceClient(
+      '3.34.120.243:9090',
+      ChannelCredentials.createInsecure()
     );
-    const taxAmount = Coins.fromProto(computeTaxRes.result.taxAmount);
+    const computeTaxRes: ComputeTaxResponse = await new Promise(
+      (resolve, reject) => {
+        client.computeTax(
+          ComputeTaxRequest.fromPartial({ tx: tx.toProto() }),
+          (err, res) => {
+            if (err !== null) {
+              return reject(err);
+            }
+
+            return resolve(res);
+          }
+        );
+      }
+    );
+    const taxAmount = Coins.fromProto(computeTaxRes.taxAmount);
     const feeAmount = gasPricesCoins
       ? taxAmount.add(gasPricesCoins.mul(gas).toIntCoins())
       : taxAmount;
