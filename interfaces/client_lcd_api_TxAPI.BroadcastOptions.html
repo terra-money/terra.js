@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Data | Terra.js</title>
+	<title>BroadcastOptions | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,16 +53,13 @@
 					<a href="../modules.html">Terra.js</a>
 				</li>
 				<li>
-					<a href="../modules/core_TxInfo.html">core/TxInfo</a>
+					<a href="../modules/client_lcd_api_TxAPI.html">client/lcd/api/TxAPI</a>
 				</li>
 				<li>
-					<a href="../modules/core_TxInfo.TxLog.html">TxLog</a>
-				</li>
-				<li>
-					<a href="core_TxInfo.TxLog.Data.html">Data</a>
+					<a href="client_lcd_api_TxAPI.BroadcastOptions.html">BroadcastOptions</a>
 				</li>
 			</ul>
-			<h1>Interface Data</h1>
+			<h1>Interface BroadcastOptions</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Data</span>
+						<span class="target">BroadcastOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -84,9 +81,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core_TxInfo.TxLog.Data.html#events" class="tsd-kind-icon">events</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core_TxInfo.TxLog.Data.html#log" class="tsd-kind-icon">log</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core_TxInfo.TxLog.Data.html#msg_index" class="tsd-kind-icon">msg_<wbr>index</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_TxAPI.BroadcastOptions.html#feeGranter" class="tsd-kind-icon">fee<wbr>Granter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_TxAPI.BroadcastOptions.html#sequences" class="tsd-kind-icon">sequences</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_TxAPI.BroadcastOptions.html#timeoutHeight" class="tsd-kind-icon">timeout<wbr>Height</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,32 +92,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="events" class="tsd-anchor"></a>
-					<h3>events</h3>
-					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <a href="core_TxInfo.Event.html" class="tsd-signature-type" data-tsd-kind="Interface">Event</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="feeGranter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fee<wbr>Granter</h3>
+					<div class="tsd-signature tsd-kind-icon">fee<wbr>Granter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/core/TxInfo.ts#L147">src/core/TxInfo.ts:147</a></li>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/client/lcd/api/TxAPI.ts#L79">src/client/lcd/api/TxAPI.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="log" class="tsd-anchor"></a>
-					<h3>log</h3>
-					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="sequences" class="tsd-anchor"></a>
+					<h3>sequences</h3>
+					<div class="tsd-signature tsd-kind-icon">sequences<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/core/TxInfo.ts#L146">src/core/TxInfo.ts:146</a></li>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/client/lcd/api/TxAPI.ts#L78">src/client/lcd/api/TxAPI.ts:78</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="msg_index" class="tsd-anchor"></a>
-					<h3>msg_<wbr>index</h3>
-					<div class="tsd-signature tsd-kind-icon">msg_<wbr>index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="timeoutHeight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timeout<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">timeout<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/core/TxInfo.ts#L145">src/core/TxInfo.ts:145</a></li>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/cd57d1b/src/client/lcd/api/TxAPI.ts#L80">src/client/lcd/api/TxAPI.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,16 +130,19 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/core_TxInfo.html">core/<wbr>TxInfo</a>
+						<a href="../modules/client_lcd_api_TxAPI.html">client/lcd/api/<wbr>TxAPI</a>
 						<ul>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/core_TxInfo.EventsByType.html">Events<wbr>ByType</a>
+								<a href="../modules/client_lcd_api_TxAPI.AsyncTxBroadcastResult.html">Async<wbr>TxBroadcast<wbr>Result</a>
 							</li>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/core_TxInfo.TxInfo.html">Tx<wbr>Info</a>
+								<a href="../modules/client_lcd_api_TxAPI.BlockTxBroadcastResult.html">Block<wbr>TxBroadcast<wbr>Result</a>
 							</li>
-							<li class="current tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/core_TxInfo.TxLog.html">Tx<wbr>Log</a>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/client_lcd_api_TxAPI.SyncTxBroadcastResult.html">Sync<wbr>TxBroadcast<wbr>Result</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/client_lcd_api_TxAPI.TxSearchResult.html">Tx<wbr>Search<wbr>Result</a>
 							</li>
 						</ul>
 					</li>
@@ -150,24 +150,60 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/client_lcd_api_TxAPI.Broadcast.html" class="tsd-kind-icon">Broadcast</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/client_lcd_api_TxAPI.TxAPI.html" class="tsd-kind-icon">TxAPI</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="core_TxInfo.TxLog.Data.html" class="tsd-kind-icon">Data</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.BroadcastOptions.html" class="tsd-kind-icon">Broadcast<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="core_TxInfo.TxLog.Data.html#events" class="tsd-kind-icon">events</a>
+								<a href="client_lcd_api_TxAPI.BroadcastOptions.html#feeGranter" class="tsd-kind-icon">fee<wbr>Granter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="core_TxInfo.TxLog.Data.html#log" class="tsd-kind-icon">log</a>
+								<a href="client_lcd_api_TxAPI.BroadcastOptions.html#sequences" class="tsd-kind-icon">sequences</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="core_TxInfo.TxLog.Data.html#msg_index" class="tsd-kind-icon">msg_<wbr>index</a>
+								<a href="client_lcd_api_TxAPI.BroadcastOptions.html#timeoutHeight" class="tsd-kind-icon">timeout<wbr>Height</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.CreateTxOptions.html" class="tsd-kind-icon">Create<wbr>TxOptions</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.TxError.html" class="tsd-kind-icon">Tx<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.TxSearchOptions.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.TxSearchResult-1.html" class="tsd-kind-icon">Tx<wbr>Search<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_TxAPI.TxSuccess.html" class="tsd-kind-icon">Tx<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/client_lcd_api_TxAPI.html#AsyncTxBroadcastResult-1" class="tsd-kind-icon">Async<wbr>TxBroadcast<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/client_lcd_api_TxAPI.html#BlockTxBroadcastResult-1" class="tsd-kind-icon">Block<wbr>TxBroadcast<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/client_lcd_api_TxAPI.html#SyncTxBroadcastResult-1" class="tsd-kind-icon">Sync<wbr>TxBroadcast<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/client_lcd_api_TxAPI.html#TxBroadcastResult" class="tsd-kind-icon">Tx<wbr>Broadcast<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/client_lcd_api_TxAPI.html#isTxError" class="tsd-kind-icon">is<wbr>TxError</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
