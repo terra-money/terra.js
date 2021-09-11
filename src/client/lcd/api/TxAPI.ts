@@ -7,6 +7,7 @@ import {
   Coins,
   TxInfo,
   Numeric,
+  AccAddress,
 } from '../../../core';
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
@@ -71,6 +72,12 @@ export function isTxError<
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
   return (x as T & TxError).code !== undefined;
+}
+
+export interface BroadcastOptions {
+  sequences: number[];
+  feeGranter?: AccAddress;
+  timeoutHeight?: number;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -248,39 +255,20 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    if (/^(?:columbus-5|bombay|localterra)/.test(this.lcd.config.chainID)) {
-      const data = {
-        base_req: {
-          chain_id: this.lcd.config.chainID,
-          memo,
-          from: sourceAddress,
-          gas: gas || 'auto',
-          gas_prices: gasPricesCoins && gasPricesCoins.toData(),
-          gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-        },
-        msgs: msgs.map(m => m.toData()),
-      };
-      return this.c
-        .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
-        .then(({ result: { fee } }) => StdFee.fromData(fee));
-    } else {
-      const data = {
-        tx: {
-          msg: msgs.map(m => m.toData()),
-          fee: { gas: gas || '0' },
-          memo,
-        },
+    const data = {
+      base_req: {
+        chain_id: this.lcd.config.chainID,
+        memo,
+        from: sourceAddress,
+        gas: gas || 'auto',
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
         gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-      };
-
-      return this.c
-        .post<{ gas: string; fees: Coins.Data }>(`/txs/estimate_fee`, data)
-        .then(
-          ({ result: d }) =>
-            new StdFee(Number.parseInt(d.gas), Coins.fromData(d.fees))
-        );
-    }
+      },
+      msgs: msgs.map(m => m.toData()),
+    };
+    return this.c
+      .post<{ fee: StdFee.Data }>(`/txs/estimate_fee`, data)
+      .then(({ result: { fee } }) => StdFee.fromData(fee));
   }
 
   /**
@@ -302,10 +290,17 @@ export class TxAPI extends BaseAPI {
     return hashAmino(amino);
   }
 
-  private async _broadcast<T>(tx: StdTx, mode: Broadcast): Promise<T> {
+  private async _broadcast<T>(
+    tx: StdTx,
+    mode: Broadcast,
+    options?: BroadcastOptions
+  ): Promise<T> {
     const data = {
       tx: tx.toData().value,
       mode,
+      sequences: options?.sequences.map(s => s.toFixed()),
+      fee_granter: options?.feeGranter,
+      timeout_height: options?.timeoutHeight?.toFixed(),
     };
     return this.c.postRaw<any>(`/txs`, data);
   }
@@ -314,10 +309,14 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "block" mode, waiting for its inclusion in the blockchain.
    * @param tx tranasaction to broadcast
    */
-  public async broadcast(tx: StdTx): Promise<BlockTxBroadcastResult> {
+  public async broadcast(
+    tx: StdTx,
+    options?: BroadcastOptions
+  ): Promise<BlockTxBroadcastResult> {
     return this._broadcast<BlockTxBroadcastResult.Data>(
       tx,
-      Broadcast.BLOCK
+      Broadcast.BLOCK,
+      options
     ).then(d => {
       const blockResult: any = {
         txhash: d.txhash,
@@ -353,36 +352,45 @@ export class TxAPI extends BaseAPI {
    * Broadcast the transaction using the "sync" mode, returning after DeliverTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastSync(tx: StdTx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast<SyncTxBroadcastResult.Data>(tx, Broadcast.SYNC).then(
-      d => {
-        const blockResult: any = {
-          height: +d.height,
-          txhash: d.txhash,
-          raw_log: d.raw_log,
-        };
+  public async broadcastSync(
+    tx: StdTx,
+    options?: BroadcastOptions
+  ): Promise<SyncTxBroadcastResult> {
+    return this._broadcast<SyncTxBroadcastResult.Data>(
+      tx,
+      Broadcast.SYNC,
+      options
+    ).then(d => {
+      const blockResult: any = {
+        height: +d.height,
+        txhash: d.txhash,
+        raw_log: d.raw_log,
+      };
 
-        if (d.code) {
-          blockResult.code = d.code;
-        }
-
-        if (d.codespace) {
-          blockResult.codespace = d.codespace;
-        }
-
-        return blockResult;
+      if (d.code) {
+        blockResult.code = d.code;
       }
-    );
+
+      if (d.codespace) {
+        blockResult.codespace = d.codespace;
+      }
+
+      return blockResult;
+    });
   }
 
   /**
    * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
-  public async broadcastAsync(tx: StdTx): Promise<AsyncTxBroadcastResult> {
+  public async broadcastAsync(
+    tx: StdTx,
+    options?: BroadcastOptions
+  ): Promise<AsyncTxBroadcastResult> {
     return this._broadcast<AsyncTxBroadcastResult.Data>(
       tx,
-      Broadcast.ASYNC
+      Broadcast.ASYNC,
+      options
     ).then(d => ({
       height: +d.height,
       txhash: d.txhash,
