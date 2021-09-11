@@ -9,7 +9,7 @@ const mk = new MnemonicKey({
 // To use LocalTerra
 const terra = new LCDClient({
   URL: 'http://localhost:1317',
-  chainID: 'localterra',
+  chainID: 'testnet',
   gasPrices: '169.77ukrw',
 });
 
@@ -21,7 +21,7 @@ const wallet = terra.wallet(mk);
 const send = new MsgSend(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-  { uluna: 1000000, ukrw: 1230201, uusd: 1312029 }
+  { uusd: 1312029 }
 );
 
 wallet
@@ -31,5 +31,6 @@ wallet
   })
   .then(tx => terra.tx.broadcast(tx))
   .then(result => {
+    console.log(`TX raw_log: ${result.raw_log}`);
     console.log(`TX hash: ${result.txhash}`);
   });
