@@ -75,7 +75,7 @@ export function isTxError<
 }
 
 export interface BroadcastOptions {
-  sequences: number[];
+  sequences?: number[];
   feeGranter?: AccAddress;
   timeoutHeight?: number;
 }
@@ -298,7 +298,7 @@ export class TxAPI extends BaseAPI {
     const data = {
       tx: tx.toData().value,
       mode,
-      sequences: options?.sequences.map(s => s.toFixed()),
+      sequences: options?.sequences?.map(s => s.toFixed()),
       fee_granter: options?.feeGranter,
       timeout_height: options?.timeoutHeight?.toFixed(),
     };
