@@ -46,12 +46,6 @@ export class SignDoc extends JSONSerializable<
       auth_info: { fee },
     } = this;
 
-    // if (fee.granter || fee.payer) {
-    //   throw new Error(
-    //     'cannot use fee granter payer feature with legacy amino signing'
-    //   );
-    // }
-
     return {
       chain_id,
       account_number: account_number.toString(),
