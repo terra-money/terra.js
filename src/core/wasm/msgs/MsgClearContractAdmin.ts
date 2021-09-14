@@ -3,7 +3,11 @@ import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgClearContractAdmin as MsgClearContractAdmin_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
-export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmin.Data> {
+export class MsgClearContractAdmin extends JSONSerializable<
+  MsgClearContractAdmin.Amino,
+  MsgClearContractAdmin.Data,
+  MsgClearContractAdmin.Proto
+> {
   /**
    * @param admin contract admin
    * @param new_admin new admin
@@ -13,8 +17,8 @@ export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmi
     super();
   }
 
-  public static fromData(
-    data: MsgClearContractAdmin.Data
+  public static fromAmino(
+    data: MsgClearContractAdmin.Amino
   ): MsgClearContractAdmin {
     const {
       value: { admin, contract },
@@ -22,7 +26,7 @@ export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmi
     return new MsgClearContractAdmin(admin, contract);
   }
 
-  public toData(): MsgClearContractAdmin.Data {
+  public toAmino(): MsgClearContractAdmin.Amino {
     const { admin, contract } = this;
     return {
       type: 'wasm/MsgClearContractAdmin',
@@ -58,15 +62,36 @@ export class MsgClearContractAdmin extends JSONSerializable<MsgClearContractAdmi
       MsgClearContractAdmin_pb.decode(msgAny.value)
     );
   }
+
+  public static fromData(
+    data: MsgClearContractAdmin.Data
+  ): MsgClearContractAdmin {
+    const { admin, contract } = data;
+    return new MsgClearContractAdmin(admin, contract);
+  }
+
+  public toData(): MsgClearContractAdmin.Data {
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
+      admin: this.admin,
+      contract: this.contract,
+    };
+  }
 }
 
 export namespace MsgClearContractAdmin {
-  export interface Data {
+  export interface Amino {
     type: 'wasm/MsgClearContractAdmin';
     value: {
       admin: AccAddress;
       contract: AccAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin';
+    admin: string;
+    contract: string;
   }
 
   export type Proto = MsgClearContractAdmin_pb;

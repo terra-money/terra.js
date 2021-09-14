@@ -13,21 +13,21 @@ export class Wallet {
   }> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
       return {
-        account_number: d.account_number,
-        sequence: d.sequence,
+        account_number: d.getAccountNumber(),
+        sequence: d.getSequenceNumber(),
       };
     });
   }
 
   public accountNumber(): Promise<number> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
-      return d.account_number;
+      return d.getAccountNumber();
     });
   }
 
   public sequence(): Promise<number> {
     return this.lcd.auth.accountInfo(this.key.accAddress).then(d => {
-      return d.sequence;
+      return d.getSequenceNumber();
     });
   }
 
@@ -40,13 +40,13 @@ export class Wallet {
     let sequence = options.sequence;
 
     if (!accountNumber || !sequence) {
-      const account = await this.lcd.auth.accountInfo(this.key.accAddress);
+      const res = await this.accountNumberAndSequence();
       if (!accountNumber) {
-        accountNumber = account.account_number;
+        accountNumber = res.account_number;
       }
 
       if (!sequence) {
-        sequence = account.sequence;
+        sequence = res.sequence;
       }
     }
 

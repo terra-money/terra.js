@@ -8,7 +8,11 @@ import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } f
  * delegations (not including its self-delegation) into their associated account's
  * withdraw address.
  */
-export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdrawValidatorCommission.Data> {
+export class MsgWithdrawValidatorCommission extends JSONSerializable<
+  MsgWithdrawValidatorCommission.Amino,
+  MsgWithdrawValidatorCommission.Data,
+  MsgWithdrawValidatorCommission.Proto
+> {
   /**
    * @param validator_address validator's operator address
    */
@@ -16,8 +20,8 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
     super();
   }
 
-  public static fromData(
-    data: MsgWithdrawValidatorCommission.Data
+  public static fromAmino(
+    data: MsgWithdrawValidatorCommission.Amino
   ): MsgWithdrawValidatorCommission {
     const {
       value: { validator_address },
@@ -25,13 +29,28 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
     return new MsgWithdrawValidatorCommission(validator_address);
   }
 
-  public toData(): MsgWithdrawValidatorCommission.Data {
+  public toAmino(): MsgWithdrawValidatorCommission.Amino {
     const { validator_address } = this;
     return {
       type: 'distribution/MsgWithdrawValidatorCommission',
       value: {
         validator_address,
       },
+    };
+  }
+
+  public static fromData(
+    proto: MsgWithdrawValidatorCommission.Data
+  ): MsgWithdrawValidatorCommission {
+    const { validator_address } = proto;
+    return new MsgWithdrawValidatorCommission(validator_address);
+  }
+
+  public toData(): MsgWithdrawValidatorCommission.Data {
+    const { validator_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
+      validator_address,
     };
   }
 
@@ -63,11 +82,16 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<MsgWithdraw
 }
 
 export namespace MsgWithdrawValidatorCommission {
-  export interface Data {
+  export interface Amino {
     type: 'distribution/MsgWithdrawValidatorCommission';
     value: {
       validator_address: ValAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission';
+    validator_address: ValAddress;
   }
 
   export type Proto = MsgWithdrawValidatorCommission_pb;

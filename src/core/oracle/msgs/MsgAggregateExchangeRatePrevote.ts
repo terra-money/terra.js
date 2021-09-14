@@ -2,12 +2,15 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgAggregateExchangeRatePrevote as MsgAggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/tx';
-import * as Long from 'long';
 
 /**
  * Aggregate analog of MsgExchangeRatePrevote
  */
-export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggregateExchangeRatePrevote.Data> {
+export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
+  MsgAggregateExchangeRatePrevote.Amino,
+  MsgAggregateExchangeRatePrevote.Data,
+  MsgAggregateExchangeRatePrevote.Proto
+> {
   /**
    * @param hash vote hash
    * @param feeder validator's feeder account address
@@ -21,8 +24,8 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
     super();
   }
 
-  public static fromData(
-    data: MsgAggregateExchangeRatePrevote.Data
+  public static fromAmino(
+    data: MsgAggregateExchangeRatePrevote.Amino
   ): MsgAggregateExchangeRatePrevote {
     const {
       value: { hash, feeder, validator },
@@ -30,7 +33,7 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
     return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
   }
 
-  public toData(): MsgAggregateExchangeRatePrevote.Data {
+  public toAmino(): MsgAggregateExchangeRatePrevote.Amino {
     const { hash, feeder, validator } = this;
     return {
       type: 'oracle/MsgAggregateExchangeRatePrevote',
@@ -39,6 +42,23 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
         feeder,
         validator,
       },
+    };
+  }
+
+  public static fromData(
+    data: MsgAggregateExchangeRatePrevote.Data
+  ): MsgAggregateExchangeRatePrevote {
+    const { hash, feeder, validator } = data;
+    return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
+  }
+
+  public toData(): MsgAggregateExchangeRatePrevote.Data {
+    const { hash, feeder, validator } = this;
+    return {
+      '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
+      hash,
+      feeder,
+      validator,
     };
   }
 
@@ -76,13 +96,20 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<MsgAggrega
 }
 
 export namespace MsgAggregateExchangeRatePrevote {
-  export interface Data {
+  export interface Amino {
     type: 'oracle/MsgAggregateExchangeRatePrevote';
     value: {
       hash: string;
       feeder: AccAddress;
       validator: ValAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote';
+    hash: string;
+    feeder: AccAddress;
+    validator: ValAddress;
   }
 
   export type Proto = MsgAggregateExchangeRatePrevote_pb;

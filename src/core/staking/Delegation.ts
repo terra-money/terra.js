@@ -10,7 +10,11 @@ import {
 /**
  * Stores information about the status of a delegation between a delegator and validator, fetched from the blockchain.
  */
-export class Delegation extends JSONSerializable<Delegation.Data> {
+export class Delegation extends JSONSerializable<
+  Delegation.Amino,
+  Delegation.Data,
+  Delegation.Proto
+> {
   /**
    * @param delegator_address 	delegator's account address
    * @param validator_address 	validator's operator address
@@ -24,6 +28,32 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
     public balance: Coin
   ) {
     super();
+  }
+
+  public static fromAmino(data: Delegation.Amino): Delegation {
+    const {
+      delegation: { delegator_address, validator_address, shares },
+      balance,
+    } = data;
+    return new Delegation(
+      delegator_address,
+      validator_address,
+      new Dec(shares),
+      Coin.fromAmino(balance)
+    );
+  }
+
+  public toAmino(): Delegation.Amino {
+    const { delegator_address, validator_address, shares, balance } = this;
+
+    return {
+      delegation: {
+        delegator_address,
+        validator_address,
+        shares: shares.toString(),
+      },
+      balance: balance.toAmino(),
+    };
   }
 
   public static fromData(data: Delegation.Data): Delegation {
@@ -76,6 +106,15 @@ export class Delegation extends JSONSerializable<Delegation.Data> {
 }
 
 export namespace Delegation {
+  export interface Amino {
+    delegation: {
+      delegator_address: AccAddress;
+      validator_address: ValAddress;
+      shares: string;
+    };
+    balance: Coin.Amino;
+  }
+
   export interface Data {
     delegation: {
       delegator_address: AccAddress;

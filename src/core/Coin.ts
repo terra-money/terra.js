@@ -8,7 +8,10 @@ import { Coin as Coin_pb } from '@terra-money/terra.proto/cosmos/base/v1beta1/co
  * a denomination with an amount value. Coins are immutable once created, and operations
  * that return Coin will return a new Coin. See [[Coins]] for a collection of Coin objects.
  */
-export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
+export class Coin
+  extends JSONSerializable<Coin.Amino, Coin.Data, Coin.Proto>
+  implements Numeric<Coin>
+{
   public readonly amount: Numeric.Output;
 
   /**
@@ -145,6 +148,19 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
     return new Coin(this.denom, this.amount.mod(otherAmount));
   }
 
+  public static fromAmino(data: Coin.Amino): Coin {
+    const { denom, amount } = data;
+    return new Coin(denom, amount);
+  }
+
+  public toAmino(): Coin.Amino {
+    const { denom, amount } = this;
+    return {
+      denom,
+      amount: amount.toString(),
+    };
+  }
+
   public static fromData(data: Coin.Data): Coin {
     const { denom, amount } = data;
     return new Coin(denom, amount);
@@ -171,6 +187,11 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
 }
 
 export namespace Coin {
+  export interface Amino {
+    denom: Denom;
+    amount: string;
+  }
+
   export interface Data {
     denom: Denom;
     amount: string;

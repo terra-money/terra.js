@@ -8,7 +8,7 @@ export interface ValidatorSet {
 
 export interface DelegateValidator {
   address: ValConsAddress;
-  pub_key: ValConsPublicKey.Data;
+  pub_key: ValConsPublicKey.Amino;
   proposer_priority: string;
   voting_power: string;
 }

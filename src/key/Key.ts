@@ -9,11 +9,11 @@ import {
   ValPubKey,
   Tx,
   SignDoc,
-  StdSignMsg,
   SimplePublicKey,
   SignerInfo,
   ModeInfo,
 } from '../core';
+import { SignatureV2 } from '../core/SignatureV2';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 const BECH32_PUBKEY_DATA_PREFIX = 'eb5ae98721';
@@ -119,20 +119,74 @@ export abstract class Key {
 
   /**
    * Signs a [[StdSignMsg]] with the method supplied by the child class.
+   * only used Amino sign
    *
    * @param tx sign-message of the transaction to sign
    */
-  public async createSignature(tx: StdSignMsg): Promise<string> {
-    return (await this.sign(Buffer.from(tx.toJSON()))).toString('base64');
+  public async createSignatureAmino(tx: SignDoc): Promise<SignatureV2> {
+    if (!this.publicKey) {
+      throw new Error(
+        'Signature could not be created: Key instance missing publicKey'
+      );
+    }
+
+    return new SignatureV2(
+      new SimplePublicKey(this.publicKey.toString('base64')),
+      new SignatureV2.Descriptor(
+        new SignatureV2.Descriptor.Single(
+          SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
+          (await this.sign(Buffer.from(tx.toAminoJSON()))).toString('base64')
+        )
+      ),
+      tx.sequence
+    );
   }
 
   /**
-   * Signs a [[StdSignMsg]] with the method supplied by the child class.
+   * Signs a [[SignDoc]] with the method supplied by the child class.
    *
    * @param tx sign-message of the transaction to sign
    */
-  public async createSignatureV2(tx: SignDoc): Promise<string> {
-    return (await this.sign(Buffer.from(tx.toBytes()))).toString('base64');
+  public async createSignature(tx: SignDoc): Promise<SignatureV2> {
+    if (!this.publicKey) {
+      throw new Error(
+        'Signature could not be created: Key instance missing publicKey'
+      );
+    }
+
+    if (tx.auth_info.signer_infos.length > 1) {
+      throw new Error('multi signer is not supported');
+    }
+
+    const publicKey = new SimplePublicKey(this.publicKey.toString('base64'));
+
+    const modified = tx.auth_info.signer_infos.length === 0;
+    if (modified) {
+      tx.auth_info.signer_infos.push(
+        new SignerInfo(
+          publicKey,
+          tx.sequence,
+          new ModeInfo(new ModeInfo.Single(SignMode.SIGN_MODE_DIRECT))
+        )
+      );
+    }
+
+    const sigBytes = (await this.sign(Buffer.from(tx.toBytes()))).toString(
+      'base64'
+    );
+
+    // restore tx to origin
+    if (modified) {
+      tx.auth_info.signer_infos.pop();
+    }
+
+    return new SignatureV2(
+      publicKey,
+      new SignatureV2.Descriptor(
+        new SignatureV2.Descriptor.Single(SignMode.SIGN_MODE_DIRECT, sigBytes)
+      ),
+      tx.sequence
+    );
   }
 
   /**
@@ -146,41 +200,33 @@ export abstract class Key {
       );
     }
 
-    // set signer info
-    tx.auth_info.signer_infos.push(
+    const copyTx = Tx.fromData(tx.toData());
+    const sign_doc = new SignDoc(
+      options.chainID,
+      options.accountNumber,
+      options.sequence,
+      copyTx.auth_info,
+      copyTx.body
+    );
+
+    let signature: SignatureV2;
+    if (options.signMode === SignMode.SIGN_MODE_LEGACY_AMINO_JSON) {
+      signature = await this.createSignatureAmino(sign_doc);
+    } else {
+      signature = await this.createSignature(sign_doc);
+    }
+
+    const sigData = signature.data.single as SignatureV2.Descriptor.Single;
+    copyTx.signatures.push(sigData.signature);
+    copyTx.auth_info.signer_infos.push(
       new SignerInfo(
-        new SimplePublicKey(this.publicKey.toString('base64')),
-        options.sequence,
-        new ModeInfo(new ModeInfo.Single(options.signMode))
+        signature.public_key,
+        signature.sequence,
+        new ModeInfo(new ModeInfo.Single(sigData.mode))
       )
     );
 
-    let signature: string;
-    if (options.signMode === SignMode.SIGN_MODE_LEGACY_AMINO_JSON) {
-      signature = await this.createSignature(
-        new StdSignMsg(
-          options.chainID,
-          options.accountNumber,
-          options.sequence,
-          tx.auth_info.fee.toStdFee(),
-          tx.body.messages,
-          tx.body.memo
-        )
-      );
-    } else {
-      signature = await this.createSignatureV2(
-        new SignDoc(
-          tx.body.toBytes(),
-          tx.auth_info.toBytes(),
-          options.chainID,
-          options.accountNumber
-        )
-      );
-    }
-
-    tx.signatures.push(signature);
-
-    return tx;
+    return copyTx;
   }
 }
 

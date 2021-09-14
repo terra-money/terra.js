@@ -31,7 +31,9 @@ export class TendermintAPI extends BaseAPI {
       height !== undefined
         ? `/validatorsets/${height}`
         : `/validatorsets/latest`;
-    return this.c.get<ValidatorSet>(url, params).then(d => d.result);
+    return this.c
+      .get<{ result: ValidatorSet }>(url, params)
+      .then(d => d.result);
   }
 
   /**

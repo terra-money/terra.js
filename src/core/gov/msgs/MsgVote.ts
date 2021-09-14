@@ -8,7 +8,11 @@ import * as Long from 'long';
 /**
  * Vote for a proposal
  */
-export class MsgVote extends JSONSerializable<MsgVote.Data> {
+export class MsgVote extends JSONSerializable<
+  MsgVote.Amino,
+  MsgVote.Data,
+  MsgVote.Proto
+> {
   /**
    * @param proposal_id ID of proposal to vote on
    * @param voter voter's account address
@@ -22,14 +26,14 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
     super();
   }
 
-  public static fromData(data: MsgVote.Data): MsgVote {
+  public static fromAmino(data: MsgVote.Amino): MsgVote {
     const {
       value: { proposal_id, voter, option },
     } = data;
     return new MsgVote(Number.parseInt(proposal_id), voter, option);
   }
 
-  public toData(): MsgVote.Data {
+  public toAmino(): MsgVote.Amino {
     const { proposal_id, voter, option } = this;
     return {
       type: 'gov/MsgVote',
@@ -38,6 +42,21 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
         voter,
         option,
       },
+    };
+  }
+
+  public static fromData(data: MsgVote.Data): MsgVote {
+    const { proposal_id, voter, option } = data;
+    return new MsgVote(Number.parseInt(proposal_id), voter, option);
+  }
+
+  public toData(): MsgVote.Data {
+    const { proposal_id, voter, option } = this;
+    return {
+      '@type': '/cosmos.gov.v1beta1.MsgVote',
+      proposal_id: proposal_id.toFixed(),
+      voter,
+      option,
     };
   }
 
@@ -68,13 +87,20 @@ export class MsgVote extends JSONSerializable<MsgVote.Data> {
 
 export namespace MsgVote {
   export type Option = VoteOption;
-  export interface Data {
+  export interface Amino {
     type: 'gov/MsgVote';
     value: {
       proposal_id: string;
       voter: AccAddress;
       option: VoteOption;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.gov.v1beta1.MsgVote';
+    proposal_id: string;
+    voter: AccAddress;
+    option: Option;
   }
 
   export type Proto = MsgVote_pb;

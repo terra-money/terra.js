@@ -5,9 +5,29 @@ import { StakeAuthorization } from './StakeAuthorization';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { Grant as Grant_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
 
-export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data> {
+export class AuthorizationGrant extends JSONSerializable<
+  AuthorizationGrant.Amino,
+  AuthorizationGrant.Data,
+  AuthorizationGrant.Proto
+> {
   constructor(public authorization: Authorization, public expiration: Date) {
     super();
+  }
+
+  public static fromAmino(amino: AuthorizationGrant.Amino): AuthorizationGrant {
+    const { authorization, expiration } = amino;
+    return new AuthorizationGrant(
+      Authorization.fromAmino(authorization),
+      new Date(expiration)
+    );
+  }
+
+  public toAmino(): AuthorizationGrant.Amino {
+    const { authorization, expiration } = this;
+    return {
+      authorization: authorization.toAmino(),
+      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+    };
   }
 
   public static fromData(data: AuthorizationGrant.Data): AuthorizationGrant {
@@ -20,18 +40,10 @@ export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data
 
   public toData(): AuthorizationGrant.Data {
     const { authorization, expiration } = this;
-    if ('toData' in authorization) {
-      return {
-        authorization: authorization.toData(),
-        expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
-      };
-    }
-
-    throw new Error(
-      `amino is not supported for "${
-        authorization.packAny().typeUrl
-      }" authorization`
-    );
+    return {
+      authorization: authorization.toData(),
+      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+    };
   }
 
   public static fromProto(proto: AuthorizationGrant.Proto): AuthorizationGrant {
@@ -51,6 +63,11 @@ export class AuthorizationGrant extends JSONSerializable<AuthorizationGrant.Data
 }
 
 export namespace AuthorizationGrant {
+  export interface Amino {
+    authorization: Authorization.Amino;
+    expiration: string;
+  }
+
   export interface Data {
     authorization: Authorization.Data;
     expiration: string;
@@ -65,14 +82,30 @@ export type Authorization =
   | StakeAuthorization;
 
 export namespace Authorization {
-  export type Data = SendAuthorization.Data | GenericAuthorization.Data;
+  export type Amino = SendAuthorization.Amino | GenericAuthorization.Amino;
+  export type Data =
+    | SendAuthorization.Data
+    | GenericAuthorization.Data
+    | StakeAuthorization.Data;
   export type Proto = Any;
-  export function fromData(data: Authorization.Data): Authorization {
+  export function fromAmino(data: Authorization.Amino): Authorization {
     switch (data.type) {
       case 'msgauth/SendAuthorization':
-        return SendAuthorization.fromData(data);
+        return SendAuthorization.fromAmino(data);
       case 'msgauth/GenericAuthorization':
+        return GenericAuthorization.fromAmino(data);
+    }
+  }
+
+  export function fromData(data: Authorization.Data): Authorization {
+    switch (data['@type']) {
+      case '/cosmos.authz.v1beta1.GenericAuthorization':
         return GenericAuthorization.fromData(data);
+
+      case '/cosmos.bank.v1beta1.SendAuthorization':
+        return SendAuthorization.fromData(data);
+      case '/cosmos.staking.v1beta1.StakeAuthorization':
+        return StakeAuthorization.fromData(data);
     }
   }
 

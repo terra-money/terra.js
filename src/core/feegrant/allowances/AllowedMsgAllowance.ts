@@ -7,7 +7,11 @@ import { AllowedMsgAllowance as AllowedMsgAllowance_pb } from '@terra-money/terr
 /**
  * AllowedMsgAllowance creates allowance only for specified message types.
  */
-export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Data> {
+export class AllowedMsgAllowance extends JSONSerializable<
+  AllowedMsgAllowance.Amino,
+  AllowedMsgAllowance.Data,
+  AllowedMsgAllowance.Proto
+> {
   /**
    * @param allowance any of basic and periodic fee allowance.
    * @param allowed_messages the messages for which the grantee has the access.
@@ -19,13 +23,36 @@ export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Da
     super();
   }
 
-  public static fromData(data: AllowedMsgAllowance.Data): AllowedMsgAllowance {
+  public static fromAmino(
+    data: AllowedMsgAllowance.Amino
+  ): AllowedMsgAllowance {
     const {
       value: { allowance, allowed_messages },
     } = data;
 
     return new AllowedMsgAllowance(
       allowance.type === 'feegrant/BasicAllowance'
+        ? BasicAllowance.fromAmino(allowance)
+        : PeriodicAllowance.fromAmino(allowance),
+      allowed_messages
+    );
+  }
+
+  public toAmino(): AllowedMsgAllowance.Amino {
+    const { allowance, allowed_messages } = this;
+    return {
+      type: 'feegrant/AllowedMsgAllowance',
+      value: {
+        allowance: allowance.toAmino(),
+        allowed_messages,
+      },
+    };
+  }
+
+  public static fromData(proto: AllowedMsgAllowance.Data): AllowedMsgAllowance {
+    const { allowance, allowed_messages } = proto;
+    return new AllowedMsgAllowance(
+      allowance['@type'] === '/cosmos.feegrant.v1beta1.BasicAllowance'
         ? BasicAllowance.fromData(allowance)
         : PeriodicAllowance.fromData(allowance),
       allowed_messages
@@ -35,11 +62,9 @@ export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Da
   public toData(): AllowedMsgAllowance.Data {
     const { allowance, allowed_messages } = this;
     return {
-      type: 'feegrant/AllowedMsgAllowance',
-      value: {
-        allowance: allowance.toData(),
-        allowed_messages,
-      },
+      '@type': '/cosmos.feegrant.v1beta1.AllowedMsgAllowance',
+      allowance: allowance.toData(),
+      allowed_messages,
     };
   }
 
@@ -78,12 +103,18 @@ export class AllowedMsgAllowance extends JSONSerializable<AllowedMsgAllowance.Da
 }
 
 export namespace AllowedMsgAllowance {
-  export interface Data {
+  export interface Amino {
     type: 'feegrant/AllowedMsgAllowance';
     value: {
-      allowance: BasicAllowance.Data | PeriodicAllowance.Data;
+      allowance: BasicAllowance.Amino | PeriodicAllowance.Amino;
       allowed_messages: string[];
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.feegrant.v1beta1.AllowedMsgAllowance';
+    allowance: BasicAllowance.Data | PeriodicAllowance.Data;
+    allowed_messages: string[];
   }
 
   export type Proto = AllowedMsgAllowance_pb;

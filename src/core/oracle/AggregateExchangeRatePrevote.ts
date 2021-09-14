@@ -6,7 +6,11 @@ import * as Long from 'long';
 /**
  * Stores information about data about Oracle aggregate prevotes fetched from the blockchain.
  */
-export class AggregateExchangeRatePrevote extends JSONSerializable<AggregateExchangeRatePrevote.Data> {
+export class AggregateExchangeRatePrevote extends JSONSerializable<
+  AggregateExchangeRatePrevote.Amino,
+  AggregateExchangeRatePrevote.Data,
+  AggregateExchangeRatePrevote.Proto
+> {
   /**
    * @param hash aggregate vote hash
    * @param voter validator
@@ -18,6 +22,26 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<AggregateExch
     public submit_block: number
   ) {
     super();
+  }
+
+  public static fromAmino(
+    data: AggregateExchangeRatePrevote.Amino
+  ): AggregateExchangeRatePrevote {
+    const { hash, voter, submit_block } = data;
+    return new AggregateExchangeRatePrevote(
+      hash,
+      voter,
+      Number.parseInt(submit_block)
+    );
+  }
+
+  public toAmino(): AggregateExchangeRatePrevote.Amino {
+    const { hash, voter, submit_block } = this;
+    return {
+      hash,
+      voter,
+      submit_block: submit_block.toFixed(),
+    };
   }
 
   public static fromData(
@@ -61,6 +85,12 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<AggregateExch
 }
 
 export namespace AggregateExchangeRatePrevote {
+  export interface Amino {
+    hash: string;
+    voter: ValAddress;
+    submit_block: string;
+  }
+
   export interface Data {
     hash: string;
     voter: ValAddress;

@@ -11,7 +11,11 @@ import { ValConsPublicKey, PublicKey } from '../../PublicKey';
  * For new validators, this message registers a validator address to be a delegate on
  * the blockchain.
  */
-export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data> {
+export class MsgCreateValidator extends JSONSerializable<
+  MsgCreateValidator.Amino,
+  MsgCreateValidator.Data,
+  MsgCreateValidator.Proto
+> {
   /**
    *
    * @param description validator's delegate information
@@ -34,7 +38,7 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
     super();
   }
 
-  public static fromData(data: MsgCreateValidator.Data): MsgCreateValidator {
+  public static fromAmino(data: MsgCreateValidator.Amino): MsgCreateValidator {
     const {
       value: {
         description,
@@ -45,6 +49,51 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
         pubkey,
         value,
       },
+    } = data;
+    return new MsgCreateValidator(
+      description,
+      Validator.CommissionRates.fromAmino(commission),
+      new Int(min_self_delegation),
+      delegator_address,
+      validator_address,
+      ValConsPublicKey.fromAmino(pubkey),
+      Coin.fromAmino(value)
+    );
+  }
+
+  public toAmino(): MsgCreateValidator.Amino {
+    const {
+      description,
+      commission,
+      min_self_delegation,
+      delegator_address,
+      validator_address,
+      pubkey,
+      value,
+    } = this;
+    return {
+      type: 'staking/MsgCreateValidator',
+      value: {
+        description,
+        commission: commission.toAmino(),
+        min_self_delegation: min_self_delegation.toString(),
+        delegator_address,
+        validator_address,
+        pubkey: pubkey.toAmino(),
+        value: value.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(data: MsgCreateValidator.Data): MsgCreateValidator {
+    const {
+      description,
+      commission,
+      min_self_delegation,
+      delegator_address,
+      validator_address,
+      pubkey,
+      value,
     } = data;
     return new MsgCreateValidator(
       description,
@@ -68,16 +117,14 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
       value,
     } = this;
     return {
-      type: 'staking/MsgCreateValidator',
-      value: {
-        description,
-        commission: commission.toData(),
-        min_self_delegation: min_self_delegation.toString(),
-        delegator_address,
-        validator_address,
-        pubkey: pubkey.toData(),
-        value: value.toData(),
-      },
+      '@type': '/cosmos.staking.v1beta1.MsgCreateValidator',
+      description,
+      commission: commission.toData(),
+      min_self_delegation: min_self_delegation.toString(),
+      delegator_address,
+      validator_address,
+      pubkey: pubkey.toData(),
+      value: value.toData(),
     };
   }
 
@@ -133,17 +180,28 @@ export class MsgCreateValidator extends JSONSerializable<MsgCreateValidator.Data
 }
 
 export namespace MsgCreateValidator {
-  export interface Data {
+  export interface Amino {
     type: 'staking/MsgCreateValidator';
     value: {
       description: Validator.Description;
-      commission: Validator.CommissionRates.Data;
+      commission: Validator.CommissionRates.Amino;
       min_self_delegation: string;
       delegator_address: AccAddress;
       validator_address: ValAddress;
-      pubkey: ValConsPublicKey.Data;
-      value: Coin.Data;
+      pubkey: ValConsPublicKey.Amino;
+      value: Coin.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.MsgCreateValidator';
+    description: Validator.Description;
+    commission: Validator.CommissionRates.Data;
+    min_self_delegation: string;
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    pubkey: ValConsPublicKey.Data;
+    value: Coin.Data;
   }
 
   export type Proto = MsgCreateValidator_pb;

@@ -57,8 +57,11 @@ export class TreasuryAPI extends BaseAPI {
    */
   public async taxCap(denom: Denom, params: APIParams = {}): Promise<Coin> {
     return this.c
-      .get<string>(`/treasury/tax_cap/${denom}`, params)
-      .then(d => new Coin(denom, d.result));
+      .get<{ tax_cap: string }>(
+        `/terra/treasury/v1beta1/tax_caps/${denom}`,
+        params
+      )
+      .then(d => new Coin(denom, d.tax_cap));
   }
 
   /**
@@ -72,8 +75,8 @@ export class TreasuryAPI extends BaseAPI {
     }
 
     return this.c
-      .get<string>(`/treasury/tax_rate`, params)
-      .then(d => new Dec(d.result));
+      .get<{ tax_rate: string }>(`/terra/treasury/v1beta1/tax_rate`, params)
+      .then(d => new Dec(d.tax_rate));
   }
 
   /**
@@ -81,8 +84,11 @@ export class TreasuryAPI extends BaseAPI {
    */
   public async rewardWeight(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<string>(`/treasury/reward_weight`, params)
-      .then(d => new Dec(d.result));
+      .get<{ reward_weight: string }>(
+        `/terra/treasury/v1beta1/reward_weight`,
+        params
+      )
+      .then(d => new Dec(d.reward_weight));
   }
 
   /**
@@ -90,8 +96,11 @@ export class TreasuryAPI extends BaseAPI {
    */
   public async taxProceeds(params: APIParams = {}): Promise<Coins> {
     return this.c
-      .get<Coins.Data>(`/treasury/tax_proceeds`, params)
-      .then(d => Coins.fromData(d.result));
+      .get<{ tax_proceeds: Coins.Data }>(
+        `/terra/treasury/v1beta1/tax_proceeds`,
+        params
+      )
+      .then(d => Coins.fromData(d.tax_proceeds));
   }
 
   /**
@@ -99,8 +108,11 @@ export class TreasuryAPI extends BaseAPI {
    */
   public async seigniorageProceeds(params: APIParams = {}): Promise<Coin> {
     return this.c
-      .get<string>(`/treasury/seigniorage_proceeds`, params)
-      .then(d => new Coin(Denom.LUNA, d.result));
+      .get<{ seigniorage_proceeds: string }>(
+        `/terra/treasury/v1beta1/seigniorage_proceeds`,
+        params
+      )
+      .then(d => new Coin(Denom.LUNA, d.seigniorage_proceeds));
   }
 
   /**
@@ -108,8 +120,11 @@ export class TreasuryAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<TreasuryParams> {
     return this.c
-      .get<TreasuryParams.Data>(`/treasury/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: TreasuryParams.Data }>(
+        `/terra/treasury/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         tax_policy: PolicyConstraints.fromData(d.tax_policy),
         reward_policy: PolicyConstraints.fromData(d.reward_policy),
         mining_increment: new Dec(d.mining_increment),

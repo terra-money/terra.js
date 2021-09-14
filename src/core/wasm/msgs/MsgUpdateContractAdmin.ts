@@ -3,7 +3,11 @@ import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgUpdateContractAdmin as MsgUpdateContractAdmin_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
-export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAdmin.Data> {
+export class MsgUpdateContractAdmin extends JSONSerializable<
+  MsgUpdateContractAdmin.Amino,
+  MsgUpdateContractAdmin.Data,
+  MsgUpdateContractAdmin.Proto
+> {
   /**
    * @param admin contract admin
    * @param new_admin new admin
@@ -17,8 +21,8 @@ export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAd
     super();
   }
 
-  public static fromData(
-    data: MsgUpdateContractAdmin.Data
+  public static fromAmino(
+    data: MsgUpdateContractAdmin.Amino
   ): MsgUpdateContractAdmin {
     const {
       value: { admin, new_admin, contract },
@@ -26,7 +30,7 @@ export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAd
     return new MsgUpdateContractAdmin(admin, new_admin, contract);
   }
 
-  public toData(): MsgUpdateContractAdmin.Data {
+  public toAmino(): MsgUpdateContractAdmin.Amino {
     const { admin, new_admin, contract } = this;
     return {
       type: 'wasm/MsgUpdateContractAdmin',
@@ -69,16 +73,40 @@ export class MsgUpdateContractAdmin extends JSONSerializable<MsgUpdateContractAd
       MsgUpdateContractAdmin_pb.decode(msgAny.value)
     );
   }
+
+  public static fromData(
+    data: MsgUpdateContractAdmin.Data
+  ): MsgUpdateContractAdmin {
+    const { admin, new_admin, contract } = data;
+    return new MsgUpdateContractAdmin(admin, new_admin, contract);
+  }
+
+  public toData(): MsgUpdateContractAdmin.Data {
+    const { admin, new_admin, contract } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
+      admin,
+      new_admin,
+      contract,
+    };
+  }
 }
 
 export namespace MsgUpdateContractAdmin {
-  export interface Data {
+  export interface Amino {
     type: 'wasm/MsgUpdateContractAdmin';
     value: {
       admin: AccAddress;
       new_admin: AccAddress;
       contract: AccAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin';
+    admin: AccAddress;
+    new_admin: AccAddress;
+    contract: AccAddress;
   }
 
   export type Proto = MsgUpdateContractAdmin_pb;

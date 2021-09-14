@@ -3,7 +3,11 @@ import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgStoreCode as MsgStoreCode_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
-export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
+export class MsgStoreCode extends JSONSerializable<
+  MsgStoreCode.Amino,
+  MsgStoreCode.Data,
+  MsgStoreCode.Proto
+> {
   /**
    * @param sender code creator
    * @param wasm_byte_code base64-encoded bytecode contents
@@ -12,14 +16,14 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
     super();
   }
 
-  public static fromData(data: MsgStoreCode.Data): MsgStoreCode {
+  public static fromAmino(data: MsgStoreCode.Amino): MsgStoreCode {
     const {
       value: { sender, wasm_byte_code },
     } = data;
     return new MsgStoreCode(sender, wasm_byte_code);
   }
 
-  public toData(): MsgStoreCode.Data {
+  public toAmino(): MsgStoreCode.Amino {
     const { sender, wasm_byte_code } = this;
     return {
       type: 'wasm/MsgStoreCode',
@@ -55,15 +59,35 @@ export class MsgStoreCode extends JSONSerializable<MsgStoreCode.Data> {
   public static unpackAny(msgAny: Any): MsgStoreCode {
     return MsgStoreCode.fromProto(MsgStoreCode_pb.decode(msgAny.value));
   }
+
+  public static fromData(data: MsgStoreCode.Data): MsgStoreCode {
+    const { sender, wasm_byte_code } = data;
+    return new MsgStoreCode(sender, wasm_byte_code);
+  }
+
+  public toData(): MsgStoreCode.Data {
+    const { sender, wasm_byte_code } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgStoreCode',
+      sender,
+      wasm_byte_code,
+    };
+  }
 }
 
 export namespace MsgStoreCode {
-  export interface Data {
+  export interface Amino {
     type: 'wasm/MsgStoreCode';
     value: {
       sender: AccAddress;
       wasm_byte_code: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.wasm.v1beta1.MsgStoreCode';
+    sender: AccAddress;
+    wasm_byte_code: string;
   }
 
   export type Proto = MsgStoreCode_pb;

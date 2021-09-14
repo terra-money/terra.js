@@ -30,7 +30,11 @@ import { ParameterChangeProposal as ParameterChangeProposal_pb } from '@terra-mo
  * const msg = new MsgSubmitProposal();
  * ```
  */
-export class ParameterChangeProposal extends JSONSerializable<ParameterChangeProposal.Data> {
+export class ParameterChangeProposal extends JSONSerializable<
+  ParameterChangeProposal.Amino,
+  ParameterChangeProposal.Data,
+  ParameterChangeProposal.Proto
+> {
   changes: ParamChanges;
 
   /**
@@ -42,22 +46,45 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChange.Data[] | ParamChanges
+    changes: ParamChanges
   ) {
     super();
     if (changes instanceof Array) {
-      this.changes = ParamChanges.fromData(changes);
+      this.changes = ParamChanges.fromAmino(changes);
     } else {
       this.changes = changes;
     }
   }
 
-  public static fromData(
-    data: ParameterChangeProposal.Data
+  public static fromAmino(
+    data: ParameterChangeProposal.Amino
   ): ParameterChangeProposal {
     const {
       value: { title, description, changes },
     } = data;
+    return new ParameterChangeProposal(
+      title,
+      description,
+      ParamChanges.fromAmino(changes)
+    );
+  }
+
+  public toAmino(): ParameterChangeProposal.Amino {
+    const { title, description, changes } = this;
+    return {
+      type: 'params/ParameterChangeProposal',
+      value: {
+        title,
+        description,
+        changes: changes.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(
+    proto: ParameterChangeProposal.Data
+  ): ParameterChangeProposal {
+    const { title, description, changes } = proto;
     return new ParameterChangeProposal(
       title,
       description,
@@ -68,12 +95,10 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
   public toData(): ParameterChangeProposal.Data {
     const { title, description, changes } = this;
     return {
-      type: 'params/ParameterChangeProposal',
-      value: {
-        title,
-        description,
-        changes: changes.toData(),
-      },
+      '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
+      title,
+      description,
+      changes: changes.toData(),
     };
   }
 
@@ -111,13 +136,20 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
 }
 
 export namespace ParameterChangeProposal {
-  export interface Data {
+  export interface Amino {
     type: 'params/ParameterChangeProposal';
     value: {
       title: string;
       description: string;
-      changes: ParamChange.Data[];
+      changes: ParamChange.Amino[];
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.params.v1beta1.ParameterChangeProposal';
+    title: string;
+    description: string;
+    changes: ParamChange.Data[];
   }
 
   export type Proto = ParameterChangeProposal_pb;

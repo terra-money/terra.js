@@ -15,6 +15,12 @@ export type DistributionMsg =
   | MsgFundCommunityPool;
 
 export namespace DistributionMsg {
+  export type Amino =
+    | MsgSetWithdrawAddress.Amino
+    | MsgWithdrawDelegatorReward.Amino
+    | MsgWithdrawValidatorCommission.Amino
+    | MsgFundCommunityPool.Amino;
+
   export type Data =
     | MsgSetWithdrawAddress.Data
     | MsgWithdrawDelegatorReward.Data

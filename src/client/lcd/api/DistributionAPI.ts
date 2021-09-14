@@ -60,24 +60,6 @@ export namespace Rewards {
   }
 }
 
-/**
- * Holds the response of validator rewards query
- */
-export interface ValidatorRewards {
-  /** Rewards that are from a validator's self-delegation.  */
-  self_bond_rewards: Coins;
-
-  /** Rewards that are from a validator's commission, from delegators.  */
-  val_commission: Coins;
-}
-
-export namespace ValidatorRewards {
-  export interface Data {
-    self_bond_rewards: Coins.Data;
-    val_commission: Coins.Data;
-  }
-}
-
 export class DistributionAPI extends BaseAPI {
   /**
    * Gets a delegator's rewards.
@@ -89,10 +71,10 @@ export class DistributionAPI extends BaseAPI {
   ): Promise<Rewards> {
     const rewardsData = await this.c
       .get<Rewards.Data>(
-        `/distribution/delegators/${delegator}/rewards`,
+        `/cosmos/distribution/v1beta1/delegators/${delegator}/rewards`,
         params
       )
-      .then(d => d.result);
+      .then(d => d);
 
     const rewards: Rewards['rewards'] = {};
     for (const reward of rewardsData.rewards) {
@@ -108,20 +90,21 @@ export class DistributionAPI extends BaseAPI {
    * Gets a validator's rewards.
    * @param validator validator's operator address
    */
-  public async validatorRewards(
+  public async validatorCommission(
     validator: ValAddress,
     params: APIParams = {}
-  ): Promise<ValidatorRewards> {
+  ): Promise<Coins> {
     return this.c
-      .get<ValidatorRewards.Data>(
-        `/distribution/validators/${validator}`,
+      .get<{
+        commission: {
+          commission: Coins.Data;
+        };
+      }>(
+        `/cosmos/distribution/v1beta1/validators/${validator}/commission`,
         params
       )
-      .then(d => d.result)
-      .then(d => ({
-        self_bond_rewards: Coins.fromData(d.self_bond_rewards),
-        val_commission: Coins.fromData(d.val_commission),
-      }));
+      .then(d => d.commission)
+      .then(d => Coins.fromData(d.commission));
   }
 
   /**
@@ -133,11 +116,11 @@ export class DistributionAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<AccAddress> {
     return this.c
-      .get<AccAddress>(
-        `/distribution/delegators/${delegator}/withdraw_address`,
+      .get<{ withdraw_address: AccAddress }>(
+        `/cosmos/distribution/v1beta1/delegators/${delegator}/withdraw_address`,
         params
       )
-      .then(d => d.result);
+      .then(d => d.withdraw_address);
   }
 
   /**
@@ -145,8 +128,11 @@ export class DistributionAPI extends BaseAPI {
    */
   public async communityPool(params: APIParams = {}): Promise<Coins> {
     return this.c
-      .get<Coins.Data>(`/distribution/community_pool`, params)
-      .then(d => Coins.fromData(d.result));
+      .get<{ pool: Coins.Data }>(
+        `/cosmos/distribution/v1beta1/community_pool`,
+        params
+      )
+      .then(d => Coins.fromData(d.pool));
   }
 
   /**
@@ -154,8 +140,11 @@ export class DistributionAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<DistributionParams> {
     return this.c
-      .get<DistributionParams.Data>(`/distribution/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: DistributionParams.Data }>(
+        `/cosmos/distribution/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         base_proposer_reward: new Dec(d.base_proposer_reward),
         community_tax: new Dec(d.community_tax),
         bonus_proposer_reward: new Dec(d.bonus_proposer_reward),

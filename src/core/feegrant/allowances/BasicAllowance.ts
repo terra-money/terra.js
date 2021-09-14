@@ -7,7 +7,11 @@ import { BasicAllowance as BasicAllowance_pb } from '@terra-money/terra.proto/co
  * BasicAllowance implements Allowance with a one-time grant of tokens
  * that optionally expires. The grantee can use up to SpendLimit to cover fees.
  */
-export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
+export class BasicAllowance extends JSONSerializable<
+  BasicAllowance.Amino,
+  BasicAllowance.Data,
+  BasicAllowance.Proto
+> {
   public spend_limit: Coins;
 
   /**
@@ -20,11 +24,30 @@ export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
     this.spend_limit = new Coins(spend_limit);
   }
 
-  public static fromData(data: BasicAllowance.Data): BasicAllowance {
+  public static fromAmino(data: BasicAllowance.Amino): BasicAllowance {
     const {
       value: { spend_limit, expiration },
     } = data;
 
+    return new BasicAllowance(
+      Coins.fromAmino(spend_limit),
+      new Date(expiration)
+    );
+  }
+
+  public toAmino(): BasicAllowance.Amino {
+    const { spend_limit, expiration } = this;
+    return {
+      type: 'feegrant/BasicAllowance',
+      value: {
+        spend_limit: spend_limit.toAmino(),
+        expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+      },
+    };
+  }
+
+  public static fromData(proto: BasicAllowance.Data): BasicAllowance {
+    const { spend_limit, expiration } = proto;
     return new BasicAllowance(
       Coins.fromData(spend_limit),
       new Date(expiration)
@@ -34,11 +57,9 @@ export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
   public toData(): BasicAllowance.Data {
     const { spend_limit, expiration } = this;
     return {
-      type: 'feegrant/BasicAllowance',
-      value: {
-        spend_limit: spend_limit.toData(),
-        expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
-      },
+      '@type': '/cosmos.feegrant.v1beta1.BasicAllowance',
+      spend_limit: spend_limit.toData(),
+      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 
@@ -70,12 +91,18 @@ export class BasicAllowance extends JSONSerializable<BasicAllowance.Data> {
 }
 
 export namespace BasicAllowance {
-  export interface Data {
+  export interface Amino {
     type: 'feegrant/BasicAllowance';
     value: {
-      spend_limit: Coins.Data;
+      spend_limit: Coins.Amino;
       expiration: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.feegrant.v1beta1.BasicAllowance';
+    spend_limit: Coins.Data;
+    expiration: string;
   }
 
   export type Proto = BasicAllowance_pb;

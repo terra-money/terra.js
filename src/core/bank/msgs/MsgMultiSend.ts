@@ -48,7 +48,11 @@ import {
  *  const multisend = new MsgMultiSend(inputs, outputs);
  * ```
  */
-export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
+export class MsgMultiSend extends JSONSerializable<
+  MsgMultiSend.Amino,
+  MsgMultiSend.Data,
+  MsgMultiSend.Proto
+> {
   /**
    * @param inputs inputs
    * @param outputs outputs
@@ -60,10 +64,29 @@ export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
     super();
   }
 
-  public static fromData(data: MsgMultiSend.Data): MsgMultiSend {
+  public static fromAmino(data: MsgMultiSend.Amino): MsgMultiSend {
     const {
       value: { inputs, outputs },
     } = data;
+    return new MsgMultiSend(
+      inputs.map(i => MsgMultiSend.Input.fromAmino(i)),
+      outputs.map(o => MsgMultiSend.Output.fromAmino(o))
+    );
+  }
+
+  public toAmino(): MsgMultiSend.Amino {
+    const { inputs, outputs } = this;
+    return {
+      type: 'bank/MsgMultiSend',
+      value: {
+        inputs: inputs.map(i => i.toAmino()),
+        outputs: outputs.map(o => o.toAmino()),
+      },
+    };
+  }
+
+  public static fromData(data: MsgMultiSend.Data): MsgMultiSend {
+    const { inputs, outputs } = data;
     return new MsgMultiSend(
       inputs.map(i => MsgMultiSend.Input.fromData(i)),
       outputs.map(o => MsgMultiSend.Output.fromData(o))
@@ -73,11 +96,9 @@ export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
   public toData(): MsgMultiSend.Data {
     const { inputs, outputs } = this;
     return {
-      type: 'bank/MsgMultiSend',
-      value: {
-        inputs: inputs.map(i => i.toData()),
-        outputs: outputs.map(o => o.toData()),
-      },
+      '@type': '/cosmos.bank.v1beta1.MsgMultiSend',
+      inputs: inputs.map(i => i.toData()),
+      outputs: outputs.map(o => o.toData()),
     };
   }
 
@@ -109,17 +130,27 @@ export class MsgMultiSend extends JSONSerializable<MsgMultiSend.Data> {
 }
 
 export namespace MsgMultiSend {
-  export interface Data {
+  export interface Amino {
     readonly type: 'bank/MsgMultiSend';
     value: {
-      inputs: Input.Data[];
-      outputs: Output.Data[];
+      inputs: Input.Amino[];
+      outputs: Output.Amino[];
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.bank.v1beta1.MsgMultiSend';
+    inputs: Input.Data[];
+    outputs: Output.Data[];
   }
 
   export type Proto = MsgMultiSend_pb;
 
-  export class Input extends JSONSerializable<Input.Data> {
+  export class Input extends JSONSerializable<
+    Input.Amino,
+    Input.Data,
+    Input.Proto
+  > {
     /**
      * Value of the transaction
      */
@@ -132,6 +163,19 @@ export namespace MsgMultiSend {
     constructor(public address: AccAddress, coinsInput: Coins.Input) {
       super();
       this.coins = new Coins(coinsInput);
+    }
+
+    public toAmino(): Input.Amino {
+      const { address, coins } = this;
+      return {
+        address,
+        coins: coins.toAmino(),
+      };
+    }
+
+    public static fromAmino(data: Input.Amino): Input {
+      const { address, coins } = data;
+      return new Input(address, Coins.fromAmino(coins));
     }
 
     public toData(): Input.Data {
@@ -160,7 +204,11 @@ export namespace MsgMultiSend {
     }
   }
 
-  export class Output extends JSONSerializable<Output.Data> {
+  export class Output extends JSONSerializable<
+    Output.Amino,
+    Output.Data,
+    Output.Proto
+  > {
     /**
      * Value of the transaction
      */
@@ -173,6 +221,19 @@ export namespace MsgMultiSend {
     constructor(public address: AccAddress, coinsInput: Coins.Input) {
       super();
       this.coins = new Coins(coinsInput);
+    }
+
+    public toAmino(): Output.Amino {
+      const { address, coins } = this;
+      return {
+        address,
+        coins: coins.toAmino(),
+      };
+    }
+
+    public static fromAmino(data: Output.Amino): Output {
+      const { address, coins } = data;
+      return new Output(address, Coins.fromAmino(coins));
     }
 
     public toData(): Output.Data {
@@ -202,6 +263,11 @@ export namespace MsgMultiSend {
   }
 
   export namespace Input {
+    export interface Amino {
+      address: AccAddress;
+      coins: Coins.Amino;
+    }
+
     export interface Data {
       address: AccAddress;
       coins: Coins.Data;
@@ -211,6 +277,11 @@ export namespace MsgMultiSend {
   }
 
   export namespace Output {
+    export interface Amino {
+      address: AccAddress;
+      coins: Coins.Amino;
+    }
+
     export interface Data {
       address: AccAddress;
       coins: Coins.Data;

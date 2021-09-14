@@ -8,7 +8,11 @@ import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@te
  * Proposal that disburses funds from the Distribution module's community pool to the
  * specified recipient if passed.
  */
-export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSpendProposal.Data> {
+export class CommunityPoolSpendProposal extends JSONSerializable<
+  CommunityPoolSpendProposal.Amino,
+  CommunityPoolSpendProposal.Data,
+  CommunityPoolSpendProposal.Proto
+> {
   public amount: Coins;
   /**
    * @param title proposal's title
@@ -26,12 +30,37 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
     this.amount = new Coins(amount);
   }
 
-  public static fromData(
-    data: CommunityPoolSpendProposal.Data
+  public static fromAmino(
+    data: CommunityPoolSpendProposal.Amino
   ): CommunityPoolSpendProposal {
     const {
       value: { title, description, recipient, amount },
     } = data;
+    return new CommunityPoolSpendProposal(
+      title,
+      description,
+      recipient,
+      Coins.fromAmino(amount)
+    );
+  }
+
+  public toAmino(): CommunityPoolSpendProposal.Amino {
+    const { title, description, recipient, amount } = this;
+    return {
+      type: 'distribution/CommunityPoolSpendProposal',
+      value: {
+        title,
+        description,
+        recipient,
+        amount: amount.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(
+    data: CommunityPoolSpendProposal.Data
+  ): CommunityPoolSpendProposal {
+    const { title, description, recipient, amount } = data;
     return new CommunityPoolSpendProposal(
       title,
       description,
@@ -43,13 +72,11 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
   public toData(): CommunityPoolSpendProposal.Data {
     const { title, description, recipient, amount } = this;
     return {
-      type: 'distribution/CommunityPoolSpendProposal',
-      value: {
-        title,
-        description,
-        recipient,
-        amount: amount.toData(),
-      },
+      '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
+      title,
+      description,
+      recipient,
+      amount: amount.toData(),
     };
   }
 
@@ -89,14 +116,22 @@ export class CommunityPoolSpendProposal extends JSONSerializable<CommunityPoolSp
 }
 
 export namespace CommunityPoolSpendProposal {
-  export interface Data {
+  export interface Amino {
     type: 'distribution/CommunityPoolSpendProposal';
     value: {
       title: string;
       description: string;
       recipient: AccAddress;
-      amount: Coins.Data;
+      amount: Coins.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal';
+    title: string;
+    description: string;
+    recipient: AccAddress;
+    amount: Coins.Data;
   }
 
   export type Proto = CommunityPoolSpendProposal_pb;

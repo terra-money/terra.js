@@ -1,8 +1,10 @@
 import { RawKey, MnemonicKey } from '.';
 import { MsgSend } from '../core/bank/msgs';
 import { Coins } from '../core/Coins';
-import { StdSignMsg } from '../core/StdSignMsg';
-import { StdFee } from '../core/StdFee';
+import { SignDoc } from '../core/SignDoc';
+import { Fee } from '../core/Fee';
+import { SignatureV2 } from '../core/SignatureV2';
+import { AuthInfo, TxBody } from '../core/Tx';
 
 describe('RawKey', () => {
   it('derives correct key information', () => {
@@ -68,13 +70,19 @@ describe('RawKey', () => {
       new Coins({ uluna: '100000000' })
     );
 
-    const fee = new StdFee(46467, new Coins({ uluna: '698' }));
-    const stdSignMsg = new StdSignMsg('columbus-3-testnet', 45, 0, fee, [
-      msgSend,
-    ]);
+    const fee = new Fee(46467, new Coins({ uluna: '698' }));
+    const signDoc = new SignDoc(
+      'columbus-3-testnet',
+      45,
+      0,
+      new AuthInfo([], fee),
+      new TxBody([msgSend])
+    );
 
-    const { signature } = await rk.createSignature(stdSignMsg);
-    expect(signature).toEqual(
+    const {
+      data: { single },
+    } = await rk.createSignatureAmino(signDoc);
+    expect((single as SignatureV2.Descriptor.Single).signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );
   });

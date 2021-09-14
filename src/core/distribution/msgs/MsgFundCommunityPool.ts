@@ -4,7 +4,11 @@ import { Coins } from '../../Coins';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgFundCommunityPool as MsgFundCommunityPool_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
-export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.Data> {
+export class MsgFundCommunityPool extends JSONSerializable<
+  MsgFundCommunityPool.Amino,
+  MsgFundCommunityPool.Data,
+  MsgFundCommunityPool.Proto
+> {
   public amount: Coins;
   /**
    * @param depositor depositor's account address
@@ -15,23 +19,39 @@ export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.
     this.amount = new Coins(amount);
   }
 
-  public static fromData(
-    data: MsgFundCommunityPool.Data
+  public static fromAmino(
+    data: MsgFundCommunityPool.Amino
   ): MsgFundCommunityPool {
     const {
       value: { depositor, amount },
     } = data;
+    return new MsgFundCommunityPool(depositor, Coins.fromAmino(amount));
+  }
+
+  public toAmino(): MsgFundCommunityPool.Amino {
+    const { depositor, amount } = this;
+    return {
+      type: 'distribution/MsgFundCommunityPool',
+      value: {
+        depositor,
+        amount: amount.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(
+    proto: MsgFundCommunityPool.Data
+  ): MsgFundCommunityPool {
+    const { depositor, amount } = proto;
     return new MsgFundCommunityPool(depositor, Coins.fromData(amount));
   }
 
   public toData(): MsgFundCommunityPool.Data {
     const { depositor, amount } = this;
     return {
-      type: 'distribution/MsgFundCommunityPool',
-      value: {
-        depositor,
-        amount: amount.toData(),
-      },
+      '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
+      depositor,
+      amount: amount.toData(),
     };
   }
 
@@ -67,12 +87,18 @@ export class MsgFundCommunityPool extends JSONSerializable<MsgFundCommunityPool.
 }
 
 export namespace MsgFundCommunityPool {
-  export interface Data {
+  export interface Amino {
     type: 'distribution/MsgFundCommunityPool';
     value: {
       depositor: AccAddress;
-      amount: Coins.Data;
+      amount: Coins.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool';
+    depositor: AccAddress;
+    amount: Coins.Data;
   }
 
   export type Proto = MsgFundCommunityPool_pb;

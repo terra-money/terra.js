@@ -8,7 +8,11 @@ import { MsgSetWithdrawAddress as MsgSetWithdrawAddress_pb } from '@terra-money/
  * delegations (not including its self-delegation) into their associated account's
  * withdraw address.
  */
-export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddress.Data> {
+export class MsgSetWithdrawAddress extends JSONSerializable<
+  MsgSetWithdrawAddress.Amino,
+  MsgSetWithdrawAddress.Data,
+  MsgSetWithdrawAddress.Proto
+> {
   /**
    * @param delegator_address delegator's account address
    * @param withdraw_address desired new withdraw address
@@ -20,8 +24,8 @@ export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddres
     super();
   }
 
-  public static fromData(
-    data: MsgSetWithdrawAddress.Data
+  public static fromAmino(
+    data: MsgSetWithdrawAddress.Amino
   ): MsgSetWithdrawAddress {
     const {
       value: { delegator_address, withdraw_address },
@@ -29,7 +33,7 @@ export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddres
     return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
   }
 
-  public toData(): MsgSetWithdrawAddress.Data {
+  public toAmino(): MsgSetWithdrawAddress.Amino {
     const { delegator_address, withdraw_address } = this;
     return {
       type: 'distribution/MsgModifyWithdrawAddress',
@@ -37,6 +41,22 @@ export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddres
         delegator_address,
         withdraw_address,
       },
+    };
+  }
+
+  public static fromData(
+    data: MsgSetWithdrawAddress.Data
+  ): MsgSetWithdrawAddress {
+    const { delegator_address, withdraw_address } = data;
+    return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
+  }
+
+  public toData(): MsgSetWithdrawAddress.Data {
+    const { delegator_address, withdraw_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
+      delegator_address,
+      withdraw_address,
     };
   }
 
@@ -72,12 +92,18 @@ export class MsgSetWithdrawAddress extends JSONSerializable<MsgSetWithdrawAddres
 }
 
 export namespace MsgSetWithdrawAddress {
-  export interface Data {
+  export interface Amino {
     type: 'distribution/MsgModifyWithdrawAddress';
     value: {
       delegator_address: AccAddress;
       withdraw_address: AccAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress';
+    delegator_address: AccAddress;
+    withdraw_address: AccAddress;
   }
 
   export type Proto = MsgSetWithdrawAddress_pb;

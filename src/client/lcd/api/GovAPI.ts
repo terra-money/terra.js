@@ -7,9 +7,13 @@ import {
   Int,
   Deposit,
   Vote,
+  WeightedVoteOption,
+  Tx,
 } from '../../../core';
 
-import { APIParams } from '../APIRequester';
+import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { TxSearchResult } from './TxAPI';
+import { ProposalStatus } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
 
 export interface GovParams {
   /**
@@ -101,10 +105,15 @@ export class GovAPI extends BaseAPI {
   /**
    * Gets all proposals.
    */
-  public async proposals(params: APIParams = {}): Promise<Proposal[]> {
+  public async proposals(
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Proposal[], Pagination]> {
     return this.c
-      .get<Proposal.Data[]>(`/gov/proposals`, params)
-      .then(d => d.result.map(Proposal.fromData));
+      .get<{
+        proposals: Proposal.Data[];
+        pagination: Pagination;
+      }>(`/gov/proposals`, params)
+      .then(d => [d.proposals.map(Proposal.fromData), d.pagination]);
   }
 
   /**
@@ -116,24 +125,45 @@ export class GovAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<Proposal> {
     return this.c
-      .get<Proposal.Data>(`/gov/proposals/${proposalId}`, params)
-      .then(d => Proposal.fromData(d.result));
+      .get<{ proposal: Proposal.Data }>(
+        `/cosmos/gov/v1beta1/proposals/${proposalId}`,
+        params
+      )
+      .then(d => Proposal.fromData(d.proposal));
   }
 
   /**
    * Get the proposal's proposer
    * @param proposalId proposal's ID
    */
-  public async proposer(
-    proposalId: number,
-    params: APIParams = {}
-  ): Promise<AccAddress> {
-    return this.c
-      .get<{ proposer: AccAddress }>(
-        `/gov/proposals/${proposalId}/proposer`,
-        params
-      )
-      .then(d => d.result.proposer);
+  public async proposer(proposalId: number): Promise<AccAddress> {
+    const creationTx = await this.searchProposalCreationTx(proposalId);
+    const msg = creationTx.body.messages.find(
+      msg => msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal'
+    );
+
+    if (msg && msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal') {
+      return msg.proposer;
+    }
+
+    throw Error('failed to fetch submit_proposer tx');
+  }
+
+  /**
+   * Get the proposal's initial deposit
+   * @param proposalId proposal's ID
+   */
+  public async initialDeposit(proposalId: number): Promise<Coins> {
+    const creationTx = await this.searchProposalCreationTx(proposalId);
+    const msg = creationTx.body.messages.find(
+      msg => msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal'
+    );
+
+    if (msg && msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal') {
+      return Coins.fromData(msg.initial_deposit);
+    }
+
+    throw Error('failed to fetch submit_proposer tx');
   }
 
   /**
@@ -142,11 +172,72 @@ export class GovAPI extends BaseAPI {
    */
   public async deposits(
     proposalId: number,
-    params: APIParams = {}
-  ): Promise<Deposit> {
+    _params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Deposit[], Pagination]> {
+    const proposal = await this.proposal(proposalId);
+    if (proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD) {
+      return this.c
+        .get<{ deposits: Deposit.Data[]; pagination: Pagination }>(
+          `/cosmos/gov/v1beta1/proposals/${proposalId}/deposits`,
+          _params
+        )
+        .then(d => [
+          d.deposits.map(deposit => Deposit.fromData(deposit)),
+          d.pagination,
+        ]);
+    }
+
+    // build search params
+    const params = new URLSearchParams();
+    params.append('events', `message.action='/cosmos.gov.v1beta1.MsgDeposit'`);
+    params.append('events', `proposal_deposit.proposal_id=${proposalId}`);
+
+    Object.entries(_params).forEach(v => {
+      params.append(v[0], v[1] as string);
+    });
+
     return this.c
-      .get<Deposit.Data>(`/gov/proposals/${proposalId}/deposits`, params)
-      .then(d => Deposit.fromData(d.result));
+      .get<TxSearchResult.Data>(`/cosmos/tx/v1beta1/txs`, params)
+      .then(d => {
+        const deposits: Deposit[] = [];
+        d.txs.map(tx =>
+          tx.body.messages.forEach(msg => {
+            if (
+              msg['@type'] === '/cosmos.gov.v1beta1.MsgDeposit' &&
+              parseInt(msg.proposal_id) == proposalId
+            ) {
+              deposits.push(
+                new Deposit(
+                  proposalId,
+                  msg.depositor,
+                  Coins.fromData(msg.amount)
+                )
+              );
+            }
+          }, deposits)
+        );
+        return [deposits, d.pagination];
+      });
+  }
+
+  public async searchProposalCreationTx(proposalId: number): Promise<Tx.Data> {
+    // build search params
+    const params = new URLSearchParams();
+    params.append(
+      'events',
+      `message.action='/cosmos.gov.v1beta1.MsgSubmitProposal'`
+    );
+    params.append('events', `submit_proposal.proposal_id=${proposalId}`);
+
+    return this.c
+      .get<TxSearchResult.Data>(`/cosmos/tx/v1beta1/txs`, params)
+      .then(d => {
+        if (d.tx_responses.length === 0) {
+          throw Error('failed to fetch submit_proposer tx');
+        }
+
+        return d.txs[0];
+      });
   }
 
   /**
@@ -155,11 +246,59 @@ export class GovAPI extends BaseAPI {
    */
   public async votes(
     proposalId: number,
-    params: APIParams = {}
-  ): Promise<Vote> {
+    _params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Vote[], Pagination]> {
+    const proposal = await this.proposal(proposalId);
+    if (proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD) {
+      return this.c
+        .get<{ votes: Vote.Data[]; pagination: Pagination }>(
+          `/cosmos/gov/v1beta1/proposals/${proposalId}/votes`,
+          _params
+        )
+        .then(d => [d.votes.map(v => Vote.fromData(v)), d.pagination]);
+    }
+
+    // build search params
+    const params = new URLSearchParams();
+    params.append('events', `message.action='/cosmos.gov.v1beta1.MsgVote'`);
+    params.append('events', `proposal_vote.proposal_id=${proposalId}`);
+
+    Object.entries(_params).forEach(v => {
+      params.append(v[0], v[1] as string);
+    });
+
     return this.c
-      .get<Vote.Data>(`/gov/proposals/${proposalId}/votes`, params)
-      .then(d => Vote.fromData(d.result));
+      .get<TxSearchResult.Data>(`/cosmos/tx/v1beta1/txs`, params)
+      .then(d => {
+        const votes: Vote[] = [];
+        d.txs.map(tx =>
+          tx.body.messages.forEach(msg => {
+            if (
+              msg['@type'] === '/cosmos.gov.v1beta1.MsgVote' &&
+              parseInt(msg.proposal_id) == proposalId
+            ) {
+              votes.push(
+                new Vote(proposalId, msg.voter, [
+                  new WeightedVoteOption(msg.option, '1'),
+                ])
+              );
+            } else if (
+              msg['@type'] === '/cosmos.gov.v1beta1.MsgVoteWeighted' &&
+              parseInt(msg.proposal_id) == proposalId
+            ) {
+              votes.push(
+                new Vote(
+                  proposalId,
+                  msg.voter,
+                  msg.options.map(o => WeightedVoteOption.fromData(o))
+                )
+              );
+            }
+          }, votes)
+        );
+
+        return [votes, d.pagination];
+      });
   }
 
   /**
@@ -171,8 +310,8 @@ export class GovAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<Tally> {
     return this.c
-      .get<Tally.Data>(`/gov/proposals/${proposalId}/tally`, params)
-      .then(({ result: d }) => ({
+      .get<{ tally: Tally.Data }>(`/gov/proposals/${proposalId}/tally`, params)
+      .then(({ tally: d }) => ({
         yes: new Int(d.yes),
         no: new Int(d.no),
         no_with_veto: new Int(d.no_with_veto),
@@ -185,8 +324,11 @@ export class GovAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<DepositParams> {
     return this.c
-      .get<DepositParams.Data>(`/gov/parameters/deposit`, params)
-      .then(({ result: d }) => ({
+      .get<{ deposit_params: DepositParams.Data }>(
+        `/cosmos/gov/v1beta1/params/deposit`,
+        params
+      )
+      .then(({ deposit_params: d }) => ({
         max_deposit_period: Number.parseInt(d.max_deposit_period),
         min_deposit: Coins.fromData(d.min_deposit),
       }));
@@ -195,8 +337,11 @@ export class GovAPI extends BaseAPI {
   /** Gets the Gov module's voting parameters */
   public async votingParameters(params: APIParams = {}): Promise<VotingParams> {
     return this.c
-      .get<VotingParams.Data>(`/gov/parameters/voting`, params)
-      .then(({ result: d }) => ({
+      .get<{ voting_params: VotingParams.Data }>(
+        `/cosmos/gov/v1beta1/params/voting`,
+        params
+      )
+      .then(({ voting_params: d }) => ({
         voting_period: Number.parseInt(d.voting_period),
       }));
   }
@@ -204,8 +349,11 @@ export class GovAPI extends BaseAPI {
   /** Gets teh Gov module's tally parameters */
   public async tallyParameters(params: APIParams = {}): Promise<TallyParams> {
     return this.c
-      .get<TallyParams.Data>(`/gov/parameters/tallying`, params)
-      .then(({ result: d }) => ({
+      .get<{ tally_params: TallyParams.Data }>(
+        `/cosmos/gov/v1beta1/params/tallying`,
+        params
+      )
+      .then(({ tally_params: d }) => ({
         quorum: new Dec(d.quorum),
         veto_threshold: new Dec(d.veto_threshold),
         threshold: new Dec(d.threshold),

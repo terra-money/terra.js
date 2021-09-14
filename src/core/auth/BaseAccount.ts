@@ -1,4 +1,3 @@
-import { Coins } from '../Coins';
 import { PublicKey } from '../PublicKey';
 import { JSONSerializable } from '../../util/json';
 import { AccAddress } from '../bech32';
@@ -9,7 +8,11 @@ import * as Long from 'long';
 /**
  * Stores information about an account fetched from the blockchain.
  */
-export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
+export class BaseAccount extends JSONSerializable<
+  BaseAccount.Amino,
+  BaseAccount.Data,
+  BaseAccount.Proto
+> {
   /**
    * Creates a new Account object, holding information about a basic account.
    *
@@ -28,23 +31,42 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
     super();
   }
 
-  public toData(): BaseAccount.Data {
+  public getAccountNumber(): number {
+    return this.account_number;
+  }
+
+  public getSequenceNumber(): number {
+    return this.sequence;
+  }
+
+  public toAmino(): BaseAccount.Amino {
     const { address, public_key, account_number, sequence } = this;
     return {
       type: 'core/Account',
       value: {
         address,
-        public_key: public_key ? public_key.toData() : null,
+        public_key: public_key ? public_key.toAmino() : null,
         account_number: account_number.toFixed(),
         sequence: sequence.toFixed(),
       },
     };
   }
 
-  public static fromData(data: BaseAccount.Data): BaseAccount {
+  public static fromAmino(data: BaseAccount.Amino): BaseAccount {
     const {
       value: { address, public_key, account_number, sequence },
     } = data;
+
+    return new BaseAccount(
+      address || '',
+      public_key ? PublicKey.fromAmino(public_key) : null,
+      Number.parseInt(account_number) || 0,
+      Number.parseInt(sequence) || 0
+    );
+  }
+
+  public static fromData(data: BaseAccount.Data): BaseAccount {
+    const { address, public_key, account_number, sequence } = data;
 
     return new BaseAccount(
       address || '',
@@ -52,6 +74,17 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0
     );
+  }
+
+  public toData(): BaseAccount.Data {
+    const { address, public_key, account_number, sequence } = this;
+    return {
+      '@type': '/cosmos.auth.v1beta1.BaseAccount',
+      address,
+      public_key: public_key ? public_key.toData() : null,
+      account_number: account_number.toFixed(),
+      sequence: sequence.toFixed(),
+    };
   }
 
   public toProto(): BaseAccount.Proto {
@@ -87,16 +120,27 @@ export class BaseAccount extends JSONSerializable<BaseAccount.Data> {
 }
 
 export namespace BaseAccount {
-  export interface Value {
+  export interface AminoValue {
+    address: AccAddress;
+    public_key: PublicKey.Amino | null;
+    account_number: string;
+    sequence: string;
+  }
+
+  export interface Amino {
+    type: 'core/Account';
+    value: AminoValue;
+  }
+
+  export interface DataValue {
     address: AccAddress;
     public_key: PublicKey.Data | null;
     account_number: string;
     sequence: string;
   }
 
-  export interface Data {
-    type: 'core/Account';
-    value: Value;
+  export interface Data extends DataValue {
+    '@type': '/cosmos.auth.v1beta1.BaseAccount';
   }
 
   export type Proto = BaseAccount_pb;

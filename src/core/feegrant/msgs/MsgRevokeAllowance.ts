@@ -6,7 +6,11 @@ import { MsgRevokeAllowance as MsgRevokeAllowance_pb } from '@terra-money/terra.
 /**
  * MsgRevokeAllowance remove permission any existing Allowance from Granter to Grantee.
  */
-export class MsgRevokeAllowance extends JSONSerializable<MsgRevokeAllowance.Data> {
+export class MsgRevokeAllowance extends JSONSerializable<
+  MsgRevokeAllowance.Amino,
+  MsgRevokeAllowance.Data,
+  MsgRevokeAllowance.Proto
+> {
   /**
    *
    * @param granter granter's account address
@@ -16,14 +20,14 @@ export class MsgRevokeAllowance extends JSONSerializable<MsgRevokeAllowance.Data
     super();
   }
 
-  public static fromData(data: MsgRevokeAllowance.Data): MsgRevokeAllowance {
+  public static fromAmino(data: MsgRevokeAllowance.Amino): MsgRevokeAllowance {
     const {
       value: { granter, grantee },
     } = data;
     return new MsgRevokeAllowance(granter, grantee);
   }
 
-  public toData(): MsgRevokeAllowance.Data {
+  public toAmino(): MsgRevokeAllowance.Amino {
     const { granter, grantee } = this;
     return {
       type: 'feegrant/MsgRevokeAllowance',
@@ -31,6 +35,20 @@ export class MsgRevokeAllowance extends JSONSerializable<MsgRevokeAllowance.Data
         granter,
         grantee,
       },
+    };
+  }
+
+  public static fromData(proto: MsgRevokeAllowance.Data): MsgRevokeAllowance {
+    const { granter, grantee } = proto;
+    return new MsgRevokeAllowance(granter, grantee);
+  }
+
+  public toData(): MsgRevokeAllowance.Data {
+    const { granter, grantee } = this;
+    return {
+      '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
+      granter,
+      grantee,
     };
   }
 
@@ -61,12 +79,18 @@ export class MsgRevokeAllowance extends JSONSerializable<MsgRevokeAllowance.Data
 }
 
 export namespace MsgRevokeAllowance {
-  export interface Data {
+  export interface Amino {
     type: 'feegrant/MsgRevokeAllowance';
     value: {
       granter: AccAddress;
       grantee: AccAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance';
+    granter: AccAddress;
+    grantee: AccAddress;
   }
 
   export type Proto = MsgRevokeAllowance_pb;

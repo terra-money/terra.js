@@ -1,4 +1,10 @@
-import { LCDClient, MsgSend, MnemonicKey } from '../src';
+import {
+  LCDClient,
+  MsgSend,
+  MnemonicKey,
+  MsgGrantAllowance,
+  Fee,
+} from '../src';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 async function main() {
@@ -11,7 +17,7 @@ async function main() {
   const bombay = new LCDClient({
     chainID: 'bombay-10',
     URL: 'https://bombay-lcd.terra.dev',
-    gasPrices: {uusd: 0.38},
+    gasPrices: { uusd: 0.38 },
   });
 
   // a wallet can be created out of any key
@@ -27,13 +33,15 @@ async function main() {
 
   wallet
     .createAndSignTx({
+      signMode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
       msgs: [send],
       memo: 'test from terra.js!',
-      gas: '109504'
     })
-    .then(tx => bombay.tx.broadcast(tx))
+    .then(tx => {
+      return bombay.tx.broadcast(tx);
+    })
     .then(result => {
-      console.log(`TX hash: ${result.txhash}`);
+      console.log(`TX hash: ${result.txhash}  ${result.raw_log}`);
     });
 }
 

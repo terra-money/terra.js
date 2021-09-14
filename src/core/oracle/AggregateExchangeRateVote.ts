@@ -10,7 +10,11 @@ import { Numeric, Dec } from '../numeric';
 /**
  * Stores information about data about Oracle aggregate vote fetched from the blockchain.
  */
-export class AggregateExchangeRateVote extends JSONSerializable<AggregateExchangeRateVote.Data> {
+export class AggregateExchangeRateVote extends JSONSerializable<
+  AggregateExchangeRateVote.Amino,
+  AggregateExchangeRateVote.Data,
+  AggregateExchangeRateVote.Proto
+> {
   /**
    * @param exchange_rate_tuples exchange rates for LUNA
    * @param voter validator
@@ -20,6 +24,24 @@ export class AggregateExchangeRateVote extends JSONSerializable<AggregateExchang
     public voter: ValAddress
   ) {
     super();
+  }
+
+  public static fromAmino(
+    data: AggregateExchangeRateVote.Amino
+  ): AggregateExchangeRateVote {
+    const { exchange_rate_tuples, voter } = data;
+    return new AggregateExchangeRateVote(
+      exchange_rate_tuples.map(t => ExchangeRateTuple.fromAmino(t)),
+      voter
+    );
+  }
+
+  public toAmino(): AggregateExchangeRateVote.Amino {
+    const { exchange_rate_tuples, voter } = this;
+    return {
+      exchange_rate_tuples: exchange_rate_tuples.map(e => e.toAmino()),
+      voter,
+    };
   }
 
   public static fromData(
@@ -59,18 +81,41 @@ export class AggregateExchangeRateVote extends JSONSerializable<AggregateExchang
 }
 
 export namespace AggregateExchangeRateVote {
+  export interface Amino {
+    exchange_rate_tuples: ExchangeRateTuple.Amino[];
+    voter: ValAddress;
+  }
+
   export interface Data {
     exchange_rate_tuples: ExchangeRateTuple.Data[];
     voter: ValAddress;
   }
+
   export type Proto = AggregateExchangeRateVote_pb;
 }
 
-export class ExchangeRateTuple extends JSONSerializable<ExchangeRateTuple.Data> {
+export class ExchangeRateTuple extends JSONSerializable<
+  ExchangeRateTuple.Amino,
+  ExchangeRateTuple.Data,
+  ExchangeRateTuple.Proto
+> {
   public exchange_rate: Dec;
   constructor(public denom: Denom, exchange_rate: Numeric.Input) {
     super();
     this.exchange_rate = new Dec(exchange_rate);
+  }
+
+  public static fromAmino(data: ExchangeRateTuple.Amino): ExchangeRateTuple {
+    const { denom, exchange_rate } = data;
+    return new ExchangeRateTuple(denom, exchange_rate);
+  }
+
+  public toAmino(): ExchangeRateTuple.Amino {
+    const { denom, exchange_rate } = this;
+    return {
+      denom,
+      exchange_rate: exchange_rate.toString(),
+    };
   }
 
   public static fromData(data: ExchangeRateTuple.Data): ExchangeRateTuple {
@@ -100,6 +145,11 @@ export class ExchangeRateTuple extends JSONSerializable<ExchangeRateTuple.Data> 
 }
 
 export namespace ExchangeRateTuple {
+  export interface Amino {
+    denom: Denom;
+    exchange_rate: string;
+  }
+
   export interface Data {
     denom: Denom;
     exchange_rate: string;

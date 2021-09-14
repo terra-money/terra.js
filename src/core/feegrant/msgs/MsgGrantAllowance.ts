@@ -8,7 +8,11 @@ import { MsgGrantAllowance as MsgGrantAllowance_pb } from '@terra-money/terra.pr
  * MsgGrantAllowance adds permission for Grantee to spend up to Allowance
  * of fees from the account of Granter.
  */
-export class MsgGrantAllowance extends JSONSerializable<MsgGrantAllowance.Data> {
+export class MsgGrantAllowance extends JSONSerializable<
+  MsgGrantAllowance.Amino,
+  MsgGrantAllowance.Data,
+  MsgGrantAllowance.Proto
+> {
   /**
    *
    * @param granter granter's account address
@@ -23,10 +27,31 @@ export class MsgGrantAllowance extends JSONSerializable<MsgGrantAllowance.Data> 
     super();
   }
 
-  public static fromData(data: MsgGrantAllowance.Data): MsgGrantAllowance {
+  public static fromAmino(data: MsgGrantAllowance.Amino): MsgGrantAllowance {
     const {
       value: { granter, grantee, allowance },
     } = data;
+    return new MsgGrantAllowance(
+      granter,
+      grantee,
+      Allowance.fromAmino(allowance)
+    );
+  }
+
+  public toAmino(): MsgGrantAllowance.Amino {
+    const { granter, grantee, allowance } = this;
+    return {
+      type: 'feegrant/MsgGrantAllowance',
+      value: {
+        granter,
+        grantee,
+        allowance: allowance.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(data: MsgGrantAllowance.Data): MsgGrantAllowance {
+    const { granter, grantee, allowance } = data;
     return new MsgGrantAllowance(
       granter,
       grantee,
@@ -37,12 +62,10 @@ export class MsgGrantAllowance extends JSONSerializable<MsgGrantAllowance.Data> 
   public toData(): MsgGrantAllowance.Data {
     const { granter, grantee, allowance } = this;
     return {
-      type: 'feegrant/MsgGrantAllowance',
-      value: {
-        granter,
-        grantee,
-        allowance: allowance.toData(),
-      },
+      '@type': '/cosmos.feegrant.v1beta1.MsgGrantAllowance',
+      granter,
+      grantee,
+      allowance: allowance.toData(),
     };
   }
 
@@ -78,13 +101,20 @@ export class MsgGrantAllowance extends JSONSerializable<MsgGrantAllowance.Data> 
 }
 
 export namespace MsgGrantAllowance {
-  export interface Data {
+  export interface Amino {
     type: 'feegrant/MsgGrantAllowance';
     value: {
       granter: AccAddress;
       grantee: AccAddress;
-      allowance: Allowance.Data;
+      allowance: Allowance.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.feegrant.v1beta1.MsgGrantAllowance';
+    granter: AccAddress;
+    grantee: AccAddress;
+    allowance: Allowance.Data;
   }
 
   export type Proto = MsgGrantAllowance_pb;

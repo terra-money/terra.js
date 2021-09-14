@@ -6,11 +6,10 @@ import {
   GovAPI,
   MarketAPI,
   MintAPI,
-  MsgAuthAPI,
+  AuthzAPI,
   OracleAPI,
   SlashingAPI,
   StakingAPI,
-  SupplyAPI,
   TendermintAPI,
   TreasuryAPI,
   TxAPI,
@@ -89,11 +88,10 @@ export class LCDClient {
   public gov: GovAPI;
   public market: MarketAPI;
   public mint: MintAPI;
-  public msgauth: MsgAuthAPI;
+  public authz: AuthzAPI;
   public oracle: OracleAPI;
   public slashing: SlashingAPI;
   public staking: StakingAPI;
-  public supply: SupplyAPI;
   public tendermint: TendermintAPI;
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
@@ -123,11 +121,10 @@ export class LCDClient {
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);
     this.mint = new MintAPI(this.apiRequester);
-    this.msgauth = new MsgAuthAPI(this.apiRequester);
+    this.authz = new AuthzAPI(this.apiRequester);
     this.oracle = new OracleAPI(this.apiRequester);
     this.slashing = new SlashingAPI(this.apiRequester);
     this.staking = new StakingAPI(this.apiRequester);
-    this.supply = new SupplyAPI(this.apiRequester);
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);

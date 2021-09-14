@@ -4,7 +4,11 @@ import { Msg } from '../../Msg';
 import { MsgExec as MsgExec_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
-export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> {
+export class MsgExecAuthorized extends JSONSerializable<
+  MsgExecAuthorized.Amino,
+  MsgExecAuthorized.Data,
+  MsgExecAuthorized.Proto
+> {
   /**
    * @param grantee authorization grantee
    * @param msgs list of messages to execute
@@ -13,10 +17,31 @@ export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> 
     super();
   }
 
-  public static fromData(data: MsgExecAuthorized.Data): MsgExecAuthorized {
+  public static fromAmino(data: MsgExecAuthorized.Amino): MsgExecAuthorized {
     const {
       value: { grantee, msgs },
     } = data;
+    return new MsgExecAuthorized(
+      grantee,
+      msgs.map(x => Msg.fromAmino(x))
+    );
+  }
+
+  public toAmino(): MsgExecAuthorized.Amino {
+    const { grantee, msgs } = this;
+    return {
+      type: 'msgauth/MsgExecAuthorized',
+      value: {
+        grantee,
+        msgs: msgs.map(msg => {
+          return msg.toAmino();
+        }),
+      },
+    };
+  }
+
+  public static fromData(proto: MsgExecAuthorized.Data): MsgExecAuthorized {
+    const { grantee, msgs } = proto;
     return new MsgExecAuthorized(
       grantee,
       msgs.map(x => Msg.fromData(x))
@@ -26,19 +51,9 @@ export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> 
   public toData(): MsgExecAuthorized.Data {
     const { grantee, msgs } = this;
     return {
-      type: 'msgauth/MsgExecAuthorized',
-      value: {
-        grantee,
-        msgs: msgs.map(msg => {
-          if ('toData' in msg) {
-            return msg.toData();
-          }
-
-          throw new Error(
-            `amino is not supported for "${msg.packAny().typeUrl}" Msg`
-          );
-        }),
-      },
+      '@type': '/cosmos.authz.v1beta1.MsgExec',
+      grantee,
+      msgs: msgs.map(msg => msg.toData()),
     };
   }
 
@@ -70,12 +85,18 @@ export class MsgExecAuthorized extends JSONSerializable<MsgExecAuthorized.Data> 
 }
 
 export namespace MsgExecAuthorized {
-  export interface Data {
+  export interface Amino {
     type: 'msgauth/MsgExecAuthorized';
     value: {
       grantee: AccAddress;
-      msgs: Msg.Data[];
+      msgs: Msg.Amino[];
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.authz.v1beta1.MsgExec';
+    grantee: AccAddress;
+    msgs: Msg.Data[];
   }
 
   export type Proto = MsgExec_pb;

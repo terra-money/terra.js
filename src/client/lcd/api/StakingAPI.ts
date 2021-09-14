@@ -9,7 +9,7 @@ import { Delegation } from '../../../core/staking/Delegation';
 import { Validator } from '../../../core/staking/Validator';
 import { Redelegation } from '../../../core/staking/Redelegation';
 import { Denom } from '../../../core/Denom';
-import { APIParams } from '../APIRequester';
+import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 
 export interface StakingParams {
   /** Amount of time, in seconds, for bonded staking tokens to be unbonded. */
@@ -25,9 +25,6 @@ export interface StakingParams {
 
   /** The denomination used as the staking token (probably Luna). */
   bond_denom: Denom;
-
-  /** The amount of staking tokens required for 1 unit of consensus-engine power */
-  power_reduction: string;
 }
 
 export namespace StakingParams {
@@ -37,7 +34,6 @@ export namespace StakingParams {
     max_entries: number;
     historical_entries: number;
     bond_denom: Denom;
-    power_reduction: string;
   }
 }
 
@@ -67,29 +63,41 @@ export class StakingAPI extends BaseAPI {
   public async delegations(
     delegator?: AccAddress,
     validator?: ValAddress,
-    params: APIParams = {}
-  ): Promise<Delegation[]> {
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Delegation[], Pagination]> {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
-        .get<Delegation.Data>(
-          `/staking/delegators/${delegator}/delegations/${validator}`,
+        .get<{ delegation_response: Delegation.Data }>(
+          `/cosmos/staking/v1beta1/validators/${validator}/delegations/${delegator}`,
           params
         )
-        .then(data => [Delegation.fromData(data.result)]);
+        .then(({ delegation_response: data }) => [
+          [Delegation.fromData(data)],
+          { total: 1, next_key: '' },
+        ]);
     } else if (delegator !== undefined) {
       return this.c
-        .get<Delegation.Data[]>(
-          `/staking/delegators/${delegator}/delegations`,
-          params
-        )
-        .then(data => data.result.map(Delegation.fromData));
+        .get<{
+          delegation_responses: Delegation.Data[];
+          pagination: Pagination;
+        }>(`/cosmos/staking/v1beta1/delegations/${delegator}`, params)
+        .then(data => [
+          data.delegation_responses.map(Delegation.fromData),
+          data.pagination,
+        ]);
     } else if (validator !== undefined) {
       return this.c
-        .get<Delegation.Data[]>(
-          `/staking/validators/${validator}/delegations`,
+        .get<{
+          delegation_responses: Delegation.Data[];
+          pagination: Pagination;
+        }>(
+          `/cosmos/staking/v1beta1/validators/${validator}/delegations`,
           params
         )
-        .then(data => data.result.map(Delegation.fromData));
+        .then(data => [
+          data.delegation_responses.map(Delegation.fromData),
+          data.pagination,
+        ]);
     } else {
       throw new TypeError(
         'arguments delegator and validator cannot both be empty'
@@ -106,7 +114,7 @@ export class StakingAPI extends BaseAPI {
     delegator: AccAddress,
     validator: ValAddress
   ): Promise<Delegation> {
-    return this.delegations(delegator, validator).then(delgs => delgs[0]);
+    return this.delegations(delegator, validator).then(delgs => delgs[0][0]);
   }
 
   /**
@@ -119,29 +127,44 @@ export class StakingAPI extends BaseAPI {
   public async unbondingDelegations(
     delegator?: AccAddress,
     validator?: ValAddress,
-    params: APIParams = {}
-  ): Promise<UnbondingDelegation[]> {
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[UnbondingDelegation[], Pagination]> {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
-        .get<UnbondingDelegation.Data>(
-          `/staking/delegators/${delegator}/unbonding_delegations/${validator}`,
+        .get<{ unbond: UnbondingDelegation.Data }>(
+          `/cosmos/staking/v1beta1/validators/${validator}/delegations/${delegator}/unbonding_delegations`,
           params
         )
-        .then(data => [UnbondingDelegation.fromData(data.result)]);
+        .then(({ unbond: data }) => [
+          [UnbondingDelegation.fromData(data)],
+          { next_key: '', total: 1 },
+        ]);
     } else if (delegator !== undefined) {
       return this.c
-        .get<UnbondingDelegation.Data[]>(
-          `/staking/delegators/${delegator}/unbonding_delegations`,
+        .get<{
+          unbonding_responses: UnbondingDelegation.Data[];
+          pagination: Pagination;
+        }>(
+          `/cosmos/staking/v1beta1/delegators/${delegator}/unbonding_delegations`,
           params
         )
-        .then(data => data.result.map(UnbondingDelegation.fromData));
+        .then(data => [
+          data.unbonding_responses.map(UnbondingDelegation.fromData),
+          data.pagination,
+        ]);
     } else if (validator !== undefined) {
       return this.c
-        .get<UnbondingDelegation.Data[]>(
-          `/staking/validators/${validator}/unbonding_delegations`,
+        .get<{
+          unbonding_responses: UnbondingDelegation.Data[];
+          pagination: Pagination;
+        }>(
+          `/cosmos/staking/v1beta1/validators/${validator}/unbonding_delegations`,
           params
         )
-        .then(data => data.result.map(UnbondingDelegation.fromData));
+        .then(data => [
+          data.unbonding_responses.map(UnbondingDelegation.fromData),
+          data.pagination,
+        ]);
     } else {
       throw new TypeError(
         'arguments delegator and validator cannot both be empty'
@@ -159,7 +182,7 @@ export class StakingAPI extends BaseAPI {
     validator?: ValAddress
   ): Promise<UnbondingDelegation> {
     return this.unbondingDelegations(delegator, validator).then(
-      udelgs => udelgs[0]
+      udelgs => udelgs[0][0]
     );
   }
 
@@ -170,20 +193,28 @@ export class StakingAPI extends BaseAPI {
    * @param validatorDst destination validator's operator address (to).
    */
   public async redelegations(
-    delegator?: AccAddress,
+    delegator: AccAddress,
     validatorSrc?: ValAddress,
     validatorDst?: ValAddress,
-    _params: APIParams = {}
-  ): Promise<Redelegation[]> {
+    _params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Redelegation[], Pagination]> {
     const params = {
       ..._params,
-      delegator,
-      validator_from: validatorSrc,
-      validator_to: validatorDst,
+      src_validator_addr: validatorSrc,
+      dst_validator_addr: validatorDst,
     };
     return this.c
-      .get<Redelegation.Data[]>(`/staking/redelegations`, params)
-      .then(d => d.result.map(Redelegation.fromData));
+      .get<{
+        redelegation_responses: Redelegation.Data[];
+        pagination: Pagination;
+      }>(
+        `/cosmos/staking/v1beta1/delegators/${delegator}/redelegations`,
+        params
+      )
+      .then(d => [
+        d.redelegation_responses.map(Redelegation.fromData),
+        d.pagination,
+      ]);
   }
 
   /**
@@ -192,23 +223,28 @@ export class StakingAPI extends BaseAPI {
    */
   public async bondedValidators(
     delegator: AccAddress,
-    params: APIParams = {}
-  ): Promise<Validator[]> {
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Validator[], Pagination]> {
     return this.c
-      .get<Validator.Data[]>(
-        `/staking/delegators/${delegator}/validators`,
+      .get<{ validators: Validator.Data[]; pagination: Pagination }>(
+        `/cosmos/staking/v1beta1/delegators/${delegator}/validators`,
         params
       )
-      .then(d => d.result.map(Validator.fromData));
+      .then(d => [d.validators.map(Validator.fromData), d.pagination]);
   }
 
   /**
    * Get all current registered validators, including validators that are not currently in the validating set.
    */
-  public async validators(params: APIParams = {}): Promise<Validator[]> {
+  public async validators(
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Validator[], Pagination]> {
     return this.c
-      .get<Validator.Data[]>(`/staking/validators`, params)
-      .then(d => d.result.map(Validator.fromData));
+      .get<{ validators: Validator.Data[]; pagination: Pagination }>(
+        `/cosmos/staking/v1beta1/validators`,
+        params
+      )
+      .then(d => [d.validators.map(Validator.fromData), d.pagination]);
   }
 
   /**
@@ -220,8 +256,11 @@ export class StakingAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<Validator> {
     return this.c
-      .get<Validator.Data>(`/staking/validators/${validator}`, params)
-      .then(d => Validator.fromData(d.result));
+      .get<{ validator: Validator.Data }>(
+        `/cosmos/staking/v1beta1/validators/${validator}`,
+        params
+      )
+      .then(d => Validator.fromData(d.validator));
   }
 
   /**
@@ -229,8 +268,8 @@ export class StakingAPI extends BaseAPI {
    */
   public async pool(params: APIParams = {}): Promise<StakingPool> {
     return this.c
-      .get<StakingPool.Data>(`/staking/pool`, params)
-      .then(({ result: d }) => ({
+      .get<{ pool: StakingPool.Data }>(`/cosmos/staking/v1beta1/pool`, params)
+      .then(({ pool: d }) => ({
         bonded_tokens: new Coin(Denom.LUNA, d.bonded_tokens),
         not_bonded_tokens: new Coin(Denom.LUNA, d.not_bonded_tokens),
       }));
@@ -241,14 +280,16 @@ export class StakingAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<StakingParams> {
     return this.c
-      .get<StakingParams.Data>(`/staking/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: StakingParams.Data }>(
+        `/cosmos/staking/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         unbonding_time: Number.parseInt(d.unbonding_time),
         max_validators: d.max_validators,
         max_entries: d.max_entries,
         historical_entries: d.historical_entries,
         bond_denom: d.bond_denom,
-        power_reduction: d.power_reduction,
       }));
   }
 }

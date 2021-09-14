@@ -71,23 +71,27 @@ export class OracleAPI extends BaseAPI {
    */
   public async exchangeRates(params: APIParams = {}): Promise<Coins> {
     return this.c
-      .get<Coins.Data>(`/oracle/denoms/exchange_rates`, params)
-      .then(d => {
-        if (d?.result) {
-          return Coins.fromData(d.result);
-        } else {
-          return new Coins({});
-        }
-      });
+      .get<{ exchange_rates: Coins.Data }>(
+        `/terra/oracle/v1beta1/denoms/exchange_rates`,
+        params
+      )
+      .then(d => Coins.fromData(d.exchange_rates));
   }
 
   /**
    * Gets the Oracle module's currently registered exchange rate for the specific denomination.
    * @param denom denomination in which to get the exchange rate of LUNA
    */
-  public async exchangeRate(denom: Denom): Promise<Coin | undefined> {
-    const rates = await this.exchangeRates();
-    return rates.get(denom);
+  public async exchangeRate(
+    denom: Denom,
+    params: APIParams = {}
+  ): Promise<Coin | undefined> {
+    return this.c
+      .get<{ exchange_rate: Coin.Data }>(
+        `/terra/oracle/v1beta1/denoms/${denom}/exchange_rate`,
+        params
+      )
+      .then(d => Coin.fromData(d.exchange_rate));
   }
 
   /**
@@ -95,8 +99,8 @@ export class OracleAPI extends BaseAPI {
    */
   public async activeDenoms(params: APIParams = {}): Promise<Denom[]> {
     return this.c
-      .get<Denom[]>(`/oracle/denoms/actives`, params)
-      .then(d => d.result);
+      .get<{ actives: Denom[] }>(`/terra/oracle/v1beta1/denoms/actives`, params)
+      .then(d => d.actives);
   }
 
   /**
@@ -109,8 +113,11 @@ export class OracleAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<AccAddress> {
     return this.c
-      .get<AccAddress>(`/oracle/voters/${validator}/feeder`, params)
-      .then(d => d.result);
+      .get<{ feeder_addr: AccAddress }>(
+        `/terra/oracle/v1beta1/validators/${validator}/feeder`,
+        params
+      )
+      .then(d => d.feeder_addr);
   }
 
   /**
@@ -122,8 +129,11 @@ export class OracleAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<number> {
     return this.c
-      .get<string>(`/oracle/voters/${validator}/miss`, params)
-      .then(d => Number.parseInt(d.result));
+      .get<{ miss_counter: string }>(
+        `/terra/oracle/v1beta1/validators/${validator}/miss`,
+        params
+      )
+      .then(d => Number.parseInt(d.miss_counter));
   }
 
   /**
@@ -135,11 +145,11 @@ export class OracleAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<AggregateExchangeRatePrevote> {
     return this.c
-      .get<AggregateExchangeRatePrevote.Data>(
-        `/oracle/voters/${validator}/aggregate_prevote`,
+      .get<{ aggregate_prevote: AggregateExchangeRatePrevote.Data }>(
+        `/terra/oracle/v1beta1/validators/${validator}/aggregate_prevote`,
         params
       )
-      .then(d => AggregateExchangeRatePrevote.fromData(d.result));
+      .then(d => AggregateExchangeRatePrevote.fromData(d.aggregate_prevote));
   }
 
   /**
@@ -151,11 +161,11 @@ export class OracleAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<AggregateExchangeRateVote> {
     return this.c
-      .get<AggregateExchangeRateVote.Data>(
-        `/oracle/voters/${validator}/aggregate_vote`,
+      .get<{ aggregate_vote: AggregateExchangeRateVote.Data }>(
+        `/terra/oracle/v1beta1/validators/${validator}/aggregate_vote`,
         params
       )
-      .then(d => AggregateExchangeRateVote.fromData(d.result));
+      .then(d => AggregateExchangeRateVote.fromData(d.aggregate_vote));
   }
 
   /**
@@ -163,8 +173,11 @@ export class OracleAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<OracleParams> {
     return this.c
-      .get<OracleParams.Data>(`/oracle/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: OracleParams.Data }>(
+        `/terra/oracle/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         vote_period: Number.parseInt(d.vote_period),
         vote_threshold: new Dec(d.vote_threshold),
         reward_band: new Dec(d.reward_band),

@@ -12,7 +12,11 @@ import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-mone
  *
  * The following message registers a validator's feeder address.
  */
-export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedConsent.Data> {
+export class MsgDelegateFeedConsent extends JSONSerializable<
+  MsgDelegateFeedConsent.Amino,
+  MsgDelegateFeedConsent.Data,
+  MsgDelegateFeedConsent.Proto
+> {
   /**
    * @param operator validator's operator address
    * @param delegate account address to set to feeder
@@ -21,8 +25,8 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
     super();
   }
 
-  public static fromData(
-    data: MsgDelegateFeedConsent.Data
+  public static fromAmino(
+    data: MsgDelegateFeedConsent.Amino
   ): MsgDelegateFeedConsent {
     const {
       value: { operator, delegate },
@@ -30,7 +34,7 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
     return new MsgDelegateFeedConsent(operator, delegate);
   }
 
-  public toData(): MsgDelegateFeedConsent.Data {
+  public toAmino(): MsgDelegateFeedConsent.Amino {
     const { operator, delegate } = this;
     return {
       type: 'oracle/MsgDelegateFeedConsent',
@@ -38,6 +42,22 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
         operator,
         delegate,
       },
+    };
+  }
+
+  public static fromData(
+    data: MsgDelegateFeedConsent.Data
+  ): MsgDelegateFeedConsent {
+    const { operator, delegate } = data;
+    return new MsgDelegateFeedConsent(operator, delegate);
+  }
+
+  public toData(): MsgDelegateFeedConsent.Data {
+    const { operator, delegate } = this;
+    return {
+      '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
+      operator,
+      delegate,
     };
   }
 
@@ -70,12 +90,18 @@ export class MsgDelegateFeedConsent extends JSONSerializable<MsgDelegateFeedCons
 }
 
 export namespace MsgDelegateFeedConsent {
-  export interface Data {
+  export interface Amino {
     type: 'oracle/MsgDelegateFeedConsent';
     value: {
       operator: ValAddress;
       delegate: AccAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent';
+    operator: ValAddress;
+    delegate: AccAddress;
   }
 
   export type Proto = MsgDelegateFeedConsent_pb;

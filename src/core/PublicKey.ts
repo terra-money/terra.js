@@ -10,19 +10,34 @@ export type PublicKey =
   | ValConsPublicKey;
 
 export namespace PublicKey {
+  export type Amino =
+    | SimplePublicKey.Amino
+    | LegacyAminoMultisigPublicKey.Amino
+    | ValConsPublicKey.Amino;
   export type Data =
     | SimplePublicKey.Data
     | LegacyAminoMultisigPublicKey.Data
     | ValConsPublicKey.Data;
   export type Proto = Any;
 
-  export function fromData(data: PublicKey.Data): PublicKey {
+  export function fromAmino(data: PublicKey.Amino): PublicKey {
     switch (data.type) {
       case 'tendermint/PubKeySecp256k1':
-        return SimplePublicKey.fromData(data);
+        return SimplePublicKey.fromAmino(data);
       case 'tendermint/PubKeyMultisigThreshold':
-        return LegacyAminoMultisigPublicKey.fromData(data);
+        return LegacyAminoMultisigPublicKey.fromAmino(data);
       case 'tendermint/PubKeyEd25519':
+        return ValConsPublicKey.fromAmino(data);
+    }
+  }
+
+  export function fromData(data: PublicKey.Data): PublicKey {
+    switch (data['@type']) {
+      case '/cosmos.crypto.secp256k1.PubKey':
+        return SimplePublicKey.fromData(data);
+      case '/cosmos.crypto.multisig.LegacyAminoPubKey':
+        return LegacyAminoMultisigPublicKey.fromData(data);
+      case '/cosmos.crypto.ed25519.PubKey':
         return ValConsPublicKey.fromData(data);
     }
   }
@@ -41,19 +56,34 @@ export namespace PublicKey {
   }
 }
 
-export class SimplePublicKey extends JSONSerializable<SimplePublicKey.Data> {
+export class SimplePublicKey extends JSONSerializable<
+  SimplePublicKey.Amino,
+  SimplePublicKey.Data,
+  SimplePublicKey.Proto
+> {
   constructor(public key: string) {
     super();
   }
 
-  public static fromData(data: SimplePublicKey.Data): SimplePublicKey {
+  public static fromAmino(data: SimplePublicKey.Amino): SimplePublicKey {
     return new SimplePublicKey(data.value);
+  }
+
+  public toAmino(): SimplePublicKey.Amino {
+    return {
+      type: 'tendermint/PubKeySecp256k1',
+      value: this.key,
+    };
+  }
+
+  public static fromData(data: SimplePublicKey.Data): SimplePublicKey {
+    return new SimplePublicKey(data.key);
   }
 
   public toData(): SimplePublicKey.Data {
     return {
-      type: 'tendermint/PubKeySecp256k1',
-      value: this.key,
+      '@type': '/cosmos.crypto.secp256k1.PubKey',
+      key: this.key,
     };
   }
 
@@ -80,35 +110,61 @@ export class SimplePublicKey extends JSONSerializable<SimplePublicKey.Data> {
 }
 
 export namespace SimplePublicKey {
-  export interface Data {
+  export interface Amino {
     type: 'tendermint/PubKeySecp256k1';
     value: string;
+  }
+
+  export interface Data {
+    '@type': '/cosmos.crypto.secp256k1.PubKey';
+    key: string;
   }
 
   export type Proto = PubKey_pb;
 }
 
-export class LegacyAminoMultisigPublicKey extends JSONSerializable<LegacyAminoMultisigPublicKey.Data> {
+export class LegacyAminoMultisigPublicKey extends JSONSerializable<
+  LegacyAminoMultisigPublicKey.Amino,
+  LegacyAminoMultisigPublicKey.Data,
+  LegacyAminoMultisigPublicKey.Proto
+> {
   constructor(public threshold: number, public pubkeys: SimplePublicKey[]) {
     super();
+  }
+
+  public static fromAmino(
+    data: LegacyAminoMultisigPublicKey.Amino
+  ): LegacyAminoMultisigPublicKey {
+    return new LegacyAminoMultisigPublicKey(
+      parseInt(data.value.threshold),
+      data.value.pubkeys.map(p => SimplePublicKey.fromAmino(p))
+    );
+  }
+
+  public toAmino(): LegacyAminoMultisigPublicKey.Amino {
+    return {
+      type: 'tendermint/PubKeyMultisigThreshold',
+      value: {
+        threshold: this.threshold.toFixed(),
+        pubkeys: this.pubkeys.map(p => p.toAmino()),
+      },
+    };
   }
 
   public static fromData(
     data: LegacyAminoMultisigPublicKey.Data
   ): LegacyAminoMultisigPublicKey {
     return new LegacyAminoMultisigPublicKey(
-      parseInt(data.value.threshold),
-      data.value.pubkeys.map(p => SimplePublicKey.fromData(p))
+      parseInt(data.threshold),
+      data.pubkeys.map(v => SimplePublicKey.fromData(v))
     );
   }
 
   public toData(): LegacyAminoMultisigPublicKey.Data {
     return {
-      type: 'tendermint/PubKeyMultisigThreshold',
-      value: {
-        threshold: this.threshold.toFixed(),
-        pubkeys: this.pubkeys.map(p => p.toData()),
-      },
+      '@type': '/cosmos.crypto.multisig.LegacyAminoPubKey',
+      threshold: this.threshold.toFixed(),
+      pubkeys: this.pubkeys.map(p => p.toData()),
     };
   }
 
@@ -143,30 +199,51 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<LegacyAminoMu
 }
 
 export namespace LegacyAminoMultisigPublicKey {
-  export interface Data {
+  export interface Amino {
     type: 'tendermint/PubKeyMultisigThreshold';
     value: {
       threshold: string;
-      pubkeys: SimplePublicKey.Data[];
+      pubkeys: SimplePublicKey.Amino[];
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.crypto.multisig.LegacyAminoPubKey';
+    threshold: string;
+    pubkeys: SimplePublicKey.Data[];
   }
 
   export type Proto = LegacyAminoPubKey_pb;
 }
 
-export class ValConsPublicKey extends JSONSerializable<ValConsPublicKey.Data> {
+export class ValConsPublicKey extends JSONSerializable<
+  ValConsPublicKey.Amino,
+  ValConsPublicKey.Data,
+  ValConsPublicKey.Proto
+> {
   constructor(public key: string) {
     super();
   }
 
-  public static fromData(data: ValConsPublicKey.Data): ValConsPublicKey {
+  public static fromAmino(data: ValConsPublicKey.Amino): ValConsPublicKey {
     return new ValConsPublicKey(data.value);
+  }
+
+  public toAmino(): ValConsPublicKey.Amino {
+    return {
+      type: 'tendermint/PubKeyEd25519',
+      value: this.key,
+    };
+  }
+
+  public static fromData(data: ValConsPublicKey.Data): ValConsPublicKey {
+    return new ValConsPublicKey(data.key);
   }
 
   public toData(): ValConsPublicKey.Data {
     return {
-      type: 'tendermint/PubKeyEd25519',
-      value: this.key,
+      '@type': '/cosmos.crypto.ed25519.PubKey',
+      key: this.key,
     };
   }
 
@@ -197,9 +274,14 @@ export class ValConsPublicKey extends JSONSerializable<ValConsPublicKey.Data> {
 }
 
 export namespace ValConsPublicKey {
-  export interface Data {
+  export interface Amino {
     type: 'tendermint/PubKeyEd25519';
     value: string;
+  }
+
+  export interface Data {
+    '@type': '/cosmos.crypto.ed25519.PubKey';
+    key: string;
   }
 
   export type Proto = PubKey_pb;

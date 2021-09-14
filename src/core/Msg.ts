@@ -11,7 +11,13 @@ import {
   MsgRevokeAllowance,
   FeeGrantMsg,
 } from './feegrant/msgs';
-import { GovMsg, MsgDeposit, MsgSubmitProposal, MsgVote } from './gov/msgs';
+import {
+  GovMsg,
+  MsgDeposit,
+  MsgSubmitProposal,
+  MsgVote,
+  MsgVoteWeighted,
+} from './gov/msgs';
 import { MarketMsg, MsgSwap, MsgSwapSend } from './market/msgs';
 import {
   MsgGrantAuthorization,
@@ -56,10 +62,21 @@ export type Msg =
   | OracleMsg
   | SlashingMsg
   | StakingMsg
-  | WasmMsg
-  | NotSupportedMsg;
+  | WasmMsg;
 
 export namespace Msg {
+  export type Amino =
+    | BankMsg.Amino
+    | DistributionMsg.Amino
+    | FeeGrantMsg.Amino
+    | GovMsg.Amino
+    | MarketMsg.Amino
+    | MsgAuthMsg.Amino
+    | OracleMsg.Amino
+    | SlashingMsg.Amino
+    | StakingMsg.Amino
+    | WasmMsg.Amino;
+
   export type Data =
     | BankMsg.Data
     | DistributionMsg.Data
@@ -82,96 +99,184 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
-    | WasmMsg.Proto
-    | NotSupportedMsg.Proto;
+    | WasmMsg.Proto;
 
-  export function fromData(data: Msg.Data): Msg {
+  export function fromAmino(data: Msg.Amino): Msg {
     switch (data.type) {
       // bank
       case 'bank/MsgSend':
-        return MsgSend.fromData(data);
+        return MsgSend.fromAmino(data);
       case 'bank/MsgMultiSend':
-        return MsgMultiSend.fromData(data);
+        return MsgMultiSend.fromAmino(data);
 
       // distribution
       case 'distribution/MsgModifyWithdrawAddress':
-        return MsgSetWithdrawAddress.fromData(data);
+        return MsgSetWithdrawAddress.fromAmino(data);
       case 'distribution/MsgWithdrawDelegationReward':
-        return MsgWithdrawDelegatorReward.fromData(data);
+        return MsgWithdrawDelegatorReward.fromAmino(data);
       case 'distribution/MsgWithdrawValidatorCommission':
-        return MsgWithdrawValidatorCommission.fromData(data);
+        return MsgWithdrawValidatorCommission.fromAmino(data);
       case 'distribution/MsgFundCommunityPool':
-        return MsgFundCommunityPool.fromData(data);
+        return MsgFundCommunityPool.fromAmino(data);
 
       // feegrant
       case 'feegrant/MsgGrantAllowance':
-        return MsgGrantAllowance.fromData(data);
+        return MsgGrantAllowance.fromAmino(data);
       case 'feegrant/MsgRevokeAllowance':
-        return MsgRevokeAllowance.fromData(data);
+        return MsgRevokeAllowance.fromAmino(data);
 
       // gov
       case 'gov/MsgDeposit':
-        return MsgDeposit.fromData(data);
+        return MsgDeposit.fromAmino(data);
       case 'gov/MsgSubmitProposal':
-        return MsgSubmitProposal.fromData(data);
+        return MsgSubmitProposal.fromAmino(data);
       case 'gov/MsgVote':
-        return MsgVote.fromData(data);
+        return MsgVote.fromAmino(data);
+      case 'gov/MsgVoteWeighted':
+        return MsgVoteWeighted.fromAmino(data);
 
       // market
       case 'market/MsgSwap':
-        return MsgSwap.fromData(data);
+        return MsgSwap.fromAmino(data);
       case 'market/MsgSwapSend':
-        return MsgSwapSend.fromData(data);
+        return MsgSwapSend.fromAmino(data);
 
       // msgauth
       case 'msgauth/MsgGrantAuthorization':
-        return MsgGrantAuthorization.fromData(data);
+        return MsgGrantAuthorization.fromAmino(data);
       case 'msgauth/MsgRevokeAuthorization':
-        return MsgRevokeAuthorization.fromData(data);
+        return MsgRevokeAuthorization.fromAmino(data);
       case 'msgauth/MsgExecAuthorized':
-        return MsgExecAuthorized.fromData(data);
+        return MsgExecAuthorized.fromAmino(data);
 
       // oracle
       case 'oracle/MsgDelegateFeedConsent':
-        return MsgDelegateFeedConsent.fromData(data);
+        return MsgDelegateFeedConsent.fromAmino(data);
       case 'oracle/MsgAggregateExchangeRatePrevote':
-        return MsgAggregateExchangeRatePrevote.fromData(data);
+        return MsgAggregateExchangeRatePrevote.fromAmino(data);
       case 'oracle/MsgAggregateExchangeRateVote':
-        return MsgAggregateExchangeRateVote.fromData(data);
+        return MsgAggregateExchangeRateVote.fromAmino(data);
 
       // slashing
       case 'slashing/MsgUnjail':
-        return MsgUnjail.fromData(data);
+        return MsgUnjail.fromAmino(data);
 
       // staking
       case 'staking/MsgDelegate':
-        return MsgDelegate.fromData(data);
+        return MsgDelegate.fromAmino(data);
       case 'staking/MsgUndelegate':
-        return MsgUndelegate.fromData(data);
+        return MsgUndelegate.fromAmino(data);
       case 'staking/MsgBeginRedelegate':
-        return MsgBeginRedelegate.fromData(data);
+        return MsgBeginRedelegate.fromAmino(data);
       case 'staking/MsgCreateValidator':
-        return MsgCreateValidator.fromData(data);
+        return MsgCreateValidator.fromAmino(data);
       case 'staking/MsgEditValidator':
-        return MsgEditValidator.fromData(data);
+        return MsgEditValidator.fromAmino(data);
 
       // wasm
       case 'wasm/MsgStoreCode':
-        return MsgStoreCode.fromData(data);
+        return MsgStoreCode.fromAmino(data);
       case 'wasm/MsgMigrateCode':
-        return MsgMigrateCode.fromData(data);
+        return MsgMigrateCode.fromAmino(data);
       case 'wasm/MsgInstantiateContract':
-        return MsgInstantiateContract.fromData(data);
+        return MsgInstantiateContract.fromAmino(data);
       case 'wasm/MsgExecuteContract':
-        return MsgExecuteContract.fromData(data);
+        return MsgExecuteContract.fromAmino(data);
       case 'wasm/MsgMigrateContract':
-        return MsgMigrateContract.fromData(data);
+        return MsgMigrateContract.fromAmino(data);
       case 'wasm/MsgUpdateContractAdmin':
-        return MsgUpdateContractAdmin.fromData(data);
+        return MsgUpdateContractAdmin.fromAmino(data);
       case 'wasm/MsgClearContractAdmin':
+        return MsgClearContractAdmin.fromAmino(data);
+    }
+  }
+  export function fromData(data: Msg.Data): Msg {
+    switch (data['@type']) {
+      // bank
+      case '/cosmos.bank.v1beta1.MsgSend':
+        return MsgSend.fromData(data);
+      case '/cosmos.bank.v1beta1.MsgMultiSend':
+        return MsgMultiSend.fromData(data);
+
+      // distribution
+      case '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress':
+        return MsgSetWithdrawAddress.fromData(data);
+      case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
+        return MsgWithdrawDelegatorReward.fromData(data);
+      case '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission':
+        return MsgWithdrawValidatorCommission.fromData(data);
+      case '/cosmos.distribution.v1beta1.MsgFundCommunityPool':
+        return MsgFundCommunityPool.fromData(data);
+
+      // feegrant
+      case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
+        return MsgGrantAllowance.fromData(data);
+      case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
+        return MsgRevokeAllowance.fromData(data);
+
+      // gov
+      case '/cosmos.gov.v1beta1.MsgDeposit':
+        return MsgDeposit.fromData(data);
+      case '/cosmos.gov.v1beta1.MsgSubmitProposal':
+        return MsgSubmitProposal.fromData(data);
+      case '/cosmos.gov.v1beta1.MsgVote':
+        return MsgVote.fromData(data);
+      case '/cosmos.gov.v1beta1.MsgVoteWeighted':
+        return MsgVoteWeighted.fromData(data);
+
+      // market
+      case '/terra.market.v1beta1.MsgSwap':
+        return MsgSwap.fromData(data);
+      case '/terra.market.v1beta1.MsgSwapSend':
+        return MsgSwapSend.fromData(data);
+
+      // authz
+      case '/cosmos.authz.v1beta1.MsgGrant':
+        return MsgGrantAuthorization.fromData(data);
+      case '/cosmos.authz.v1beta1.MsgRevoke':
+        return MsgRevokeAuthorization.fromData(data);
+      case '/cosmos.authz.v1beta1.MsgExec':
+        return MsgExecAuthorized.fromData(data);
+
+      // oracle
+      case '/terra.oracle.v1beta1.MsgDelegateFeedConsent':
+        return MsgDelegateFeedConsent.fromData(data);
+      case '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote':
+        return MsgAggregateExchangeRatePrevote.fromData(data);
+      case '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote':
+        return MsgAggregateExchangeRateVote.fromData(data);
+
+      // slashing
+      case '/cosmos.slashing.v1beta1.MsgUnjail':
+        return MsgUnjail.fromData(data);
+
+      // staking
+      case '/cosmos.staking.v1beta1.MsgDelegate':
+        return MsgDelegate.fromData(data);
+      case '/cosmos.staking.v1beta1.MsgUndelegate':
+        return MsgUndelegate.fromData(data);
+      case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
+        return MsgBeginRedelegate.fromData(data);
+      case '/cosmos.staking.v1beta1.MsgCreateValidator':
+        return MsgCreateValidator.fromData(data);
+      case '/cosmos.staking.v1beta1.MsgEditValidator':
+        return MsgEditValidator.fromData(data);
+
+      // wasm
+      case '/terra.wasm.v1beta1.MsgStoreCode':
+        return MsgStoreCode.fromData(data);
+      case '/terra.wasm.v1beta1.MsgMigrateCode':
+        return MsgMigrateCode.fromData(data);
+      case '/terra.wasm.v1beta1.MsgInstantiateContract':
+        return MsgInstantiateContract.fromData(data);
+      case '/terra.wasm.v1beta1.MsgExecuteContract':
+        return MsgExecuteContract.fromData(data);
+      case '/terra.wasm.v1beta1.MsgMigrateContract':
+        return MsgMigrateContract.fromData(data);
+      case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
+        return MsgUpdateContractAdmin.fromData(data);
+      case '/terra.wasm.v1beta1.MsgClearContractAdmin':
         return MsgClearContractAdmin.fromData(data);
-      default:
-        throw new Error(`unable to parse msg: ${data} unrecognized`);
     }
   }
 
@@ -261,37 +366,7 @@ export namespace Msg {
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
         return MsgClearContractAdmin.unpackAny(proto);
       default:
-        return NotSupportedMsg.unpackAny(proto);
+        throw Error(`not supported msg ${proto.typeUrl}`);
     }
   }
-}
-
-export class NotSupportedMsg {
-  constructor(public typeUrl: string, public value: string) {}
-
-  public static fromProto(msgAny: NotSupportedMsg.Proto): NotSupportedMsg {
-    return new NotSupportedMsg(
-      msgAny.typeUrl,
-      Buffer.from(msgAny.value).toString('base64')
-    );
-  }
-
-  public toProto(): NotSupportedMsg.Proto {
-    return Any.fromPartial({
-      typeUrl: this.typeUrl,
-      value: Buffer.from(this.value, 'base64'),
-    });
-  }
-
-  public static unpackAny(msgAny: Any): NotSupportedMsg {
-    return NotSupportedMsg.fromProto(msgAny);
-  }
-
-  public packAny(): Any {
-    return this.toProto();
-  }
-}
-
-export namespace NotSupportedMsg {
-  export type Proto = Any;
 }

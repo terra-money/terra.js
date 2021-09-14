@@ -2,7 +2,7 @@ import { MsgMultiSend } from './MsgMultiSend';
 import { Coins } from '../../Coins';
 import { Coin } from '../../Coin';
 
-const example: MsgMultiSend.Data = {
+const example: MsgMultiSend.Amino = {
   type: 'bank/MsgMultiSend',
   value: {
     inputs: [
@@ -138,7 +138,7 @@ const example: MsgMultiSend.Data = {
   },
 };
 
-const proto_example: MsgMultiSend.Proto = {
+const proto_example: MsgMultiSend.Data = {
   '@type': '/cosmos.bank.v1beta1.MsgMultiSend',
   inputs: [
     {
@@ -274,13 +274,13 @@ const proto_example: MsgMultiSend.Proto = {
 
 describe('MsgMultiSend', () => {
   it('deserialize correctly', () => {
-    const multisend = MsgMultiSend.fromData(example);
-    expect(multisend.toData()).toMatchObject(example);
+    const multisend = MsgMultiSend.fromAmino(example);
+    expect(multisend.toAmino()).toMatchObject(example);
   });
 
   it('deserialize correctly proto', () => {
     const multisend = MsgMultiSend.fromProto(proto_example);
-    expect(multisend.toProto()).toMatchObject(proto_example);
+    expect(multisend.toData()).toMatchObject(proto_example);
   });
 
   it('can be created manually', () => {
@@ -308,7 +308,7 @@ describe('MsgMultiSend', () => {
       }),
     ];
     const multisend = new MsgMultiSend(inputs, outputs);
-    expect(multisend.toData()).toMatchObject({
+    expect(multisend.toAmino()).toMatchObject({
       type: 'bank/MsgMultiSend',
       value: {
         inputs: [

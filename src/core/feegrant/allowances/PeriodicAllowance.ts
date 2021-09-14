@@ -8,7 +8,11 @@ import * as Long from 'long';
  * PeriodicAllowance extends Allowance to allow for both a maximum cap,
  * as well as a limit per time period.
  */
-export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> {
+export class PeriodicAllowance extends JSONSerializable<
+  PeriodicAllowance.Amino,
+  PeriodicAllowance.Data,
+  PeriodicAllowance.Proto
+> {
   public period_spend_limit: Coins;
   public period_can_spend: Coins;
 
@@ -32,7 +36,7 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
     this.period_can_spend = new Coins(period_can_spend);
   }
 
-  public static fromData(data: PeriodicAllowance.Data): PeriodicAllowance {
+  public static fromAmino(data: PeriodicAllowance.Amino): PeriodicAllowance {
     const {
       value: {
         basic,
@@ -43,6 +47,43 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
       },
     } = data;
 
+    return new PeriodicAllowance(
+      BasicAllowance.fromAmino(basic),
+      Number.parseInt(period),
+      Coins.fromAmino(period_spend_limit),
+      Coins.fromAmino(period_can_spend),
+      new Date(period_reset)
+    );
+  }
+
+  public toAmino(): PeriodicAllowance.Amino {
+    const {
+      basic,
+      period,
+      period_spend_limit,
+      period_can_spend,
+      period_reset,
+    } = this;
+    return {
+      type: 'feegrant/PeriodicAllowance',
+      value: {
+        basic: basic.toAmino(),
+        period: period.toString(),
+        period_spend_limit: period_spend_limit.toAmino(),
+        period_can_spend: period_can_spend.toAmino(),
+        period_reset: period_reset.toISOString().replace(/\.000Z$/, 'Z'),
+      },
+    };
+  }
+
+  public static fromData(proto: PeriodicAllowance.Data): PeriodicAllowance {
+    const {
+      basic,
+      period,
+      period_spend_limit,
+      period_can_spend,
+      period_reset,
+    } = proto;
     return new PeriodicAllowance(
       BasicAllowance.fromData(basic),
       Number.parseInt(period),
@@ -61,14 +102,12 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
       period_reset,
     } = this;
     return {
-      type: 'feegrant/PeriodicAllowance',
-      value: {
-        basic: basic.toData(),
-        period: period.toString(),
-        period_spend_limit: period_spend_limit.toData(),
-        period_can_spend: period_can_spend.toData(),
-        period_reset: period_reset.toISOString().replace(/\.000Z$/, 'Z'),
-      },
+      '@type': '/cosmos.feegrant.v1beta1.PeriodicAllowance',
+      basic: basic.toData(),
+      period: period.toString(),
+      period_spend_limit: period_spend_limit.toData(),
+      period_can_spend: period_can_spend.toData(),
+      period_reset: period_reset.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 
@@ -115,15 +154,24 @@ export class PeriodicAllowance extends JSONSerializable<PeriodicAllowance.Data> 
 }
 
 export namespace PeriodicAllowance {
-  export interface Data {
+  export interface Amino {
     type: 'feegrant/PeriodicAllowance';
     value: {
-      basic: BasicAllowance.Data;
+      basic: BasicAllowance.Amino;
       period: string;
-      period_spend_limit: Coins.Data;
-      period_can_spend: Coins.Data;
+      period_spend_limit: Coins.Amino;
+      period_can_spend: Coins.Amino;
       period_reset: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.feegrant.v1beta1.PeriodicAllowance';
+    basic: BasicAllowance.Data;
+    period: string;
+    period_spend_limit: Coins.Data;
+    period_can_spend: Coins.Data;
+    period_reset: string;
   }
 
   export type Proto = PeriodicAllowance_pb;

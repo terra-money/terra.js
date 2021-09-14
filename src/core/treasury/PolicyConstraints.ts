@@ -7,7 +7,11 @@ import { PolicyConstraints as PolicyConstraints_pb } from '@terra-money/terra.pr
  * This captures the Treasury module's `tax_policy` and `reward_policy` parameters, which
  * determine how the Tax Rate and Reward Weight values are allowed to change.
  */
-export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> {
+export class PolicyConstraints extends JSONSerializable<
+  PolicyConstraints.Amino,
+  PolicyConstraints.Data,
+  PolicyConstraints.Proto
+> {
   /**
    * Minimum value for rate.
    */
@@ -40,6 +44,26 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
     this.rate_min = new Dec(rate_min);
     this.rate_max = new Dec(rate_max);
     this.change_rate_max = new Dec(change_rate_max);
+  }
+
+  public static fromAmino(data: PolicyConstraints.Amino): PolicyConstraints {
+    const { rate_min, rate_max, cap, change_rate_max } = data;
+    return new PolicyConstraints(
+      rate_min,
+      rate_max,
+      Coin.fromAmino(cap),
+      change_rate_max
+    );
+  }
+
+  public toAmino(): PolicyConstraints.Amino {
+    const { rate_min, rate_max, cap, change_rate_max } = this;
+    return {
+      rate_min: rate_min.toString(),
+      rate_max: rate_max.toString(),
+      cap: cap.toAmino(),
+      change_rate_max: change_rate_max.toString(),
+    };
   }
 
   public static fromData(data: PolicyConstraints.Data): PolicyConstraints {
@@ -114,6 +138,13 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
 }
 
 export namespace PolicyConstraints {
+  export interface Amino {
+    rate_min: string;
+    rate_max: string;
+    cap: Coin.Amino;
+    change_rate_max: string;
+  }
+
   export interface Data {
     rate_min: string;
     rate_max: string;

@@ -49,6 +49,21 @@ export class TxInfo {
       proto.codespace
     );
   }
+
+  public static fromData(data: TxInfo.Data): TxInfo {
+    return new TxInfo(
+      parseInt(data.height),
+      data.txhash,
+      data.raw_log,
+      data.logs.map(log => TxLog.fromData(log)),
+      parseInt(data.gas_wanted),
+      parseInt(data.gas_used),
+      Tx.fromData(data.tx),
+      data.timestamp,
+      data.code,
+      data.codespace
+    );
+  }
 }
 
 export interface EventKV {
@@ -68,9 +83,9 @@ export interface EventsByType {
 }
 
 export namespace EventsByType {
-  export function parse(eventData: Event[]): EventsByType {
+  export function parse(eventAmino: Event[]): EventsByType {
     const events: EventsByType = {};
-    eventData.forEach(ev => {
+    eventAmino.forEach(ev => {
       ev.attributes.forEach(attr => {
         if (!(ev.type in events)) {
           events[ev.type] = {};
@@ -96,6 +111,33 @@ export class TxLog {
     public events: Event[]
   ) {
     this.eventsByType = EventsByType.parse(this.events);
+  }
+
+  public static fromData(data: TxLog.Data): TxLog {
+    return new TxLog(
+      data.msg_index,
+      data.log,
+      data.events.map(e => {
+        return {
+          type: e.type,
+          attributes: e.attributes.map(attr => {
+            return {
+              key: attr.key,
+              value: attr.value,
+            };
+          }),
+        };
+      })
+    );
+  }
+
+  public toData(): TxLog.Data {
+    const { msg_index, log, events } = this;
+    return {
+      msg_index,
+      log,
+      events,
+    };
   }
 
   public static fromProto(proto: TxLog.Proto): TxLog {
@@ -127,9 +169,28 @@ export class TxLog {
 }
 
 export namespace TxLog {
+  export interface Data {
+    msg_index: number;
+    log: string;
+    events: { type: string; attributes: { key: string; value: string }[] }[];
+  }
   export type Proto = ABCIMessageLog_pb;
 }
 
 export namespace TxInfo {
+  export interface Data {
+    height: string;
+    txhash: string;
+    codespace: string;
+    code: number;
+    data: string;
+    raw_log: string;
+    logs: TxLog.Data[];
+    info: string;
+    gas_wanted: string;
+    gas_used: string;
+    tx: Tx.Data;
+    timestamp: string;
+  }
   export type Proto = TxResponse_pb;
 }

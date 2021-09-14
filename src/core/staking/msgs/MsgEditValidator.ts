@@ -13,7 +13,11 @@ import { MsgEditValidator as MsgEditValidator_pb } from '@terra-money/terra.prot
  * field untouched. For `Description`,` you should start with [[MsgEditValidator.DESC_DO_NOT_MODIFY]] and
  * change each field you wish to modify individually.
  */
-export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
+export class MsgEditValidator extends JSONSerializable<
+  MsgEditValidator.Amino,
+  MsgEditValidator.Data,
+  MsgEditValidator.Proto
+> {
   /**
    * @param Description new description to apply
    * @param address new address to apply
@@ -29,7 +33,7 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
     super();
   }
 
-  public static fromData(data: MsgEditValidator.Data): MsgEditValidator {
+  public static fromAmino(data: MsgEditValidator.Amino): MsgEditValidator {
     const {
       value: {
         description,
@@ -39,14 +43,14 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
       },
     } = data;
     return new MsgEditValidator(
-      Validator.Description.fromData(description),
+      Validator.Description.fromAmino(description),
       validator_address,
       commission_rate ? new Dec(commission_rate) : undefined,
       min_self_delegation ? new Int(min_self_delegation) : undefined
     );
   }
 
-  public toData(): MsgEditValidator.Data {
+  public toAmino(): MsgEditValidator.Amino {
     const {
       description,
       validator_address,
@@ -106,10 +110,43 @@ export class MsgEditValidator extends JSONSerializable<MsgEditValidator.Data> {
   public static unpackAny(msgAny: Any): MsgEditValidator {
     return MsgEditValidator.fromProto(MsgEditValidator_pb.decode(msgAny.value));
   }
+
+  public static fromData(data: MsgEditValidator.Data): MsgEditValidator {
+    const {
+      description,
+      validator_address,
+      commission_rate,
+      min_self_delegation,
+    } = data;
+    return new MsgEditValidator(
+      Validator.Description.fromData(description),
+      validator_address,
+      commission_rate ? new Dec(commission_rate) : undefined,
+      min_self_delegation ? new Int(min_self_delegation) : undefined
+    );
+  }
+
+  public toData(): MsgEditValidator.Data {
+    const {
+      description,
+      validator_address,
+      commission_rate,
+      min_self_delegation,
+    } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgEditValidator',
+      description,
+      validator_address,
+      commission_rate: commission_rate ? commission_rate.toString() : undefined,
+      min_self_delegation: min_self_delegation
+        ? min_self_delegation.toString()
+        : undefined,
+    };
+  }
 }
 
 export namespace MsgEditValidator {
-  export const DESC_DO_NOT_MODIFY: Validator.Description.Data = {
+  export const DESC_DO_NOT_MODIFY: Validator.Description.Amino = {
     moniker: '[do-not-modify]',
     website: '[do-not-modify]',
     identity: '[do-not-modify]',
@@ -117,14 +154,22 @@ export namespace MsgEditValidator {
     security_contact: '[do-not-modify]',
   };
 
-  export interface Data {
+  export interface Amino {
     type: 'staking/MsgEditValidator';
     value: {
-      description: Validator.Description.Data;
+      description: Validator.Description.Amino;
       validator_address: ValAddress;
       commission_rate?: string;
       min_self_delegation?: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.MsgEditValidator';
+    description: Validator.Description.Data;
+    validator_address: ValAddress;
+    commission_rate?: string;
+    min_self_delegation?: string;
   }
 
   export type Proto = MsgEditValidator_pb;

@@ -2,24 +2,42 @@ import { JSONSerializable } from '../../../util/json';
 import { GenericAuthorization as GenericAuthorization_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
-export class GenericAuthorization extends JSONSerializable<GenericAuthorization.Data> {
+export class GenericAuthorization extends JSONSerializable<
+  GenericAuthorization.Amino,
+  GenericAuthorization.Data,
+  GenericAuthorization.Proto
+> {
   constructor(public msg: string) {
     super();
   }
 
-  public static fromData(
-    data: GenericAuthorization.Data
+  public static fromAmino(
+    data: GenericAuthorization.Amino
   ): GenericAuthorization {
     return new GenericAuthorization(data.value.msg);
   }
 
-  public toData(): GenericAuthorization.Data {
+  public toAmino(): GenericAuthorization.Amino {
     const { msg } = this;
     return {
       type: 'msgauth/GenericAuthorization',
       value: {
         msg,
       },
+    };
+  }
+
+  public static fromData(
+    data: GenericAuthorization.Data
+  ): GenericAuthorization {
+    return new GenericAuthorization(data.msg);
+  }
+
+  public toData(): GenericAuthorization.Data {
+    const { msg } = this;
+    return {
+      '@type': '/cosmos.authz.v1beta1.GenericAuthorization',
+      msg,
     };
   }
 
@@ -50,11 +68,16 @@ export class GenericAuthorization extends JSONSerializable<GenericAuthorization.
 }
 
 export namespace GenericAuthorization {
-  export interface Data {
+  export interface Amino {
     type: 'msgauth/GenericAuthorization';
     value: {
       msg: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.authz.v1beta1.GenericAuthorization';
+    msg: string;
   }
 
   export type Proto = GenericAuthorization_pb;

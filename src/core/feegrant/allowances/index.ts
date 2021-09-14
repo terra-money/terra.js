@@ -13,6 +13,11 @@ export type Allowance =
   | AllowedMsgAllowance;
 
 export namespace Allowance {
+  export type Amino =
+    | BasicAllowance.Amino
+    | PeriodicAllowance.Amino
+    | AllowedMsgAllowance.Amino;
+
   export type Data =
     | BasicAllowance.Data
     | PeriodicAllowance.Data
@@ -23,13 +28,24 @@ export namespace Allowance {
     | PeriodicAllowance.Proto
     | AllowedMsgAllowance.Proto;
 
-  export function fromData(data: Allowance.Data): Allowance {
+  export function fromAmino(data: Allowance.Amino): Allowance {
     switch (data.type) {
       case 'feegrant/BasicAllowance':
-        return BasicAllowance.fromData(data);
+        return BasicAllowance.fromAmino(data);
       case 'feegrant/PeriodicAllowance':
-        return PeriodicAllowance.fromData(data);
+        return PeriodicAllowance.fromAmino(data);
       case 'feegrant/AllowedMsgAllowance':
+        return AllowedMsgAllowance.fromAmino(data);
+    }
+  }
+
+  export function fromData(data: Allowance.Data): Allowance {
+    switch (data['@type']) {
+      case '/cosmos.feegrant.v1beta1.PeriodicAllowance':
+        return PeriodicAllowance.fromData(data);
+      case '/cosmos.feegrant.v1beta1.BasicAllowance':
+        return BasicAllowance.fromData(data);
+      case '/cosmos.feegrant.v1beta1.AllowedMsgAllowance':
         return AllowedMsgAllowance.fromData(data);
     }
   }
@@ -44,6 +60,6 @@ export namespace Allowance {
         return AllowedMsgAllowance.unpackAny(proto);
     }
 
-    throw new Error('');
+    throw new Error(`not supported allowance ${proto.typeUrl}`);
   }
 }

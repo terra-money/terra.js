@@ -5,9 +5,8 @@ export * from './Denom';
 export * from './Msg';
 export * from './numeric';
 export * from './PublicKey';
-export * from './StdFee';
-export * from './StdSignature';
-export * from './StdSignMsg';
+export * from './Fee';
+export * from './SignDoc';
 export * from './Tx';
 export * from './TxInfo';
 export * from './ValidatorSet';
@@ -15,6 +14,7 @@ export * from './Deposit';
 
 // Auth
 export * from './auth/Account';
+export * from './auth/BaseAccount';
 export * from './auth/LazyGradedVestingAccount';
 
 // Bank

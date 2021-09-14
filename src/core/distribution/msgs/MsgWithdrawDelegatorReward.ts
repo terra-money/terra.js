@@ -9,7 +9,11 @@ import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_pb } from '@te
  *
  * The rewards will be deposited to their Withdraw Address.
  */
-export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDelegatorReward.Data> {
+export class MsgWithdrawDelegatorReward extends JSONSerializable<
+  MsgWithdrawDelegatorReward.Amino,
+  MsgWithdrawDelegatorReward.Data,
+  MsgWithdrawDelegatorReward.Proto
+> {
   /**
    *
    * @param delegator_address delegator's account address
@@ -22,8 +26,8 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDele
     super();
   }
 
-  public static fromData(
-    data: MsgWithdrawDelegatorReward.Data
+  public static fromAmino(
+    data: MsgWithdrawDelegatorReward.Amino
   ): MsgWithdrawDelegatorReward {
     const {
       value: { delegator_address, validator_address },
@@ -31,7 +35,7 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDele
     return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
   }
 
-  public toData(): MsgWithdrawDelegatorReward.Data {
+  public toAmino(): MsgWithdrawDelegatorReward.Amino {
     const { delegator_address, validator_address } = this;
     return {
       type: 'distribution/MsgWithdrawDelegationReward',
@@ -39,6 +43,22 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDele
         delegator_address,
         validator_address,
       },
+    };
+  }
+
+  public static fromData(
+    proto: MsgWithdrawDelegatorReward.Data
+  ): MsgWithdrawDelegatorReward {
+    const { delegator_address, validator_address } = proto;
+    return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
+  }
+
+  public toData(): MsgWithdrawDelegatorReward.Data {
+    const { delegator_address, validator_address } = this;
+    return {
+      '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+      delegator_address,
+      validator_address,
     };
   }
 
@@ -74,12 +94,18 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<MsgWithdrawDele
 }
 
 export namespace MsgWithdrawDelegatorReward {
-  export interface Data {
+  export interface Amino {
     type: 'distribution/MsgWithdrawDelegationReward';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
   }
 
   export type Proto = MsgWithdrawDelegatorReward_pb;

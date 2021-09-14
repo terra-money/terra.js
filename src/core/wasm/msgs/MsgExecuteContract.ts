@@ -4,7 +4,11 @@ import { Coins } from '../../Coins';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgExecuteContract as MsgExecuteContract_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
 
-export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data> {
+export class MsgExecuteContract extends JSONSerializable<
+  MsgExecuteContract.Amino,
+  MsgExecuteContract.Data,
+  MsgExecuteContract.Proto
+> {
   public coins: Coins;
 
   /**
@@ -23,7 +27,7 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
     this.coins = new Coins(coins);
   }
 
-  public static fromData(data: MsgExecuteContract.Data): MsgExecuteContract {
+  public static fromAmino(data: MsgExecuteContract.Amino): MsgExecuteContract {
     const {
       value: { sender, contract, execute_msg, coins },
     } = data;
@@ -31,11 +35,11 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
       sender,
       contract,
       execute_msg,
-      Coins.fromData(coins)
+      Coins.fromAmino(coins)
     );
   }
 
-  public toData(): MsgExecuteContract.Data {
+  public toAmino(): MsgExecuteContract.Amino {
     const { sender, contract, execute_msg, coins } = this;
 
     return {
@@ -44,7 +48,7 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
         sender,
         contract,
         execute_msg: removeNull(execute_msg),
-        coins: coins.toData(),
+        coins: coins.toAmino(),
       },
     };
   }
@@ -83,17 +87,46 @@ export class MsgExecuteContract extends JSONSerializable<MsgExecuteContract.Data
       MsgExecuteContract_pb.decode(msgAny.value)
     );
   }
+
+  public static fromData(data: MsgExecuteContract.Data): MsgExecuteContract {
+    const { sender, contract, execute_msg, coins } = data;
+    return new MsgExecuteContract(
+      sender,
+      contract,
+      execute_msg,
+      Coins.fromData(coins)
+    );
+  }
+
+  public toData(): MsgExecuteContract.Data {
+    const { sender, contract, execute_msg, coins } = this;
+    return {
+      '@type': '/terra.wasm.v1beta1.MsgExecuteContract',
+      sender,
+      contract,
+      execute_msg,
+      coins: coins.toData(),
+    };
+  }
 }
 
 export namespace MsgExecuteContract {
-  export interface Data {
+  export interface Amino {
     type: 'wasm/MsgExecuteContract';
     value: {
       sender: AccAddress;
       contract: AccAddress;
       execute_msg: object;
-      coins: Coins.Data;
+      coins: Coins.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/terra.wasm.v1beta1.MsgExecuteContract';
+    sender: AccAddress;
+    contract: AccAddress;
+    execute_msg: object;
+    coins: Coins.Data;
   }
 
   export type Proto = MsgExecuteContract_pb;

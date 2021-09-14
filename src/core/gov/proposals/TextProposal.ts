@@ -7,7 +7,11 @@ import { TextProposal as TextProposal_pb } from '@terra-money/terra.proto/cosmos
  * manually if passed. Used as a general-purpose way of discovering community's
  * sentiment / interest for an arbitrary change.
  */
-export class TextProposal extends JSONSerializable<TextProposal.Data> {
+export class TextProposal extends JSONSerializable<
+  TextProposal.Amino,
+  TextProposal.Data,
+  TextProposal.Proto
+> {
   /**
    * @param title proposal's title
    * @param description proposal's description
@@ -16,14 +20,14 @@ export class TextProposal extends JSONSerializable<TextProposal.Data> {
     super();
   }
 
-  public static fromData(data: TextProposal.Data): TextProposal {
+  public static fromAmino(data: TextProposal.Amino): TextProposal {
     const {
       value: { title, description },
     } = data;
     return new TextProposal(title, description);
   }
 
-  public toData(): TextProposal.Data {
+  public toAmino(): TextProposal.Amino {
     const { title, description } = this;
     return {
       type: 'gov/TextProposal',
@@ -31,6 +35,20 @@ export class TextProposal extends JSONSerializable<TextProposal.Data> {
         title,
         description,
       },
+    };
+  }
+
+  public static fromData(proto: TextProposal.Data): TextProposal {
+    const { title, description } = proto;
+    return new TextProposal(title, description);
+  }
+
+  public toData(): TextProposal.Data {
+    const { title, description } = this;
+    return {
+      '@type': '/cosmos.gov.v1beta1.TextProposal',
+      title,
+      description,
     };
   }
 
@@ -59,12 +77,18 @@ export class TextProposal extends JSONSerializable<TextProposal.Data> {
 }
 
 export namespace TextProposal {
-  export interface Data {
+  export interface Amino {
     type: 'gov/TextProposal';
     value: {
       title: string;
       description: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.gov.v1beta1.TextProposal';
+    title: string;
+    description: string;
   }
 
   export type Proto = TextProposal_pb;

@@ -18,7 +18,11 @@ import { Any } from '@terra-money/terra.proto/google/protobuf/any';
  * generated for you to store information about a validator polled from the API functions
  * in [[StakingAPI]].
  */
-export class Validator extends JSONSerializable<Validator.Data> {
+export class Validator extends JSONSerializable<
+  Validator.Amino,
+  Validator.Data,
+  Validator.Proto
+> {
   /**
    *
    * @param operator_address validator's operator address
@@ -47,6 +51,38 @@ export class Validator extends JSONSerializable<Validator.Data> {
     public min_self_delegation: Int
   ) {
     super();
+  }
+
+  public toAmino(): Validator.Amino {
+    return {
+      operator_address: this.operator_address,
+      consensus_pubkey: this.consensus_pubkey.toAmino(),
+      jailed: this.jailed,
+      status: this.status,
+      tokens: this.tokens.toString(),
+      delegator_shares: this.delegator_shares.toString(),
+      description: this.description,
+      unbonding_height: this.unbonding_height.toFixed(),
+      unbonding_time: this.unbonding_time.toISOString(),
+      commission: this.commission.toAmino(),
+      min_self_delegation: this.min_self_delegation.toString(),
+    };
+  }
+
+  public static fromAmino(data: Validator.Amino): Validator {
+    return new Validator(
+      data.operator_address,
+      ValConsPublicKey.fromAmino(data.consensus_pubkey),
+      data.jailed || false,
+      data.status || 0,
+      new Int(data.tokens),
+      new Dec(data.delegator_shares),
+      Validator.Description.fromAmino(data.description),
+      Number.parseInt(data.unbonding_height),
+      new Date(data.unbonding_time),
+      Validator.Commission.fromAmino(data.commission),
+      new Int(data.min_self_delegation)
+    );
   }
 
   public toData(): Validator.Data {
@@ -134,6 +170,20 @@ export class Validator extends JSONSerializable<Validator.Data> {
 export namespace Validator {
   export const Status = BondStatus;
   export type Status = BondStatus;
+  export interface Amino {
+    operator_address: ValAddress;
+    consensus_pubkey: ValConsPublicKey.Amino;
+    jailed: boolean;
+    status: BondStatus;
+    tokens: string;
+    delegator_shares: string;
+    description: Description.Amino;
+    unbonding_height: string;
+    unbonding_time: string;
+    commission: Commission.Amino;
+    min_self_delegation: string;
+  }
+
   export interface Data {
     operator_address: ValAddress;
     consensus_pubkey: ValConsPublicKey.Data;
@@ -150,7 +200,11 @@ export namespace Validator {
 
   export type Proto = Validator_pb;
 
-  export class Description extends JSONSerializable<Description.Data> {
+  export class Description extends JSONSerializable<
+    Description.Amino,
+    Description.Data,
+    Description.Proto
+  > {
     /**
      * @param moniker Identifying name, e.g. "Hashed"
      * @param identity time at which commission was last updated
@@ -166,6 +220,26 @@ export namespace Validator {
       public security_contact: string
     ) {
       super();
+    }
+
+    public toAmino(): Description.Amino {
+      return {
+        moniker: this.moniker,
+        identity: this.identity,
+        website: this.website,
+        details: this.details,
+        security_contact: this.security_contact,
+      };
+    }
+
+    public static fromAmino(data: Description.Amino): Description {
+      return new Description(
+        data.moniker,
+        data.identity || '',
+        data.website || '',
+        data.details || '',
+        data.security_contact || ''
+      );
     }
 
     public toData(): Description.Data {
@@ -212,6 +286,14 @@ export namespace Validator {
   }
 
   export namespace Description {
+    export interface Amino {
+      moniker: string;
+      identity: string;
+      website: string;
+      details: string;
+      security_contact: string;
+    }
+
     export interface Data {
       moniker: string;
       identity: string;
@@ -223,7 +305,11 @@ export namespace Validator {
     export type Proto = Description_pb;
   }
 
-  export class CommissionRates extends JSONSerializable<CommissionRates.Data> {
+  export class CommissionRates extends JSONSerializable<
+    CommissionRates.Amino,
+    CommissionRates.Data,
+    CommissionRates.Proto
+  > {
     /**
      * @param rate current commission rate
      * @param max_rate max commission rate
@@ -235,6 +321,24 @@ export namespace Validator {
       public max_change_rate: Dec
     ) {
       super();
+    }
+
+    public static fromAmino(data: CommissionRates.Amino): CommissionRates {
+      const { rate, max_rate, max_change_rate } = data;
+      return new CommissionRates(
+        new Dec(rate),
+        new Dec(max_rate),
+        new Dec(max_change_rate)
+      );
+    }
+
+    public toAmino(): Validator.CommissionRates.Amino {
+      const { rate, max_rate, max_change_rate } = this;
+      return {
+        rate: rate.toString(),
+        max_rate: max_rate.toString(),
+        max_change_rate: max_change_rate.toString(),
+      };
     }
 
     public static fromData(data: CommissionRates.Data): CommissionRates {
@@ -274,6 +378,12 @@ export namespace Validator {
   }
 
   export namespace CommissionRates {
+    export interface Amino {
+      rate: string;
+      max_rate: string;
+      max_change_rate: string;
+    }
+
     export interface Data {
       rate: string;
       max_rate: string;
@@ -283,7 +393,11 @@ export namespace Validator {
     export type Proto = CommissionRates_pb;
   }
 
-  export class Commission extends JSONSerializable<Commission.Data> {
+  export class Commission extends JSONSerializable<
+    Commission.Amino,
+    Commission.Data,
+    Commission.Proto
+  > {
     /**
      * @param commission_rates commission rates
      * @param update_time time at which commission was last updated
@@ -293,6 +407,20 @@ export namespace Validator {
       public update_time: Date
     ) {
       super();
+    }
+
+    public toAmino(): Commission.Amino {
+      return {
+        commission_rates: this.commission_rates.toAmino(),
+        update_time: this.update_time.toISOString(),
+      };
+    }
+
+    public static fromAmino(data: Commission.Amino): Commission {
+      return new Commission(
+        CommissionRates.fromAmino(data.commission_rates),
+        new Date(data.update_time)
+      );
     }
 
     public toData(): Commission.Data {
@@ -328,6 +456,11 @@ export namespace Validator {
   }
 
   export namespace Commission {
+    export interface Amino {
+      commission_rates: CommissionRates.Amino;
+      update_time: string;
+    }
+
     export interface Data {
       commission_rates: CommissionRates.Data;
       update_time: string;

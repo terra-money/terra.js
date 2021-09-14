@@ -8,7 +8,11 @@ import { MsgDelegate as MsgDelegate_pb } from '@terra-money/terra.proto/cosmos/s
  * A delegator can submit this message to send more Luna to be staked through a
  * validator delegate.
  */
-export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
+export class MsgDelegate extends JSONSerializable<
+  MsgDelegate.Amino,
+  MsgDelegate.Data,
+  MsgDelegate.Proto
+> {
   /**
    *
    * @param delegator_address delegator's account address
@@ -23,25 +27,25 @@ export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
     super();
   }
 
-  public static fromData(data: MsgDelegate.Data): MsgDelegate {
+  public static fromAmino(data: MsgDelegate.Amino): MsgDelegate {
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
     return new MsgDelegate(
       delegator_address,
       validator_address,
-      Coin.fromData(amount)
+      Coin.fromAmino(amount)
     );
   }
 
-  public toData(): MsgDelegate.Data {
+  public toAmino(): MsgDelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
       type: 'staking/MsgDelegate',
       value: {
         delegator_address,
         validator_address,
-        amount: amount.toData(),
+        amount: amount.toAmino(),
       },
     };
   }
@@ -73,16 +77,42 @@ export class MsgDelegate extends JSONSerializable<MsgDelegate.Data> {
   public static unpackAny(msgAny: Any): MsgDelegate {
     return MsgDelegate.fromProto(MsgDelegate_pb.decode(msgAny.value));
   }
+
+  public static fromData(data: MsgDelegate.Data): MsgDelegate {
+    const { delegator_address, validator_address, amount } = data;
+    return new MsgDelegate(
+      delegator_address,
+      validator_address,
+      Coin.fromData(amount)
+    );
+  }
+
+  public toData(): MsgDelegate.Data {
+    const { delegator_address, validator_address, amount } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgDelegate',
+      delegator_address,
+      validator_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgDelegate {
-  export interface Data {
+  export interface Amino {
     type: 'staking/MsgDelegate';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;
-      amount: Coin.Data;
+      amount: Coin.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.MsgDelegate';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    amount: Coin.Data;
   }
 
   export type Proto = MsgDelegate_pb;

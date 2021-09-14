@@ -1,7 +1,6 @@
+import { JSONSerializable } from '../../util/json';
 import { Coins } from '../Coins';
 import { BaseAccount } from './BaseAccount';
-import { AccAddress } from '../bech32';
-import { PublicKey } from '../PublicKey';
 import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/cosmos/auth/v1beta1/auth';
 import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/cosmos/vesting/v1beta1/vesting';
 import * as Long from 'long';
@@ -9,7 +8,11 @@ import * as Long from 'long';
 /**
  * Holds information about a Account which has vesting information.
  */
-export class BaseVestingAccount {
+export class BaseVestingAccount extends JSONSerializable<
+  BaseVestingAccount.Amino,
+  BaseVestingAccount.Data,
+  BaseVestingAccount.Proto
+> {
   /**
    *
    * @param BaseAccount account information
@@ -20,36 +23,105 @@ export class BaseVestingAccount {
    * @param vesting_schedules Entries that make up vesting
    */
   constructor(
-    public address: AccAddress,
-    public public_key: PublicKey | null,
-    public account_number: number,
-    public sequence: number,
+    public base_account: BaseAccount,
     public original_vesting: Coins,
     public delegated_free: Coins,
     public delegated_vesting: Coins,
     public end_time: number
-  ) {}
+  ) {
+    super();
+  }
 
-  public toProto(): BaseVestingAccount.Proto {
+  public getAccountNumber(): number {
+    return this.base_account.account_number;
+  }
+
+  public getSequenceNumber(): number {
+    return this.base_account.sequence;
+  }
+
+  public toAmino(): BaseVestingAccount.Amino {
+    undefined;
     const {
-      address,
-      public_key,
-      account_number,
-      sequence,
+      base_account,
       original_vesting,
       delegated_free,
       delegated_vesting,
       end_time,
     } = this;
 
-    const baseAccount = new BaseAccount(
-      address,
-      public_key,
-      account_number,
-      sequence
+    return {
+      type: 'core/BaseVestingAccount',
+      value: {
+        base_account: base_account.toAmino().value,
+        delegated_free: delegated_free.toAmino(),
+        delegated_vesting: delegated_vesting.toAmino(),
+        end_time: end_time.toFixed(),
+        original_vesting: original_vesting.toAmino(),
+      },
+    };
+  }
+
+  public static fromAmino(amino: BaseVestingAccount.Amino): BaseVestingAccount {
+    const base_account = BaseAccount.fromAmino({
+      type: 'core/Account',
+      value: amino.value.base_account,
+    });
+
+    return new BaseVestingAccount(
+      base_account,
+      Coins.fromAmino(amino.value.original_vesting),
+      Coins.fromAmino(amino.value.delegated_free),
+      Coins.fromAmino(amino.value.delegated_vesting),
+      parseInt(amino.value.end_time)
     );
+  }
+
+  public toData(): BaseVestingAccount.Data {
+    const {
+      base_account,
+      original_vesting,
+      delegated_free,
+      delegated_vesting,
+      end_time,
+    } = this;
+
+    return {
+      '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount',
+      base_account: base_account.toData(),
+      delegated_free: delegated_free.toData(),
+      delegated_vesting: delegated_vesting.toData(),
+      end_time: end_time.toFixed(),
+      original_vesting: original_vesting.toData(),
+    };
+  }
+
+  public static fromData(data: BaseVestingAccount.Data): BaseVestingAccount {
+    const base_account = BaseAccount.fromData({
+      '@type': '/cosmos.auth.v1beta1.BaseAccount',
+      ...data.base_account,
+    });
+
+    return new BaseVestingAccount(
+      base_account,
+      Coins.fromData(data.original_vesting),
+      Coins.fromData(data.delegated_free),
+      Coins.fromData(data.delegated_vesting),
+      parseInt(data.end_time)
+    );
+  }
+
+  public toProto(): BaseVestingAccount.Proto {
+    const {
+      base_account,
+      original_vesting,
+      delegated_free,
+      delegated_vesting,
+      end_time,
+    } = this;
+
     return BaseVestingAccount_pb.fromPartial({
-      baseAccount: baseAccount.toProto(),
+      baseAccount: base_account.toProto(),
       delegatedFree: delegated_free.toProto(),
       delegatedVesting: delegated_vesting.toProto(),
       endTime: Long.fromNumber(end_time),
@@ -57,32 +129,45 @@ export class BaseVestingAccount {
     });
   }
 
-  public static fromProto(
-    baseVestingAccountProto: BaseVestingAccount.Proto
-  ): BaseVestingAccount {
+  public static fromProto(proto: BaseVestingAccount.Proto): BaseVestingAccount {
     const baseAccount = BaseAccount.fromProto(
-      baseVestingAccountProto.baseAccount as BaseAccount_pb
+      proto.baseAccount as BaseAccount_pb
     );
 
     return new BaseVestingAccount(
-      baseAccount.address,
-      baseAccount.public_key,
-      baseAccount.account_number,
-      baseAccount.sequence,
-      Coins.fromProto(baseVestingAccountProto.originalVesting),
-      Coins.fromProto(baseVestingAccountProto.delegatedFree),
-      Coins.fromProto(baseVestingAccountProto.delegatedVesting),
-      baseVestingAccountProto.endTime.toNumber()
+      baseAccount,
+      Coins.fromProto(proto.originalVesting),
+      Coins.fromProto(proto.delegatedFree),
+      Coins.fromProto(proto.delegatedVesting),
+      proto.endTime.toNumber()
     );
   }
 }
 
 export namespace BaseVestingAccount {
-  export interface Value {
-    original_vesting: Coins.Data;
-    delegated_free: Coins.Data;
-    delegated_vesting: Coins.Data;
+  export interface AminoValue {
+    base_account: BaseAccount.AminoValue;
+    original_vesting: Coins.Amino;
+    delegated_free: Coins.Amino;
+    delegated_vesting: Coins.Amino;
     end_time: string;
+  }
+
+  export interface Amino {
+    type: 'core/BaseVestingAccount';
+    value: AminoValue;
+  }
+
+  export interface DataValue {
+    base_account: BaseAccount.DataValue;
+    original_vesting: Coins.Amino;
+    delegated_free: Coins.Amino;
+    delegated_vesting: Coins.Amino;
+    end_time: string;
+  }
+
+  export interface Data extends DataValue {
+    '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount';
   }
 
   export type Proto = BaseVestingAccount_pb;

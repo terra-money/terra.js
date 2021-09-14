@@ -1,3 +1,4 @@
+import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { AccAddress } from '../../bech32';
 import {
@@ -7,13 +8,52 @@ import {
 } from '@terra-money/terra.proto/cosmos/staking/v1beta1/authz';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
-export class StakeAuthorization {
+export class StakeAuthorization extends JSONSerializable<
+  any,
+  StakeAuthorization.Data,
+  StakeAuthorization.Proto
+> {
   constructor(
     public authorization_type: AuthorizationType,
     public max_tokens?: Coin,
     public allow_list?: StakeAuthorizationValidators,
     public deny_list?: StakeAuthorizationValidators
-  ) {}
+  ) {
+    super();
+  }
+
+  public static fromAmino(_: any): StakeAuthorizationValidators {
+    _;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(): any {
+    throw new Error('Amino not supported');
+  }
+
+  public static fromData(data: StakeAuthorization.Data): StakeAuthorization {
+    return new StakeAuthorization(
+      data.authorization_type,
+      data.max_tokens ? Coin.fromProto(data.max_tokens) : undefined,
+      data.allow_list
+        ? StakeAuthorizationValidators.fromProto(data.allow_list)
+        : undefined,
+      data.deny_list
+        ? StakeAuthorizationValidators.fromProto(data.deny_list)
+        : undefined
+    );
+  }
+
+  public toData(): StakeAuthorization.Data {
+    const { max_tokens, allow_list, deny_list, authorization_type } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.StakeAuthorization',
+      authorization_type: authorization_type,
+      max_tokens: max_tokens?.toData(),
+      allow_list: allow_list?.toData(),
+      deny_list: deny_list?.toData(),
+    };
+  }
 
   public static fromProto(proto: StakeAuthorization.Proto): StakeAuthorization {
     return new StakeAuthorization(
@@ -52,13 +92,40 @@ export class StakeAuthorization {
   }
 }
 
-export class StakeAuthorizationValidators {
-  constructor(public address: AccAddress[]) {}
+export class StakeAuthorizationValidators extends JSONSerializable<
+  any,
+  StakeAuthorizationValidators.Data,
+  StakeAuthorizationValidators.Proto
+> {
+  constructor(public address: AccAddress[]) {
+    super();
+  }
+
+  public static fromAmino(_: any): StakeAuthorizationValidators {
+    _;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(): any {
+    throw new Error('Amino not supported');
+  }
+
+  public static fromData(
+    data: StakeAuthorizationValidators.Data
+  ): StakeAuthorizationValidators {
+    return new StakeAuthorizationValidators(data.address);
+  }
+
+  public toData(): StakeAuthorizationValidators.Data {
+    return {
+      address: this.address,
+    };
+  }
 
   public static fromProto(
-    validatorsProto: StakeAuthorizationValidators.Proto
+    proto: StakeAuthorizationValidators.Proto
   ): StakeAuthorizationValidators {
-    return new StakeAuthorizationValidators(validatorsProto.address);
+    return new StakeAuthorizationValidators(proto.address);
   }
 
   public toProto(): StakeAuthorizationValidators.Proto {
@@ -69,11 +136,24 @@ export class StakeAuthorizationValidators {
 }
 
 export namespace StakeAuthorizationValidators {
+  export interface Data {
+    address: AccAddress[];
+  }
+
   export type Proto = StakeAuthorizationValidators_pb;
 }
 
 export namespace StakeAuthorization {
   export type Type = AuthorizationType;
   export const Type = AuthorizationType;
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.StakeAuthorization';
+    max_tokens?: Coin.Data;
+    allow_list?: StakeAuthorizationValidators.Data;
+    deny_list?: StakeAuthorizationValidators.Data;
+    authorization_type: AuthorizationType;
+  }
+
   export type Proto = StakeAuthorization_pb;
 }

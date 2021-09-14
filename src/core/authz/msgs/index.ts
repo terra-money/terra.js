@@ -12,11 +12,14 @@ export type MsgAuthMsg =
   | MsgExecAuthorized;
 
 export namespace MsgAuthMsg {
+  export type Amino =
+    | MsgGrantAuthorization.Amino
+    | MsgRevokeAuthorization.Amino
+    | MsgExecAuthorized.Amino;
   export type Data =
     | MsgGrantAuthorization.Data
     | MsgRevokeAuthorization.Data
     | MsgExecAuthorized.Data;
-
   export type Proto =
     | MsgGrantAuthorization.Proto
     | MsgRevokeAuthorization.Proto

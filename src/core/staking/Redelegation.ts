@@ -21,7 +21,11 @@ import * as Long from 'long';
  * more times than the amount of entries. Entries are cleared when the redelegation is
  * completed, the same amount of time as unbonding.
  */
-export class Redelegation extends JSONSerializable<Redelegation.Data> {
+export class Redelegation extends JSONSerializable<
+  Redelegation.Amino,
+  Redelegation.Data,
+  Redelegation.Proto
+> {
   /**
    *
    * @param delegator_address delegator's account address
@@ -36,6 +40,40 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
     public entries: Redelegation.Entry[]
   ) {
     super();
+  }
+
+  public static fromAmino(data: Redelegation.Amino): Redelegation {
+    const {
+      redelegation: {
+        delegator_address,
+        validator_src_address,
+        validator_dst_address,
+      },
+      entries,
+    } = data;
+    return new Redelegation(
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      entries.map(e => Redelegation.Entry.fromAmino(e))
+    );
+  }
+
+  public toAmino(): Redelegation.Amino {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      entries,
+    } = this;
+    return {
+      redelegation: {
+        delegator_address,
+        validator_src_address,
+        validator_dst_address,
+      },
+      entries: entries.map(e => e.toAmino()),
+    };
   }
 
   public static fromData(data: Redelegation.Data): Redelegation {
@@ -105,6 +143,15 @@ export class Redelegation extends JSONSerializable<Redelegation.Data> {
 }
 
 export namespace Redelegation {
+  export interface Amino {
+    redelegation: {
+      delegator_address: AccAddress;
+      validator_src_address: ValAddress;
+      validator_dst_address: ValAddress;
+    };
+    entries: Redelegation.Entry.Amino[];
+  }
+
   export interface Data {
     redelegation: {
       delegator_address: AccAddress;
@@ -116,7 +163,11 @@ export namespace Redelegation {
 
   export type Proto = RedelegationResponse_pb;
 
-  export class Entry extends JSONSerializable<Entry.Data> {
+  export class Entry extends JSONSerializable<
+    Entry.Amino,
+    Entry.Data,
+    Entry.Proto
+  > {
     /**
      *
      * @param initial_balance balance of delegation prior to initiating redelegation
@@ -132,6 +183,37 @@ export namespace Redelegation {
       public completion_time: Date
     ) {
       super();
+    }
+
+    public toAmino(): Entry.Amino {
+      return {
+        redelegation_entry: {
+          initial_balance: this.initial_balance.toString(),
+          shares_dst: this.shares_dst.toString(),
+          creation_height: this.creation_height,
+          completion_time: this.completion_time.toISOString(),
+        },
+        balance: this.balance.toString(),
+      };
+    }
+
+    public static fromAmino(data: Entry.Amino): Entry {
+      const {
+        redelegation_entry: {
+          initial_balance,
+          shares_dst,
+          creation_height,
+          completion_time,
+        },
+        balance,
+      } = data;
+      return new Entry(
+        new Int(initial_balance),
+        new Int(balance),
+        new Dec(shares_dst),
+        creation_height,
+        new Date(completion_time)
+      );
     }
 
     public toData(): Entry.Data {
@@ -200,6 +282,16 @@ export namespace Redelegation {
   }
 
   export namespace Entry {
+    export interface Amino {
+      redelegation_entry: {
+        creation_height: number;
+        completion_time: string;
+        initial_balance: string;
+        shares_dst: string;
+      };
+      balance: string;
+    }
+
     export interface Data {
       redelegation_entry: {
         creation_height: number;

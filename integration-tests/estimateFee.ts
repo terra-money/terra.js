@@ -17,30 +17,53 @@ async function main() {
     gasPrices,
   });
 
-  const accountInfo = await bombay.auth.accountInfo(test1.key.accAddress);
+  const accountInfo = await bombay.auth.accountInfo(
+    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
+  );
 
   // Test raw estimate fee function with specified gas
   const rawFee = await bombay.tx.estimateFee(
-    [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
-    { gas: 'auto', sequence: accountInfo.sequence }
+    [
+      new MsgSwap(
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        new Coin('uusd', 1000),
+        'uluna'
+      ),
+    ],
+    { gas: 'auto', sequence: accountInfo.getSequenceNumber() }
   );
 
-  console.log('MsgSwap(500000 gas): ', Fee.toJSON(rawFee.toProto()));
+  console.log('MsgSwap(500000 gas): ', rawFee.toData());
 
   // Test automatic fee estimation using create method with specified denom
-  const item = await bombay.tx.create(test1.key.accAddress, {
-    msgs: [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
-    feeDenoms: ['uusd'],
-  });
+  const item = await bombay.tx.create(
+    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+    {
+      msgs: [
+        new MsgSwap(
+          'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+          new Coin('uusd', 1000),
+          'uluna'
+        ),
+      ],
+      feeDenoms: ['uusd'],
+    }
+  );
 
-  console.log('MsgSwap(uusd fee)', Fee.toJSON(item.auth_info.fee.toProto()));
+  console.log('MsgSwap(uusd fee)', item.auth_info.fee.toData());
 
   const send = await bombay.tx.create(test2.key.accAddress, {
-    msgs: [new MsgSend(test2.key.accAddress, test1.key.accAddress, '1234uusd')],
+    msgs: [
+      new MsgSend(
+        test2.key.accAddress,
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        '1234uusd'
+      ),
+    ],
     feeDenoms: ['uusd'],
   });
 
-  console.log('MsgSend', Fee.toJSON(send.auth_info.fee.toProto()));
+  console.log('MsgSend', send.auth_info.fee.toData());
 }
 
 main().catch(console.error);

@@ -18,13 +18,37 @@ import * as Long from 'long';
  * when their unbonding periods are completed and the funds are returned to the
  * delegator's account balance to be spent freely.
  */
-export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Data> {
+export class UnbondingDelegation extends JSONSerializable<
+  UnbondingDelegation.Amino,
+  UnbondingDelegation.Data,
+  UnbondingDelegation.Proto
+> {
   constructor(
     public delegator_address: AccAddress,
     public validator_address: ValAddress,
     public entries: UnbondingDelegation.Entry[]
   ) {
     super();
+  }
+
+  public static fromAmino(
+    data: UnbondingDelegation.Amino
+  ): UnbondingDelegation {
+    const { delegator_address, validator_address, entries } = data;
+    return new UnbondingDelegation(
+      delegator_address,
+      validator_address,
+      entries.map(e => UnbondingDelegation.Entry.fromAmino(e))
+    );
+  }
+
+  public toAmino(): UnbondingDelegation.Amino {
+    const { delegator_address, validator_address, entries } = this;
+    return {
+      delegator_address,
+      validator_address,
+      entries: entries.map(e => e.toAmino()),
+    };
   }
 
   public static fromData(data: UnbondingDelegation.Data): UnbondingDelegation {
@@ -34,6 +58,15 @@ export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Da
       validator_address,
       entries.map(e => UnbondingDelegation.Entry.fromData(e))
     );
+  }
+
+  public toData(): UnbondingDelegation.Data {
+    const { delegator_address, validator_address, entries } = this;
+    return {
+      delegator_address,
+      validator_address,
+      entries: entries.map(e => e.toData()),
+    };
   }
 
   public toProto(): UnbondingDelegation.Proto {
@@ -54,18 +87,15 @@ export class UnbondingDelegation extends JSONSerializable<UnbondingDelegation.Da
       proto.entries.map(e => UnbondingDelegation.Entry.fromProto(e))
     );
   }
-
-  public toData(): UnbondingDelegation.Data {
-    const { delegator_address, validator_address, entries } = this;
-    return {
-      delegator_address,
-      validator_address,
-      entries: entries.map(e => e.toData()),
-    };
-  }
 }
 
 export namespace UnbondingDelegation {
+  export interface Amino {
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    entries: UnbondingDelegation.Entry.Amino[];
+  }
+
   export interface Data {
     delegator_address: AccAddress;
     validator_address: ValAddress;
@@ -74,7 +104,11 @@ export namespace UnbondingDelegation {
 
   export type Proto = UnbondingDelegation_pb;
 
-  export class Entry extends JSONSerializable<Entry.Data> {
+  export class Entry extends JSONSerializable<
+    Entry.Amino,
+    Entry.Data,
+    Entry.Proto
+  > {
     /**
      * Note that the size of the undelegation is `initial_balance - balance`
      * @param initial_balance balance of delegation prior to initiating unbond
@@ -89,6 +123,26 @@ export namespace UnbondingDelegation {
       public completion_time: Date
     ) {
       super();
+    }
+
+    public toAmino(): Entry.Amino {
+      return {
+        initial_balance: this.initial_balance.toString(),
+        balance: this.balance.toString(),
+        creation_height: this.creation_height.toFixed(),
+        completion_time: this.completion_time.toISOString(),
+      };
+    }
+
+    public static fromAmino(data: Entry.Amino): Entry {
+      const { initial_balance, balance, creation_height, completion_time } =
+        data;
+      return new Entry(
+        new Int(initial_balance),
+        new Int(balance),
+        Number.parseInt(creation_height),
+        new Date(completion_time)
+      );
     }
 
     public toData(): Entry.Data {
@@ -133,6 +187,13 @@ export namespace UnbondingDelegation {
   }
 
   export namespace Entry {
+    export interface Amino {
+      initial_balance: string;
+      balance: string;
+      creation_height: string;
+      completion_time: string;
+    }
+
     export interface Data {
       initial_balance: string;
       balance: string;

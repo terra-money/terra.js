@@ -3,7 +3,11 @@ import { AccAddress } from '../../bech32';
 import { MsgRevoke as MsgRevoke_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
-export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorization.Data> {
+export class MsgRevokeAuthorization extends JSONSerializable<
+  MsgRevokeAuthorization.Amino,
+  MsgRevokeAuthorization.Data,
+  MsgRevokeAuthorization.Proto
+> {
   /**
    * @param granter authorization granter
    * @param grantee authorization grantee
@@ -17,8 +21,8 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
     super();
   }
 
-  public static fromData(
-    data: MsgRevokeAuthorization.Data
+  public static fromAmino(
+    data: MsgRevokeAuthorization.Amino
   ): MsgRevokeAuthorization {
     const {
       value: { granter, grantee, msg_type_url },
@@ -26,7 +30,7 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
     return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
   }
 
-  public toData(): MsgRevokeAuthorization.Data {
+  public toAmino(): MsgRevokeAuthorization.Amino {
     const { granter, grantee, msg_type_url } = this;
     return {
       type: 'msgauth/MsgRevokeAuthorization',
@@ -35,6 +39,23 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
         grantee,
         msg_type_url,
       },
+    };
+  }
+
+  public static fromData(
+    data: MsgRevokeAuthorization.Data
+  ): MsgRevokeAuthorization {
+    const { granter, grantee, msg_type_url } = data;
+    return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
+  }
+
+  public toData(): MsgRevokeAuthorization.Data {
+    const { granter, grantee, msg_type_url } = this;
+    return {
+      '@type': '/cosmos.authz.v1beta1.MsgRevoke',
+      granter,
+      grantee,
+      msg_type_url,
     };
   }
 
@@ -70,13 +91,20 @@ export class MsgRevokeAuthorization extends JSONSerializable<MsgRevokeAuthorizat
 }
 
 export namespace MsgRevokeAuthorization {
-  export interface Data {
+  export interface Amino {
     type: 'msgauth/MsgRevokeAuthorization';
     value: {
       granter: AccAddress;
       grantee: AccAddress;
       msg_type_url: string;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.authz.v1beta1.MsgRevoke';
+    granter: AccAddress;
+    grantee: AccAddress;
+    msg_type_url: string;
   }
 
   export type Proto = MsgRevoke_pb;

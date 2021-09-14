@@ -1,11 +1,10 @@
 import { Key } from './Key';
 import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
-import { StdSignature } from '../core/StdSignature';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
-import { Tx, StdSignMsg } from 'core';
-import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
+import { SignDoc } from 'core';
+import { SignatureV2 } from '../core/SignatureV2';
 
 interface CLIKeyParams {
   keyName: string;
@@ -103,9 +102,9 @@ export class CLIKey extends Key {
     );
   }
 
-  public async createSignature(tx: StdSignMsg): Promise<string> {
+  public async createSignature(tx: SignDoc): Promise<SignatureV2> {
     const tmpobj = fileSync({ postfix: '.json' });
-    writeFileSync(tmpobj.fd, JSON.stringify(Tx_pb.toJSON(tx.toTxProto())));
+    writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
 
     const result = execSync(
       this.generateCommand(
@@ -115,6 +114,6 @@ export class CLIKey extends Key {
       )
     ).toString();
     tmpobj.removeCallback();
-    return StdSignature.fromData(JSON.parse(result)).signature;
+    return SignatureV2.fromData(JSON.parse(result));
   }
 }

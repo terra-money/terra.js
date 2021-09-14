@@ -1,13 +1,13 @@
 import { MsgUnjail } from './MsgUnjail';
-const MsgUnjailData = require('./MsgUnjail.data.json');
+const MsgUnjailAmino = require('./MsgUnjail.data.json');
 
 describe('MsgUnjail', () => {
   it('deserializes', () => {
-    MsgUnjailData.txs.forEach((txinfo: any) => {
+    MsgUnjailAmino.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'cosmos/MsgUnjail') {
-          const e = MsgUnjail.fromData(msg);
-          expect(e.toData()).toEqual(msg);
+          const e = MsgUnjail.fromAmino(msg);
+          expect(e.toAmino()).toEqual(msg);
         }
       });
     });

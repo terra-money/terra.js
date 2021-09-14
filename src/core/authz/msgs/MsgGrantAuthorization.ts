@@ -5,7 +5,11 @@ import { MsgGrant as MsgGrant_pb } from '@terra-money/terra.proto/cosmos/authz/v
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { Grant as Grant_pb } from '@terra-money/terra.proto/cosmos/authz/v1beta1/authz';
 
-export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorization.Data> {
+export class MsgGrantAuthorization extends JSONSerializable<
+  MsgGrantAuthorization.Amino,
+  MsgGrantAuthorization.Data,
+  MsgGrantAuthorization.Proto
+> {
   /**
    * @param depositor depositor's account address
    * @param amount coins to fund the community pool
@@ -18,12 +22,35 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
     super();
   }
 
-  public static fromData(
-    data: MsgGrantAuthorization.Data
+  public static fromAmino(
+    data: MsgGrantAuthorization.Amino
   ): MsgGrantAuthorization {
     const {
       value: { granter, grantee, grant },
     } = data;
+    return new MsgGrantAuthorization(
+      granter,
+      grantee,
+      AuthorizationGrant.fromAmino(grant)
+    );
+  }
+
+  public toAmino(): MsgGrantAuthorization.Amino {
+    const { granter, grantee, grant } = this;
+    return {
+      type: 'msgauth/MsgGrantAuthorization',
+      value: {
+        granter,
+        grantee,
+        grant: grant.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(
+    data: MsgGrantAuthorization.Data
+  ): MsgGrantAuthorization {
+    const { granter, grantee, grant } = data;
     return new MsgGrantAuthorization(
       granter,
       grantee,
@@ -34,12 +61,10 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
   public toData(): MsgGrantAuthorization.Data {
     const { granter, grantee, grant } = this;
     return {
-      type: 'msgauth/MsgGrantAuthorization',
-      value: {
-        granter,
-        grantee,
-        grant: grant.toData(),
-      },
+      '@type': '/cosmos.authz.v1beta1.MsgGrant',
+      granter,
+      grantee,
+      grant: grant.toData(),
     };
   }
 
@@ -75,13 +100,20 @@ export class MsgGrantAuthorization extends JSONSerializable<MsgGrantAuthorizatio
 }
 
 export namespace MsgGrantAuthorization {
-  export interface Data {
+  export interface Amino {
     type: 'msgauth/MsgGrantAuthorization';
     value: {
       granter: AccAddress;
       grantee: AccAddress;
-      grant: AuthorizationGrant.Data;
+      grant: AuthorizationGrant.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.authz.v1beta1.MsgGrant';
+    granter: AccAddress;
+    grantee: AccAddress;
+    grant: AuthorizationGrant.Data;
   }
 
   export type Proto = MsgGrant_pb;

@@ -20,6 +20,7 @@ export class LCDUtils {
   public async calculateTax(coin: Coin): Promise<Coin> {
     const rate = await this.lcd.treasury.taxRate();
     const cap = await this.lcd.treasury.taxCap(coin.denom);
+
     return new Coin(
       coin.denom,
       Int.ceil(Dec.min(coin.amount.mul(rate), cap.amount))
@@ -33,17 +34,29 @@ export class LCDUtils {
     [validatorAddress: string]: ValidatorWithVotingPower;
   }> {
     const validatorSetResponse = await this.lcd.tendermint.validatorSet();
-    const validators = await this.lcd.staking.validators();
     const validatorSet = validatorSetResponse.validators.reduce((m: any, o) => {
       m[o.pub_key.value] = o;
       return m;
     }, {});
 
+    const validators: Validator[] = [];
+    let next_key: string | undefined;
+    for (;;) {
+      const validatorsRes = await this.lcd.staking.validators({
+        'pagination.key': next_key,
+      });
+
+      validators.push(...validatorsRes[0]);
+
+      if (!validatorsRes[1].next_key) break;
+      next_key = validatorsRes[1].next_key;
+    }
+
     const res: { [k: string]: ValidatorWithVotingPower } = {};
 
     for (const v of validators) {
       const delegateInfo =
-        validatorSet[v.consensus_pubkey.toData().value as string];
+        validatorSet[v.consensus_pubkey.toData().key as string];
       if (delegateInfo === undefined) continue;
       res[v.operator_address] = {
         validatorInfo: v,

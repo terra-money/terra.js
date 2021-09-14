@@ -18,6 +18,6 @@ describe('BankAPI', () => {
 
   it('total supply', async () => {
     const totalSupply = await bank.total();
-    expect(totalSupply).toEqual(expect.any(Coins));
+    expect(totalSupply[0]).toEqual(expect.any(Coins));
   });
 });

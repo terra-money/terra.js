@@ -1,13 +1,13 @@
 import { MsgWithdrawDelegatorReward } from './MsgWithdrawDelegatorReward';
-const MsgWithdrawDelegatorRewardData = require('./MsgWithdrawDelegatorReward.data.json');
+const MsgWithdrawDelegatorRewardAmino = require('./MsgWithdrawDelegatorReward.data.json');
 
 describe('MsgWithdrawDelegatorReward', () => {
   it('deserializes', () => {
-    MsgWithdrawDelegatorRewardData.txs.forEach((txinfo: any) => {
+    MsgWithdrawDelegatorRewardAmino.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'distribution/MsgWithdrawDelegationReward') {
-          const e = MsgWithdrawDelegatorReward.fromData(msg);
-          expect(e.toData()).toEqual(msg);
+          const e = MsgWithdrawDelegatorReward.fromAmino(msg);
+          expect(e.toAmino()).toEqual(msg);
         }
       });
     });

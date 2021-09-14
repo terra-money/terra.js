@@ -9,7 +9,11 @@ import { MsgBeginRedelegate as MsgBeginRedelegate_pb } from '@terra-money/terra.
  * amount from one validator to another. Unlike undelegating, redelegations do not incur
  * a 21-day unbonding period and happen immediately.
  */
-export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data> {
+export class MsgBeginRedelegate extends JSONSerializable<
+  MsgBeginRedelegate.Amino,
+  MsgBeginRedelegate.Data,
+  MsgBeginRedelegate.Proto
+> {
   /**
    *
    * @param delegator_address delegator's account address
@@ -26,7 +30,7 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
     super();
   }
 
-  public static fromData(data: MsgBeginRedelegate.Data): MsgBeginRedelegate {
+  public static fromAmino(data: MsgBeginRedelegate.Amino): MsgBeginRedelegate {
     const {
       value: {
         delegator_address,
@@ -34,6 +38,39 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
         validator_dst_address,
         amount,
       },
+    } = data;
+    return new MsgBeginRedelegate(
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      Coin.fromAmino(amount)
+    );
+  }
+
+  public toAmino(): MsgBeginRedelegate.Amino {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount,
+    } = this;
+    return {
+      type: 'staking/MsgBeginRedelegate',
+      value: {
+        delegator_address,
+        validator_src_address,
+        validator_dst_address,
+        amount: amount.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(data: MsgBeginRedelegate.Data): MsgBeginRedelegate {
+    const {
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount,
     } = data;
     return new MsgBeginRedelegate(
       delegator_address,
@@ -51,13 +88,11 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
       amount,
     } = this;
     return {
-      type: 'staking/MsgBeginRedelegate',
-      value: {
-        delegator_address,
-        validator_src_address,
-        validator_dst_address,
-        amount: amount.toData(),
-      },
+      '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate',
+      delegator_address,
+      validator_src_address,
+      validator_dst_address,
+      amount: amount.toData(),
     };
   }
 
@@ -100,14 +135,22 @@ export class MsgBeginRedelegate extends JSONSerializable<MsgBeginRedelegate.Data
 }
 
 export namespace MsgBeginRedelegate {
-  export interface Data {
+  export interface Amino {
     type: 'staking/MsgBeginRedelegate';
     value: {
       delegator_address: AccAddress;
       validator_src_address: ValAddress;
       validator_dst_address: ValAddress;
-      amount: Coin.Data;
+      amount: Coin.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.MsgBeginRedelegate';
+    delegator_address: AccAddress;
+    validator_src_address: ValAddress;
+    validator_dst_address: ValAddress;
+    amount: Coin.Data;
   }
 
   export type Proto = MsgBeginRedelegate_pb;

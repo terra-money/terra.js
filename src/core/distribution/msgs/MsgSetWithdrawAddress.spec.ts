@@ -1,13 +1,13 @@
 import { MsgSetWithdrawAddress } from './MsgSetWithdrawAddress';
-const MsgSetWithdrawAddressData = require('./MsgSetWithdrawAddress.data.json');
+const MsgSetWithdrawAddressAmino = require('./MsgSetWithdrawAddress.data.json');
 
 describe('MsgSetWithdrawAddress', () => {
   it('deserializes', () => {
-    MsgSetWithdrawAddressData.txs.forEach((txinfo: any) => {
+    MsgSetWithdrawAddressAmino.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'distribution/MsgModifyWithdrawAddress') {
-          const e = MsgSetWithdrawAddress.fromData(msg);
-          expect(e.toData()).toEqual(msg);
+          const e = MsgSetWithdrawAddress.fromAmino(msg);
+          expect(e.toAmino()).toEqual(msg);
         }
       });
     });

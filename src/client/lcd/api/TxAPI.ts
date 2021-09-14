@@ -16,27 +16,8 @@ import {
 import { hashAmino } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
-import { APIParams } from '../APIRequester';
-import {
-  GetTxsEventResponse as GetTxsEventResponse_pb,
-  BroadcastMode,
-  SimulateResponse,
-  SimulateRequest,
-  ServiceClient,
-  BroadcastTxRequest,
-  BroadcastTxResponse,
-} from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
-import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
-import {
-  ServiceClient as TerraServiceClient,
-  ComputeTaxRequest,
-  ComputeTaxResponse,
-} from '@terra-money/terra.proto/terra/tx/v1beta1/service';
-import { TxResponse as TxResponse_pb } from '@terra-money/terra.proto/cosmos/base/abci/v1beta1/abci';
-import { ChannelCredentials } from '@grpc/grpc-js';
-
-/** Transaction broadcasting modes  */
-export type Broadcast = BroadcastMode;
+import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
 
 interface Block {
   height: number;
@@ -44,6 +25,10 @@ interface Block {
   raw_log: string;
   gas_wanted: number;
   gas_used: number;
+  data: string;
+  logs: TxLog.Data[];
+  timestamp: string;
+  info: string;
 }
 
 interface Sync {
@@ -87,15 +72,30 @@ export function isTxError<
 }
 
 export namespace BlockTxBroadcastResult {
-  export type Proto = BroadcastTxResponse;
+  export interface Data {
+    height: string;
+    txhash: string;
+    raw_log: string;
+    gas_wanted: string;
+    gas_used: string;
+    logs: TxLog.Data[];
+    code: number;
+    codespace: string;
+    info: string;
+    data: string;
+    timestamp: string;
+  }
 }
 
 export namespace AsyncTxBroadcastResult {
-  export type Proto = BlockTxBroadcastResult.Proto;
+  export type Data = Pick<BlockTxBroadcastResult.Data, 'height' | 'txhash'>;
 }
 
 export namespace SyncTxBroadcastResult {
-  export type Proto = BlockTxBroadcastResult.Proto;
+  export type Data = Pick<
+    BlockTxBroadcastResult.Data,
+    'height' | 'txhash' | 'raw_log' | 'code' | 'codespace'
+  >;
 }
 
 export interface CreateTxOptions {
@@ -117,35 +117,62 @@ export interface TxResult {
 }
 
 export namespace TxResult {
-  export interface Proto {
-    tx: Tx.Proto;
-    tx_response: TxInfo.Proto;
+  export interface Data {
+    tx: Tx.Data;
+    tx_response: TxInfo.Data;
   }
 }
 
 export interface TxSearchResult {
-  total_count: number;
-  count: number;
-  page_number: number;
-  page_total: number;
-  limit: number;
+  pagination: Pagination;
   txs: TxInfo[];
 }
 
 export namespace TxSearchResult {
-  export type Proto = GetTxsEventResponse_pb;
+  export interface Data {
+    txs: Tx.Data[];
+    tx_responses: TxInfo.Data[];
+    pagination: Pagination;
+  }
 }
 
-export interface TxSearchOptions {
-  page: number;
-  limit: number;
-  [key: string]: any;
+export class SimulateResponse {
+  constructor(
+    public gas_info: { gas_wanted: number; gas_used: number },
+    public result: {
+      data: string;
+      log: string;
+      events: { type: string; attributes: { key: string; value: string }[] }[];
+    }
+  ) {}
+
+  public static fromData(data: SimulateResponse.Data): SimulateResponse {
+    return new SimulateResponse(
+      {
+        gas_wanted: parseInt(data.gas_info.gas_wanted),
+        gas_used: parseInt(data.gas_info.gas_used),
+      },
+      data.result
+    );
+  }
 }
 
-export interface PaginationOptions {
-  'pagination.limit': string;
-  'pagination.offset': string;
-  [key: string]: any;
+export namespace SimulateResponse {
+  export interface Data {
+    gas_info: {
+      gas_wanted: string;
+      gas_used: string;
+    };
+    result: {
+      data: string;
+      log: string;
+      events: { type: string; attributes: { key: string; value: string }[] }[];
+    };
+  }
+}
+
+export interface TxSearchOptions extends PaginationOptions {
+  events: { key: string; value: string }[];
 }
 
 export class TxAPI extends BaseAPI {
@@ -159,8 +186,8 @@ export class TxAPI extends BaseAPI {
    */
   public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
     return this.c
-      .getRaw<TxResult.Proto>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
-      .then(v => TxInfo.fromProto(v.tx_response));
+      .getRaw<TxResult.Data>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
+      .then(v => TxInfo.fromData(v.tx_response));
   }
 
   /**
@@ -187,11 +214,11 @@ export class TxAPI extends BaseAPI {
     if (!accountNumber || !sequence) {
       const account = await this.lcd.auth.accountInfo(sourceAddress);
       if (!accountNumber) {
-        accountNumber = account.account_number;
+        accountNumber = account.getAccountNumber();
       }
 
       if (!sequence) {
-        sequence = account.sequence;
+        sequence = account.getSequenceNumber();
       }
     }
 
@@ -282,49 +309,23 @@ export class TxAPI extends BaseAPI {
 
     // simulate gas
     if (!gas || gas === 'auto' || gas === '0') {
-      const client = new ServiceClient(
-        '3.34.120.243:9090',
-        ChannelCredentials.createInsecure()
-      );
-      const simulateRes: SimulateResponse = await new Promise(
-        (resolve, reject) => {
-          client.simulate(
-            SimulateRequest.fromPartial({ txBytes: tx.toBytes() }),
-            (err, res) => {
-              if (err !== null) {
-                return reject(err);
-              }
-
-              return resolve(res);
-            }
-          );
-        }
-      );
+      const simulateRes = await this.c
+        .post<SimulateResponse.Data>(`/cosmos/tx/v1beta1/simulate`, {
+          tx_bytes: this.encode(tx),
+        })
+        .then(d => SimulateResponse.fromData(d));
 
       gas = new Dec(gasAdjustment)
-        .mul(simulateRes.gasInfo?.gasUsed.toNumber() || 0)
+        .mul(simulateRes.gas_info.gas_used)
         .toString();
     }
 
-    const client = new TerraServiceClient(
-      '3.34.120.243:9090',
-      ChannelCredentials.createInsecure()
-    );
-    const computeTaxRes: ComputeTaxResponse = await new Promise(
-      (resolve, reject) => {
-        client.computeTax(
-          ComputeTaxRequest.fromPartial({ tx: tx.toProto() }),
-          (err, res) => {
-            if (err !== null) {
-              return reject(err);
-            }
+    const taxAmount = await this.c
+      .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
+        tx: tx.toData(),
+      })
+      .then(d => Coins.fromData(d.tax_amount));
 
-            return resolve(res);
-          }
-        );
-      }
-    );
-    const taxAmount = Coins.fromProto(computeTaxRes.taxAmount);
     const feeAmount = gasPricesCoins
       ? taxAmount.add(gasPricesCoins.mul(gas).toIntCoins())
       : taxAmount;
@@ -335,7 +336,7 @@ export class TxAPI extends BaseAPI {
    * Encode a transaction to Amino-encoding
    * @param tx transaction to encode
    */
-  public async encode(tx: Tx): Promise<string> {
+  public encode(tx: Tx): string {
     return Buffer.from(tx.toBytes()).toString('base64');
   }
 
@@ -348,31 +349,14 @@ export class TxAPI extends BaseAPI {
     return hashAmino(txBytes);
   }
 
-  private async _broadcast(
+  private async _broadcast<T>(
     tx: Tx,
-    mode: Broadcast
-  ): Promise<BroadcastTxResponse> {
-    const client = new ServiceClient(
-      '3.34.120.243:9090',
-      ChannelCredentials.createInsecure()
-    );
-    console.log(JSON.stringify(Tx_pb.toJSON(tx.toProto())));
-    const broadcastTxRes: BroadcastTxResponse = await new Promise(
-      (resolve, reject) => {
-        client.broadcastTx(
-          BroadcastTxRequest.fromPartial({ txBytes: tx.toBytes(), mode }),
-          (err, res) => {
-            if (err !== null) {
-              return reject(err);
-            }
-
-            return resolve(res);
-          }
-        );
-      }
-    );
-
-    return broadcastTxRes;
+    mode: keyof typeof BroadcastMode
+  ): Promise<T> {
+    return await this.c.post<any>(`/cosmos/tx/v1beta1/txs`, {
+      tx_bytes: this.encode(tx),
+      mode,
+    });
   }
 
   /**
@@ -380,31 +364,23 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcast(tx: Tx): Promise<BlockTxBroadcastResult> {
-    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_BLOCK).then(d => {
-      console.log(d);
-      const txResponse = d.txResponse as TxResponse_pb;
-      const blockResult: any = {
-        txhash: txResponse.txhash,
-        raw_log: txResponse.rawLog,
-        gas_wanted: txResponse.gasWanted.toNumber(),
-        gas_used: txResponse.gasUsed,
+    return this._broadcast<{ tx_response: BlockTxBroadcastResult.Data }>(
+      tx,
+      'BROADCAST_MODE_BLOCK'
+    ).then(({ tx_response: d }) => {
+      const blockResult: BlockTxBroadcastResult = {
+        txhash: d.txhash,
+        raw_log: d.raw_log,
+        gas_wanted: Number.parseInt(d.gas_wanted),
+        gas_used: Number.parseInt(d.gas_used),
+        height: +d.height,
+        logs: d.logs.map(l => TxLog.fromData(l)),
+        code: d.code,
+        codespace: d.codespace,
+        data: d.data,
+        info: d.info,
+        timestamp: d.timestamp,
       };
-
-      if (txResponse.height) {
-        blockResult.height = +txResponse.height;
-      }
-
-      if (txResponse.logs) {
-        blockResult.logs = txResponse.logs.map(l => TxLog.fromProto(l));
-      }
-
-      if (txResponse.code) {
-        blockResult.code = txResponse.code;
-      }
-
-      if (txResponse.codespace) {
-        blockResult.codespace = txResponse.codespace;
-      }
 
       return blockResult;
     });
@@ -418,20 +394,22 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_SYNC).then(d => {
-      const txResponse = d.txResponse as TxResponse_pb;
+    return this._broadcast<SyncTxBroadcastResult.Data>(
+      tx,
+      'BROADCAST_MODE_SYNC'
+    ).then(d => {
       const blockResult: any = {
-        height: +txResponse.height,
-        txhash: txResponse.txhash,
-        raw_log: txResponse.rawLog,
+        height: +d.height,
+        txhash: d.txhash,
+        raw_log: d.raw_log,
       };
 
-      if (txResponse.code) {
-        blockResult.code = txResponse.code;
+      if (d.code) {
+        blockResult.code = d.code;
       }
 
-      if (txResponse.codespace) {
-        blockResult.codespace = txResponse.codespace;
+      if (d.codespace) {
+        blockResult.codespace = d.codespace;
       }
 
       return blockResult;
@@ -443,13 +421,13 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
-    return this._broadcast(tx, BroadcastMode.BROADCAST_MODE_ASYNC).then(d => {
-      const txResponse = d.txResponse as TxResponse_pb;
-      return {
-        height: +txResponse.height,
-        txhash: txResponse.txhash,
-      };
-    });
+    return this._broadcast<AsyncTxBroadcastResult.Data>(
+      tx,
+      'BROADCAST_MODE_ASYNC'
+    ).then(d => ({
+      height: +d.height,
+      txhash: d.txhash,
+    }));
   }
 
   /**
@@ -459,35 +437,28 @@ export class TxAPI extends BaseAPI {
   public async search(
     options: Partial<TxSearchOptions>
   ): Promise<TxSearchResult> {
-    const page_number = options.page || 1;
-    const limit = options.limit || 100;
-    const offset = (page_number - 1) * (options.limit || 100);
+    const params = new URLSearchParams();
 
-    // remove already spend items
-    delete options['page'];
-    delete options['limit'];
+    // build search params
+    options.events?.forEach(v =>
+      params.append(
+        'events',
+        v.key === 'tx.height' ? `${v.key}=${v.value}` : `${v.key}='${v.value}'`
+      )
+    );
 
-    const pagination_options: Partial<PaginationOptions> = {
-      'pagination.limit': limit.toString(),
-      'pagination.offset': offset.toString(),
-      events: Object.entries(options)
-        .map(v => `${v[0]}=${v[1]}`)
-        .reduce((prev, cur) => `${prev},${cur}`),
-    };
+    delete options['events'];
+
+    Object.entries(options).forEach(v => {
+      params.append(v[0], v[1] as string);
+    });
 
     return this.c
-      .getRaw<TxSearchResult.Proto>(`cosmos/tx/v1beta1/txs`, pagination_options)
+      .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, params)
       .then(d => {
-        const total_count = d.pagination?.total.toNumber() || 0;
-        const page_total =
-          Math.floor(total_count / limit) + (total_count % limit == 0 ? 0 : 1);
         return {
-          total_count: total_count,
-          count: d.txs.length,
-          page_number,
-          page_total,
-          limit,
-          txs: d.txResponses.map(tx_response => TxInfo.fromProto(tx_response)),
+          txs: d.tx_responses.map(tx_response => TxInfo.fromData(tx_response)),
+          pagination: d.pagination,
         };
       });
   }

@@ -9,7 +9,11 @@ import { MsgUndelegate as MsgUndelegate_pb } from '@terra-money/terra.proto/cosm
  * process for those funds. The unbonding process takes 21 days to complete, during
  * which the Luna cannot be transacted or swapped.
  */
-export class MsgUndelegate extends JSONSerializable<MsgUndelegate.Data> {
+export class MsgUndelegate extends JSONSerializable<
+  MsgUndelegate.Amino,
+  MsgUndelegate.Data,
+  MsgUndelegate.Proto
+> {
   /**
    * @param delegator_address delegator's account address
    * @param validator_address validator's operator address
@@ -23,25 +27,25 @@ export class MsgUndelegate extends JSONSerializable<MsgUndelegate.Data> {
     super();
   }
 
-  public static fromData(data: MsgUndelegate.Data): MsgUndelegate {
+  public static fromAmino(data: MsgUndelegate.Amino): MsgUndelegate {
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
     return new MsgUndelegate(
       delegator_address,
       validator_address,
-      Coin.fromData(amount)
+      Coin.fromAmino(amount)
     );
   }
 
-  public toData(): MsgUndelegate.Data {
+  public toAmino(): MsgUndelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
       type: 'staking/MsgUndelegate',
       value: {
         delegator_address,
         validator_address,
-        amount: amount.toData(),
+        amount: amount.toAmino(),
       },
     };
   }
@@ -73,16 +77,42 @@ export class MsgUndelegate extends JSONSerializable<MsgUndelegate.Data> {
   public static unpackAny(msgAny: Any): MsgUndelegate {
     return MsgUndelegate.fromProto(MsgUndelegate_pb.decode(msgAny.value));
   }
+
+  public static fromData(data: MsgUndelegate.Data): MsgUndelegate {
+    const { delegator_address, validator_address, amount } = data;
+    return new MsgUndelegate(
+      delegator_address,
+      validator_address,
+      Coin.fromData(amount)
+    );
+  }
+
+  public toData(): MsgUndelegate.Data {
+    const { delegator_address, validator_address, amount } = this;
+    return {
+      '@type': '/cosmos.staking.v1beta1.MsgUndelegate',
+      delegator_address,
+      validator_address,
+      amount: amount.toData(),
+    };
+  }
 }
 
 export namespace MsgUndelegate {
-  export interface Data {
+  export interface Amino {
     type: 'staking/MsgUndelegate';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;
-      amount: Coin.Data;
+      amount: Coin.Amino;
     };
+  }
+
+  export interface Data {
+    '@type': '/cosmos.staking.v1beta1.MsgUndelegate';
+    delegator_address: AccAddress;
+    validator_address: ValAddress;
+    amount: Coin.Data;
   }
 
   export type Proto = MsgUndelegate_pb;

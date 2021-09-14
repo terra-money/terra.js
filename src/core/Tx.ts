@@ -1,6 +1,4 @@
 import { PublicKey } from './PublicKey';
-import { Coins } from './Coins';
-import { AccAddress } from './bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { SignMode as SignMode_pb } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 import {
@@ -9,15 +7,13 @@ import {
   SignerInfo as SignerInfo_pb,
   ModeInfo as ModeInfo_pb,
   AuthInfo as AuthInfo_pb,
-  Fee as Fee_pb,
-  SignDoc as SignDoc_pb,
   ModeInfo_Single as ModeInfoSingle_pb,
   ModeInfo_Multi as ModeInfoMulti_pb,
 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 import { CompactBitArray as CompactBitArray_pb } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
 import { Msg } from './Msg';
+import { Fee } from './Fee';
 import * as Long from 'long';
-import { StdFee } from './StdFee';
 
 export class Tx {
   constructor(
@@ -25,6 +21,22 @@ export class Tx {
     public auth_info: AuthInfo,
     public signatures: string[]
   ) {}
+
+  public static fromData(data: Tx.Data): Tx {
+    return new Tx(
+      TxBody.fromData(data.body),
+      AuthInfo.fromData(data.auth_info),
+      data.signatures
+    );
+  }
+
+  public toData(): Tx.Data {
+    return {
+      body: this.body.toData(),
+      auth_info: this.auth_info.toData(),
+      signatures: this.signatures,
+    };
+  }
 
   public static unpackAny(anyProto: Any): Tx {
     return this.fromProto(Tx_pb.decode(anyProto.value));
@@ -52,15 +64,36 @@ export class Tx {
 }
 
 export namespace Tx {
+  export interface Data {
+    body: TxBody.Data;
+    auth_info: AuthInfo.Data;
+    signatures: string[];
+  }
   export type Proto = Tx_pb;
 }
 
 export class TxBody {
   constructor(
     public messages: Msg[],
-    public memo: string,
-    public timeout_height: number
+    public memo?: string,
+    public timeout_height?: number
   ) {}
+
+  public static fromData(data: TxBody.Data): TxBody {
+    return new TxBody(
+      data.messages.map(m => Msg.fromData(m)),
+      data.memo,
+      parseInt(data.timeout_height)
+    );
+  }
+
+  public toData(): TxBody.Data {
+    return {
+      memo: this.memo ?? '',
+      messages: this.messages.map(m => m.toData()),
+      timeout_height: (this.timeout_height ?? 0).toFixed(),
+    };
+  }
 
   public static fromProto(proto: TxBody.Proto): TxBody {
     return new TxBody(
@@ -74,7 +107,7 @@ export class TxBody {
     return TxBody_pb.fromPartial({
       memo: this.memo,
       messages: this.messages.map(m => m.packAny()),
-      timeoutHeight: Long.fromNumber(this.timeout_height),
+      timeoutHeight: Long.fromNumber(this.timeout_height ?? 0),
     });
   }
 
@@ -84,11 +117,30 @@ export class TxBody {
 }
 
 export namespace TxBody {
+  export interface Data {
+    messages: Msg.Data[];
+    memo: string;
+    timeout_height: string;
+  }
   export type Proto = TxBody_pb;
 }
 
 export class AuthInfo {
   constructor(public signer_infos: SignerInfo[], public fee: Fee) {}
+
+  public static fromData(data: AuthInfo.Data): AuthInfo {
+    return new AuthInfo(
+      data.signer_infos.map(s => SignerInfo.fromData(s)),
+      Fee.fromData(data.fee as Fee.Data)
+    );
+  }
+
+  public toData(): AuthInfo.Data {
+    return {
+      fee: this.fee.toData(),
+      signer_infos: this.signer_infos.map(info => info.toData()),
+    };
+  }
 
   public static fromProto(proto: AuthInfo.Proto): AuthInfo {
     return new AuthInfo(
@@ -110,6 +162,10 @@ export class AuthInfo {
 }
 
 export namespace AuthInfo {
+  export interface Data {
+    signer_infos: SignerInfo.Data[];
+    fee: Fee.Data;
+  }
   export type Proto = AuthInfo_pb;
 }
 
@@ -119,6 +175,23 @@ export class SignerInfo {
     public sequence: number,
     public mode_info: ModeInfo
   ) {}
+
+  public static fromData(data: SignerInfo.Data): SignerInfo {
+    return new SignerInfo(
+      PublicKey.fromData(data.public_key),
+      parseInt(data.sequence),
+      ModeInfo.fromData(data.mode_info)
+    );
+  }
+
+  public toData(): SignerInfo.Data {
+    const { public_key, sequence, mode_info } = this;
+    return {
+      mode_info: mode_info.toData(),
+      public_key: public_key.toData(),
+      sequence: sequence.toFixed(),
+    };
+  }
 
   public static fromProto(proto: SignerInfo.Proto): SignerInfo {
     return new SignerInfo(
@@ -139,6 +212,12 @@ export class SignerInfo {
 }
 
 export namespace SignerInfo {
+  export interface Data {
+    public_key: PublicKey.Data;
+    mode_info: ModeInfo.Data;
+    sequence: string;
+  }
+
   export type Proto = SignerInfo_pb;
 }
 
@@ -147,6 +226,26 @@ export class ModeInfo {
     public single_mode?: ModeInfo.Single,
     public multi_mode?: ModeInfo.Multi
   ) {}
+
+  public static fromData(data: ModeInfo.Data): ModeInfo {
+    if (data.single) {
+      return new ModeInfo(ModeInfo.Single.fromData(data.single));
+    }
+
+    if (data.multi) {
+      return new ModeInfo(undefined, ModeInfo.Multi.fromData(data.multi));
+    }
+
+    throw new Error('must be one of single or multi');
+  }
+
+  public toData(): ModeInfo.Data {
+    return {
+      single: this.single_mode?.toData(),
+      multi: this.multi_mode?.toData(),
+    };
+  }
+
   public static fromProto(proto: ModeInfo.Proto): ModeInfo {
     const singleMode = proto.single;
     const multiMode = proto.multi;
@@ -166,12 +265,28 @@ export class ModeInfo {
 }
 
 export namespace ModeInfo {
+  export interface Data {
+    single?: Single.Data;
+    multi?: Multi.Data;
+  }
   export type Proto = ModeInfo_pb;
   export const SignMode = SignMode_pb;
   export type SignMode = SignMode_pb;
 
   export class Single {
     constructor(public mode: SignMode) {}
+
+    public static fromData(data: Single.Data): Single {
+      return new Single(
+        Object.keys(SignMode_pb).findIndex(s => s === data.mode)
+      );
+    }
+
+    public toData(): Single.Data {
+      return {
+        mode: SignMode[this.mode],
+      };
+    }
 
     public static fromProto(proto: Single.Proto): Single {
       return new Single(proto.mode);
@@ -185,6 +300,10 @@ export namespace ModeInfo {
   }
 
   export namespace Single {
+    export interface Data {
+      mode: string;
+    }
+
     export type Proto = ModeInfoSingle_pb;
   }
 
@@ -193,6 +312,20 @@ export namespace ModeInfo {
       public bitarray: CompactBitArray,
       public modeInfos: ModeInfo[]
     ) {}
+
+    public static fromData(proto: Multi.Data): Multi {
+      return new Multi(
+        CompactBitArray.fromData(proto.bitarray as CompactBitArray.Data),
+        proto.mode_infos.map(m => ModeInfo.fromData(m))
+      );
+    }
+
+    public toData(): Multi.Data {
+      return {
+        bitarray: this.bitarray.toData(),
+        mode_infos: this.modeInfos.map(m => m.toData()),
+      };
+    }
 
     public static fromProto(proto: Multi.Proto): Multi {
       return new Multi(
@@ -210,12 +343,27 @@ export namespace ModeInfo {
   }
 
   export namespace Multi {
+    export interface Data {
+      bitarray: CompactBitArray.Data;
+      mode_infos: ModeInfo.Data[];
+    }
     export type Proto = ModeInfoMulti_pb;
   }
 }
 
 export class CompactBitArray {
-  constructor(public extraBitsStored: number, public elems: string) {}
+  constructor(public extra_bits_stored: number, public elems: string) {}
+
+  public static fromData(data: CompactBitArray.Data): CompactBitArray {
+    return new CompactBitArray(data.extra_bits_stored, data.elems);
+  }
+
+  public toData(): CompactBitArray.Data {
+    return {
+      elems: this.elems,
+      extra_bits_stored: this.extra_bits_stored,
+    };
+  }
 
   public static fromProto(proto: CompactBitArray.Proto): CompactBitArray {
     return new CompactBitArray(
@@ -227,91 +375,16 @@ export class CompactBitArray {
   public toProto(): CompactBitArray.Proto {
     return CompactBitArray_pb.fromPartial({
       elems: Buffer.from(this.elems, 'base64'),
-      extraBitsStored: this.extraBitsStored,
+      extraBitsStored: this.extra_bits_stored,
     });
   }
 }
 
 export namespace CompactBitArray {
+  export interface Data {
+    extra_bits_stored: number;
+    elems: string;
+  }
+
   export type Proto = CompactBitArray_pb;
-}
-
-export class Fee {
-  /** Fee amount to be paid */
-  public readonly amount: Coins;
-
-  /**
-   * Creates a new StdFee object.
-   * @param gas gas limit
-   * @param amount amount to be paid to validator
-   */
-  constructor(
-    public readonly gas_limit: number,
-    amount: Coins.Input,
-    public payer: AccAddress,
-    public granter: AccAddress
-  ) {
-    this.amount = new Coins(amount);
-  }
-
-  public static fromProto(proto: Fee.Proto): Fee {
-    return new Fee(
-      proto.gasLimit.toNumber(),
-      Coins.fromProto(proto.amount),
-      proto.payer,
-      proto.granter
-    );
-  }
-
-  public toProto(): Fee.Proto {
-    const { amount, gas_limit, payer, granter } = this;
-    return Fee_pb.fromPartial({
-      amount: amount.toProto(),
-      gasLimit: Long.fromNumber(gas_limit),
-      granter,
-      payer,
-    });
-  }
-
-  public toStdFee(): StdFee {
-    return new StdFee(this.gas_limit, this.amount);
-  }
-}
-export namespace Fee {
-  export type Proto = Fee_pb;
-}
-
-export class SignDoc {
-  constructor(
-    public body_bytes: Uint8Array,
-    public auth_info_bytes: Uint8Array,
-    public chain_id: string,
-    public account_number: number
-  ) {}
-
-  public static fromProto(proto: SignDoc.Proto): SignDoc {
-    return new SignDoc(
-      proto.bodyBytes,
-      proto.authInfoBytes,
-      proto.chainId,
-      proto.accountNumber.toNumber()
-    );
-  }
-
-  public toProto(): SignDoc.Proto {
-    return SignDoc_pb.fromPartial({
-      accountNumber: Long.fromNumber(this.account_number),
-      authInfoBytes: this.auth_info_bytes,
-      bodyBytes: this.body_bytes,
-      chainId: this.chain_id,
-    });
-  }
-
-  public toBytes(): Uint8Array {
-    return SignDoc_pb.encode(this.toProto()).finish();
-  }
-}
-
-export namespace SignDoc {
-  export type Proto = SignDoc_pb;
 }
