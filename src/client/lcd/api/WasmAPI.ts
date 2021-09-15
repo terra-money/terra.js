@@ -93,7 +93,9 @@ export class WasmAPI extends BaseAPI {
         `/terra/wasm/v1beta1/contracts/${contractAddress}/store`,
         {
           ...params,
-          query_msg: JSON.stringify(query),
+          query_msg: Buffer.from(JSON.stringify(query), 'utf-8').toString(
+            'base64'
+          ),
         }
       )
       .then(d => d.query_result);
