@@ -1,7 +1,7 @@
 import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
 import { CreateTxOptions } from '../lcd/api/TxAPI';
-import { Tx } from 'core';
+import { Tx } from '../../core/Tx';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 export class Wallet {

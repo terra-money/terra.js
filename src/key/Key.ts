@@ -194,12 +194,6 @@ export abstract class Key {
    * @param tx
    */
   public async signTx(tx: Tx, options: SignOptions): Promise<Tx> {
-    if (!this.publicKey) {
-      throw new Error(
-        'Signature could not be created: Key instance missing publicKey'
-      );
-    }
-
     const copyTx = Tx.fromData(tx.toData());
     const sign_doc = new SignDoc(
       options.chainID,
