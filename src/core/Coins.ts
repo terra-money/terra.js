@@ -60,6 +60,13 @@ export class Coins
   }
 
   /**
+   * Creates a new Coins object with all Integer coins with ceiling the amount
+   */
+  public toIntCeilCoins(): Coins {
+    return new Coins(this.map(c => c.toIntCeilCoin()));
+  }
+
+  /**
    * @param arg coins to input
    */
   constructor(arg: Coins.Input = {}) {

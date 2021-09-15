@@ -327,7 +327,7 @@ export class TxAPI extends BaseAPI {
       .then(d => Coins.fromData(d.tax_amount));
 
     const feeAmount = gasPricesCoins
-      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCoins())
+      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCeilCoins())
       : taxAmount;
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
@@ -394,10 +394,10 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast<SyncTxBroadcastResult.Data>(
+    return this._broadcast<{ tx_response: SyncTxBroadcastResult.Data }>(
       tx,
       'BROADCAST_MODE_SYNC'
-    ).then(d => {
+    ).then(({ tx_response: d }) => {
       const blockResult: any = {
         height: +d.height,
         txhash: d.txhash,
@@ -421,10 +421,10 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
-    return this._broadcast<AsyncTxBroadcastResult.Data>(
+    return this._broadcast<{ tx_response: AsyncTxBroadcastResult.Data }>(
       tx,
       'BROADCAST_MODE_ASYNC'
-    ).then(d => ({
+    ).then(({ tx_response: d }) => ({
       height: +d.height,
       txhash: d.txhash,
     }));
