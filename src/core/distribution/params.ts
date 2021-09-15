@@ -37,20 +37,9 @@ export namespace DistributionParamChange {
 
 export type DistributionParamChanges = {
   distribution?: {
-    communitytax?: Dec;
-    baseproposerreward?: Dec;
-    bonusproposerreward?: Dec;
+    communitytax?: string;
+    baseproposerreward?: string;
+    bonusproposerreward?: string;
     withdrawaddrenabled?: boolean;
   };
 };
-
-export namespace DistributionParamChanges {
-  export const ConversionTable = {
-    distribution: {
-      communitytax: [Convert.toDec, Convert.toString],
-      baseproposerreward: [Convert.toDec, Convert.toString],
-      bonusproposerreward: [Convert.toDec, Convert.toString],
-      withdrawaddrenabled: [Convert.id, Convert.id],
-    },
-  };
-}

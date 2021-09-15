@@ -62,29 +62,3 @@ export interface OracleParamChanges {
     MinValidPerWindow?: Dec;
   };
 }
-
-export namespace OracleParamChanges {
-  export const ConversionTable = {
-    oracle: {
-      VotePeriod: [Convert.toNumber, Convert.toFixed],
-      VoteThreshold: [Convert.toDec, Convert.toString],
-      RewardBand: [Convert.toDec, Convert.toString],
-      RewardDistributionWindow: [Convert.toNumber, Convert.toFixed],
-      Whitelist: [
-        (c: OracleWhitelist.Data): OracleWhitelist =>
-          c.map(v => ({
-            name: v.name,
-            tobin_tax: new Dec(v.tobin_tax),
-          })),
-        (c: OracleWhitelist): OracleWhitelist.Data =>
-          c.map(v => ({
-            name: v.name,
-            tobin_tax: v.tobin_tax.toString(),
-          })),
-      ],
-      SlashFraction: [Convert.toDec, Convert.toString],
-      SlashWindow: [Convert.toNumber, Convert.toFixed],
-      MinValidPerWindow: [Convert.toDec, Convert.toString],
-    },
-  };
-}

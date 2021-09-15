@@ -38,16 +38,3 @@ export interface MintParamChanges {
     BlocksPerYear?: number;
   };
 }
-
-export namespace MintParamChanges {
-  export const ConversionTable = {
-    mint: {
-      MintDenom: [Convert.id, Convert.id],
-      InflationRateChange: [Convert.toDec, Convert.toString],
-      InflationMax: [Convert.toDec, Convert.toString],
-      InflationMin: [Convert.toDec, Convert.toString],
-      GoalBonded: [Convert.toDec, Convert.toString],
-      BlocksPerYear: [Convert.toNumber, Convert.toFixed],
-    },
-  };
-}

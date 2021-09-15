@@ -30,13 +30,3 @@ export interface WasmParamChanges {
     MaxContractMsgSize?: number;
   };
 }
-
-export namespace WasmParamChanges {
-  export const ConversionTable = {
-    wasm: {
-      MaxContractSize: [Convert.toNumber, Convert.toFixed],
-      MaxContractGas: [Convert.toNumber, Convert.toFixed],
-      MaxContractMsgSize: [Convert.toNumber, Convert.toFixed],
-    },
-  };
-}

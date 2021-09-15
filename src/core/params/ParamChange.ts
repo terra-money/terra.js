@@ -101,18 +101,6 @@ export type ParamChanges = DistributionParamChanges &
   MintParamChanges;
 
 export namespace ParamChanges {
-  export const ConversionTable = {
-    ...DistributionParamChanges.ConversionTable,
-    ...GovParamChanges.ConversionTable,
-    ...MarketParamChanges.ConversionTable,
-    ...OracleParamChanges.ConversionTable,
-    ...SlashingParamChanges.ConversionTable,
-    ...StakingParamChanges.ConversionTable,
-    ...TreasuryParamChanges.ConversionTable,
-    ...WasmParamChanges.ConversionTable,
-    ...MintParamChanges.ConversionTable,
-  };
-
   export function fromData(data: ParamChange.Data[]): ParamChanges {
     const result: ParamChanges = {};
     for (const pc of data) {
@@ -120,9 +108,7 @@ export namespace ParamChanges {
         result[pc.subspace] = {};
       }
       // @ts-ignore
-      const converter = ParamChanges.ConversionTable[pc.subspace][pc.key][0];
-      // @ts-ignore
-      result[pc.subspace][pc.key] = converter(JSON.parse(pc.value));
+      result[pc.subspace][pc.key] = JSON.parse(pc.value);
     }
     return result;
   }
@@ -133,14 +119,13 @@ export namespace ParamChanges {
       // @ts-ignore
       for (const key of Object.keys(pc[subspace])) {
         // @ts-ignore
-        const serializer = ParamChanges.ConversionTable[subspace][key][1];
         result.push({
           // @ts-ignore
           subspace,
           // @ts-ignore
           key,
           // @ts-ignore
-          value: JSON.stringify(serializer(pc[subspace][key])),
+          value: JSON.stringify(pc[subspace][key]),
         });
       }
     }

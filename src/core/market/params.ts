@@ -31,13 +31,3 @@ export interface MarketParamChanges {
     MinStabilitySpread?: Dec;
   };
 }
-
-export namespace MarketParamChanges {
-  export const ConversionTable = {
-    market: {
-      PoolRecoveryPeriod: [Convert.toNumber, Convert.toFixed],
-      BasePool: [Convert.toDec, Convert.toString],
-      MinStabilitySpread: [Convert.toDec, Convert.toString],
-    },
-  };
-}
