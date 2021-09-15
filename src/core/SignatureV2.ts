@@ -1,6 +1,9 @@
 import { PublicKey } from './PublicKey';
 import { CompactBitArray } from './Tx';
-import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+import {
+  SignMode,
+  signModeFromJSON,
+} from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 export class SignatureV2 {
   constructor(
@@ -54,10 +57,7 @@ export namespace SignatureV2 {
       constructor(public mode: SignMode, public signature: string) {}
 
       public static fromData(data: Single.Data): Single {
-        return new Single(
-          Object.keys(SignMode).findIndex(s => s === data.mode),
-          data.signature
-        );
+        return new Single(signModeFromJSON(data.mode), data.signature);
       }
     }
 

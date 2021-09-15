@@ -57,7 +57,7 @@ export class MsgExecuteContract extends JSONSerializable<
     return new MsgExecuteContract(
       data.sender,
       data.contract,
-      JSON.parse(atob(Buffer.from(data.executeMsg).toString('base64'))),
+      JSON.parse(Buffer.from(data.executeMsg).toString('utf-8')),
       Coins.fromProto(data.coins)
     );
   }
@@ -68,10 +68,7 @@ export class MsgExecuteContract extends JSONSerializable<
       coins: coins.toProto(),
       contract,
       sender,
-      executeMsg: Buffer.from(
-        btoa(JSON.stringify(removeNull(execute_msg))),
-        'base64'
-      ),
+      executeMsg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
     });
   }
 

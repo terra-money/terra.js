@@ -8,6 +8,8 @@ import {
   Proposal as Proposal_pb,
   ProposalStatus,
   TallyResult,
+  proposalStatusFromJSON,
+  proposalStatusToJSON,
 } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import * as Long from 'long';
@@ -115,7 +117,7 @@ export class Proposal extends JSONSerializable<
     return new Proposal(
       Number.parseInt(proposal_id),
       Proposal.Content.fromData(content),
-      Object.keys(ProposalStatus).findIndex(v => v === status),
+      proposalStatusFromJSON(status),
       {
         yes: new Int(final_tally_result?.yes || 0),
         no: new Int(final_tally_result?.no || 0),
@@ -136,7 +138,7 @@ export class Proposal extends JSONSerializable<
     return {
       proposal_id: this.id.toFixed(),
       content: this.content.toData(),
-      status: ProposalStatus[status],
+      status: proposalStatusToJSON(status),
       final_tally_result: {
         yes: final_tally_result.yes.toString(),
         no: final_tally_result.no.toString(),

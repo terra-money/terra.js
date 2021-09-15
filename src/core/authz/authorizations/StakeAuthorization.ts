@@ -5,6 +5,8 @@ import {
   StakeAuthorization as StakeAuthorization_pb,
   AuthorizationType,
   StakeAuthorization_Validators as StakeAuthorizationValidators_pb,
+  authorizationTypeFromJSON,
+  authorizationTypeToJSON,
 } from '@terra-money/terra.proto/cosmos/staking/v1beta1/authz';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
@@ -33,13 +35,13 @@ export class StakeAuthorization extends JSONSerializable<
 
   public static fromData(data: StakeAuthorization.Data): StakeAuthorization {
     return new StakeAuthorization(
-      data.authorization_type,
+      authorizationTypeFromJSON(data.authorization_type),
       data.max_tokens ? Coin.fromProto(data.max_tokens) : undefined,
       data.allow_list
-        ? StakeAuthorizationValidators.fromProto(data.allow_list)
+        ? StakeAuthorizationValidators.fromData(data.allow_list)
         : undefined,
       data.deny_list
-        ? StakeAuthorizationValidators.fromProto(data.deny_list)
+        ? StakeAuthorizationValidators.fromData(data.deny_list)
         : undefined
     );
   }
@@ -48,7 +50,7 @@ export class StakeAuthorization extends JSONSerializable<
     const { max_tokens, allow_list, deny_list, authorization_type } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.StakeAuthorization',
-      authorization_type: authorization_type,
+      authorization_type: authorizationTypeToJSON(authorization_type),
       max_tokens: max_tokens?.toData(),
       allow_list: allow_list?.toData(),
       deny_list: deny_list?.toData(),
@@ -152,7 +154,7 @@ export namespace StakeAuthorization {
     max_tokens?: Coin.Data;
     allow_list?: StakeAuthorizationValidators.Data;
     deny_list?: StakeAuthorizationValidators.Data;
-    authorization_type: AuthorizationType;
+    authorization_type: string;
   }
 
   export type Proto = StakeAuthorization_pb;

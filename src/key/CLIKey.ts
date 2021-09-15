@@ -37,7 +37,7 @@ export class CLIKey extends Key {
   }
 
   private generateCommand(args: string) {
-    return `${this.params.cliPath} ${args} -o json ${
+    return `${this.params.cliPath} ${args} --output json ${
       this.params.home ? `--home ${this.params.home}` : ''
     }`;
   }
@@ -114,6 +114,6 @@ export class CLIKey extends Key {
       )
     ).toString();
     tmpobj.removeCallback();
-    return SignatureV2.fromData(JSON.parse(result));
+    return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
   }
 }

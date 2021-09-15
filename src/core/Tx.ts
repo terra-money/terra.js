@@ -1,6 +1,10 @@
 import { PublicKey } from './PublicKey';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { SignMode as SignMode_pb } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+import {
+  SignMode as SignMode_pb,
+  signModeFromJSON,
+  signModeToJSON,
+} from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 import {
   Tx as Tx_pb,
   TxBody as TxBody_pb,
@@ -277,14 +281,12 @@ export namespace ModeInfo {
     constructor(public mode: SignMode) {}
 
     public static fromData(data: Single.Data): Single {
-      return new Single(
-        Object.keys(SignMode_pb).findIndex(s => s === data.mode)
-      );
+      return new Single(signModeFromJSON(data.mode));
     }
 
     public toData(): Single.Data {
       return {
-        mode: SignMode[this.mode],
+        mode: signModeToJSON(this.mode),
       };
     }
 
