@@ -5,6 +5,10 @@ import { CommunityPoolSpendProposal } from '../distribution/proposals';
 import { ParameterChangeProposal } from '../params/proposals';
 import { TextProposal } from './proposals';
 import {
+  SoftwareUpgradeProposal,
+  CancelSoftwareUpgradeProposal,
+} from '../upgrade/proposals';
+import {
   Proposal as Proposal_pb,
   ProposalStatus,
   TallyResult,
@@ -221,23 +225,31 @@ export namespace Proposal {
   export type Content =
     | TextProposal
     | CommunityPoolSpendProposal
-    | ParameterChangeProposal;
+    | ParameterChangeProposal
+    | SoftwareUpgradeProposal
+    | CancelSoftwareUpgradeProposal;
 
   export namespace Content {
     export type Amino =
       | TextProposal.Amino
       | CommunityPoolSpendProposal.Amino
-      | ParameterChangeProposal.Amino;
+      | ParameterChangeProposal.Amino
+      | SoftwareUpgradeProposal.Amino
+      | CancelSoftwareUpgradeProposal.Amino;
 
     export type Data =
       | TextProposal.Data
       | CommunityPoolSpendProposal.Data
-      | ParameterChangeProposal.Data;
+      | ParameterChangeProposal.Data
+      | SoftwareUpgradeProposal.Data
+      | CancelSoftwareUpgradeProposal.Data;
 
     export type Proto =
       | TextProposal.Proto
       | CommunityPoolSpendProposal.Proto
-      | ParameterChangeProposal.Proto;
+      | ParameterChangeProposal.Proto
+      | SoftwareUpgradeProposal.Proto
+      | CancelSoftwareUpgradeProposal.Proto;
 
     export function fromAmino(amino: Proposal.Content.Amino): Proposal.Content {
       switch (amino.type) {
@@ -247,8 +259,10 @@ export namespace Proposal {
           return CommunityPoolSpendProposal.fromAmino(amino);
         case 'params/ParameterChangeProposal':
           return ParameterChangeProposal.fromAmino(amino);
-        // case 'upgrade/SoftwareUpgradeProposal':
-        // case 'upgrade/CancelSoftwareUpgradeProposal':
+        case 'upgrade/SoftwareUpgradeProposal':
+          return SoftwareUpgradeProposal.fromAmino(amino);
+        case 'upgrade/CancelSoftwareUpgradeProposal':
+          return CancelSoftwareUpgradeProposal.fromAmino(amino);
       }
     }
 
@@ -260,9 +274,10 @@ export namespace Proposal {
           return CommunityPoolSpendProposal.fromData(data);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
           return ParameterChangeProposal.fromData(data);
-
-        // case 'upgrade/SoftwareUpgradeProposal':
-        // case 'upgrade/CancelSoftwareUpgradeProposal':
+        case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
+          return SoftwareUpgradeProposal.fromData(data);
+        case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
+          return CancelSoftwareUpgradeProposal.fromData(data);
       }
     }
 
@@ -275,9 +290,10 @@ export namespace Proposal {
           return CommunityPoolSpendProposal.unpackAny(anyProto);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
           return ParameterChangeProposal.unpackAny(anyProto);
-
-        // case 'upgrade/SoftwareUpgradeProposal':
-        // case 'upgrade/CancelSoftwareUpgradeProposal':
+        case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
+          return SoftwareUpgradeProposal.unpackAny(anyProto);
+        case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
+          return CancelSoftwareUpgradeProposal.unpackAny(anyProto);
       }
 
       throw `Proposal content ${typeUrl} not recognized`;
