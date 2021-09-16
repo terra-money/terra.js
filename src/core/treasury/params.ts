@@ -62,17 +62,3 @@ export interface TreasuryParamChanges {
     windowprobation?: number;
   };
 }
-
-export namespace TreasuryParamChanges {
-  export const ConversionTable = {
-    treasury: {
-      taxpolicy: [PolicyConstraints.fromData, Convert.toData],
-      rewardpolicy: [PolicyConstraints.fromData, Convert.toData],
-      seigniorageburdentarget: [Convert.toDec, Convert.toString],
-      miningincrement: [Convert.toDec, Convert.toString],
-      windowshort: [Convert.toNumber, Convert.toFixed],
-      windowlong: [Convert.toNumber, Convert.toFixed],
-      windowprobation: [Convert.toNumber, Convert.toFixed],
-    },
-  };
-}

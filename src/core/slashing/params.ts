@@ -66,16 +66,3 @@ export interface SlashingParamChanges {
     SlashFractionDowntime?: Dec;
   };
 }
-
-export namespace SlashingParamChanges {
-  export const ConversionTable = {
-    slashing: {
-      MaxEvidenceAge: [Convert.toNumber, Convert.toFixed],
-      SignedBlocksWindow: [Convert.toNumber, Convert.toFixed],
-      MinSignedPerWindow: [Convert.toDec, Convert.toString],
-      DowntimeJailDuration: [Convert.toNumber, Convert.toString],
-      SlashFractionDoubleSign: [Convert.toDec, Convert.toString],
-      SlashFractionDowntime: [Convert.toDec, Convert.toString],
-    },
-  };
-}

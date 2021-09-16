@@ -36,14 +36,3 @@ export interface StakingParamChanges {
     BondDenom?: Denom;
   };
 }
-
-export namespace StakingParamChanges {
-  export const ConversionTable = {
-    staking: {
-      UnbondingTime: [Convert.toNumber, Convert.toFixed],
-      MaxValidators: [Convert.toNumber, Convert.toNumber],
-      KeyMaxEntries: [Convert.toNumber, Convert.toNumber],
-      BondDenom: [Convert.id, Convert.id],
-    },
-  };
-}

@@ -101,33 +101,19 @@ export type ParamChanges = DistributionParamChanges &
   MintParamChanges;
 
 export namespace ParamChanges {
-  export const ConversionTable = {
-    ...DistributionParamChanges.ConversionTable,
-    ...GovParamChanges.ConversionTable,
-    ...MarketParamChanges.ConversionTable,
-    ...OracleParamChanges.ConversionTable,
-    ...SlashingParamChanges.ConversionTable,
-    ...StakingParamChanges.ConversionTable,
-    ...TreasuryParamChanges.ConversionTable,
-    ...WasmParamChanges.ConversionTable,
-    ...MintParamChanges.ConversionTable,
-  };
-
   export function fromData(data: ParamChange.Data[]): ParamChanges {
     const result: ParamChanges = {};
     for (const pc of data) {
       if (result[pc.subspace] === undefined) {
         result[pc.subspace] = {};
       }
-      // @ts-ignore
-      const conversion = ParamChanges.ConversionTable[pc.subspace][pc.key];
-      if (!Array.isArray(conversion)) {
-        throw new TypeError(
-          `cannot find ${pc.key} in ${pc.subspace} ParamChange conversion table`
-        );
+      try {
+        const obj = JSON.parse(pc.value);
+        // @ts-ignore
+        result[pc.subspace][pc.key] = obj;
+      } catch (err) {
+        // ignore error
       }
-      // @ts-ignore
-      result[pc.subspace][pc.key] = conversion[0](JSON.parse(pc.value));
     }
     return result;
   }
@@ -137,15 +123,13 @@ export namespace ParamChanges {
     for (const subspace of Object.keys(pc)) {
       // @ts-ignore
       for (const key of Object.keys(pc[subspace])) {
-        // @ts-ignore
-        const serializer = ParamChanges.ConversionTable[subspace][key][1];
         result.push({
           // @ts-ignore
           subspace,
           // @ts-ignore
           key,
           // @ts-ignore
-          value: JSON.stringify(serializer(pc[subspace][key])),
+          value: JSON.stringify(pc[subspace][key]),
         });
       }
     }
