@@ -1,5 +1,4 @@
 import { SoftwareUpgradeProposal } from './SoftwareUpgradeProposal';
-import { Plan } from '../Plan';
 
 describe('SoftwareUpgradeProposal', () => {
   it('deserializes', () => {
