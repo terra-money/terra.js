@@ -18,7 +18,7 @@ export namespace Denom {
   export const NOK = 'unok';
   export const PHP = 'uphp';
   export const SDR = 'usdr';
-  export const SEK - 'usek';
+  export const SEK = 'usek';
   export const SGD = 'usgd';
   export const THB = 'uthb';
   export const USD = 'uusd';
