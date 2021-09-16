@@ -1,7 +1,7 @@
 import { APIRequester } from './APIRequester';
 import {
   AuthAPI,
-  BankAPI,
+  IbcTransferAPI,
   DistributionAPI,
   GovAPI,
   MarketAPI,
@@ -83,7 +83,7 @@ export class LCDClient {
 
   // API access
   public auth: AuthAPI;
-  public bank: BankAPI;
+  public bank: IbcTransferAPI;
   public distribution: DistributionAPI;
   public gov: GovAPI;
   public market: MarketAPI;
@@ -116,7 +116,7 @@ export class LCDClient {
 
     // instantiate APIs
     this.auth = new AuthAPI(this.apiRequester);
-    this.bank = new BankAPI(this.apiRequester);
+    this.bank = new IbcTransferAPI(this.apiRequester);
     this.distribution = new DistributionAPI(this.apiRequester);
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);

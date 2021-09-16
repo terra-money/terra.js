@@ -50,6 +50,13 @@ import {
   MsgClearContractAdmin,
   WasmMsg,
 } from './wasm/msgs';
+import { MsgTransfer, IbcTransferMsg } from './ibc-transfer/msgs';
+import {
+  MsgCreateClient,
+  MsgUpdateClient,
+  MsgUpgradeClient,
+  MsgSubmitMisbehaviour,
+} from './ibc/msgs/client';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export type Msg =
@@ -62,7 +69,8 @@ export type Msg =
   | OracleMsg
   | SlashingMsg
   | StakingMsg
-  | WasmMsg;
+  | WasmMsg
+  | IbcTransferMsg;
 
 export namespace Msg {
   export type Amino =
@@ -75,7 +83,8 @@ export namespace Msg {
     | OracleMsg.Amino
     | SlashingMsg.Amino
     | StakingMsg.Amino
-    | WasmMsg.Amino;
+    | WasmMsg.Amino
+    | IbcTransferMsg.Amino;
 
   export type Data =
     | BankMsg.Data
@@ -87,7 +96,8 @@ export namespace Msg {
     | OracleMsg.Data
     | SlashingMsg.Data
     | StakingMsg.Data
-    | WasmMsg.Data;
+    | WasmMsg.Data
+    | IbcTransferMsg.Data;
 
   export type Proto =
     | BankMsg.Proto
@@ -99,7 +109,8 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
-    | WasmMsg.Proto;
+    | WasmMsg.Proto
+    | IbcTransferMsg.Proto;
 
   export function fromAmino(data: Msg.Amino): Msg {
     switch (data.type) {
@@ -188,6 +199,11 @@ export namespace Msg {
         return MsgUpdateContractAdmin.fromAmino(data);
       case 'wasm/MsgClearContractAdmin':
         return MsgClearContractAdmin.fromAmino(data);
+
+      // ibc-transfer
+      case 'cosmos-sdk/MsgTransfer':
+        return MsgTransfer.fromAmino(data);
+      // no amino codec for ibc::client
     }
   }
   export function fromData(data: Msg.Data): Msg {
@@ -277,6 +293,10 @@ export namespace Msg {
         return MsgUpdateContractAdmin.fromData(data);
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
         return MsgClearContractAdmin.fromData(data);
+
+      // ibc-transfer
+      case '/ibc.applications.transfer.v1.MsgTransfer':
+        return MsgTransfer.fromData(data);
     }
   }
 
@@ -365,6 +385,11 @@ export namespace Msg {
         return MsgUpdateContractAdmin.unpackAny(proto);
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
         return MsgClearContractAdmin.unpackAny(proto);
+
+      // ibc-transfer
+      case 'cosmos-sdk/MsgTransfer':
+        return MsgTransfer.unpackAny(proto);
+
       default:
         throw Error(`not supported msg ${proto.typeUrl}`);
     }
