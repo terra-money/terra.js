@@ -68,7 +68,7 @@ export function isTxError<
   B extends Block | Sync,
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
-  return (x as T & TxError).code !== undefined;
+  return (x as T & TxError).code !== undefined && (x as T & TxError).code !== 0;
 }
 
 export namespace BlockTxBroadcastResult {
