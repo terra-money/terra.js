@@ -112,7 +112,8 @@ export namespace ParamChanges {
         // @ts-ignore
         result[pc.subspace][pc.key] = obj;
       } catch (err) {
-        // ignore error
+        // @ts-ignore
+        result[pc.subspace][pc.key] = null;
       }
     }
     return result;

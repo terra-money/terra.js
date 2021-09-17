@@ -28,11 +28,7 @@ import { ParamChange, ParamChanges } from '../ParamChange';
  * const msg = new MsgSubmitProposal();
  * ```
  */
-export class ParameterChangeProposal extends JSONSerializable<
-  ParameterChangeProposal.Data
-> {
-  changes: ParamChanges;
-
+export class ParameterChangeProposal extends JSONSerializable<ParameterChangeProposal.Data> {
   /**
    * @param title proposal's title
    * @param description proposal's description
@@ -42,14 +38,9 @@ export class ParameterChangeProposal extends JSONSerializable<
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChange.Data[] | ParamChanges
+    public changes: object
   ) {
     super();
-    if (changes instanceof Array) {
-      this.changes = ParamChanges.fromData(changes);
-    } else {
-      this.changes = changes;
-    }
   }
 
   public static fromData(
@@ -58,11 +49,15 @@ export class ParameterChangeProposal extends JSONSerializable<
     const {
       value: { title, description, changes },
     } = data;
-    return new ParameterChangeProposal(
-      title,
-      description,
-      ParamChanges.fromData(changes)
-    );
+    let strObj;
+
+    try {
+      strObj = JSON.parse(changes);
+    } catch (err) {
+      strObj = null;
+    }
+
+    return new ParameterChangeProposal(title, description, strObj);
   }
 
   public toData(): ParameterChangeProposal.Data {
@@ -72,7 +67,7 @@ export class ParameterChangeProposal extends JSONSerializable<
       value: {
         title,
         description,
-        changes: ParamChanges.toData(changes),
+        changes: JSON.stringify(changes),
       },
     };
   }
@@ -84,7 +79,7 @@ export namespace ParameterChangeProposal {
     value: {
       title: string;
       description: string;
-      changes: ParamChange.Data[];
+      changes: string;
     };
   }
 }
