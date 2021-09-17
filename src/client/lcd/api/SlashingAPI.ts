@@ -1,6 +1,6 @@
 import { BaseAPI } from './BaseAPI';
-import { Dec, ValConsAddress, ValConsPubKey } from '../../../core';
-import { APIParams } from '../APIRequester';
+import { Dec, ValConsAddress } from '../../../core';
+import { APIParams, Pagination } from '../APIRequester';
 
 export interface SlashingParams {
   /** Number of blocks over which missed blocks are tallied for downtime. */
@@ -66,27 +66,41 @@ export class SlashingAPI extends BaseAPI {
    *
    * @param valConsPubKey validator's consensus public key
    */
-  public async signingInfos(
-    valConsPubKey?: ValConsPubKey,
+  public async signingInfo(
+    valConsAddress: ValConsAddress,
     params: APIParams = {}
-  ): Promise<SigningInfo[]> {
-    let url;
-    if (valConsPubKey !== undefined) {
-      url = `/slashing/validators/${valConsPubKey}/signing_info`;
-    } else {
-      url = `/slashing/signing_infos`;
-    }
+  ): Promise<SigningInfo> {
+    return this.c
+      .get<{ val_signing_info: SigningInfo.Data }>(
+        `/cosmos/slashing/v1beta1/signing_infos/${valConsAddress}`,
+        params
+      )
+      .then(({ val_signing_info: d }) => ({
+        address: d.address,
+        start_height: Number.parseInt(d.start_height),
+        index_offset: Number.parseInt(d.index_offset),
+        jailed_until: new Date(d.jailed_until),
+        tombstoned: d.tombstoned,
+        missed_blocks_counter: Number.parseInt(d.missed_blocks_counter),
+      }));
+  }
 
-    return this.c.get<SigningInfo.Data[]>(url, params).then(d =>
-      d.result.map(x => ({
-        address: x.address,
-        start_height: Number.parseInt(x.start_height),
-        index_offset: Number.parseInt(x.index_offset),
-        jailed_until: new Date(x.jailed_until),
-        tombstoned: x.tombstoned,
-        missed_blocks_counter: Number.parseInt(x.missed_blocks_counter),
-      }))
-    );
+  public async signingInfos(params: APIParams = {}): Promise<SigningInfo[]> {
+    return this.c
+      .get<{ info: SigningInfo.Data[]; pagination: Pagination }>(
+        `/cosmos/slashing/v1beta1/signing_infos`,
+        params
+      )
+      .then(d =>
+        d.info.map(x => ({
+          address: x.address,
+          start_height: Number.parseInt(x.start_height),
+          index_offset: Number.parseInt(x.index_offset),
+          jailed_until: new Date(x.jailed_until),
+          tombstoned: x.tombstoned,
+          missed_blocks_counter: Number.parseInt(x.missed_blocks_counter),
+        }))
+      );
   }
 
   /**
@@ -94,8 +108,11 @@ export class SlashingAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<SlashingParams> {
     return this.c
-      .get<SlashingParams.Data>(`/slashing/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: SlashingParams.Data }>(
+        `/cosmos/slashing/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         signed_blocks_window: Number.parseInt(d.signed_blocks_window),
         min_signed_per_window: new Dec(d.min_signed_per_window),
         downtime_jail_duration: Number.parseInt(d.downtime_jail_duration),

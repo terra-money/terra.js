@@ -15,9 +15,6 @@ export type AccPubKey = string;
 /** `terravaloperpub-` prefixed validator public key */
 export type ValPubKey = string;
 
-/** `terravalconspub-` prefixed validator consensus public key */
-export type ValConsPubKey = string;
-
 function checkPrefixAndLength(
   prefix: string,
   data: string,
@@ -119,22 +116,5 @@ export namespace ValConsAddress {
 
   export function validate(data: string): boolean {
     return checkPrefixAndLength('terravalcons', data, 51);
-  }
-}
-
-export namespace ValConsPubKey {
-  export interface Data {
-    type: string;
-    value: string;
-  }
-
-  /**
-   * Checks if string is a valid Terra consensus (node) pubkey.
-   * @param data string to check
-   */
-  export function validate(data: ValConsPubKey.Data): boolean {
-    return (
-      data.type === 'tendermint/PubKeyEd25519' && typeof data.value === 'string'
-    );
   }
 }

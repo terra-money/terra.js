@@ -7,5 +7,5 @@ export namespace Convert {
   export const toString = (c: any): string => c.toString();
   export const toFixed = (c: number): string => c.toFixed();
   export const toNumber = Number.parseInt;
-  export const toData = (c: JSONSerializable<any>): any => c.toData();
+  export const toData = (c: JSONSerializable<any, any, any>): any => c.toData();
 }

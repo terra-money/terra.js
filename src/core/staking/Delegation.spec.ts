@@ -1,11 +1,11 @@
-const delgsData = require('./Delegation.data.json');
+const delgsAmino = require('./Delegation.data.json');
 import { Delegation } from './Delegation';
 
 describe('Delegation', () => {
   it('deserializes', () => {
-    delgsData.forEach((delgExample: Delegation.Data) => {
-      const delg = Delegation.fromData(delgExample);
-      expect(delg.toData()).toMatchObject(delgExample);
+    delgsAmino.forEach((delgExample: Delegation.Amino) => {
+      const delg = Delegation.fromAmino(delgExample);
+      expect(delg.toAmino()).toMatchObject(delgExample);
     });
   });
 });

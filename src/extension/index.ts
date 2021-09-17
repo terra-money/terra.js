@@ -1,5 +1,7 @@
 import { CreateTxOptions } from '../client';
 import PostMessageStream from './PostMessageStream';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Fee as Fee_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 
 interface ResponseData {
   name: string;
@@ -188,12 +190,12 @@ export class Extension {
   sign(options: Option): number {
     return this.send('sign', {
       ...options,
-      msgs: options.msgs.map(msg => msg.toJSON()),
-      fee: options.fee?.toJSON(),
+      msgs: options.msgs.map(msg => Any.toJSON(msg.packAny())),
+      fee: options.fee ? Fee_pb.toJSON(options.fee?.toProto()) : undefined,
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
-      account_number: options.account_number,
+      account_number: options.accountNumber,
       sequence: options.sequence,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
@@ -216,12 +218,12 @@ export class Extension {
    */
   post(options: Option): number {
     return this.send('post', {
-      msgs: options.msgs.map(msg => msg.toJSON()),
-      fee: options.fee?.toJSON(),
+      msgs: options.msgs.map(msg => Any.toJSON(msg.packAny())),
+      fee: options.fee ? Fee_pb.toJSON(options.fee?.toProto()) : undefined,
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
-      account_number: options.account_number,
+      account_number: options.accountNumber,
       sequence: options.sequence,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,

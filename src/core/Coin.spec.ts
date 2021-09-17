@@ -10,7 +10,7 @@ describe('Coin', () => {
   });
 
   it('deserializes Coin value', () => {
-    const coin = Coin.fromData({
+    const coin = Coin.fromAmino({
       denom: Denom.LUNA,
       amount: '1000',
     });
@@ -20,22 +20,22 @@ describe('Coin', () => {
   });
 
   it('serializes', () => {
-    const coinData: Coin.Data = {
+    const coinAmino: Coin.Amino = {
       denom: Denom.LUNA,
       amount: '1000',
     };
 
-    const coin = Coin.fromData(coinData);
+    const coin = Coin.fromAmino(coinAmino);
     expect(coin.amount).toBeInstanceOf(Int);
-    expect(coin.toData()).toEqual(coinData);
+    expect(coin.toAmino()).toEqual(coinAmino);
 
-    const decCoinData = {
+    const decCoinAmino = {
       denom: Denom.LUNA,
       amount: '1000.000000000000000000',
     };
-    const decCoin = Coin.fromData(decCoinData);
+    const decCoin = Coin.fromAmino(decCoinAmino);
     expect(decCoin.amount).toBeInstanceOf(Dec);
-    expect(decCoin.toData()).toEqual(decCoinData);
+    expect(decCoin.toAmino()).toEqual(decCoinAmino);
   });
 
   it('arithmetic', () => {

@@ -1,13 +1,17 @@
 import { JSONSerializable } from '../util/json';
 import { Denom } from './Denom';
 import { Dec, Int, Numeric } from './numeric';
+import { Coin as Coin_pb } from '@terra-money/terra.proto/cosmos/base/v1beta1/coin';
 
 /**
  * Captures `sdk.Coin` and `sdk.DecCoin` from Cosmos SDK. A composite value that combines
  * a denomination with an amount value. Coins are immutable once created, and operations
  * that return Coin will return a new Coin. See [[Coins]] for a collection of Coin objects.
  */
-export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
+export class Coin
+  extends JSONSerializable<Coin.Amino, Coin.Data, Coin.Proto>
+  implements Numeric<Coin>
+{
   public readonly amount: Numeric.Output;
 
   /**
@@ -20,11 +24,6 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
   constructor(public readonly denom: Denom, amount: Numeric.Input) {
     super();
     this.amount = Numeric.parse(amount);
-  }
-
-  public static fromData(data: Coin.Data): Coin {
-    const { denom, amount } = data;
-    return new Coin(denom, amount);
   }
 
   /**
@@ -54,14 +53,6 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
    */
   public toDecCoin(): Coin {
     return new Coin(this.denom, new Dec(this.amount));
-  }
-
-  public toData(): Coin.Data {
-    const { denom, amount } = this;
-    return {
-      denom,
-      amount: amount.toString(),
-    };
   }
 
   /**
@@ -156,9 +147,51 @@ export class Coin extends JSONSerializable<Coin.Data> implements Numeric<Coin> {
     const otherAmount = Numeric.parse(other);
     return new Coin(this.denom, this.amount.mod(otherAmount));
   }
+
+  public static fromAmino(data: Coin.Amino): Coin {
+    const { denom, amount } = data;
+    return new Coin(denom, amount);
+  }
+
+  public toAmino(): Coin.Amino {
+    const { denom, amount } = this;
+    return {
+      denom,
+      amount: amount.toString(),
+    };
+  }
+
+  public static fromData(data: Coin.Data): Coin {
+    const { denom, amount } = data;
+    return new Coin(denom, amount);
+  }
+
+  public toData(): Coin.Data {
+    const { denom, amount } = this;
+    return {
+      denom,
+      amount: amount.toString(),
+    };
+  }
+
+  public static fromProto(proto: Coin.Proto): Coin {
+    return new Coin(proto.denom, Numeric.parse(proto.amount));
+  }
+
+  public toProto(): Coin.Proto {
+    return Coin_pb.fromPartial({
+      denom: this.denom,
+      amount: this.amount.toString(),
+    });
+  }
 }
 
 export namespace Coin {
+  export interface Amino {
+    denom: Denom;
+    amount: string;
+  }
+
   export interface Data {
     denom: Denom;
     amount: string;
@@ -167,4 +200,6 @@ export namespace Coin {
   export class ArithmeticError {
     constructor(public readonly message: string) {}
   }
+
+  export type Proto = Coin_pb;
 }

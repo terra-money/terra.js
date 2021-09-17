@@ -1,11 +1,11 @@
 import { Key, pubKeyFromPublicKey } from './Key';
 import { bech32 } from 'bech32'
 import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
-import { StdSignMsg } from '../core/StdSignMsg';
-import { StdSignature } from '../core/StdSignature';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
+import { SignDoc } from 'core';
+import { SignatureV2 } from '../core/SignatureV2';
 
 interface CLIKeyParams {
   keyName: string;
@@ -107,9 +107,9 @@ export class CLIKey extends Key {
     );
   }
 
-  public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
+  public async createSignature(tx: SignDoc): Promise<SignatureV2> {
     const tmpobj = fileSync({ postfix: '.json' });
-    writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
+    writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
 
     const result = execSync(
       this.generateCommand(
@@ -119,6 +119,6 @@ export class CLIKey extends Key {
       )
     ).toString();
     tmpobj.removeCallback();
-    return StdSignature.fromData(JSON.parse(result));
+    return SignatureV2.fromData(JSON.parse(result));
   }
 }

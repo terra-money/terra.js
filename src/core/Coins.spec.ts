@@ -49,7 +49,7 @@ describe('Coins', () => {
     // input #2: Coin[]
     const coins2 = new Coins([new Coin('ukrw', 1), new Coin('uluna', 2)]);
 
-    // input #3: Coins.DataDict
+    // input #3: Coins.AminoDict
     const coins3 = new Coins({
       ukrw: 1,
       uluna: 2,

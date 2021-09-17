@@ -1,5 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ParamChange, ParamChanges } from '../ParamChange';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { ParameterChangeProposal as ParameterChangeProposal_pb } from '@terra-money/terra.proto/cosmos/params/v1beta1/params';
 
 /**
  * Describes a proposal for directly altering the value of the module parameters.
@@ -29,7 +31,9 @@ import { ParamChange, ParamChanges } from '../ParamChange';
  * ```
  */
 export class ParameterChangeProposal extends JSONSerializable<
-  ParameterChangeProposal.Data
+  ParameterChangeProposal.Amino,
+  ParameterChangeProposal.Data,
+  ParameterChangeProposal.Proto
 > {
   changes: ParamChanges;
 
@@ -42,22 +46,45 @@ export class ParameterChangeProposal extends JSONSerializable<
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChange.Data[] | ParamChanges
+    changes: ParamChanges
   ) {
     super();
     if (changes instanceof Array) {
-      this.changes = ParamChanges.fromData(changes);
+      this.changes = ParamChanges.fromAmino(changes);
     } else {
       this.changes = changes;
     }
   }
 
-  public static fromData(
-    data: ParameterChangeProposal.Data
+  public static fromAmino(
+    data: ParameterChangeProposal.Amino
   ): ParameterChangeProposal {
     const {
       value: { title, description, changes },
     } = data;
+    return new ParameterChangeProposal(
+      title,
+      description,
+      ParamChanges.fromAmino(changes)
+    );
+  }
+
+  public toAmino(): ParameterChangeProposal.Amino {
+    const { title, description, changes } = this;
+    return {
+      type: 'params/ParameterChangeProposal',
+      value: {
+        title,
+        description,
+        changes: changes.toAmino(),
+      },
+    };
+  }
+
+  public static fromData(
+    proto: ParameterChangeProposal.Data
+  ): ParameterChangeProposal {
+    const { title, description, changes } = proto;
     return new ParameterChangeProposal(
       title,
       description,
@@ -68,23 +95,62 @@ export class ParameterChangeProposal extends JSONSerializable<
   public toData(): ParameterChangeProposal.Data {
     const { title, description, changes } = this;
     return {
-      type: 'params/ParameterChangeProposal',
-      value: {
-        title,
-        description,
-        changes: ParamChanges.toData(changes),
-      },
+      '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
+      title,
+      description,
+      changes: changes.toData(),
     };
+  }
+
+  public static fromProto(
+    proto: ParameterChangeProposal.Proto
+  ): ParameterChangeProposal {
+    return new ParameterChangeProposal(
+      proto.title,
+      proto.description,
+      ParamChanges.fromProto(proto.changes)
+    );
+  }
+
+  public toProto(): ParameterChangeProposal.Proto {
+    const { title, description, changes } = this;
+    return ParameterChangeProposal_pb.fromPartial({
+      changes: changes.toProto(),
+      description,
+      title,
+    });
+  }
+
+  public packAny(): Any {
+    return Any.fromPartial({
+      typeUrl: '/cosmos.params.v1beta1.ParameterChangeProposal',
+      value: ParameterChangeProposal_pb.encode(this.toProto()).finish(),
+    });
+  }
+
+  public static unpackAny(msgAny: Any): ParameterChangeProposal {
+    return ParameterChangeProposal.fromProto(
+      ParameterChangeProposal_pb.decode(msgAny.value)
+    );
   }
 }
 
 export namespace ParameterChangeProposal {
-  export interface Data {
+  export interface Amino {
     type: 'params/ParameterChangeProposal';
     value: {
       title: string;
       description: string;
-      changes: ParamChange.Data[];
+      changes: ParamChange.Amino[];
     };
   }
+
+  export interface Data {
+    '@type': '/cosmos.params.v1beta1.ParameterChangeProposal';
+    title: string;
+    description: string;
+    changes: ParamChange.Data[];
+  }
+
+  export type Proto = ParameterChangeProposal_pb;
 }

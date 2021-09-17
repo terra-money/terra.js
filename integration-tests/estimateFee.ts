@@ -1,5 +1,6 @@
-import { LCDClient, LocalTerra, MsgSwap, MsgSend, Coin, StdTx, StdFee } from '../src';
+import { LCDClient, LocalTerra, MsgSwap, MsgSend, Coin } from '../src';
 import Axios from 'axios';
+import { Fee } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 
 const lt = new LocalTerra();
 const test1 = lt.wallets.test1;
@@ -10,35 +11,59 @@ async function main() {
     'https://bombay-fcd.terra.dev/v1/txs/gas_prices'
   );
 
-  const tequila = new LCDClient({
-    chainID: 'bombay-9',
+  const bombay = new LCDClient({
+    chainID: 'bombay-10',
     URL: 'https://bombay-lcd.terra.dev',
     gasPrices,
   });
 
-  // Test raw estimate fee function with specified gas
-  const rawFee = await tequila.tx.estimateFee(
-    test1.key.accAddress,
-    [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
-    { gas: '500000' }
+  const accountInfo = await bombay.auth.accountInfo(
+    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
   );
 
-  console.log('MsgSwap(500000 gas): ', rawFee.toJSON());
+  // Test raw estimate fee function with specified gas
+  const rawFee = await bombay.tx.estimateFee(
+    [
+      new MsgSwap(
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        new Coin('uusd', 1000),
+        'uluna'
+      ),
+    ],
+    { gas: 'auto', sequence: accountInfo.getSequenceNumber() }
+  );
+
+  console.log('MsgSwap(500000 gas): ', rawFee.toData());
 
   // Test automatic fee estimation using create method with specified denom
-  const item = await tequila.tx.create(test1.key.accAddress, {
-    msgs: [new MsgSwap(test1.key.accAddress, new Coin('uluna', 1000), 'uusd')],
+  const item = await bombay.tx.create(
+    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+    {
+      msgs: [
+        new MsgSwap(
+          'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+          new Coin('uusd', 1000),
+          'uluna'
+        ),
+      ],
+      feeDenoms: ['uusd'],
+    }
+  );
+
+  console.log('MsgSwap(uusd fee)', item.auth_info.fee.toData());
+
+  const send = await bombay.tx.create(test2.key.accAddress, {
+    msgs: [
+      new MsgSend(
+        test2.key.accAddress,
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        '1234uusd'
+      ),
+    ],
     feeDenoms: ['uusd'],
   });
 
-  console.log('MsgSwap(uusd fee)', item.fee.toJSON());
-
-  const send = await tequila.tx.create(test2.key.accAddress, {
-    msgs: [new MsgSend(test2.key.accAddress, test1.key.accAddress, '1234uusd')],
-    feeDenoms: ['uusd'],
-  });
-
-  console.log('MsgSend', send.fee.toJSON());
+  console.log('MsgSend', send.auth_info.fee.toData());
 }
 
 main().catch(console.error);

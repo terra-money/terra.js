@@ -1,16 +1,15 @@
 import { APIRequester } from './APIRequester';
 import {
   AuthAPI,
-  BankAPI,
+  IbcTransferAPI,
   DistributionAPI,
   GovAPI,
   MarketAPI,
   MintAPI,
-  MsgAuthAPI,
+  AuthzAPI,
   OracleAPI,
   SlashingAPI,
   StakingAPI,
-  SupplyAPI,
   TendermintAPI,
   TreasuryAPI,
   TxAPI,
@@ -84,16 +83,15 @@ export class LCDClient {
 
   // API access
   public auth: AuthAPI;
-  public bank: BankAPI;
+  public bank: IbcTransferAPI;
   public distribution: DistributionAPI;
   public gov: GovAPI;
   public market: MarketAPI;
   public mint: MintAPI;
-  public msgauth: MsgAuthAPI;
+  public authz: AuthzAPI;
   public oracle: OracleAPI;
   public slashing: SlashingAPI;
   public staking: StakingAPI;
-  public supply: SupplyAPI;
   public tendermint: TendermintAPI;
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
@@ -118,16 +116,15 @@ export class LCDClient {
 
     // instantiate APIs
     this.auth = new AuthAPI(this.apiRequester);
-    this.bank = new BankAPI(this.apiRequester);
+    this.bank = new IbcTransferAPI(this.apiRequester);
     this.distribution = new DistributionAPI(this.apiRequester);
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);
     this.mint = new MintAPI(this.apiRequester);
-    this.msgauth = new MsgAuthAPI(this.apiRequester);
+    this.authz = new AuthzAPI(this.apiRequester);
     this.oracle = new OracleAPI(this.apiRequester);
     this.slashing = new SlashingAPI(this.apiRequester);
     this.staking = new StakingAPI(this.apiRequester);
-    this.supply = new SupplyAPI(this.apiRequester);
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);

@@ -1,10 +1,9 @@
 import { MnemonicKey } from './MnemonicKey';
 import { MsgSend, MsgMultiSend } from '../core/bank/msgs';
 import { Coins } from '../core/Coins';
-import { StdFee } from '../core/StdFee';
-import { StdSignature } from '../core/StdSignature';
-import { StdTx } from '../core/StdTx';
-import { StdSignMsg } from '../core/StdSignMsg';
+import { Fee } from '../core/Fee';
+import { AuthInfo, TxBody } from '../core/Tx';
+import { SignDoc } from '../core/SignDoc';
 
 describe('MnemonicKey', () => {
   it('derives correct Key information', () => {
@@ -66,13 +65,19 @@ describe('MnemonicKey', () => {
       new Coins({ uluna: '100000000' })
     );
 
-    const fee = new StdFee(46467, new Coins({ uluna: '698' }));
-    const stdSignMsg = new StdSignMsg('columbus-3-testnet', 45, 0, fee, [
-      msgSend,
-    ]);
+    const fee = new Fee(46467, new Coins({ uluna: '698' }));
+    const signDoc = new SignDoc(
+      'columbus-3-testnet',
+      45,
+      0,
+      new AuthInfo([], fee),
+      new TxBody([msgSend])
+    );
 
-    const { signature } = await mk.createSignature(stdSignMsg);
-    expect(signature).toEqual(
+    const {
+      data: { single },
+    } = await mk.createSignatureAmino(signDoc);
+    expect((single as any).signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );
   });
@@ -110,50 +115,27 @@ describe('MnemonicKey', () => {
       new Coins({ uluna: 100000000 })
     );
 
-    const stdSignMsg = new StdSignMsg(
+    const signDoc = new SignDoc(
       'columbus-3-testnet',
       multisigAccountNumber,
       multisigSequenceNumber,
-      new StdFee(50000, { uluna: 750 }),
-      [msgSend]
+      new AuthInfo([], new Fee(50000, { uluna: 750 })),
+      new TxBody([msgSend])
     );
 
-    const a1Signature = await a1Key.createSignature(stdSignMsg);
-    expect(a1Signature.signature).toEqual(
+    const a1Signature = await a1Key.createSignatureAmino(signDoc);
+    expect((a1Signature.data.single as any).signature).toEqual(
       '/kIFqGnmgOqMzf7guoe1eDTA1W5TjJcelJSRBdN0CTRyyxTMIbsxd+wL4fatHAq4hYOTf/zxD4l5xyU7/POZyg=='
     );
 
-    const a2Signature = await a2Key.createSignature(stdSignMsg);
-    expect(a2Signature.signature).toEqual(
+    const a2Signature = await a2Key.createSignatureAmino(signDoc);
+    expect((a2Signature.data.single as any).signature).toEqual(
       'hEjv9CnXQa89robHVsHS3GDZJiunnNb8xqziWD8D4aAuBXwxDzUXY14IE7q9Z3Qh0VMb3FBHuogHi7QZn2pM9g=='
     );
 
-    const a3Signature = await a3Key.createSignature(stdSignMsg);
-    expect(a3Signature.signature).toEqual(
+    const a3Signature = await a3Key.createSignatureAmino(signDoc);
+    expect((a3Signature.data.single as any).signature).toEqual(
       'CwHdmwC9ADtr5cTUdRZEfAcA8d1bgkF8fB+DcbB6MBB6amJz51WQYfVE1VgVTEY8Lyzg8+s8gX6nkqkXPeX72A=='
-    );
-  });
-
-  it('txid', () => {
-    new StdTx(
-      [
-        new MsgSend(
-          'terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv',
-          'terra18h5pmhrz45z2ne7lz4nfd7cdfwl3jfeu99e7a5',
-          { uluna: 100000000 }
-        ),
-      ],
-      new StdFee(54260, { ukrw: 814 }),
-      [
-        StdSignature.fromData({
-          signature:
-            '+SnQyRQZ536m0VLTwWFn6WTlmV0ZP+EI08lIGbZFhvYMLPA+Dld3qaTFKwgJEd7kZrAb5OPWBUhiOc9326daEw==',
-          pub_key: {
-            type: 'tendermint/PubKeySecp256k1',
-            value: 'Ar+guke5UuM2XEZ9/ouPhAQbYs+f7y6jQCtGlI2lj1ZH',
-          },
-        }),
-      ]
     );
   });
 
@@ -163,41 +145,43 @@ describe('MnemonicKey', () => {
         'spatial fantasy weekend romance entire million celery final moon solid route theory way hockey north trigger advice balcony melody fabric alter bullet twice push',
     });
 
-    const stdSignMsg = new StdSignMsg(
+    const signDoc = new SignDoc(
       'columbus-3-testnet',
       47,
       0,
-      new StdFee(100000, { uluna: 1500, usdr: 1000 }),
-      [
-        new MsgMultiSend(
-          [
-            new MsgMultiSend.Input(key.accAddress, {
-              uluna: 1000000,
-              usdr: 1000000,
-            }),
-          ],
-          [
-            new MsgMultiSend.Output(
-              'terra12dazwl3yq6nwrce052ah3fudkarglsgvacyvl9',
-              {
-                uluna: 500000,
-              }
-            ),
-            new MsgMultiSend.Output(
-              'terra1ptdx6akgk7wwemlk5j73artt5t6j8am08ql3qv',
-              {
-                uluna: 500000,
+      new AuthInfo([], new Fee(100000, { uluna: 1500, usdr: 1000 })),
+      new TxBody(
+        [
+          new MsgMultiSend(
+            [
+              new MsgMultiSend.Input(key.accAddress, {
+                uluna: 1000000,
                 usdr: 1000000,
-              }
-            ),
-          ]
-        ),
-      ],
-      '1234'
+              }),
+            ],
+            [
+              new MsgMultiSend.Output(
+                'terra12dazwl3yq6nwrce052ah3fudkarglsgvacyvl9',
+                {
+                  uluna: 500000,
+                }
+              ),
+              new MsgMultiSend.Output(
+                'terra1ptdx6akgk7wwemlk5j73artt5t6j8am08ql3qv',
+                {
+                  uluna: 500000,
+                  usdr: 1000000,
+                }
+              ),
+            ]
+          ),
+        ],
+        '1234'
+      )
     );
 
-    const tx = await key.signTx(stdSignMsg);
-    expect(tx.signatures[0].signature).toEqual(
+    const signature = await key.createSignatureAmino(signDoc);
+    expect((signature.data.single as any).signature).toEqual(
       'YA/ToXLxuuAOQlpm5trbIUu2zv5NfBmeHz2jmXgNrt8jP+odukerfri3DUXAJuhETAMHVVV78t7Q4xC0j+CVkA=='
     );
   });

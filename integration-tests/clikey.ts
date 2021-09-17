@@ -1,4 +1,4 @@
-import { StdFee, MsgSend } from '../src';
+import { Fee, MsgSend } from '../src';
 import { LocalTerra } from '../src';
 import { CLIKey } from '../src/key/CLIKey';
 
@@ -14,7 +14,7 @@ const send = new MsgSend(cliWallet.key.accAddress, test1.key.accAddress, {
 async function main() {
   const tx = await cliWallet.createAndSignTx({
     msgs: [send],
-    fee: new StdFee(100000, { uluna: 100000 }),
+    fee: new Fee(100000, { uluna: 100000 }, '', ''),
   });
 
   console.log(await terra.tx.broadcast(tx));

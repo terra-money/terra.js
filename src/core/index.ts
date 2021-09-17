@@ -5,16 +5,16 @@ export * from './Denom';
 export * from './Msg';
 export * from './numeric';
 export * from './PublicKey';
-export * from './StdFee';
-export * from './StdSignature';
-export * from './StdSignMsg';
-export * from './StdTx';
+export * from './Fee';
+export * from './SignDoc';
+export * from './Tx';
 export * from './TxInfo';
 export * from './ValidatorSet';
 export * from './Deposit';
 
 // Auth
 export * from './auth/Account';
+export * from './auth/BaseAccount';
 export * from './auth/LazyGradedVestingAccount';
 
 // Bank
@@ -23,6 +23,10 @@ export * from './bank/msgs';
 // Distribution
 export * from './distribution/msgs';
 export * from './distribution/proposals';
+
+// FeeGrant
+export * from './feegrant/msgs';
+export * from './feegrant/allowances';
 
 // Governance
 export * from './gov/msgs';
@@ -34,8 +38,8 @@ export * from './gov/Vote';
 export * from './market/msgs';
 
 // MsgAuth
-export * from './msgauth/msgs';
-export * from './msgauth/Authorization';
+export * from './authz/msgs';
+export * from './authz/authorizations';
 
 // Oracle
 export * from './oracle/msgs';
@@ -61,6 +65,14 @@ export * from './treasury/PolicyConstraints';
 
 // WASM
 export * from './wasm/msgs';
+
+// IBC
+export * from './ibc/msgs/channel';
+export * from './ibc/msgs/client';
+export * from './ibc/msgs/connection';
+
+// IBC-transfer
+export * from './ibc-transfer/msgs';
 
 // bech32 types
 export * from './bech32';
