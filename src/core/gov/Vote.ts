@@ -23,7 +23,7 @@ export class Vote extends JSONSerializable<Vote.Data> {
     const { proposal_id, voter, options, option } = data;
 
     return new Vote(
-      parseInt(proposal_id),
+      Number.parseInt(proposal_id),
       voter,
       options.map(({ option, weight }) => ({
         option: Vote.OptionMapping[option],

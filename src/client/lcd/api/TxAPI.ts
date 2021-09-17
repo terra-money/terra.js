@@ -103,6 +103,7 @@ export interface CreateTxOptions {
   feeDenoms?: string[];
   account_number?: number;
   sequence?: number;
+  timeout_height?: number;
 }
 
 export namespace AsyncTxBroadcastResult {
@@ -174,31 +175,29 @@ export class TxAPI extends BaseAPI {
     const { msgs } = options;
     memo = memo || '';
 
+    if (!options.account_number || !options.sequence) {
+      const account = await this.lcd.auth.accountInfo(sourceAddress);
+      if (!options.account_number) {
+        options.account_number = account.account_number;
+      }
+
+      if (!options.sequence) {
+        options.sequence = account.sequence;
+      }
+    }
+
     if (fee === undefined) {
       fee = await this.lcd.tx.estimateFee(sourceAddress, msgs, options);
     }
 
-    let accountNumber = options.account_number;
-    let sequence = options.sequence;
-
-    if (!accountNumber || !sequence) {
-      const account = await this.lcd.auth.accountInfo(sourceAddress);
-      if (!accountNumber) {
-        accountNumber = account.account_number;
-      }
-
-      if (!sequence) {
-        sequence = account.sequence;
-      }
-    }
-
     return new StdSignMsg(
       this.lcd.config.chainID,
-      accountNumber,
-      sequence,
+      options.account_number,
+      options.sequence,
       fee,
       msgs,
-      memo
+      memo,
+      options.timeout_height
     );
   }
 

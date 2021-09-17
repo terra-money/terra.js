@@ -137,6 +137,6 @@ export abstract class Key {
    */
   public async signTx(tx: StdSignMsg): Promise<StdTx> {
     const sig = await this.createSignature(tx);
-    return new StdTx(tx.msgs, tx.fee, [sig], tx.memo);
+    return new StdTx(tx.msgs, tx.fee, [sig], tx.memo, tx.timeout_height);
   }
 }
