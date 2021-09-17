@@ -16,12 +16,14 @@ export namespace IbcTransferParams {
 }
 
 export class IbcTransferAPI extends BaseAPI {
+  /** Gets a denomTrace for the hash */
   public async denomTrace(hash: string): Promise<DenomTrace> {
     return await this.c.get<DenomTrace>(
       `/ibc/apps/transfer/v1/denom_traces/${hash}`
     );
   }
 
+  /** Gets a list of denomTraces */
   public async denomTraces(
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[DenomTrace[], Pagination]> {
@@ -47,7 +49,7 @@ export class IbcTransferAPI extends BaseAPI {
   public async parameters(params: APIParams = {}): Promise<IbcTransferParams> {
     return this.c
       .get<{ params: IbcTransferParams.Data }>(
-        '/ibc.applications.transfer.v1.Query/Params',
+        '/ibc/apps/transfer/v1/params',
         params
       )
       .then(({ params: d }) => ({

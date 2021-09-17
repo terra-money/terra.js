@@ -1,0 +1,20 @@
+import { MsgConnectionOpenInit } from './MsgConnectionOpenInit';
+
+/*
+describe('MsgConnectionOpenInit', () => {
+
+it('deserializes correctly', () => {
+  const send = MsgConnectionOpenInit.fromData({
+    '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit',
+    value: {
+    },
+  });
+
+  expect(send).toMatchObject({
+  });
+
+  expect(send.toData()).toMatchObject({});
+});
+});
+
+*/

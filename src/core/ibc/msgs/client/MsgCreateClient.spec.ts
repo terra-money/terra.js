@@ -5,24 +5,72 @@ describe('MsgCreateClient', () => {
     const send = MsgCreateClient.fromData({
       '@type': '/ibc.core.client.v1.MsgCreateClient',
       value: {
-        client_state: { chain_id: 'bombay-10' },
-        consensus_state: {
-          timestamp: 1,
-          root: 'root_hash',
-          next_validator_hash: 'next_valoper_hash',
+        signer: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        client_state: {
+          typeUrl: '/ibc.lightclients.tendermint.v1.ClientState',
+          value: {
+            type: 'Buffer',
+            data: [
+              10, 11, 111, 121, 115, 116, 101, 114, 110, 101, 116, 45, 49, 18,
+              4, 8, 1, 16, 3, 26, 4, 8, 128, 234, 73, 34, 4, 8, 128, 223, 110,
+              42, 2, 8, 20, 58, 6, 8, 1, 16, 244, 175, 102, 66, 25, 10, 9, 8, 1,
+              24, 1, 32, 1, 42, 1, 0, 18, 12, 10, 2, 0, 1, 16, 33, 24, 4, 32,
+              12, 48, 1, 66, 25, 10, 9, 8, 1, 24, 1, 32, 1, 42, 1, 0, 18, 12,
+              10, 2, 0, 1, 16, 32, 24, 1, 32, 1, 48, 1, 74, 7, 117, 112, 103,
+              114, 97, 100, 101, 74, 16, 117, 112, 103, 114, 97, 100, 101, 100,
+              73, 66, 67, 83, 116, 97, 116, 101,
+            ],
+          },
         },
-        signer: 'terra1av6ssz7k4xpc5nsjj2884nugakpp874ae0krx7',
+        consensus_state: {
+          typeUrl: '/ibc.lightclients.tendermint.v1.ConsensusState',
+          value: {
+            type: 'Buffer',
+            data: [
+              10, 12, 8, 230, 219, 229, 137, 6, 16, 209, 204, 237, 191, 2, 18,
+              34, 10, 32, 101, 162, 202, 10, 68, 146, 185, 218, 229, 23, 165,
+              47, 153, 192, 191, 34, 59, 119, 76, 43, 207, 66, 164, 103, 232,
+              47, 200, 81, 218, 6, 157, 138, 26, 32, 186, 23, 208, 56, 27, 68,
+              51, 41, 21, 28, 181, 130, 252, 20, 187, 89, 195, 49, 182, 83, 96,
+              207, 22, 158, 235, 33, 138, 203, 55, 5, 66, 127,
+            ],
+          },
+        },
       },
     });
 
     expect(send).toMatchObject({
-      client_state: { chain_id: 'bombay-10' },
-      consensus_state: {
-        timestamp: 1,
-        root: 'root_hash',
-        next_validator_hash: 'next_valoper_hash',
+      signer: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+      client_state: {
+        typeUrl: '/ibc.lightclients.tendermint.v1.ClientState',
+        value: {
+          type: 'Buffer',
+          data: [
+            10, 11, 111, 121, 115, 116, 101, 114, 110, 101, 116, 45, 49, 18, 4,
+            8, 1, 16, 3, 26, 4, 8, 128, 234, 73, 34, 4, 8, 128, 223, 110, 42, 2,
+            8, 20, 58, 6, 8, 1, 16, 244, 175, 102, 66, 25, 10, 9, 8, 1, 24, 1,
+            32, 1, 42, 1, 0, 18, 12, 10, 2, 0, 1, 16, 33, 24, 4, 32, 12, 48, 1,
+            66, 25, 10, 9, 8, 1, 24, 1, 32, 1, 42, 1, 0, 18, 12, 10, 2, 0, 1,
+            16, 32, 24, 1, 32, 1, 48, 1, 74, 7, 117, 112, 103, 114, 97, 100,
+            101, 74, 16, 117, 112, 103, 114, 97, 100, 101, 100, 73, 66, 67, 83,
+            116, 97, 116, 101,
+          ],
+        },
       },
-      signer: 'terra1av6ssz7k4xpc5nsjj2884nugakpp874ae0krx7',
+      consensus_state: {
+        typeUrl: '/ibc.lightclients.tendermint.v1.ConsensusState',
+        value: {
+          type: 'Buffer',
+          data: [
+            10, 12, 8, 230, 219, 229, 137, 6, 16, 209, 204, 237, 191, 2, 18, 34,
+            10, 32, 101, 162, 202, 10, 68, 146, 185, 218, 229, 23, 165, 47, 153,
+            192, 191, 34, 59, 119, 76, 43, 207, 66, 164, 103, 232, 47, 200, 81,
+            218, 6, 157, 138, 26, 32, 186, 23, 208, 56, 27, 68, 51, 41, 21, 28,
+            181, 130, 252, 20, 187, 89, 195, 49, 182, 83, 96, 207, 22, 158, 235,
+            33, 138, 203, 55, 5, 66, 127,
+          ],
+        },
+      },
     });
 
     expect(send.toData()).toMatchObject({});

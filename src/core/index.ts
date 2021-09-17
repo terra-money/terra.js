@@ -66,5 +66,13 @@ export * from './treasury/PolicyConstraints';
 // WASM
 export * from './wasm/msgs';
 
+// IBC
+export * from './ibc/msgs/channel';
+export * from './ibc/msgs/client';
+export * from './ibc/msgs/connection';
+
+// IBC-transfer
+export * from './ibc-transfer/msgs';
+
 // bech32 types
 export * from './bech32';

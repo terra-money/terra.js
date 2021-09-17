@@ -12,4 +12,5 @@ export * from './TreasuryAPI';
 export * from './TxAPI';
 export * from './WasmAPI';
 export * from './MintAPI';
+export * from './IbcAPI';
 export * from './IbcTransferAPI';
