@@ -59,7 +59,7 @@ export class WasmAPI extends BaseAPI {
         params
       )
       .then(({ code_info: d }) => ({
-        code_id: parseInt(d.code_id),
+        code_id: Number.parseInt(d.code_id),
         code_hash: d.code_hash,
         creator: d.creator,
       }));

@@ -149,8 +149,8 @@ export class SimulateResponse {
   public static fromData(data: SimulateResponse.Data): SimulateResponse {
     return new SimulateResponse(
       {
-        gas_wanted: parseInt(data.gas_info.gas_wanted),
-        gas_used: parseInt(data.gas_info.gas_used),
+        gas_wanted: Number.parseInt(data.gas_info.gas_wanted),
+        gas_used: Number.parseInt(data.gas_info.gas_used),
       },
       data.result
     );
@@ -322,9 +322,14 @@ export class TxAPI extends BaseAPI {
 
     const taxAmount = await this.c
       .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
-        tx: tx.toData(),
+        // tx: tx.toData(),
+        tx_bytes: this.encode(tx),
       })
-      .then(d => Coins.fromData(d.tax_amount));
+      .then(d => Coins.fromData(d.tax_amount))
+      .catch(err => {
+        console.error(err);
+        throw err;
+      });
 
     const feeAmount = gasPricesCoins
       ? taxAmount.add(gasPricesCoins.mul(gas).toIntCeilCoins())

@@ -41,7 +41,7 @@ export class Fee extends JSONSerializable<Fee.Amino, Fee.Data, Fee.Proto> {
 
   public static fromData(data: Fee.Data): Fee {
     return new Fee(
-      parseInt(data.gas_limit),
+      Number.parseInt(data.gas_limit),
       Coins.fromData(data.amount),
       data.payer,
       data.granter

@@ -87,7 +87,7 @@ export class TxBody {
     return new TxBody(
       data.messages.map(m => Msg.fromData(m)),
       data.memo,
-      parseInt(data.timeout_height)
+      Number.parseInt(data.timeout_height)
     );
   }
 
@@ -183,7 +183,7 @@ export class SignerInfo {
   public static fromData(data: SignerInfo.Data): SignerInfo {
     return new SignerInfo(
       PublicKey.fromData(data.public_key),
-      parseInt(data.sequence),
+      Number.parseInt(data.sequence),
       ModeInfo.fromData(data.mode_info)
     );
   }
