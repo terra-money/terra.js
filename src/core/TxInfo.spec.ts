@@ -85,6 +85,7 @@ const instantiateContractTxData = {
         },
       ],
       memo: '',
+      timeout_height: '0',
     },
   },
   timestamp: '2020-09-23T13:17:22Z',

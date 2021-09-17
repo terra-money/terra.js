@@ -1,4 +1,5 @@
-[{
+[
+  {
     "type": "core/StdTx",
     "value": {
       "fee": {
@@ -710,7 +711,8 @@
           },
           "signature": "kdWY6xTVziyM9C23+LrO1D0NjxExjieWsFF3OMycPxM0421Zx4Y1oEdM+YV0XK07O4P9dv18p4wRBuuHK2gKng=="
         }
-      ]
+      ],
+      "timeout_height": "0"
     }
   },
   {
@@ -744,7 +746,8 @@
           },
           "signature": "gm09BXqRfXwAQrh9v0cNDADjGxuYESgnYCZQYh7eMKV7741JeAHC7InYMt0yaudPmAqAI6eeY5Ckqan9qZheDQ=="
         }
-      ]
+      ],
+      "timeout_height": "0"
     }
   }
 ]
