@@ -56,7 +56,28 @@ import {
   MsgUpdateClient,
   MsgUpgradeClient,
   MsgSubmitMisbehaviour,
+  IbcClientMsg,
 } from './ibc/msgs/client';
+import {
+  MsgConnectionOpenInit,
+  MsgConnectionOpenTry,
+  MsgConnectionOpenConfirm,
+  MsgConnectionOpenAck,
+  IbcConnectionMsg,
+} from './ibc/msgs/connection';
+import {
+  MsgChannelOpenInit,
+  MsgChannelOpenTry,
+  MsgChannelOpenConfirm,
+  MsgChannelOpenAck,
+  MsgChannelCloseInit,
+  MsgChannelCloseConfirm,
+  MsgRecvPacket,
+  MsgAcknowledgement,
+  MsgTimeout,
+  MsgTimeoutOnClose,
+  IbcChannelMsg,
+} from './ibc/msgs/channel';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export type Msg =
@@ -70,7 +91,10 @@ export type Msg =
   | SlashingMsg
   | StakingMsg
   | WasmMsg
-  | IbcTransferMsg;
+  | IbcTransferMsg
+  | IbcClientMsg
+  | IbcConnectionMsg
+  | IbcChannelMsg;
 
 export namespace Msg {
   export type Amino =
@@ -84,7 +108,10 @@ export namespace Msg {
     | SlashingMsg.Amino
     | StakingMsg.Amino
     | WasmMsg.Amino
-    | IbcTransferMsg.Amino;
+    | IbcTransferMsg.Amino
+    | IbcClientMsg.Amino
+    | IbcConnectionMsg.Amino
+    | IbcChannelMsg.Amino;
 
   export type Data =
     | BankMsg.Data
@@ -97,7 +124,10 @@ export namespace Msg {
     | SlashingMsg.Data
     | StakingMsg.Data
     | WasmMsg.Data
-    | IbcTransferMsg.Data;
+    | IbcTransferMsg.Data
+    | IbcClientMsg.Data
+    | IbcConnectionMsg.Data
+    | IbcChannelMsg.Data;
 
   export type Proto =
     | BankMsg.Proto
@@ -110,7 +140,10 @@ export namespace Msg {
     | SlashingMsg.Proto
     | StakingMsg.Proto
     | WasmMsg.Proto
-    | IbcTransferMsg.Proto;
+    | IbcTransferMsg.Proto
+    | IbcClientMsg.Proto
+    | IbcConnectionMsg.Proto
+    | IbcChannelMsg.Proto;
 
   export function fromAmino(data: Msg.Amino): Msg {
     switch (data.type) {
@@ -203,7 +236,48 @@ export namespace Msg {
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
         return MsgTransfer.fromAmino(data);
-      // no amino codec for ibc::client
+
+      // ibc-client
+      case 'cosmos-sdk/MsgCreateClient':
+        return MsgCreateClient.fromAmino(data);
+      case 'cosmos-sdk/MsgUpdateClient':
+        return MsgUpdateClient.fromAmino(data);
+      case 'cosmos-sdk/MsgUpgradeClient':
+        return MsgUpgradeClient.fromAmino(data);
+      case 'cosmos-sdk/MsgSubmitMisbehaviour':
+        return MsgSubmitMisbehaviour.fromAmino(data);
+
+      // ibc-connection
+      case 'cosmos-sdk/MsgConnectionOpenInit':
+        return MsgConnectionOpenInit.fromAmino(data);
+      case 'cosmos-sdk/MsgConnectionOpenTry':
+        return MsgConnectionOpenTry.fromAmino(data);
+      case 'cosmos-sdk/MsgConnectionOpenConfirm':
+        return MsgConnectionOpenConfirm.fromAmino(data);
+      case 'cosmos-sdk/MsgConnectionOpenAck':
+        return MsgConnectionOpenAck.fromAmino(data);
+
+      // ibc-channel
+      case 'cosmos-sdk/MsgChannelOpenInit':
+        return MsgChannelOpenInit.fromAmino(data);
+      case 'cosmos-sdk/MsgChannelOpenTry':
+        return MsgChannelOpenTry.fromAmino(data);
+      case 'cosmos-sdk/MsgChannelOpenConfirm':
+        return MsgChannelOpenConfirm.fromAmino(data);
+      case 'cosmos-sdk/MsgChannelOpenAck':
+        return MsgChannelOpenAck.fromAmino(data);
+      case 'cosmos-sdk/MsgChannelCloseInit':
+        return MsgChannelCloseInit.fromAmino(data);
+      case 'cosmos-sdk/MsgChannelCloseConfirm':
+        return MsgChannelCloseConfirm.fromAmino(data);
+      case 'cosmos-sdk/MsgRecvPacket':
+        return MsgRecvPacket.fromAmino(data);
+      case 'cosmos-sdk/MsgAcknowledgement':
+        return MsgAcknowledgement.fromAmino(data);
+      case 'cosmos-sdk/MsgTimeout':
+        return MsgTimeout.fromAmino(data);
+      case 'cosmos-sdk/MsgTimeoutOnClose':
+        return MsgTimeoutOnClose.fromAmino(data);
     }
   }
   export function fromData(data: Msg.Data): Msg {
@@ -297,6 +371,48 @@ export namespace Msg {
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':
         return MsgTransfer.fromData(data);
+
+      // ibc-client
+      case '/ibc.core.client.v1.MsgCreateClient':
+        return MsgCreateClient.fromData(data);
+      case '/ibc.core.client.v1.MsgUpdateClient':
+        return MsgUpdateClient.fromData(data);
+      case '/ibc.core.client.v1.MsgUpgradeClient':
+        return MsgUpgradeClient.fromData(data);
+      case '/ibc.core.client.v1.MsgSubmitMisbehaviour':
+        return MsgSubmitMisbehaviour.fromData(data);
+
+      // ibc-connection
+      case '/ibc.core.connection.v1.MsgConnectionOpenInit':
+        return MsgConnectionOpenInit.fromData(data);
+      case '/ibc.core.connection.v1.MsgConnectionOpenTry':
+        return MsgConnectionOpenTry.fromData(data);
+      case '/ibc.core.connection.v1.MsgConnectionOpenConfirm':
+        return MsgConnectionOpenConfirm.fromData(data);
+      case '/ibc.core.connection.v1.MsgConnectionOpenAck':
+        return MsgConnectionOpenAck.fromData(data);
+
+      // ibc-channel
+      case '/ibc.core.channel.v1.MsgChannelOpenInit':
+        return MsgChannelOpenInit.fromData(data);
+      case '/ibc.core.channel.v1.MsgChannelOpenTry':
+        return MsgChannelOpenTry.fromData(data);
+      case '/ibc.core.channel.v1.MsgChannelOpenConfirm':
+        return MsgChannelOpenConfirm.fromData(data);
+      case '/ibc.core.channel.v1.MsgChannelOpenAck':
+        return MsgChannelOpenAck.fromData(data);
+      case '/ibc.core.channel.v1.MsgChannelCloseInit':
+        return MsgChannelCloseInit.fromData(data);
+      case '/ibc.core.channel.v1.MsgChannelCloseConfirm':
+        return MsgChannelCloseConfirm.fromData(data);
+      case '/ibc.core.channel.v1.MsgRecvPacket':
+        return MsgRecvPacket.fromData(data);
+      case '/ibc.core.channel.v1.MsgAcknowledgement':
+        return MsgAcknowledgement.fromData(data);
+      case '/ibc.core.channel.v1.MsgTimeout':
+        return MsgTimeout.fromData(data);
+      case '/ibc.core.channel.v1.MsgTimeoutOnClose':
+        return MsgTimeoutOnClose.fromData(data);
     }
   }
 
@@ -387,9 +503,50 @@ export namespace Msg {
         return MsgClearContractAdmin.unpackAny(proto);
 
       // ibc-transfer
-      case 'cosmos-sdk/MsgTransfer':
+      case '/ibc.applications.transfer.v1.Msg/Transfer':
         return MsgTransfer.unpackAny(proto);
 
+      // ibc-client
+      case '/ibc.core.client.v1.MsgCreateClient':
+        return MsgCreateClient.unpackAny(proto);
+      case '/ibc.core.client.v1.MsgUpdateClient':
+        return MsgUpdateClient.unpackAny(proto);
+      case '/ibc.core.client.v1.MsgUpgradeClient':
+        return MsgUpgradeClient.unpackAny(proto);
+      case '/ibc.core.client.v1.MsgSubmitMisbehaviour':
+        return MsgSubmitMisbehaviour.unpackAny(proto);
+
+      // ibc-connection
+      case '/ibc.core.connection.v1.MsgConnectionOpenInit':
+        return MsgConnectionOpenInit.unpackAny(proto);
+      case '/ibc.core.connection.v1.MsgConnectionOpenTry':
+        return MsgConnectionOpenTry.unpackAny(proto);
+      case '/ibc.core.connection.v1.MsgConnectionOpenConfirm':
+        return MsgConnectionOpenConfirm.unpackAny(proto);
+      case '/ibc.core.connection.v1.MsgConnectionOpenAck':
+        return MsgConnectionOpenAck.unpackAny(proto);
+
+      // ibc-channel
+      case '/ibc.core.channel.v1.MsgChannelOpenInit':
+        return MsgChannelOpenInit.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgChannelOpenTry':
+        return MsgChannelOpenTry.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgChannelOpenConfirm':
+        return MsgChannelOpenConfirm.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgChannelOpenAck':
+        return MsgChannelOpenAck.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgChannelCloseInit':
+        return MsgChannelCloseInit.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgChannelCloseConfirm':
+        return MsgChannelCloseConfirm.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgRecvPacket':
+        return MsgRecvPacket.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgAcknowledgement':
+        return MsgAcknowledgement.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgTimeout':
+        return MsgTimeout.unpackAny(proto);
+      case '/ibc.core.channel.v1.MsgTimeoutOnClose':
+        return MsgTimeoutOnClose.unpackAny(proto);
       default:
         throw Error(`not supported msg ${proto.typeUrl}`);
     }
