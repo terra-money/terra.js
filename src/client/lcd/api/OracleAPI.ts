@@ -87,11 +87,16 @@ export class OracleAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<Coin | undefined> {
     return this.c
-      .get<{ exchange_rate: Coin.Data }>(
+      .get<{ exchange_rate: string }>(
         `/terra/oracle/v1beta1/denoms/${denom}/exchange_rate`,
         params
       )
-      .then(d => Coin.fromData(d.exchange_rate));
+      .then(d =>
+        Coin.fromData({
+          denom,
+          amount: d.exchange_rate,
+        })
+      );
   }
 
   /**
