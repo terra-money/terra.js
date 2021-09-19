@@ -33,7 +33,6 @@ export class MsgUpdateClient extends JSONSerializable<
   }
 
   public static fromData(data: MsgUpdateClient.Data): MsgUpdateClient {
-    console.log(data);
     const { client_id, header, signer } = data;
     return new MsgUpdateClient(client_id, header, signer);
   }
