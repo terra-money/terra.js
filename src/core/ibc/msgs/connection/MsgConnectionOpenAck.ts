@@ -54,18 +54,16 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     data: MsgConnectionOpenAck.Data
   ): MsgConnectionOpenAck {
     const {
-      value: {
-        connection_id,
-        counterparty_connection_id,
-        version,
-        client_state,
-        proof_height,
-        proof_try,
-        proof_client,
-        proof_consensus,
-        consensus_height,
-        signer,
-      },
+      connection_id,
+      counterparty_connection_id,
+      version,
+      client_state,
+      proof_height,
+      proof_try,
+      proof_client,
+      proof_consensus,
+      consensus_height,
+      signer,
     } = data;
     return new MsgConnectionOpenAck(
       connection_id,
@@ -96,18 +94,16 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenAck',
-      value: {
-        connection_id,
-        counterparty_connection_id,
-        version: version.toData(),
-        client_state,
-        proof_height: proof_height.toData(),
-        proof_try,
-        proof_client,
-        proof_consensus,
-        consensus_height: consensus_height.toData(),
-        signer,
-      },
+      connection_id,
+      counterparty_connection_id,
+      version: version.toData(),
+      client_state,
+      proof_height: proof_height.toData(),
+      proof_try,
+      proof_client,
+      proof_consensus,
+      consensus_height: consensus_height.toData(),
+      signer,
     };
   }
 
@@ -117,13 +113,13 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     return new MsgConnectionOpenAck(
       proto.connectionId,
       proto.counterpartyConnectionId,
-      Version.fromProto(proto.version),
+      Version.fromProto(proto.version!),
       proto.clientState,
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       Buffer.from(proto.proofTry).toString('base64'),
       Buffer.from(proto.proofClient).toString('base64'),
       Buffer.from(proto.proofConsensus).toString('base64'),
-      Height.fromProto(proto.consensusHeight),
+      Height.fromProto(proto.consensusHeight!),
       proto.signer
     );
   }
@@ -187,18 +183,16 @@ export namespace MsgConnectionOpenAck {
   }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenAck';
-    value: {
-      connection_id: string;
-      counterparty_connection_id: string;
-      version: Version.Data;
-      client_state: Any;
-      proof_height: Height.Data;
-      proof_try: string;
-      proof_client: string;
-      proof_consensus: string;
-      consensus_height: Height.Data;
-      signer: AccAddress;
-    };
+    connection_id: string;
+    counterparty_connection_id: string;
+    version: Version.Data;
+    client_state: Any;
+    proof_height: Height.Data;
+    proof_try: string;
+    proof_client: string;
+    proof_consensus: string;
+    consensus_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenAck_pb;
 }

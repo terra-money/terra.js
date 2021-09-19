@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Height } from '../../../ibc-transfer/Height';
+import { Height } from '../client/Height';
 import { MsgChannelOpenAck as MsgChannelOpenAck_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**
@@ -44,15 +44,13 @@ export class MsgChannelOpenAck extends JSONSerializable<
 
   public static fromData(data: MsgChannelOpenAck.Data): MsgChannelOpenAck {
     const {
-      value: {
-        port_id,
-        channel_id,
-        counterparty_channel_id,
-        counterparty_version,
-        proof_try,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      counterparty_channel_id,
+      counterparty_version,
+      proof_try,
+      proof_height,
+      signer,
     } = data;
     return new MsgChannelOpenAck(
       port_id,
@@ -77,15 +75,13 @@ export class MsgChannelOpenAck extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenAck',
-      value: {
-        port_id,
-        channel_id,
-        counterparty_channel_id,
-        counterparty_version,
-        proof_try,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      counterparty_channel_id,
+      counterparty_version,
+      proof_try,
+      proof_height,
+      signer,
     };
   }
 
@@ -96,7 +92,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
       proto.counterpartyChannelId,
       proto.counterpartyVersion,
       Buffer.from(proto.proofTry).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -151,15 +147,13 @@ export namespace MsgChannelOpenAck {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenAck';
-    value: {
-      port_id: string;
-      channel_id: string;
-      counterparty_channel_id: string;
-      counterparty_version: string;
-      proof_try: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    counterparty_channel_id: string;
+    counterparty_version: string;
+    proof_try: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenAck_pb;
 }

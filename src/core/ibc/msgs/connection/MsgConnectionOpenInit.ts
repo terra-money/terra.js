@@ -14,6 +14,11 @@ export class MsgConnectionOpenInit extends JSONSerializable<
   MsgConnectionOpenInit.Data,
   MsgConnectionOpenInit.Proto
 > {
+  public client_id: string;
+  public counterparty?: Counterparty;
+  public version?: Version;
+  public delay_period: number;
+  public signer: AccAddress;
   /**
    * @param client_id identifier of the port to use
    * @param counterparty
@@ -22,13 +27,18 @@ export class MsgConnectionOpenInit extends JSONSerializable<
    * @param signer signer address
    */
   constructor(
-    public client_id: string,
-    public counterparty: Counterparty,
-    public version: Version,
-    public delay_period: number,
-    public signer: AccAddress
+    client_id: string,
+    delay_period: number,
+    signer: AccAddress,
+    counterparty?: Counterparty,
+    version?: Version
   ) {
     super();
+    this.client_id = client_id;
+    this.delay_period = delay_period;
+    this.signer = signer;
+    this.counterparty = counterparty;
+    this.version = version;
   }
 
   public static fromAmino(_: any): MsgConnectionOpenInit {
@@ -43,15 +53,13 @@ export class MsgConnectionOpenInit extends JSONSerializable<
   public static fromData(
     data: MsgConnectionOpenInit.Data
   ): MsgConnectionOpenInit {
-    const {
-      value: { client_id, counterparty, version, delay_period, signer },
-    } = data;
+    const { client_id, counterparty, version, delay_period, signer } = data;
     return new MsgConnectionOpenInit(
       client_id,
-      Counterparty.fromData(counterparty),
-      Version.fromData(version),
       delay_period,
-      signer
+      signer,
+      counterparty ? Counterparty.fromData(counterparty) : undefined,
+      version ? Version.fromData(version) : undefined
     );
   }
 
@@ -59,13 +67,11 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     const { client_id, counterparty, version, delay_period, signer } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit',
-      value: {
-        client_id,
-        counterparty,
-        version,
-        delay_period,
-        signer,
-      },
+      client_id,
+      delay_period,
+      signer,
+      counterparty,
+      version,
     };
   }
 
@@ -74,10 +80,12 @@ export class MsgConnectionOpenInit extends JSONSerializable<
   ): MsgConnectionOpenInit {
     return new MsgConnectionOpenInit(
       proto.clientId,
-      Counterparty.fromProto(proto.counterparty),
-      Version.fromProto(proto.version),
       proto.delayPeriod.toNumber(),
-      proto.signer
+      proto.signer,
+      proto.counterparty
+        ? Counterparty.fromProto(proto.counterparty)
+        : undefined,
+      proto.version ? Version.fromProto(proto.version) : undefined
     );
   }
 
@@ -85,10 +93,10 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     const { client_id, counterparty, version, delay_period, signer } = this;
     return MsgConnectionOpenInit_pb.fromPartial({
       clientId: client_id,
-      counterparty: counterparty.toProto(),
-      version: version.toProto(),
       delayPeriod: Long.fromNumber(delay_period),
       signer,
+      counterparty: counterparty ? counterparty.toProto() : undefined,
+      version: version ? version.toProto() : undefined,
     });
   }
 
@@ -111,21 +119,19 @@ export namespace MsgConnectionOpenInit {
     type: 'cosmos-sdk/MsgConnectionOpenInit';
     value: {
       client_id: string;
-      counterparty: Counterparty.Amino;
-      version: Version.Amino;
+      counterparty?: Counterparty.Amino;
+      version?: Version.Amino;
       delay_period: number;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit';
-    value: {
-      client_id: string;
-      counterparty: Counterparty.Data;
-      version: Version.Data;
-      delay_period: number;
-      signer: AccAddress;
-    };
+    client_id: string;
+    counterparty?: Counterparty.Data;
+    version?: Version.Data;
+    delay_period: number;
+    signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenInit_pb;
 }

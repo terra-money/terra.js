@@ -35,9 +35,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
   }
 
   public static fromData(data: MsgChannelOpenInit.Data): MsgChannelOpenInit {
-    const {
-      value: { port_id, channel, signer },
-    } = data;
+    const { port_id, channel, signer } = data;
     return new MsgChannelOpenInit(port_id, Channel.fromData(channel), signer);
   }
 
@@ -45,18 +43,16 @@ export class MsgChannelOpenInit extends JSONSerializable<
     const { port_id, channel, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenInit',
-      value: {
-        port_id,
-        channel,
-        signer,
-      },
+      port_id,
+      channel,
+      signer,
     };
   }
 
   public static fromProto(proto: MsgChannelOpenInit.Proto): MsgChannelOpenInit {
     return new MsgChannelOpenInit(
       proto.portId,
-      Channel.fromProto(proto.channel),
+      Channel.fromProto(proto.channel!),
       proto.signer
     );
   }
@@ -95,11 +91,9 @@ export namespace MsgChannelOpenInit {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenInit';
-    value: {
-      port_id: string;
-      channel: Channel.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel: Channel.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenInit_pb;
 }

@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Height } from '../../../ibc-transfer/Height';
+import { Height } from '../client/Height';
 import { MsgChannelCloseConfirm as MsgChannelCloseConfirm_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**
@@ -41,9 +41,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
   public static fromData(
     data: MsgChannelCloseConfirm.Data
   ): MsgChannelCloseConfirm {
-    const {
-      value: { port_id, channel_id, proof_init, proof_height, signer },
-    } = data;
+    const { port_id, channel_id, proof_init, proof_height, signer } = data;
     return new MsgChannelCloseConfirm(
       port_id,
       channel_id,
@@ -57,13 +55,11 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     const { port_id, channel_id, proof_init, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm',
-      value: {
-        port_id,
-        channel_id,
-        proof_init,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      proof_init,
+      proof_height,
+      signer,
     };
   }
 
@@ -74,7 +70,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       proto.portId,
       proto.channelId,
       Buffer.from(proto.proofInit).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -117,13 +113,11 @@ export namespace MsgChannelCloseConfirm {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_init: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    proof_init: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelCloseConfirm_pb;
 }

@@ -42,13 +42,11 @@ export class MsgTimeout extends JSONSerializable<
 
   public static fromData(data: MsgTimeout.Data): MsgTimeout {
     const {
-      value: {
-        packet,
-        proof_unreceived,
-        proof_height,
-        next_sequence_recv,
-        signer,
-      },
+      packet,
+      proof_unreceived,
+      proof_height,
+      next_sequence_recv,
+      signer,
     } = data;
     return new MsgTimeout(
       Packet.fromData(packet),
@@ -69,21 +67,19 @@ export class MsgTimeout extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgTimeout',
-      value: {
-        packet: packet.toData(),
-        proof_unreceived,
-        proof_height: proof_height.toData(),
-        next_sequence_recv,
-        signer,
-      },
+      packet: packet.toData(),
+      proof_unreceived,
+      proof_height: proof_height.toData(),
+      next_sequence_recv,
+      signer,
     };
   }
 
   public static fromProto(proto: MsgTimeout.Proto): MsgTimeout {
     return new MsgTimeout(
-      Packet.fromProto(proto.packet),
+      Packet.fromProto(proto.packet!),
       Buffer.from(proto.proofUnreceived).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.nextSequenceRecv.toNumber(),
       proto.signer
     );
@@ -131,13 +127,11 @@ export namespace MsgTimeout {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeout';
-    value: {
-      packet: Packet.Data;
-      proof_unreceived: string;
-      proof_height: Height.Data;
-      next_sequence_recv: number;
-      signer: AccAddress;
-    };
+    packet: Packet.Data;
+    proof_unreceived: string;
+    proof_height: Height.Data;
+    next_sequence_recv: number;
+    signer: AccAddress;
   }
   export type Proto = MsgTimeout_pb;
 }

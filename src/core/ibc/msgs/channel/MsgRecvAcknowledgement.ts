@@ -40,9 +40,7 @@ export class MsgAcknowledgement extends JSONSerializable<
   }
 
   public static fromData(data: MsgAcknowledgement.Data): MsgAcknowledgement {
-    const {
-      value: { packet, acknowledgement, proof_acked, proof_height, signer },
-    } = data;
+    const { packet, acknowledgement, proof_acked, proof_height, signer } = data;
     return new MsgAcknowledgement(
       Packet.fromData(packet),
       proof_acked,
@@ -56,22 +54,20 @@ export class MsgAcknowledgement extends JSONSerializable<
     const { packet, acknowledgement, proof_acked, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgAcknowledgement',
-      value: {
-        packet: packet.toData(),
-        acknowledgement,
-        proof_acked,
-        proof_height: proof_height.toData(),
-        signer,
-      },
+      packet: packet.toData(),
+      acknowledgement,
+      proof_acked,
+      proof_height: proof_height.toData(),
+      signer,
     };
   }
 
   public static fromProto(proto: MsgAcknowledgement.Proto): MsgAcknowledgement {
     return new MsgAcknowledgement(
-      Packet.fromProto(proto.packet),
+      Packet.fromProto(proto.packet!),
       Buffer.from(proto.acknowledgement).toString('base64'),
       Buffer.from(proto.proofAcked).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -114,13 +110,11 @@ export namespace MsgAcknowledgement {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgAcknowledgement';
-    value: {
-      packet: Packet.Data;
-      acknowledgement: string;
-      proof_acked: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    packet: Packet.Data;
+    acknowledgement: string;
+    proof_acked: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgAcknowledgement_pb;
 }

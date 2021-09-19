@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Channel } from '../../Channel';
-import { Height } from '../../../ibc-transfer/Height';
+import { Channel } from './Channel';
+import { Height } from '../client/Height';
 import { MsgChannelOpenTry as MsgChannelOpenTry_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**
@@ -45,15 +45,13 @@ export class MsgChannelOpenTry extends JSONSerializable<
 
   public static fromData(data: MsgChannelOpenTry.Data): MsgChannelOpenTry {
     const {
-      value: {
-        port_id,
-        previous_channel_id,
-        channel,
-        counterparty_version,
-        proof_init,
-        proof_height,
-        signer,
-      },
+      port_id,
+      previous_channel_id,
+      channel,
+      counterparty_version,
+      proof_init,
+      proof_height,
+      signer,
     } = data;
     return new MsgChannelOpenTry(
       port_id,
@@ -78,15 +76,13 @@ export class MsgChannelOpenTry extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenTry',
-      value: {
-        port_id,
-        previous_channel_id,
-        channel,
-        counterparty_version,
-        proof_init,
-        proof_height,
-        signer,
-      },
+      port_id,
+      previous_channel_id,
+      channel,
+      counterparty_version,
+      proof_init,
+      proof_height,
+      signer,
     };
   }
 
@@ -94,10 +90,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
     return new MsgChannelOpenTry(
       proto.portId,
       proto.previousChannelId,
-      Channel.fromProto(proto.channel),
+      Channel.fromProto(proto.channel!),
       proto.counterpartyVersion,
       Buffer.from(proto.proofInit).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -152,15 +148,13 @@ export namespace MsgChannelOpenTry {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenTry';
-    value: {
-      port_id: string;
-      previous_channel_id: string;
-      channel: Channel.Data;
-      counterparty_version: string;
-      proof_init: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    previous_channel_id: string;
+    channel: Channel.Data;
+    counterparty_version: string;
+    proof_init: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenTry_pb;
 }

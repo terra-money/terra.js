@@ -44,14 +44,12 @@ export class MsgTimeoutOnClose extends JSONSerializable<
 
   public static fromData(data: MsgTimeoutOnClose.Data): MsgTimeoutOnClose {
     const {
-      value: {
-        packet,
-        proof_unreceived,
-        proof_close,
-        proof_height,
-        next_sequence_recv,
-        signer,
-      },
+      packet,
+      proof_unreceived,
+      proof_close,
+      proof_height,
+      next_sequence_recv,
+      signer,
     } = data;
     return new MsgTimeoutOnClose(
       Packet.fromData(packet),
@@ -74,23 +72,21 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgTimeoutOnClose',
-      value: {
-        packet: packet.toData(),
-        proof_unreceived,
-        proof_close,
-        proof_height: proof_height.toData(),
-        next_sequence_recv,
-        signer,
-      },
+      packet: packet.toData(),
+      proof_unreceived,
+      proof_close,
+      proof_height: proof_height.toData(),
+      next_sequence_recv,
+      signer,
     };
   }
 
   public static fromProto(proto: MsgTimeoutOnClose.Proto): MsgTimeoutOnClose {
     return new MsgTimeoutOnClose(
-      Packet.fromProto(proto.packet),
+      Packet.fromProto(proto.packet!),
       Buffer.from(proto.proofUnreceived).toString('base64'),
       Buffer.from(proto.proofClose).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.nextSequenceRecv.toNumber(),
       proto.signer
     );
@@ -143,14 +139,12 @@ export namespace MsgTimeoutOnClose {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeoutOnClose';
-    value: {
-      packet: Packet.Data;
-      proof_unreceived: string;
-      proof_close: string;
-      proof_height: Height.Data;
-      next_sequence_recv: number;
-      signer: AccAddress;
-    };
+    packet: Packet.Data;
+    proof_unreceived: string;
+    proof_close: string;
+    proof_height: Height.Data;
+    next_sequence_recv: number;
+    signer: AccAddress;
   }
   export type Proto = MsgTimeoutOnClose_pb;
 }

@@ -40,9 +40,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
   public static fromData(
     data: MsgConnectionOpenConfirm.Data
   ): MsgConnectionOpenConfirm {
-    const {
-      value: { connection_id, proof_ack, proof_height, signer },
-    } = data;
+    const { connection_id, proof_ack, proof_height, signer } = data;
     return new MsgConnectionOpenConfirm(
       connection_id,
       proof_ack,
@@ -55,12 +53,10 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     const { connection_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
-      value: {
-        connection_id,
-        proof_ack,
-        proof_height: proof_height.toData(),
-        signer,
-      },
+      connection_id,
+      proof_ack,
+      proof_height: proof_height.toData(),
+      signer,
     };
   }
 
@@ -70,7 +66,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return new MsgConnectionOpenConfirm(
       proto.connectionId,
       Buffer.from(proto.proofAck).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -111,12 +107,10 @@ export namespace MsgConnectionOpenConfirm {
   }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm';
-    value: {
-      connection_id: string;
-      proof_ack: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    connection_id: string;
+    proof_ack: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenConfirm_pb;
 }

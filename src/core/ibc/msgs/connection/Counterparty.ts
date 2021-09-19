@@ -16,7 +16,7 @@ export class Counterparty extends JSONSerializable<
   constructor(
     public client_id: string,
     public connection_id: string,
-    public prefix: MerklePrefix
+    public prefix?: MerklePrefix
   ) {
     super();
   }
@@ -26,7 +26,7 @@ export class Counterparty extends JSONSerializable<
     return new Counterparty(
       client_id,
       connection_id,
-      MerklePrefix.fromAmino(prefix)
+      prefix ? MerklePrefix.fromAmino(prefix) : undefined
     );
   }
 
@@ -45,7 +45,7 @@ export class Counterparty extends JSONSerializable<
     return new Counterparty(
       client_id,
       connection_id,
-      MerklePrefix.fromData(prefix)
+      prefix ? MerklePrefix.fromData(prefix) : undefined
     );
   }
 
@@ -63,7 +63,7 @@ export class Counterparty extends JSONSerializable<
     return new Counterparty(
       proto.clientId,
       proto.connectionId,
-      MerklePrefix.fromProto(proto.prefix)
+      proto.prefix ? MerklePrefix.fromProto(proto.prefix) : undefined
     );
   }
 
@@ -72,7 +72,7 @@ export class Counterparty extends JSONSerializable<
     return Counterparty_pb.fromPartial({
       clientId: client_id,
       connectionId: connection_id,
-      prefix: prefix.toProto(),
+      prefix: prefix ? prefix.toProto() : undefined,
     });
   }
 }
@@ -81,13 +81,13 @@ export namespace Counterparty {
   export interface Amino {
     client_id: string;
     connection_id: string;
-    prefix: MerklePrefix.Amino;
+    prefix?: MerklePrefix.Amino;
   }
 
   export interface Data {
     client_id: string;
     connection_id: string;
-    prefix: MerklePrefix.Data;
+    prefix?: MerklePrefix.Data;
   }
 
   export type Proto = Counterparty_pb;

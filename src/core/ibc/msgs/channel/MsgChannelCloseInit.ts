@@ -34,9 +34,7 @@ export class MsgChannelCloseInit extends JSONSerializable<
   }
 
   public static fromData(data: MsgChannelCloseInit.Data): MsgChannelCloseInit {
-    const {
-      value: { port_id, channel_id, signer },
-    } = data;
+    const { port_id, channel_id, signer } = data;
     return new MsgChannelCloseInit(port_id, channel_id, signer);
   }
 
@@ -44,11 +42,9 @@ export class MsgChannelCloseInit extends JSONSerializable<
     const { port_id, channel_id, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelCloseInit',
-      value: {
-        port_id,
-        channel_id,
-        signer,
-      },
+      port_id,
+      channel_id,
+      signer,
     };
   }
 
@@ -92,11 +88,9 @@ export namespace MsgChannelCloseInit {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelCloseInit';
-    value: {
-      port_id: string;
-      channel_id: string;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelCloseInit_pb;
 }

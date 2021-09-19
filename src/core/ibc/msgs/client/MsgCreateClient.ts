@@ -35,9 +35,7 @@ export class MsgCreateClient extends JSONSerializable<
   }
 
   public static fromData(data: MsgCreateClient.Data): MsgCreateClient {
-    const {
-      value: { client_state, consensus_state, signer },
-    } = data;
+    const { client_state, consensus_state, signer } = data;
     return new MsgCreateClient(client_state, consensus_state, signer);
   }
 
@@ -45,11 +43,9 @@ export class MsgCreateClient extends JSONSerializable<
     const { client_state, consensus_state, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgCreateClient',
-      value: {
-        client_state,
-        consensus_state,
-        signer,
-      },
+      client_state,
+      consensus_state,
+      signer,
     };
   }
 
@@ -93,11 +89,9 @@ export namespace MsgCreateClient {
   }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgCreateClient';
-    value: {
-      client_state?: any;
-      consensus_state?: any;
-      signer: AccAddress;
-    };
+    client_state?: any;
+    consensus_state?: any;
+    signer: AccAddress;
   }
   export type Proto = MsgCreateClient_pb;
 }

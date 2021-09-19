@@ -59,20 +59,18 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     data: MsgConnectionOpenTry.Data
   ): MsgConnectionOpenTry {
     const {
-      value: {
-        client_id,
-        previous_connection_id,
-        client_state,
-        counterparty,
-        delay_period,
-        counterpary_versions,
-        proof_height,
-        proof_init,
-        proof_client,
-        proof_consensus,
-        consensus_height,
-        signer,
-      },
+      client_id,
+      previous_connection_id,
+      client_state,
+      counterparty,
+      delay_period,
+      counterpary_versions,
+      proof_height,
+      proof_init,
+      proof_client,
+      proof_consensus,
+      consensus_height,
+      signer,
     } = data;
     return new MsgConnectionOpenTry(
       client_id,
@@ -107,20 +105,18 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenTry',
-      value: {
-        client_id,
-        previous_connection_id,
-        client_state,
-        counterparty,
-        delay_period,
-        counterpary_versions,
-        proof_height,
-        proof_init,
-        proof_client,
-        proof_consensus,
-        consensus_height,
-        signer,
-      },
+      client_id,
+      previous_connection_id,
+      client_state,
+      counterparty,
+      delay_period,
+      counterpary_versions,
+      proof_height,
+      proof_init,
+      proof_client,
+      proof_consensus,
+      consensus_height,
+      signer,
     };
   }
 
@@ -131,14 +127,14 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       proto.clientId,
       proto.previousConnectionId,
       proto.clientState,
-      Counterparty.fromProto(proto.counterparty),
+      Counterparty.fromProto(proto.counterparty!),
       proto.delayPeriod.toNumber(),
       proto.counterpartyVersions.map(cv => Version.fromProto(cv)),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       Buffer.from(proto.proofInit).toString('base64'),
       Buffer.from(proto.proofClient).toString('base64'),
       Buffer.from(proto.proofConsensus).toString('base64'),
-      Height.fromProto(proto.consensusHeight),
+      Height.fromProto(proto.consensusHeight!),
       proto.signer
     );
   }
@@ -208,20 +204,18 @@ export namespace MsgConnectionOpenTry {
   }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenTry';
-    value: {
-      client_id: string;
-      previous_connection_id: string;
-      client_state: Any;
-      counterparty: Counterparty;
-      delay_period: number;
-      counterpary_versions: Version.Data[];
-      proof_height: Height.Data;
-      proof_init: string;
-      proof_client: string;
-      proof_consensus: string;
-      consensus_height: Height.Data;
-      signer: AccAddress;
-    };
+    client_id: string;
+    previous_connection_id: string;
+    client_state: Any;
+    counterparty: Counterparty;
+    delay_period: number;
+    counterpary_versions: Version.Data[];
+    proof_height: Height.Data;
+    proof_init: string;
+    proof_client: string;
+    proof_consensus: string;
+    consensus_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenTry_pb;
 }

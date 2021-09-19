@@ -40,14 +40,12 @@ export class MsgUpgradeClient extends JSONSerializable<
 
   public static fromData(data: MsgUpgradeClient.Data): MsgUpgradeClient {
     const {
-      value: {
-        client_id,
-        client_state,
-        consensus_state,
-        proof_upgrade_client,
-        proof_upgrade_consensus_state,
-        signer,
-      },
+      client_id,
+      client_state,
+      consensus_state,
+      proof_upgrade_client,
+      proof_upgrade_consensus_state,
+      signer,
     } = data;
     return new MsgUpgradeClient(
       client_id,
@@ -70,14 +68,12 @@ export class MsgUpgradeClient extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgUpgradeClient',
-      value: {
-        client_id,
-        client_state,
-        consensus_state,
-        proof_upgrade_client,
-        proof_upgrade_consensus_state,
-        signer,
-      },
+      client_id,
+      client_state,
+      consensus_state,
+      proof_upgrade_client,
+      proof_upgrade_consensus_state,
+      signer,
     };
   }
 
@@ -140,14 +136,12 @@ export namespace MsgUpgradeClient {
   }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgUpgradeClient';
-    value: {
-      client_id: string;
-      client_state: any;
-      consensus_state: any;
-      proof_upgrade_client: string;
-      proof_upgrade_consensus_state: string;
-      signer: AccAddress;
-    };
+    client_id: string;
+    client_state: any;
+    consensus_state: any;
+    proof_upgrade_client: string;
+    proof_upgrade_consensus_state: string;
+    signer: AccAddress;
   }
   export type Proto = MsgUpgradeClient_pb;
 }

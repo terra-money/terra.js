@@ -41,9 +41,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
   public static fromData(
     data: MsgChannelOpenConfirm.Data
   ): MsgChannelOpenConfirm {
-    const {
-      value: { port_id, channel_id, proof_ack, proof_height, signer },
-    } = data;
+    const { port_id, channel_id, proof_ack, proof_height, signer } = data;
     return new MsgChannelOpenConfirm(
       port_id,
       channel_id,
@@ -57,13 +55,11 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     const { port_id, channel_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm',
-      value: {
-        port_id,
-        channel_id,
-        proof_ack,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      proof_ack,
+      proof_height,
+      signer,
     };
   }
 
@@ -74,7 +70,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
       proto.portId,
       proto.channelId,
       Buffer.from(proto.proofAck).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      Height.fromProto(proto.proofHeight!),
       proto.signer
     );
   }
@@ -117,13 +113,11 @@ export namespace MsgChannelOpenConfirm {
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_ack: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    proof_ack: string;
+    proof_height: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenConfirm_pb;
 }
