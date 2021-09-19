@@ -68,7 +68,7 @@ export class MsgCreateClient extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgCreateClient',
+      typeUrl: '/ibc.core.client.v1.MsgCreateClient',
       value: MsgCreateClient_pb.encode(this.toProto()).finish(),
     });
   }

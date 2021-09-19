@@ -172,7 +172,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgConnectionOpenTry',
+      typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenTry',
       value: MsgConnectionOpenTry_pb.encode(this.toProto()).finish(),
     });
   }

@@ -113,7 +113,7 @@ export class MsgTimeoutOnClose extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgTimeoutOnClose',
+      typeUrl: '/ibc.core.channel.v1.MsgTimeoutOnClose',
       value: MsgTimeoutOnClose_pb.encode(this.toProto()).finish(),
     });
   }

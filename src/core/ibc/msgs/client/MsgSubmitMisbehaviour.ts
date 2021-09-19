@@ -70,7 +70,7 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgSubmitMisbehaviour',
+      typeUrl: '/ibc.core.client.v1.MsgSubmitMisbehaviour',
       value: MsgSubmitMisbehaviour_pb.encode(this.toProto()).finish(),
     });
   }

@@ -88,7 +88,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelCloseConfirm',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelCloseConfirm',
       value: MsgChannelCloseConfirm_pb.encode(this.toProto()).finish(),
     });
   }

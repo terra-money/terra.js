@@ -112,7 +112,7 @@ export class MsgUpgradeClient extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgUpgradeClient',
+      typeUrl: '/ibc.core.client.v1.MsgUpgradeClient',
       value: MsgUpgradeClient_pb.encode(this.toProto()).finish(),
     });
   }

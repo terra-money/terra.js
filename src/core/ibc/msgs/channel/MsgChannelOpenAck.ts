@@ -120,7 +120,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenAck',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenAck',
       value: MsgChannelOpenAck_pb.encode(this.toProto()).finish(),
     });
   }

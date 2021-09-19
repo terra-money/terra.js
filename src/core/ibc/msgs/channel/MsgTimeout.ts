@@ -104,7 +104,7 @@ export class MsgTimeout extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgTimeout',
+      typeUrl: '/ibc.core.channel.v1.MsgTimeout',
       value: MsgTimeout_pb.encode(this.toProto()).finish(),
     });
   }

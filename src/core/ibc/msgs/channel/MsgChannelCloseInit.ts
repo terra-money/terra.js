@@ -65,7 +65,7 @@ export class MsgChannelCloseInit extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelCloseInit',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelCloseInit',
       value: MsgChannelCloseInit_pb.encode(this.toProto()).finish(),
     });
   }

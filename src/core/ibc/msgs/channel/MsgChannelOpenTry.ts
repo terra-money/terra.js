@@ -121,7 +121,7 @@ export class MsgChannelOpenTry extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenTry',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenTry',
       value: MsgChannelOpenTry_pb.encode(this.toProto()).finish(),
     });
   }

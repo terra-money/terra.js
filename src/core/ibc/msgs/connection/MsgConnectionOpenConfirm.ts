@@ -83,7 +83,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgConnectionOpenConfirm',
+      typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
       value: MsgConnectionOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }

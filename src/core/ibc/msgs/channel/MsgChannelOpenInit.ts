@@ -68,7 +68,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenInit',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenInit',
       value: MsgChannelOpenInit_pb.encode(this.toProto()).finish(),
     });
   }

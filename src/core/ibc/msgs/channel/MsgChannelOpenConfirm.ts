@@ -88,7 +88,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenConfirm',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenConfirm',
       value: MsgChannelOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }

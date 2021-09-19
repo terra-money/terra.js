@@ -153,7 +153,7 @@ export class MsgConnectionOpenAck extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgConnectionOpenAck',
+      typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenAck',
       value: MsgConnectionOpenAck_pb.encode(this.toProto()).finish(),
     });
   }

@@ -85,7 +85,7 @@ export class MsgAcknowledgement extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgAcknowledgement',
+      typeUrl: '/ibc.core.channel.v1.MsgAcknowledgement',
       value: MsgAcknowledgement_pb.encode(this.toProto()).finish(),
     });
   }

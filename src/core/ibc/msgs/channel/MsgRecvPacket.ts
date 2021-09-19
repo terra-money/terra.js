@@ -79,7 +79,7 @@ export class MsgRecvPacket extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgRecvPacket',
+      typeUrl: '/ibc.core.channel.v1.MsgRecvPacket',
       value: MsgRecvPacket_pb.encode(this.toProto()).finish(),
     });
   }
