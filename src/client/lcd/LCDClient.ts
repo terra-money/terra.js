@@ -1,7 +1,7 @@
 import { APIRequester } from './APIRequester';
 import {
   AuthAPI,
-  IbcTransferAPI,
+  BankAPI,
   DistributionAPI,
   GovAPI,
   MarketAPI,
@@ -14,6 +14,7 @@ import {
   TreasuryAPI,
   TxAPI,
   WasmAPI,
+  IbcTransferAPI,
 } from './api';
 import { LCDUtils } from './LCDUtils';
 import { Wallet } from './Wallet';
@@ -83,7 +84,7 @@ export class LCDClient {
 
   // API access
   public auth: AuthAPI;
-  public bank: IbcTransferAPI;
+  public bank: BankAPI;
   public distribution: DistributionAPI;
   public gov: GovAPI;
   public market: MarketAPI;
@@ -96,6 +97,7 @@ export class LCDClient {
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
   public tx: TxAPI;
+  public ibcTransfer: IbcTransferAPI;
   public utils: LCDUtils;
 
   /**
@@ -116,7 +118,7 @@ export class LCDClient {
 
     // instantiate APIs
     this.auth = new AuthAPI(this.apiRequester);
-    this.bank = new IbcTransferAPI(this.apiRequester);
+    this.bank = new BankAPI(this.apiRequester);
     this.distribution = new DistributionAPI(this.apiRequester);
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);
@@ -128,6 +130,7 @@ export class LCDClient {
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);
+    this.ibcTransfer = new IbcTransferAPI(this.apiRequester);
     this.tx = new TxAPI(this);
 
     this.utils = new LCDUtils(this);
