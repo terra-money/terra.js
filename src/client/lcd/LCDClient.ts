@@ -14,6 +14,7 @@ import {
   TreasuryAPI,
   TxAPI,
   WasmAPI,
+  IbcTransferAPI,
 } from './api';
 import { LCDUtils } from './LCDUtils';
 import { Wallet } from './Wallet';
@@ -96,6 +97,7 @@ export class LCDClient {
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
   public tx: TxAPI;
+  public ibcTransfer: IbcTransferAPI;
   public utils: LCDUtils;
 
   /**
@@ -128,6 +130,7 @@ export class LCDClient {
     this.tendermint = new TendermintAPI(this.apiRequester);
     this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);
+    this.ibcTransfer = new IbcTransferAPI(this.apiRequester);
     this.tx = new TxAPI(this);
 
     this.utils = new LCDUtils(this);
