@@ -3,7 +3,7 @@ import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
-import { SignDoc } from 'core';
+import { SignDoc } from '../core/SignDoc';
 import { SignatureV2 } from '../core/SignatureV2';
 
 interface CLIKeyParams {
@@ -37,7 +37,7 @@ export class CLIKey extends Key {
   }
 
   private generateCommand(args: string) {
-    return `${this.params.cliPath} ${args} -o json ${
+    return `${this.params.cliPath} ${args} --output json ${
       this.params.home ? `--home ${this.params.home}` : ''
     }`;
   }
@@ -110,10 +110,29 @@ export class CLIKey extends Key {
       this.generateCommand(
         `tx sign ${tmpobj.name} --yes --signature-only --from ${this.params.keyName} --offline ` +
           `--chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ` +
-          `${this.params.multisig ? `--multisig ${this.params.multisig}` : ''}`
+          `${
+            this.params.multisig ? `--multisig ${this.params.multisig}` : ''
+          } --sign-mode direct`
       )
     ).toString();
     tmpobj.removeCallback();
-    return SignatureV2.fromData(JSON.parse(result));
+    return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
+  }
+
+  public async createSignatureAmino(tx: SignDoc): Promise<SignatureV2> {
+    const tmpobj = fileSync({ postfix: '.json' });
+    writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
+
+    const result = execSync(
+      this.generateCommand(
+        `tx sign ${tmpobj.name} --yes --signature-only --from ${this.params.keyName} --offline ` +
+          `--chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ` +
+          `${
+            this.params.multisig ? `--multisig ${this.params.multisig}` : ''
+          } --sign-mode amino-json`
+      )
+    ).toString();
+    tmpobj.removeCallback();
+    return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
   }
 }

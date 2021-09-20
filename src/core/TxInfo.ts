@@ -52,12 +52,12 @@ export class TxInfo {
 
   public static fromData(data: TxInfo.Data): TxInfo {
     return new TxInfo(
-      parseInt(data.height),
+      Number.parseInt(data.height),
       data.txhash,
       data.raw_log,
       data.logs.map(log => TxLog.fromData(log)),
-      parseInt(data.gas_wanted),
-      parseInt(data.gas_used),
+      Number.parseInt(data.gas_wanted),
+      Number.parseInt(data.gas_used),
       Tx.fromData(data.tx),
       data.timestamp,
       data.code,

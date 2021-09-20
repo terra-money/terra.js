@@ -68,7 +68,7 @@ export function isTxError<
   B extends Block | Sync,
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
-  return (x as T & TxError).code !== undefined;
+  return (x as T & TxError).code !== undefined && (x as T & TxError).code !== 0;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -149,8 +149,8 @@ export class SimulateResponse {
   public static fromData(data: SimulateResponse.Data): SimulateResponse {
     return new SimulateResponse(
       {
-        gas_wanted: parseInt(data.gas_info.gas_wanted),
-        gas_used: parseInt(data.gas_info.gas_used),
+        gas_wanted: Number.parseInt(data.gas_info.gas_wanted),
+        gas_used: Number.parseInt(data.gas_info.gas_used),
       },
       data.result
     );
@@ -322,12 +322,17 @@ export class TxAPI extends BaseAPI {
 
     const taxAmount = await this.c
       .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
-        tx: tx.toData(),
+        // tx: tx.toData(),
+        tx_bytes: this.encode(tx),
       })
-      .then(d => Coins.fromData(d.tax_amount));
+      .then(d => Coins.fromData(d.tax_amount))
+      .catch(err => {
+        console.error(err);
+        throw err;
+      });
 
     const feeAmount = gasPricesCoins
-      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCoins())
+      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCeilCoins())
       : taxAmount;
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
@@ -394,10 +399,10 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
-    return this._broadcast<SyncTxBroadcastResult.Data>(
+    return this._broadcast<{ tx_response: SyncTxBroadcastResult.Data }>(
       tx,
       'BROADCAST_MODE_SYNC'
-    ).then(d => {
+    ).then(({ tx_response: d }) => {
       const blockResult: any = {
         height: +d.height,
         txhash: d.txhash,
@@ -421,10 +426,10 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
-    return this._broadcast<AsyncTxBroadcastResult.Data>(
+    return this._broadcast<{ tx_response: AsyncTxBroadcastResult.Data }>(
       tx,
       'BROADCAST_MODE_ASYNC'
-    ).then(d => ({
+    ).then(({ tx_response: d }) => ({
       height: +d.height,
       txhash: d.txhash,
     }));

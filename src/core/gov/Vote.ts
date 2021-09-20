@@ -27,7 +27,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
   public static fromAmino(data: Vote.Amino): Vote {
     const { proposal_id, voter, options } = data;
     return new Vote(
-      parseInt(proposal_id),
+      Number.parseInt(proposal_id),
       voter,
       options.map(v => WeightedVoteOption.fromAmino(v))
     );
@@ -48,7 +48,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
   public static fromData(data: Vote.Data): Vote {
     const { proposal_id, voter, options } = data;
     return new Vote(
-      parseInt(proposal_id),
+      Number.parseInt(proposal_id),
       voter,
       options.map(v => WeightedVoteOption.fromData(v))
     );

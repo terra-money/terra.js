@@ -204,7 +204,7 @@ export class GovAPI extends BaseAPI {
           tx.body.messages.forEach(msg => {
             if (
               msg['@type'] === '/cosmos.gov.v1beta1.MsgDeposit' &&
-              parseInt(msg.proposal_id) == proposalId
+              Number.parseInt(msg.proposal_id) == proposalId
             ) {
               deposits.push(
                 new Deposit(
@@ -275,7 +275,7 @@ export class GovAPI extends BaseAPI {
           tx.body.messages.forEach(msg => {
             if (
               msg['@type'] === '/cosmos.gov.v1beta1.MsgVote' &&
-              parseInt(msg.proposal_id) == proposalId
+              Number.parseInt(msg.proposal_id) == proposalId
             ) {
               votes.push(
                 new Vote(proposalId, msg.voter, [
@@ -284,7 +284,7 @@ export class GovAPI extends BaseAPI {
               );
             } else if (
               msg['@type'] === '/cosmos.gov.v1beta1.MsgVoteWeighted' &&
-              parseInt(msg.proposal_id) == proposalId
+              Number.parseInt(msg.proposal_id) == proposalId
             ) {
               votes.push(
                 new Vote(

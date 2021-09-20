@@ -1,10 +1,4 @@
-import {
-  LCDClient,
-  MsgSend,
-  MnemonicKey,
-  MsgGrantAllowance,
-  Fee,
-} from '../src';
+import { LCDClient, MsgSend, MnemonicKey } from '../src';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 async function main() {

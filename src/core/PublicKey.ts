@@ -136,7 +136,7 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
     data: LegacyAminoMultisigPublicKey.Amino
   ): LegacyAminoMultisigPublicKey {
     return new LegacyAminoMultisigPublicKey(
-      parseInt(data.value.threshold),
+      Number.parseInt(data.value.threshold),
       data.value.pubkeys.map(p => SimplePublicKey.fromAmino(p))
     );
   }
@@ -155,7 +155,7 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
     data: LegacyAminoMultisigPublicKey.Data
   ): LegacyAminoMultisigPublicKey {
     return new LegacyAminoMultisigPublicKey(
-      parseInt(data.threshold),
+      Number.parseInt(data.threshold),
       data.pubkeys.map(v => SimplePublicKey.fromData(v))
     );
   }
