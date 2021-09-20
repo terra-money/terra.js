@@ -1,5 +1,5 @@
 import { APIRequester } from '../APIRequester';
-import { IbcClientAPI, Status } from './Ibc';
+import { IbcClientAPI } from './IbcAPI';
 
 const c = new APIRequester('https://bombay-lcd.terra.dev/');
 //const c = new APIRequester('http://localhost:1317/');
