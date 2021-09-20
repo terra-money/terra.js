@@ -49,6 +49,13 @@ export class Coin
   }
 
   /**
+   * Turns the Coin into an Integer coin with ceiling the amount.
+   */
+  public toIntCeilCoin(): Coin {
+    return new Coin(this.denom, new Int(this.amount.ceil()));
+  }
+
+  /**
    * Turns the Coin into a Decimal coin.
    */
   public toDecCoin(): Coin {

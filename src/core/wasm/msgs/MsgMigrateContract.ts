@@ -54,7 +54,7 @@ export class MsgMigrateContract extends JSONSerializable<
       proto.admin,
       proto.contract,
       proto.newCodeId.toNumber(),
-      JSON.parse(atob(Buffer.from(proto.migrateMsg).toString('base64')))
+      JSON.parse(Buffer.from(proto.migrateMsg).toString('utf-8'))
     );
   }
 
@@ -64,7 +64,7 @@ export class MsgMigrateContract extends JSONSerializable<
       admin,
       contract,
       newCodeId: Long.fromNumber(new_code_id),
-      migrateMsg: Buffer.from(btoa(JSON.stringify(migrate_msg)), 'base64'),
+      migrateMsg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
     });
   }
   public packAny(): Any {

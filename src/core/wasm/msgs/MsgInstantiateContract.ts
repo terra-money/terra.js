@@ -66,7 +66,7 @@ export class MsgInstantiateContract extends JSONSerializable<
       proto.sender,
       proto.admin !== '' ? proto.admin : undefined,
       proto.codeId.toNumber(),
-      JSON.parse(atob(Buffer.from(proto.initMsg).toString('base64'))),
+      JSON.parse(Buffer.from(proto.initMsg).toString('utf-8')),
       Coins.fromProto(proto.initCoins)
     );
   }
@@ -77,7 +77,7 @@ export class MsgInstantiateContract extends JSONSerializable<
       admin,
       codeId: Long.fromNumber(code_id),
       initCoins: init_coins.toProto(),
-      initMsg: Buffer.from(btoa(JSON.stringify(init_msg))),
+      initMsg: Buffer.from(JSON.stringify(init_msg), 'utf-8'),
       sender,
     });
   }

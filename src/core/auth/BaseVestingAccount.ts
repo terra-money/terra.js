@@ -73,7 +73,7 @@ export class BaseVestingAccount extends JSONSerializable<
       Coins.fromAmino(amino.value.original_vesting),
       Coins.fromAmino(amino.value.delegated_free),
       Coins.fromAmino(amino.value.delegated_vesting),
-      parseInt(amino.value.end_time)
+      Number.parseInt(amino.value.end_time)
     );
   }
 
@@ -107,7 +107,7 @@ export class BaseVestingAccount extends JSONSerializable<
       Coins.fromData(data.original_vesting),
       Coins.fromData(data.delegated_free),
       Coins.fromData(data.delegated_vesting),
-      parseInt(data.end_time)
+      Number.parseInt(data.end_time)
     );
   }
 

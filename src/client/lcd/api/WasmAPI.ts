@@ -59,7 +59,7 @@ export class WasmAPI extends BaseAPI {
         params
       )
       .then(({ code_info: d }) => ({
-        code_id: parseInt(d.code_id),
+        code_id: Number.parseInt(d.code_id),
         code_hash: d.code_hash,
         creator: d.creator,
       }));
@@ -93,7 +93,9 @@ export class WasmAPI extends BaseAPI {
         `/terra/wasm/v1beta1/contracts/${contractAddress}/store`,
         {
           ...params,
-          query_msg: JSON.stringify(query),
+          query_msg: Buffer.from(JSON.stringify(query), 'utf-8').toString(
+            'base64'
+          ),
         }
       )
       .then(d => d.query_result);
