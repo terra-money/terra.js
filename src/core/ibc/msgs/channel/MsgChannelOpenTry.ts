@@ -25,10 +25,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
   constructor(
     public port_id: string,
     public previous_channel_id: string,
-    public channel: Channel,
+    public channel: Channel | undefined,
     public counterparty_version: string,
     public proof_init: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -56,10 +56,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
     return new MsgChannelOpenTry(
       port_id,
       previous_channel_id,
-      Channel.fromData(channel),
+      channel ? Channel.fromData(channel) : undefined,
       counterparty_version,
       proof_init,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -90,10 +90,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
     return new MsgChannelOpenTry(
       proto.portId,
       proto.previousChannelId,
-      Channel.fromProto(proto.channel!),
+      proto.channel ? Channel.fromProto(proto.channel) : undefined,
       proto.counterpartyVersion,
       Buffer.from(proto.proofInit).toString('base64'),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -111,10 +111,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
     return MsgChannelOpenTry_pb.fromPartial({
       portId: port_id,
       previousChannelId: previous_channel_id,
-      channel: channel.toProto(),
+      channel: channel ? channel.toProto() : undefined,
       counterpartyVersion: counterparty_version,
       proofInit: Buffer.from(proof_init, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
@@ -139,10 +139,10 @@ export namespace MsgChannelOpenTry {
     value: {
       port_id: string;
       previous_channel_id: string;
-      channel: Channel.Amino;
+      channel?: Channel.Amino;
       counterparty_version: string;
       proof_init: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
@@ -150,10 +150,10 @@ export namespace MsgChannelOpenTry {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenTry';
     port_id: string;
     previous_channel_id: string;
-    channel: Channel.Data;
+    channel?: Channel.Data;
     counterparty_version: string;
     proof_init: string;
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     signer: AccAddress;
   }
   export type Proto = MsgChannelOpenTry_pb;

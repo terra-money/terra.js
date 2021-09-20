@@ -23,10 +23,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
    * @param signer signer address
    */
   constructor(
-    public packet: Packet,
+    public packet: Packet | undefined,
     public proof_unreceived: string,
     public proof_close: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public next_sequence_recv: number,
     public signer: AccAddress
   ) {
@@ -52,10 +52,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
       signer,
     } = data;
     return new MsgTimeoutOnClose(
-      Packet.fromData(packet),
+      packet ? Packet.fromData(packet) : undefined,
       proof_close,
       proof_unreceived,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       next_sequence_recv,
       signer
     );
@@ -72,10 +72,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgTimeoutOnClose',
-      packet: packet.toData(),
+      packet: packet ? packet.toData() : undefined,
       proof_unreceived,
       proof_close,
-      proof_height: proof_height.toData(),
+      proof_height: proof_height ? proof_height.toData() : undefined,
       next_sequence_recv,
       signer,
     };
@@ -83,10 +83,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
 
   public static fromProto(proto: MsgTimeoutOnClose.Proto): MsgTimeoutOnClose {
     return new MsgTimeoutOnClose(
-      Packet.fromProto(proto.packet!),
+      proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofUnreceived).toString('base64'),
       Buffer.from(proto.proofClose).toString('base64'),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.nextSequenceRecv.toNumber(),
       proto.signer
     );
@@ -102,10 +102,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
       signer,
     } = this;
     return MsgTimeoutOnClose_pb.fromPartial({
-      packet: packet.toProto(),
+      packet: packet ? packet.toProto() : undefined,
       proofUnreceived: Buffer.from(proof_unreceived, 'base64'),
       proofClose: Buffer.from(proof_close, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       nextSequenceRecv: Long.fromNumber(next_sequence_recv),
       signer,
     });
@@ -129,20 +129,20 @@ export namespace MsgTimeoutOnClose {
   export interface Amino {
     type: 'cosmos-sdk/MsgTimeoutOnClose';
     value: {
-      packet: Packet.Amino;
+      packet?: Packet.Amino;
       proof_unreceived: string;
       proof_close: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       next_sequence_recv: number;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeoutOnClose';
-    packet: Packet.Data;
+    packet?: Packet.Data;
     proof_unreceived: string;
     proof_close: string;
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     next_sequence_recv: number;
     signer: AccAddress;
   }

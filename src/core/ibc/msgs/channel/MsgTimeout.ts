@@ -22,9 +22,9 @@ export class MsgTimeout extends JSONSerializable<
    * @param signer signer address
    */
   constructor(
-    public packet: Packet,
+    public packet: Packet | undefined,
     public proof_unreceived: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public next_sequence_recv: number,
     public signer: AccAddress
   ) {
@@ -49,9 +49,9 @@ export class MsgTimeout extends JSONSerializable<
       signer,
     } = data;
     return new MsgTimeout(
-      Packet.fromData(packet),
+      packet ? Packet.fromData(packet) : undefined,
       proof_unreceived,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       next_sequence_recv,
       signer
     );
@@ -67,9 +67,9 @@ export class MsgTimeout extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgTimeout',
-      packet: packet.toData(),
+      packet: packet ? packet.toData() : undefined,
       proof_unreceived,
-      proof_height: proof_height.toData(),
+      proof_height: proof_height ? proof_height.toData() : undefined,
       next_sequence_recv,
       signer,
     };
@@ -77,9 +77,9 @@ export class MsgTimeout extends JSONSerializable<
 
   public static fromProto(proto: MsgTimeout.Proto): MsgTimeout {
     return new MsgTimeout(
-      Packet.fromProto(proto.packet!),
+      proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofUnreceived).toString('base64'),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.nextSequenceRecv.toNumber(),
       proto.signer
     );
@@ -94,9 +94,9 @@ export class MsgTimeout extends JSONSerializable<
       signer,
     } = this;
     return MsgTimeout_pb.fromPartial({
-      packet: packet.toProto(),
+      packet: packet ? packet.toProto() : undefined,
       proofUnreceived: Buffer.from(proof_unreceived, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       nextSequenceRecv: Long.fromNumber(next_sequence_recv),
       signer,
     });
@@ -118,18 +118,18 @@ export namespace MsgTimeout {
   export interface Amino {
     type: 'cosmos-sdk/MsgTimeout';
     value: {
-      packet: Packet.Amino;
+      packet?: Packet.Amino;
       proof_unreceived: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       next_sequence_recv: number;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeout';
-    packet: Packet.Data;
+    packet?: Packet.Data;
     proof_unreceived: string;
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     next_sequence_recv: number;
     signer: AccAddress;
   }

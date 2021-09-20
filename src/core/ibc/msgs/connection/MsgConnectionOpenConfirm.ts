@@ -22,7 +22,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
   constructor(
     public connection_id: string,
     public proof_ack: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -44,7 +44,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return new MsgConnectionOpenConfirm(
       connection_id,
       proof_ack,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -55,7 +55,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
       connection_id,
       proof_ack,
-      proof_height: proof_height.toData(),
+      proof_height: proof_height ? proof_height.toData() : undefined,
       signer,
     };
   }
@@ -66,7 +66,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return new MsgConnectionOpenConfirm(
       proto.connectionId,
       Buffer.from(proto.proofAck).toString('base64'),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -76,7 +76,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return MsgConnectionOpenConfirm_pb.fromPartial({
       connectionId: connection_id,
       proofAck: Buffer.from(proof_ack, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
@@ -101,7 +101,7 @@ export namespace MsgConnectionOpenConfirm {
     value: {
       connection_id: string;
       proof_ack: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
@@ -109,7 +109,7 @@ export namespace MsgConnectionOpenConfirm {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm';
     connection_id: string;
     proof_ack: string;
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenConfirm_pb;

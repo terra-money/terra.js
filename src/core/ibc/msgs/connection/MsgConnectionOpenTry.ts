@@ -33,14 +33,14 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     public client_id: string,
     public previous_connection_id: string,
     public client_state: any,
-    public counterparty: Counterparty,
+    public counterparty: Counterparty | undefined,
     public delay_period: number,
     public counterpary_versions: Version[],
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public proof_init: string,
     public proof_client: string,
     public proof_consensus: string,
-    public consensus_height: Height,
+    public consensus_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -76,14 +76,14 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_id,
       previous_connection_id,
       client_state,
-      Counterparty.fromData(counterparty),
+      counterparty ? Counterparty.fromData(counterparty) : undefined,
       delay_period,
       counterpary_versions.map(cv => Version.fromData(cv)),
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       Buffer.from(proof_init).toString('base64'),
       Buffer.from(proof_client).toString('base64'),
       Buffer.from(proof_consensus).toString('base64'),
-      Height.fromData(consensus_height),
+      consensus_height ? Height.fromData(consensus_height) : undefined,
       signer
     );
   }
@@ -108,14 +108,16 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_id,
       previous_connection_id,
       client_state,
-      counterparty,
+      counterparty: counterparty ? counterparty.toData() : undefined,
       delay_period,
       counterpary_versions,
-      proof_height,
+      proof_height: proof_height ? proof_height.toData() : undefined,
       proof_init,
       proof_client,
       proof_consensus,
-      consensus_height,
+      consensus_height: consensus_height
+        ? consensus_height.toData()
+        : undefined,
       signer,
     };
   }
@@ -127,14 +129,18 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       proto.clientId,
       proto.previousConnectionId,
       proto.clientState,
-      Counterparty.fromProto(proto.counterparty!),
+      proto.counterparty
+        ? Counterparty.fromProto(proto.counterparty)
+        : undefined,
       proto.delayPeriod.toNumber(),
       proto.counterpartyVersions.map(cv => Version.fromProto(cv)),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       Buffer.from(proto.proofInit).toString('base64'),
       Buffer.from(proto.proofClient).toString('base64'),
       Buffer.from(proto.proofConsensus).toString('base64'),
-      Height.fromProto(proto.consensusHeight!),
+      proto.consensusHeight
+        ? Height.fromProto(proto.consensusHeight)
+        : undefined,
       proto.signer
     );
   }
@@ -158,14 +164,16 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       clientId: client_id,
       previousConnectionId: previous_connection_id,
       clientState: client_state.toProto(),
-      counterparty: counterparty.toProto(),
+      counterparty: counterparty ? counterparty.toProto() : undefined,
       delayPeriod: Long.fromNumber(delay_period),
       counterpartyVersions: counterpary_versions.map(cv => cv.toProto()),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       proofInit: Buffer.from(proof_init, 'base64'),
       proofClient: Buffer.from(proof_client, 'base64'),
       proofConsensus: Buffer.from(proof_consensus, 'base64'),
-      consensusHeight: consensus_height.toProto(),
+      consensusHeight: consensus_height
+        ? consensus_height.toProto()
+        : undefined,
       signer,
     });
   }
@@ -191,14 +199,14 @@ export namespace MsgConnectionOpenTry {
       client_id: string;
       previous_connection_id: string;
       client_state: any;
-      counterparty: Counterparty;
+      counterparty?: Counterparty.Amino;
       delay_period: number;
       counterpary_versions: Version.Amino[];
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       proof_init: string;
       proof_client: string;
       proof_consensus: string;
-      consensus_height: Height.Amino;
+      consensus_height?: Height.Amino;
       signer: AccAddress;
     };
   }
@@ -207,14 +215,14 @@ export namespace MsgConnectionOpenTry {
     client_id: string;
     previous_connection_id: string;
     client_state: Any;
-    counterparty: Counterparty;
+    counterparty?: Counterparty.Data;
     delay_period: number;
     counterpary_versions: Version.Data[];
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     proof_init: string;
     proof_client: string;
     proof_consensus: string;
-    consensus_height: Height.Data;
+    consensus_height?: Height.Data;
     signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenTry_pb;

@@ -19,7 +19,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
    */
   constructor(
     public port_id: string,
-    public channel: Channel,
+    public channel: Channel | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -36,7 +36,11 @@ export class MsgChannelOpenInit extends JSONSerializable<
 
   public static fromData(data: MsgChannelOpenInit.Data): MsgChannelOpenInit {
     const { port_id, channel, signer } = data;
-    return new MsgChannelOpenInit(port_id, Channel.fromData(channel), signer);
+    return new MsgChannelOpenInit(
+      port_id,
+      channel ? Channel.fromData(channel) : undefined,
+      signer
+    );
   }
 
   public toData(): MsgChannelOpenInit.Data {
@@ -44,7 +48,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenInit',
       port_id,
-      channel,
+      channel: channel ? channel.toData() : undefined,
       signer,
     };
   }
@@ -52,7 +56,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
   public static fromProto(proto: MsgChannelOpenInit.Proto): MsgChannelOpenInit {
     return new MsgChannelOpenInit(
       proto.portId,
-      Channel.fromProto(proto.channel!),
+      proto.channel ? Channel.fromProto(proto.channel) : undefined,
       proto.signer
     );
   }
@@ -61,7 +65,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     const { port_id, channel, signer } = this;
     return MsgChannelOpenInit_pb.fromPartial({
       portId: port_id,
-      channel: channel.toProto(),
+      channel: channel ? channel.toProto() : undefined,
       signer,
     });
   }
@@ -85,14 +89,14 @@ export namespace MsgChannelOpenInit {
     type: 'cosmos-sdk/MsgChannelOpenInit';
     value: {
       port_id: string;
-      channel: Channel.Amino;
+      channel?: Channel.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenInit';
     port_id: string;
-    channel: Channel.Data;
+    channel?: Channel.Data;
     signer: AccAddress;
   }
   export type Proto = MsgChannelOpenInit_pb;

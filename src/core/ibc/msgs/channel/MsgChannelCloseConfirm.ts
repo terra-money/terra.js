@@ -23,7 +23,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     public port_id: string,
     public channel_id: string,
     public proof_init: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -46,7 +46,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       port_id,
       channel_id,
       proof_init,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -70,7 +70,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       proto.portId,
       proto.channelId,
       Buffer.from(proto.proofInit).toString('base64'),
-      Height.fromProto(proto.proofHeight!),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -81,7 +81,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       portId: port_id,
       channelId: channel_id,
       proofInit: Buffer.from(proof_init, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
@@ -107,7 +107,7 @@ export namespace MsgChannelCloseConfirm {
       port_id: string;
       channel_id: string;
       proof_init: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
@@ -116,7 +116,7 @@ export namespace MsgChannelCloseConfirm {
     port_id: string;
     channel_id: string;
     proof_init: string;
-    proof_height: Height.Data;
+    proof_height?: Height.Data;
     signer: AccAddress;
   }
   export type Proto = MsgChannelCloseConfirm_pb;
