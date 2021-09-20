@@ -177,7 +177,7 @@ export class MsgTransfer extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgTransfer',
+      typeUrl: '/ibc.applications.transfer.v1.Msg/Transfer',
       value: MsgTransfer_pb.encode(this.toProto()).finish(),
     });
   }

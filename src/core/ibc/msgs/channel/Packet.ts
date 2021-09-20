@@ -128,7 +128,7 @@ export class Packet extends JSONSerializable<
       proto.destinationPort,
       proto.destinationChannel,
       Buffer.from(proto.data).toString('base64'),
-      Height.fromProto(proto.timeoutHeight),
+      Height.fromProto(proto.timeoutHeight!),
       proto.timeoutTimestamp.toNumber()
     );
   }

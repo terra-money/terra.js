@@ -23,7 +23,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     public port_id: string,
     public channel_id: string,
     public proof_ack: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -41,14 +41,12 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
   public static fromData(
     data: MsgChannelOpenConfirm.Data
   ): MsgChannelOpenConfirm {
-    const {
-      value: { port_id, channel_id, proof_ack, proof_height, signer },
-    } = data;
+    const { port_id, channel_id, proof_ack, proof_height, signer } = data;
     return new MsgChannelOpenConfirm(
       port_id,
       channel_id,
       proof_ack,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -57,13 +55,11 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     const { port_id, channel_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm',
-      value: {
-        port_id,
-        channel_id,
-        proof_ack,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      proof_ack,
+      proof_height: proof_height ? proof_height.toData() : undefined,
+      signer,
     };
   }
 
@@ -74,7 +70,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
       proto.portId,
       proto.channelId,
       Buffer.from(proto.proofAck).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -85,14 +81,14 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
       portId: port_id,
       channelId: channel_id,
       proofAck: Buffer.from(proof_ack, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenConfirm',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenConfirm',
       value: MsgChannelOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }
@@ -111,19 +107,17 @@ export namespace MsgChannelOpenConfirm {
       port_id: string;
       channel_id: string;
       proof_ack: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_ack: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    proof_ack: string;
+    proof_height?: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenConfirm_pb;
 }

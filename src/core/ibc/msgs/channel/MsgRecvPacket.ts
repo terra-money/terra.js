@@ -20,9 +20,9 @@ export class MsgRecvPacket extends JSONSerializable<
    * @param signer signer address
    */
   constructor(
-    public packet: Packet,
+    public packet: Packet | undefined,
     public proof_commitment: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -38,13 +38,11 @@ export class MsgRecvPacket extends JSONSerializable<
   }
 
   public static fromData(data: MsgRecvPacket.Data): MsgRecvPacket {
-    const {
-      value: { packet, proof_commitment, proof_height, signer },
-    } = data;
+    const { packet, proof_commitment, proof_height, signer } = data;
     return new MsgRecvPacket(
-      Packet.fromData(packet),
+      packet ? Packet.fromData(packet) : undefined,
       proof_commitment,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -53,20 +51,18 @@ export class MsgRecvPacket extends JSONSerializable<
     const { packet, proof_commitment, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgRecvPacket',
-      value: {
-        packet: packet.toData(),
-        proof_commitment,
-        proof_height: proof_height.toData(),
-        signer,
-      },
+      packet: packet ? packet.toData() : undefined,
+      proof_commitment,
+      proof_height: proof_height ? proof_height.toData() : undefined,
+      signer,
     };
   }
 
   public static fromProto(proto: MsgRecvPacket.Proto): MsgRecvPacket {
     return new MsgRecvPacket(
-      Packet.fromProto(proto.packet),
+      proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofCommitment).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -74,16 +70,16 @@ export class MsgRecvPacket extends JSONSerializable<
   public toProto(): MsgRecvPacket.Proto {
     const { packet, proof_commitment, proof_height, signer } = this;
     return MsgRecvPacket_pb.fromPartial({
-      packet: packet.toProto(),
+      packet: packet ? packet.toProto() : undefined,
       proofCommitment: Buffer.from(proof_commitment, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgRecvPacket',
+      typeUrl: '/ibc.core.channel.v1.MsgRecvPacket',
       value: MsgRecvPacket_pb.encode(this.toProto()).finish(),
     });
   }
@@ -97,20 +93,18 @@ export namespace MsgRecvPacket {
   export interface Amino {
     type: 'cosmos-sdk/MsgRecvPacket';
     value: {
-      packet: Packet.Amino;
+      packet?: Packet.Amino;
       proof_commitment: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgRecvPacket';
-    value: {
-      packet: Packet.Data;
-      proof_commitment: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    packet?: Packet.Data;
+    proof_commitment: string;
+    proof_height?: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgRecvPacket_pb;
 }

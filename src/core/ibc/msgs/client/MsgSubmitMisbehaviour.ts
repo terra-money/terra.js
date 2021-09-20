@@ -35,9 +35,7 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
   public static fromData(
     data: MsgSubmitMisbehaviour.Data
   ): MsgSubmitMisbehaviour {
-    const {
-      value: { client_id, misbehaviour, signer },
-    } = data;
+    const { client_id, misbehaviour, signer } = data;
     return new MsgSubmitMisbehaviour(client_id, misbehaviour, signer);
   }
 
@@ -45,11 +43,9 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     const { client_id, misbehaviour, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgSubmitMisbehaviour',
-      value: {
-        client_id,
-        misbehaviour,
-        signer,
-      },
+      client_id,
+      misbehaviour,
+      signer,
     };
   }
 
@@ -74,7 +70,7 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgSubmitMisbehaviour',
+      typeUrl: '/ibc.core.client.v1.MsgSubmitMisbehaviour',
       value: MsgSubmitMisbehaviour_pb.encode(this.toProto()).finish(),
     });
   }
@@ -97,11 +93,9 @@ export namespace MsgSubmitMisbehaviour {
   }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgSubmitMisbehaviour';
-    value: {
-      client_id: string;
-      misbehaviour: any;
-      signer: AccAddress;
-    };
+    client_id: string;
+    misbehaviour: any;
+    signer: AccAddress;
   }
   export type Proto = MsgSubmitMisbehaviour_pb;
 }

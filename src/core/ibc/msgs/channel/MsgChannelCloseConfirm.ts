@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Height } from '../../../ibc-transfer/Height';
+import { Height } from '../client/Height';
 import { MsgChannelCloseConfirm as MsgChannelCloseConfirm_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**
@@ -23,7 +23,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     public port_id: string,
     public channel_id: string,
     public proof_init: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -41,14 +41,12 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
   public static fromData(
     data: MsgChannelCloseConfirm.Data
   ): MsgChannelCloseConfirm {
-    const {
-      value: { port_id, channel_id, proof_init, proof_height, signer },
-    } = data;
+    const { port_id, channel_id, proof_init, proof_height, signer } = data;
     return new MsgChannelCloseConfirm(
       port_id,
       channel_id,
       proof_init,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -57,13 +55,11 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     const { port_id, channel_id, proof_init, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm',
-      value: {
-        port_id,
-        channel_id,
-        proof_init,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      proof_init,
+      proof_height,
+      signer,
     };
   }
 
@@ -74,7 +70,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       proto.portId,
       proto.channelId,
       Buffer.from(proto.proofInit).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -85,14 +81,14 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       portId: port_id,
       channelId: channel_id,
       proofInit: Buffer.from(proof_init, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelCloseConfirm',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelCloseConfirm',
       value: MsgChannelCloseConfirm_pb.encode(this.toProto()).finish(),
     });
   }
@@ -111,19 +107,17 @@ export namespace MsgChannelCloseConfirm {
       port_id: string;
       channel_id: string;
       proof_init: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_init: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    proof_init: string;
+    proof_height?: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelCloseConfirm_pb;
 }

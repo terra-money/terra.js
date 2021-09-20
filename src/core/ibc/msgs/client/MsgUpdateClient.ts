@@ -33,9 +33,7 @@ export class MsgUpdateClient extends JSONSerializable<
   }
 
   public static fromData(data: MsgUpdateClient.Data): MsgUpdateClient {
-    const {
-      value: { client_id, header, signer },
-    } = data;
+    const { client_id, header, signer } = data;
     return new MsgUpdateClient(client_id, header, signer);
   }
 
@@ -43,11 +41,9 @@ export class MsgUpdateClient extends JSONSerializable<
     const { client_id, header, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgUpdateClient',
-      value: {
-        client_id,
-        header,
-        signer,
-      },
+      client_id,
+      header,
+      signer,
     };
   }
 
@@ -66,7 +62,7 @@ export class MsgUpdateClient extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgUpdateClient',
+      typeUrl: '/ibc.core.client.v1.MsgUpdateClient',
       value: MsgUpdateClient_pb.encode(this.toProto()).finish(),
     });
   }
@@ -87,11 +83,9 @@ export namespace MsgUpdateClient {
   }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgUpdateClient';
-    value: {
-      client_id: string;
-      header: any;
-      signer: AccAddress;
-    };
+    client_id: string;
+    header: any;
+    signer: AccAddress;
   }
   export type Proto = MsgUpdateClient_pb;
 }

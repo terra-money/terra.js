@@ -19,7 +19,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
    */
   constructor(
     public port_id: string,
-    public channel: Channel,
+    public channel: Channel | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -35,28 +35,28 @@ export class MsgChannelOpenInit extends JSONSerializable<
   }
 
   public static fromData(data: MsgChannelOpenInit.Data): MsgChannelOpenInit {
-    const {
-      value: { port_id, channel, signer },
-    } = data;
-    return new MsgChannelOpenInit(port_id, Channel.fromData(channel), signer);
+    const { port_id, channel, signer } = data;
+    return new MsgChannelOpenInit(
+      port_id,
+      channel ? Channel.fromData(channel) : undefined,
+      signer
+    );
   }
 
   public toData(): MsgChannelOpenInit.Data {
     const { port_id, channel, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenInit',
-      value: {
-        port_id,
-        channel,
-        signer,
-      },
+      port_id,
+      channel: channel ? channel.toData() : undefined,
+      signer,
     };
   }
 
   public static fromProto(proto: MsgChannelOpenInit.Proto): MsgChannelOpenInit {
     return new MsgChannelOpenInit(
       proto.portId,
-      Channel.fromProto(proto.channel),
+      proto.channel ? Channel.fromProto(proto.channel) : undefined,
       proto.signer
     );
   }
@@ -65,14 +65,14 @@ export class MsgChannelOpenInit extends JSONSerializable<
     const { port_id, channel, signer } = this;
     return MsgChannelOpenInit_pb.fromPartial({
       portId: port_id,
-      channel: channel.toProto(),
+      channel: channel ? channel.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenInit',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenInit',
       value: MsgChannelOpenInit_pb.encode(this.toProto()).finish(),
     });
   }
@@ -89,17 +89,15 @@ export namespace MsgChannelOpenInit {
     type: 'cosmos-sdk/MsgChannelOpenInit';
     value: {
       port_id: string;
-      channel: Channel.Amino;
+      channel?: Channel.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenInit';
-    value: {
-      port_id: string;
-      channel: Channel.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel?: Channel.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenInit_pb;
 }

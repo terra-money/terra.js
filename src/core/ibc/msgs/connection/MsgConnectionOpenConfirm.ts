@@ -22,7 +22,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
   constructor(
     public connection_id: string,
     public proof_ack: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -40,13 +40,11 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
   public static fromData(
     data: MsgConnectionOpenConfirm.Data
   ): MsgConnectionOpenConfirm {
-    const {
-      value: { connection_id, proof_ack, proof_height, signer },
-    } = data;
+    const { connection_id, proof_ack, proof_height, signer } = data;
     return new MsgConnectionOpenConfirm(
       connection_id,
       proof_ack,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -55,12 +53,10 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     const { connection_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
-      value: {
-        connection_id,
-        proof_ack,
-        proof_height: proof_height.toData(),
-        signer,
-      },
+      connection_id,
+      proof_ack,
+      proof_height: proof_height ? proof_height.toData() : undefined,
+      signer,
     };
   }
 
@@ -70,7 +66,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return new MsgConnectionOpenConfirm(
       proto.connectionId,
       Buffer.from(proto.proofAck).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -80,14 +76,14 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     return MsgConnectionOpenConfirm_pb.fromPartial({
       connectionId: connection_id,
       proofAck: Buffer.from(proof_ack, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgConnectionOpenConfirm',
+      typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
       value: MsgConnectionOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }
@@ -105,18 +101,16 @@ export namespace MsgConnectionOpenConfirm {
     value: {
       connection_id: string;
       proof_ack: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm';
-    value: {
-      connection_id: string;
-      proof_ack: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    connection_id: string;
+    proof_ack: string;
+    proof_height?: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenConfirm_pb;
 }

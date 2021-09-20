@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Height } from '../../../ibc-transfer/Height';
+import { Height } from '../client/Height';
 import { MsgChannelOpenAck as MsgChannelOpenAck_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**
@@ -27,7 +27,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
     public counterparty_channel_id: string,
     public counterparty_version: string,
     public proof_try: string,
-    public proof_height: Height,
+    public proof_height: Height | undefined,
     public signer: AccAddress
   ) {
     super();
@@ -44,15 +44,13 @@ export class MsgChannelOpenAck extends JSONSerializable<
 
   public static fromData(data: MsgChannelOpenAck.Data): MsgChannelOpenAck {
     const {
-      value: {
-        port_id,
-        channel_id,
-        counterparty_channel_id,
-        counterparty_version,
-        proof_try,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      counterparty_channel_id,
+      counterparty_version,
+      proof_try,
+      proof_height,
+      signer,
     } = data;
     return new MsgChannelOpenAck(
       port_id,
@@ -60,7 +58,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
       counterparty_channel_id,
       counterparty_version,
       proof_try,
-      Height.fromData(proof_height),
+      proof_height ? Height.fromData(proof_height) : undefined,
       signer
     );
   }
@@ -77,15 +75,13 @@ export class MsgChannelOpenAck extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenAck',
-      value: {
-        port_id,
-        channel_id,
-        counterparty_channel_id,
-        counterparty_version,
-        proof_try,
-        proof_height,
-        signer,
-      },
+      port_id,
+      channel_id,
+      counterparty_channel_id,
+      counterparty_version,
+      proof_try,
+      proof_height,
+      signer,
     };
   }
 
@@ -96,7 +92,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
       proto.counterpartyChannelId,
       proto.counterpartyVersion,
       Buffer.from(proto.proofTry).toString('base64'),
-      Height.fromProto(proto.proofHeight),
+      proto.proofHeight ? Height.fromProto(proto.proofHeight) : undefined,
       proto.signer
     );
   }
@@ -117,14 +113,14 @@ export class MsgChannelOpenAck extends JSONSerializable<
       counterpartyChannelId: counterparty_channel_id,
       counterpartyVersion: counterparty_version,
       proofTry: Buffer.from(proof_try, 'base64'),
-      proofHeight: proof_height.toProto(),
+      proofHeight: proof_height ? proof_height.toProto() : undefined,
       signer,
     });
   }
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/cosmos-sdk/MsgChannelOpenAck',
+      typeUrl: '/ibc.core.channel.v1.MsgChannelOpenAck',
       value: MsgChannelOpenAck_pb.encode(this.toProto()).finish(),
     });
   }
@@ -145,21 +141,19 @@ export namespace MsgChannelOpenAck {
       counterparty_channel_id: string;
       counterparty_version: string;
       proof_try: string;
-      proof_height: Height.Amino;
+      proof_height?: Height.Amino;
       signer: AccAddress;
     };
   }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenAck';
-    value: {
-      port_id: string;
-      channel_id: string;
-      counterparty_channel_id: string;
-      counterparty_version: string;
-      proof_try: string;
-      proof_height: Height.Data;
-      signer: AccAddress;
-    };
+    port_id: string;
+    channel_id: string;
+    counterparty_channel_id: string;
+    counterparty_version: string;
+    proof_try: string;
+    proof_height?: Height.Data;
+    signer: AccAddress;
   }
   export type Proto = MsgChannelOpenAck_pb;
 }
