@@ -8,7 +8,7 @@ import Long from 'long';
 export class Plan extends JSONSerializable<Plan.Amino, Plan.Data, Plan.Proto> {
   public name: string;
   public time?: Date;
-  public height: number;
+  public height: string;
   public info: string;
   public upgraded_client_state?: any;
   /**
@@ -21,7 +21,7 @@ export class Plan extends JSONSerializable<Plan.Amino, Plan.Data, Plan.Proto> {
   constructor(
     name: string,
     time: Date | undefined,
-    height: number,
+    height: string,
     info: string,
     upgraded_client_state: any | undefined
   ) {
@@ -83,7 +83,7 @@ export class Plan extends JSONSerializable<Plan.Amino, Plan.Data, Plan.Proto> {
     return new Plan(
       proto.name,
       proto.time as Date,
-      proto.height.toNumber(),
+      proto.height.toString(),
       proto.info,
       proto.upgradedClientState
     );
@@ -94,7 +94,7 @@ export class Plan extends JSONSerializable<Plan.Amino, Plan.Data, Plan.Proto> {
     return Plan_pb.fromPartial({
       name,
       time,
-      height: Long.fromNumber(height),
+      height: Long.fromString(height),
       info,
       upgradedClientState: upgraded_client_state,
     });
@@ -105,7 +105,7 @@ export namespace Plan {
   export interface Amino {
     name: string;
     time?: string;
-    height: number;
+    height: string;
     info: string;
     upgraded_client_state?: any;
   }
@@ -113,7 +113,7 @@ export namespace Plan {
   export interface Data {
     name: string;
     time?: string;
-    height: number;
+    height: string;
     info: string;
     upgraded_client_state?: any;
   }
