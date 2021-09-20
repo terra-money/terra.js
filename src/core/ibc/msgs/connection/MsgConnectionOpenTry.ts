@@ -21,7 +21,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
    * @param client_state
    * @param counterparty
    * @param delay_period
-   * @param counterpary_versions
+   * @param counterparty_versions
    * @param proof_height proof of the initialization the connection on Chain A: `UNITIALIZED -> INIT`
    * @param proof_init proof of client state included in message
    * @param proof_client proof of client consensus state
@@ -35,7 +35,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     public client_state: any,
     public counterparty: Counterparty | undefined,
     public delay_period: number,
-    public counterpary_versions: Version[],
+    public counterparty_versions: Version[],
     public proof_height: Height | undefined,
     public proof_init: string,
     public proof_client: string,
@@ -64,7 +64,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_state,
       counterparty,
       delay_period,
-      counterpary_versions,
+      counterparty_versions,
       proof_height,
       proof_init,
       proof_client,
@@ -78,7 +78,9 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_state,
       counterparty ? Counterparty.fromData(counterparty) : undefined,
       delay_period,
-      counterpary_versions.map(cv => Version.fromData(cv)),
+      counterparty_versions.length > 0
+        ? counterparty_versions.map(cv => Version.fromData(cv))
+        : [],
       proof_height ? Height.fromData(proof_height) : undefined,
       Buffer.from(proof_init).toString('base64'),
       Buffer.from(proof_client).toString('base64'),
@@ -95,7 +97,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_state,
       counterparty,
       delay_period,
-      counterpary_versions,
+      counterparty_versions,
       proof_height,
       proof_init,
       proof_client,
@@ -110,7 +112,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_state,
       counterparty: counterparty ? counterparty.toData() : undefined,
       delay_period,
-      counterpary_versions,
+      counterparty_versions,
       proof_height: proof_height ? proof_height.toData() : undefined,
       proof_init,
       proof_client,
@@ -152,7 +154,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       client_state,
       counterparty,
       delay_period,
-      counterpary_versions,
+      counterparty_versions,
       proof_height,
       proof_init,
       proof_client,
@@ -166,7 +168,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
       clientState: client_state.toProto(),
       counterparty: counterparty ? counterparty.toProto() : undefined,
       delayPeriod: Long.fromNumber(delay_period),
-      counterpartyVersions: counterpary_versions.map(cv => cv.toProto()),
+      counterpartyVersions: counterparty_versions.map(cv => cv.toProto()),
       proofHeight: proof_height ? proof_height.toProto() : undefined,
       proofInit: Buffer.from(proof_init, 'base64'),
       proofClient: Buffer.from(proof_client, 'base64'),
@@ -201,7 +203,7 @@ export namespace MsgConnectionOpenTry {
       client_state: any;
       counterparty?: Counterparty.Amino;
       delay_period: number;
-      counterpary_versions: Version.Amino[];
+      counterparty_versions: Version.Amino[];
       proof_height?: Height.Amino;
       proof_init: string;
       proof_client: string;
@@ -217,7 +219,7 @@ export namespace MsgConnectionOpenTry {
     client_state: Any;
     counterparty?: Counterparty.Data;
     delay_period: number;
-    counterpary_versions: Version.Data[];
+    counterparty_versions: Version.Data[];
     proof_height?: Height.Data;
     proof_init: string;
     proof_client: string;
