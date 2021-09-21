@@ -97,15 +97,13 @@ export class MsgTransfer extends JSONSerializable<
 
   public static fromData(data: MsgTransfer.Data): MsgTransfer {
     const {
-      value: {
-        source_port,
-        source_channel,
-        token,
-        sender,
-        receiver,
-        timeout_timestamp,
-        timeout_height,
-      },
+      source_port,
+      source_channel,
+      token,
+      sender,
+      receiver,
+      timeout_timestamp,
+      timeout_height,
     } = data;
     return new MsgTransfer(
       source_port,
@@ -130,15 +128,13 @@ export class MsgTransfer extends JSONSerializable<
     } = this;
     return {
       '@type': '/ibc.applications.transfer.v1.MsgTransfer',
-      value: {
-        source_port,
-        source_channel,
-        token: token ? token.toData() : undefined,
-        sender,
-        receiver,
-        timeout_height,
-        timeout_timestamp,
-      },
+      source_port,
+      source_channel,
+      token: token ? token.toData() : undefined,
+      sender,
+      receiver,
+      timeout_height,
+      timeout_timestamp,
     };
   }
 
@@ -202,15 +198,13 @@ export namespace MsgTransfer {
   }
   export interface Data {
     '@type': '/ibc.applications.transfer.v1.MsgTransfer';
-    value: {
-      source_port: string;
-      source_channel: string;
-      token?: Coin.Data;
-      sender: AccAddress;
-      receiver: string;
-      timeout_height?: Height;
-      timeout_timestamp: number;
-    };
+    source_port: string;
+    source_channel: string;
+    token?: Coin.Data;
+    sender: AccAddress;
+    receiver: string;
+    timeout_height?: Height;
+    timeout_timestamp: number;
   }
   export type Proto = MsgTransfer_pb;
 }
