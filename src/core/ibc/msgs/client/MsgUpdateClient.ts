@@ -6,7 +6,7 @@ import { MsgUpdateClient as MsgUpdateClient_pb } from '@terra-money/terra.proto/
  * MsgUpdateClient defines an sdk.Msg to update a IBC client state using the given header
  */
 export class MsgUpdateClient extends JSONSerializable<
-  MsgUpdateClient.Amino,
+  any,
   MsgUpdateClient.Data,
   MsgUpdateClient.Proto
 > {
@@ -28,7 +28,7 @@ export class MsgUpdateClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgUpdateClient.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -73,14 +73,6 @@ export class MsgUpdateClient extends JSONSerializable<
 }
 
 export namespace MsgUpdateClient {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgUpdateClient';
-    value: {
-      client_id: string;
-      header: any;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgUpdateClient';
     client_id: string;

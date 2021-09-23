@@ -19,9 +19,27 @@ export class SignatureV2 {
       Number.parseInt(data.sequence)
     );
   }
+
+  public static fromAmino(data: SignatureV2.Amino): SignatureV2 {
+    return new SignatureV2(
+      PublicKey.fromAmino(data.pub_key),
+      new SignatureV2.Descriptor(
+        new SignatureV2.Descriptor.Single(
+          SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
+          data.signature
+        )
+      ),
+      0
+    );
+  }
 }
 
 export namespace SignatureV2 {
+  export interface Amino {
+    signature: string;
+    pub_key: PublicKey.Amino;
+  }
+
   export interface Data {
     public_key: PublicKey.Data;
     data: Descriptor.Data;

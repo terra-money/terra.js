@@ -15,11 +15,6 @@ export type IbcConnectionMsg =
   | MsgConnectionOpenAck;
 
 export namespace IbcConnectionMsg {
-  export type Amino =
-    | MsgConnectionOpenInit.Amino
-    | MsgConnectionOpenTry.Amino
-    | MsgConnectionOpenConfirm.Amino
-    | MsgConnectionOpenAck.Amino;
   export type Data =
     | MsgConnectionOpenInit.Data
     | MsgConnectionOpenTry.Data

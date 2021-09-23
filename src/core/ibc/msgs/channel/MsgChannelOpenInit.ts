@@ -8,7 +8,7 @@ import { MsgChannelOpenInit as MsgChannelOpenInit_pb } from '@terra-money/terra.
  * MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It is called by a relayer on Chain A.
  */
 export class MsgChannelOpenInit extends JSONSerializable<
-  MsgChannelOpenInit.Amino,
+  any,
   MsgChannelOpenInit.Data,
   MsgChannelOpenInit.Proto
 > {
@@ -30,7 +30,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelOpenInit.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -85,14 +85,6 @@ export class MsgChannelOpenInit extends JSONSerializable<
 }
 
 export namespace MsgChannelOpenInit {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelOpenInit';
-    value: {
-      port_id: string;
-      channel?: Channel.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenInit';
     port_id: string;

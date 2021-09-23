@@ -10,7 +10,7 @@ import Long from 'long';
  * MsgConnectionOpenInit defines the msg sent by an account on Chain A to initialize a connection with Chain B.
  */
 export class MsgConnectionOpenInit extends JSONSerializable<
-  MsgConnectionOpenInit.Amino,
+  any,
   MsgConnectionOpenInit.Data,
   MsgConnectionOpenInit.Proto
 > {
@@ -46,7 +46,7 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgConnectionOpenInit.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -115,16 +115,6 @@ export class MsgConnectionOpenInit extends JSONSerializable<
 }
 
 export namespace MsgConnectionOpenInit {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgConnectionOpenInit';
-    value: {
-      client_id: string;
-      counterparty?: Counterparty.Amino;
-      version?: Version.Amino;
-      delay_period: number;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit';
     client_id: string;

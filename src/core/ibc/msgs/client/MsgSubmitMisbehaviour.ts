@@ -6,7 +6,7 @@ import { MsgSubmitMisbehaviour as MsgSubmitMisbehaviour_pb } from '@terra-money/
  *  MsgSubmitMisbehaviour defines an sdk.Msg type that submits Evidence for light client misbehaviour.
  */
 export class MsgSubmitMisbehaviour extends JSONSerializable<
-  MsgSubmitMisbehaviour.Amino,
+  any,
   MsgSubmitMisbehaviour.Data,
   MsgSubmitMisbehaviour.Proto
 > {
@@ -28,7 +28,7 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgSubmitMisbehaviour.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -83,14 +83,6 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
 }
 
 export namespace MsgSubmitMisbehaviour {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgSubmitMisbehaviour';
-    value: {
-      client_id: string;
-      misbehaviour: any;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgSubmitMisbehaviour';
     client_id: string;

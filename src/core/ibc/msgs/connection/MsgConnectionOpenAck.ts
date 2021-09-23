@@ -10,7 +10,7 @@ import { Height } from '../client/Height';
  * acknowledge the change of connection state to TRYOPEN on Chain B.
  */
 export class MsgConnectionOpenAck extends JSONSerializable<
-  MsgConnectionOpenAck.Amino,
+  any,
   MsgConnectionOpenAck.Data,
   MsgConnectionOpenAck.Proto
 > {
@@ -46,7 +46,7 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgConnectionOpenAck.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -172,21 +172,6 @@ export class MsgConnectionOpenAck extends JSONSerializable<
 }
 
 export namespace MsgConnectionOpenAck {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgConnectionOpenAck';
-    value: {
-      connection_id: string;
-      counterparty_connection_id: string;
-      version?: Version.Amino;
-      client_state: Any;
-      proof_height?: Height.Amino;
-      proof_try: string;
-      proof_client: string;
-      proof_consensus: string;
-      consensus_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenAck';
     connection_id: string;

@@ -9,7 +9,7 @@ import { MsgChannelOpenTry as MsgChannelOpenTry_pb } from '@terra-money/terra.pr
  * MsgChannelOpenTry defines a msg sent by a Relayer to try to open a channel on Chain B
  */
 export class MsgChannelOpenTry extends JSONSerializable<
-  MsgChannelOpenTry.Amino,
+  any,
   MsgChannelOpenTry.Data,
   MsgChannelOpenTry.Proto
 > {
@@ -39,7 +39,7 @@ export class MsgChannelOpenTry extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelOpenTry.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -134,18 +134,6 @@ export class MsgChannelOpenTry extends JSONSerializable<
 }
 
 export namespace MsgChannelOpenTry {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelOpenTry';
-    value: {
-      port_id: string;
-      previous_channel_id: string;
-      channel?: Channel.Amino;
-      counterparty_version: string;
-      proof_init: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenTry';
     port_id: string;

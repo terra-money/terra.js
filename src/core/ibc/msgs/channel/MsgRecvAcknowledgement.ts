@@ -9,7 +9,7 @@ import { MsgAcknowledgement as MsgAcknowledgement_pb } from '@terra-money/terra.
  * MsgAcknowledgement receives incoming IBC acknowledgement
  */
 export class MsgAcknowledgement extends JSONSerializable<
-  MsgAcknowledgement.Amino,
+  any,
   MsgAcknowledgement.Data,
   MsgAcknowledgement.Proto
 > {
@@ -35,7 +35,7 @@ export class MsgAcknowledgement extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgAcknowledgement.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -98,16 +98,6 @@ export class MsgAcknowledgement extends JSONSerializable<
 }
 
 export namespace MsgAcknowledgement {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgAcknowledgement';
-    value: {
-      packet?: Packet.Amino;
-      acknowledgement: string;
-      proof_acked: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgAcknowledgement';
     packet?: Packet.Data;

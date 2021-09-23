@@ -8,7 +8,7 @@ import { MsgChannelOpenConfirm as MsgChannelOpenConfirm_pb } from '@terra-money/
  *  MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to acknowledge the change of channel state to OPEN on Chain A.
  */
 export class MsgChannelOpenConfirm extends JSONSerializable<
-  MsgChannelOpenConfirm.Amino,
+  any,
   MsgChannelOpenConfirm.Data,
   MsgChannelOpenConfirm.Proto
 > {
@@ -34,7 +34,7 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelOpenConfirm.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -101,16 +101,6 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
 }
 
 export namespace MsgChannelOpenConfirm {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelOpenConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_ack: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm';
     port_id: string;

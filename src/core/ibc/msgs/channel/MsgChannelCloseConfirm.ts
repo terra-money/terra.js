@@ -8,7 +8,7 @@ import { MsgChannelCloseConfirm as MsgChannelCloseConfirm_pb } from '@terra-mone
  * MsgChannelCloseConfirm defines a msg sent by a Relayer to Chain B to acknowledge the change of channel state to CLOSED on Chain A.
  */
 export class MsgChannelCloseConfirm extends JSONSerializable<
-  MsgChannelCloseConfirm.Amino,
+  any,
   MsgChannelCloseConfirm.Data,
   MsgChannelCloseConfirm.Proto
 > {
@@ -34,7 +34,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelCloseConfirm.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -101,16 +101,6 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
 }
 
 export namespace MsgChannelCloseConfirm {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelCloseConfirm';
-    value: {
-      port_id: string;
-      channel_id: string;
-      proof_init: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm';
     port_id: string;

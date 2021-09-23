@@ -9,7 +9,7 @@ import { MsgRecvPacket as MsgRecvPacket_pb } from '@terra-money/terra.proto/ibc/
  * MsgRecvPacket receives incoming IBC packet
  */
 export class MsgRecvPacket extends JSONSerializable<
-  MsgRecvPacket.Amino,
+  any,
   MsgRecvPacket.Data,
   MsgRecvPacket.Proto
 > {
@@ -33,7 +33,7 @@ export class MsgRecvPacket extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgRecvPacket.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -90,15 +90,6 @@ export class MsgRecvPacket extends JSONSerializable<
 }
 
 export namespace MsgRecvPacket {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgRecvPacket';
-    value: {
-      packet?: Packet.Amino;
-      proof_commitment: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgRecvPacket';
     packet?: Packet.Data;

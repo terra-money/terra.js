@@ -15,11 +15,6 @@ export type IbcClientMsg =
   | MsgSubmitMisbehaviour;
 
 export namespace IbcClientMsg {
-  export type Amino =
-    | MsgCreateClient.Amino
-    | MsgUpdateClient.Amino
-    | MsgUpgradeClient.Amino
-    | MsgSubmitMisbehaviour.Amino;
   export type Data =
     | MsgCreateClient.Data
     | MsgUpdateClient.Data

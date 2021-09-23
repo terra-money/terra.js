@@ -33,18 +33,6 @@ export type IbcChannelMsg =
   | MsgTimeoutOnClose;
 
 export namespace IbcChannelMsg {
-  export type Amino =
-    | MsgChannelOpenInit.Amino
-    | MsgChannelOpenTry.Amino
-    | MsgChannelOpenConfirm.Amino
-    | MsgChannelOpenAck.Amino
-    | MsgChannelCloseInit.Amino
-    | MsgChannelCloseConfirm.Amino
-    | MsgRecvPacket.Amino
-    | MsgAcknowledgement.Amino
-    | MsgTimeout.Amino
-    | MsgTimeoutOnClose.Amino;
-
   export type Data =
     | MsgChannelOpenInit.Data
     | MsgChannelOpenTry.Data

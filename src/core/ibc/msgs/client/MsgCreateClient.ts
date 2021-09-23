@@ -6,7 +6,7 @@ import { MsgCreateClient as MsgCreateClient_pb } from '@terra-money/terra.proto/
  * MsgCreateClient defines a message to create an IBC client
  */
 export class MsgCreateClient extends JSONSerializable<
-  MsgCreateClient.Amino,
+  any,
   MsgCreateClient.Data,
   MsgCreateClient.Proto
 > {
@@ -30,7 +30,7 @@ export class MsgCreateClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgCreateClient.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -79,14 +79,6 @@ export class MsgCreateClient extends JSONSerializable<
 }
 
 export namespace MsgCreateClient {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgCreateClient';
-    value: {
-      client_state?: any;
-      consensus_state?: any;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgCreateClient';
     client_state?: any;

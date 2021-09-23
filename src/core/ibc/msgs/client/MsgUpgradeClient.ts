@@ -6,7 +6,7 @@ import { MsgUpgradeClient as MsgUpgradeClient_pb } from '@terra-money/terra.prot
  * MsgUpgradeClient defines an sdk.Msg to upgrade an IBC client to a new client state
  */
 export class MsgUpgradeClient extends JSONSerializable<
-  MsgUpgradeClient.Amino,
+  any,
   MsgUpgradeClient.Data,
   MsgUpgradeClient.Proto
 > {
@@ -34,7 +34,7 @@ export class MsgUpgradeClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgUpgradeClient.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -123,17 +123,6 @@ export class MsgUpgradeClient extends JSONSerializable<
 }
 
 export namespace MsgUpgradeClient {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgUpgradeClient';
-    value: {
-      client_id: string;
-      client_state: any;
-      consensus_state: any;
-      proof_upgrade_client: string;
-      proof_upgrade_consensus_state: string;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgUpgradeClient';
     client_id: string;

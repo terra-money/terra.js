@@ -18,6 +18,7 @@ import { CompactBitArray as CompactBitArray_pb } from '@terra-money/terra.proto/
 import { Msg } from './Msg';
 import { Fee } from './Fee';
 import * as Long from 'long';
+import { SignatureV2 } from './SignatureV2';
 
 export class Tx {
   constructor(
@@ -25,6 +26,20 @@ export class Tx {
     public auth_info: AuthInfo,
     public signatures: string[]
   ) {}
+
+  public static fromAmino(data: Tx.Amino): Tx {
+    const signatures = data.value.signatures.map(s => SignatureV2.fromAmino(s));
+
+    return new Tx(
+      new TxBody(
+        data.value.msg.map(m => Msg.fromAmino(m)),
+        data.value.memo,
+        Number.parseInt(data.value.timeout_height)
+      ),
+      new AuthInfo([], Fee.fromAmino(data.value.fee)),
+      signatures.map(s => s.data.single?.signature || '')
+    );
+  }
 
   public static fromData(data: Tx.Data): Tx {
     return new Tx(
@@ -68,6 +83,17 @@ export class Tx {
 }
 
 export namespace Tx {
+  export interface Amino {
+    type: 'core/StdTx';
+    value: {
+      msg: Msg.Amino[];
+      fee: Fee.Amino;
+      signatures: SignatureV2.Amino[];
+      memo: string;
+      timeout_height: string;
+    };
+  }
+
   export interface Data {
     body: TxBody.Data;
     auth_info: AuthInfo.Data;

@@ -10,7 +10,7 @@ import Long from 'long';
  * MsgTimeout receives timed-out packet
  */
 export class MsgTimeout extends JSONSerializable<
-  MsgTimeout.Amino,
+  any,
   MsgTimeout.Data,
   MsgTimeout.Proto
 > {
@@ -36,7 +36,7 @@ export class MsgTimeout extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgTimeout.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -115,16 +115,6 @@ export class MsgTimeout extends JSONSerializable<
 }
 
 export namespace MsgTimeout {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgTimeout';
-    value: {
-      packet?: Packet.Amino;
-      proof_unreceived: string;
-      proof_height?: Height.Amino;
-      next_sequence_recv: number;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeout';
     packet?: Packet.Data;

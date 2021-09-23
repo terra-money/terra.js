@@ -108,10 +108,7 @@ export namespace Msg {
     | SlashingMsg.Amino
     | StakingMsg.Amino
     | WasmMsg.Amino
-    | IbcTransferMsg.Amino
-    | IbcClientMsg.Amino
-    | IbcConnectionMsg.Amino
-    | IbcChannelMsg.Amino;
+    | IbcTransferMsg.Amino;
 
   export type Data =
     | BankMsg.Data
@@ -236,48 +233,6 @@ export namespace Msg {
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
         return MsgTransfer.fromAmino(data);
-
-      // ibc-client
-      case 'cosmos-sdk/MsgCreateClient':
-        return MsgCreateClient.fromAmino(data);
-      case 'cosmos-sdk/MsgUpdateClient':
-        return MsgUpdateClient.fromAmino(data);
-      case 'cosmos-sdk/MsgUpgradeClient':
-        return MsgUpgradeClient.fromAmino(data);
-      case 'cosmos-sdk/MsgSubmitMisbehaviour':
-        return MsgSubmitMisbehaviour.fromAmino(data);
-
-      // ibc-connection
-      case 'cosmos-sdk/MsgConnectionOpenInit':
-        return MsgConnectionOpenInit.fromAmino(data);
-      case 'cosmos-sdk/MsgConnectionOpenTry':
-        return MsgConnectionOpenTry.fromAmino(data);
-      case 'cosmos-sdk/MsgConnectionOpenConfirm':
-        return MsgConnectionOpenConfirm.fromAmino(data);
-      case 'cosmos-sdk/MsgConnectionOpenAck':
-        return MsgConnectionOpenAck.fromAmino(data);
-
-      // ibc-channel
-      case 'cosmos-sdk/MsgChannelOpenInit':
-        return MsgChannelOpenInit.fromAmino(data);
-      case 'cosmos-sdk/MsgChannelOpenTry':
-        return MsgChannelOpenTry.fromAmino(data);
-      case 'cosmos-sdk/MsgChannelOpenConfirm':
-        return MsgChannelOpenConfirm.fromAmino(data);
-      case 'cosmos-sdk/MsgChannelOpenAck':
-        return MsgChannelOpenAck.fromAmino(data);
-      case 'cosmos-sdk/MsgChannelCloseInit':
-        return MsgChannelCloseInit.fromAmino(data);
-      case 'cosmos-sdk/MsgChannelCloseConfirm':
-        return MsgChannelCloseConfirm.fromAmino(data);
-      case 'cosmos-sdk/MsgRecvPacket':
-        return MsgRecvPacket.fromAmino(data);
-      case 'cosmos-sdk/MsgAcknowledgement':
-        return MsgAcknowledgement.fromAmino(data);
-      case 'cosmos-sdk/MsgTimeout':
-        return MsgTimeout.fromAmino(data);
-      case 'cosmos-sdk/MsgTimeoutOnClose':
-        return MsgTimeoutOnClose.fromAmino(data);
     }
   }
   export function fromData(data: Msg.Data): Msg {

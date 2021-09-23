@@ -7,7 +7,7 @@ import { MsgChannelCloseInit as MsgChannelCloseInit_pb } from '@terra-money/terr
  * MsgChannelCloseInit defines a msg sent by a Relayer to Chain A to close a channel with Chain B.
  */
 export class MsgChannelCloseInit extends JSONSerializable<
-  MsgChannelCloseInit.Amino,
+  any,
   MsgChannelCloseInit.Data,
   MsgChannelCloseInit.Proto
 > {
@@ -29,7 +29,7 @@ export class MsgChannelCloseInit extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelCloseInit.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -78,14 +78,6 @@ export class MsgChannelCloseInit extends JSONSerializable<
 }
 
 export namespace MsgChannelCloseInit {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelCloseInit';
-    value: {
-      port_id: string;
-      channel_id: string;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelCloseInit';
     port_id: string;

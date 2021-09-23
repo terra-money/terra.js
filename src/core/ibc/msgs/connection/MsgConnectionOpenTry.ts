@@ -11,7 +11,7 @@ import { Height } from '../client/Height';
  *  MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a connection on Chain B.
  */
 export class MsgConnectionOpenTry extends JSONSerializable<
-  MsgConnectionOpenTry.Amino,
+  any,
   MsgConnectionOpenTry.Data,
   MsgConnectionOpenTry.Proto
 > {
@@ -51,7 +51,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgConnectionOpenTry.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -195,23 +195,6 @@ export class MsgConnectionOpenTry extends JSONSerializable<
 }
 
 export namespace MsgConnectionOpenTry {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgConnectionOpenTry';
-    value: {
-      client_id: string;
-      previous_connection_id: string;
-      client_state: any;
-      counterparty?: Counterparty.Amino;
-      delay_period: number;
-      counterparty_versions: Version.Amino[];
-      proof_height?: Height.Amino;
-      proof_init: string;
-      proof_client: string;
-      proof_consensus: string;
-      consensus_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenTry';
     client_id: string;

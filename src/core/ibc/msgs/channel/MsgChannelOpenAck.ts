@@ -8,7 +8,7 @@ import { MsgChannelOpenAck as MsgChannelOpenAck_pb } from '@terra-money/terra.pr
  * MsgChannelOpenAck defines a msg sent by a Relayer to Chain A to acknowledge the change of channel state to TRYOPEN on Chain B.
  */
 export class MsgChannelOpenAck extends JSONSerializable<
-  MsgChannelOpenAck.Amino,
+  any,
   MsgChannelOpenAck.Data,
   MsgChannelOpenAck.Proto
 > {
@@ -38,7 +38,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgChannelOpenAck.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -133,18 +133,6 @@ export class MsgChannelOpenAck extends JSONSerializable<
 }
 
 export namespace MsgChannelOpenAck {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgChannelOpenAck';
-    value: {
-      port_id: string;
-      channel_id: string;
-      counterparty_channel_id: string;
-      counterparty_version: string;
-      proof_try: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgChannelOpenAck';
     port_id: string;

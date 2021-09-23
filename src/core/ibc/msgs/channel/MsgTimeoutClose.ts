@@ -10,7 +10,7 @@ import Long from 'long';
  * MsgTimeoutOnClose timed-out packet upon counterparty channel closure.
  */
 export class MsgTimeoutOnClose extends JSONSerializable<
-  MsgTimeoutOnClose.Amino,
+  any,
   MsgTimeoutOnClose.Data,
   MsgTimeoutOnClose.Proto
 > {
@@ -38,7 +38,7 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgTimeoutOnClose.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -126,17 +126,6 @@ export class MsgTimeoutOnClose extends JSONSerializable<
 }
 
 export namespace MsgTimeoutOnClose {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgTimeoutOnClose';
-    value: {
-      packet?: Packet.Amino;
-      proof_unreceived: string;
-      proof_close: string;
-      proof_height?: Height.Amino;
-      next_sequence_recv: number;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.channel.v1.MsgTimeoutOnClose';
     packet?: Packet.Data;

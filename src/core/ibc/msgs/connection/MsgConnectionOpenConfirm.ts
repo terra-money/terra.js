@@ -9,7 +9,7 @@ import { Height } from '../client/Height';
  * acknowledge the change of connection state to OPEN on Chain A.
  */
 export class MsgConnectionOpenConfirm extends JSONSerializable<
-  MsgConnectionOpenConfirm.Amino,
+  any,
   MsgConnectionOpenConfirm.Data,
   MsgConnectionOpenConfirm.Proto
 > {
@@ -33,7 +33,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): MsgConnectionOpenConfirm.Amino {
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
@@ -96,15 +96,6 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
 }
 
 export namespace MsgConnectionOpenConfirm {
-  export interface Amino {
-    type: 'cosmos-sdk/MsgConnectionOpenConfirm';
-    value: {
-      connection_id: string;
-      proof_ack: string;
-      proof_height?: Height.Amino;
-      signer: AccAddress;
-    };
-  }
   export interface Data {
     '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm';
     connection_id: string;
