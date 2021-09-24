@@ -1,6 +1,5 @@
 import { Denom } from '../Denom';
 import { ParamChange } from '../params/ParamChange';
-import { Convert } from '../../util/convert';
 
 type UnbondingTime = ParamChange.Type<'staking', 'UnbondingTime', number>;
 

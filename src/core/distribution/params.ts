@@ -1,5 +1,4 @@
 import { ParamChange } from '../params/ParamChange';
-import { Convert } from '../../util/convert';
 import { Dec } from '../numeric';
 
 type CommunityTax = ParamChange.Type<'distribution', 'communitytax', Dec>;
