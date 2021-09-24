@@ -28,6 +28,7 @@ wallet
   .createAndSignTx({
     msgs: [send],
     memo: 'test from terra.js!',
+    timeout_height: 14500,
   })
   .then(tx => terra.tx.broadcast(tx))
   .then(result => {

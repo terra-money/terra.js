@@ -26,13 +26,22 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
     public sequence: number,
     public fee: StdFee,
     public msgs: Msg[],
-    public memo: string = ''
+    public memo: string = '',
+    public timeout_height: number = 0
   ) {
     super();
   }
 
   public toData(): StdSignMsg.Data {
-    const { chain_id, account_number, sequence, fee, msgs, memo } = this;
+    const {
+      chain_id,
+      account_number,
+      sequence,
+      fee,
+      msgs,
+      memo,
+      timeout_height,
+    } = this;
     return {
       chain_id,
       account_number: account_number.toString(),
@@ -40,18 +49,29 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
       fee: fee.toData(),
       msgs: msgs.map(m => m.toData()),
       memo,
+      timeout_height:
+        timeout_height !== 0 ? timeout_height.toFixed() : undefined,
     };
   }
 
   public static fromData(data: StdSignMsg.Data): StdSignMsg {
-    const { chain_id, account_number, sequence, fee, msgs, memo } = data;
+    const {
+      chain_id,
+      account_number,
+      sequence,
+      fee,
+      msgs,
+      memo,
+      timeout_height,
+    } = data;
     return new StdSignMsg(
       chain_id,
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0,
       StdFee.fromData(fee),
       msgs.map(m => Msg.fromData(m)),
-      memo
+      memo,
+      Number.parseInt(timeout_height ?? '0')
     );
   }
 
@@ -59,8 +79,8 @@ export class StdSignMsg extends JSONSerializable<StdSignMsg.Data> {
    * You get the [[StdTx]] value from a `StdSignMsg` (without the signature).
    */
   public toStdTx(): StdTx {
-    const { fee, msgs, memo } = this;
-    return new StdTx(msgs, fee, [], memo);
+    const { fee, msgs, memo, timeout_height } = this;
+    return new StdTx(msgs, fee, [], memo, timeout_height);
   }
 }
 
@@ -72,5 +92,6 @@ export namespace StdSignMsg {
     fee: StdFee.Data;
     msgs: Msg.Data[];
     memo: string;
+    timeout_height?: string;
   }
 }
