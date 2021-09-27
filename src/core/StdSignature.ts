@@ -17,20 +17,28 @@ export class StdSignature extends JSONSerializable<StdSignature.Data> {
 
   public static fromData(data: StdSignature.Data): StdSignature {
     const { signature, pub_key } = data;
-    return new StdSignature(signature, PublicKey.fromData(pub_key));
+    return new StdSignature(
+      signature,
+      PublicKey.fromData(
+        pub_key || {
+          type: 'tendermint/PubKeySecp256k1',
+          value: '',
+        }
+      )
+    );
   }
 
   public toData(): StdSignature.Data {
     const { signature, pub_key } = this;
     return {
       signature,
-      pub_key: pub_key.toData(),
+      pub_key: pub_key?.toData(),
     };
   }
 }
 export namespace StdSignature {
   export interface Data {
     signature: string;
-    pub_key: PublicKey.Data;
+    pub_key: PublicKey.Data | null;
   }
 }
