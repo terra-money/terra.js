@@ -74,7 +74,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return new Proposal(
       Number.parseInt(id),
       Proposal.Content.fromData(content),
-      Proposal.StatusMapping[status],
+      status,
       ftr,
       new Date(submit_time),
       new Date(deposit_end_time),
@@ -108,7 +108,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return {
       id: this.id.toFixed(),
       content: this.content.toData(),
-      status: Object.keys(Proposal.StatusMapping).indexOf(status),
+      status,
       final_tally_result: ftr,
       submit_time: this.submit_time.toISOString(),
       deposit_end_time: this.deposit_end_time.toISOString(),
@@ -159,27 +159,18 @@ export namespace Proposal {
   }
 
   export enum Status {
-    NIL = '',
-    DEPOSIT_PERIOD = 'DepositPeriod',
-    VOTING_PERIOD = 'VotingPeriod',
-    PASSED = 'Passed',
-    REJECTED = 'Rejected',
-    FAILED = 'Failed',
+    NIL = 0,
+    DEPOSIT_PERIOD = 1,
+    VOTING_PERIOD = 2,
+    PASSED = 3,
+    REJECTED = 4,
+    FAILED = 5,
   }
-
-  export const StatusMapping: { [key: number]: Status } = {
-    0: Status.NIL,
-    1: Status.DEPOSIT_PERIOD,
-    2: Status.VOTING_PERIOD,
-    3: Status.PASSED,
-    4: Status.REJECTED,
-    5: Status.FAILED,
-  };
 
   export interface Data {
     content: Content.Data;
     id: string;
-    status: number;
+    status: Status;
     final_tally_result?: {
       yes: string;
       abstain: string;
