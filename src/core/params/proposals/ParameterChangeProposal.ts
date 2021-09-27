@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { ParamChanges } from '../ParamChange';
+import { ParamChange, ParamChanges } from '../ParamChange';
 
 /**
  * Describes a proposal for directly altering the value of the module parameters.
@@ -40,10 +40,14 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChanges
+    changes: ParamChange.Data[] | ParamChanges
   ) {
     super();
-    this.changes = changes;
+    if (Array.isArray(changes)) {
+      this.changes = ParamChanges.fromData(changes);
+    } else {
+      this.changes = changes;
+    }
   }
 
   public static fromData(

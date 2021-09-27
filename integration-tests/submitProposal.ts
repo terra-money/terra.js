@@ -5,7 +5,6 @@ import {
   // TextProposal,
   // CommunityPoolSpendProposal,
   ParameterChangeProposal,
-  ParamChanges,
 } from '../src';
 
 const client = new LCDClient({
@@ -30,7 +29,7 @@ async function main() {
     new ParameterChangeProposal(
       title,
       description,
-      ParamChanges.fromData(changes)
+      changes
     ),
     { uluna: 10000000 },
     wallet.key.accAddress
