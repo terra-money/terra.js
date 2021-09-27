@@ -112,7 +112,7 @@ export class GovAPI extends BaseAPI {
       .get<{
         proposals: Proposal.Data[];
         pagination: Pagination;
-      }>(`/gov/proposals`, params)
+      }>(`/cosmos/gov/v1beta1/proposals`, params)
       .then(d => [d.proposals.map(Proposal.fromData), d.pagination]);
   }
 
