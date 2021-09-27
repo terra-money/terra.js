@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MintParamChanges | Terra.js</title>
+	<title>OracleWhitelist | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,13 +53,13 @@
 					<a href="../modules.html">Terra.js</a>
 				</li>
 				<li>
-					<a href="../modules/core_mint_params.html">core/mint/params</a>
+					<a href="../modules/client_lcd_api_OracleAPI.html">client/lcd/api/OracleAPI</a>
 				</li>
 				<li>
-					<a href="core_mint_params.MintParamChanges-1.html">MintParamChanges</a>
+					<a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html">OracleWhitelist</a>
 				</li>
 			</ul>
-			<h1>Interface MintParamChanges</h1>
+			<h1>Interface OracleWhitelist</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">MintParamChanges</span>
+						<span class="target">OracleWhitelist</span>
 					</li>
 				</ul>
 			</section>
@@ -81,7 +81,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core_mint_params.MintParamChanges-1.html#mint" class="tsd-kind-icon">mint</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html#tobin_tax" class="tsd-kind-icon">tobin_<wbr>tax</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,37 +91,24 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="mint" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> mint</h3>
-					<div class="tsd-signature tsd-kind-icon">mint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>BlocksPerYear<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>GoalBonded<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a><span class="tsd-signature-symbol">; </span>InflationMax<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a><span class="tsd-signature-symbol">; </span>InflationMin<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a><span class="tsd-signature-symbol">; </span>InflationRateChange<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a><span class="tsd-signature-symbol">; </span>MintDenom<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/fe80357/src/core/mint/params.ts#L32">src/core/mint/params.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/c8dcb24/src/client/lcd/api/OracleAPI.ts#L15">client/lcd/api/OracleAPI.ts:15</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Blocks<wbr>Per<wbr>Year<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Goal<wbr>Bonded<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Inflation<wbr>Max<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Inflation<wbr>Min<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Inflation<wbr>Rate<wbr>Change<span class="tsd-signature-symbol">?: </span><a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> Mint<wbr>Denom<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tobin_tax" class="tsd-anchor"></a>
+					<h3>tobin_<wbr>tax</h3>
+					<div class="tsd-signature tsd-kind-icon">tobin_<wbr>tax<span class="tsd-signature-symbol">:</span> <a href="../classes/core_numeric.Dec.html" class="tsd-signature-type" data-tsd-kind="Class">Dec</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/c8dcb24/src/client/lcd/api/OracleAPI.ts#L16">client/lcd/api/OracleAPI.ts:16</a></li>
 						</ul>
-					</div>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -131,13 +119,13 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/core_mint_params.html">core/mint/params</a>
+						<a href="../modules/client_lcd_api_OracleAPI.html">client/lcd/api/<wbr>OracleAPI</a>
 						<ul>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/core_mint_params.MintParamChange.html">Mint<wbr>Param<wbr>Change</a>
+								<a href="../modules/client_lcd_api_OracleAPI.OracleParams.html">Oracle<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/core_mint_params.MintParamChanges.html">Mint<wbr>Param<wbr>Changes</a>
+								<a href="../modules/client_lcd_api_OracleAPI.OracleWhitelist.html">Oracle<wbr>Whitelist</a>
 							</li>
 						</ul>
 					</li>
@@ -145,21 +133,27 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/client_lcd_api_OracleAPI.OracleAPI.html" class="tsd-kind-icon">OracleAPI</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_OracleAPI.OracleParams-1.html" class="tsd-kind-icon">Oracle<wbr>Params</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="core_mint_params.MintParamChanges-1.html" class="tsd-kind-icon">Mint<wbr>Param<wbr>Changes</a>
+						<a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html" class="tsd-kind-icon">Oracle<wbr>Whitelist</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="core_mint_params.MintParamChanges-1.html#mint" class="tsd-kind-icon">mint</a>
+								<a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="client_lcd_api_OracleAPI.OracleWhitelist-1.html#tobin_tax" class="tsd-kind-icon">tobin_<wbr>tax</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/core_mint_params.html#MintParamChange-1" class="tsd-kind-icon">Mint<wbr>Param<wbr>Change</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

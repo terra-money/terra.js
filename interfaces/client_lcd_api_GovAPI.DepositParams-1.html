@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>core/wasm/params | Terra.js</title>
+	<title>DepositParams | Terra.js</title>
 	<meta name="description" content="Documentation for Terra.js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,53 +53,72 @@
 					<a href="../modules.html">Terra.js</a>
 				</li>
 				<li>
-					<a href="core_wasm_params.html">core/wasm/params</a>
+					<a href="../modules/client_lcd_api_GovAPI.html">client/lcd/api/GovAPI</a>
+				</li>
+				<li>
+					<a href="client_lcd_api_GovAPI.DepositParams-1.html">DepositParams</a>
 				</li>
 			</ul>
-			<h1>Module core/wasm/params</h1>
+			<h1>Interface DepositParams</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">DepositParams</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Namespaces</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="core_wasm_params.WasmParamChange.html" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Change</a></li>
-								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="core_wasm_params.WasmParamChanges.html" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Changes</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/core_wasm_params.WasmParamChanges-1.html" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Changes</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="core_wasm_params.html#WasmParamChange-1" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Change</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_GovAPI.DepositParams-1.html#max_deposit_period" class="tsd-kind-icon">max_<wbr>deposit_<wbr>period</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="client_lcd_api_GovAPI.DepositParams-1.html#min_deposit" class="tsd-kind-icon">min_<wbr>deposit</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="WasmParamChange-1" class="tsd-anchor"></a>
-					<h3>Wasm<wbr>Param<wbr>Change</h3>
-					<div class="tsd-signature tsd-kind-icon">Wasm<wbr>Param<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MaxContractSize</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MaxContractGas</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MaxContractMsgSize</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="max_deposit_period" class="tsd-anchor"></a>
+					<h3>max_<wbr>deposit_<wbr>period</h3>
+					<div class="tsd-signature tsd-kind-icon">max_<wbr>deposit_<wbr>period<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/fe80357/src/core/wasm/params.ts#L14">src/core/wasm/params.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/c8dcb24/src/client/lcd/api/GovAPI.ts#L43">client/lcd/api/GovAPI.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Amount of time (in seconds) a proposal can take to acquire the necessary deposits to enter voting stage, after being submitted.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="min_deposit" class="tsd-anchor"></a>
+					<h3>min_<wbr>deposit</h3>
+					<div class="tsd-signature tsd-kind-icon">min_<wbr>deposit<span class="tsd-signature-symbol">:</span> <a href="../classes/core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/c8dcb24/src/client/lcd/api/GovAPI.ts#L40">client/lcd/api/GovAPI.ts:40</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Minimum deposit to enter voting.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -110,13 +129,22 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="core_wasm_params.html">core/wasm/params</a>
+						<a href="../modules/client_lcd_api_GovAPI.html">client/lcd/api/<wbr>GovAPI</a>
 						<ul>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_wasm_params.WasmParamChange.html">Wasm<wbr>Param<wbr>Change</a>
+								<a href="../modules/client_lcd_api_GovAPI.DepositParams.html">Deposit<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="core_wasm_params.WasmParamChanges.html">Wasm<wbr>Param<wbr>Changes</a>
+								<a href="../modules/client_lcd_api_GovAPI.GovParams.html">Gov<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/client_lcd_api_GovAPI.Tally.html">Tally</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/client_lcd_api_GovAPI.TallyParams.html">Tally<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/client_lcd_api_GovAPI.VotingParams.html">Voting<wbr>Params</a>
 							</li>
 						</ul>
 					</li>
@@ -124,11 +152,35 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/core_wasm_params.WasmParamChanges-1.html" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Changes</a>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/client_lcd_api_GovAPI.GovAPI.html" class="tsd-kind-icon">GovAPI</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="core_wasm_params.html#WasmParamChange-1" class="tsd-kind-icon">Wasm<wbr>Param<wbr>Change</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_GovAPI.DepositParams-1.html" class="tsd-kind-icon">Deposit<wbr>Params</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="client_lcd_api_GovAPI.DepositParams-1.html#max_deposit_period" class="tsd-kind-icon">max_<wbr>deposit_<wbr>period</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="client_lcd_api_GovAPI.DepositParams-1.html#min_deposit" class="tsd-kind-icon">min_<wbr>deposit</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_GovAPI.GovParams-1.html" class="tsd-kind-icon">Gov<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_GovAPI.Tally-1.html" class="tsd-kind-icon">Tally</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_GovAPI.TallyParams-1.html" class="tsd-kind-icon">Tally<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="client_lcd_api_GovAPI.VotingParams-1.html" class="tsd-kind-icon">Voting<wbr>Params</a>
 					</li>
 				</ul>
 			</nav>
@@ -150,6 +202,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
