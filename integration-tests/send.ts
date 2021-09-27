@@ -21,7 +21,7 @@ const wallet = terra.wallet(mk);
 const send = new MsgSend(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-  { uusd: 1312029 }
+  { ukrw: 13120 }
 );
 
 wallet
@@ -30,7 +30,13 @@ wallet
     memo: 'test from terra.js!',
     timeout_height: 14500,
   })
-  .then(tx => terra.tx.broadcast(tx))
+  .then(async tx => {
+    const hash = await terra.tx.hash(tx);
+    const result = await terra.tx.broadcast(tx);
+    console.log(`Encode hash: ${hash}`)
+    console.log(`Result hash: ${result.txhash}`)
+    return result
+  })
   .then(result => {
     console.log(`TX raw_log: ${result.raw_log}`);
     console.log(`TX hash: ${result.txhash}`);

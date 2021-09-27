@@ -9,7 +9,7 @@ import {
   Numeric,
   AccAddress,
 } from '../../../core';
-import { hashAmino } from '../../../util/hash';
+import { hashTxBytes } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams } from '../APIRequester';
@@ -77,7 +77,6 @@ export function isTxError<
 export interface BroadcastOptions {
   sequences?: number[];
   feeGranter?: AccAddress;
-  timeoutHeight?: number;
 }
 
 export namespace BlockTxBroadcastResult {
@@ -212,7 +211,7 @@ export class TxAPI extends BaseAPI {
     if (!txs) {
       return [];
     } else {
-      const txhashes = txs.map(txdata => hashAmino(txdata));
+      const txhashes = txs.map(txdata => hashTxBytes(txdata));
       return Promise.all(txhashes.map(txhash => this.txInfo(txhash)));
     }
   }
@@ -274,9 +273,13 @@ export class TxAPI extends BaseAPI {
    * Encode a transaction to Amino-encoding
    * @param tx transaction to encode
    */
-  public async encode(tx: StdTx): Promise<string> {
+  public async encode(tx: StdTx, options?: BroadcastOptions): Promise<string> {
     return this.c
-      .postRaw<{ tx: string }>(`/txs/encode`, tx.toData())
+      .postRaw<{ tx: string }>(`/txs/encode`, {
+        tx: tx.toData().value,
+        sequences: options?.sequences?.map(s => s.toFixed()),
+        fee_granter: options?.feeGranter,
+      })
       .then(d => d.tx);
   }
 
@@ -286,7 +289,7 @@ export class TxAPI extends BaseAPI {
    */
   public async hash(tx: StdTx): Promise<string> {
     const amino = await this.encode(tx);
-    return hashAmino(amino);
+    return hashTxBytes(amino);
   }
 
   private async _broadcast<T>(
@@ -294,14 +297,12 @@ export class TxAPI extends BaseAPI {
     mode: Broadcast,
     options?: BroadcastOptions
   ): Promise<T> {
-    const data = {
+    return this.c.postRaw<any>(`/txs`, {
       tx: tx.toData().value,
       mode,
       sequences: options?.sequences?.map(s => s.toFixed()),
       fee_granter: options?.feeGranter,
-      timeout_height: options?.timeoutHeight?.toFixed(),
-    };
-    return this.c.postRaw<any>(`/txs`, data);
+    });
   }
 
   /**

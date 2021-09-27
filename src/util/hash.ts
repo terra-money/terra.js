@@ -11,9 +11,9 @@ function byteArrayToWordArray(ba: Uint8Array): CryptoJS.LibWordArray {
 }*/
 
 /**
- * Calculates the transaction hash from Amino-encoded string.
- * @param txData Amino-encoded string (base64)
+ * Calculates the transaction hash from Proto-encoded string.
+ * @param txData Proto-encoded string (base64)
  */
-export function hashAmino(txData: string): string {
+export function hashTxBytes(txData: string): string {
   return SHA256.hash(Base64.parse(txData)).toString().toUpperCase();
 }
