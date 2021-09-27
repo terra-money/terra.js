@@ -46,11 +46,11 @@ export class ParameterChangeProposal extends JSONSerializable<
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChange.Amino[] | ParamChanges
+    changes: ParamChange.Data[] | ParamChanges
   ) {
     super();
     if (Array.isArray(changes)) {
-      this.changes = ParamChanges.fromAmino(changes);
+      this.changes = ParamChanges.fromData(changes);
     } else {
       this.changes = changes;
     }
