@@ -113,4 +113,26 @@ describe('Coins', () => {
       new Coins({ ukrw: '178.05' })
     );
   });
+
+  it('is iterable', () => {
+    const gasPrices = new Coins({
+      uluna: '0.15',
+      usdr: '0.1018',
+      uusd: '0.15',
+      ukrw: '178.05',
+      umnt: '431.6259',
+      ueur: '0.125',
+      ucny: '0.97',
+      ujpy: '16.0',
+      ugbp: '0.11',
+      uinr: '11.0',
+      ucad: '0.19',
+      uchf: '0.13',
+      uaud: '0.19',
+      usgd: '0.2',
+    });
+
+    // shouldn't fail or ts giving errors on type
+    expect(Array.isArray(Array.from(gasPrices))).toBe(true);
+  });
 });

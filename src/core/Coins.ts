@@ -10,9 +10,22 @@ import { Numeric } from './numeric';
  */
 export class Coins
   extends JSONSerializable<Coins.Amino, Coins.Data, Coins.Proto>
-  implements Numeric<Coins>
+  implements Numeric<Coins>, Iterable<Coin.Data>
 {
   private _coins: Coins.ReprDict;
+
+  // implement iterator interface for interop
+  [Symbol.iterator]() {
+    let index = -1;
+    const data = this.toArray();
+
+    return {
+      next: () => ({
+        value: data[++index],
+        done: (index === data.length) as true,
+      }),
+    };
+  }
 
   /**
    * Converts the Coins information to a comma-separated list.
