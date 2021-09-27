@@ -1,15 +1,14 @@
 import {
-  Dec,
   LCDClient,
   MnemonicKey,
   MsgSubmitProposal,
-  TextProposal,
-  CommunityPoolSpendProposal,
+  // TextProposal,
+  // CommunityPoolSpendProposal,
   ParameterChangeProposal,
 } from '../src';
 
 const client = new LCDClient({
-  chainID: 'bombay-9',
+  chainID: 'bombay-11',
   URL: 'https://bombay-lcd.terra.dev',
 });
 
@@ -21,9 +20,17 @@ const mk = new MnemonicKey({
 
 const wallet = client.wallet(mk);
 
+const title = 'Test proposal';
+const description = 'Hello world';
+const changes = [{ subspace: 'staking', key: 'MaxValidators', value: '130' }];
+
 async function main() {
   const execute = new MsgSubmitProposal(
-    new TaxRateUpdateProposal('tax rate test', 'tax rate test', new Dec(0.2)),
+    new ParameterChangeProposal(
+      title,
+      description,
+      changes
+    ),
     { uluna: 10000000 },
     wallet.key.accAddress
   );

@@ -9,8 +9,19 @@ import {
   AggregateExchangeRatePrevote,
   AggregateExchangeRateVote,
 } from '../../../core';
-
 import { APIParams } from '../APIRequester';
+
+export interface OracleWhitelist {
+  name: string;
+  tobin_tax: Dec;
+}
+
+export namespace OracleWhitelist {
+  export interface Data {
+    name: string;
+    tobin_tax: string;
+  }
+}
 
 export interface OracleParams {
   /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of LUNA. */

@@ -1,4 +1,5 @@
-import { Key } from './Key';
+import { Key, pubKeyFromPublicKey } from './Key';
+import { bech32 } from 'bech32';
 import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
@@ -14,8 +15,8 @@ interface CLIKeyParams {
 }
 
 /**
- * Key implementation that uses `terracli` to sign transactions. Keys should be registered
- * in `terracli`'s OS keyring.
+ * Key implementation that uses `terrad` to sign transactions. Keys should be registered
+ * in `terrad`'s OS keyring.
  *
  * NOTE: This Key implementation overrides `createSignature()` and only provide a shim
  * for `sign()`.
@@ -26,10 +27,10 @@ export class CLIKey extends Key {
 
   /**
    *
-   * @param keyName name of the key for terracli
+   * @param keyName name of the key for terrad
    * @param multisig (optional) address of multisig account on behalf of which transaction shall be signed
-   * @param cliPath (optional) path of terracli
-   * @param home (optional) home option for terracli
+   * @param cliPath (optional) path of terrad
+   * @param home (optional) home option for terrad
    */
   constructor(private params: CLIKeyParams) {
     super();
@@ -48,8 +49,15 @@ export class CLIKey extends Key {
         this.generateCommand(`keys show ${this.params.keyName}`)
       ).toString()
     );
+
+    const publicKeyString = JSON.parse(details.pubkey).key;
+    const publicKey = Buffer.from(publicKeyString, 'base64');
+
     this._accAddress = details.address;
-    this._accPubKey = details.pubkey;
+    this._accPubKey = bech32.encode(
+      'terrapub',
+      Array.from(pubKeyFromPublicKey(publicKey))
+    );
   }
 
   /**
