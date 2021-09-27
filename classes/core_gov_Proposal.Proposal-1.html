@@ -104,7 +104,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#deposit_end_time" class="tsd-kind-icon">deposit_<wbr>end_<wbr>time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#final_tally_result" class="tsd-kind-icon">final_<wbr>tally_<wbr>result</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#proposal_status" class="tsd-kind-icon">proposal_<wbr>status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#status" class="tsd-kind-icon">status</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#submit_time" class="tsd-kind-icon">submit_<wbr>time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#total_deposit" class="tsd-kind-icon">total_<wbr>deposit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_gov_Proposal.Proposal-1.html#voting_end_time" class="tsd-kind-icon">voting_<wbr>end_<wbr>time</a></li>
@@ -128,14 +128,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Proposal<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, content<span class="tsd-signature-symbol">: </span><a href="../modules/core_gov_Proposal.Proposal.Content.html" class="tsd-signature-type" data-tsd-kind="Namespace">Content</a>, proposal_status<span class="tsd-signature-symbol">: </span><a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a>, final_tally_result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/core_gov_Proposal.Proposal.FinalTallyResult.html" class="tsd-signature-type" data-tsd-kind="Interface">FinalTallyResult</a>, submit_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, deposit_end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, total_deposit<span class="tsd-signature-symbol">: </span><a href="core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a>, voting_start_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, voting_end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_gov_Proposal.Proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Proposal<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, content<span class="tsd-signature-symbol">: </span><a href="../modules/core_gov_Proposal.Proposal.Content.html" class="tsd-signature-type" data-tsd-kind="Namespace">Content</a>, status<span class="tsd-signature-symbol">: </span><a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a>, final_tally_result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/core_gov_Proposal.Proposal.FinalTallyResult.html" class="tsd-signature-type" data-tsd-kind="Interface">FinalTallyResult</a>, submit_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, deposit_end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, total_deposit<span class="tsd-signature-symbol">: </span><a href="core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a>, voting_start_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span>, voting_end_time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_gov_Proposal.Proposal-1.html" class="tsd-signature-type" data-tsd-kind="Class">Proposal</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/254de79/src/core/gov/Proposal.ts#L25">core/gov/Proposal.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/711242a/src/core/gov/Proposal.ts#L29">core/gov/Proposal.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -157,7 +157,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>proposal_status: <a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a></h5>
+									<h5>status: <a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>proposal&#39;s status</p>
@@ -249,9 +249,9 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="proposal_status" class="tsd-anchor"></a>
-					<h3>proposal_<wbr>status</h3>
-					<div class="tsd-signature tsd-kind-icon">proposal_<wbr>status<span class="tsd-signature-symbol">:</span> <a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a></div>
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <a href="../enums/core_gov_Proposal.Proposal.Status.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Status</a></div>
 					<aside class="tsd-sources">
 					</aside>
 				</section>
@@ -297,7 +297,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#toData">toData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/254de79/src/core/gov/Proposal.ts#L83">core/gov/Proposal.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/711242a/src/core/gov/Proposal.ts#L87">core/gov/Proposal.ts:87</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/core_gov_Proposal.Proposal.Data.html" class="tsd-signature-type" data-tsd-kind="Interface">Data</a></h4>
@@ -315,7 +315,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#toJSON">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/254de79/src/util/json.ts#L23">util/json.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/711242a/src/util/json.ts#L23">util/json.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -332,7 +332,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/254de79/src/core/gov/Proposal.ts#L39">core/gov/Proposal.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/711242a/src/core/gov/Proposal.ts#L43">core/gov/Proposal.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -386,7 +386,7 @@
 								<a href="core_gov_Proposal.Proposal-1.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="core_gov_Proposal.Proposal-1.html#proposal_status" class="tsd-kind-icon">proposal_<wbr>status</a>
+								<a href="core_gov_Proposal.Proposal-1.html#status" class="tsd-kind-icon">status</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_gov_Proposal.Proposal-1.html#submit_time" class="tsd-kind-icon">submit_<wbr>time</a>
