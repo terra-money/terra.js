@@ -1,4 +1,4 @@
-import { PublicKey } from './PublicKey';
+import { PublicKey, SimplePublicKey } from './PublicKey';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import {
   SignMode as SignMode_pb,
@@ -208,7 +208,7 @@ export class SignerInfo {
 
   public static fromData(data: SignerInfo.Data): SignerInfo {
     return new SignerInfo(
-      PublicKey.fromData(data.public_key),
+      PublicKey.fromData(data.public_key ?? new SimplePublicKey('').toData()),
       Number.parseInt(data.sequence),
       ModeInfo.fromData(data.mode_info)
     );
@@ -218,14 +218,14 @@ export class SignerInfo {
     const { public_key, sequence, mode_info } = this;
     return {
       mode_info: mode_info.toData(),
-      public_key: public_key.toData(),
+      public_key: public_key?.toData() || null,
       sequence: sequence.toFixed(),
     };
   }
 
   public static fromProto(proto: SignerInfo.Proto): SignerInfo {
     return new SignerInfo(
-      PublicKey.fromProto(proto.publicKey as Any),
+      PublicKey.fromProto(proto.publicKey ?? new SimplePublicKey('').packAny()),
       proto.sequence.toNumber(),
       ModeInfo.fromProto(proto.modeInfo as ModeInfo_pb)
     );
@@ -235,7 +235,7 @@ export class SignerInfo {
     const { public_key, sequence, mode_info } = this;
     return SignerInfo_pb.fromPartial({
       modeInfo: mode_info.toProto(),
-      publicKey: public_key.packAny(),
+      publicKey: public_key?.packAny(),
       sequence: Long.fromNumber(sequence),
     });
   }
@@ -243,7 +243,7 @@ export class SignerInfo {
 
 export namespace SignerInfo {
   export interface Data {
-    public_key: PublicKey.Data;
+    public_key: PublicKey.Data | null;
     mode_info: ModeInfo.Data;
     sequence: string;
   }

@@ -23,7 +23,7 @@ export class ParamChanges extends JSONSerializable<
   }
 
   public toData(): ParamChanges.Data {
-    return this.paramChanges.map(c => c.toAmino());
+    return this.paramChanges.map(c => c.toData());
   }
 
   public static fromProto(proto: ParamChanges.Proto | null): ParamChanges {
