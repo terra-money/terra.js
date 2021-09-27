@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../../util/json';
-import { ParamChange, ParamChanges } from '../ParamChange';
+import { ParamChanges } from '../ParamChange';
 
 /**
  * Describes a proposal for directly altering the value of the module parameters.
@@ -40,10 +40,10 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
   constructor(
     public title: string,
     public description: string,
-    changes: ParamChange.Data[]
+    changes: ParamChanges
   ) {
     super();
-    this.changes = ParamChanges.fromData(changes);
+    this.changes = changes;
   }
 
   public static fromData(
@@ -52,7 +52,11 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
     const {
       value: { title, description, changes },
     } = data;
-    return new ParameterChangeProposal(title, description, changes);
+    return new ParameterChangeProposal(
+      title,
+      description,
+      ParamChanges.fromData(changes)
+    );
   }
 
   public toData(): ParameterChangeProposal.Data {
@@ -62,7 +66,7 @@ export class ParameterChangeProposal extends JSONSerializable<ParameterChangePro
       value: {
         title,
         description,
-        changes: ParamChanges.toData(changes),
+        changes: changes.toData(),
       },
     };
   }
@@ -74,7 +78,7 @@ export namespace ParameterChangeProposal {
     value: {
       title: string;
       description: string;
-      changes: ParamChange.Data[];
+      changes: ParamChanges.Data;
     };
   }
 }
