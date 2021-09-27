@@ -5,7 +5,7 @@ import {
   // TextProposal,
   // CommunityPoolSpendProposal,
   ParameterChangeProposal,
-  ParamChange
+  ParamChanges,
 } from '../src';
 
 const client = new LCDClient({
@@ -21,15 +21,17 @@ const mk = new MnemonicKey({
 
 const wallet = client.wallet(mk);
 
-const title = "Test proposal"
-const description = "Hello world"
-const changes: ParamChange.Data[] = [
-  { subspace: "staking", key: "MaxValidators", value: "130" },
-]
+const title = 'Test proposal';
+const description = 'Hello world';
+const changes = [{ subspace: 'staking', key: 'MaxValidators', value: '130' }];
 
 async function main() {
   const execute = new MsgSubmitProposal(
-    new ParameterChangeProposal(title, description, changes),
+    new ParameterChangeProposal(
+      title,
+      description,
+      ParamChanges.fromData(changes)
+    ),
     { uluna: 10000000 },
     wallet.key.accAddress
   );
