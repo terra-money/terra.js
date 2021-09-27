@@ -28,9 +28,7 @@ import { ParamChange, ParamChanges } from '../ParamChange';
  * const msg = new MsgSubmitProposal();
  * ```
  */
-export class ParameterChangeProposal extends JSONSerializable<
-  ParameterChangeProposal.Data
-> {
+export class ParameterChangeProposal extends JSONSerializable<ParameterChangeProposal.Data> {
   changes: ParamChanges;
 
   /**
@@ -45,7 +43,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     changes: ParamChange.Data[] | ParamChanges
   ) {
     super();
-    if (changes instanceof Array) {
+    if (Array.isArray(changes)) {
       this.changes = ParamChanges.fromData(changes);
     } else {
       this.changes = changes;
@@ -72,7 +70,7 @@ export class ParameterChangeProposal extends JSONSerializable<
       value: {
         title,
         description,
-        changes: ParamChanges.toData(changes),
+        changes: changes.toData(),
       },
     };
   }
@@ -84,7 +82,7 @@ export namespace ParameterChangeProposal {
     value: {
       title: string;
       description: string;
-      changes: ParamChange.Data[];
+      changes: ParamChanges.Data;
     };
   }
 }
