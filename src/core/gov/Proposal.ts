@@ -4,6 +4,10 @@ import { JSONSerializable } from '../../util/json';
 import { CommunityPoolSpendProposal } from '../distribution/proposals';
 import { ParameterChangeProposal } from '../params/proposals';
 import { TextProposal } from './proposals';
+import {
+  SoftwareUpgradeProposal,
+  CancelSoftwareUpgradeProposal,
+} from '../upgrade/proposals';
 
 /**
  * Stores information pertaining to a submitted proposal, such as its status and time of
@@ -14,7 +18,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
    *
    * @param id proposal's ID
    * @param content content of the proposal
-   * @param proposal_status proposal's status
+   * @param status proposal's status
    * @param final_tally_result tally result
    * @param submit_time time proposal was submitted and deposit period started
    * @param deposit_end_time time deposit period will end
@@ -25,7 +29,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
   constructor(
     public id: number,
     public content: Proposal.Content,
-    public proposal_status: Proposal.Status,
+    public status: Proposal.Status,
     public final_tally_result: Proposal.FinalTallyResult | undefined,
     public submit_time: Date,
     public deposit_end_time: Date,
@@ -40,7 +44,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     const {
       id,
       content,
-      proposal_status,
+      status,
       final_tally_result,
       submit_time,
       deposit_end_time,
@@ -70,7 +74,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return new Proposal(
       Number.parseInt(id),
       Proposal.Content.fromData(content),
-      Proposal.StatusMapping[proposal_status],
+      status,
       ftr,
       new Date(submit_time),
       new Date(deposit_end_time),
@@ -81,7 +85,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
   }
 
   public toData(): Proposal.Data {
-    const { proposal_status, final_tally_result } = this;
+    const { status, final_tally_result } = this;
 
     let ftr:
       | {
@@ -104,9 +108,7 @@ export class Proposal extends JSONSerializable<Proposal.Data> {
     return {
       id: this.id.toFixed(),
       content: this.content.toData(),
-      proposal_status: Object.keys(Proposal.StatusMapping).indexOf(
-        proposal_status
-      ),
+      status,
       final_tally_result: ftr,
       submit_time: this.submit_time.toISOString(),
       deposit_end_time: this.deposit_end_time.toISOString(),
@@ -128,13 +130,17 @@ export namespace Proposal {
   export type Content =
     | TextProposal
     | CommunityPoolSpendProposal
-    | ParameterChangeProposal;
+    | ParameterChangeProposal
+    | SoftwareUpgradeProposal
+    | CancelSoftwareUpgradeProposal;
 
   export namespace Content {
     export type Data =
       | TextProposal.Data
       | CommunityPoolSpendProposal.Data
-      | ParameterChangeProposal.Data;
+      | ParameterChangeProposal.Data
+      | SoftwareUpgradeProposal.Data
+      | CancelSoftwareUpgradeProposal.Data;
 
     export function fromData(data: Proposal.Content.Data): Proposal.Content {
       switch (data.type) {
@@ -144,34 +150,27 @@ export namespace Proposal {
           return CommunityPoolSpendProposal.fromData(data);
         case 'params/ParameterChangeProposal':
           return ParameterChangeProposal.fromData(data);
-        // case 'upgrade/SoftwareUpgradeProposal':
-        // case 'upgrade/CancelSoftwareUpgradeProposal':
+        case 'upgrade/SoftwareUpgradeProposal':
+          return SoftwareUpgradeProposal.fromData(data);
+        case 'upgrade/CancelSoftwareUpgradeProposal':
+          return CancelSoftwareUpgradeProposal.fromData(data);
       }
     }
   }
 
   export enum Status {
-    NIL = '',
-    DEPOSIT_PERIOD = 'DepositPeriod',
-    VOTING_PERIOD = 'VotingPeriod',
-    PASSED = 'Passed',
-    REJECTED = 'Rejected',
-    FAILED = 'Failed',
+    NIL = 0,
+    DEPOSIT_PERIOD = 1,
+    VOTING_PERIOD = 2,
+    PASSED = 3,
+    REJECTED = 4,
+    FAILED = 5,
   }
-
-  export const StatusMapping: { [key: number]: Status } = {
-    0: Status.NIL,
-    1: Status.DEPOSIT_PERIOD,
-    2: Status.VOTING_PERIOD,
-    3: Status.PASSED,
-    4: Status.REJECTED,
-    5: Status.FAILED,
-  };
 
   export interface Data {
     content: Content.Data;
     id: string;
-    proposal_status: number;
+    status: Status;
     final_tally_result?: {
       yes: string;
       abstain: string;
