@@ -67,7 +67,7 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 // connect to bombay testnet
 const terra = new LCDClient({
   URL: 'https://bombay-lcd.terra.dev',
-  chainID: 'bombay-10',
+  chainID: 'bombay-12',
 });
 
 // To use LocalTerra
@@ -99,7 +99,7 @@ const mk = new MnemonicKey({
 // connect to bombay testnet
 const terra = new LCDClient({
   URL: 'https://bombay-lcd.terra.dev',
-  chainID: 'bombay-10',
+  chainID: 'bombay-12',
 });
 
 // To use LocalTerra
