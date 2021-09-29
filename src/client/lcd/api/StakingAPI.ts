@@ -231,8 +231,8 @@ export class StakingAPI extends BaseAPI {
     return this.c
       .get<StakingPool.Data>(`/staking/pool`, params)
       .then(({ result: d }) => ({
-        bonded_tokens: new Coin(Denom.LUNA, d.bonded_tokens),
-        not_bonded_tokens: new Coin(Denom.LUNA, d.not_bonded_tokens),
+        bonded_tokens: new Coin('uluna', d.bonded_tokens),
+        not_bonded_tokens: new Coin('uluna', d.not_bonded_tokens),
       }));
   }
 

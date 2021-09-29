@@ -124,7 +124,7 @@
   },
   {
     "id": 20854160,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -245,7 +245,7 @@
   },
   {
     "id": 20849375,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -417,7 +417,7 @@
   },
   {
     "id": 20849322,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -594,7 +594,7 @@
   },
   {
     "id": 20539231,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -726,7 +726,7 @@
   },
   {
     "id": 20529213,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -871,7 +871,7 @@
   },
   {
     "id": 20529159,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -1048,7 +1048,7 @@
   },
   {
     "id": 20524335,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -1225,7 +1225,7 @@
   },
   {
     "id": 20523910,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -1370,7 +1370,7 @@
   },
   {
     "id": 20512034,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -1489,7 +1489,7 @@
   },
   {
     "id": 20510761,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {
@@ -1661,7 +1661,7 @@
   },
   {
     "id": 18557171,
-    "chainId": "bombay-9",
+    "chainId": "bombay-12",
     "tx": {
       "type": "core/StdTx",
       "value": {

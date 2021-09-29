@@ -8,7 +8,7 @@ import {
 } from '../src';
 
 const client = new LCDClient({
-  chainID: 'bombay-11',
+  chainID: 'bombay-12',
   URL: 'https://bombay-lcd.terra.dev',
 });
 

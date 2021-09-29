@@ -4,7 +4,7 @@ import { Coin, Validator } from '../../core';
 
 const lcdUtils = new LCDUtils(
   new LCDClient({
-    chainID: 'bombay-9',
+    chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
   })
 );
