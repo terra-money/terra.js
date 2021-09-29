@@ -156,7 +156,7 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
   ): LegacyAminoMultisigPublicKey {
     return new LegacyAminoMultisigPublicKey(
       Number.parseInt(data.threshold),
-      data.pubkeys.map(v => SimplePublicKey.fromData(v))
+      data.public_keys.map(v => SimplePublicKey.fromData(v))
     );
   }
 
@@ -164,7 +164,7 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
     return {
       '@type': '/cosmos.crypto.multisig.LegacyAminoPubKey',
       threshold: this.threshold.toFixed(),
-      pubkeys: this.pubkeys.map(p => p.toData()),
+      public_keys: this.pubkeys.map(p => p.toData()),
     };
   }
 
@@ -210,7 +210,7 @@ export namespace LegacyAminoMultisigPublicKey {
   export interface Data {
     '@type': '/cosmos.crypto.multisig.LegacyAminoPubKey';
     threshold: string;
-    pubkeys: SimplePublicKey.Data[];
+    public_keys: SimplePublicKey.Data[];
   }
 
   export type Proto = LegacyAminoPubKey_pb;
