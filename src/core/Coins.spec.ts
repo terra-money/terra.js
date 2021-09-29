@@ -1,17 +1,16 @@
 import { Coins } from './Coins';
 import { Coin } from './Coin';
-import { Denom } from './Denom';
 
 describe('Coins', () => {
   it('clobbers coins of similar denom', () => {
     const coins1 = new Coins([
-      new Coin(Denom.KRW, 1000),
-      new Coin(Denom.LUNA, 1000),
-      new Coin(Denom.LUNA, 1000),
+      new Coin('ukrw', 1000),
+      new Coin('uluna', 1000),
+      new Coin('uluna', 1000),
     ]);
 
-    const coinKRW = coins1.get(Denom.KRW);
-    const coinLUNA = coins1.get(Denom.LUNA);
+    const coinKRW = coins1.get('ukrw');
+    const coinLUNA = coins1.get('uluna');
 
     expect(coinKRW).toBeDefined();
     expect(coinLUNA).toBeDefined();

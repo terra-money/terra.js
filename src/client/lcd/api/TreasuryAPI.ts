@@ -100,7 +100,7 @@ export class TreasuryAPI extends BaseAPI {
   public async seigniorageProceeds(params: APIParams = {}): Promise<Coin> {
     return this.c
       .get<string>(`/treasury/seigniorage_proceeds`, params)
-      .then(d => new Coin(Denom.LUNA, d.result));
+      .then(d => new Coin('uluna', d.result));
   }
 
   /**
