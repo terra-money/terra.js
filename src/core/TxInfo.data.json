@@ -4291,7 +4291,7 @@
             "previous_connection_id": "",
             "client_state": {
               "@type": "/ibc.lightclients.tendermint.v1.ClientState",
-              "chain_id": "bombay-10",
+              "chain_id": "bombay-12",
               "trust_level": {
                 "numerator": "1",
                 "denominator": "3"
@@ -15621,7 +15621,7 @@
               "previous_connection_id": "",
               "client_state": {
                 "@type": "/ibc.lightclients.tendermint.v1.ClientState",
-                "chain_id": "bombay-10",
+                "chain_id": "bombay-12",
                 "trust_level": {
                   "numerator": "1",
                   "denominator": "3"
