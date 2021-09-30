@@ -49,7 +49,7 @@ Grab the latest version off [NPM](https://www.npmjs.com/package/@terra-money/ter
 npm install @terra-money/terra.js
 ```
 
-For columbus-4 and tequila network, use v1.x
+For columbus-5 and bombay network, use v2.x
 
 ```sh
 npm install @terra-money/terra.js@^1
