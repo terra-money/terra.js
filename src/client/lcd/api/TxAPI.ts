@@ -52,7 +52,7 @@ export interface TxSuccess {
 }
 
 export interface TxError {
-  code: number;
+  code: number | string;
   codespace?: string;
 }
 
@@ -68,7 +68,11 @@ export function isTxError<
   B extends Block | Sync,
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
-  return (x as T & TxError).code !== undefined && (x as T & TxError).code !== 0;
+  return (
+    (x as T & TxError).code !== undefined &&
+    (x as T & TxError).code !== 0 &&
+    (x as T & TxError).code !== '0'
+  );
 }
 
 export namespace BlockTxBroadcastResult {
@@ -79,7 +83,7 @@ export namespace BlockTxBroadcastResult {
     gas_wanted: string;
     gas_used: string;
     logs: TxLog.Data[];
-    code: number;
+    code: number | string;
     codespace: string;
     info: string;
     data: string;
