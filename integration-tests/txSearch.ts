@@ -2,7 +2,7 @@ import { LCDClient } from '../src';
 
 async function main() {
   const bombay = new LCDClient({
-    chainID: 'bombay-10',
+    chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
     gasPrices: { uusd: 0.38 },
   });
