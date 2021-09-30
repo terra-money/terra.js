@@ -8,46 +8,27 @@ describe('LazyGradedVestingAccount', () => {
     const acct = LazyGradedVestingAccount.fromData({
       type: 'core/LazyGradedVestingAccount',
       value: {
-        address: 'terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn',
-        coins: [
-          {
-            denom: 'ukrw',
-            amount: '3952727625434',
+        base_vesting_account: {
+          base_account: {
+            address: 'terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn',
+            public_key: null,
+            account_number: '684082',
+            sequence: '0',
           },
-          {
-            denom: 'uluna',
-            amount: '48919046',
-          },
-          {
-            denom: 'umnt',
-            amount: '35243811596',
-          },
-          {
-            denom: 'usdr',
-            amount: '1212381',
-          },
-          {
-            denom: 'uusd',
-            amount: '474532',
-          },
-        ],
-        public_key: null,
-        account_number: '684082',
-        sequence: '0',
-        original_vesting: [
-          {
-            denom: 'uluna',
-            amount: '5000000000000',
-          },
-        ],
-        delegated_free: [],
-        delegated_vesting: [
-          {
-            denom: 'uluna',
-            amount: '1338029091449',
-          },
-        ],
-        end_time: '0',
+          original_vesting: [
+            {
+              denom: 'uluna',
+              amount: '5000000000000',
+            },
+          ],
+          delegated_free: [],
+          delegated_vesting: [
+            {
+              denom: 'uluna',
+              amount: '1338029091449',
+            },
+          ],
+        },
         vesting_schedules: [
           {
             denom: 'uluna',

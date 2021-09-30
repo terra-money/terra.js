@@ -10,16 +10,6 @@ describe('Account', () => {
       type: 'core/Account',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
-        coins: [
-          {
-            denom: 'ukrw',
-            amount: '1077000000',
-          },
-          {
-            denom: 'uluna',
-            amount: '10203920',
-          },
-        ],
         public_key: {
           type: 'tendermint/PubKeySecp256k1',
           value: 'AvBeqhogW0wd7OtF8M8hJ/P1A/IBY1+uNvBO/tbVlfq2',
@@ -31,10 +21,6 @@ describe('Account', () => {
     const acct = Account.fromData(data);
     expect(acct).toMatchObject({
       address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
-      coins: new Coins({
-        ukrw: '1077000000',
-        uluna: '10203920',
-      }),
       public_key: {
         value: 'AvBeqhogW0wd7OtF8M8hJ/P1A/IBY1+uNvBO/tbVlfq2',
       },
@@ -50,7 +36,6 @@ describe('Account', () => {
       type: 'core/Account',
       value: {
         address: '',
-        coins: [],
         public_key: null,
         account_number: '0',
         sequence: '0',
@@ -63,9 +48,6 @@ describe('Account', () => {
   it('serializes accounts correctly', () => {
     const acct = new Account(
       'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
-      new Coins({
-        uluna: 10203920,
-      }),
       new PublicKey('tendermint/PubKeySecp256k1', 'abc'),
       251248,
       58
@@ -75,12 +57,6 @@ describe('Account', () => {
       type: 'core/Account',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
-        coins: [
-          {
-            denom: 'uluna',
-            amount: '10203920',
-          },
-        ],
         public_key: {
           type: 'tendermint/PubKeySecp256k1',
           value: 'abc',

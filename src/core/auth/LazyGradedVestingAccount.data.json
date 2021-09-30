@@ -1,64 +1,94 @@
-[{
-  "type": "core/LazyGradedVestingAccount",
-  "value": {
-    "address": "terra1upg95nlwkfkrq4hhjrn3k9s6ud0aqx36gwnlsn",
-    "coins": [{
-        "denom": "ukrw",
-        "amount": "3952727625434"
-      },
-      {
-        "denom": "uluna",
-        "amount": "48919046"
-      },
-      {
-        "denom": "umnt",
-        "amount": "35243811596"
-      },
-      {
-        "denom": "usdr",
-        "amount": "1212381"
-      },
-      {
-        "denom": "uusd",
-        "amount": "474532"
-      }
-    ],
-    "public_key": null,
-    "account_number": "684082",
-    "sequence": "0",
-    "original_vesting": [{
-      "denom": "uluna",
-      "amount": "5000000000000"
-    }],
-    "delegated_free": [],
-    "delegated_vesting": [{
-      "denom": "uluna",
-      "amount": "1338029091449"
-    }],
-    "end_time": "0",
-    "vesting_schedules": [{
-      "denom": "uluna",
-      "schedules": [{
-          "start_time": "1558677600",
-          "end_time": "1561356000",
-          "ratio": "0.100000000000000000"
+[
+  {
+    "type": "core/LazyGradedVestingAccount",
+    "value": {
+      "base_vesting_account": {
+        "base_account": {
+          "address": "terra1dp0taj85ruc299rkdvzp4z5pfg6z6swaed74e6",
+          "public_key": {
+            "type": "tendermint/PubKeyMultisigThreshold",
+            "value": {
+              "threshold": "2",
+              "pubkeys": [
+                {
+                  "type": "tendermint/PubKeySecp256k1",
+                  "value": "AyETa9Y9ihObzeRPWMP0MBAa0Mqune3I+5KonOCPTtkv"
+                },
+                {
+                  "type": "tendermint/PubKeySecp256k1",
+                  "value": "AzzLltyI4MzxLpcmS1vfpXJeAk/sgS1eVYmvXgFpGRtg"
+                },
+                {
+                  "type": "tendermint/PubKeySecp256k1",
+                  "value": "AnZjvWmye3JPEL95xRcGeFRf4o8pHDK0dkZjf6B9D4FA"
+                }
+              ]
+            }
+          },
+          "account_number": "317776",
+          "sequence": "61"
         },
+        "original_vesting": [{ "denom": "usdr", "amount": "1000000000000000" }],
+        "delegated_free": [{ "denom": "uluna", "amount": "57620630000008" }],
+        "delegated_vesting": []
+      },
+      "vesting_schedules": [
         {
-          "start_time": "1561356000",
-          "end_time": "1587708000",
-          "ratio": "0.270000000000000000"
-        },
-        {
-          "start_time": "1587708000",
-          "end_time": "1600927200",
-          "ratio": "0.480000000000000000"
-        },
-        {
-          "start_time": "1600927200",
-          "end_time": "1603519200",
-          "ratio": "0.150000000000000000"
+          "denom": "usdr",
+          "schedules": [
+            {
+              "start_time": "1556085600",
+              "end_time": "1558677600",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1587708000",
+              "end_time": "1590300000",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1619244000",
+              "end_time": "1621836000",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1650780000",
+              "end_time": "1653372000",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1682316000",
+              "end_time": "1684908000",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1713938400",
+              "end_time": "1716530400",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1745474400",
+              "end_time": "1748066400",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1777010400",
+              "end_time": "1779602400",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1808546400",
+              "end_time": "1811138400",
+              "ratio": "0.100000000000000000"
+            },
+            {
+              "start_time": "1840168800",
+              "end_time": "1842760800",
+              "ratio": "0.100000000000000000"
+            }
+          ]
         }
       ]
-    }]
+    }
   }
-}]
+]

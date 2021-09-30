@@ -21,14 +21,6 @@ export class AuthAPI extends BaseAPI {
     const { result } = await this.c.get<
       Account.Data | LazyGradedVestingAccount.Data
     >(`/auth/accounts/${address}`, params);
-
-    // Until columbus-4 it used to return coins from /auth/accounts
-    if (!result.value.coins) {
-      result.value.coins = (
-        await this.c.get<Coins.Data>(`/bank/balances/${address}`, params)
-      ).result;
-    }
-
     if (result.type === 'core/Account') {
       return Account.fromData(result);
     } else {

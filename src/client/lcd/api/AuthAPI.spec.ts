@@ -15,10 +15,6 @@ describe('AuthAPI', () => {
       );
 
       expect(acct instanceof Account).toBe(true);
-      expect(acct.coins.toData()).toContainEqual({
-        denom: expect.any(String),
-        amount: expect.any(String),
-      });
     });
 
     // TODO: - after merging CosmosSDK@v0.43.x restore vesting account test
