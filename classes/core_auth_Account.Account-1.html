@@ -101,7 +101,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_auth_Account.Account-1.html#account_number" class="tsd-kind-icon">account_<wbr>number</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_auth_Account.Account-1.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_auth_Account.Account-1.html#coins" class="tsd-kind-icon">coins</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_auth_Account.Account-1.html#public_key" class="tsd-kind-icon">public_<wbr>key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="core_auth_Account.Account-1.html#sequence" class="tsd-kind-icon">sequence</a></li>
 							</ul>
@@ -123,14 +122,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Account<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, coins<span class="tsd-signature-symbol">: </span><a href="core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a>, public_key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="core_PublicKey.PublicKey-1.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, account_number<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_auth_Account.Account-1.html" class="tsd-signature-type" data-tsd-kind="Class">Account</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Account<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, public_key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="core_PublicKey.PublicKey-1.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a>, account_number<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, sequence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_auth_Account.Account-1.html" class="tsd-signature-type" data-tsd-kind="Class">Account</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/556689e/src/core/auth/Account.ts#L19">core/auth/Account.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/499a71a/src/core/auth/Account.ts#L18">core/auth/Account.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -145,14 +144,6 @@
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>account address</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>coins: <a href="core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>account&#39;s balance</p>
 										</div>
 									</div>
 								</li>
@@ -203,13 +194,6 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="coins" class="tsd-anchor"></a>
-					<h3>coins</h3>
-					<div class="tsd-signature tsd-kind-icon">coins<span class="tsd-signature-symbol">:</span> <a href="core_Coins.Coins-1.html" class="tsd-signature-type" data-tsd-kind="Class">Coins</a></div>
-					<aside class="tsd-sources">
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="public_key" class="tsd-anchor"></a>
 					<h3>public_<wbr>key</h3>
 					<div class="tsd-signature tsd-kind-icon">public_<wbr>key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="core_PublicKey.PublicKey-1.html" class="tsd-signature-type" data-tsd-kind="Class">PublicKey</a></div>
@@ -237,7 +221,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#toData">toData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/556689e/src/core/auth/Account.ts#L29">core/auth/Account.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/499a71a/src/core/auth/Account.ts#L27">core/auth/Account.ts:27</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/core_auth_Account.Account.Data.html" class="tsd-signature-type" data-tsd-kind="Interface">Data</a></h4>
@@ -255,7 +239,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="util_json.JSONSerializable.html">JSONSerializable</a>.<a href="util_json.JSONSerializable.html#toJSON">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/556689e/src/util/json.ts#L23">util/json.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/499a71a/src/util/json.ts#L23">util/json.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -272,7 +256,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/556689e/src/core/auth/Account.ts#L43">core/auth/Account.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/terra-money/terra.js/blob/499a71a/src/core/auth/Account.ts#L40">core/auth/Account.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -318,9 +302,6 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_auth_Account.Account-1.html#address" class="tsd-kind-icon">address</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="core_auth_Account.Account-1.html#coins" class="tsd-kind-icon">coins</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="core_auth_Account.Account-1.html#public_key" class="tsd-kind-icon">public_<wbr>key</a>
