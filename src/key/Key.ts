@@ -12,6 +12,7 @@ import {
   SimplePublicKey,
   SignerInfo,
   ModeInfo,
+  AuthInfo,
 } from '../core';
 import { SignatureV2 } from '../core/SignatureV2';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
@@ -147,45 +148,38 @@ export abstract class Key {
    *
    * @param tx sign-message of the transaction to sign
    */
-  public async createSignature(tx: SignDoc): Promise<SignatureV2> {
+  public async createSignature(signDoc: SignDoc): Promise<SignatureV2> {
     if (!this.publicKey) {
       throw new Error(
         'Signature could not be created: Key instance missing publicKey'
       );
     }
 
-    if (tx.auth_info.signer_infos.length > 1) {
-      throw new Error('multi signer is not supported');
-    }
-
     const publicKey = new SimplePublicKey(this.publicKey.toString('base64'));
 
-    const modified = tx.auth_info.signer_infos.length === 0;
-    if (modified) {
-      tx.auth_info.signer_infos.push(
-        new SignerInfo(
-          publicKey,
-          tx.sequence,
-          new ModeInfo(new ModeInfo.Single(SignMode.SIGN_MODE_DIRECT))
-        )
-      );
-    }
+    // backup for restore
+    const signerInfos = signDoc.auth_info.signer_infos;
+    signDoc.auth_info.signer_infos = [
+      new SignerInfo(
+        publicKey,
+        signDoc.sequence,
+        new ModeInfo(new ModeInfo.Single(SignMode.SIGN_MODE_DIRECT))
+      ),
+    ];
 
-    const sigBytes = (await this.sign(Buffer.from(tx.toBytes()))).toString(
+    const sigBytes = (await this.sign(Buffer.from(signDoc.toBytes()))).toString(
       'base64'
     );
 
-    // restore tx to origin
-    if (modified) {
-      tx.auth_info.signer_infos.pop();
-    }
+    // restore signDoc to origin
+    signDoc.auth_info.signer_infos = signerInfos;
 
     return new SignatureV2(
       publicKey,
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(SignMode.SIGN_MODE_DIRECT, sigBytes)
       ),
-      tx.sequence
+      signDoc.sequence
     );
   }
 
@@ -194,7 +188,7 @@ export abstract class Key {
    * @param tx
    */
   public async signTx(tx: Tx, options: SignOptions): Promise<Tx> {
-    const copyTx = Tx.fromData(tx.toData());
+    const copyTx = new Tx(tx.body, new AuthInfo([], tx.auth_info.fee), []);
     const sign_doc = new SignDoc(
       options.chainID,
       options.accountNumber,
@@ -211,8 +205,9 @@ export abstract class Key {
     }
 
     const sigData = signature.data.single as SignatureV2.Descriptor.Single;
-    copyTx.signatures.push(sigData.signature);
+    copyTx.signatures.push(...tx.signatures, sigData.signature);
     copyTx.auth_info.signer_infos.push(
+      ...tx.auth_info.signer_infos,
       new SignerInfo(
         signature.public_key,
         signature.sequence,

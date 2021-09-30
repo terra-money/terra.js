@@ -18,21 +18,21 @@ describe('IbcClientAPI', () => {
     expect(res).not.toBeUndefined();
   });
 
-  it('client_state', async () => {
-    const res = await ibc.client_state('07-tendermint-0');
-    expect(res).not.toBeNull();
-    expect(res).not.toBeUndefined();
-  });
+  // it('client_state', async () => {
+  //   const res = await ibc.client_state('07-tendermint-0');
+  //   expect(res).not.toBeNull();
+  //   expect(res).not.toBeUndefined();
+  // });
 
-  it('client_status', async () => {
-    const res = await ibc.client_status('07-tendermint-0');
-    expect(res).not.toBeNull();
-    expect(res).not.toBeUndefined();
-  });
+  // it('client_status', async () => {
+  //   const res = await ibc.client_status('07-tendermint-0');
+  //   expect(res).not.toBeNull();
+  //   expect(res).not.toBeUndefined();
+  // });
 
-  it('consensus_states', async () => {
-    const res = await ibc.consensus_states('07-tendermint-0');
-    expect(res).not.toBeNull();
-    expect(res).not.toBeUndefined();
-  });
+  // it('consensus_states', async () => {
+  //   const res = await ibc.consensus_states('07-tendermint-0');
+  //   expect(res).not.toBeNull();
+  //   expect(res).not.toBeUndefined();
+  // });
 });
