@@ -142,10 +142,10 @@ export class GovAPI extends BaseAPI {
   public async deposits(
     proposalId: number,
     params: APIParams = {}
-  ): Promise<Deposit> {
+  ): Promise<Deposit[]> {
     return this.c
-      .get<Deposit.Data>(`/gov/proposals/${proposalId}/deposits`, params)
-      .then(d => Deposit.fromData(d.result));
+      .get<Deposit.Data[]>(`/gov/proposals/${proposalId}/deposits`, params)
+      .then(d => d.result.map(Deposit.fromData));
   }
 
   /**
@@ -155,10 +155,10 @@ export class GovAPI extends BaseAPI {
   public async votes(
     proposalId: number,
     params: APIParams = {}
-  ): Promise<Vote> {
+  ): Promise<Vote[]> {
     return this.c
-      .get<Vote.Data>(`/gov/proposals/${proposalId}/votes`, params)
-      .then(d => Vote.fromData(d.result));
+      .get<Vote.Data[]>(`/gov/proposals/${proposalId}/votes`, params)
+      .then(d => d.result.map(Vote.fromData));
   }
 
   /**
