@@ -225,20 +225,12 @@ export class TxAPI extends BaseAPI {
   public async estimateFee(
     sourceAddress: string,
     msgs: Msg[],
-    options?: {
-      memo?: string;
-      gas?: string;
-      gasPrices?: Coins.Input;
-      gasAdjustment?: Numeric.Input;
-      feeDenoms?: string[];
-    }
+    options: Partial<CreateTxOptions> = {}
   ): Promise<StdFee> {
-    const memo = options?.memo;
-    const gas = options?.gas;
-    const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
+    const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
-      options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options?.feeDenoms || ['uluna'];
+      options.gasAdjustment || this.lcd.config.gasAdjustment;
+    const feeDenoms = options.feeDenoms || ['uluna'];
 
     let gasPricesCoins: Coins | undefined;
     if (gasPrices) {
@@ -256,11 +248,13 @@ export class TxAPI extends BaseAPI {
     const data = {
       base_req: {
         chain_id: this.lcd.config.chainID,
-        memo,
+        memo: options.memo,
         from: sourceAddress,
-        gas: gas || 'auto',
+        gas: options.gas || 'auto',
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
         gas_adjustment: gasAdjustment && gasAdjustment.toString(),
+        account_number: options.account_number,
+        sequence: options.sequence,
       },
       msgs: msgs.map(m => m.toData()),
     };
