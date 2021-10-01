@@ -32,10 +32,16 @@ export class Wallet {
   }
 
   public async createTx(options: CreateTxOptions): Promise<Tx> {
-    return this.lcd.tx.create(this.key.accAddress, options);
+    return this.lcd.tx.create([{ address: this.key.accAddress }], options);
   }
 
-  public async createAndSignTx(options: CreateTxOptions): Promise<Tx> {
+  public async createAndSignTx(
+    options: CreateTxOptions & {
+      sequence?: number;
+      accountNumber?: number;
+      signMode?: SignMode;
+    }
+  ): Promise<Tx> {
     let accountNumber = options.accountNumber;
     let sequence = options.sequence;
 

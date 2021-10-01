@@ -4,6 +4,7 @@ import { BaseAccount } from './BaseAccount';
 import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/cosmos/auth/v1beta1/auth';
 import { BaseVestingAccount as BaseVestingAccount_pb } from '@terra-money/terra.proto/cosmos/vesting/v1beta1/vesting';
 import * as Long from 'long';
+import { PublicKey } from '../PublicKey';
 
 /**
  * Holds information about a Account which has vesting information.
@@ -38,6 +39,10 @@ export class BaseVestingAccount extends JSONSerializable<
 
   public getSequenceNumber(): number {
     return this.base_account.sequence;
+  }
+
+  public getPublicKey(): PublicKey | null {
+    return this.base_account.public_key;
   }
 
   public toAmino(): BaseVestingAccount.Amino {

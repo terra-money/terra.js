@@ -39,6 +39,10 @@ export class BaseAccount extends JSONSerializable<
     return this.sequence;
   }
 
+  public getPublicKey(): PublicKey | null {
+    return this.public_key;
+  }
+
   public toAmino(): BaseAccount.Amino {
     const { address, public_key, account_number, sequence } = this;
     return {
@@ -66,11 +70,11 @@ export class BaseAccount extends JSONSerializable<
   }
 
   public static fromData(data: BaseAccount.Data): BaseAccount {
-    const { address, public_key, account_number, sequence } = data;
+    const { address, pub_key, account_number, sequence } = data;
 
     return new BaseAccount(
       address || '',
-      public_key ? PublicKey.fromData(public_key) : null,
+      pub_key ? PublicKey.fromData(pub_key) : null,
       Number.parseInt(account_number) || 0,
       Number.parseInt(sequence) || 0
     );
@@ -81,7 +85,7 @@ export class BaseAccount extends JSONSerializable<
     return {
       '@type': '/cosmos.auth.v1beta1.BaseAccount',
       address,
-      public_key: public_key ? public_key.toData() : null,
+      pub_key: public_key ? public_key.toData() : null,
       account_number: account_number.toFixed(),
       sequence: sequence.toFixed(),
     };
@@ -134,7 +138,7 @@ export namespace BaseAccount {
 
   export interface DataValue {
     address: AccAddress;
-    public_key: PublicKey.Data | null;
+    pub_key: PublicKey.Data | null;
     account_number: string;
     sequence: string;
   }

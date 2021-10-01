@@ -1,9 +1,11 @@
 import { PublicKey } from './PublicKey';
-import { CompactBitArray } from './Tx';
+import { ModeInfo } from './Tx';
+import { CompactBitArray } from './CompactBitArray';
 import {
   SignMode,
   signModeFromJSON,
 } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+import { MultiSignature } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
 
 export class SignatureV2 {
   constructor(
@@ -47,10 +49,13 @@ export namespace SignatureV2 {
   }
 
   export class Descriptor {
-    constructor(
-      public single?: Descriptor.Single,
-      public multi?: Descriptor.Multi
-    ) {}
+    public single?: Descriptor.Single;
+    public multi?: Descriptor.Multi;
+    constructor(data: Descriptor.Single | Descriptor.Multi) {
+      data instanceof Descriptor.Single
+        ? (this.single = data)
+        : (this.multi = data);
+    }
 
     public static fromData(data: Descriptor.Data): Descriptor {
       if (data.single) {
@@ -58,10 +63,44 @@ export namespace SignatureV2 {
       }
 
       if (data.multi) {
-        return new Descriptor(undefined, Descriptor.Multi.fromData(data.multi));
+        return new Descriptor(Descriptor.Multi.fromData(data.multi));
       }
 
       throw new Error('must be one of single or multi');
+    }
+
+    public toModeInfoAndSignature(): [ModeInfo, Uint8Array] {
+      if (this.single) {
+        const sigData = this.single;
+        return [
+          new ModeInfo(new ModeInfo.Single(sigData.mode)),
+          Buffer.from(sigData.signature, 'base64'),
+        ];
+      }
+
+      if (this.multi) {
+        const sigData = this.multi;
+        const modeInfos: ModeInfo[] = [];
+        const signatures: Uint8Array[] = [];
+        for (const signature of sigData.signatures) {
+          const [modeInfo, sigBytes] = signature.toModeInfoAndSignature();
+          modeInfos.push(modeInfo);
+          signatures.push(sigBytes);
+        }
+
+        const multisigBytes = MultiSignature.encode(
+          MultiSignature.fromPartial({
+            signatures: signatures,
+          })
+        ).finish();
+
+        return [
+          new ModeInfo(new ModeInfo.Multi(sigData.bitarray, modeInfos)),
+          multisigBytes,
+        ];
+      }
+
+      throw new Error('invalid signature descriptor');
     }
   }
 

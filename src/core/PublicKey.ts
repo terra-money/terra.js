@@ -1,8 +1,33 @@
 import { JSONSerializable } from '../util/json';
+import { hashRaw } from '../util/hash';
 import { LegacyAminoPubKey as LegacyAminoPubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/multisig/keys';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { PubKey as PubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/secp256k1/keys';
 import { PubKey as ValConsPubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/ed25519/keys';
+import { bech32 } from 'bech32';
+
+// As discussed in https://github.com/binance-chain/javascript-sdk/issues/163
+// Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
+// Last bytes is varint-encoded length prefix
+const pubkeyAminoPrefixSecp256k1 = Buffer.from(
+  'eb5ae987' + '21' /* fixed length */,
+  'hex'
+);
+/** See https://github.com/tendermint/tendermint/commit/38b401657e4ad7a7eeb3c30a3cbf512037df3740 */
+const pubkeyAminoPrefixMultisigThreshold = Buffer.from(
+  '22c1f7e2' /* variable length not included */,
+  'hex'
+);
+
+const encodeUvarint = (value: number | string): number[] => {
+  const checked = Number.parseInt(value.toString());
+  if (checked > 127) {
+    throw new Error(
+      'Encoding numbers > 127 is not supported here. Please tell those lazy CosmJS maintainers to port the binary.PutUvarint implementation from the Go standard library and write some tests.'
+    );
+  }
+  return [checked];
+};
 
 export type PublicKey =
   | SimplePublicKey
@@ -107,6 +132,13 @@ export class SimplePublicKey extends JSONSerializable<
   public static unpackAny(pubkeyAny: Any): SimplePublicKey {
     return SimplePublicKey.fromProto(PubKey_pb.decode(pubkeyAny.value));
   }
+
+  public encodeAminoPubkey(): Uint8Array {
+    return Buffer.concat([
+      pubkeyAminoPrefixSecp256k1,
+      Buffer.from(this.key, 'base64'),
+    ]);
+  }
 }
 
 export namespace SimplePublicKey {
@@ -130,6 +162,25 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
 > {
   constructor(public threshold: number, public pubkeys: SimplePublicKey[]) {
     super();
+  }
+
+  public encodeAminoPubkey(): Uint8Array {
+    const out = Array.from(pubkeyAminoPrefixMultisigThreshold);
+    out.push(0x08);
+    out.push(...encodeUvarint(this.threshold));
+    for (const pubkeyData of this.pubkeys.map(p => p.encodeAminoPubkey())) {
+      out.push(0x12);
+      out.push(...encodeUvarint(pubkeyData.length));
+      out.push(...Array.from(pubkeyData));
+    }
+
+    return new Uint8Array(out);
+  }
+
+  public address(): string {
+    const pubkeyData = this.encodeAminoPubkey();
+    const rawBytes = hashRaw(Buffer.from(pubkeyData)).slice(0, 20);
+    return bech32.encode('terra', bech32.toWords(rawBytes));
   }
 
   public static fromAmino(

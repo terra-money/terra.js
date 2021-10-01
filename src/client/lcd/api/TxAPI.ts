@@ -7,13 +7,11 @@ import {
   Numeric,
   TxBody,
   AuthInfo,
-  SignerInfo,
-  SimplePublicKey,
-  ModeInfo,
   Fee,
   Dec,
+  PublicKey,
 } from '../../../core';
-import { hashAmino } from '../../../util/hash';
+import { hashToHex } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
@@ -102,6 +100,17 @@ export namespace SyncTxBroadcastResult {
   >;
 }
 
+export interface SignerOptions {
+  address: string;
+  sequenceNumber?: number;
+  publicKey?: PublicKey | null;
+}
+
+export interface SignerData {
+  sequenceNumber: number;
+  publicKey?: PublicKey | null;
+}
+
 export interface CreateTxOptions {
   msgs: Msg[];
   fee?: Fee;
@@ -110,10 +119,7 @@ export interface CreateTxOptions {
   gasPrices?: Coins.Input;
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
-  accountNumber?: number;
-  sequence?: number;
   timeoutHeight?: number;
-  signMode?: ModeInfo.SignMode;
 }
 
 export interface TxResult {
@@ -205,32 +211,37 @@ export class TxAPI extends BaseAPI {
    * @param options TX generation options
    */
   public async create(
-    sourceAddress: string,
+    signers: SignerOptions[],
     options: CreateTxOptions
   ): Promise<Tx> {
     let { fee, memo } = options;
     const { msgs } = options;
     memo = memo || '';
 
-    let accountNumber = options.accountNumber;
-    let sequence = options.sequence;
+    const signerDatas: SignerData[] = [];
+    for (const signer of signers) {
+      let sequenceNumber = signer.sequenceNumber;
+      let publicKey = signer.publicKey;
 
-    if (!accountNumber || !sequence) {
-      const account = await this.lcd.auth.accountInfo(sourceAddress);
-      if (!accountNumber) {
-        accountNumber = account.getAccountNumber();
+      if (!sequenceNumber || !publicKey) {
+        const account = await this.lcd.auth.accountInfo(signer.address);
+        if (!sequenceNumber) {
+          sequenceNumber = account.getSequenceNumber();
+        }
+
+        if (!publicKey) {
+          publicKey = account.getPublicKey();
+        }
       }
 
-      if (!sequence) {
-        sequence = account.getSequenceNumber();
-      }
+      signerDatas.push({
+        sequenceNumber,
+        publicKey,
+      });
     }
 
-    options.sequence = sequence;
-    options.accountNumber = accountNumber;
-
     if (fee === undefined) {
-      fee = await this.lcd.tx.estimateFee(msgs, options);
+      fee = await this.lcd.tx.estimateFee(msgs, signerDatas, options);
     }
 
     return new Tx(
@@ -251,7 +262,7 @@ export class TxAPI extends BaseAPI {
     if (!txs) {
       return [];
     } else {
-      const txhashes = txs.map(txdata => hashAmino(txdata));
+      const txhashes = txs.map(txdata => hashToHex(txdata));
       return Promise.all(txhashes.map(txhash => this.txInfo(txhash)));
     }
   }
@@ -264,14 +275,13 @@ export class TxAPI extends BaseAPI {
    */
   public async estimateFee(
     msgs: Msg[],
+    signers: SignerData[],
     options?: {
       memo?: string;
       gas?: string;
       gasPrices?: Coins.Input;
       gasAdjustment?: Numeric.Input;
       feeDenoms?: string[];
-      signMode?: ModeInfo.SignMode;
-      sequence?: number;
     }
   ): Promise<Fee> {
     const memo = options?.memo;
@@ -294,51 +304,52 @@ export class TxAPI extends BaseAPI {
       }
     }
 
+    const txBody = new TxBody(msgs, memo || '');
+    const authInfo = new AuthInfo([], new Fee(0, new Coins()));
+    const tx = new Tx(txBody, authInfo, []);
+
     // fill empty signature
-    const signerInfo = new SignerInfo(
-      new SimplePublicKey(''),
-      options?.sequence || 0,
-      new ModeInfo(
-        new ModeInfo.Single(
-          options?.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
-        )
-      )
-    );
-    const txBody = new TxBody(msgs, memo || '', 0);
-    const authInfo = new AuthInfo(
-      [signerInfo],
-      new Fee(0, new Coins(), '', '')
-    );
-    const tx = new Tx(txBody, authInfo, ['']);
+    tx.appendEmptySignatures(signers);
 
     // simulate gas
     if (!gas || gas === 'auto' || gas === '0') {
-      const simulateRes = await this.c
-        .post<SimulateResponse.Data>(`/cosmos/tx/v1beta1/simulate`, {
-          tx_bytes: this.encode(tx),
-        })
-        .then(d => SimulateResponse.fromData(d));
-
-      gas = new Dec(gasAdjustment)
-        .mul(simulateRes.gas_info.gas_used)
-        .toString();
+      gas = (await this.estimateGas(tx, { gasAdjustment })).toString();
     }
 
-    const taxAmount = await this.c
-      .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
-        // tx: tx.toData(),
-        tx_bytes: this.encode(tx),
-      })
-      .then(d => Coins.fromData(d.tax_amount))
-      .catch(err => {
-        console.error(err);
-        throw err;
-      });
-
+    const taxAmount = await this.computeTax(tx);
     const feeAmount = gasPricesCoins
       ? taxAmount.add(gasPricesCoins.mul(gas).toIntCeilCoins())
       : taxAmount;
+
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
+  }
+
+  public async estimateGas(
+    tx: Tx,
+    options?: {
+      gasAdjustment?: Numeric.Input;
+    }
+  ): Promise<number> {
+    const gasAdjustment =
+      options?.gasAdjustment || this.lcd.config.gasAdjustment;
+
+    const simulateRes = await this.c
+      .post<SimulateResponse.Data>(`/cosmos/tx/v1beta1/simulate`, {
+        tx_bytes: this.encode(tx),
+      })
+      .then(d => SimulateResponse.fromData(d));
+
+    return new Dec(gasAdjustment).mul(simulateRes.gas_info.gas_used).toNumber();
+  }
+
+  public async computeTax(tx: Tx): Promise<Coins> {
+    const taxAmount = await this.c
+      .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
+        tx_bytes: this.encode(tx),
+      })
+      .then(d => Coins.fromData(d.tax_amount));
+
+    return taxAmount;
   }
 
   /**
@@ -355,7 +366,7 @@ export class TxAPI extends BaseAPI {
    */
   public async hash(tx: Tx): Promise<string> {
     const txBytes = await this.encode(tx);
-    return hashAmino(txBytes);
+    return hashToHex(txBytes);
   }
 
   private async _broadcast<T>(

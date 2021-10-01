@@ -10,6 +10,7 @@ import {
 } from '@terra-money/terra.proto/terra/vesting/v1beta1/vesting';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import * as Long from 'long';
+import { PublicKey } from '../PublicKey';
 
 /**
  * Holds information about a Account which has vesting information.
@@ -41,6 +42,10 @@ export class LazyGradedVestingAccount extends JSONSerializable<
 
   public getSequenceNumber(): number {
     return this.base_vesting_account.getSequenceNumber();
+  }
+
+  public getPublicKey(): PublicKey | null {
+    return this.base_vesting_account.base_account.public_key;
   }
 
   public toAmino(): LazyGradedVestingAccount.Amino {
