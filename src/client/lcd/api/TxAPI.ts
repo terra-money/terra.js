@@ -253,8 +253,11 @@ export class TxAPI extends BaseAPI {
         gas: options.gas || 'auto',
         gas_prices: gasPricesCoins && gasPricesCoins.toData(),
         gas_adjustment: gasAdjustment && gasAdjustment.toString(),
-        account_number: options.account_number,
-        sequence: options.sequence,
+        account_number:
+          typeof options.account_number === 'number' &&
+          options.account_number.toString(),
+        sequence:
+          typeof options.sequence === 'number' && options.sequence.toString(),
       },
       msgs: msgs.map(m => m.toData()),
     };
