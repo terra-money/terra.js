@@ -208,15 +208,12 @@ export class TxAPI extends BaseAPI {
     sourceAddress: string,
     options: CreateTxOptions
   ): Promise<Tx> {
-    let { fee, memo } = options;
-    const { msgs } = options;
-    memo = memo || '';
-
-    let accountNumber = options.accountNumber;
-    let sequence = options.sequence;
+    const { msgs, memo, timeoutHeight } = options;
+    let { fee, accountNumber, sequence } = options;
 
     if (!accountNumber || !sequence) {
       const account = await this.lcd.auth.accountInfo(sourceAddress);
+
       if (!accountNumber) {
         accountNumber = account.getAccountNumber();
       }
@@ -226,15 +223,16 @@ export class TxAPI extends BaseAPI {
       }
     }
 
-    options.sequence = sequence;
-    options.accountNumber = accountNumber;
-
     if (fee === undefined) {
-      fee = await this.lcd.tx.estimateFee(msgs, options);
+      fee = await this.lcd.tx.estimateFee({
+        ...options,
+        sequence,
+        accountNumber,
+      });
     }
 
     return new Tx(
-      new TxBody(msgs, memo || '', options.timeoutHeight || 0),
+      new TxBody(msgs, memo || '', timeoutHeight || 0),
       new AuthInfo([], fee),
       []
     );
@@ -262,32 +260,22 @@ export class TxAPI extends BaseAPI {
    * @param msgs standard messages
    * @param options options for fee estimation
    */
-  public async estimateFee(
-    msgs: Msg[],
-    options?: {
-      memo?: string;
-      gas?: string;
-      gasPrices?: Coins.Input;
-      gasAdjustment?: Numeric.Input;
-      feeDenoms?: string[];
-      signMode?: ModeInfo.SignMode;
-      sequence?: number;
-    }
-  ): Promise<Fee> {
-    const memo = options?.memo;
-    let gas = options?.gas;
-    const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
+  public async estimateFee(options: CreateTxOptions): Promise<Fee> {
+    const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
-      options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options?.feeDenoms || ['uluna'];
-
+      options.gasAdjustment || this.lcd.config.gasAdjustment;
+    const feeDenoms = options.feeDenoms || ['uluna'];
+    let gas = options.gas;
     let gasPricesCoins: Coins | undefined;
+
     if (gasPrices) {
       gasPricesCoins = new Coins(gasPrices);
+
       if (feeDenoms) {
         const gasPricesCoinsFiltered = gasPricesCoins.filter(c =>
           feeDenoms.includes(c.denom)
         );
+
         if (gasPricesCoinsFiltered.toArray().length > 0) {
           gasPricesCoins = gasPricesCoinsFiltered;
         }
@@ -297,14 +285,14 @@ export class TxAPI extends BaseAPI {
     // fill empty signature
     const signerInfo = new SignerInfo(
       new SimplePublicKey(''),
-      options?.sequence || 0,
+      options.sequence || 0,
       new ModeInfo(
         new ModeInfo.Single(
-          options?.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
+          options.signMode || ModeInfo.SignMode.SIGN_MODE_DIRECT
         )
       )
     );
-    const txBody = new TxBody(msgs, memo || '', 0);
+    const txBody = new TxBody(options.msgs, options.memo || '', 0);
     const authInfo = new AuthInfo(
       [signerInfo],
       new Fee(0, new Coins(), '', '')
