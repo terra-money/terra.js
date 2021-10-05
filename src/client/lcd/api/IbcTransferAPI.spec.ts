@@ -1,6 +1,5 @@
 import { APIRequester } from '../APIRequester';
 import { IbcTransferAPI } from './IbcTransferAPI';
-import { Coins } from '../../../core';
 
 const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const ibctx = new IbcTransferAPI(c);

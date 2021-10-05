@@ -17,6 +17,8 @@ interface SendData {
 interface Option extends CreateTxOptions {
   waitForConfirmation?: boolean; // default false
   purgeQueue?: boolean; // default true
+  sequence?: number;
+  accountNumber?: number;
 }
 
 declare global {

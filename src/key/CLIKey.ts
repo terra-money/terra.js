@@ -1,11 +1,11 @@
-import { Key, pubKeyFromPublicKey } from './Key';
-import { bech32 } from 'bech32';
-import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
+import { Key } from './Key';
+import { AccAddress, ValAddress } from '../core/bech32';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
 import { SignDoc } from '../core/SignDoc';
 import { SignatureV2 } from '../core/SignatureV2';
+import { PublicKey } from '../core/PublicKey';
 
 interface CLIKeyParams {
   keyName: string;
@@ -23,7 +23,6 @@ interface CLIKeyParams {
  */
 export class CLIKey extends Key {
   private _accAddress?: AccAddress;
-  private _accPubKey?: AccPubKey;
 
   /**
    *
@@ -50,14 +49,8 @@ export class CLIKey extends Key {
       ).toString()
     );
 
-    const publicKeyString = JSON.parse(details.pubkey).key;
-    const publicKey = Buffer.from(publicKeyString, 'base64');
-
     this._accAddress = details.address;
-    this._accPubKey = bech32.encode(
-      'terrapub',
-      Array.from(pubKeyFromPublicKey(publicKey))
-    );
+    this.publicKey = PublicKey.fromData(JSON.parse(details.pubkey));
   }
 
   /**
@@ -82,28 +75,6 @@ export class CLIKey extends Key {
     return ValAddress.fromAccAddress(this._accAddress);
   }
 
-  /**
-   * Terra account public key. `terrapub-` prefixed.
-   */
-  public get accPubKey(): AccPubKey {
-    if (!this._accPubKey) {
-      this.loadAccountDetails();
-      return this.accPubKey;
-    }
-    return this._accPubKey;
-  }
-
-  /**
-   * Terra validator public key. `terravaloperpub-` prefixed.
-   */
-  public get valPubKey(): ValPubKey {
-    if (!this._accPubKey) {
-      this.loadAccountDetails();
-      return this.valPubKey;
-    }
-    return ValPubKey.fromValAddress(this.valAddress);
-  }
-
   public async sign(): Promise<Buffer> {
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
@@ -111,6 +82,10 @@ export class CLIKey extends Key {
   }
 
   public async createSignature(tx: SignDoc): Promise<SignatureV2> {
+    if (this.params.multisig) {
+      throw new Error('multisig is not supported in direct sign mode');
+    }
+
     const tmpobj = fileSync({ postfix: '.json' });
     writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
 

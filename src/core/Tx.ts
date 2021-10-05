@@ -1,4 +1,8 @@
-import { PublicKey, SimplePublicKey } from './PublicKey';
+import {
+  PublicKey,
+  SimplePublicKey,
+  LegacyAminoMultisigPublicKey,
+} from './PublicKey';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import {
   SignMode as SignMode_pb,
@@ -14,11 +18,12 @@ import {
   ModeInfo_Single as ModeInfoSingle_pb,
   ModeInfo_Multi as ModeInfoMulti_pb,
 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
-import { CompactBitArray as CompactBitArray_pb } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
+import { CompactBitArray } from './CompactBitArray';
 import { Msg } from './Msg';
 import { Fee } from './Fee';
 import * as Long from 'long';
 import { SignatureV2 } from './SignatureV2';
+import { SignerData } from '../client/lcd/api/TxAPI';
 
 export class Tx {
   constructor(
@@ -79,6 +84,59 @@ export class Tx {
 
   public toBytes(): Uint8Array {
     return Tx_pb.encode(this.toProto()).finish();
+  }
+
+  public appendEmptySignatures(signers: SignerData[]) {
+    signers.forEach(signer => {
+      let signerInfo: SignerInfo;
+      if (signer.publicKey) {
+        if (signer.publicKey instanceof LegacyAminoMultisigPublicKey) {
+          signerInfo = new SignerInfo(
+            signer.publicKey,
+            signer.sequenceNumber,
+            new ModeInfo(
+              new ModeInfo.Multi(
+                CompactBitArray.fromBits(signer.publicKey.pubkeys.length),
+                []
+              )
+            )
+          );
+        } else {
+          signerInfo = new SignerInfo(
+            signer.publicKey,
+            signer.sequenceNumber,
+            new ModeInfo(
+              new ModeInfo.Single(ModeInfo.SignMode.SIGN_MODE_DIRECT)
+            )
+          );
+        }
+      } else {
+        signerInfo = new SignerInfo(
+          new SimplePublicKey(''),
+          signer.sequenceNumber,
+          new ModeInfo(new ModeInfo.Single(ModeInfo.SignMode.SIGN_MODE_DIRECT))
+        );
+      }
+
+      this.auth_info.signer_infos.push(signerInfo);
+      this.signatures.push('');
+    });
+  }
+
+  public clearSignatures() {
+    this.auth_info.signer_infos = [];
+    this.signatures = [];
+  }
+
+  public appendSignatures(signatures: SignatureV2[]) {
+    for (const signature of signatures) {
+      const [modeInfo, sigBytes] = signature.data.toModeInfoAndSignature();
+
+      this.signatures.push(Buffer.from(sigBytes).toString('base64'));
+      this.auth_info.signer_infos.push(
+        new SignerInfo(signature.public_key, signature.sequence, modeInfo)
+      );
+    }
   }
 }
 
@@ -252,10 +310,15 @@ export namespace SignerInfo {
 }
 
 export class ModeInfo {
-  constructor(
-    public single_mode?: ModeInfo.Single,
-    public multi_mode?: ModeInfo.Multi
-  ) {}
+  public single?: ModeInfo.Single;
+  public multi?: ModeInfo.Multi;
+  constructor(mode_info: ModeInfo.Single | ModeInfo.Multi) {
+    if (mode_info instanceof ModeInfo.Single) {
+      this.single = mode_info;
+    } else {
+      this.multi = mode_info;
+    }
+  }
 
   public static fromData(data: ModeInfo.Data): ModeInfo {
     if (data.single) {
@@ -263,7 +326,7 @@ export class ModeInfo {
     }
 
     if (data.multi) {
-      return new ModeInfo(undefined, ModeInfo.Multi.fromData(data.multi));
+      return new ModeInfo(ModeInfo.Multi.fromData(data.multi));
     }
 
     throw new Error('must be one of single or multi');
@@ -271,8 +334,8 @@ export class ModeInfo {
 
   public toData(): ModeInfo.Data {
     return {
-      single: this.single_mode?.toData(),
-      multi: this.multi_mode?.toData(),
+      single: this.single?.toData(),
+      multi: this.multi?.toData(),
     };
   }
 
@@ -281,15 +344,16 @@ export class ModeInfo {
     const multiMode = proto.multi;
 
     return new ModeInfo(
-      singleMode ? ModeInfo.Single.fromProto(singleMode) : undefined,
-      multiMode ? ModeInfo.Multi.fromProto(multiMode) : undefined
+      singleMode
+        ? ModeInfo.Single.fromProto(singleMode)
+        : ModeInfo.Multi.fromProto(multiMode as ModeInfoMulti_pb)
     );
   }
 
   public toProto(): ModeInfo.Proto {
     return ModeInfo_pb.fromPartial({
-      multi: this.multi_mode?.toProto(),
-      single: this.single_mode?.toProto(),
+      multi: this.multi?.toProto(),
+      single: this.single?.toProto(),
     });
   }
 }
@@ -377,42 +441,4 @@ export namespace ModeInfo {
     }
     export type Proto = ModeInfoMulti_pb;
   }
-}
-
-export class CompactBitArray {
-  constructor(public extra_bits_stored: number, public elems: string) {}
-
-  public static fromData(data: CompactBitArray.Data): CompactBitArray {
-    return new CompactBitArray(data.extra_bits_stored, data.elems);
-  }
-
-  public toData(): CompactBitArray.Data {
-    return {
-      elems: this.elems,
-      extra_bits_stored: this.extra_bits_stored,
-    };
-  }
-
-  public static fromProto(proto: CompactBitArray.Proto): CompactBitArray {
-    return new CompactBitArray(
-      proto.extraBitsStored,
-      Buffer.from(proto.elems).toString('base64')
-    );
-  }
-
-  public toProto(): CompactBitArray.Proto {
-    return CompactBitArray_pb.fromPartial({
-      elems: Buffer.from(this.elems, 'base64'),
-      extraBitsStored: this.extra_bits_stored,
-    });
-  }
-}
-
-export namespace CompactBitArray {
-  export interface Data {
-    extra_bits_stored: number;
-    elems: string;
-  }
-
-  export type Proto = CompactBitArray_pb;
 }

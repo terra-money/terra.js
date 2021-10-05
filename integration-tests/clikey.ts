@@ -4,7 +4,8 @@ import { CLIKey } from '../src/key/CLIKey';
 
 const terra = new LocalTerra();
 const { test1 } = terra.wallets;
-const cliKey = new CLIKey({ keyName: 'paul4' });
+const cliKey = new CLIKey({ keyName: 'operator' });
+
 const cliWallet = terra.wallet(cliKey);
 
 const send = new MsgSend(cliWallet.key.accAddress, test1.key.accAddress, {

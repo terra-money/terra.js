@@ -5,45 +5,34 @@ import { SignDoc } from '../core/SignDoc';
 import { Fee } from '../core/Fee';
 import { SignatureV2 } from '../core/SignatureV2';
 import { AuthInfo, TxBody } from '../core/Tx';
+import { PublicKey, SimplePublicKey } from '../core';
 
 describe('RawKey', () => {
   it('derives correct key information', () => {
     const examples: {
       mnemonic?: string;
-      accAddress: string;
-      accPubKey: string;
-      valAddress: string;
-      valPubKey: string;
+      publicKey: PublicKey;
     }[] = [
       {
         mnemonic:
           'wonder caution square unveil april art add hover spend smile proud admit modify old copper throw crew happy nature luggage reopen exhibit ordinary napkin',
-        accAddress: 'terra1jnzv225hwl3uxc5wtnlgr8mwy6nlt0vztv3qqm',
-        accPubKey:
-          'terrapub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5nwzrf9',
-        valAddress: 'terravaloper1jnzv225hwl3uxc5wtnlgr8mwy6nlt0vztraasg',
-        valPubKey:
-          'terravaloperpub1addwnpepqt8ha594svjn3nvfk4ggfn5n8xd3sm3cz6ztxyugwcuqzsuuhhfq5y7accr',
+        publicKey: new SimplePublicKey(
+          'As9+0LWDJTjNibVQhM6TOZsYbjgWhLMTiHY4AUOcvdIK'
+        ),
       },
       {
         mnemonic:
           'speak scatter present rice cattle sight amateur novel dizzy wheel cannon mango model sunset smooth appear impose want lunar tattoo theme zero misery flower',
-        accAddress: 'terra1ghvjx8jyn3m4v94nwdzjjevlsqz3uevvvhvedp',
-        accPubKey:
-          'terrapub1addwnpepqdavy7mkxxjl8dd5mck7tef8rrxmmhzs3ts0grn3laczdjstt6vtjfsumau',
-        valAddress: 'terravaloper1ghvjx8jyn3m4v94nwdzjjevlsqz3uevvvcqyaj',
-        valPubKey:
-          'terravaloperpub1addwnpepqdavy7mkxxjl8dd5mck7tef8rrxmmhzs3ts0grn3laczdjstt6vtj7qrqv6',
+        publicKey: new SimplePublicKey(
+          'A3rCe3YxpfO1tN4t5eUnGM293FCK4PQOcf9wJsoLXpi5'
+        ),
       },
       {
         mnemonic:
           'pool december kitchen crouch robot relax oppose system virtual spread pistol obtain vicious bless salmon drive repeat when frost summer render shed bone limb',
-        accAddress: 'terra1a3l5xudduhrk43whxm65hpyh3lqspx94vhlx6h',
-        accPubKey:
-          'terrapub1addwnpepqvaz9qpllrwu7l4nf3wzgnz6vn54x4snsw7r7kfmygf06dq2tjkc2plmywj',
-        valAddress: 'terravaloper1a3l5xudduhrk43whxm65hpyh3lqspx94vcnm2y',
-        valPubKey:
-          'terravaloperpub1addwnpepqvaz9qpllrwu7l4nf3wzgnz6vn54x4snsw7r7kfmygf06dq2tjkc2k0yll5',
+        publicKey: new SimplePublicKey(
+          'AzoigD/43c9+s0xcJExaZOlTVhODvD9ZOyIS/TQKXK2F'
+        ),
       },
     ];
 
@@ -52,6 +41,7 @@ describe('RawKey', () => {
       const mk = new MnemonicKey({ mnemonic });
       const rk = new RawKey(mk.privateKey);
       delete example.mnemonic;
+      console.log(rk);
       expect(rk).toMatchObject(example);
     });
   });
