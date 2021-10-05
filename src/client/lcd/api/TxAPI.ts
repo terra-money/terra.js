@@ -214,9 +214,8 @@ export class TxAPI extends BaseAPI {
     signers: SignerOptions[],
     options: CreateTxOptions
   ): Promise<Tx> {
-    let { fee, memo } = options;
-    const { msgs } = options;
-    memo = memo || '';
+    let { fee } = options;
+    const { msgs, memo, timeoutHeight } = options;
 
     const signerDatas: SignerData[] = [];
     for (const signer of signers) {
@@ -241,11 +240,11 @@ export class TxAPI extends BaseAPI {
     }
 
     if (fee === undefined) {
-      fee = await this.lcd.tx.estimateFee(msgs, signerDatas, options);
+      fee = await this.lcd.tx.estimateFee(signerDatas, options);
     }
 
     return new Tx(
-      new TxBody(msgs, memo || '', options.timeoutHeight || 0),
+      new TxBody(msgs, memo || '', timeoutHeight || 0),
       new AuthInfo([], fee),
       []
     );
@@ -274,37 +273,31 @@ export class TxAPI extends BaseAPI {
    * @param options options for fee estimation
    */
   public async estimateFee(
-    msgs: Msg[],
     signers: SignerData[],
-    options?: {
-      memo?: string;
-      gas?: string;
-      gasPrices?: Coins.Input;
-      gasAdjustment?: Numeric.Input;
-      feeDenoms?: string[];
-    }
+    options: CreateTxOptions
   ): Promise<Fee> {
-    const memo = options?.memo;
-    let gas = options?.gas;
-    const gasPrices = options?.gasPrices || this.lcd.config.gasPrices;
+    const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
-      options?.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options?.feeDenoms || ['uluna'];
-
+      options.gasAdjustment || this.lcd.config.gasAdjustment;
+    const feeDenoms = options.feeDenoms || ['uluna'];
+    let gas = options.gas;
     let gasPricesCoins: Coins | undefined;
+
     if (gasPrices) {
       gasPricesCoins = new Coins(gasPrices);
+
       if (feeDenoms) {
         const gasPricesCoinsFiltered = gasPricesCoins.filter(c =>
           feeDenoms.includes(c.denom)
         );
+
         if (gasPricesCoinsFiltered.toArray().length > 0) {
           gasPricesCoins = gasPricesCoinsFiltered;
         }
       }
     }
 
-    const txBody = new TxBody(msgs, memo || '');
+    const txBody = new TxBody(options.msgs, options.memo || '');
     const authInfo = new AuthInfo([], new Fee(0, new Coins()));
     const tx = new Tx(txBody, authInfo, []);
 
