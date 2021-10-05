@@ -4,20 +4,24 @@ import { CLIKey } from '../src/key/CLIKey';
 
 const terra = new LocalTerra();
 const { test1 } = terra.wallets;
-const cliKey = new CLIKey({ keyName: 'paul4' });
-const cliWallet = terra.wallet(cliKey);
+const cliKey = new CLIKey({ keyName: 'operator' });
+console.log(cliKey.valAddress);
+console.log(cliKey.accAddress);
+console.log(cliKey.publicKey);
 
-const send = new MsgSend(cliWallet.key.accAddress, test1.key.accAddress, {
-  uluna: 100000,
-});
+// const cliWallet = terra.wallet(cliKey);
 
-async function main() {
-  const tx = await cliWallet.createAndSignTx({
-    msgs: [send],
-    fee: new Fee(100000, { uluna: 100000 }, '', ''),
-  });
+// const send = new MsgSend(cliWallet.key.accAddress, test1.key.accAddress, {
+//   uluna: 100000,
+// });
 
-  console.log(await terra.tx.broadcast(tx));
-}
+// async function main() {
+//   const tx = await cliWallet.createAndSignTx({
+//     msgs: [send],
+//     fee: new Fee(100000, { uluna: 100000 }, '', ''),
+//   });
 
-main().catch(console.error);
+//   console.log(await terra.tx.broadcast(tx));
+// }
+
+// main().catch(console.error);

@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../util/json';
-import { hashRaw } from '../util/hash';
+import { sha256, ripemd160 } from '../util/hash';
 import { LegacyAminoPubKey as LegacyAminoPubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/multisig/keys';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { PubKey as PubKey_pb } from '@terra-money/terra.proto/cosmos/crypto/secp256k1/keys';
@@ -11,6 +11,10 @@ import { bech32 } from 'bech32';
 // Last bytes is varint-encoded length prefix
 const pubkeyAminoPrefixSecp256k1 = Buffer.from(
   'eb5ae987' + '21' /* fixed length */,
+  'hex'
+);
+const pubkeyAminoPrefixEd25519 = Buffer.from(
+  '1624de64' + '20' /* fixed length */,
   'hex'
 );
 /** See https://github.com/tendermint/tendermint/commit/38b401657e4ad7a7eeb3c30a3cbf512037df3740 */
@@ -139,6 +143,19 @@ export class SimplePublicKey extends JSONSerializable<
       Buffer.from(this.key, 'base64'),
     ]);
   }
+
+  public rawAddress(): Uint8Array {
+    const pubkeyData = Buffer.from(this.key, 'base64');
+    return ripemd160(sha256(pubkeyData));
+  }
+
+  public address(): string {
+    return bech32.encode('terra', bech32.toWords(this.rawAddress()));
+  }
+
+  public pubkeyAddress(): string {
+    return bech32.encode('terrapub', bech32.toWords(this.encodeAminoPubkey()));
+  }
 }
 
 export namespace SimplePublicKey {
@@ -177,10 +194,17 @@ export class LegacyAminoMultisigPublicKey extends JSONSerializable<
     return new Uint8Array(out);
   }
 
-  public address(): string {
+  public rawAddress(): Uint8Array {
     const pubkeyData = this.encodeAminoPubkey();
-    const rawBytes = hashRaw(Buffer.from(pubkeyData)).slice(0, 20);
-    return bech32.encode('terra', bech32.toWords(rawBytes));
+    return sha256(pubkeyData).slice(0, 20);
+  }
+
+  public address(): string {
+    return bech32.encode('terra', bech32.toWords(this.rawAddress()));
+  }
+
+  public pubkeyAddress(): string {
+    return bech32.encode('terrapub', bech32.toWords(this.encodeAminoPubkey()));
   }
 
   public static fromAmino(
@@ -321,6 +345,29 @@ export class ValConsPublicKey extends JSONSerializable<
 
   public static unpackAny(pubkeyAny: Any): ValConsPublicKey {
     return ValConsPublicKey.fromProto(ValConsPubKey_pb.decode(pubkeyAny.value));
+  }
+
+  public encodeAminoPubkey(): Uint8Array {
+    return Buffer.concat([
+      pubkeyAminoPrefixEd25519,
+      Buffer.from(this.key, 'base64'),
+    ]);
+  }
+
+  public rawAddress(): Uint8Array {
+    const pubkeyData = Buffer.from(this.key, 'base64');
+    return sha256(pubkeyData).slice(0, 20);
+  }
+
+  public address(): string {
+    return bech32.encode('terravalcons', bech32.toWords(this.rawAddress()));
+  }
+
+  public pubkeyAddress(): string {
+    return bech32.encode(
+      'terravalconspub',
+      bech32.toWords(this.encodeAminoPubkey())
+    );
   }
 }
 

@@ -1,50 +1,16 @@
 import { bech32 } from 'bech32';
-import { Hex } from 'jscrypto/Hex';
-import { RIPEMD160 } from 'jscrypto/RIPEMD160';
-import { SHA256 } from 'jscrypto/SHA256';
 import {
   AccAddress,
-  AccPubKey,
   ValAddress,
-  ValPubKey,
   Tx,
   SignDoc,
-  SimplePublicKey,
   SignerInfo,
   ModeInfo,
   AuthInfo,
+  PublicKey,
 } from '../core';
 import { SignatureV2 } from '../core/SignatureV2';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
-
-const BECH32_PUBKEY_DATA_PREFIX = 'eb5ae98721';
-
-/**
- * Gets a raw address from a compressed bytes public key.
- *
- * @param publicKey raw public key
- */
-export function addressFromPublicKey(publicKey: Buffer): Buffer {
-  if (typeof publicKey !== 'object' || !(publicKey instanceof Buffer)) {
-    throw new TypeError('parameter must be Buffer that contains public key');
-  }
-
-  const message = Hex.parse(publicKey.toString('hex'));
-  const hash = RIPEMD160.hash(SHA256.hash(message)).toString();
-  const address = Buffer.from(hash, 'hex');
-  return Buffer.from(bech32.toWords(address));
-}
-
-/**
- * Gets a bech32-words pubkey from a compressed bytes public key.
- *
- * @param publicKey raw public key
- */
-export function pubKeyFromPublicKey(publicKey: Buffer): Buffer {
-  const buffer = Buffer.from(BECH32_PUBKEY_DATA_PREFIX, 'hex');
-  const combined = Buffer.concat([buffer, publicKey]);
-  return Buffer.from(bech32.toWords(combined));
-}
 
 /**
  * Abstract key interface that provides transaction signing features and Bech32 address
@@ -62,47 +28,26 @@ export abstract class Key {
    */
   public abstract sign(payload: Buffer): Promise<Buffer>;
 
-  public rawAddress?: Buffer;
-  public rawPubKey?: Buffer;
-
   /**
    * Terra account address. `terra-` prefixed.
    */
   public get accAddress(): AccAddress {
-    if (!this.rawAddress) {
+    if (!this.publicKey) {
       throw new Error('Could not compute accAddress: missing rawAddress');
     }
-    return bech32.encode('terra', Array.from(this.rawAddress));
+
+    return this.publicKey.address();
   }
 
   /**
    * Terra validator address. `terravaloper-` prefixed.
    */
   public get valAddress(): ValAddress {
-    if (!this.rawAddress) {
+    if (!this.publicKey) {
       throw new Error('Could not compute valAddress: missing rawAddress');
     }
-    return bech32.encode('terravaloper', Array.from(this.rawAddress));
-  }
 
-  /**
-   * Terra account public key. `terrapub-` prefixed.
-   */
-  public get accPubKey(): AccPubKey {
-    if (!this.rawPubKey) {
-      throw new Error('Could not compute accPubKey: missing rawPubKey');
-    }
-    return bech32.encode('terrapub', Array.from(this.rawPubKey));
-  }
-
-  /**
-   * Terra validator public key. `terravaloperpub-` prefixed.
-   */
-  public get valPubKey(): ValPubKey {
-    if (!this.rawPubKey) {
-      throw new Error('Could not compute valPubKey: missing rawPubKey');
-    }
-    return bech32.encode('terravaloperpub', Array.from(this.rawPubKey));
+    return bech32.encode('terravaloper', this.publicKey.rawAddress());
   }
 
   /**
@@ -111,12 +56,7 @@ export abstract class Key {
    *
    * @param publicKey raw compressed bytes public key
    */
-  constructor(public publicKey?: Buffer) {
-    if (publicKey) {
-      this.rawAddress = addressFromPublicKey(publicKey);
-      this.rawPubKey = pubKeyFromPublicKey(publicKey);
-    }
-  }
+  constructor(public publicKey?: PublicKey) {}
 
   /**
    * Signs a [[StdSignMsg]] with the method supplied by the child class.
@@ -132,7 +72,7 @@ export abstract class Key {
     }
 
     return new SignatureV2(
-      new SimplePublicKey(this.publicKey.toString('base64')),
+      this.publicKey,
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(
           SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
@@ -155,13 +95,11 @@ export abstract class Key {
       );
     }
 
-    const publicKey = new SimplePublicKey(this.publicKey.toString('base64'));
-
     // backup for restore
     const signerInfos = signDoc.auth_info.signer_infos;
     signDoc.auth_info.signer_infos = [
       new SignerInfo(
-        publicKey,
+        this.publicKey,
         signDoc.sequence,
         new ModeInfo(new ModeInfo.Single(SignMode.SIGN_MODE_DIRECT))
       ),
@@ -175,7 +113,7 @@ export abstract class Key {
     signDoc.auth_info.signer_infos = signerInfos;
 
     return new SignatureV2(
-      publicKey,
+      this.publicKey,
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(SignMode.SIGN_MODE_DIRECT, sigBytes)
       ),

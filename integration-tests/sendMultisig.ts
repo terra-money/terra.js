@@ -27,9 +27,9 @@ async function main() {
   });
 
   const multisigPubkey = new LegacyAminoMultisigPublicKey(2, [
-    new SimplePublicKey(mk1.publicKey?.toString('base64') as string),
-    new SimplePublicKey(mk2.publicKey?.toString('base64') as string),
-    new SimplePublicKey(mk3.publicKey?.toString('base64') as string),
+    mk1.publicKey as SimplePublicKey,
+    mk2.publicKey as SimplePublicKey,
+    mk3.publicKey as SimplePublicKey,
   ]);
 
   const bombay = new LCDClient({

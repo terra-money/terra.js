@@ -1,6 +1,7 @@
 import { SHA256, Word32Array } from 'jscrypto';
 import * as secp256k1 from 'secp256k1';
 import { Key } from './Key';
+import { SimplePublicKey } from '../core/PublicKey';
 
 /**
  * An implementation of the Key interfaces that uses a raw private key.
@@ -16,7 +17,7 @@ export class RawKey extends Key {
       new Uint8Array(privateKey),
       true
     );
-    super(Buffer.from(publicKey));
+    super(new SimplePublicKey(Buffer.from(publicKey).toString('base64')));
     this.privateKey = privateKey;
   }
 
