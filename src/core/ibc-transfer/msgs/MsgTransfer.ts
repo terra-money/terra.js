@@ -173,7 +173,7 @@ export class MsgTransfer extends JSONSerializable<
 
   public packAny(): Any {
     return Any.fromPartial({
-      typeUrl: '/ibc.applications.transfer.v1.Msg/Transfer',
+      typeUrl: '/ibc.applications.transfer.v1.MsgTransfer',
       value: MsgTransfer_pb.encode(this.toProto()).finish(),
     });
   }

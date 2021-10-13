@@ -458,7 +458,7 @@ export namespace Msg {
         return MsgClearContractAdmin.unpackAny(proto);
 
       // ibc-transfer
-      case '/ibc.applications.transfer.v1.Msg/Transfer':
+      case '/ibc.applications.transfer.v1.MsgTransfer':
         return MsgTransfer.unpackAny(proto);
 
       // ibc-client
