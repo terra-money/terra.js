@@ -31,8 +31,21 @@ export class Wallet {
     });
   }
 
-  public async createTx(options: CreateTxOptions): Promise<Tx> {
-    return this.lcd.tx.create([{ address: this.key.accAddress }], options);
+  public async createTx(
+    options: CreateTxOptions & {
+      sequence?: number;
+    }
+  ): Promise<Tx> {
+    return this.lcd.tx.create(
+      [
+        {
+          address: this.key.accAddress,
+          sequenceNumber: options.sequence,
+          publicKey: this.key.publicKey,
+        },
+      ],
+      options
+    );
   }
 
   public async createAndSignTx(
@@ -45,13 +58,13 @@ export class Wallet {
     let accountNumber = options.accountNumber;
     let sequence = options.sequence;
 
-    if (!accountNumber || !sequence) {
+    if (accountNumber === undefined || sequence == undefined) {
       const res = await this.accountNumberAndSequence();
-      if (!accountNumber) {
+      if (accountNumber === undefined) {
         accountNumber = res.account_number;
       }
 
-      if (!sequence) {
+      if (sequence === undefined) {
         sequence = res.sequence;
       }
     }

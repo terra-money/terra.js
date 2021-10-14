@@ -11,6 +11,8 @@ export * from './Tx';
 export * from './TxInfo';
 export * from './ValidatorSet';
 export * from './Deposit';
+export * from './SignatureV2';
+export * from './MultiSignature';
 
 // Auth
 export * from './auth/Account';
