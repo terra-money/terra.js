@@ -86,7 +86,9 @@ export class MsgVote extends JSONSerializable<
 }
 
 export namespace MsgVote {
+  export const Option = VoteOption;
   export type Option = VoteOption;
+
   export interface Amino {
     type: 'gov/MsgVote';
     value: {

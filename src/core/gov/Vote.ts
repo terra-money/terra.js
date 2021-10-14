@@ -11,6 +11,8 @@ import * as Long from 'long';
  * Stores vote information for a proposal
  */
 export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
+  public Option = VoteOption;
+
   /**
    * @param proposal_id ID of proposal to vote on
    * @param voter voter's account address
@@ -85,7 +87,9 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
 }
 
 export namespace Vote {
+  export const Option = VoteOption;
   export type Option = VoteOption;
+
   export interface Amino {
     proposal_id: string;
     voter: AccAddress;
