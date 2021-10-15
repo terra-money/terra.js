@@ -10,14 +10,14 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   ConsensusStateWithHeight.Data,
   ConsensusStateWithHeight.Proto
 > {
-  public height: Height;
+  public height: Height | undefined;
   public consensus_state: any;
 
   /**
    * @param height consensus state height
    * @param consensus_state consensus state
    */
-  constructor(height: Height, consensus_state: any) {
+  constructor(height: Height | undefined, consensus_state: any) {
     super();
     this.height = height;
     this.consensus_state = consensus_state;
@@ -28,7 +28,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   ): ConsensusStateWithHeight {
     const { height, consensus_state } = data;
     return new ConsensusStateWithHeight(
-      Height.fromAmino(height),
+      height ? Height.fromAmino(height) : undefined,
       consensus_state
     );
   }
@@ -36,7 +36,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   public toAmino(): ConsensusStateWithHeight.Amino {
     const { height, consensus_state } = this;
     const res: ConsensusStateWithHeight.Amino = {
-      height: height.toAmino(),
+      height: height ? height.toAmino() : undefined,
       consensus_state: consensus_state,
     };
     return res;
@@ -47,7 +47,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   ): ConsensusStateWithHeight {
     const { height, consensus_state } = data;
     return new ConsensusStateWithHeight(
-      Height.fromData(height),
+      height ? Height.fromData(height) : undefined,
       consensus_state
     );
   }
@@ -55,7 +55,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   public toData(): ConsensusStateWithHeight.Data {
     const { height, consensus_state } = this;
     const res: ConsensusStateWithHeight.Data = {
-      height: height.toData(),
+      height: height ? height.toData() : undefined,
       consensus_state,
     };
     return res;
@@ -65,7 +65,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
     proto: ConsensusStateWithHeight.Proto
   ): ConsensusStateWithHeight {
     return new ConsensusStateWithHeight(
-      proto.height ? Height.fromProto(proto.height) : new Height(0, 0), // FIXME: is this okay with new object?
+      proto.height ? Height.fromProto(proto.height) : undefined,
       proto.consensusState
     );
   }
@@ -73,7 +73,7 @@ export class ConsensusStateWithHeight extends JSONSerializable<
   public toProto(): ConsensusStateWithHeight.Proto {
     const { height, consensus_state } = this;
     return ConsensusStateWithHeight_pb.fromPartial({
-      height: height.toProto(),
+      height: height ? height.toProto() : undefined,
       consensusState: consensus_state,
     });
   }
@@ -81,12 +81,12 @@ export class ConsensusStateWithHeight extends JSONSerializable<
 
 export namespace ConsensusStateWithHeight {
   export interface Amino {
-    height: Height.Amino;
+    height?: Height.Amino;
     consensus_state: any;
   }
 
   export interface Data {
-    height: Height.Data;
+    height?: Height.Data;
     consensus_state: any;
   }
 

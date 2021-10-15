@@ -1,6 +1,6 @@
 import { Counterparty as Counterparty_pb } from '@terra-money/terra.proto/ibc/core/connection/v1/connection';
 import { JSONSerializable } from '../../../../util/json';
-import { MerklePrefix } from './MerklePrefix';
+import { MerklePrefix } from '../../core/commitment/MerklePrefix';
 
 /** Counterparty defines a channel end counterparty */
 export class Counterparty extends JSONSerializable<
@@ -54,7 +54,7 @@ export class Counterparty extends JSONSerializable<
     const res: Counterparty.Data = {
       client_id,
       connection_id,
-      prefix,
+      prefix: prefix ? prefix.toData() : undefined,
     };
     return res;
   }

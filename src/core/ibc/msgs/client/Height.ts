@@ -73,6 +73,7 @@ export class Height extends JSONSerializable<
 
 export namespace Height {
   export interface Amino {
+
     revision_number: string;
     revision_height: string;
   }

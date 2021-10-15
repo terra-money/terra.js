@@ -4,7 +4,8 @@ import { Coin } from '../../Coin';
 import * as Long from 'long';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgTransfer as MsgTransfer_pb } from '@terra-money/terra.proto/ibc/applications/transfer/v1/tx';
-import { Height } from '@terra-money/terra.proto/ibc/core/client/v1/client';
+import { Height } from '../../ibc/msgs/client/Height';
+import { time } from 'console';
 /**
  * A basic message for transfer [[Coin]] via IBC.
  */
@@ -66,7 +67,7 @@ export class MsgTransfer extends JSONSerializable<
       token ? Coin.fromAmino(token) : undefined,
       sender,
       receiver,
-      timeout_height,
+      timeout_height ? Height.fromAmino(timeout_height) : undefined,
       timeout_timestamp
     );
   }
@@ -89,7 +90,7 @@ export class MsgTransfer extends JSONSerializable<
         token: token ? token.toAmino() : undefined,
         sender,
         receiver,
-        timeout_height,
+        timeout_height: timeout_height ? timeout_height.toAmino() : undefined,
         timeout_timestamp,
       },
     };
@@ -111,7 +112,7 @@ export class MsgTransfer extends JSONSerializable<
       token ? Coin.fromData(token) : undefined,
       sender,
       receiver,
-      timeout_height,
+      timeout_height ? Height.fromData(timeout_height) : undefined,
       timeout_timestamp
     );
   }
@@ -133,7 +134,7 @@ export class MsgTransfer extends JSONSerializable<
       token: token ? token.toData() : undefined,
       sender,
       receiver,
-      timeout_height,
+      timeout_height: timeout_height ? timeout_height.toData() : undefined,
       timeout_timestamp,
     };
   }
@@ -145,7 +146,7 @@ export class MsgTransfer extends JSONSerializable<
       proto.token ? Coin.fromProto(proto.token) : undefined,
       proto.sender,
       proto.receiver,
-      proto.timeoutHeight ? proto.timeoutHeight : undefined,
+      proto.timeoutHeight ? Height.fromProto(proto.timeoutHeight) : undefined,
       proto.timeoutTimestamp.toNumber()
     );
   }
@@ -166,7 +167,7 @@ export class MsgTransfer extends JSONSerializable<
       token: token ? token.toProto() : undefined,
       sender,
       receiver,
-      timeoutHeight: timeout_height ? timeout_height : undefined,
+      timeoutHeight: timeout_height ? timeout_height.toProto() : undefined,
       timeoutTimestamp: Long.fromNumber(timeout_timestamp),
     });
   }
@@ -192,7 +193,7 @@ export namespace MsgTransfer {
       token?: Coin.Amino;
       sender: AccAddress;
       receiver: string;
-      timeout_height?: Height;
+      timeout_height?: Height.Amino;
       timeout_timestamp: number;
     };
   }
@@ -203,7 +204,7 @@ export namespace MsgTransfer {
     token?: Coin.Data;
     sender: AccAddress;
     receiver: string;
-    timeout_height?: Height;
+    timeout_height?: Height.Data;
     timeout_timestamp: number;
   }
   export type Proto = MsgTransfer_pb;

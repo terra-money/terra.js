@@ -70,8 +70,8 @@ export class MsgConnectionOpenInit extends JSONSerializable<
       client_id,
       delay_period,
       signer,
-      counterparty,
-      version,
+      counterparty: counterparty ? counterparty.toData() : undefined,
+      version: version ? version.toData() : undefined,
     };
   }
 
