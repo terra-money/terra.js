@@ -78,10 +78,10 @@ export class MsgChannelOpenTry extends JSONSerializable<
       '@type': '/ibc.core.channel.v1.MsgChannelOpenTry',
       port_id,
       previous_channel_id,
-      channel,
+      channel: channel ? channel.toData() : undefined,
       counterparty_version,
       proof_init,
-      proof_height,
+      proof_height: proof_height ? proof_height.toData() : undefined,
       signer,
     };
   }

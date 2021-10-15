@@ -58,7 +58,7 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
       port_id,
       channel_id,
       proof_init,
-      proof_height,
+      proof_height: proof_height ? proof_height.toData() : undefined,
       signer,
     };
   }

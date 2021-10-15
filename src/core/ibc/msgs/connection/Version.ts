@@ -13,7 +13,7 @@ export class Version extends JSONSerializable<
    * @param identifier unique version identifier
    * @param features list of features compatible with the specified identifier
    */
-  constructor(public identifier?: string, public features?: string[]) {
+  constructor(public identifier: string, public features: string[]) {
     super();
   }
 
@@ -57,13 +57,13 @@ export class Version extends JSONSerializable<
 
 export namespace Version {
   export interface Amino {
-    identifier?: string;
-    features?: string[];
+    identifier: string;
+    features: string[];
   }
 
   export interface Data {
-    identifier?: string;
-    features?: string[];
+    identifier: string;
+    features: string[];
   }
 
   export type Proto = Version_pb;

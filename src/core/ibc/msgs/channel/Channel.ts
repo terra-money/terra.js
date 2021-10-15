@@ -33,7 +33,7 @@ export class Channel extends JSONSerializable<
   constructor(
     public state: State,
     public ordering: Order,
-    public counterparty: Counterparty,
+    public counterparty: Counterparty | undefined,
     public connection_hops: string[],
     public version: string
   ) {
@@ -45,7 +45,7 @@ export class Channel extends JSONSerializable<
     return new Channel(
       state,
       ordering,
-      Counterparty.fromAmino(counterparty),
+      counterparty ? Counterparty.fromAmino(counterparty) : undefined,
       connection_hops,
       version
     );
@@ -56,7 +56,7 @@ export class Channel extends JSONSerializable<
     const res: Channel.Amino = {
       state,
       ordering,
-      counterparty,
+      counterparty: counterparty ? counterparty.toAmino() : undefined,
       connection_hops,
       version,
     };
@@ -68,7 +68,7 @@ export class Channel extends JSONSerializable<
     return new Channel(
       state,
       ordering,
-      Counterparty.fromData(counterparty),
+      counterparty ? Counterparty.fromData(counterparty) : undefined,
       connection_hops,
       version
     );
@@ -79,7 +79,7 @@ export class Channel extends JSONSerializable<
     const res: Channel.Data = {
       state,
       ordering,
-      counterparty,
+      counterparty: counterparty ? counterparty.toData() : undefined,
       connection_hops,
       version,
     };
@@ -90,7 +90,7 @@ export class Channel extends JSONSerializable<
     return new Channel(
       proto.state,
       proto.ordering,
-      Counterparty.fromProto(proto.counterparty!),
+      proto.counterparty ? Counterparty.fromProto(proto.counterparty) : undefined,
       proto.connectionHops,
       proto.version
     );
@@ -101,7 +101,7 @@ export class Channel extends JSONSerializable<
     return Channel_pb.fromPartial({
       state,
       ordering,
-      counterparty: counterparty.toProto(),
+      counterparty: counterparty ? counterparty.toProto() : undefined,
       connectionHops: connection_hops,
       version,
     });
@@ -112,7 +112,7 @@ export namespace Channel {
   export interface Amino {
     state: State;
     ordering: Order;
-    counterparty: Counterparty.Amino;
+    counterparty?: Counterparty.Amino;
     connection_hops: string[];
     version: string;
   }
@@ -120,7 +120,7 @@ export namespace Channel {
   export interface Data {
     state: State;
     ordering: Order;
-    counterparty: Counterparty.Data;
+    counterparty?: Counterparty.Data;
     connection_hops: string[];
     version: string;
   }

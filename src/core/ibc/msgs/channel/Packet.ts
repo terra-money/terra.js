@@ -20,7 +20,7 @@ export class Packet extends JSONSerializable<
     public destination_port: string,
     public destination_channel: string,
     public data: string,
-    public timeout_height: Height,
+    public timeout_height: Height | undefined,
     public timeout_timestamp: number
   ) {
     super();
@@ -44,7 +44,7 @@ export class Packet extends JSONSerializable<
       destination_port,
       destination_channel,
       data,
-      Height.fromAmino(timeout_height),
+      timeout_height ? Height.fromAmino(timeout_height) : undefined,
       timeout_timestamp
     );
   }
@@ -67,7 +67,7 @@ export class Packet extends JSONSerializable<
       destination_port,
       destination_channel,
       data,
-      timeout_height: timeout_height.toAmino(),
+      timeout_height: timeout_height ? timeout_height.toAmino() : undefined,
       timeout_timestamp,
     };
     return res;
@@ -91,8 +91,8 @@ export class Packet extends JSONSerializable<
       destination_port,
       destination_channel,
       data,
-      Height.fromData(timeout_height),
-      timeout_timestamp
+      timeout_height ? Height.fromData(timeout_height) : undefined,
+      Number.parseInt(timeout_timestamp)
     );
   }
 
@@ -114,8 +114,8 @@ export class Packet extends JSONSerializable<
       destination_port,
       destination_channel,
       data,
-      timeout_height: timeout_height.toData(),
-      timeout_timestamp,
+      timeout_height: timeout_height ? timeout_height.toData() : undefined,
+      timeout_timestamp: timeout_timestamp.toFixed(),
     };
     return res;
   }
@@ -128,7 +128,7 @@ export class Packet extends JSONSerializable<
       proto.destinationPort,
       proto.destinationChannel,
       Buffer.from(proto.data).toString('base64'),
-      Height.fromProto(proto.timeoutHeight!),
+      proto.timeoutHeight ? Height.fromProto(proto.timeoutHeight) : undefined,
       proto.timeoutTimestamp.toNumber()
     );
   }
@@ -151,7 +151,7 @@ export class Packet extends JSONSerializable<
       destinationPort: destination_port,
       destinationChannel: destination_channel,
       data: Buffer.from(data, 'base64'),
-      timeoutHeight: timeout_height.toProto(),
+      timeoutHeight: timeout_height ? timeout_height.toProto() : undefined,
       timeoutTimestamp: Long.fromNumber(timeout_timestamp),
     });
   }
@@ -165,7 +165,7 @@ export namespace Packet {
     destination_port: string;
     destination_channel: string;
     data: string;
-    timeout_height: Height.Amino;
+    timeout_height?: Height.Amino;
     timeout_timestamp: number;
   }
 
@@ -176,8 +176,8 @@ export namespace Packet {
     destination_port: string;
     destination_channel: string;
     data: string;
-    timeout_height: Height.Data;
-    timeout_timestamp: number;
+    timeout_height?: Height.Data;
+    timeout_timestamp: string;
   }
 
   export type Proto = Packet_pb;

@@ -80,7 +80,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
       counterparty_channel_id,
       counterparty_version,
       proof_try,
-      proof_height,
+      proof_height: proof_height ? proof_height.toData() : undefined,
       signer,
     };
   }

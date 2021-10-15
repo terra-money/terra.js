@@ -52,7 +52,7 @@ export class MsgTimeout extends JSONSerializable<
       packet ? Packet.fromData(packet) : undefined,
       proof_unreceived,
       proof_height ? Height.fromData(proof_height) : undefined,
-      next_sequence_recv,
+      Number.parseInt(next_sequence_recv),
       signer
     );
   }
@@ -70,7 +70,7 @@ export class MsgTimeout extends JSONSerializable<
       packet: packet ? packet.toData() : undefined,
       proof_unreceived,
       proof_height: proof_height ? proof_height.toData() : undefined,
-      next_sequence_recv,
+      next_sequence_recv: next_sequence_recv.toFixed(),
       signer,
     };
   }
@@ -120,7 +120,7 @@ export namespace MsgTimeout {
     packet?: Packet.Data;
     proof_unreceived: string;
     proof_height?: Height.Data;
-    next_sequence_recv: number;
+    next_sequence_recv: string;
     signer: AccAddress;
   }
   export type Proto = MsgTimeout_pb;
