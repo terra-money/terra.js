@@ -11,8 +11,8 @@ async function main() {
     `Txs Page 1: ${JSON.stringify(
       (
         await bombay.tx.search({
-          events: [{ key: 'tx.height', value: '5403875' }],
-          'pagination.limit': '50',
+          events: [{ key: 'tx.height', value: '5947667' }],
+          'pagination.limit': '100',
         })
       ).txs.map(tx => tx.txhash)
     )}`
@@ -22,9 +22,9 @@ async function main() {
     `Txs Page 2: ${JSON.stringify(
       (
         await bombay.tx.search({
-          events: [{ key: 'tx.height', value: '5403875' }],
+          events: [{ key: 'tx.height', value: '5947667' }],
           'pagination.limit': '50',
-          'pagination.offset': '50',
+          'pagination.offset': '1',
         })
       ).txs.map(tx => tx.txhash)
     )}`
