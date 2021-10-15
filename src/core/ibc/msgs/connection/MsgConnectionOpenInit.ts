@@ -56,7 +56,7 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     const { client_id, counterparty, version, delay_period, signer } = data;
     return new MsgConnectionOpenInit(
       client_id,
-      delay_period,
+      Number.parseInt(delay_period),
       signer,
       counterparty ? Counterparty.fromData(counterparty) : undefined,
       version ? Version.fromData(version) : undefined
@@ -68,7 +68,7 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit',
       client_id,
-      delay_period,
+      delay_period: delay_period.toFixed(),
       signer,
       counterparty: counterparty ? counterparty.toData() : undefined,
       version: version ? version.toData() : undefined,
@@ -120,7 +120,7 @@ export namespace MsgConnectionOpenInit {
     client_id: string;
     counterparty?: Counterparty.Data;
     version?: Version.Data;
-    delay_period: number;
+    delay_period: string;
     signer: AccAddress;
   }
   export type Proto = MsgConnectionOpenInit_pb;

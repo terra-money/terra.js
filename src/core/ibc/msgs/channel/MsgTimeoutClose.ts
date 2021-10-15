@@ -56,7 +56,7 @@ export class MsgTimeoutOnClose extends JSONSerializable<
       proof_close,
       proof_unreceived,
       proof_height ? Height.fromData(proof_height) : undefined,
-      next_sequence_recv,
+      Number.parseInt(next_sequence_recv),
       signer
     );
   }
@@ -76,7 +76,7 @@ export class MsgTimeoutOnClose extends JSONSerializable<
       proof_unreceived,
       proof_close,
       proof_height: proof_height ? proof_height.toData() : undefined,
-      next_sequence_recv,
+      next_sequence_recv: next_sequence_recv.toFixed(),
       signer,
     };
   }
@@ -132,7 +132,7 @@ export namespace MsgTimeoutOnClose {
     proof_unreceived: string;
     proof_close: string;
     proof_height?: Height.Data;
-    next_sequence_recv: number;
+    next_sequence_recv: string;
     signer: AccAddress;
   }
   export type Proto = MsgTimeoutOnClose_pb;

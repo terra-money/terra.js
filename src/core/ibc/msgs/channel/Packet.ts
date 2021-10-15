@@ -92,7 +92,7 @@ export class Packet extends JSONSerializable<
       destination_channel,
       data,
       timeout_height ? Height.fromData(timeout_height) : undefined,
-      timeout_timestamp
+      Number.parseInt(timeout_timestamp)
     );
   }
 
@@ -115,7 +115,7 @@ export class Packet extends JSONSerializable<
       destination_channel,
       data,
       timeout_height: timeout_height ? timeout_height.toData() : undefined,
-      timeout_timestamp,
+      timeout_timestamp: timeout_timestamp.toFixed(),
     };
     return res;
   }
@@ -177,7 +177,7 @@ export namespace Packet {
     destination_channel: string;
     data: string;
     timeout_height?: Height.Data;
-    timeout_timestamp: number;
+    timeout_timestamp: string;
   }
 
   export type Proto = Packet_pb;
