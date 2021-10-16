@@ -15,7 +15,7 @@ interface SendData {
 interface Option extends Partial<CreateTxOptions> {
   waitForConfirmation?: boolean; // default false
   purgeQueue?: boolean; // default true
-  bytes?: string;
+  bytes?: Buffer;
 }
 
 declare global {
@@ -198,6 +198,7 @@ export class Extension {
       sequence: options.sequence,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
+      bytes: options.bytes?.toString('base64'),
     });
   }
 
