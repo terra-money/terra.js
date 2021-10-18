@@ -12,10 +12,14 @@ interface SendData {
   [key: string]: any;
 }
 
-interface Option extends Partial<CreateTxOptions> {
+interface Option extends CreateTxOptions {
   waitForConfirmation?: boolean; // default false
   purgeQueue?: boolean; // default true
-  bytes?: Buffer;
+}
+
+interface SignBytesOption {
+  bytes: Buffer;
+  purgeQueue?: boolean; // default true
 }
 
 declare global {
@@ -198,7 +202,27 @@ export class Extension {
       sequence: options.sequence,
       waitForConfirmation: options.waitForConfirmation,
       purgeQueue: options.purgeQueue,
-      bytes: options.bytes?.toString('base64'),
+    });
+  }
+
+  /**
+   * Request for signing bytes
+   *
+   * @return {string}  name               'onSign'
+   * @return {object}  payload
+   * @return {number}  payload.id         identifier
+   * @return {string}  payload.origin     origin address
+   * @return {Msg[]}   payload.msgs       requested msgs
+   * @return {boolean} payload.success
+   * @return {string}  payload.result.public_key Base64 encoded public key
+   * @return {string}  payload.result.signature  Base64 encoded signature
+   * @return {number}  payload.result.recid      Recovery id
+   */
+  signBytes(options: SignBytesOption): number {
+    return this.send('sign', {
+      ...options,
+      bytes: options.bytes.toString('base64'),
+      purgeQueue: options.purgeQueue,
     });
   }
 
