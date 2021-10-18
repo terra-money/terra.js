@@ -200,6 +200,16 @@ export class TxAPI extends BaseAPI {
       .then(v => TxInfo.fromData(v.tx_response));
   }
 
+  private convertMsg(msg: Msg): Msg {
+    try {
+      // try to convert
+      return Msg.fromAmino(msg as unknown as Msg.Amino);
+    } catch {
+      // if failed, it means the msg is proto
+      return msg;
+    }
+  }
+
   /**
    * Builds a [[StdSignMsg]] that is ready to be signed by a [[Key]]. The appropriate
    * account number and sequence will be fetched live from the blockchain and added to
@@ -216,6 +226,8 @@ export class TxAPI extends BaseAPI {
   ): Promise<Tx> {
     let { fee } = options;
     const { msgs, memo, timeoutHeight } = options;
+
+    options.msgs = msgs.map(m => this.convertMsg(m));
 
     const signerDatas: SignerData[] = [];
     for (const signer of signers) {
@@ -244,7 +256,7 @@ export class TxAPI extends BaseAPI {
     }
 
     return new Tx(
-      new TxBody(msgs, memo || '', timeoutHeight || 0),
+      new TxBody(options.msgs, memo || '', timeoutHeight || 0),
       new AuthInfo([], fee),
       []
     );

@@ -37,6 +37,22 @@ export class SignDoc extends JSONSerializable<
     super();
   }
 
+  public static fromAmino(data: SignDoc.Amino): SignDoc {
+    const doc = new SignDoc(
+      data.chain_id,
+      Number.parseInt(data.account_number),
+      Number.parseInt(data.sequence),
+      new AuthInfo([], Fee.fromAmino(data.fee)),
+      new TxBody(
+        data.msgs.map(msg => Msg.fromAmino(msg)),
+        data.memo,
+        Number.parseInt(data.timeout_height || '0')
+      )
+    );
+
+    return doc;
+  }
+
   public toAmino(): SignDoc.Amino {
     const {
       chain_id,

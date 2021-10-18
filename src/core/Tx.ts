@@ -192,9 +192,18 @@ export class TxBody {
   }
 
   public toProto(): TxBody.Proto {
+    let messages: any;
+    try {
+      messages = this.messages.map(m => m.packAny());
+    } catch (e) {
+      messages = this.messages.map(m =>
+        Msg.fromAmino(m as unknown as Msg.Amino).packAny()
+      );
+    }
+
     return TxBody_pb.fromPartial({
       memo: this.memo,
-      messages: this.messages.map(m => m.packAny()),
+      messages, //: this.messages.map(m => m.packAny()),
       timeoutHeight: Long.fromNumber(this.timeout_height ?? 0),
     });
   }
