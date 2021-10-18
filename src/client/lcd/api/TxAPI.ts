@@ -16,6 +16,7 @@ import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { MsgChannelOpenInitResponse } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 interface Block {
   height: number;
@@ -200,14 +201,12 @@ export class TxAPI extends BaseAPI {
       .then(v => TxInfo.fromData(v.tx_response));
   }
 
-  private convertMsg(msg: Msg): Msg {
-    try {
-      // try to convert
-      return Msg.fromAmino(msg as unknown as Msg.Amino);
-    } catch {
-      // if failed, it means the msg is proto
-      return msg;
+  private convertMsg(msg: any): Msg {
+    const converted = Msg.fromAmino(msg as Msg.Amino);
+    if (converted) {
+      return converted;
     }
+    return msg;
   }
 
   /**
