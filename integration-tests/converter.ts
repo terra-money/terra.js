@@ -23,12 +23,14 @@ async function main() {
     'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
     'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
     { uusd: 1312029 }
-  );
+  ).toAminoJSON();
+
+  console.log('AMINOJS');
+  console.log(send);
 
   wallet
     .createAndSignTx({
-      signMode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
-      msgs: [send],
+      msgs: [JSON.parse(send)],
       memo: 'test from terra.js!',
     })
     .then(tx => {
