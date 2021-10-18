@@ -16,7 +16,6 @@ import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
-import { MsgChannelOpenInitResponse } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 interface Block {
   height: number;
