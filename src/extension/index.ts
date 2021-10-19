@@ -192,8 +192,8 @@ export class Extension {
   sign(options: Option): number {
     return this.send('sign', {
       ...options,
-      msgs: options.msgs.map(msg => Any.toJSON(msg.packAny())),
-      fee: options.fee ? Fee_pb.toJSON(options.fee?.toProto()) : undefined,
+      msgs: options.msgs.map(msg => msg.toJSON()),
+      fee: options.fee?.toJSON(),
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
@@ -220,8 +220,8 @@ export class Extension {
    */
   post(options: Option): number {
     return this.send('post', {
-      msgs: options.msgs.map(msg => Any.toJSON(msg.packAny())),
-      fee: options.fee ? Fee_pb.toJSON(options.fee?.toProto()) : undefined,
+      msgs: options.msgs.map(msg => msg.toJSON()),
+      fee: options.fee?.toJSON(),
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
       gasAdjustment: options.gasAdjustment?.toString(),
