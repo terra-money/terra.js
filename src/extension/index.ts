@@ -220,7 +220,6 @@ export class Extension {
    */
   signBytes(options: SignBytesOption): number {
     return this.send('sign', {
-      ...options,
       bytes: options.bytes.toString('base64'),
       purgeQueue: options.purgeQueue,
     });
