@@ -201,17 +201,6 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
-   *  convert message if msg is amino-typed object.
-   */
-  private convertMsg(msg: any): Msg {
-    // amino case
-    if ('type' in msg && 'value' in msg) {
-      return Msg.fromAmino(msg as Msg.Amino);
-    }
-    return msg;
-  }
-
-  /**
    * Builds a [[StdSignMsg]] that is ready to be signed by a [[Key]]. The appropriate
    * account number and sequence will be fetched live from the blockchain and added to
    * the resultant [[StdSignMsg]]. If no fee is provided, fee will be automatically
@@ -227,9 +216,6 @@ export class TxAPI extends BaseAPI {
   ): Promise<Tx> {
     let { fee } = options;
     const { msgs, memo, timeoutHeight } = options;
-
-    // TODO: remove it when amino is completely abandoned
-    options.msgs = msgs.map(m => this.convertMsg(m));
 
     const signerDatas: SignerData[] = [];
     for (const signer of signers) {
@@ -255,14 +241,10 @@ export class TxAPI extends BaseAPI {
 
     if (fee === undefined) {
       fee = await this.lcd.tx.estimateFee(signerDatas, options);
-    } else if (!((fee as any) instanceof Fee)) {
-      // fee is NOT proto-compatible
-      // TODO: remove it when amino is completely abandoned
-      fee = Fee.fromAmino(fee as any);
     }
 
     return new Tx(
-      new TxBody(options.msgs, memo || '', timeoutHeight || 0),
+      new TxBody(msgs, memo || '', timeoutHeight || 0),
       new AuthInfo([], fee),
       []
     );
