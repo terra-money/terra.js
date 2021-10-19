@@ -175,7 +175,10 @@ export class GovAPI extends BaseAPI {
     _params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Deposit[], Pagination]> {
     const proposal = await this.proposal(proposalId);
-    if (proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD) {
+    if (
+      proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD ||
+      proposal.status === ProposalStatus.PROPOSAL_STATUS_VOTING_PERIOD
+    ) {
       return this.c
         .get<{ deposits: Deposit.Data[]; pagination: Pagination }>(
           `/cosmos/gov/v1beta1/proposals/${proposalId}/deposits`,
