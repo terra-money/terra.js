@@ -2,7 +2,7 @@ import { PublicKey } from './PublicKey';
 import { ModeInfo } from './Tx';
 import { CompactBitArray } from './CompactBitArray';
 import {
-  SignMode,
+  SignMode as SignMode_pb,
   signModeFromJSON,
 } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 import { MultiSignature } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
@@ -27,7 +27,7 @@ export class SignatureV2 {
       PublicKey.fromAmino(data.pub_key),
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(
-          SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
+          SignatureV2.SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
           data.signature
         )
       ),
@@ -37,6 +37,9 @@ export class SignatureV2 {
 }
 
 export namespace SignatureV2 {
+  export const SignMode = SignMode_pb;
+  export type SignMode = SignMode_pb;
+
   export interface Amino {
     signature: string;
     pub_key: PublicKey.Amino;
