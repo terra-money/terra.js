@@ -17,6 +17,11 @@ interface Option extends CreateTxOptions {
   purgeQueue?: boolean; // default true
 }
 
+interface SignBytesOption {
+  bytes: Buffer;
+  purgeQueue?: boolean; // default true
+}
+
 declare global {
   interface Window {
     // add you custom properties and methods
@@ -196,6 +201,26 @@ export class Extension {
       account_number: options.account_number,
       sequence: options.sequence,
       waitForConfirmation: options.waitForConfirmation,
+      purgeQueue: options.purgeQueue,
+    });
+  }
+
+  /**
+   * Request for signing bytes
+   *
+   * @return {string}  name               'onSign'
+   * @return {object}  payload
+   * @return {number}  payload.id         identifier
+   * @return {string}  payload.origin     origin address
+   * @return {Msg[]}   payload.msgs       requested msgs
+   * @return {boolean} payload.success
+   * @return {string}  payload.result.public_key Base64 encoded public key
+   * @return {string}  payload.result.signature  Base64 encoded signature
+   * @return {number}  payload.result.recid      Recovery id
+   */
+  signBytes(options: SignBytesOption): number {
+    return this.send('sign', {
+      bytes: options.bytes.toString('base64'),
       purgeQueue: options.purgeQueue,
     });
   }
