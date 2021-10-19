@@ -1,4 +1,4 @@
-import { LCDClient, MsgSend, MnemonicKey } from '../src';
+import { LCDClient, MsgSend, MnemonicKey, Fee } from '../src';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 async function main() {
@@ -9,8 +9,8 @@ async function main() {
   });
 
   const bombay = new LCDClient({
-    chainID: 'bombay-12',
-    URL: 'https://bombay-lcd.terra.dev',
+    chainID: 'localterra',
+    URL: 'http://localhost:1317',
     gasPrices: { uusd: 0.38 },
   });
 
@@ -22,16 +22,20 @@ async function main() {
   const send = new MsgSend(
     'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
     'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-    { uusd: 1312029 }
+    { uluna: 1312029 }
   ).toAminoJSON();
 
+  const fee = JSON.parse(new Fee(200000, { uluna: 500000 }, '', '').toAminoJSON());
+  //const fee = new Fee(200000, { uluna: 100000 }, '', '');
   console.log('AMINOJS');
-  console.log(send);
+  console.log(send)
+  console.log(fee);
 
   wallet
     .createAndSignTx({
       msgs: [JSON.parse(send)],
       memo: 'test from terra.js!',
+      fee
     })
     .then(tx => {
       return bombay.tx.broadcast(tx);

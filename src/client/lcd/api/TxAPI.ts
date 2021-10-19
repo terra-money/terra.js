@@ -200,10 +200,13 @@ export class TxAPI extends BaseAPI {
       .then(v => TxInfo.fromData(v.tx_response));
   }
 
+  /**
+   *  convert message if msg is amino-typed object.
+   */
   private convertMsg(msg: any): Msg {
-    const converted = Msg.fromAmino(msg as Msg.Amino);
-    if (converted) {
-      return converted;
+    // amino case
+    if ('type' in msg && 'value' in msg) {
+      return Msg.fromAmino(msg as Msg.Amino);
     }
     return msg;
   }
@@ -225,6 +228,7 @@ export class TxAPI extends BaseAPI {
     let { fee } = options;
     const { msgs, memo, timeoutHeight } = options;
 
+    // TODO: remove it when amino is completely abandoned
     options.msgs = msgs.map(m => this.convertMsg(m));
 
     const signerDatas: SignerData[] = [];
@@ -251,6 +255,10 @@ export class TxAPI extends BaseAPI {
 
     if (fee === undefined) {
       fee = await this.lcd.tx.estimateFee(signerDatas, options);
+    } else if (!((fee as any) instanceof Fee)) {
+      // fee is NOT proto-compatible
+      // TODO: remove it when amino is completely abandoned
+      fee = Fee.fromAmino(fee as any);
     }
 
     return new Tx(
