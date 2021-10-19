@@ -36,13 +36,6 @@ export function removeNull(obj: any): any {
         }),
         {}
       );
-    Object.keys(obj).forEach(function (key) {
-      if (obj[key] === null) {
-        delete obj[key];
-      } else if (typeof obj[key] === 'object') {
-        removeNull(obj[key]);
-      }
-    });
   }
 
   return obj;
