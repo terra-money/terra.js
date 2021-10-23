@@ -41,7 +41,6 @@ describe('RawKey', () => {
       const mk = new MnemonicKey({ mnemonic });
       const rk = new RawKey(mk.privateKey);
       delete example.mnemonic;
-      console.log(rk);
       expect(rk).toMatchObject(example);
     });
   });
