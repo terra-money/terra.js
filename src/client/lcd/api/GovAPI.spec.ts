@@ -1,6 +1,6 @@
 import { APIRequester } from '../APIRequester';
 import { GovAPI } from './GovAPI';
-import { Coins, Dec } from '../../../core';
+import { Coins, Dec, Int } from '../../../core';
 
 const c = new APIRequester('https://bombay-lcd.terra.dev/');
 const gov = new GovAPI(c);
@@ -20,6 +20,15 @@ describe('GovAPI', () => {
         threshold: expect.any(Dec),
         veto_threshold: expect.any(Dec),
       },
+    });
+  });
+
+  it('tally', async () => {
+    await expect(gov.tally(5333)).resolves.toMatchObject({
+      yes: expect.any(Int),
+      abstain: expect.any(Int),
+      no: expect.any(Int),
+      no_with_veto: expect.any(Int),
     });
   });
 });

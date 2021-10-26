@@ -313,7 +313,10 @@ export class GovAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<Tally> {
     return this.c
-      .get<{ tally: Tally.Data }>(`/gov/proposals/${proposalId}/tally`, params)
+      .get<{ tally: Tally.Data }>(
+        `/cosmos/gov/v1beta1/proposals/${proposalId}/tally`,
+        params
+      )
       .then(({ tally: d }) => ({
         yes: new Int(d.yes),
         no: new Int(d.no),
