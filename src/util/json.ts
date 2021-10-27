@@ -27,13 +27,15 @@ export abstract class JSONSerializable<T> {
 
 export function removeNull(obj: any): any {
   if (obj !== null && typeof obj === 'object') {
-    Object.keys(obj).forEach(function (key) {
-      if (obj[key] === null) {
-        delete obj[key];
-      } else if (typeof obj[key] === 'object') {
-        removeNull(obj[key]);
-      }
-    });
+    return Object.entries(obj)
+      .filter(([_, v]) => v != null)
+      .reduce(
+        (acc, [k, v]) => ({
+          ...acc,
+          [k]: v === Object(v) && !Array.isArray(v) ? removeNull(v) : v,
+        }),
+        {}
+      );
   }
 
   return obj;
