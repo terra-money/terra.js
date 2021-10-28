@@ -132,7 +132,7 @@ export class StakingAPI extends BaseAPI {
     if (delegator !== undefined && validator !== undefined) {
       return this.c
         .get<{ unbond: UnbondingDelegation.Data }>(
-          `/cosmos/staking/v1beta1/validators/${validator}/delegations/${delegator}/unbonding_delegations`,
+          `/cosmos/staking/v1beta1/validators/${validator}/delegations/${delegator}/unbonding_delegation`,
           params
         )
         .then(({ unbond: data }) => [
