@@ -30,8 +30,8 @@
   "scripts": {
     "build": "tsc --module commonjs && webpack --mode production",
     "test": "jest",
-    "prettier": "prettier --check ./src/**/*.ts",
-    "prettier:fix": "prettier --write ./src/**/*.ts",
+    "format": "prettier --check ./src/**/*.ts",
+    "format:fix": "prettier --write ./src/**/*.ts",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --ext .js,.ts --fix",
     "doc": "typedoc",
@@ -40,7 +40,7 @@
   "lint-staged": {
     "./src/**/*.ts": [
       "npm run lint:fix",
-      "npm run prettier:fix"
+      "npm run format:fix"
     ]
   },
   "husky": {
