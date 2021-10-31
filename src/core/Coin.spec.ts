@@ -1,5 +1,4 @@
 import { Coin } from './Coin';
-import { Denom } from './index';
 import { Dec, Int } from './numeric';
 
 describe('Coin', () => {

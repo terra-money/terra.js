@@ -1,9 +1,4 @@
-import {
-  AccAddress,
-  Account,
-  Coins,
-  LazyGradedVestingAccount,
-} from '../../../core';
+import { AccAddress, Account, LazyGradedVestingAccount } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 import { APIParams } from '../APIRequester';
 

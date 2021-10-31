@@ -1,5 +1,4 @@
 import { Account } from './Account';
-import { Coins } from '../Coins';
 import { PublicKey } from '../PublicKey';
 
 const data = require('./Account.data.json');
