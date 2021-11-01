@@ -3,21 +3,24 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 
 /**
- * A basic message for sending [[Coins]] between Terra accounts.
+ * MsgTransfer defines a msg to transfer fungible tokens (i.e Coins) between
+ * ICS20 enabled chains
  */
 export class MsgTransfer extends JSONSerializable<MsgTransfer.Data> {
   /**
-   * value of the transaction
+   * Token to be transferred
    */
   public token: Coin;
 
   /**
-   * @param sender sender's address
-   * @param receiver recipient's address
-   * @param token value of the transaction
-   * @param source_port: string,
-   * @param source_channel: string,
-   * @param timeout_height: string,
+   * @param sender sender's beck32 address
+   * @param receiver recipient's beck32 address
+   * @param {Coin.Data} token value of the transaction
+   * @param source_port port on which the packet will be sent,
+   * @param source_channel channel by which the packet will be sent,
+   * @param {Object} timeout_height timeout height relative to the current block height
+   * @param {string} timeout_height.revision_number timeout timestamp (in nanoseconds) relative to the current block timestamp
+   * @param {string} timeout_height.revision_height
    */
   constructor(
     public sender: AccAddress,
