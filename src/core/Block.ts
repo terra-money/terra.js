@@ -5,13 +5,9 @@ export interface BlockInfo {
 
 export interface Block {
   header: Header;
-  data: Amino;
+  data: { txs: string[] | null };
   evidence: Evidence;
   last_commit: LastCommit;
-}
-
-export interface Amino {
-  txs: string[] | null;
 }
 
 export interface Evidence {

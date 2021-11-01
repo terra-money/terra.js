@@ -1,64 +1,72 @@
-import { LCDClient, LocalTerra, MsgSwap, MsgSend, Coin } from '../src';
+import {
+  LCDClient,
+  LocalTerra,
+  MsgTransfer,
+  Coin,
+  CreateTxOptions,
+  SimplePublicKey,
+} from '../src';
 import Axios from 'axios';
+import { PublicKey } from '@terra-money/terra.proto/tendermint/crypto/keys';
 
 const lt = new LocalTerra();
 const test1 = lt.wallets.test1;
 
 async function main() {
   const { data: gasPrices } = await Axios.get(
-    'https://bombay-fcd.terra.dev/v1/txs/gas_prices'
+    'https://fcd.terra.dev/v1/txs/gas_prices'
   );
 
-  const bombay = new LCDClient({
-    chainID: 'bombay-12',
-    URL: 'https://bombay-lcd.terra.dev',
+  const columbus = new LCDClient({
+    chainID: 'columbus-5',
+    URL: 'https://lcd.terra.dev',
     gasPrices,
   });
 
-  const accountInfo = await bombay.auth.accountInfo(
-    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
+  const accountInfo = await columbus.auth.accountInfo(
+    'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz'
   );
 
+  /*
+  {"msgs":["{\"@type\":\"/ibc.applications.transfer.v1.MsgTransfer\",\"receiver\":\"osmo1e07gcj02nqhdyj2lfndsx0zzphuz5mvm2kzt6y\",\"sender\":\"terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz\",\"source_channel\":\"channel-72\",\"source_port\":\"transfer\",\"timeout_timestamp\":\"1635304311760999936\",\"token\":{\"amount\":\"1000\",\"denom\":\"ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B\"}}"],"memo":"IBC Test mobile","gasPrices":"0.15uusd","gasAdjustment":"1.75"}
+  */
+
   const msgs = [
-    new MsgSwap(
-      'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
-      new Coin('uusd', 1000),
-      'uluna'
+    new MsgTransfer(
+      'transfer', // source port
+      'channel-21', // source channel
+      new Coin(
+        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
+        1000
+      ), // amount to transfer
+      'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz', // sender
+      'osmo1e07gcj02nqhdyj2lfndsx0zzphuz5mvm2kzt6y', // recipient
+      undefined,
+      (Date.now() + 60 * 1000) * 1e6
+      // timeout_height, //timeout_height,
+      // 0 // timeout_height, timeout_timestamp
     ),
   ];
 
-  // Test raw estimate fee function with specified gas
-  const rawFee = await bombay.tx.estimateFee({
+  const memo = 'IBC Test mobile';
+  const txOptions: CreateTxOptions = {
     msgs,
-    gas: 'auto',
-    sequence: accountInfo.getSequenceNumber(),
-  });
-
-  console.log('MsgSwap(500000 gas): ', rawFee.toData());
-
-  // Test automatic fee estimation using create method with specified denom
-  const item = await bombay.tx.create(
-    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
-    {
-      msgs,
-      feeDenoms: ['uusd'],
-    }
+    memo,
+    gasPrices,
+    gasAdjustment: 1.75,
+  };
+  // Test raw estimate fee function with specified gas
+  const rawFee = await columbus.tx.estimateFee(
+    [
+      {
+        sequenceNumber: accountInfo.getSequenceNumber(),
+        publicKey: accountInfo.getPublicKey(),
+      },
+    ],
+    txOptions
   );
 
-  console.log('MsgSwap(uusd fee)', item.auth_info.fee.toData());
-
-  const send = await bombay.tx.create(test1.key.accAddress, {
-    msgs: [
-      new MsgSend(
-        test1.key.accAddress,
-        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
-        '1234uusd'
-      ),
-    ],
-    feeDenoms: ['uusd'],
-  });
-
-  console.log('MsgSend', send.auth_info.fee.toData());
+  console.log('MsgSwap(500000 gas): ', rawFee.toData());
 }
 
 main().catch(console.error);
