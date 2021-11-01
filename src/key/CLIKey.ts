@@ -115,6 +115,7 @@ export class CLIKey extends Key {
           } --sign-mode amino-json`
       )
     ).toString();
+
     tmpobj.removeCallback();
     return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
   }

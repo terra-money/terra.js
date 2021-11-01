@@ -26,8 +26,10 @@ jobs:
         env:
           CI: true
 
-      - name: Lint
-        run: npm run lint
+      - name: Code style
+        run: |
+          npm run lint
+          npm run format
         env:
           CI: true
 

@@ -1,7 +1,5 @@
 import { CreateTxOptions } from '../client';
 import PostMessageStream from './PostMessageStream';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Fee as Fee_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 
 interface ResponseData {
   name: string;

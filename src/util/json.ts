@@ -33,7 +33,7 @@ export abstract class JSONSerializable<A, D, P> {
 export function removeNull(obj: any): any {
   if (obj !== null && typeof obj === 'object') {
     return Object.entries(obj)
-      .filter(([_, v]) => v != null)
+      .filter(([, v]) => v != null)
       .reduce(
         (acc, [k, v]) => ({
           ...acc,
