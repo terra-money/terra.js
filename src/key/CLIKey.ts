@@ -1,5 +1,5 @@
 import { Key, pubKeyFromPublicKey } from './Key';
-import { bech32 } from 'bech32'
+import { bech32 } from 'bech32';
 import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
 import { StdSignMsg } from '../core/StdSignMsg';
 import { StdSignature } from '../core/StdSignature';
@@ -50,11 +50,14 @@ export class CLIKey extends Key {
       ).toString()
     );
 
-    const publicKeyString = JSON.parse(details.pubkey).key
-    const publicKey = Buffer.from(publicKeyString, 'base64')
+    const publicKeyString = JSON.parse(details.pubkey).key;
+    const publicKey = Buffer.from(publicKeyString, 'base64');
 
     this._accAddress = details.address;
-    this._accPubKey = bech32.encode('terrapub', Array.from(pubKeyFromPublicKey(publicKey)));
+    this._accPubKey = bech32.encode(
+      'terrapub',
+      Array.from(pubKeyFromPublicKey(publicKey))
+    );
   }
 
   /**
@@ -118,6 +121,7 @@ export class CLIKey extends Key {
           `${this.params.multisig ? `--multisig ${this.params.multisig}` : ''}`
       )
     ).toString();
+
     tmpobj.removeCallback();
     return StdSignature.fromData(JSON.parse(result));
   }

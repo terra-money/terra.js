@@ -1,4 +1,3 @@
-import { Coins } from '../Coins';
 import { PublicKey } from '../PublicKey';
 import { JSONSerializable } from '../../util/json';
 import { AccAddress } from '../bech32';
