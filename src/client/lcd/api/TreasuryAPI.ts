@@ -52,7 +52,20 @@ export namespace TreasuryParams {
 }
 export class TreasuryAPI extends BaseAPI {
   /**
-   * Gets the current registered Tax Cap for a specified denomation.
+   * Gets the current registered Tax caps for all denomination
+   * @returns Coin[]
+   */
+  public async taxCaps(params: APIParams = {}): Promise<Coins> {
+    return this.c
+      .get<{ tax_caps: { denom: string; tax_cap: string }[] }>(
+        `/terra/treasury/v1beta1/tax_caps`,
+        params
+      )
+      .then(d => new Coins(d.tax_caps.map(c => new Coin(c.denom, c.tax_cap))));
+  }
+
+  /**
+   * Gets the current registered Tax Cap for a specified denomination.
    * @param denom denomination desired for Tax Cap query.
    */
   public async taxCap(denom: Denom, params: APIParams = {}): Promise<Coin> {
