@@ -1,4 +1,5 @@
 import { BankMsg, MsgMultiSend, MsgSend } from './bank/msgs';
+import { CosmosMsg, MsgTransfer } from './cosmos-sdk/msgs';
 import {
   DistributionMsg,
   MsgModifyWithdrawAddress,
@@ -42,6 +43,7 @@ import {
 
 export type Msg =
   | BankMsg
+  | CosmosMsg
   | DistributionMsg
   | GovMsg
   | MarketMsg
@@ -54,6 +56,7 @@ export type Msg =
 export namespace Msg {
   export type Data =
     | BankMsg.Data
+    | CosmosMsg.Data
     | DistributionMsg.Data
     | GovMsg.Data
     | MarketMsg.Data
@@ -70,6 +73,10 @@ export namespace Msg {
         return MsgSend.fromData(data);
       case 'bank/MsgMultiSend':
         return MsgMultiSend.fromData(data);
+
+      // cosmos-sdk
+      case 'cosmos-sdk/MsgTransfer':
+        return MsgTransfer.fromData(data);
 
       // distribution
       case 'distribution/MsgModifyWithdrawAddress':
