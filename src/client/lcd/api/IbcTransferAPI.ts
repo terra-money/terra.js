@@ -49,7 +49,7 @@ export class IbcTransferAPI extends BaseAPI {
   public async parameters(params: APIParams = {}): Promise<IbcTransferParams> {
     return this.c
       .get<{ params: IbcTransferParams.Data }>(
-        '/ibc/apps/transfer/v1/params',
+        `/ibc/apps/transfer/v1/params`,
         params
       )
       .then(({ params: d }) => ({

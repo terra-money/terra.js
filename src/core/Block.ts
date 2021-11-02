@@ -15,7 +15,7 @@ export interface Amino {
 }
 
 export interface Evidence {
-  evidence: string | null;
+  evidence: string[];
 }
 
 export interface Header {
@@ -43,7 +43,7 @@ export interface Header {
 
 export interface BlockID {
   hash: string;
-  parts: Parts;
+  part_set_header: Parts;
 }
 
 export interface Parts {
@@ -58,7 +58,7 @@ export interface Version {
 
 export interface LastCommit {
   height: string;
-  round: string;
+  round: number;
   block_id: BlockID;
   signatures: Signature[];
 }

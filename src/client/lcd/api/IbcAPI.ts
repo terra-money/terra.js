@@ -29,7 +29,7 @@ export class IbcClientAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<IbcClientParams> {
     return this.c
-      .get<{ params: IbcClientParams.Data }>('/ibc/client/v1/params', params)
+      .get<{ params: IbcClientParams.Data }>(`/ibc/client/v1/params`, params)
       .then(({ params: d }) => ({
         allowed_clients: d.allowed_clients,
       }));
@@ -42,7 +42,7 @@ export class IbcClientAPI extends BaseAPI {
       .get<{
         client_states: IdentifiedClientState.Data[];
         pagination: Pagination;
-      }>('/ibc/core/client/v1/client_states', params)
+      }>(`/ibc/core/client/v1/client_states`, params)
       .then(d => [
         d.client_states.map(IdentifiedClientState.fromData),
         d.pagination,
