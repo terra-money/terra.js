@@ -3,12 +3,13 @@ export function prepareSignBytes(obj: any): any {
     return obj.map(prepareSignBytes);
   }
 
-  // string or number
-  if (typeof obj !== `object`) {
+  // string, number, or null
+  if (typeof obj !== `object` || obj === null) {
     return obj;
   }
 
   const sorted: any = {};
+
   Object.keys(obj)
     .sort()
     .forEach(key => {
