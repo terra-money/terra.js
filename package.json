@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "2.1.22",
+  "version": "3.0.0-beta.0",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -57,15 +57,15 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
-    "@types/node": "^16.11.6",
+    "@types/node": "^16.11.7",
     "@types/readable-stream": "^2.3.9",
     "@types/secp256k1": "^4.0.1",
     "@types/tmp": "^0.2.0",
-    "@types/ws": "^7.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
+    "@types/ws": "^7.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
     "buffer": "^6.0.3",
-    "eslint": "^8.1.0",
+    "eslint": "^8.2.0",
     "husky": "^4.3.6",
     "jest": "^27.0.4",
     "lint-staged": "^10.5.3",
@@ -75,7 +75,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "typedoc": "^0.21.0",
+    "typedoc": "^0.22.8",
     "typescript": "^4.3.4",
     "webpack": "^5.11.1",
     "webpack-bundle-analyzer": "^4.3.0",
@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@terra-money/terra.proto": "^0.1.7",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "bech32": "^2.0.0",
     "bip32": "^2.0.6",
     "bip39": "^3.0.3",
@@ -94,6 +94,6 @@
     "secp256k1": "^4.0.2",
     "tmp": "^0.2.1",
     "utf-8-validate": "^5.0.5",
-    "ws": "^7.4.2"
+    "ws": "^7.5.5"
   }
 }
