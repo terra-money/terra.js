@@ -1,556 +1,110 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Terra.js</title>
-	<meta name="description" content="Documentation for Terra.js">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">Terra.js</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>Terra.js</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<p>&nbsp;</p>
-				<p align="center">
-					<img src="https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs.svg" width=500>
-				</p>
-				<p align="center">
-					The JavaScript SDK for Terra
-				</p>
-				<p><img src="https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs-diagram.png" alt="diagram"></p>
-				<br/>
-				<p align="center">
-					<img alt="GitHub" src="https://img.shields.io/github/license/terra-money/terra.js">
-					<img alt="npm (scoped)" src="https://img.shields.io/npm/v/@terra-money/terra.js">
-				</p>
-				<p align="center">
-					<a href="https://github.com/terra-money/terra.js/wiki"><strong>Explore the Docs »</strong></a>
-					<br />
-					<br/>
-					<a href="https://github.com/terra-money/terra.js/wiki">Examples</a>
-					·
-					<a href="https://terra-money.github.io/terra.js/">API Reference</a>
-					·
-					<a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM Package</a>
-					·
-					<a href="https://github.com/terra-money/terra.js">GitHub</a>
-				</p>
-				<p>Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.</p>
-				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
-					<h2>Features</h2>
-				</a>
-				<ul>
-					<li><strong>Written in TypeScript</strong>, with type definitions</li>
-					<li>Versatile support for <a href="https://github.com/terra-money/terra.js/wiki/Keys">key management</a> solutions</li>
-					<li>Works in Node.js, in the browser, and React Native</li>
-					<li>Exposes the Terra API through <a href="https://github.com/terra-money/terra.js/wiki/Querying"><code>LCDClient</code></a></li>
-					<li>Parses responses into native JavaScript types</li>
-				</ul>
-				<p>We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<p>Grab the latest version off <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM</a>:</p>
-				<pre><code class="language-sh"><span style="color: #000000">npm install @terra-money/terra.js</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Terra.js</title><meta name="description" content="Documentation for Terra.js"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Terra.js</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>Terra.js</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><p>&nbsp;</p>
+<p align="center">
+<img src="https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs.svg" width=500>
+</p>
+
+<p align="center">
+The JavaScript SDK for Terra
+</p>
+
+<p><img src="https://raw.githubusercontent.com/terra-money/terra.js/master/img/terrajs-diagram.png" alt="diagram"></p>
+<br/>
+
+<p align="center">
+  <img alt="GitHub" src="https://img.shields.io/github/license/terra-money/terra.js">
+  <img alt="npm (scoped)" src="https://img.shields.io/npm/v/@terra-money/terra.js">
+</p>
+
+<p align="center">
+  <a href="https://github.com/terra-money/terra.js/wiki"><strong>Explore the Docs »</strong></a>
+  <br />
+  <br/>
+  <a href="https://github.com/terra-money/terra.js/wiki">Examples</a>
+  ·
+  <a href="https://terra-money.github.io/terra.js/">API Reference</a>
+  ·
+  <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM Package</a>
+  ·
+  <a href="https://github.com/terra-money/terra.js">GitHub</a>
+</p>
+
+<p>Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.</p>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li><strong>Written in TypeScript</strong>, with type definitions</li>
+<li>Versatile support for <a href="https://github.com/terra-money/terra.js/wiki/Keys">key management</a> solutions</li>
+<li>Works in Node.js, in the browser, and React Native</li>
+<li>Exposes the Terra API through <a href="https://github.com/terra-money/terra.js/wiki/Querying"><code>LCDClient</code></a></li>
+<li>Parses responses into native JavaScript types</li>
+</ul>
+<p>We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p>Grab the latest version off <a href="https://www.npmjs.com/package/@terra-money/terra.js">NPM</a>:</p>
+<pre><code class="language-sh"><span class="hl-1">npm install @terra-money/terra.js</span>
 </code></pre>
-				<p>For columbus-5 and bombay network, use v2.x</p>
-				<pre><code class="language-sh"><span style="color: #000000">npm install @terra-money/terra.js@^1</span>
+<p>For columbus-5 and bombay network, use v2.x</p>
+<pre><code class="language-sh"><span class="hl-1">npm install @terra-money/terra.js@^1</span>
 </code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<p>Terra.js can be use in Node.js, as well as inside the browser. Please check the <a href="https://github.com/terra-money/terra.js/wiki">GitHub Wiki</a> for notes on how to get up and running.</p>
-				<a href="#getting-blockchain-data" id="getting-blockchain-data" style="color: inherit; text-decoration: none;">
-					<h3>Getting blockchain data</h3>
-				</a>
-				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">Coin</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #008000">// connect to bombay testnet</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">terra</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">LCDClient</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://bombay-lcd.terra.dev&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">chainID:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;bombay-12&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">});</span>
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>Terra.js can be use in Node.js, as well as inside the browser. Please check the <a href="https://github.com/terra-money/terra.js/wiki">GitHub Wiki</a> for notes on how to get up and running.</p>
 
-<span style="color: #008000">// To use LocalTerra</span>
-<span style="color: #008000">// const terra = new LCDClient({</span>
-<span style="color: #008000">//   URL: &#039;http://localhost:1317&#039;,</span>
-<span style="color: #008000">//   chainID: &#039;localterra&#039;</span>
-<span style="color: #008000">// });</span>
-
-<span style="color: #008000">// get the current swap rate from 1 TerraUSD to TerraKRW</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">offerCoin</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Coin</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;uusd&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;1000000&#039;</span><span style="color: #000000">);</span>
-<span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #001080">market</span><span style="color: #000000">.</span><span style="color: #795E26">swapRate</span><span style="color: #000000">(</span><span style="color: #001080">offerCoin</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;ukrw&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">c</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">offerCoin</span><span style="color: #000000FF">.</span><span style="color: #795E26">toString</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #A31515"> can be swapped for </span><span style="color: #0000FF">${</span><span style="color: #001080">c</span><span style="color: #000000FF">.</span><span style="color: #795E26">toString</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
-<span style="color: #000000">});</span>
+<a href="#getting-blockchain-data" id="getting-blockchain-data" style="color: inherit; text-decoration: none;">
+  <h3>Getting blockchain data</h3>
+</a>
+<pre><code class="language-ts"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">LCDClient</span><span class="hl-1">, </span><span class="hl-2">Coin</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@terra-money/terra.js&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">// connect to bombay testnet</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">terra</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">LCDClient</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">URL:</span><span class="hl-1"> </span><span class="hl-3">&#39;https://bombay-lcd.terra.dev&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">chainID:</span><span class="hl-1"> </span><span class="hl-3">&#39;bombay-12&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">// To use LocalTerra</span><br/><span class="hl-7">// const terra = new LCDClient({</span><br/><span class="hl-7">//   URL: &#39;http://localhost:1317&#39;,</span><br/><span class="hl-7">//   chainID: &#39;localterra&#39;</span><br/><span class="hl-7">// });</span><br/><br/><span class="hl-7">// get the current swap rate from 1 TerraUSD to TerraKRW</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">offerCoin</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">Coin</span><span class="hl-1">(</span><span class="hl-3">&#39;uusd&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;1000000&#39;</span><span class="hl-1">);</span><br/><span class="hl-2">terra</span><span class="hl-1">.</span><span class="hl-2">market</span><span class="hl-1">.</span><span class="hl-6">swapRate</span><span class="hl-1">(</span><span class="hl-2">offerCoin</span><span class="hl-1">, </span><span class="hl-3">&#39;ukrw&#39;</span><span class="hl-1">).</span><span class="hl-6">then</span><span class="hl-1">(</span><span class="hl-2">c</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">`</span><span class="hl-4">${</span><span class="hl-2">offerCoin</span><span class="hl-8">.</span><span class="hl-6">toString</span><span class="hl-8">()</span><span class="hl-4">}</span><span class="hl-3"> can be swapped for </span><span class="hl-4">${</span><span class="hl-2">c</span><span class="hl-8">.</span><span class="hl-6">toString</span><span class="hl-8">()</span><span class="hl-4">}</span><span class="hl-3">`</span><span class="hl-1">);</span><br/><span class="hl-1">});</span>
 </code></pre>
-				<a href="#broadcasting-transactions" id="broadcasting-transactions" style="color: inherit; text-decoration: none;">
-					<h3>Broadcasting transactions</h3>
-				</a>
-				<p>First, <a href="https://faucet.terra.money/">get</a> some testnet tokens for <code>terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v</code>, or use <a href="https://www.github.com/terra-money/LocalTerra">LocalTerra</a>.</p>
-				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LCDClient</span><span style="color: #000000">, </span><span style="color: #001080">MsgSend</span><span style="color: #000000">, </span><span style="color: #001080">MnemonicKey</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@terra-money/terra.js&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #008000">// create a key out of a mnemonic</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mk</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MnemonicKey</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">mnemonic:</span>
-<span style="color: #000000">    </span><span style="color: #A31515">&#039;notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #008000">// connect to bombay testnet</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">terra</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">LCDClient</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #001080">URL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://bombay-lcd.terra.dev&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">chainID:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;bombay-12&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #008000">// To use LocalTerra</span>
-<span style="color: #008000">// const terra = new LCDClient({</span>
-<span style="color: #008000">//   URL: &#039;http://localhost:1317&#039;,</span>
-<span style="color: #008000">//   chainID: &#039;localterra&#039;</span>
-<span style="color: #008000">// });</span>
-
-<span style="color: #008000">// a wallet can be created out of any key</span>
-<span style="color: #008000">// wallets abstract transaction building</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wallet</span><span style="color: #000000"> = </span><span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #795E26">wallet</span><span style="color: #000000">(</span><span style="color: #001080">mk</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// create a simple message that moves coin balances</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">send</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MsgSend</span><span style="color: #000000">(</span>
-<span style="color: #000000">  </span><span style="color: #A31515">&#039;terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #A31515">&#039;terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  { </span><span style="color: #001080">uluna:</span><span style="color: #000000"> </span><span style="color: #098658">1000000</span><span style="color: #000000">, </span><span style="color: #001080">ukrw:</span><span style="color: #000000"> </span><span style="color: #098658">1230201</span><span style="color: #000000">, </span><span style="color: #001080">uusd:</span><span style="color: #000000"> </span><span style="color: #098658">1312029</span><span style="color: #000000"> }</span>
-<span style="color: #000000">);</span>
-
-<span style="color: #001080">wallet</span>
-<span style="color: #000000">  .</span><span style="color: #795E26">createAndSignTx</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">msgs:</span><span style="color: #000000"> [</span><span style="color: #001080">send</span><span style="color: #000000">],</span>
-<span style="color: #000000">    </span><span style="color: #001080">memo:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;test from terra.js!&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  })</span>
-<span style="color: #000000">  .</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">tx</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">terra</span><span style="color: #000000">.</span><span style="color: #001080">tx</span><span style="color: #000000">.</span><span style="color: #795E26">broadcast</span><span style="color: #000000">(</span><span style="color: #001080">tx</span><span style="color: #000000">))</span>
-<span style="color: #000000">  .</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`TX hash: </span><span style="color: #0000FF">${</span><span style="color: #001080">result</span><span style="color: #000000FF">.</span><span style="color: #001080">txhash</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
-<span style="color: #000000">  });</span>
+<a href="#broadcasting-transactions" id="broadcasting-transactions" style="color: inherit; text-decoration: none;">
+  <h3>Broadcasting transactions</h3>
+</a>
+<p>First, <a href="https://faucet.terra.money/">get</a> some testnet tokens for <code>terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v</code>, or use <a href="https://www.github.com/terra-money/LocalTerra">LocalTerra</a>.</p>
+<pre><code class="language-ts"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">LCDClient</span><span class="hl-1">, </span><span class="hl-2">MsgSend</span><span class="hl-1">, </span><span class="hl-2">MnemonicKey</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@terra-money/terra.js&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">// create a key out of a mnemonic</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">mk</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">MnemonicKey</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">mnemonic:</span><br/><span class="hl-1">    </span><span class="hl-3">&#39;notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">// connect to bombay testnet</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">terra</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">LCDClient</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">URL:</span><span class="hl-1"> </span><span class="hl-3">&#39;https://bombay-lcd.terra.dev&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">chainID:</span><span class="hl-1"> </span><span class="hl-3">&#39;bombay-12&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">// To use LocalTerra</span><br/><span class="hl-7">// const terra = new LCDClient({</span><br/><span class="hl-7">//   URL: &#39;http://localhost:1317&#39;,</span><br/><span class="hl-7">//   chainID: &#39;localterra&#39;</span><br/><span class="hl-7">// });</span><br/><br/><span class="hl-7">// a wallet can be created out of any key</span><br/><span class="hl-7">// wallets abstract transaction building</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">wallet</span><span class="hl-1"> = </span><span class="hl-2">terra</span><span class="hl-1">.</span><span class="hl-6">wallet</span><span class="hl-1">(</span><span class="hl-2">mk</span><span class="hl-1">);</span><br/><br/><span class="hl-7">// create a simple message that moves coin balances</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">send</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">MsgSend</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-3">&#39;terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-3">&#39;terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  { </span><span class="hl-2">uluna:</span><span class="hl-1"> </span><span class="hl-9">1000000</span><span class="hl-1">, </span><span class="hl-2">ukrw:</span><span class="hl-1"> </span><span class="hl-9">1230201</span><span class="hl-1">, </span><span class="hl-2">uusd:</span><span class="hl-1"> </span><span class="hl-9">1312029</span><span class="hl-1"> }</span><br/><span class="hl-1">);</span><br/><br/><span class="hl-2">wallet</span><br/><span class="hl-1">  .</span><span class="hl-6">createAndSignTx</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-2">msgs:</span><span class="hl-1"> [</span><span class="hl-2">send</span><span class="hl-1">],</span><br/><span class="hl-1">    </span><span class="hl-2">memo:</span><span class="hl-1"> </span><span class="hl-3">&#39;test from terra.js!&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  })</span><br/><span class="hl-1">  .</span><span class="hl-6">then</span><span class="hl-1">(</span><span class="hl-2">tx</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> </span><span class="hl-2">terra</span><span class="hl-1">.</span><span class="hl-2">tx</span><span class="hl-1">.</span><span class="hl-6">broadcast</span><span class="hl-1">(</span><span class="hl-2">tx</span><span class="hl-1">))</span><br/><span class="hl-1">  .</span><span class="hl-6">then</span><span class="hl-1">(</span><span class="hl-2">result</span><span class="hl-1"> </span><span class="hl-4">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">`TX hash: </span><span class="hl-4">${</span><span class="hl-2">result</span><span class="hl-8">.</span><span class="hl-2">txhash</span><span class="hl-4">}</span><span class="hl-3">`</span><span class="hl-1">);</span><br/><span class="hl-1">  });</span>
 </code></pre>
-				<a href="#terrajs-in-the-browser" id="terrajs-in-the-browser" style="color: inherit; text-decoration: none;">
-					<h2>Terra.js in the browser</h2>
-				</a>
-				<p>You can access all the objects of the <code>@terra-money/terra.js</code> from the global <code>Terra</code> object if you load Terra.js with a <code>&lt;script&gt;</code> tag.</p>
-				<p>Include the following in your browser:</p>
-				<pre><code class="language-html"><span style="color: #800000">&lt;script</span>
-<span style="color: #000000FF">  </span><span style="color: #FF0000">crossorigin</span>
-<span style="color: #000000FF">  </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://unpkg.com/@terra-money/terra.js/dist/bundle.js&quot;</span>
-<span style="color: #800000">&gt;&lt;/script&gt;</span>
+
+<a href="#terrajs-in-the-browser" id="terrajs-in-the-browser" style="color: inherit; text-decoration: none;">
+  <h2>Terra.js in the browser</h2>
+</a>
+<p>You can access all the objects of the <code>@terra-money/terra.js</code> from the global <code>Terra</code> object if you load Terra.js with a <code>&lt;script&gt;</code> tag.</p>
+<p>Include the following in your browser:</p>
+<pre><code class="language-html"><span class="hl-10">&lt;</span><span class="hl-11">script</span><br/><span class="hl-8">  </span><span class="hl-12">crossorigin</span><br/><span class="hl-8">  </span><span class="hl-12">src</span><span class="hl-8">=</span><span class="hl-13">&quot;https://unpkg.com/@terra-money/terra.js/dist/bundle.js&quot;</span><br/><span class="hl-10">&gt;&lt;/</span><span class="hl-11">script</span><span class="hl-10">&gt;</span>
 </code></pre>
-				<p>You can find a small JSFiddle example that refreshes current Oracle votes <a href="https://jsfiddle.net/tLm1b527/1/">here</a>.</p>
-				<a href="#terrajs-in-react-native" id="terrajs-in-react-native" style="color: inherit; text-decoration: none;">
-					<h2>Terra.js in React Native</h2>
-				</a>
-				<p>In order to use Terra.js inside React Native, you need to add the <a href="https://github.com/parshap/node-libs-react-native"><code>node-libs-react-native</code></a> package and <a href="https://github.com/LinusU/react-native-get-random-values"><code>react-native-get-random-values</code></a> package to your React Native app&#39;s <code>package.json</code>.</p>
-				<pre><code class="language-sh"><span style="color: #000000">yarn add node-libs-react-native react-native-get-random-values</span>
+<p>You can find a small JSFiddle example that refreshes current Oracle votes <a href="https://jsfiddle.net/tLm1b527/1/">here</a>.</p>
+
+<a href="#terrajs-in-react-native" id="terrajs-in-react-native" style="color: inherit; text-decoration: none;">
+  <h2>Terra.js in React Native</h2>
+</a>
+<p>In order to use Terra.js inside React Native, you need to add the <a href="https://github.com/parshap/node-libs-react-native"><code>node-libs-react-native</code></a> package and <a href="https://github.com/LinusU/react-native-get-random-values"><code>react-native-get-random-values</code></a> package to your React Native app&#39;s <code>package.json</code>.</p>
+<pre><code class="language-sh"><span class="hl-1">yarn add node-libs-react-native react-native-get-random-values</span>
 </code></pre>
-				<p>You will need to register Node.js native modules in an entry point of your application, such as <code>index.tsx</code>:</p>
-				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;node-libs-react-native/globals&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;react-native-get-random-values&#039;</span><span style="color: #000000">;</span>
+<p>You will need to register Node.js native modules in an entry point of your application, such as <code>index.tsx</code>:</p>
+<pre><code class="language-js"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-3">&#39;node-libs-react-native/globals&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-3">&#39;react-native-get-random-values&#39;</span><span class="hl-1">;</span>
 </code></pre>
-				<p>Also, add resolvers to your <code>metro.config.js</code></p>
-				<pre><code class="language-js"><span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #008000">// ...</span>
-<span style="color: #000000">  resolver: {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// ...</span>
-<span style="color: #000000">    extraNodeModules: </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;node-libs-react-native&#039;</span><span style="color: #000000">),</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #008000">// ...</span>
-<span style="color: #000000">}</span>
+<p>Also, add resolvers to your <code>metro.config.js</code></p>
+<pre><code class="language-js"><span class="hl-14">module</span><span class="hl-1">.</span><span class="hl-14">exports</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-7">// ...</span><br/><span class="hl-1">  </span><span class="hl-15">resolver</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">// ...</span><br/><span class="hl-1">    </span><span class="hl-15">extraNodeModules</span><span class="hl-1">: </span><span class="hl-6">require</span><span class="hl-1">(</span><span class="hl-3">&#39;node-libs-react-native&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-7">// ...</span><br/><span class="hl-1">}</span>
 </code></pre>
-				<p>There have been many complaints about <code>MnemonicKey</code> of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use <a href="https://github.com/terra-money/react-native-mnemonic-key"><code>react-native-mnemonic-key</code></a> instead for more reliable performance and security.</p>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p>This software is licensed under the MIT license. See <a href="./LICENSE">LICENSE</a> for full disclosure.</p>
-				<p>© 2020 Terraform Labs, PTE.</p>
-				<hr/>
-				<p>&nbsp;</p>
-				<p align="center">
-					<a href="https://terra.money/"><img src="http://terra.money/logos/terra_logo.svg" align="center" width=200/></a>
-				</p>
-				<div align="center">
-					<sub><em>Powering the innovation of money.</em></sub>
-				</div>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_LocalTerra.html">client/<wbr>Local<wbr>Terra</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_WebSocketClient.html">client/<wbr>Web<wbr>Socket<wbr>Client</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_APIRequester.html">client/lcd/APIRequester</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_LCDClient.html">client/lcd/LCDClient</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_LCDUtils.html">client/lcd/LCDUtils</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_Wallet.html">client/lcd/<wbr>Wallet</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_AuthAPI.html">client/lcd/api/<wbr>AuthAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_BankAPI.html">client/lcd/api/<wbr>BankAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_BaseAPI.html">client/lcd/api/<wbr>BaseAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_DistributionAPI.html">client/lcd/api/<wbr>DistributionAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_GovAPI.html">client/lcd/api/<wbr>GovAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_MarketAPI.html">client/lcd/api/<wbr>MarketAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_MintAPI.html">client/lcd/api/<wbr>MintAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_MsgAuthAPI.html">client/lcd/api/<wbr>Msg<wbr>AuthAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_OracleAPI.html">client/lcd/api/<wbr>OracleAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_SlashingAPI.html">client/lcd/api/<wbr>SlashingAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_StakingAPI.html">client/lcd/api/<wbr>StakingAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_SupplyAPI.html">client/lcd/api/<wbr>SupplyAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_TendermintAPI.html">client/lcd/api/<wbr>TendermintAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_TreasuryAPI.html">client/lcd/api/<wbr>TreasuryAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_TxAPI.html">client/lcd/api/<wbr>TxAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/client_lcd_api_WasmAPI.html">client/lcd/api/<wbr>WasmAPI</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Block.html">core/<wbr>Block</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Coin.html">core/<wbr>Coin</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Coins.html">core/<wbr>Coins</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Denom.html">core/<wbr>Denom</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Deposit.html">core/<wbr>Deposit</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_Msg.html">core/<wbr>Msg</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_PublicKey.html">core/<wbr>Public<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_StdFee.html">core/<wbr>Std<wbr>Fee</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_StdSignMsg.html">core/<wbr>Std<wbr>Sign<wbr>Msg</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_StdSignature.html">core/<wbr>Std<wbr>Signature</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_StdTx.html">core/<wbr>Std<wbr>Tx</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_TxInfo.html">core/<wbr>TxInfo</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_ValidatorSet.html">core/<wbr>Validator<wbr>Set</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_auth_Account.html">core/auth/<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_auth_LazyGradedVestingAccount.html">core/auth/<wbr>Lazy<wbr>Graded<wbr>Vesting<wbr>Account</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_bank_msgs_MsgMultiSend.html">core/bank/msgs/<wbr>Msg<wbr>Multi<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_bank_msgs_MsgSend.html">core/bank/msgs/<wbr>Msg<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_bech32.html">core/bech32</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_distribution_msgs_MsgFundCommunityPool.html">core/distribution/msgs/<wbr>Msg<wbr>Fund<wbr>Community<wbr>Pool</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_distribution_msgs_MsgModifyWithdrawAddress.html">core/distribution/msgs/<wbr>Msg<wbr>Modify<wbr>Withdraw<wbr>Address</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_distribution_msgs_MsgWithdrawDelegationReward.html">core/distribution/msgs/<wbr>Msg<wbr>Withdraw<wbr>Delegation<wbr>Reward</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_distribution_msgs_MsgWithdrawValidatorCommission.html">core/distribution/msgs/<wbr>Msg<wbr>Withdraw<wbr>Validator<wbr>Commission</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_distribution_proposals_CommunityPoolSpendProposal.html">core/distribution/proposals/<wbr>Community<wbr>Pool<wbr>Spend<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_Proposal.html">core/gov/<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_Vote.html">core/gov/<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_msgs_MsgDeposit.html">core/gov/msgs/<wbr>Msg<wbr>Deposit</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_msgs_MsgSubmitProposal.html">core/gov/msgs/<wbr>Msg<wbr>Submit<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_msgs_MsgVote.html">core/gov/msgs/<wbr>Msg<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_msgs_MsgVoteWeighted.html">core/gov/msgs/<wbr>Msg<wbr>Vote<wbr>Weighted</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_gov_proposals_TextProposal.html">core/gov/proposals/<wbr>Text<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_market_msgs_MsgSwap.html">core/market/msgs/<wbr>Msg<wbr>Swap</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_market_msgs_MsgSwapSend.html">core/market/msgs/<wbr>Msg<wbr>Swap<wbr>Send</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_msgauth_Authorization.html">core/msgauth/<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_msgauth_msgs_MsgExecAuthorized.html">core/msgauth/msgs/<wbr>Msg<wbr>Exec<wbr>Authorized</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_msgauth_msgs_MsgGrantAuthorization.html">core/msgauth/msgs/<wbr>Msg<wbr>Grant<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_msgauth_msgs_MsgRevokeAuthorization.html">core/msgauth/msgs/<wbr>Msg<wbr>Revoke<wbr>Authorization</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_numeric.html">core/numeric</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_oracle_AggregateExchangeRatePrevote.html">core/oracle/<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_oracle_AggregateExchangeRateVote.html">core/oracle/<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_oracle_msgs_MsgAggregateExchangeRatePrevote.html">core/oracle/msgs/<wbr>Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Prevote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_oracle_msgs_MsgAggregateExchangeRateVote.html">core/oracle/msgs/<wbr>Msg<wbr>Aggregate<wbr>Exchange<wbr>Rate<wbr>Vote</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_oracle_msgs_MsgDelegateFeedConsent.html">core/oracle/msgs/<wbr>Msg<wbr>Delegate<wbr>Feed<wbr>Consent</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_params_ParamChange.html">core/params/<wbr>Param<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_params_proposals_ParameterChangeProposal.html">core/params/proposals/<wbr>Parameter<wbr>Change<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_slashing_msgs_MsgUnjail.html">core/slashing/msgs/<wbr>Msg<wbr>Unjail</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_Delegation.html">core/staking/<wbr>Delegation</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_Redelegation.html">core/staking/<wbr>Redelegation</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_UnbondingDelegation.html">core/staking/<wbr>Unbonding<wbr>Delegation</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_Validator.html">core/staking/<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_msgs_MsgBeginRedelegate.html">core/staking/msgs/<wbr>Msg<wbr>Begin<wbr>Redelegate</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_msgs_MsgCreateValidator.html">core/staking/msgs/<wbr>Msg<wbr>Create<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_msgs_MsgDelegate.html">core/staking/msgs/<wbr>Msg<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_msgs_MsgEditValidator.html">core/staking/msgs/<wbr>Msg<wbr>Edit<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_staking_msgs_MsgUndelegate.html">core/staking/msgs/<wbr>Msg<wbr>Undelegate</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_treasury_PolicyConstraints.html">core/treasury/<wbr>Policy<wbr>Constraints</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_upgrade_Plan.html">core/upgrade/<wbr>Plan</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_upgrade_proposals_CancelSoftwareUpgradeProposal.html">core/upgrade/proposals/<wbr>Cancel<wbr>Software<wbr>Upgrade<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_upgrade_proposals_SoftwareUpgradeProposal.html">core/upgrade/proposals/<wbr>Software<wbr>Upgrade<wbr>Proposal</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgClearContractAdmin.html">core/wasm/msgs/<wbr>Msg<wbr>Clear<wbr>Contract<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgExecuteContract.html">core/wasm/msgs/<wbr>Msg<wbr>Execute<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgInstantiateContract.html">core/wasm/msgs/<wbr>Msg<wbr>Instantiate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgMigrateCode.html">core/wasm/msgs/<wbr>Msg<wbr>Migrate<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgMigrateContract.html">core/wasm/msgs/<wbr>Msg<wbr>Migrate<wbr>Contract</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgStoreCode.html">core/wasm/msgs/<wbr>Msg<wbr>Store<wbr>Code</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/core_wasm_msgs_MsgUpdateContractAdmin.html">core/wasm/msgs/<wbr>Msg<wbr>Update<wbr>Contract<wbr>Admin</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/extension_PostMessageStream.html">extension/<wbr>Post<wbr>Message<wbr>Stream</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/key_CLIKey.html">key/CLIKey</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/key_Key.html">key/<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/key_MnemonicKey.html">key/<wbr>Mnemonic<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/key_RawKey.html">key/<wbr>Raw<wbr>Key</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_contract.html">util/contract</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_convert.html">util/convert</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_hash.html">util/hash</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_json.html">util/json</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
+<p>There have been many complaints about <code>MnemonicKey</code> of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use <a href="https://github.com/terra-money/react-native-mnemonic-key"><code>react-native-mnemonic-key</code></a> instead for more reliable performance and security.</p>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>This software is licensed under the MIT license. See <a href="./LICENSE">LICENSE</a> for full disclosure.</p>
+<p>© 2020 Terraform Labs, PTE.</p>
+<hr/>
+
+<p>&nbsp;</p>
+<p align="center">
+    <a href="https://terra.money/"><img src="http://terra.money/logos/terra_logo.svg" align="center" width=200/></a>
+</p>
+<div align="center">
+  <sub><em>Powering the innovation of money.</em></sub>
 </div>
-<footer>
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/AccAddress.html">Acc<wbr/>Address</a></li><li class=" tsd-kind-namespace"><a href="modules/AccPubKey.html">Acc<wbr/>Pub<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/Account.html">Account</a></li><li class=" tsd-kind-namespace"><a href="modules/AggregateExchangeRatePrevote.html">Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Prevote</a></li><li class=" tsd-kind-namespace"><a href="modules/AggregateExchangeRateVote.html">Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Vote</a></li><li class=" tsd-kind-namespace"><a href="modules/AsyncTxBroadcastResult.html">Async<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class=" tsd-kind-namespace"><a href="modules/Authorization.html">Authorization</a></li><li class=" tsd-kind-namespace"><a href="modules/AuthorizationGrant.html">Authorization<wbr/>Grant</a></li><li class=" tsd-kind-namespace"><a href="modules/BlockTxBroadcastResult.html">Block<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class=" tsd-kind-namespace"><a href="modules/Coin.html">Coin</a></li><li class=" tsd-kind-namespace"><a href="modules/Coins.html">Coins</a></li><li class=" tsd-kind-namespace"><a href="modules/CommunityPoolSpendProposal.html">Community<wbr/>Pool<wbr/>Spend<wbr/>Proposal</a></li><li class=" tsd-kind-namespace"><a href="modules/ContractInfo.html">Contract<wbr/>Info</a></li><li class=" tsd-kind-namespace"><a href="modules/Delegation.html">Delegation</a></li><li class=" tsd-kind-namespace"><a href="modules/Deposit.html">Deposit</a></li><li class=" tsd-kind-namespace"><a href="modules/DepositParams.html">Deposit<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/DistributionParams.html">Distribution<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/EventsByType.html">Events<wbr/>By<wbr/>Type</a></li><li class=" tsd-kind-namespace"><a href="modules/GenericAuthorization.html">Generic<wbr/>Authorization</a></li><li class=" tsd-kind-namespace"><a href="modules/GovParams.html">Gov<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/LazyGradedVestingAccount.html">Lazy<wbr/>Graded<wbr/>Vesting<wbr/>Account</a></li><li class=" tsd-kind-namespace"><a href="modules/MarketParams.html">Market<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/MintingParams.html">Minting<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/Msg.html">Msg</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgAggregateExchangeRatePrevote.html">Msg<wbr/>Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Prevote</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgAggregateExchangeRateVote.html">Msg<wbr/>Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Vote</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgBeginRedelegate.html">Msg<wbr/>Begin<wbr/>Redelegate</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgClearContractAdmin.html">Msg<wbr/>Clear<wbr/>Contract<wbr/>Admin</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgCreateValidator.html">Msg<wbr/>Create<wbr/>Validator</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgDelegate.html">Msg<wbr/>Delegate</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgDelegateFeedConsent.html">Msg<wbr/>Delegate<wbr/>Feed<wbr/>Consent</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgDeposit.html">Msg<wbr/>Deposit</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgEditValidator.html">Msg<wbr/>Edit<wbr/>Validator</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgExecAuthorized.html">Msg<wbr/>Exec<wbr/>Authorized</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgExecuteContract.html">Msg<wbr/>Execute<wbr/>Contract</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgFundCommunityPool.html">Msg<wbr/>Fund<wbr/>Community<wbr/>Pool</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgGrantAuthorization.html">Msg<wbr/>Grant<wbr/>Authorization</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgInstantiateContract.html">Msg<wbr/>Instantiate<wbr/>Contract</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgMigrateCode.html">Msg<wbr/>Migrate<wbr/>Code</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgMigrateContract.html">Msg<wbr/>Migrate<wbr/>Contract</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgModifyWithdrawAddress.html">Msg<wbr/>Modify<wbr/>Withdraw<wbr/>Address</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgMultiSend.html">Msg<wbr/>Multi<wbr/>Send</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgRevokeAuthorization.html">Msg<wbr/>Revoke<wbr/>Authorization</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgSend.html">Msg<wbr/>Send</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgStoreCode.html">Msg<wbr/>Store<wbr/>Code</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgSubmitProposal.html">Msg<wbr/>Submit<wbr/>Proposal</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgSwap.html">Msg<wbr/>Swap</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgSwapSend.html">Msg<wbr/>Swap<wbr/>Send</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgUndelegate.html">Msg<wbr/>Undelegate</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgUnjail.html">Msg<wbr/>Unjail</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgUpdateContractAdmin.html">Msg<wbr/>Update<wbr/>Contract<wbr/>Admin</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgVote.html">Msg<wbr/>Vote</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgVoteWeighted.html">Msg<wbr/>Vote<wbr/>Weighted</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgWithdrawDelegationReward.html">Msg<wbr/>Withdraw<wbr/>Delegation<wbr/>Reward</a></li><li class=" tsd-kind-namespace"><a href="modules/MsgWithdrawValidatorCommission.html">Msg<wbr/>Withdraw<wbr/>Validator<wbr/>Commission</a></li><li class=" tsd-kind-namespace"><a href="modules/MultisigPublicKey.html">Multisig<wbr/>Public<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/Numeric.html">Numeric</a></li><li class=" tsd-kind-namespace"><a href="modules/OracleParams.html">Oracle<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/OracleWhitelist.html">Oracle<wbr/>Whitelist</a></li><li class=" tsd-kind-namespace"><a href="modules/ParamChange.html">Param<wbr/>Change</a></li><li class=" tsd-kind-namespace"><a href="modules/ParamChanges.html">Param<wbr/>Changes</a></li><li class=" tsd-kind-namespace"><a href="modules/ParameterChangeProposal.html">Parameter<wbr/>Change<wbr/>Proposal</a></li><li class=" tsd-kind-namespace"><a href="modules/PolicyConstraints.html">Policy<wbr/>Constraints</a></li><li class=" tsd-kind-namespace"><a href="modules/Proposal.html">Proposal</a></li><li class=" tsd-kind-namespace"><a href="modules/PublicKey.html">Public<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/Redelegation.html">Redelegation</a></li><li class=" tsd-kind-namespace"><a href="modules/Rewards.html">Rewards</a></li><li class=" tsd-kind-namespace"><a href="modules/SendAuthorization.html">Send<wbr/>Authorization</a></li><li class=" tsd-kind-namespace"><a href="modules/SigningInfo.html">Signing<wbr/>Info</a></li><li class=" tsd-kind-namespace"><a href="modules/SimplePublicKey.html">Simple<wbr/>Public<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/SlashingParams.html">Slashing<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/StakingParams.html">Staking<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/StakingPool.html">Staking<wbr/>Pool</a></li><li class=" tsd-kind-namespace"><a href="modules/StdFee.html">Std<wbr/>Fee</a></li><li class=" tsd-kind-namespace"><a href="modules/StdSignMsg.html">Std<wbr/>Sign<wbr/>Msg</a></li><li class=" tsd-kind-namespace"><a href="modules/StdSignature.html">Std<wbr/>Signature</a></li><li class=" tsd-kind-namespace"><a href="modules/StdTx.html">Std<wbr/>Tx</a></li><li class=" tsd-kind-namespace"><a href="modules/SupplyResponse.html">Supply<wbr/>Response</a></li><li class=" tsd-kind-namespace"><a href="modules/SyncTxBroadcastResult.html">Sync<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class=" tsd-kind-namespace"><a href="modules/Tally.html">Tally</a></li><li class=" tsd-kind-namespace"><a href="modules/TallyParams.html">Tally<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/TextProposal.html">Text<wbr/>Proposal</a></li><li class=" tsd-kind-namespace"><a href="modules/TreasuryParams.html">Treasury<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/TxInfo.html">Tx<wbr/>Info</a></li><li class=" tsd-kind-namespace"><a href="modules/TxLog.html">Tx<wbr/>Log</a></li><li class=" tsd-kind-namespace"><a href="modules/TxSearchResult.html">Tx<wbr/>Search<wbr/>Result</a></li><li class=" tsd-kind-namespace"><a href="modules/UnbondingDelegation.html">Unbonding<wbr/>Delegation</a></li><li class=" tsd-kind-namespace"><a href="modules/ValAddress.html">Val<wbr/>Address</a></li><li class=" tsd-kind-namespace"><a href="modules/ValConsAddress.html">Val<wbr/>Cons<wbr/>Address</a></li><li class=" tsd-kind-namespace"><a href="modules/ValConsPubKey.html">Val<wbr/>Cons<wbr/>Pub<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/ValPubKey.html">Val<wbr/>Pub<wbr/>Key</a></li><li class=" tsd-kind-namespace"><a href="modules/Validator.html">Validator</a></li><li class=" tsd-kind-namespace"><a href="modules/ValidatorRewards.html">Validator<wbr/>Rewards</a></li><li class=" tsd-kind-namespace"><a href="modules/Vote.html">Vote</a></li><li class=" tsd-kind-namespace"><a href="modules/VotingParams.html">Voting<wbr/>Params</a></li><li class=" tsd-kind-namespace"><a href="modules/WasmParams.html">Wasm<wbr/>Params</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-enum"><a href="enums/Broadcast.html" class="tsd-kind-icon">Broadcast</a></li><li class="tsd-kind-class"><a href="classes/Account.html" class="tsd-kind-icon">Account</a></li><li class="tsd-kind-class"><a href="classes/AggregateExchangeRatePrevote.html" class="tsd-kind-icon">Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Prevote</a></li><li class="tsd-kind-class"><a href="classes/AggregateExchangeRateVote.html" class="tsd-kind-icon">Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Vote</a></li><li class="tsd-kind-class"><a href="classes/AuthAPI.html" class="tsd-kind-icon">AuthAPI</a></li><li class="tsd-kind-class"><a href="classes/AuthorizationGrant.html" class="tsd-kind-icon">Authorization<wbr/>Grant</a></li><li class="tsd-kind-class"><a href="classes/BankAPI.html" class="tsd-kind-icon">BankAPI</a></li><li class="tsd-kind-class"><a href="classes/Coin.html" class="tsd-kind-icon">Coin</a></li><li class="tsd-kind-class"><a href="classes/Coins.html" class="tsd-kind-icon">Coins</a></li><li class="tsd-kind-class"><a href="classes/CommunityPoolSpendProposal.html" class="tsd-kind-icon">Community<wbr/>Pool<wbr/>Spend<wbr/>Proposal</a></li><li class="tsd-kind-class"><a href="classes/Dec.html" class="tsd-kind-icon">Dec</a></li><li class="tsd-kind-class"><a href="classes/Delegation.html" class="tsd-kind-icon">Delegation</a></li><li class="tsd-kind-class"><a href="classes/Deposit.html" class="tsd-kind-icon">Deposit</a></li><li class="tsd-kind-class"><a href="classes/DistributionAPI.html" class="tsd-kind-icon">DistributionAPI</a></li><li class="tsd-kind-class"><a href="classes/GenericAuthorization.html" class="tsd-kind-icon">Generic<wbr/>Authorization</a></li><li class="tsd-kind-class"><a href="classes/GovAPI.html" class="tsd-kind-icon">GovAPI</a></li><li class="tsd-kind-class"><a href="classes/Int.html" class="tsd-kind-icon">Int</a></li><li class="tsd-kind-class"><a href="classes/Key.html" class="tsd-kind-icon">Key</a></li><li class="tsd-kind-class"><a href="classes/LCDClient.html" class="tsd-kind-icon">LCDClient</a></li><li class="tsd-kind-class"><a href="classes/LazyGradedVestingAccount.html" class="tsd-kind-icon">Lazy<wbr/>Graded<wbr/>Vesting<wbr/>Account</a></li><li class="tsd-kind-class"><a href="classes/LocalTerra.html" class="tsd-kind-icon">Local<wbr/>Terra</a></li><li class="tsd-kind-class"><a href="classes/MarketAPI.html" class="tsd-kind-icon">MarketAPI</a></li><li class="tsd-kind-class"><a href="classes/MintAPI.html" class="tsd-kind-icon">MintAPI</a></li><li class="tsd-kind-class"><a href="classes/MnemonicKey.html" class="tsd-kind-icon">Mnemonic<wbr/>Key</a></li><li class="tsd-kind-class"><a href="classes/MsgAggregateExchangeRatePrevote.html" class="tsd-kind-icon">Msg<wbr/>Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Prevote</a></li><li class="tsd-kind-class"><a href="classes/MsgAggregateExchangeRateVote.html" class="tsd-kind-icon">Msg<wbr/>Aggregate<wbr/>Exchange<wbr/>Rate<wbr/>Vote</a></li><li class="tsd-kind-class"><a href="classes/MsgAuthAPI.html" class="tsd-kind-icon">Msg<wbr/>AuthAPI</a></li><li class="tsd-kind-class"><a href="classes/MsgBeginRedelegate.html" class="tsd-kind-icon">Msg<wbr/>Begin<wbr/>Redelegate</a></li><li class="tsd-kind-class"><a href="classes/MsgClearContractAdmin.html" class="tsd-kind-icon">Msg<wbr/>Clear<wbr/>Contract<wbr/>Admin</a></li><li class="tsd-kind-class"><a href="classes/MsgCreateValidator.html" class="tsd-kind-icon">Msg<wbr/>Create<wbr/>Validator</a></li><li class="tsd-kind-class"><a href="classes/MsgDelegate.html" class="tsd-kind-icon">Msg<wbr/>Delegate</a></li><li class="tsd-kind-class"><a href="classes/MsgDelegateFeedConsent.html" class="tsd-kind-icon">Msg<wbr/>Delegate<wbr/>Feed<wbr/>Consent</a></li><li class="tsd-kind-class"><a href="classes/MsgDeposit.html" class="tsd-kind-icon">Msg<wbr/>Deposit</a></li><li class="tsd-kind-class"><a href="classes/MsgEditValidator.html" class="tsd-kind-icon">Msg<wbr/>Edit<wbr/>Validator</a></li><li class="tsd-kind-class"><a href="classes/MsgExecAuthorized.html" class="tsd-kind-icon">Msg<wbr/>Exec<wbr/>Authorized</a></li><li class="tsd-kind-class"><a href="classes/MsgExecuteContract.html" class="tsd-kind-icon">Msg<wbr/>Execute<wbr/>Contract</a></li><li class="tsd-kind-class"><a href="classes/MsgFundCommunityPool.html" class="tsd-kind-icon">Msg<wbr/>Fund<wbr/>Community<wbr/>Pool</a></li><li class="tsd-kind-class"><a href="classes/MsgGrantAuthorization.html" class="tsd-kind-icon">Msg<wbr/>Grant<wbr/>Authorization</a></li><li class="tsd-kind-class"><a href="classes/MsgInstantiateContract.html" class="tsd-kind-icon">Msg<wbr/>Instantiate<wbr/>Contract</a></li><li class="tsd-kind-class"><a href="classes/MsgMigrateCode.html" class="tsd-kind-icon">Msg<wbr/>Migrate<wbr/>Code</a></li><li class="tsd-kind-class"><a href="classes/MsgMigrateContract.html" class="tsd-kind-icon">Msg<wbr/>Migrate<wbr/>Contract</a></li><li class="tsd-kind-class"><a href="classes/MsgModifyWithdrawAddress.html" class="tsd-kind-icon">Msg<wbr/>Modify<wbr/>Withdraw<wbr/>Address</a></li><li class="tsd-kind-class"><a href="classes/MsgMultiSend.html" class="tsd-kind-icon">Msg<wbr/>Multi<wbr/>Send</a></li><li class="tsd-kind-class"><a href="classes/MsgRevokeAuthorization.html" class="tsd-kind-icon">Msg<wbr/>Revoke<wbr/>Authorization</a></li><li class="tsd-kind-class"><a href="classes/MsgSend.html" class="tsd-kind-icon">Msg<wbr/>Send</a></li><li class="tsd-kind-class"><a href="classes/MsgStoreCode.html" class="tsd-kind-icon">Msg<wbr/>Store<wbr/>Code</a></li><li class="tsd-kind-class"><a href="classes/MsgSubmitProposal.html" class="tsd-kind-icon">Msg<wbr/>Submit<wbr/>Proposal</a></li><li class="tsd-kind-class"><a href="classes/MsgSwap.html" class="tsd-kind-icon">Msg<wbr/>Swap</a></li><li class="tsd-kind-class"><a href="classes/MsgSwapSend.html" class="tsd-kind-icon">Msg<wbr/>Swap<wbr/>Send</a></li><li class="tsd-kind-class"><a href="classes/MsgUndelegate.html" class="tsd-kind-icon">Msg<wbr/>Undelegate</a></li><li class="tsd-kind-class"><a href="classes/MsgUnjail.html" class="tsd-kind-icon">Msg<wbr/>Unjail</a></li><li class="tsd-kind-class"><a href="classes/MsgUpdateContractAdmin.html" class="tsd-kind-icon">Msg<wbr/>Update<wbr/>Contract<wbr/>Admin</a></li><li class="tsd-kind-class"><a href="classes/MsgVote.html" class="tsd-kind-icon">Msg<wbr/>Vote</a></li><li class="tsd-kind-class"><a href="classes/MsgVoteWeighted.html" class="tsd-kind-icon">Msg<wbr/>Vote<wbr/>Weighted</a></li><li class="tsd-kind-class"><a href="classes/MsgWithdrawDelegationReward.html" class="tsd-kind-icon">Msg<wbr/>Withdraw<wbr/>Delegation<wbr/>Reward</a></li><li class="tsd-kind-class"><a href="classes/MsgWithdrawValidatorCommission.html" class="tsd-kind-icon">Msg<wbr/>Withdraw<wbr/>Validator<wbr/>Commission</a></li><li class="tsd-kind-class"><a href="classes/OracleAPI.html" class="tsd-kind-icon">OracleAPI</a></li><li class="tsd-kind-class"><a href="classes/ParamChange.html" class="tsd-kind-icon">Param<wbr/>Change</a></li><li class="tsd-kind-class"><a href="classes/ParamChanges.html" class="tsd-kind-icon">Param<wbr/>Changes</a></li><li class="tsd-kind-class"><a href="classes/ParameterChangeProposal.html" class="tsd-kind-icon">Parameter<wbr/>Change<wbr/>Proposal</a></li><li class="tsd-kind-class"><a href="classes/PolicyConstraints.html" class="tsd-kind-icon">Policy<wbr/>Constraints</a></li><li class="tsd-kind-class"><a href="classes/Proposal.html" class="tsd-kind-icon">Proposal</a></li><li class="tsd-kind-class"><a href="classes/PublicKey.html" class="tsd-kind-icon">Public<wbr/>Key</a></li><li class="tsd-kind-class"><a href="classes/RawKey.html" class="tsd-kind-icon">Raw<wbr/>Key</a></li><li class="tsd-kind-class"><a href="classes/Redelegation.html" class="tsd-kind-icon">Redelegation</a></li><li class="tsd-kind-class"><a href="classes/SendAuthorization.html" class="tsd-kind-icon">Send<wbr/>Authorization</a></li><li class="tsd-kind-class"><a href="classes/SlashingAPI.html" class="tsd-kind-icon">SlashingAPI</a></li><li class="tsd-kind-class"><a href="classes/StakingAPI.html" class="tsd-kind-icon">StakingAPI</a></li><li class="tsd-kind-class"><a href="classes/StdFee.html" class="tsd-kind-icon">Std<wbr/>Fee</a></li><li class="tsd-kind-class"><a href="classes/StdSignMsg.html" class="tsd-kind-icon">Std<wbr/>Sign<wbr/>Msg</a></li><li class="tsd-kind-class"><a href="classes/StdSignature.html" class="tsd-kind-icon">Std<wbr/>Signature</a></li><li class="tsd-kind-class"><a href="classes/StdTx.html" class="tsd-kind-icon">Std<wbr/>Tx</a></li><li class="tsd-kind-class"><a href="classes/SupplyAPI.html" class="tsd-kind-icon">SupplyAPI</a></li><li class="tsd-kind-class"><a href="classes/TendermintAPI.html" class="tsd-kind-icon">TendermintAPI</a></li><li class="tsd-kind-class"><a href="classes/TextProposal.html" class="tsd-kind-icon">Text<wbr/>Proposal</a></li><li class="tsd-kind-class"><a href="classes/TreasuryAPI.html" class="tsd-kind-icon">TreasuryAPI</a></li><li class="tsd-kind-class"><a href="classes/TxAPI.html" class="tsd-kind-icon">TxAPI</a></li><li class="tsd-kind-class"><a href="classes/TxInfo.html" class="tsd-kind-icon">Tx<wbr/>Info</a></li><li class="tsd-kind-class"><a href="classes/TxLog.html" class="tsd-kind-icon">Tx<wbr/>Log</a></li><li class="tsd-kind-class"><a href="classes/UnbondingDelegation.html" class="tsd-kind-icon">Unbonding<wbr/>Delegation</a></li><li class="tsd-kind-class"><a href="classes/Validator.html" class="tsd-kind-icon">Validator</a></li><li class="tsd-kind-class"><a href="classes/Vote.html" class="tsd-kind-icon">Vote</a></li><li class="tsd-kind-class"><a href="classes/Wallet.html" class="tsd-kind-icon">Wallet</a></li><li class="tsd-kind-class"><a href="classes/WasmAPI.html" class="tsd-kind-icon">WasmAPI</a></li><li class="tsd-kind-class"><a href="classes/WebSocketClient.html" class="tsd-kind-icon">Web<wbr/>Socket<wbr/>Client</a></li><li class="tsd-kind-interface"><a href="interfaces/Block.html" class="tsd-kind-icon">Block</a></li><li class="tsd-kind-interface"><a href="interfaces/BlockID.html" class="tsd-kind-icon">BlockID</a></li><li class="tsd-kind-interface"><a href="interfaces/BlockInfo.html" class="tsd-kind-icon">Block<wbr/>Info</a></li><li class="tsd-kind-interface"><a href="interfaces/BroadcastOptions.html" class="tsd-kind-icon">Broadcast<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/CodeInfo.html" class="tsd-kind-icon">Code<wbr/>Info</a></li><li class="tsd-kind-interface"><a href="interfaces/ContractEvent.html" class="tsd-kind-icon">Contract<wbr/>Event</a></li><li class="tsd-kind-interface"><a href="interfaces/ContractInfo.html" class="tsd-kind-icon">Contract<wbr/>Info</a></li><li class="tsd-kind-interface"><a href="interfaces/CreateTxOptions.html" class="tsd-kind-icon">Create<wbr/>Tx<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/Data.html" class="tsd-kind-icon">Data</a></li><li class="tsd-kind-interface"><a href="interfaces/DelegateValidator.html" class="tsd-kind-icon">Delegate<wbr/>Validator</a></li><li class="tsd-kind-interface"><a href="interfaces/DepositParams.html" class="tsd-kind-icon">Deposit<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/DistributionParams.html" class="tsd-kind-icon">Distribution<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/Event.html" class="tsd-kind-icon">Event</a></li><li class="tsd-kind-interface"><a href="interfaces/EventKV.html" class="tsd-kind-icon">EventKV</a></li><li class="tsd-kind-interface"><a href="interfaces/EventsByType.html" class="tsd-kind-icon">Events<wbr/>By<wbr/>Type</a></li><li class="tsd-kind-interface"><a href="interfaces/Evidence.html" class="tsd-kind-icon">Evidence</a></li><li class="tsd-kind-interface"><a href="interfaces/ExchangeRateTuple.html" class="tsd-kind-icon">Exchange<wbr/>Rate<wbr/>Tuple</a></li><li class="tsd-kind-interface"><a href="interfaces/GovParams.html" class="tsd-kind-icon">Gov<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/Header.html" class="tsd-kind-icon">Header</a></li><li class="tsd-kind-interface"><a href="interfaces/LCDClientConfig.html" class="tsd-kind-icon">LCDClient<wbr/>Config</a></li><li class="tsd-kind-interface"><a href="interfaces/LastCommit.html" class="tsd-kind-icon">Last<wbr/>Commit</a></li><li class="tsd-kind-interface"><a href="interfaces/MarketParams.html" class="tsd-kind-icon">Market<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/MintingParams.html" class="tsd-kind-icon">Minting<wbr/>Params</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/Numeric.html" class="tsd-kind-icon">Numeric</a></li><li class="tsd-kind-interface"><a href="interfaces/OracleParams.html" class="tsd-kind-icon">Oracle<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/OracleWhitelist.html" class="tsd-kind-icon">Oracle<wbr/>Whitelist</a></li><li class="tsd-kind-interface"><a href="interfaces/Parts.html" class="tsd-kind-icon">Parts</a></li><li class="tsd-kind-interface"><a href="interfaces/Rewards.html" class="tsd-kind-icon">Rewards</a></li><li class="tsd-kind-interface"><a href="interfaces/Signature.html" class="tsd-kind-icon">Signature</a></li><li class="tsd-kind-interface"><a href="interfaces/SigningInfo.html" class="tsd-kind-icon">Signing<wbr/>Info</a></li><li class="tsd-kind-interface"><a href="interfaces/SlashingParams.html" class="tsd-kind-icon">Slashing<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/StakingParams.html" class="tsd-kind-icon">Staking<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/StakingPool.html" class="tsd-kind-icon">Staking<wbr/>Pool</a></li><li class="tsd-kind-interface"><a href="interfaces/SupplyResponse.html" class="tsd-kind-icon">Supply<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/Tally.html" class="tsd-kind-icon">Tally</a></li><li class="tsd-kind-interface"><a href="interfaces/TallyParams.html" class="tsd-kind-icon">Tally<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/TendermintQuery.html" class="tsd-kind-icon">Tendermint<wbr/>Query</a></li><li class="tsd-kind-interface"><a href="interfaces/TendermintSubscriptionResponse.html" class="tsd-kind-icon">Tendermint<wbr/>Subscription<wbr/>Response</a></li><li class="tsd-kind-interface"><a href="interfaces/TreasuryParams.html" class="tsd-kind-icon">Treasury<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/TxError.html" class="tsd-kind-icon">Tx<wbr/>Error</a></li><li class="tsd-kind-interface"><a href="interfaces/TxSearchOptions.html" class="tsd-kind-icon">Tx<wbr/>Search<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/TxSearchResult.html" class="tsd-kind-icon">Tx<wbr/>Search<wbr/>Result</a></li><li class="tsd-kind-interface"><a href="interfaces/TxSuccess.html" class="tsd-kind-icon">Tx<wbr/>Success</a></li><li class="tsd-kind-interface"><a href="interfaces/ValidatorRewards.html" class="tsd-kind-icon">Validator<wbr/>Rewards</a></li><li class="tsd-kind-interface"><a href="interfaces/ValidatorSet.html" class="tsd-kind-icon">Validator<wbr/>Set</a></li><li class="tsd-kind-interface"><a href="interfaces/Version.html" class="tsd-kind-icon">Version</a></li><li class="tsd-kind-interface"><a href="interfaces/VotingParams.html" class="tsd-kind-icon">Voting<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/WasmParams.html" class="tsd-kind-icon">Wasm<wbr/>Params</a></li><li class="tsd-kind-type-alias"><a href="modules.html#AccAddress" class="tsd-kind-icon">Acc<wbr/>Address</a></li><li class="tsd-kind-type-alias"><a href="modules.html#AccPubKey" class="tsd-kind-icon">Acc<wbr/>Pub<wbr/>Key</a></li><li class="tsd-kind-type-alias"><a href="modules.html#AsyncTxBroadcastResult" class="tsd-kind-icon">Async<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class="tsd-kind-type-alias"><a href="modules.html#Authorization" class="tsd-kind-icon">Authorization</a></li><li class="tsd-kind-type-alias"><a href="modules.html#BlockTxBroadcastResult" class="tsd-kind-icon">Block<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class="tsd-kind-type-alias"><a href="modules.html#Denom" class="tsd-kind-icon">Denom</a></li><li class="tsd-kind-type-alias"><a href="modules.html#Msg" class="tsd-kind-icon">Msg</a></li><li class="tsd-kind-type-alias"><a href="modules.html#SyncTxBroadcastResult" class="tsd-kind-icon">Sync<wbr/>Tx<wbr/>Broadcast<wbr/>Result</a></li><li class="tsd-kind-type-alias"><a href="modules.html#TendermintEventType" class="tsd-kind-icon">Tendermint<wbr/>Event<wbr/>Type</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#TxBroadcastResult" class="tsd-kind-icon">Tx<wbr/>Broadcast<wbr/>Result</a></li><li class="tsd-kind-type-alias"><a href="modules.html#ValAddress" class="tsd-kind-icon">Val<wbr/>Address</a></li><li class="tsd-kind-type-alias"><a href="modules.html#ValConsAddress" class="tsd-kind-icon">Val<wbr/>Cons<wbr/>Address</a></li><li class="tsd-kind-type-alias"><a href="modules.html#ValConsPubKey" class="tsd-kind-icon">Val<wbr/>Cons<wbr/>Pub<wbr/>Key</a></li><li class="tsd-kind-type-alias"><a href="modules.html#ValPubKey" class="tsd-kind-icon">Val<wbr/>Pub<wbr/>Key</a></li><li class="tsd-kind-variable"><a href="modules.html#DEC_PRECISION" class="tsd-kind-icon">DEC_<wbr/>PRECISION</a></li><li class="tsd-kind-variable"><a href="modules.html#LUNA_COIN_TYPE" class="tsd-kind-icon">LUNA_<wbr/>COIN_<wbr/>TYPE</a></li><li class="tsd-kind-function"><a href="modules.html#addressFromPublicKey" class="tsd-kind-icon">address<wbr/>From<wbr/>Public<wbr/>Key</a></li><li class="tsd-kind-function"><a href="modules.html#aggregateVoteHash" class="tsd-kind-icon">aggregate<wbr/>Vote<wbr/>Hash</a></li><li class="tsd-kind-function"><a href="modules.html#dec" class="tsd-kind-icon">dec</a></li><li class="tsd-kind-function"><a href="modules.html#getCodeId" class="tsd-kind-icon">get<wbr/>Code<wbr/>Id</a></li><li class="tsd-kind-function"><a href="modules.html#getContractAddress" class="tsd-kind-icon">get<wbr/>Contract<wbr/>Address</a></li><li class="tsd-kind-function"><a href="modules.html#getContractEvents" class="tsd-kind-icon">get<wbr/>Contract<wbr/>Events</a></li><li class="tsd-kind-function"><a href="modules.html#hashTxBytes" class="tsd-kind-icon">hash<wbr/>Tx<wbr/>Bytes</a></li><li class="tsd-kind-function"><a href="modules.html#int" class="tsd-kind-icon">int</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#isTxError" class="tsd-kind-icon">is<wbr/>Tx<wbr/>Error</a></li><li class="tsd-kind-function"><a href="modules.html#pubKeyFromPublicKey" class="tsd-kind-icon">pub<wbr/>Key<wbr/>From<wbr/>Public<wbr/>Key</a></li></ul></nav></div></div></div><footer class=""><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="overlay"></div><script src="assets/main.js"></script></body></html>
