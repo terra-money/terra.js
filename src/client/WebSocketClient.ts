@@ -161,7 +161,7 @@ export class WebSocketClient extends EventEmitter {
     this.socket && this.socket.close();
   }
 
-  private start() {
+  start() {
     this.socket = new WebSocket(this.URL);
 
     this.socket.onopen = this.onOpen.bind(this);
