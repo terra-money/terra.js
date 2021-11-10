@@ -39,7 +39,7 @@ export class Extension {
   /**
    * Using singleton pattern, hence every instanciation will return same value
    */
-  constructor() {
+  constructor(identifier = 'station') {
     if (Extension.instance) {
       return Extension.instance;
     }
@@ -47,8 +47,8 @@ export class Extension {
     Extension.instance = this;
 
     this.inpageStream = new PostMessageStream({
-      name: 'station:inpage',
-      target: 'station:content',
+      name: `${identifier}:inpage`,
+      target: `${identifier}:content`,
     });
   }
 
