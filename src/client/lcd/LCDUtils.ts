@@ -33,9 +33,9 @@ export class LCDUtils {
   public async validatorsWithVotingPower(): Promise<{
     [validatorAddress: string]: ValidatorWithVotingPower;
   }> {
-    const validatorSetResponse = await this.lcd.tendermint.validatorSet();
-    const validatorSet = validatorSetResponse.validators.reduce((m: any, o) => {
-      m[o.pub_key.value] = o;
+    const [validatorSet] = await this.lcd.tendermint.validatorSet();
+    const validatorSetByPubKey = validatorSet.reduce((m: any, o) => {
+      m[o.pub_key.key] = o;
       return m;
     }, {});
 
@@ -56,7 +56,7 @@ export class LCDUtils {
 
     for (const v of validators) {
       const delegateInfo =
-        validatorSet[v.consensus_pubkey.toData().key as string];
+        validatorSetByPubKey[v.consensus_pubkey.toData().key as string];
       if (delegateInfo === undefined) continue;
       res[v.operator_address] = {
         validatorInfo: v,

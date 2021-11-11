@@ -27,7 +27,7 @@ export class BankAPI extends BaseAPI {
   ): Promise<[Coins, Pagination]> {
     return this.c
       .get<{ supply: Coins.Data; pagination: Pagination }>(
-        `/bank/total`,
+        `/cosmos/bank/v1beta1/supply`,
         params
       )
       .then(d => [Coins.fromData(d.supply), d.pagination]);

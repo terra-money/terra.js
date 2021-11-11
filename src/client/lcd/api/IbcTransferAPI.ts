@@ -18,9 +18,11 @@ export namespace IbcTransferParams {
 export class IbcTransferAPI extends BaseAPI {
   /** Gets a denomTrace for the hash */
   public async denomTrace(hash: string): Promise<DenomTrace> {
-    return await this.c.get<DenomTrace>(
-      `/ibc/apps/transfer/v1/denom_traces/${hash}`
-    );
+    return this.c
+      .get<{ denom_trace: DenomTrace.Data }>(
+        `/ibc/apps/transfer/v1/denom_traces/${hash}`
+      )
+      .then(d => DenomTrace.fromData(d.denom_trace));
   }
 
   /** Gets a list of denomTraces */
@@ -32,7 +34,7 @@ export class IbcTransferAPI extends BaseAPI {
         `/ibc/apps/transfer/v1/denom_traces`,
         params
       )
-      .then(d => [d.denom_traces, d.pagination]);
+      .then(d => [d.denom_traces.map(DenomTrace.fromData), d.pagination]);
   }
 
   /* not supoorted
@@ -49,7 +51,7 @@ export class IbcTransferAPI extends BaseAPI {
   public async parameters(params: APIParams = {}): Promise<IbcTransferParams> {
     return this.c
       .get<{ params: IbcTransferParams.Data }>(
-        '/ibc/apps/transfer/v1/params',
+        `/ibc/apps/transfer/v1/params`,
         params
       )
       .then(({ params: d }) => ({
