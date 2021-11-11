@@ -176,21 +176,6 @@ export class Extension {
    * @return {string}  payload.result.signature  Base64 encoded signature
    * @return {number}  payload.result.recid      Recovery id
    * @return {StdSignMsg.Data} payload.result.stdSignMsgData
-   *
-   * @example of broadcasting
-   *
-   * const { signature, public_key, recid, stdSignMsg } = payload.result;
-   *
-   * const sig = StdSignature.fromData({
-   *   signature,
-   *   pub_key: {
-   *    type: 'tendermint/PubKeySecp256k1',
-   *    value: public_key,
-   *  },
-   * });
-   *
-   * const stdSignMsg = StdSignMsg.fromData(payload.result.stdSignMsgData);
-   * terra.tx.broadcast(new StdTx(stdSignMsg.msgs, stdSignMsg.fee, [sig], stdSignMsg.memo));
    */
   sign(options: Option): number {
     return this.send('sign', {

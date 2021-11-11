@@ -22,11 +22,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<
 > {
   /**
    *
-   * @param BaseAccount account information
-   * @param original_vesting initial vesting amount
-   * @param delegated_free
-   * @param delegated_vesting
-   * @param end_time  -not used-
+   * @param base_vesting_account account information
    * @param vesting_schedules Entries that make up vesting
    */
   constructor(

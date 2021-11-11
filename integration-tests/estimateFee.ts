@@ -1,16 +1,10 @@
 import {
   LCDClient,
-  LocalTerra,
   MsgTransfer,
   Coin,
   CreateTxOptions,
-  SimplePublicKey,
 } from '../src';
 import Axios from 'axios';
-import { PublicKey } from '@terra-money/terra.proto/tendermint/crypto/keys';
-
-const lt = new LocalTerra();
-const test1 = lt.wallets.test1;
 
 async function main() {
   const { data: gasPrices } = await Axios.get(
