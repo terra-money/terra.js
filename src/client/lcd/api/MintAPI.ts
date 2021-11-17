@@ -28,17 +28,23 @@ export class MintAPI extends BaseAPI {
    */
   public async inflation(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/minting/inflation`, params)
-      .then(d => new Dec(d.result));
+      .get<{ inflation: Numeric.Input }>(
+        `/cosmos/mint/v1beta1/inflation`,
+        params
+      )
+      .then(d => new Dec(d.inflation));
   }
 
   /**
-   * Gets the current minting annaul provisions value
+   * Gets the current minting annual provisions value
    */
   public async annualProvisions(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`minting/annual-provisions`, params)
-      .then(d => new Dec(d.result));
+      .get<{ annual_provisions: Numeric.Input }>(
+        `cosmos/mint/v1beta1/annual_provisions`,
+        params
+      )
+      .then(d => new Dec(d.annual_provisions));
   }
 
   /**
@@ -46,8 +52,11 @@ export class MintAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<MintingParams> {
     return this.c
-      .get<MintingParams.Data>(`/minting/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: MintingParams.Data }>(
+        `/cosmos/mint/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         mint_denom: d.mint_denom,
         inflation_rate_change: new Dec(d.inflation_rate_change),
         inflation_max: new Dec(d.inflation_max),

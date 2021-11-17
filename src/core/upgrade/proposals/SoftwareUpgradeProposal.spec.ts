@@ -2,7 +2,7 @@ import { SoftwareUpgradeProposal } from './SoftwareUpgradeProposal';
 
 describe('SoftwareUpgradeProposal', () => {
   it('deserializes', () => {
-    const softwareUpgradeProposal = SoftwareUpgradeProposal.fromData({
+    const softwareUpgradeProposal = SoftwareUpgradeProposal.fromAmino({
       type: 'upgrade/SoftwareUpgradeProposal',
       value: {
         title: `spectest`,

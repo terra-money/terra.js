@@ -1,6 +1,6 @@
 import { APIRequester } from '../APIRequester';
 import { AuthAPI } from './AuthAPI';
-import { Account } from '../../../core';
+import { BaseAccount } from '../../../core';
 import { MnemonicKey } from '../../../key';
 
 // TODO - restore to https://lcd.terra.dev
@@ -14,7 +14,7 @@ describe('AuthAPI', () => {
         'terra1fa0trn2nqjc2n6mmz9txta7ky5h5nnp9m6cra3'
       );
 
-      expect(acct instanceof Account).toBe(true);
+      expect(acct instanceof BaseAccount).toBe(true);
     });
 
     // TODO: - after merging CosmosSDK@v0.43.x restore vesting account test
@@ -32,8 +32,9 @@ describe('AuthAPI', () => {
 
     it("account doesn't exist (valid but new account)", async () => {
       const mk = new MnemonicKey();
-      const acct = await auth.accountInfo(mk.accAddress);
-      expect((acct as Account).address).toBe('');
+      await expect(auth.accountInfo(mk.accAddress)).rejects.toThrow(
+        'status code 404'
+      );
     });
   });
 });

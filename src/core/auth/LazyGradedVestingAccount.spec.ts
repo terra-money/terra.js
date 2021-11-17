@@ -5,7 +5,7 @@ const data = require('./LazyGradedVestingAccount.data.json');
 
 describe('LazyGradedVestingAccount', () => {
   it('deserializes correctly', () => {
-    const acct = LazyGradedVestingAccount.fromData({
+    const acct = LazyGradedVestingAccount.fromAmino({
       type: 'core/LazyGradedVestingAccount',
       value: {
         base_vesting_account: {
@@ -28,6 +28,7 @@ describe('LazyGradedVestingAccount', () => {
               amount: '1338029091449',
             },
           ],
+          end_time: '0',
         },
         vesting_schedules: [
           {
@@ -64,13 +65,15 @@ describe('LazyGradedVestingAccount', () => {
       end_time: 1561356000,
       ratio: new Dec(0.1),
     });
-    expect(acct.delegated_free instanceof Coins).toBe(true);
+    expect(acct.base_vesting_account.delegated_free instanceof Coins).toBe(
+      true
+    );
   });
 
   it('deserializes according to examples', () => {
-    data.forEach((ex: LazyGradedVestingAccount.Data) => {
-      const acct = LazyGradedVestingAccount.fromData(ex);
-      expect(acct.toData()).toMatchObject(ex);
+    data.forEach((ex: LazyGradedVestingAccount.Amino) => {
+      const acct = LazyGradedVestingAccount.fromAmino(ex);
+      expect(acct.toAmino()).toMatchObject(ex);
     });
   });
 });

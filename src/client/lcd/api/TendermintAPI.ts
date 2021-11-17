@@ -1,13 +1,13 @@
 import { BaseAPI } from './BaseAPI';
-import { BlockInfo, ValidatorSet } from '../../../core';
-import { APIParams } from '../APIRequester';
+import { BlockInfo, DelegateValidator } from '../../../core';
+import { APIParams, Pagination } from '../APIRequester';
 
 export class TendermintAPI extends BaseAPI {
   /**
    * Gets the node's information.
    */
   public async nodeInfo(params: APIParams = {}): Promise<object> {
-    return this.c.getRaw(`/node_info`, params);
+    return this.c.getRaw(`/cosmos/base/tendermint/v1beta1/node_info`, params);
   }
 
   /**
@@ -15,7 +15,10 @@ export class TendermintAPI extends BaseAPI {
    */
   public async syncing(params: APIParams = {}): Promise<boolean> {
     return this.c
-      .getRaw<{ syncing: boolean }>(`/syncing`, params)
+      .getRaw<{ syncing: boolean }>(
+        `/cosmos/base/tendermint/v1beta1/syncing`,
+        params
+      )
       .then(d => d.syncing);
   }
 
@@ -26,12 +29,18 @@ export class TendermintAPI extends BaseAPI {
   public async validatorSet(
     height?: number,
     params: APIParams = {}
-  ): Promise<ValidatorSet> {
+  ): Promise<[DelegateValidator[], Pagination]> {
     const url =
       height !== undefined
-        ? `/validatorsets/${height}`
-        : `/validatorsets/latest`;
-    return this.c.get<ValidatorSet>(url, params).then(d => d.result);
+        ? `/cosmos/base/tendermint/v1beta1/validatorsets/${height}`
+        : `/cosmos/base/tendermint/v1beta1/validatorsets/latest`;
+    return this.c
+      .get<{
+        block_height: string;
+        validators: DelegateValidator[];
+        pagination: Pagination;
+      }>(url, params)
+      .then(d => [d.validators, d.pagination]);
   }
 
   /**
@@ -42,7 +51,10 @@ export class TendermintAPI extends BaseAPI {
     height?: number,
     params: APIParams = {}
   ): Promise<BlockInfo> {
-    const url = height !== undefined ? `/blocks/${height}` : `/blocks/latest`;
+    const url =
+      height !== undefined
+        ? `/cosmos/base/tendermint/v1beta1/blocks/${height}`
+        : `/cosmos/base/tendermint/v1beta1/blocks/latest`;
     return this.c.getRaw<BlockInfo>(url, params);
   }
 }

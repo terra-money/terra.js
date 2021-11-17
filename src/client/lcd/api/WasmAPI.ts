@@ -3,15 +3,24 @@ import { AccAddress } from '../../../core/bech32';
 import { APIParams } from '../APIRequester';
 
 export interface CodeInfo {
+  code_id: number;
   code_hash: string;
   creator: AccAddress;
+}
+
+export namespace CodeInfo {
+  export interface Data {
+    code_id: string;
+    code_hash: string;
+    creator: AccAddress;
+  }
 }
 
 export interface ContractInfo {
   code_id: number;
   address: AccAddress;
   creator: AccAddress;
-  admin: AccAddress;
+  admin?: AccAddress;
   init_msg: any; // object
 }
 
@@ -45,8 +54,15 @@ export class WasmAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<CodeInfo> {
     return this.c
-      .get<CodeInfo>(`/wasm/codes/${codeID}`, params)
-      .then(d => d.result);
+      .get<{ code_info: CodeInfo.Data }>(
+        `/terra/wasm/v1beta1/codes/${codeID}`,
+        params
+      )
+      .then(({ code_info: d }) => ({
+        code_id: Number.parseInt(d.code_id),
+        code_hash: d.code_hash,
+        creator: d.creator,
+      }));
   }
 
   public async contractInfo(
@@ -54,12 +70,15 @@ export class WasmAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<ContractInfo> {
     return this.c
-      .get<ContractInfo.Data>(`/wasm/contracts/${contractAddress}`, params)
-      .then(({ result: d }) => ({
+      .get<{ contract_info: ContractInfo.Data }>(
+        `/terra/wasm/v1beta1/contracts/${contractAddress}`,
+        params
+      )
+      .then(({ contract_info: d }) => ({
         code_id: Number.parseInt(d.code_id),
         address: d.address,
         creator: d.creator,
-        admin: d.admin,
+        admin: d.admin !== '' ? d.admin : undefined,
         init_msg: d.init_msg,
       }));
   }
@@ -70,17 +89,22 @@ export class WasmAPI extends BaseAPI {
     params: APIParams = {}
   ): Promise<T> {
     return this.c
-      .get<T>(`/wasm/contracts/${contractAddress}/store`, {
-        ...params,
-        query_msg: JSON.stringify(query),
-      })
-      .then(d => d.result);
+      .get<{ query_result: T }>(
+        `/terra/wasm/v1beta1/contracts/${contractAddress}/store`,
+        {
+          ...params,
+          query_msg: Buffer.from(JSON.stringify(query), 'utf-8').toString(
+            'base64'
+          ),
+        }
+      )
+      .then(d => d.query_result);
   }
 
   public async parameters(params: APIParams = {}): Promise<WasmParams> {
     return this.c
-      .get<WasmParams.Data>(`/wasm/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: WasmParams.Data }>(`/terra/wasm/v1beta1/params`, params)
+      .then(({ params: d }) => ({
         max_contract_size: Number.parseInt(d.max_contract_size),
         max_contract_gas: Number.parseInt(d.max_contract_gas),
         max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),

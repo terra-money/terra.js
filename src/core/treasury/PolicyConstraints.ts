@@ -1,12 +1,17 @@
 import { JSONSerializable } from '../../util/json';
 import { Coin } from '../Coin';
 import { Dec, Numeric } from '../numeric';
+import { PolicyConstraints as PolicyConstraints_pb } from '@terra-money/terra.proto/terra/treasury/v1beta1/treasury';
 
 /**
  * This captures the Treasury module's `tax_policy` and `reward_policy` parameters, which
  * determine how the Tax Rate and Reward Weight values are allowed to change.
  */
-export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> {
+export class PolicyConstraints extends JSONSerializable<
+  PolicyConstraints.Amino,
+  PolicyConstraints.Data,
+  PolicyConstraints.Proto
+> {
   /**
    * Minimum value for rate.
    */
@@ -41,6 +46,26 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
     this.change_rate_max = new Dec(change_rate_max);
   }
 
+  public static fromAmino(data: PolicyConstraints.Amino): PolicyConstraints {
+    const { rate_min, rate_max, cap, change_rate_max } = data;
+    return new PolicyConstraints(
+      rate_min,
+      rate_max,
+      Coin.fromAmino(cap),
+      change_rate_max
+    );
+  }
+
+  public toAmino(): PolicyConstraints.Amino {
+    const { rate_min, rate_max, cap, change_rate_max } = this;
+    return {
+      rate_min: rate_min.toString(),
+      rate_max: rate_max.toString(),
+      cap: cap.toAmino(),
+      change_rate_max: change_rate_max.toString(),
+    };
+  }
+
   public static fromData(data: PolicyConstraints.Data): PolicyConstraints {
     const { rate_min, rate_max, cap, change_rate_max } = data;
     return new PolicyConstraints(
@@ -59,6 +84,25 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
       cap: cap.toData(),
       change_rate_max: change_rate_max.toString(),
     };
+  }
+
+  public static fromProto(proto: PolicyConstraints.Proto): PolicyConstraints {
+    return new PolicyConstraints(
+      proto.rateMax,
+      proto.rateMin,
+      Coin.fromProto(proto.cap as Coin.Proto),
+      proto.changeRateMax
+    );
+  }
+
+  public toProto(): PolicyConstraints.Proto {
+    const { rate_min, rate_max, cap, change_rate_max } = this;
+    return PolicyConstraints_pb.fromPartial({
+      cap: cap.toProto(),
+      changeRateMax: change_rate_max.toString(),
+      rateMax: rate_max.toString(),
+      rateMin: rate_min.toString(),
+    });
   }
 
   /**
@@ -94,10 +138,19 @@ export class PolicyConstraints extends JSONSerializable<PolicyConstraints.Data> 
 }
 
 export namespace PolicyConstraints {
+  export interface Amino {
+    rate_min: string;
+    rate_max: string;
+    cap: Coin.Amino;
+    change_rate_max: string;
+  }
+
   export interface Data {
     rate_min: string;
     rate_max: string;
     cap: Coin.Data;
     change_rate_max: string;
   }
+
+  export type Proto = PolicyConstraints_pb;
 }

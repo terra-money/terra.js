@@ -9,7 +9,7 @@ describe('Coin', () => {
   });
 
   it('deserializes Coin value', () => {
-    const coin = Coin.fromData({
+    const coin = Coin.fromAmino({
       denom: 'uluna',
       amount: '1000',
     });
@@ -19,22 +19,22 @@ describe('Coin', () => {
   });
 
   it('serializes', () => {
-    const coinData: Coin.Data = {
+    const coinAmino: Coin.Amino = {
       denom: 'uluna',
       amount: '1000',
     };
 
-    const coin = Coin.fromData(coinData);
+    const coin = Coin.fromAmino(coinAmino);
     expect(coin.amount).toBeInstanceOf(Int);
-    expect(coin.toData()).toEqual(coinData);
+    expect(coin.toAmino()).toEqual(coinAmino);
 
-    const decCoinData = {
+    const decCoinAmino = {
       denom: 'uluna',
       amount: '1000.000000000000000000',
     };
-    const decCoin = Coin.fromData(decCoinData);
+    const decCoin = Coin.fromAmino(decCoinAmino);
     expect(decCoin.amount).toBeInstanceOf(Dec);
-    expect(decCoin.toData()).toEqual(decCoinData);
+    expect(decCoin.toAmino()).toEqual(decCoinAmino);
   });
 
   it('arithmetic', () => {
@@ -104,6 +104,26 @@ describe('Coin', () => {
       expect(coin3).toEqual(coin4);
     });
 
+    it('parse IBC IntCoin', () => {
+      const coin1 = new Coin(
+        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
+        1001
+      );
+      const coin2 = Coin.fromString(
+        '1001ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B'
+      );
+      expect(coin1).toEqual(coin2);
+
+      const coin3 = new Coin(
+        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
+        -1
+      );
+      const coin4 = Coin.fromString(
+        '-1ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B'
+      );
+      expect(coin3).toEqual(coin4);
+    });
+
     it('parse DecCoin', () => {
       const coin1 = new Coin('uluna', 1001.5);
       const coin2 = Coin.fromString('1001.500000000000000000uluna');
@@ -111,6 +131,26 @@ describe('Coin', () => {
 
       const coin3 = new Coin('uluna', '-1.0');
       const coin4 = Coin.fromString('-1.000000000000000000uluna');
+      expect(coin3).toEqual(coin4);
+    });
+
+    it('parse IBC DecCoin', () => {
+      const coin1 = new Coin(
+        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
+        1001.5
+      );
+      const coin2 = Coin.fromString(
+        '1001.500000000000000000ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B'
+      );
+      expect(coin1).toEqual(coin2);
+
+      const coin3 = new Coin(
+        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
+        '-1.0'
+      );
+      const coin4 = Coin.fromString(
+        '-1.000000000000000000ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B'
+      );
       expect(coin3).toEqual(coin4);
     });
   });

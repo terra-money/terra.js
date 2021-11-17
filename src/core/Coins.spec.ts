@@ -48,7 +48,7 @@ describe('Coins', () => {
     // input #2: Coin[]
     const coins2 = new Coins([new Coin('ukrw', 1), new Coin('uluna', 2)]);
 
-    // input #3: Coins.DataDict
+    // input #3: Coins.AminoDict
     const coins3 = new Coins({
       ukrw: 1,
       uluna: 2,
@@ -111,5 +111,27 @@ describe('Coins', () => {
     expect(gasPrices.filter(c => ['ukrw'].includes(c.denom))).toEqual(
       new Coins({ ukrw: '178.05' })
     );
+  });
+
+  it('is iterable', () => {
+    const gasPrices = new Coins({
+      uluna: '0.15',
+      usdr: '0.1018',
+      uusd: '0.15',
+      ukrw: '178.05',
+      umnt: '431.6259',
+      ueur: '0.125',
+      ucny: '0.97',
+      ujpy: '16.0',
+      ugbp: '0.11',
+      uinr: '11.0',
+      ucad: '0.19',
+      uchf: '0.13',
+      uaud: '0.19',
+      usgd: '0.2',
+    });
+
+    // shouldn't fail or ts giving errors on type
+    expect(Array.isArray(Array.from(gasPrices))).toBe(true);
   });
 });

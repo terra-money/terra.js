@@ -2,7 +2,7 @@ import { Plan } from './Plan';
 
 describe('Plan', () => {
   it('deserializes', () => {
-    const plan = Plan.fromData({
+    const plan = Plan.fromAmino({
       name: `v0.5.2`,
       time: '2019-12-01T03:28:34.024363013Z',
       height: '5330001',

@@ -1,5 +1,7 @@
 import { SHA256 } from 'jscrypto/SHA256';
+import { RIPEMD160 } from 'jscrypto/RIPEMD160';
 import { Base64 } from 'jscrypto/Base64';
+import { Word32Array } from 'jscrypto';
 /*
 DEPRECATED (was used by crypto-js)
 function byteArrayToWordArray(ba: Uint8Array): CryptoJS.LibWordArray {
@@ -11,9 +13,21 @@ function byteArrayToWordArray(ba: Uint8Array): CryptoJS.LibWordArray {
 }*/
 
 /**
- * Calculates the transaction hash from Proto-encoded string.
- * @param txData Proto-encoded string (base64)
+ * Calculates the transaction hash from Amino-encoded string.
+ * @param data Amino-encoded string (base64)
  */
-export function hashTxBytes(txData: string): string {
-  return SHA256.hash(Base64.parse(txData)).toString().toUpperCase();
+export function hashToHex(data: string): string {
+  return SHA256.hash(Base64.parse(data)).toString().toUpperCase();
+}
+
+/**
+ * Calculates the transaction hash from Amino-encoded string.
+ * @param data raw bytes
+ */
+export function sha256(data: Uint8Array): Uint8Array {
+  return SHA256.hash(new Word32Array(data)).toUint8Array();
+}
+
+export function ripemd160(data: Uint8Array): Uint8Array {
+  return RIPEMD160.hash(new Word32Array(data)).toUint8Array();
 }

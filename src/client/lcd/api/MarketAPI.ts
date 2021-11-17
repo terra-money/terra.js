@@ -41,8 +41,8 @@ export class MarketAPI extends BaseAPI {
     };
 
     return this.c
-      .get<Coin.Data>(`/market/swap`, params)
-      .then(d => Coin.fromData(d.result));
+      .get<{ return_coin: Coin.Data }>(`/terra/market/v1beta1/swap`, params)
+      .then(d => Coin.fromData(d.return_coin));
   }
 
   /**
@@ -50,8 +50,11 @@ export class MarketAPI extends BaseAPI {
    */
   public async poolDelta(params: APIParams = {}): Promise<Dec> {
     return this.c
-      .get<Numeric.Input>(`/market/terra_pool_delta`, params)
-      .then(d => new Dec(d.result));
+      .get<{ terra_pool_delta: Numeric.Input }>(
+        `/terra/market/v1beta1/terra_pool_delta`,
+        params
+      )
+      .then(d => new Dec(d.terra_pool_delta));
   }
 
   /**
@@ -59,8 +62,11 @@ export class MarketAPI extends BaseAPI {
    */
   public async parameters(params: APIParams = {}): Promise<MarketParams> {
     return this.c
-      .get<MarketParams.Data>(`/market/parameters`, params)
-      .then(({ result: d }) => ({
+      .get<{ params: MarketParams.Data }>(
+        `/terra/market/v1beta1/params`,
+        params
+      )
+      .then(({ params: d }) => ({
         pool_recovery_period: Number.parseInt(d.pool_recovery_period),
         base_pool: new Dec(d.base_pool),
         min_stability_spread: new Dec(d.min_stability_spread),

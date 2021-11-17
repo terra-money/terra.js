@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import WebSocket from 'ws';
-import { hashTxBytes } from '../util/hash';
+import { hashToHex } from '../util/hash';
 
 type Callback = (data: TendermintSubscriptionResponse) => void;
 
@@ -238,7 +238,7 @@ export class WebSocketClient extends EventEmitter {
 
   public subscribeTx(query: TendermintQuery, callback: Callback): void {
     const newCallback: Callback = d => {
-      d.value.TxResult.txhash = hashTxBytes(d.value.TxResult.tx);
+      d.value.TxResult.txhash = hashToHex(d.value.TxResult.tx);
       return callback(d);
     };
 
