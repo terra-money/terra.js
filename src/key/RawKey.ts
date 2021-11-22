@@ -1,6 +1,7 @@
-import { SHA256 } from 'jscrypto/SHA256';
+import { SHA256, Word32Array } from 'jscrypto';
 import * as secp256k1 from 'secp256k1';
 import { Key } from './Key';
+import { SimplePublicKey } from '../core/PublicKey';
 
 /**
  * An implementation of the Key interfaces that uses a raw private key.
@@ -16,12 +17,15 @@ export class RawKey extends Key {
       new Uint8Array(privateKey),
       true
     );
-    super(Buffer.from(publicKey));
+    super(new SimplePublicKey(Buffer.from(publicKey).toString('base64')));
     this.privateKey = privateKey;
   }
 
   public ecdsaSign(payload: Buffer): { signature: Uint8Array; recid: number } {
-    const hash = Buffer.from(SHA256.hash(payload.toString()).toString(), 'hex');
+    const hash = Buffer.from(
+      SHA256.hash(new Word32Array(payload)).toString(),
+      'hex'
+    );
     return secp256k1.ecdsaSign(
       Uint8Array.from(hash),
       Uint8Array.from(this.privateKey)

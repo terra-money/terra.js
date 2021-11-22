@@ -24,6 +24,14 @@ export type WasmMsg =
   | MsgClearContractAdmin;
 
 export namespace WasmMsg {
+  export type Amino =
+    | MsgStoreCode.Amino
+    | MsgMigrateCode.Amino
+    | MsgInstantiateContract.Amino
+    | MsgExecuteContract.Amino
+    | MsgMigrateContract.Amino
+    | MsgUpdateContractAdmin.Amino
+    | MsgClearContractAdmin.Amino;
   export type Data =
     | MsgStoreCode.Data
     | MsgMigrateCode.Data
@@ -32,4 +40,12 @@ export namespace WasmMsg {
     | MsgMigrateContract.Data
     | MsgUpdateContractAdmin.Data
     | MsgClearContractAdmin.Data;
+  export type Proto =
+    | MsgStoreCode.Proto
+    | MsgMigrateCode.Proto
+    | MsgInstantiateContract.Proto
+    | MsgExecuteContract.Proto
+    | MsgMigrateContract.Proto
+    | MsgUpdateContractAdmin.Proto
+    | MsgClearContractAdmin.Proto;
 }

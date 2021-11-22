@@ -1,11 +1,11 @@
-import { Key, pubKeyFromPublicKey } from './Key';
-import { bech32 } from 'bech32';
-import { AccPubKey, AccAddress, ValAddress, ValPubKey } from '../core/bech32';
-import { StdSignMsg } from '../core/StdSignMsg';
-import { StdSignature } from '../core/StdSignature';
+import { Key } from './Key';
+import { AccAddress, ValAddress } from '../core/bech32';
 import { execSync } from 'child_process';
 import { fileSync } from 'tmp';
 import { writeFileSync } from 'fs';
+import { SignDoc } from '../core/SignDoc';
+import { SignatureV2 } from '../core/SignatureV2';
+import { PublicKey } from '../core/PublicKey';
 
 interface CLIKeyParams {
   keyName: string;
@@ -23,7 +23,6 @@ interface CLIKeyParams {
  */
 export class CLIKey extends Key {
   private _accAddress?: AccAddress;
-  private _accPubKey?: AccPubKey;
 
   /**
    *
@@ -50,14 +49,8 @@ export class CLIKey extends Key {
       ).toString()
     );
 
-    const publicKeyString = JSON.parse(details.pubkey).key;
-    const publicKey = Buffer.from(publicKeyString, 'base64');
-
     this._accAddress = details.address;
-    this._accPubKey = bech32.encode(
-      'terrapub',
-      Array.from(pubKeyFromPublicKey(publicKey))
-    );
+    this.publicKey = PublicKey.fromData(JSON.parse(details.pubkey));
   }
 
   /**
@@ -82,47 +75,48 @@ export class CLIKey extends Key {
     return ValAddress.fromAccAddress(this._accAddress);
   }
 
-  /**
-   * Terra account public key. `terrapub-` prefixed.
-   */
-  public get accPubKey(): AccPubKey {
-    if (!this._accPubKey) {
-      this.loadAccountDetails();
-      return this.accPubKey;
-    }
-    return this._accPubKey;
-  }
-
-  /**
-   * Terra validator public key. `terravaloperpub-` prefixed.
-   */
-  public get valPubKey(): ValPubKey {
-    if (!this._accPubKey) {
-      this.loadAccountDetails();
-      return this.valPubKey;
-    }
-    return ValPubKey.fromValAddress(this.valAddress);
-  }
-
   public async sign(): Promise<Buffer> {
     throw new Error(
       'CLIKey does not use sign() -- use createSignature() directly.'
     );
   }
 
-  public async createSignature(tx: StdSignMsg): Promise<StdSignature> {
+  public async createSignature(tx: SignDoc): Promise<SignatureV2> {
+    if (this.params.multisig) {
+      throw new Error('multisig is not supported in direct sign mode');
+    }
+
     const tmpobj = fileSync({ postfix: '.json' });
-    writeFileSync(tmpobj.fd, tx.toStdTx().toJSON());
+    writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
 
     const result = execSync(
       this.generateCommand(
         `tx sign ${tmpobj.name} --yes --signature-only --from ${this.params.keyName} --offline ` +
           `--chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ` +
-          `${this.params.multisig ? `--multisig ${this.params.multisig}` : ''}`
+          `${
+            this.params.multisig ? `--multisig ${this.params.multisig}` : ''
+          } --sign-mode direct`
+      )
+    ).toString();
+    tmpobj.removeCallback();
+    return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
+  }
+
+  public async createSignatureAmino(tx: SignDoc): Promise<SignatureV2> {
+    const tmpobj = fileSync({ postfix: '.json' });
+    writeFileSync(tmpobj.fd, JSON.stringify(tx.toUnSignedTx().toData()));
+
+    const result = execSync(
+      this.generateCommand(
+        `tx sign ${tmpobj.name} --yes --signature-only --from ${this.params.keyName} --offline ` +
+          `--chain-id ${tx.chain_id} --account-number ${tx.account_number} --sequence ${tx.sequence} ` +
+          `${
+            this.params.multisig ? `--multisig ${this.params.multisig}` : ''
+          } --sign-mode amino-json`
       )
     ).toString();
 
     tmpobj.removeCallback();
-    return StdSignature.fromData(JSON.parse(result));
+    return SignatureV2.fromData(JSON.parse(result)['signatures'][0]);
   }
 }

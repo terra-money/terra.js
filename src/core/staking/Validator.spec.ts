@@ -1,9 +1,10 @@
 import { Validator } from './Validator';
 import { Int, Dec } from '../numeric';
+import { ValConsPublicKey } from '../PublicKey';
 
 describe('Validator', () => {
   it('deserializes', () => {
-    const validatorData = {
+    const validator = Validator.fromAmino({
       operator_address: 'terravaloper1ptyzewnns2kn37ewtmv6ppsvhdnmeapvgk6d65',
       consensus_pubkey: {
         type: 'tendermint/PubKeyEd25519',
@@ -32,14 +33,13 @@ describe('Validator', () => {
         update_time: '2019-12-01T03:28:34.024363013Z',
       },
       min_self_delegation: '1',
-    };
-    const validator = Validator.fromData(validatorData);
+    });
+
     expect(validator).toMatchObject({
       operator_address: 'terravaloper1ptyzewnns2kn37ewtmv6ppsvhdnmeapvgk6d65',
-      consensus_pubkey: {
-        type: 'tendermint/PubKeyEd25519',
-        value: '1v2BCLSLYe9tQ9JXMuYURf3UIQ/uE+RUVcYfTDVM1ec=',
-      },
+      consensus_pubkey: new ValConsPublicKey(
+        '1v2BCLSLYe9tQ9JXMuYURf3UIQ/uE+RUVcYfTDVM1ec='
+      ),
       jailed: false,
       status: 2,
       tokens: new Int(111401100001),

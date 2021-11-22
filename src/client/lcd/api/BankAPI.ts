@@ -1,6 +1,6 @@
 import { BaseAPI } from './BaseAPI';
 import { Coins, AccAddress } from '../../../core';
-import { APIParams } from '../APIRequester';
+import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 
 export class BankAPI extends BaseAPI {
   /**
@@ -9,19 +9,27 @@ export class BankAPI extends BaseAPI {
    */
   public async balance(
     address: AccAddress,
-    params: APIParams = {}
-  ): Promise<Coins> {
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Coins, Pagination]> {
     return this.c
-      .get<Coins.Data>(`/bank/balances/${address}`, params)
-      .then(d => Coins.fromData(d.result));
+      .get<{
+        balances: Coins.Data;
+        pagination: Pagination;
+      }>(`/cosmos/bank/v1beta1/balances/${address}`, params)
+      .then(d => [Coins.fromData(d.balances), d.pagination]);
   }
 
   /**
    * Get the total supply of tokens in circulation for all denominations.
    */
-  public async total(): Promise<Coins> {
+  public async total(
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Coins, Pagination]> {
     return this.c
-      .get<{ supply: Coins.Data }>(`/bank/total`)
-      .then(d => Coins.fromData(d.result.supply));
+      .get<{ supply: Coins.Data; pagination: Pagination }>(
+        `/cosmos/bank/v1beta1/supply`,
+        params
+      )
+      .then(d => [Coins.fromData(d.supply), d.pagination]);
   }
 }

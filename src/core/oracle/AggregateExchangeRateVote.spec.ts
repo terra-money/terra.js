@@ -3,7 +3,7 @@ const data = require('./AggregateExchangeRateVote.data.json');
 
 describe('AggregateExchangeRateVote', () => {
   it('deserializes', () => {
-    const obj = AggregateExchangeRateVote.fromData(data);
-    expect(obj.toData()).toMatchObject(data);
+    const obj = AggregateExchangeRateVote.fromAmino(data);
+    expect(obj.toAmino()).toMatchObject(data);
   });
 });

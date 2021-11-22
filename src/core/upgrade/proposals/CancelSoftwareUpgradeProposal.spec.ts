@@ -3,7 +3,7 @@ import { CancelSoftwareUpgradeProposal } from './CancelSoftwareUpgradeProposal';
 describe('CancelSoftwareUpgradeProposal', () => {
   it('deserializes', () => {
     const cancelSoftwareUpgradeProposal =
-      CancelSoftwareUpgradeProposal.fromData({
+      CancelSoftwareUpgradeProposal.fromAmino({
         type: 'upgrade/CancelSoftwareUpgradeProposal',
         value: {
           title: `upgrade to col-5`,

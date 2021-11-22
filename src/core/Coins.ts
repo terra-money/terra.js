@@ -9,10 +9,23 @@ import { Numeric } from './numeric';
  *
  */
 export class Coins
-  extends JSONSerializable<Coins.Data>
-  implements Numeric<Coins>
+  extends JSONSerializable<Coins.Amino, Coins.Data, Coins.Proto>
+  implements Numeric<Coins>, Iterable<Coin.Data>
 {
   private _coins: Coins.ReprDict;
+
+  // implement iterator interface for interop
+  [Symbol.iterator]() {
+    let index = -1;
+    const data = this.toArray();
+
+    return {
+      next: () => ({
+        value: data[++index],
+        done: (index === data.length) as true,
+      }),
+    };
+  }
 
   /**
    * Converts the Coins information to a comma-separated list.
@@ -57,6 +70,13 @@ export class Coins
    */
   public toIntCoins(): Coins {
     return new Coins(this.map(c => c.toIntCoin()));
+  }
+
+  /**
+   * Creates a new Coins object with all Integer coins with ceiling the amount
+   */
+  public toIntCeilCoins(): Coins {
+    return new Coins(this.map(c => c.toIntCeilCoin()));
   }
 
   /**
@@ -127,10 +147,6 @@ export class Coins
     this._coins[denom] = val;
   }
 
-  public static fromData(data: Coins.Data | null): Coins {
-    return new Coins((data ?? []).map(Coin.fromData));
-  }
-
   /**
    * Gets the individual elements of the collection.
    */
@@ -138,10 +154,6 @@ export class Coins
     return Object.values(this._coins).sort((a, b) =>
       a.denom.localeCompare(b.denom)
     );
-  }
-
-  public toData(): Coins.Data {
-    return this.toArray().map(c => c.toData());
   }
 
   /**
@@ -207,12 +219,38 @@ export class Coins
   public filter(fn: (c: Coin) => boolean): Coins {
     return new Coins(this.toArray().filter(fn));
   }
+
+  public static fromAmino(data: Coins.Amino | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromAmino));
+  }
+
+  public toAmino(): Coins.Amino {
+    return this.toArray().map(c => c.toAmino());
+  }
+
+  public static fromData(data: Coins.Data | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromData));
+  }
+
+  public toData(): Coins.Data {
+    return this.toArray().map(c => c.toData());
+  }
+
+  public static fromProto(data: Coins.Proto | null): Coins {
+    return new Coins((data ?? []).map(Coin.fromProto));
+  }
+
+  public toProto(): Coins.Proto {
+    return this.toArray().map(c => c.toProto());
+  }
 }
 
 export namespace Coins {
-  export type Input = Coins.DataDict | Coin[] | Coins | string;
+  export type Input = Coins.AminoDict | Coin[] | Coins | string;
+  export type Amino = Coin.Amino[];
   export type Data = Coin.Data[];
-  export type DataDict = {
+  export type Proto = Coin.Proto[];
+  export type AminoDict = {
     [denom: string]: Numeric.Input;
   };
   export type ReprDict = {

@@ -3,12 +3,13 @@ export function prepareSignBytes(obj: any): any {
     return obj.map(prepareSignBytes);
   }
 
-  // string or number
-  if (typeof obj !== `object`) {
+  // string, number, or null
+  if (typeof obj !== `object` || obj === null) {
     return obj;
   }
 
   const sorted: any = {};
+
   Object.keys(obj)
     .sort()
     .forEach(key => {
@@ -18,10 +19,15 @@ export function prepareSignBytes(obj: any): any {
   return sorted;
 }
 
-export abstract class JSONSerializable<T> {
-  public abstract toData(): T;
+export abstract class JSONSerializable<A, D, P> {
+  public abstract toAmino(): A;
+  public abstract toData(): D;
+  public abstract toProto(): P;
   public toJSON(): string {
     return JSON.stringify(prepareSignBytes(this.toData()));
+  }
+  public toAminoJSON(): string {
+    return JSON.stringify(prepareSignBytes(this.toAmino()));
   }
 }
 
