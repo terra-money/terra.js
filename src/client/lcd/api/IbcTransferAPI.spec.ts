@@ -1,4 +1,4 @@
-import { APIRequester, Pagination } from '../APIRequester';
+import { APIRequester } from '../APIRequester';
 import { IbcTransferAPI } from './IbcTransferAPI';
 import { DenomTrace } from '../../../core/ibc-transfer/DenomTrace';
 
