@@ -1,7 +1,6 @@
 import Decimal from 'decimal.js';
 
 export const DEC_PRECISION = 18;
-const _Dec = Decimal.clone();
 
 export interface Numeric<T> {
   add(other: any): T;
@@ -14,10 +13,6 @@ export interface Numeric<T> {
 
   mod(other: any): T;
 }
-
-_Dec.prototype.toString = function (): string {
-  return this.toFixed(DEC_PRECISION);
-};
 
 export namespace Numeric {
   export type Input = Decimal.Value;
@@ -59,9 +54,13 @@ export namespace Numeric {
  * const dec2 = new Dec(decimal);
  */
 
-export class Dec extends _Dec implements Numeric<Dec> {
+export class Dec extends Decimal implements Numeric<Dec> {
   constructor(arg?: Numeric.Input) {
     super((arg ?? 0).toString());
+  }
+
+  public toString(): string {
+    return this.toFixed(DEC_PRECISION);
   }
 
   public static withPrec(value: Decimal.Value, prec: number): Dec {
