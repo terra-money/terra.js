@@ -1,6 +1,6 @@
 import {
   LCDClient,
-  MsgTransfer,
+  MsgSend,
   Coin,
   CreateTxOptions,
 } from '../src';
@@ -21,28 +21,15 @@ async function main() {
     'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz'
   );
 
-  /*
-  {"msgs":["{\"@type\":\"/ibc.applications.transfer.v1.MsgTransfer\",\"receiver\":\"osmo1e07gcj02nqhdyj2lfndsx0zzphuz5mvm2kzt6y\",\"sender\":\"terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz\",\"source_channel\":\"channel-72\",\"source_port\":\"transfer\",\"timeout_timestamp\":\"1635304311760999936\",\"token\":{\"amount\":\"1000\",\"denom\":\"ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B\"}}"],"memo":"IBC Test mobile","gasPrices":"0.15uusd","gasAdjustment":"1.75"}
-  */
-
   const msgs = [
-    new MsgTransfer(
-      'transfer', // source port
-      'channel-21', // source channel
-      new Coin(
-        'ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B',
-        1000
-      ), // amount to transfer
-      'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz', // sender
-      'osmo1e07gcj02nqhdyj2lfndsx0zzphuz5mvm2kzt6y', // recipient
-      undefined,
-      (Date.now() + 60 * 1000) * 1e6
-      // timeout_height, //timeout_height,
-      // 0 // timeout_height, timeout_timestamp
+    new MsgSend(
+    	'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz',
+    	'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+		{uluna:12345}
     ),
   ];
 
-  const memo = 'IBC Test mobile';
+  const memo = 'estimate fee';
   const txOptions: CreateTxOptions = {
     msgs,
     memo,

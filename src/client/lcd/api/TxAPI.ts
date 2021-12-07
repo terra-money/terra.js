@@ -321,14 +321,26 @@ export class TxAPI extends BaseAPI {
     tx: Tx,
     options?: {
       gasAdjustment?: Numeric.Input;
+      signers?: SignerData[];
     }
   ): Promise<number> {
     const gasAdjustment =
       options?.gasAdjustment || this.lcd.config.gasAdjustment;
 
+    // append empty signatures if there's no signatures in tx
+    let simTx: Tx = tx;
+    if (tx.signatures.length <= 0) {
+      if (!(options && options.signers && options.signers.length > 0)) {
+        throw Error('cannot append signature');
+      }
+      const authInfo = new AuthInfo([], new Fee(0, new Coins()));
+      simTx = new Tx(tx.body, authInfo, []);
+      simTx.appendEmptySignatures(options.signers);
+    }
+
     const simulateRes = await this.c
       .post<SimulateResponse.Data>(`/cosmos/tx/v1beta1/simulate`, {
-        tx_bytes: this.encode(tx),
+        tx_bytes: this.encode(simTx),
       })
       .then(d => SimulateResponse.fromData(d));
 
