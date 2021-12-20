@@ -1,5 +1,5 @@
 import { MsgDeposit } from './MsgDeposit';
-const MsgDepositAmino = require('./MsgDeposit.data.json');
+import MsgDepositAmino from './MsgDeposit.data.json';
 
 describe('MsgDeposit', () => {
   it('deserializes', () => {

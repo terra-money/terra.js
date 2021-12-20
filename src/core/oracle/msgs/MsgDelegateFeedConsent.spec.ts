@@ -1,5 +1,5 @@
 import { MsgDelegateFeedConsent } from './MsgDelegateFeedConsent';
-const MsgDelegateFeedConsentAmino = require('./MsgDelegateFeedConsent.data.json');
+import MsgDelegateFeedConsentAmino from './MsgDelegateFeedConsent.data.json';
 
 describe('MsgDelegateFeedConsent', () => {
   it('deserializes', () => {

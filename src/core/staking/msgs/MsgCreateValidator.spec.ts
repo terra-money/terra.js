@@ -1,5 +1,5 @@
 import { MsgCreateValidator } from './MsgCreateValidator';
-const MsgCreateValidatorAmino = require('./MsgCreateValidator.data.json');
+import MsgCreateValidatorAmino from './MsgCreateValidator.data.json';
 
 describe('MsgCreateValidator', () => {
   it('deserializes', () => {

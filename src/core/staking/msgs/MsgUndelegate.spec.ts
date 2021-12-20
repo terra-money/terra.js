@@ -1,5 +1,5 @@
 import { MsgUndelegate } from './MsgUndelegate';
-const MsgUndelegateAmino = require('./MsgUndelegate.data.json');
+import MsgUndelegateAmino from './MsgUndelegate.data.json';
 
 describe('MsgUndelegate', () => {
   it('deserializes', () => {

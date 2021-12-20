@@ -5,7 +5,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const commonConfig = {
   mode: 'production',
   entry: './src/index.ts',
-  devtool: 'source-map',
+  devtool: false,
   module: {
     rules: [
       {
@@ -24,6 +24,18 @@ const commonConfig = {
       resourceRegExp: /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese)\.json$/,
     }),
   ],
+  optimization: {
+	  chunkIds: 'deterministic',
+	  concatenateModules: true,
+	  innerGraph: true,
+	  minimize: true,
+	  sideEffects: false,
+	  usedExports: true,
+	  removeEmptyChunks: true,
+	  mergeDuplicateChunks: true,
+	  mangleExports: 'deterministic',
+	  providedExports: true,
+  },
 };
 
 const webConfig = {
@@ -54,9 +66,13 @@ const nodeConfig = {
   ...commonConfig,
   target: 'node',
   output: {
-    libraryTarget: 'commonjs',
+    libraryTarget: 'module',
     filename: 'bundle.node.js',
+    chunkFormat: 'module',
   },
+	experiments: {
+		outputModule: true
+	}
 };
 
 module.exports = [webConfig, nodeConfig];

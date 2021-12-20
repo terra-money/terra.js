@@ -1,5 +1,5 @@
 import { MsgWithdrawValidatorCommission } from './MsgWithdrawValidatorCommission';
-const MsgWithdrawValidatorCommissionAmino = require('./MsgWithdrawValidatorCommission.data.json');
+import MsgWithdrawValidatorCommissionAmino from './MsgWithdrawValidatorCommission.data.json';
 
 describe('MsgWithdrawValidatorCommission', () => {
   it('deserializes', () => {

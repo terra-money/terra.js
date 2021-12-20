@@ -1,5 +1,5 @@
 import { MsgUnjail } from './MsgUnjail';
-const MsgUnjailAmino = require('./MsgUnjail.data.json');
+import MsgUnjailAmino from './MsgUnjail.data.json';
 
 describe('MsgUnjail', () => {
   it('deserializes', () => {

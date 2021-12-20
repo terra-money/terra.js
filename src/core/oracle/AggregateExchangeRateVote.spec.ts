@@ -1,5 +1,5 @@
 import { AggregateExchangeRateVote } from './AggregateExchangeRateVote';
-const data = require('./AggregateExchangeRateVote.data.json');
+import data from './AggregateExchangeRateVote.data.json';
 
 describe('AggregateExchangeRateVote', () => {
   it('deserializes', () => {

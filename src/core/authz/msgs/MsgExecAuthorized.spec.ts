@@ -1,5 +1,5 @@
 import { MsgExecAuthorized } from './MsgExecAuthorized';
-const examples = require('./MsgExecAuthorized.data.json');
+import examples from './MsgExecAuthorized.data.json';
 
 describe('MsgExecAuthorized', () => {
   it('deserializes', () => {

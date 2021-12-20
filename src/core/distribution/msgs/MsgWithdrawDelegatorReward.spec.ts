@@ -1,5 +1,5 @@
 import { MsgWithdrawDelegatorReward } from './MsgWithdrawDelegatorReward';
-const MsgWithdrawDelegatorRewardAmino = require('./MsgWithdrawDelegatorReward.data.json');
+import MsgWithdrawDelegatorRewardAmino from './MsgWithdrawDelegatorReward.data.json';
 
 describe('MsgWithdrawDelegatorReward', () => {
   it('deserializes', () => {

@@ -1,4 +1,4 @@
-const data = require('./UnbondingDelegation.data.json');
+import data from './UnbondingDelegation.data.json';
 import { UnbondingDelegation } from './UnbondingDelegation';
 
 describe('UnbondingDelegation', () => {

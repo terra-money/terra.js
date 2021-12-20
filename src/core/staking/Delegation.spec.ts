@@ -1,4 +1,4 @@
-const delgsAmino = require('./Delegation.data.json');
+import delgsAmino from './Delegation.data.json';
 import { Delegation } from './Delegation';
 
 describe('Delegation', () => {

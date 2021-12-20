@@ -1,5 +1,5 @@
 import { MsgBeginRedelegate } from './MsgBeginRedelegate';
-const MsgBeginRedelegateAmino = require('./MsgBeginRedelegate.data.json');
+import MsgBeginRedelegateAmino from './MsgBeginRedelegate.data.json';
 
 describe('MsgBeginRedelegate', () => {
   it('deserializes', () => {

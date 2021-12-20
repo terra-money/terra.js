@@ -1,5 +1,5 @@
 import { MsgGrantAuthorization } from './MsgGrantAuthorization';
-const examples = require('./MsgGrantAuthorization.data.json');
+import examples from './MsgGrantAuthorization.data.json';
 
 describe('MsgGrantAuthorization', () => {
   it('deserializes', () => {

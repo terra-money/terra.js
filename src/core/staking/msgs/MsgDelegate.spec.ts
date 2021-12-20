@@ -1,5 +1,5 @@
 import { MsgDelegate } from './MsgDelegate';
-const MsgDelegateAmino = require('./MsgDelegate.data.json');
+import MsgDelegateAmino from './MsgDelegate.data.json';
 
 describe('MsgDelegate', () => {
   it('deserializes', () => {

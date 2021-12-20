@@ -1,5 +1,5 @@
 import { MsgSetWithdrawAddress } from './MsgSetWithdrawAddress';
-const MsgSetWithdrawAddressAmino = require('./MsgSetWithdrawAddress.data.json');
+import MsgSetWithdrawAddressAmino from './MsgSetWithdrawAddress.data.json';
 
 describe('MsgSetWithdrawAddress', () => {
   it('deserializes', () => {

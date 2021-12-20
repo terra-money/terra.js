@@ -1,5 +1,5 @@
 import { MsgSubmitProposal } from './MsgSubmitProposal';
-const MsgSubmitProposalAmino = require('./MsgSubmitProposal.data.json');
+import MsgSubmitProposalAmino from './MsgSubmitProposal.data.json';
 
 describe('MsgSubmitProposal', () => {
   it('deserializes', () => {

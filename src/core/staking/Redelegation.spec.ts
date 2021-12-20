@@ -1,4 +1,4 @@
-const data = require('./Redelegation.data.json');
+import data from './Redelegation.data.json';
 import { Redelegation } from './Redelegation';
 
 describe('Redelegation', () => {

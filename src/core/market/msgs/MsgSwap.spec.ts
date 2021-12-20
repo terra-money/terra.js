@@ -1,5 +1,5 @@
 import { MsgSwap } from './MsgSwap';
-const MsgSwapAmino = require('./MsgSwap.data.json');
+import MsgSwapAmino from './MsgSwap.data.json';
 
 describe('MsgSwap', () => {
   it('deserializes', () => {
