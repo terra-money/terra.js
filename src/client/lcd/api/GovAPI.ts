@@ -45,7 +45,7 @@ export interface DepositParams {
   min_deposit: Coins;
 
   /** Amount of time (in seconds) a proposal can take to acquire the necessary deposits to enter voting stage, after being submitted. */
-  max_deposit_period: string;
+  max_deposit_period: number;
 }
 
 export namespace DepositParams {
@@ -57,7 +57,7 @@ export namespace DepositParams {
 
 export interface VotingParams {
   /** Amount of time (in seconds) a proposal can take to get votes once voting has begun. */
-  voting_period: string;
+  voting_period: number;
 }
 
 export namespace VotingParams {

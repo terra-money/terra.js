@@ -10,10 +10,10 @@ describe('GovAPI', () => {
     await expect(gov.parameters()).resolves.toMatchObject({
       deposit_params: {
         min_deposit: expect.any(Coins),
-        max_deposit_period: expect.any(String),
+        max_deposit_period: expect.any(Number),
       },
       voting_params: {
-        voting_period: expect.any(String),
+        voting_period: expect.any(Number),
       },
       tally_params: {
         quorum: expect.any(Dec),
