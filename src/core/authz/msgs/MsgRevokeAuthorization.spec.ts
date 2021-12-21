@@ -1,5 +1,5 @@
 import { MsgRevokeAuthorization } from './MsgRevokeAuthorization';
-import examples from './MsgRevokeAuthorization.data.json';
+const examples = require('./MsgRevokeAuthorization.data.json');
 
 describe('MsgRevokeAuthorization', () => {
   it('deserializes', () => {

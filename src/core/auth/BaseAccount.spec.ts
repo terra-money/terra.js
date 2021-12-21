@@ -1,7 +1,7 @@
 import { BaseAccount } from './BaseAccount';
 import { SimplePublicKey } from '../PublicKey';
 
-import data from './BaseAccount.data.json';
+const data = require('./BaseAccount.data.json');
 
 describe('Account', () => {
   it('deserializes accounts correctly', () => {

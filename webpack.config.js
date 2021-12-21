@@ -66,13 +66,9 @@ const nodeConfig = {
   ...commonConfig,
   target: 'node',
   output: {
-    libraryTarget: 'module',
+    libraryTarget: 'commonjs',
     filename: 'bundle.node.js',
-    chunkFormat: 'module',
   },
-	experiments: {
-		outputModule: true
-	}
 };
 
 module.exports = [webConfig, nodeConfig];

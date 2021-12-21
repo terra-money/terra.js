@@ -1,5 +1,5 @@
 import { TxInfo } from './TxInfo';
-import data from './TxInfo.data.json';
+const data = require('./TxInfo.data.json');
 
 const instantiateContractTxAmino = {
   height: '301435',
