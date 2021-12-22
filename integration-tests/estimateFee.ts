@@ -25,7 +25,7 @@ async function main() {
     new MsgSend(
     	'terra1zsky63r58vc7dfn3ljj32ch6fyn4e5qd8skzyz',
     	'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
-		{uluna:12345}
+		{ukrw:12345}
     ),
   ];
 
