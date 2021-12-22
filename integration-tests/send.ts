@@ -11,7 +11,7 @@ async function main() {
   const bombay = new LCDClient({
     chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
-    gasPrices: { uusd: 0.38 },
+    gasPrices: { uluna: 0.38 },
   });
 
   // a wallet can be created out of any key
@@ -22,7 +22,7 @@ async function main() {
   const send = new MsgSend(
     'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
     'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-    { uusd: 1312029 }
+    { uluna: 1312029 }
   );
 
   wallet
