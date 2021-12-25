@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@ledgerhq/hw-transport-node-hid": "^6.20.0",
+    "@ledgerhq/hw-transport-node-hid-singleton": "^6.20.0",
     "@ledgerhq/hw-transport-webusb": "^6.20.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.11.7",
