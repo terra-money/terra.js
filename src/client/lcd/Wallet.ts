@@ -4,6 +4,8 @@ import { CreateTxOptions } from '../lcd/api/TxAPI';
 import { Tx } from '../../core/Tx';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
+export { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}
 

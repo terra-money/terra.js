@@ -56,6 +56,8 @@
     "arrowParens": "avoid"
   },
   "devDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^6.20.0",
+    "@ledgerhq/hw-transport-webusb": "^6.20.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.11.7",
     "@types/readable-stream": "^2.3.9",
@@ -82,6 +84,8 @@
     "webpack-cli": "^4.3.0"
   },
   "dependencies": {
+    "@ledgerhq/hw-transport": "^6.20.0",
+    "@terra-money/ledger-terra-js": "^1.1.0",
     "@terra-money/terra.proto": "^0.1.7",
     "axios": "^0.24.0",
     "bech32": "^2.0.0",
