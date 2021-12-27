@@ -12,7 +12,6 @@ import TerraApp from '@terra-money/ledger-terra-js';
 //import { ERROR_CODE } from '@terra-money/ledger-terra-js';
 const NoError = 0x9000;
 import { LUNA_COIN_TYPE } from './MnemonicKey';
-import { SignMode } from '../client/lcd/Wallet';
 import { signatureImport } from 'secp256k1';
 import { bech32 } from 'bech32';
 import { SignatureV2, SignDoc } from '..';
