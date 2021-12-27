@@ -1,19 +1,18 @@
-import { LCDClient, MsgSend, LedgerKey, LedgerTransportType } from '../src';
+import { LCDClient, MsgSend, LedgerKey, LedgerTransportType, MnemonicKey } from '../src';
 import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 async function main() {
   // ledgerkey
-  const lk = new LedgerKey(LedgerTransportType.NODE);
+  const lk = new LedgerKey(LedgerTransportType.NODE_HID);
   await lk.initialize();
-
-  const bombay = new LCDClient({
+  const terra = new LCDClient({
     chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
   });
 
   // a wallet can be created out of any key
   // wallets abstract transaction building
-  const wallet = bombay.wallet(lk);
+  const wallet = terra.wallet(lk);
 
   // create a simple message that moves coin balances
   const send = new MsgSend(
@@ -28,8 +27,8 @@ async function main() {
       memo: 'ledgerkey test',
       signMode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON
     });
-  console.log(`signed tx: ${JSON.stringify(tx)}`);
-  const result = await bombay.tx.broadcast(tx);
+
+  const result = await terra.tx.broadcast(tx);
   console.log(`TX hash: ${result.txhash}  ${result.raw_log}`);
 }
 
