@@ -3,6 +3,7 @@ import {
   AuthAPI,
   BankAPI,
   DistributionAPI,
+  FeeGrantAPI,
   GovAPI,
   MarketAPI,
   MintAPI,
@@ -86,6 +87,7 @@ export class LCDClient {
   public auth: AuthAPI;
   public bank: BankAPI;
   public distribution: DistributionAPI;
+  public feeGrant: FeeGrantAPI;
   public gov: GovAPI;
   public market: MarketAPI;
   public mint: MintAPI;
@@ -120,6 +122,7 @@ export class LCDClient {
     this.auth = new AuthAPI(this.apiRequester);
     this.bank = new BankAPI(this.apiRequester);
     this.distribution = new DistributionAPI(this.apiRequester);
+    this.feeGrant = new FeeGrantAPI(this.apiRequester);
     this.gov = new GovAPI(this.apiRequester);
     this.market = new MarketAPI(this.apiRequester);
     this.mint = new MintAPI(this.apiRequester);
