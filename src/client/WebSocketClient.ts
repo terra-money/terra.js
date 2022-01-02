@@ -123,6 +123,7 @@ function makeQueryParams(query: TendermintQuery): string {
  *   wsclient.destroy();
  * });
  *
+ * wsclient.start();
  * ```
  */
 export class WebSocketClient extends EventEmitter {
