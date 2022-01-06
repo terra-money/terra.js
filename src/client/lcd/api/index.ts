@@ -1,6 +1,7 @@
 export * from './AuthAPI';
 export * from './BankAPI';
 export * from './DistributionAPI';
+export * from './FeeGrantAPI';
 export * from './GovAPI';
 export * from './MarketAPI';
 export * from './AuthzAPI';
