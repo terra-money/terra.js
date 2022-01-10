@@ -45,7 +45,10 @@ const webConfig = {
     ...commonConfig.plugins,
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
-    })
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     // new BundleAnalyzerPlugin(),
   ],
 };
