@@ -2,8 +2,10 @@ import { PublicKey } from './PublicKey';
 import { ModeInfo } from './Tx';
 import { CompactBitArray } from './CompactBitArray';
 import {
+  SignMode,
   SignMode as SignMode_pb,
   signModeFromJSON,
+  signModeToJSON,
 } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 import { MultiSignature } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
 
@@ -20,6 +22,14 @@ export class SignatureV2 {
       SignatureV2.Descriptor.fromData(data.data),
       Number.parseInt(data.sequence)
     );
+  }
+
+  public toData(): SignatureV2.Data {
+    return {
+      public_key: this.public_key.toData(),
+      data: this.data.toData(),
+      sequence: this.sequence.toFixed(),
+    };
   }
 
   public static fromAmino(data: SignatureV2.Amino): SignatureV2 {
@@ -72,6 +82,22 @@ export namespace SignatureV2 {
       throw new Error('must be one of single or multi');
     }
 
+    public toData(): Descriptor.Data {
+      if (this.single) {
+        return {
+          single: this.single.toData(),
+        };
+      }
+
+      if (this.multi) {
+        return {
+          multi: this.multi.toData(),
+        };
+      }
+
+      throw new Error('must be one of single or multi');
+    }
+
     public toModeInfoAndSignature(): [ModeInfo, Uint8Array] {
       if (this.single) {
         const sigData = this.single;
@@ -119,6 +145,14 @@ export namespace SignatureV2 {
       public static fromData(data: Single.Data): Single {
         return new Single(signModeFromJSON(data.mode), data.signature);
       }
+
+      public toData(): Single.Data {
+        const { mode, signature } = this;
+        return {
+          mode: signModeToJSON(mode),
+          signature,
+        };
+      }
     }
 
     export namespace Single {
@@ -139,6 +173,13 @@ export namespace SignatureV2 {
           CompactBitArray.fromData(data.bitarray),
           data.signatures.map(v => Descriptor.fromData(v))
         );
+      }
+
+      public toData(): Multi.Data {
+        return {
+          bitarray: this.bitarray.toData(),
+          signatures: this.signatures.map(sig => sig.toData()),
+        };
       }
     }
 
