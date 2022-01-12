@@ -86,6 +86,10 @@ export class Tx {
     return Tx_pb.encode(this.toProto()).finish();
   }
 
+  public static fromBuffer(buf: Buffer): Tx {
+    return Tx.fromProto(Tx_pb.decode(buf));
+  }
+
   public appendEmptySignatures(signers: SignerData[]) {
     signers.forEach(signer => {
       let signerInfo: SignerInfo;
