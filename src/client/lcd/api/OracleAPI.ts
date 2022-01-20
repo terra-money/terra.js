@@ -24,7 +24,7 @@ export namespace OracleWhitelist {
 }
 
 export interface OracleParams {
-  /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of LUNA. */
+  /** Number of blocks that define the period over which new votes must be submitted for the exchange rate of uluna. */
   vote_period: number;
 
   /** Ratio of voting power that must be reached for a denomination to be considered "active." */
@@ -78,7 +78,7 @@ export namespace OracleWhitelist {
 
 export class OracleAPI extends BaseAPI {
   /**
-   * Gets the Oracle module's currently registered exchange rate for LUNA in all available denominations.
+   * Gets the Oracle module's currently registered exchange rate for uluna in all available denominations.
    */
   public async exchangeRates(params: APIParams = {}): Promise<Coins> {
     return this.c
@@ -91,7 +91,7 @@ export class OracleAPI extends BaseAPI {
 
   /**
    * Gets the Oracle module's currently registered exchange rate for the specific denomination.
-   * @param denom denomination in which to get the exchange rate of LUNA
+   * @param denom denomination in which to get the exchange rate of uluna
    */
   public async exchangeRate(
     denom: Denom,

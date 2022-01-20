@@ -47,7 +47,10 @@ export abstract class Key {
       throw new Error('Could not compute valAddress: missing rawAddress');
     }
 
-    return bech32.encode('terravaloper', this.publicKey.rawAddress());
+    return bech32.encode(
+      'terravaloper',
+      bech32.toWords(this.publicKey.rawAddress())
+    );
   }
 
   /**

@@ -67,7 +67,7 @@ export class MsgTransfer extends JSONSerializable<
       sender,
       receiver,
       timeout_height ? Height.fromAmino(timeout_height) : undefined,
-      Number.parseInt(timeout_timestamp)
+      Number.parseInt(timeout_timestamp || '0')
     );
   }
 
@@ -89,7 +89,7 @@ export class MsgTransfer extends JSONSerializable<
         token: token ? token.toAmino() : undefined,
         sender,
         receiver,
-        timeout_height: timeout_height ? timeout_height.toAmino() : undefined,
+        timeout_height: timeout_height?.toAmino(),
         timeout_timestamp: timeout_timestamp.toFixed(),
       },
     };
@@ -133,7 +133,9 @@ export class MsgTransfer extends JSONSerializable<
       token: token ? token.toData() : undefined,
       sender,
       receiver,
-      timeout_height: timeout_height ? timeout_height.toData() : undefined,
+      timeout_height: timeout_height
+        ? timeout_height.toData()
+        : new Height(0, 0).toData(),
       timeout_timestamp: timeout_timestamp.toFixed(),
     };
   }
@@ -193,7 +195,7 @@ export namespace MsgTransfer {
       sender: AccAddress;
       receiver: string;
       timeout_height?: Height.Amino;
-      timeout_timestamp: string;
+      timeout_timestamp?: string;
     };
   }
   export interface Data {
@@ -203,7 +205,7 @@ export namespace MsgTransfer {
     token?: Coin.Data;
     sender: AccAddress;
     receiver: string;
-    timeout_height?: Height.Data;
+    timeout_height: Height.Data;
     timeout_timestamp: string;
   }
   export type Proto = MsgTransfer_pb;

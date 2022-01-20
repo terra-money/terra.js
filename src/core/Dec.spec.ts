@@ -92,5 +92,12 @@ describe('Decimal', () => {
         expect(d1.sub(d2)).toEqual(sub);
       });
     });
+
+    it('keep away from decimal.js', () => {
+      const decimal = new Decimal('500000');
+      const dec = new Dec('500000');
+      expect(decimal.toString()).toEqual('500000');
+      expect(dec.toString()).toEqual('500000.000000000000000000');
+    });
   });
 });

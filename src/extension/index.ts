@@ -35,19 +35,9 @@ declare global {
  * Extension class is for communicating between page and extension
  */
 export class Extension {
-  static instance: Extension;
   private inpageStream!: PostMessageStream;
 
-  /**
-   * Using singleton pattern, hence every instanciation will return same value
-   */
   constructor(identifier = 'station') {
-    if (Extension.instance) {
-      return Extension.instance;
-    }
-
-    Extension.instance = this;
-
     this.inpageStream = new PostMessageStream({
       name: `${identifier}:inpage`,
       target: `${identifier}:content`,
