@@ -29,14 +29,19 @@ export class Height extends JSONSerializable<
 
   public static fromAmino(data: Height.Amino): Height {
     const { revision_number, revision_height } = data;
-    return new Height(parseInt(revision_number), parseInt(revision_height));
+    return new Height(
+      parseInt(revision_number || '0'),
+      parseInt(revision_height || '0')
+    );
   }
 
   public toAmino(): Height.Amino {
     const { revision_number, revision_height } = this;
     const res: Height.Amino = {
-      revision_number: revision_number.toFixed(),
-      revision_height: revision_height.toFixed(),
+      revision_number:
+        revision_number > 0 ? revision_number.toFixed() : undefined,
+      revision_height:
+        revision_height > 0 ? revision_height.toFixed() : undefined,
     };
     return res;
   }
@@ -76,8 +81,8 @@ export class Height extends JSONSerializable<
 
 export namespace Height {
   export interface Amino {
-    revision_number: string;
-    revision_height: string;
+    revision_number?: string;
+    revision_height?: string;
   }
 
   export interface Data {

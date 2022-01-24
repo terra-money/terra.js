@@ -5,6 +5,7 @@ import * as Long from 'long';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgTransfer as MsgTransfer_pb } from '@terra-money/terra.proto/ibc/applications/transfer/v1/tx';
 import { Height } from '../../ibc/msgs/client/Height';
+import { Numeric } from '../../..';
 /**
  * A basic message for transfer [[Coin]] via IBC.
  */
@@ -19,7 +20,7 @@ export class MsgTransfer extends JSONSerializable<
   public sender: AccAddress;
   public receiver: string; // destination chain can be non-cosmos-based
   public timeout_height?: Height; // 0 to disable
-  public timeout_timestamp: number; // 0 to disable
+  public timeout_timestamp?: Numeric.Output; // 0 to disable
   /**
    * @param source_port the port on which the packet will be sent
    * @param source_channel  the channel by which the packet will be sent
@@ -36,16 +37,23 @@ export class MsgTransfer extends JSONSerializable<
     sender: AccAddress,
     receiver: string,
     timeout_height: Height | undefined,
-    timeout_timestamp: number
+    timeout_timestamp: Numeric.Input | undefined
   ) {
     super();
+
+    if (!timeout_height && !timeout_timestamp) {
+      throw 'both of timeout_height and timeout_timestamp are undefined';
+    }
+
     this.source_port = source_port;
     this.source_channel = source_channel;
     this.token = token;
     this.sender = sender;
     this.receiver = receiver;
     this.timeout_height = timeout_height;
-    this.timeout_timestamp = timeout_timestamp;
+    this.timeout_timestamp = timeout_timestamp
+      ? Numeric.parse(timeout_timestamp)
+      : undefined;
   }
 
   public static fromAmino(data: MsgTransfer.Amino): MsgTransfer {
@@ -60,6 +68,11 @@ export class MsgTransfer extends JSONSerializable<
         timeout_timestamp,
       },
     } = data;
+
+    if (!timeout_height && !timeout_timestamp) {
+      throw 'both of timeout_height and timeout_timestamp are undefined';
+    }
+
     return new MsgTransfer(
       source_port,
       source_channel,
@@ -67,7 +80,7 @@ export class MsgTransfer extends JSONSerializable<
       sender,
       receiver,
       timeout_height ? Height.fromAmino(timeout_height) : undefined,
-      Number.parseInt(timeout_timestamp)
+      timeout_timestamp ? Numeric.parse(timeout_timestamp) : undefined
     );
   }
 
@@ -89,8 +102,8 @@ export class MsgTransfer extends JSONSerializable<
         token: token ? token.toAmino() : undefined,
         sender,
         receiver,
-        timeout_height: timeout_height ? timeout_height.toAmino() : undefined,
-        timeout_timestamp: timeout_timestamp.toFixed(),
+        timeout_height: timeout_height?.toAmino() || {},
+        timeout_timestamp: timeout_timestamp?.toFixed() || undefined,
       },
     };
   }
@@ -105,6 +118,11 @@ export class MsgTransfer extends JSONSerializable<
       timeout_timestamp,
       timeout_height,
     } = data;
+
+    if (!timeout_height && !timeout_timestamp) {
+      throw 'both of timeout_height and timeout_timestamp are undefined';
+    }
+
     return new MsgTransfer(
       source_port,
       source_channel,
@@ -112,7 +130,7 @@ export class MsgTransfer extends JSONSerializable<
       sender,
       receiver,
       timeout_height ? Height.fromData(timeout_height) : undefined,
-      Number.parseInt(timeout_timestamp)
+      timeout_timestamp ? Number.parseInt(timeout_timestamp) : undefined
     );
   }
 
@@ -133,12 +151,18 @@ export class MsgTransfer extends JSONSerializable<
       token: token ? token.toData() : undefined,
       sender,
       receiver,
-      timeout_height: timeout_height ? timeout_height.toData() : undefined,
-      timeout_timestamp: timeout_timestamp.toFixed(),
+      timeout_height: timeout_height
+        ? timeout_height.toData()
+        : new Height(0, 0).toData(),
+      timeout_timestamp: timeout_timestamp?.toFixed() || '0',
     };
   }
 
   public static fromProto(proto: MsgTransfer.Proto): MsgTransfer {
+    if (!proto.timeoutHeight && proto.timeoutTimestamp.toNumber() == 0) {
+      throw 'both of timeout_height and timeout_timestamp are empty';
+    }
+
     return new MsgTransfer(
       proto.sourcePort,
       proto.sourceChannel,
@@ -167,7 +191,7 @@ export class MsgTransfer extends JSONSerializable<
       sender,
       receiver,
       timeoutHeight: timeout_height ? timeout_height.toProto() : undefined,
-      timeoutTimestamp: Long.fromNumber(timeout_timestamp),
+      timeoutTimestamp: Long.fromString(timeout_timestamp?.toFixed() || '0'),
     });
   }
 
@@ -192,8 +216,8 @@ export namespace MsgTransfer {
       token?: Coin.Amino;
       sender: AccAddress;
       receiver: string;
-      timeout_height?: Height.Amino;
-      timeout_timestamp: string;
+      timeout_height: Height.Amino;
+      timeout_timestamp?: string;
     };
   }
   export interface Data {
@@ -203,7 +227,7 @@ export namespace MsgTransfer {
     token?: Coin.Data;
     sender: AccAddress;
     receiver: string;
-    timeout_height?: Height.Data;
+    timeout_height: Height.Data;
     timeout_timestamp: string;
   }
   export type Proto = MsgTransfer_pb;
