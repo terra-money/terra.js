@@ -38,8 +38,10 @@ export class Height extends JSONSerializable<
   public toAmino(): Height.Amino {
     const { revision_number, revision_height } = this;
     const res: Height.Amino = {
-      revision_number: revision_number.toFixed(),
-      revision_height: revision_height.toFixed(),
+      revision_number:
+        revision_number > 0 ? revision_number.toFixed() : undefined,
+      revision_height:
+        revision_height > 0 ? revision_height.toFixed() : undefined,
     };
     return res;
   }
