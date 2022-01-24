@@ -358,11 +358,19 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
-   * Encode a transaction to Amino-encoding
+   * Encode a transaction to base64-encoded protobuf
    * @param tx transaction to encode
    */
   public encode(tx: Tx): string {
     return Buffer.from(tx.toBytes()).toString('base64');
+  }
+
+  /**
+   * Decode a transaction from base64-encoded protobuf
+   * @param tx transaction string to decode
+   */
+  public decode(encodedTx: string): Tx {
+    return Tx.fromBuffer(Buffer.from(encodedTx, 'base64'));
   }
 
   /**
