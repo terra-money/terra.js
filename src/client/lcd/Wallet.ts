@@ -58,7 +58,7 @@ export class Wallet {
     let accountNumber = options.accountNumber;
     let sequence = options.sequence;
 
-    if (accountNumber === undefined || sequence == undefined) {
+    if (accountNumber === undefined || sequence === undefined) {
       const res = await this.accountNumberAndSequence();
       if (accountNumber === undefined) {
         accountNumber = res.account_number;
