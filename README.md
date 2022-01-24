@@ -167,8 +167,6 @@ module.exports {
 }
 ```
 
-There have been many complaints about `MnemonicKey` of having poor performance or being sometimes incompatible when used inside React Native. It is recommended to use [`react-native-mnemonic-key`](https://github.com/terra-money/react-native-mnemonic-key) instead for more reliable performance and security.
-
 ## License
 
 This software is licensed under the MIT license. See [LICENSE](./LICENSE) for full disclosure.
