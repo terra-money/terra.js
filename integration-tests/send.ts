@@ -11,7 +11,6 @@ async function main() {
   const bombay = new LCDClient({
     chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
-    gasPrices: { uluna: 0.38 },
   });
 
   // a wallet can be created out of any key

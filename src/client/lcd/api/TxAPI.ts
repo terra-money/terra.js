@@ -279,7 +279,7 @@ export class TxAPI extends BaseAPI {
     const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options.feeDenoms || ['uluna'];
+    const feeDenoms = options.feeDenoms || ['uusd'];
     let gas = options.gas;
     let gasPricesCoins: Coins | undefined;
 
@@ -309,10 +309,9 @@ export class TxAPI extends BaseAPI {
       gas = (await this.estimateGas(tx, { gasAdjustment })).toString();
     }
 
-    const taxAmount = await this.computeTax(tx);
     const feeAmount = gasPricesCoins
-      ? taxAmount.add(gasPricesCoins.mul(gas).toIntCeilCoins())
-      : taxAmount;
+      ? gasPricesCoins.mul(gas).toIntCeilCoins()
+      : '0uusd';
 
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
@@ -347,14 +346,8 @@ export class TxAPI extends BaseAPI {
     return new Dec(gasAdjustment).mul(simulateRes.gas_info.gas_used).toNumber();
   }
 
-  public async computeTax(tx: Tx): Promise<Coins> {
-    const taxAmount = await this.c
-      .post<{ tax_amount: Coins.Data }>(`/terra/tx/v1beta1/compute_tax`, {
-        tx_bytes: this.encode(tx),
-      })
-      .then(d => Coins.fromData(d.tax_amount));
-
-    return taxAmount;
+  public async computeTax(): Promise<Coins> {
+    throw new Error('Tax was removed from network');
   }
 
   /**

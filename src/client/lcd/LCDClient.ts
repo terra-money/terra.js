@@ -51,13 +51,13 @@ const DEFAULT_LCD_OPTIONS: Partial<LCDClientConfig> = {
 
 const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
   default: {
-    uluna: 0.15,
+    uusd: 0.15,
   },
   'columbus-5': {
-    uluna: 0.015,
+    uusd: 0.15,
   },
   'bombay-12': {
-    uluna: 0.15,
+    uusd: 0.15,
   },
 };
 
