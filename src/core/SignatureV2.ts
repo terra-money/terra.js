@@ -2,7 +2,6 @@ import { PublicKey } from './PublicKey';
 import { ModeInfo } from './Tx';
 import { CompactBitArray } from './CompactBitArray';
 import {
-  SignMode,
   SignMode as SignMode_pb,
   signModeFromJSON,
   signModeToJSON,
