@@ -8,6 +8,12 @@ describe('BasicAllowance', () => {
 
     expect(ba.toData().spend_limit).toEqual(new Coins('1000uluna').toData());
     expect(ba.toData().expiration).toEqual(now.toISOString());
+    expect(ba.toProto().spendLimit).toEqual(new Coins('1000uluna').toProto());
+    expect(ba.toProto().expiration).toEqual(now);
+    expect(ba.toAmino().value.spend_limit).toEqual(
+      new Coins('1000uluna').toAmino()
+    );
+    expect(ba.toAmino().value.expiration).toEqual(now.toISOString());
   });
 
   it('spend_limit only', () => {
@@ -15,6 +21,12 @@ describe('BasicAllowance', () => {
 
     expect(ba.toData().spend_limit).toEqual(new Coins('1000uluna').toData());
     expect(ba.toData().expiration).toBeUndefined();
+    expect(ba.toProto().spendLimit).toEqual(new Coins('1000uluna').toProto());
+    expect(ba.toProto().expiration).toBeUndefined();
+    expect(ba.toAmino().value.spend_limit).toEqual(
+      new Coins('1000uluna').toAmino()
+    );
+    expect(ba.toAmino().value.expiration).toBeUndefined();
   });
 
   it('expiration only', () => {
@@ -23,6 +35,10 @@ describe('BasicAllowance', () => {
 
     expect(ba.toData().spend_limit).toEqual(undefined);
     expect(ba.toData().expiration).toEqual(now.toISOString());
+    expect(ba.toProto().spendLimit).toHaveLength(0);
+    expect(ba.toProto().expiration).toEqual(now);
+    expect(ba.toAmino().value.spend_limit).toBeUndefined();
+    expect(ba.toAmino().value.expiration).toEqual(now.toISOString());
   });
 
   it('both empty', () => {
