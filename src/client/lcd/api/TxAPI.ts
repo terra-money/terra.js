@@ -416,7 +416,7 @@ export class TxAPI extends BaseAPI {
    * NOTE: This is not a synchronous function and is unconventionally named. This function
    * can be await as it returns a `Promise`.
    *
-   * Broadcast the transaction using the "sync" mode, returning after DeliverTx() is performed.
+   * Broadcast the transaction using the "sync" mode, returning after CheckTx() is performed.
    * @param tx transaction to broadcast
    */
   public async broadcastSync(tx: Tx): Promise<SyncTxBroadcastResult> {
@@ -443,7 +443,7 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
-   * Broadcast the transaction using the "async" mode, returning after CheckTx() is performed.
+   * Broadcast the transaction using the "async" mode, returns immediately (transaction might fail).
    * @param tx transaction to broadcast
    */
   public async broadcastAsync(tx: Tx): Promise<AsyncTxBroadcastResult> {
