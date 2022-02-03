@@ -20,16 +20,16 @@ export class BasicAllowance extends JSONSerializable<
    */
   constructor(spend_limit?: Coins.Input, public expiration?: Date) {
     super();
-    let is_zero_conins = true;
+    let isZeroCoins = true;
     if (spend_limit) {
       this.spend_limit = new Coins(spend_limit);
       this.spend_limit.map(c => {
         if (!c.amount.isZero()) {
-          is_zero_conins = false;
+          isZeroCoins = false;
         }
       });
     }
-    if (is_zero_conins && expiration == undefined) {
+    if (isZeroCoins && expiration == undefined) {
       throw Error('cannot set both of spend_limit and expiration empty');
     }
   }
