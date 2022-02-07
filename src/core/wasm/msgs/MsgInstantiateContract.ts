@@ -51,7 +51,7 @@ export class MsgInstantiateContract extends JSONSerializable<
       type: 'wasm/MsgInstantiateContract',
       value: {
         sender,
-        admin: admin || '',
+        admin,
         code_id: code_id.toFixed(),
         init_msg: removeNull(init_msg),
         init_coins: init_coins.toAmino(),
