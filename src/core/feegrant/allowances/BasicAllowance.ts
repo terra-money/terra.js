@@ -12,16 +12,26 @@ export class BasicAllowance extends JSONSerializable<
   BasicAllowance.Data,
   BasicAllowance.Proto
 > {
-  public spend_limit: Coins;
+  public spend_limit?: Coins;
 
   /**
    * @param spend_limit spend_limit allowed to be spent as fee
    * @param expiration allowance's expiration
    */
-  constructor(spend_limit: Coins.Input, public expiration: Date) {
+  constructor(spend_limit?: Coins.Input, public expiration?: Date) {
     super();
-
-    this.spend_limit = new Coins(spend_limit);
+    let isZeroCoins = true;
+    if (spend_limit) {
+      this.spend_limit = new Coins(spend_limit);
+      this.spend_limit.map(c => {
+        if (!c.amount.isZero()) {
+          isZeroCoins = false;
+        }
+      });
+    }
+    if (isZeroCoins && expiration == undefined) {
+      throw Error('cannot set both of spend_limit and expiration empty');
+    }
   }
 
   public static fromAmino(data: BasicAllowance.Amino): BasicAllowance {
@@ -30,9 +40,11 @@ export class BasicAllowance extends JSONSerializable<
     } = data;
 
     return new BasicAllowance(
-      Coins.fromAmino(spend_limit),
-      new Date(expiration)
+      spend_limit ? Coins.fromAmino(spend_limit) : undefined,
+      expiration ? new Date(expiration) : undefined
     );
+
+    new BasicAllowance('');
   }
 
   public toAmino(): BasicAllowance.Amino {
@@ -40,8 +52,9 @@ export class BasicAllowance extends JSONSerializable<
     return {
       type: 'feegrant/BasicAllowance',
       value: {
-        spend_limit: spend_limit.toAmino(),
-        expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+        spend_limit: spend_limit?.toAmino() || undefined,
+        expiration:
+          expiration?.toISOString().replace(/\.000Z$/, 'Z') || undefined,
       },
     };
   }
@@ -49,8 +62,8 @@ export class BasicAllowance extends JSONSerializable<
   public static fromData(proto: BasicAllowance.Data): BasicAllowance {
     const { spend_limit, expiration } = proto;
     return new BasicAllowance(
-      Coins.fromData(spend_limit),
-      new Date(expiration)
+      spend_limit ? Coins.fromData(spend_limit) : undefined,
+      expiration ? new Date(expiration) : undefined
     );
   }
 
@@ -58,15 +71,16 @@ export class BasicAllowance extends JSONSerializable<
     const { spend_limit, expiration } = this;
     return {
       '@type': '/cosmos.feegrant.v1beta1.BasicAllowance',
-      spend_limit: spend_limit.toData(),
-      expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
+      spend_limit: spend_limit?.toData() || undefined,
+      expiration:
+        expiration?.toISOString().replace(/\.000Z$/, 'Z') || undefined,
     };
   }
 
   public static fromProto(proto: BasicAllowance.Proto): BasicAllowance {
     return new BasicAllowance(
       Coins.fromProto(proto.spendLimit),
-      proto.expiration as Date
+      proto.expiration ? (proto.expiration as Date) : undefined
     );
   }
 
@@ -74,7 +88,7 @@ export class BasicAllowance extends JSONSerializable<
     const { spend_limit, expiration } = this;
     return BasicAllowance_pb.fromPartial({
       expiration,
-      spendLimit: spend_limit.toProto(),
+      spendLimit: spend_limit?.toProto() || undefined,
     });
   }
 
@@ -94,15 +108,15 @@ export namespace BasicAllowance {
   export interface Amino {
     type: 'feegrant/BasicAllowance';
     value: {
-      spend_limit: Coins.Amino;
-      expiration: string;
+      spend_limit?: Coins.Amino;
+      expiration?: string;
     };
   }
 
   export interface Data {
     '@type': '/cosmos.feegrant.v1beta1.BasicAllowance';
-    spend_limit: Coins.Data;
-    expiration: string;
+    spend_limit?: Coins.Data;
+    expiration?: string;
   }
 
   export type Proto = BasicAllowance_pb;
