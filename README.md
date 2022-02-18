@@ -177,7 +177,7 @@ This software is licensed under the MIT license. See [LICENSE](./LICENSE) for fu
 
 <p>&nbsp;</p>
 <p align="center">
-    <a href="https://terra.money/"><img src="http://terra.money/logos/terra_logo.svg" align="center" width=200/></a>
+    <a href="https://terra.money/"><img src="https://assets.website-files.com/611153e7af981472d8da199c/61794f2b6b1c7a1cb9444489_symbol-terra-blue.svg" align="center" width=200/></a>
 </p>
 <div align="center">
   <sub><em>Powering the innovation of money.</em></sub>
