@@ -48,7 +48,7 @@ describe('BasicAllowance', () => {
   });
 
   it('allow both empty', () => {
-    const ba = new BasicAllowance(undefined, undefined);
+    const ba = new BasicAllowance();
     expect(ba.spend_limit).toBeUndefined();
     expect(ba.expiration).toBeUndefined();
   });
