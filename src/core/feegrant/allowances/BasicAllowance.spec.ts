@@ -41,12 +41,15 @@ describe('BasicAllowance', () => {
     expect(ba.toAmino().value.expiration).toEqual(now.toISOString());
   });
 
-  it('both empty', () => {
-    expect(() => {
-      new BasicAllowance('0uluna,0uusd', undefined);
-    }).toThrowError(); // zero coins
-    expect(() => {
-      new BasicAllowance(undefined, undefined);
-    }).toThrowError();
+  it('spend_limit has zero amount', () => {
+    expect(() => new BasicAllowance('1uluna,-1uusd', undefined)).toThrowError();
+    expect(() => new BasicAllowance('0ukrw', undefined)).toThrowError();
+    expect(() => new BasicAllowance('-1204unok', undefined)).toThrowError();
+  });
+
+  it('allow both empty', () => {
+    const ba = new BasicAllowance(undefined, undefined);
+    expect(ba.spend_limit).toBeUndefined();
+    expect(ba.expiration).toBeUndefined();
   });
 });

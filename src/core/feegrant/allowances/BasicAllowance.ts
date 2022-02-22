@@ -20,17 +20,20 @@ export class BasicAllowance extends JSONSerializable<
    */
   constructor(spend_limit?: Coins.Input, public expiration?: Date) {
     super();
-    let isZeroCoins = true;
+    let hasNotPositive = false;
     if (spend_limit) {
       this.spend_limit = new Coins(spend_limit);
       this.spend_limit.map(c => {
-        if (!c.amount.isZero()) {
-          isZeroCoins = false;
+        // isPositive() from decimal.js returns true when the amount is 0.
+        // but Coins.IsAllPositive() from cosmos-sdk will return false in same case.
+        // so we use lessThanorEquenTo(0) instead of isPositive() == false
+        if (c.amount.lessThanOrEqualTo(0)) {
+          hasNotPositive = true;
         }
       });
     }
-    if (isZeroCoins && expiration == undefined) {
-      throw Error('cannot set both of spend_limit and expiration empty');
+    if (spend_limit && hasNotPositive) {
+      throw Error('spend_limit must be positive');
     }
   }
 
