@@ -17,10 +17,10 @@ The JavaScript SDK for Terra
 </p>
 
 <p align="center">
-  <a href="https://github.com/terra-money/terra.js/wiki"><strong>Explore the Docs »</strong></a>
+  <a href="https://docs.terra.money/docs/develop/sdks/terra-js/README.html"><strong>Explore the Docs »</strong></a>
   <br />
   <br/>
-  <a href="https://github.com/terra-money/terra.js/wiki">Examples</a>
+  <a href="https://docs.terra.money/docs/develop/sdks/terra-js/common-examples.html">Examples</a>
   ·
   <a href="https://terra-money.github.io/terra.js/">API Reference</a>
   ·
@@ -34,9 +34,9 @@ Terra.js a JavaScript SDK for writing applications that interact with the Terra 
 ## Features
 
 - **Written in TypeScript**, with type definitions
-- Versatile support for [key management](https://github.com/terra-money/terra.js/wiki/Keys) solutions
+- Versatile support for [key management](https://docs.terra.money/docs/develop/sdks/terra-js/keys.html) solutions
 - Works in Node.js, in the browser, and React Native
-- Exposes the Terra API through [`LCDClient`](https://github.com/terra-money/terra.js/wiki/Querying)
+- Exposes the Terra API through [`LCDClient`](https://docs.terra.money/docs/develop/sdks/terra-js/query-data.html)
 - Parses responses into native JavaScript types
 
 We highly suggest using Terra.js with TypeScript, or JavaScript in a code editor that has support for type declarations, so you can take advantage of the helpful type hints that are included with the package.
@@ -51,7 +51,7 @@ npm install @terra-money/terra.js
 
 ## Usage
 
-Terra.js can be use in Node.js, as well as inside the browser. Please check the [GitHub Wiki](https://github.com/terra-money/terra.js/wiki) for notes on how to get up and running.
+Terra.js can be use in Node.js, as well as inside the browser. Please check the [docs](https://docs.terra.money/docs/develop/sdks/terra-js/README.html) for notes on how to get up and running.
 
 ### Getting blockchain data
 
