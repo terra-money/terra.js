@@ -78,6 +78,7 @@ import {
   MsgTimeoutOnClose,
   IbcChannelMsg,
 } from './ibc/msgs/channel';
+import { MsgVerifyInvariant, CrisisMsg } from './crisis';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export type Msg =
@@ -94,7 +95,8 @@ export type Msg =
   | IbcTransferMsg
   | IbcClientMsg
   | IbcConnectionMsg
-  | IbcChannelMsg;
+  | IbcChannelMsg
+  | CrisisMsg;
 
 export namespace Msg {
   export type Amino =
@@ -108,7 +110,8 @@ export namespace Msg {
     | SlashingMsg.Amino
     | StakingMsg.Amino
     | WasmMsg.Amino
-    | IbcTransferMsg.Amino;
+    | IbcTransferMsg.Amino
+    | CrisisMsg.Amino;
 
   export type Data =
     | BankMsg.Data
@@ -124,7 +127,8 @@ export namespace Msg {
     | IbcTransferMsg.Data
     | IbcClientMsg.Data
     | IbcConnectionMsg.Data
-    | IbcChannelMsg.Data;
+    | IbcChannelMsg.Data
+    | CrisisMsg.Data;
 
   export type Proto =
     | BankMsg.Proto
@@ -140,7 +144,8 @@ export namespace Msg {
     | IbcTransferMsg.Proto
     | IbcClientMsg.Proto
     | IbcConnectionMsg.Proto
-    | IbcChannelMsg.Proto;
+    | IbcChannelMsg.Proto
+    | CrisisMsg.Proto;
 
   export function fromAmino(data: Msg.Amino): Msg {
     switch (data.type) {
@@ -233,6 +238,10 @@ export namespace Msg {
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
         return MsgTransfer.fromAmino(data);
+
+      // crisis
+      case 'crisis/MsgVerifyInvariant':
+        return MsgVerifyInvariant.fromAmino(data);
     }
   }
   export function fromData(data: Msg.Data): Msg {
@@ -368,6 +377,10 @@ export namespace Msg {
         return MsgTimeout.fromData(data);
       case '/ibc.core.channel.v1.MsgTimeoutOnClose':
         return MsgTimeoutOnClose.fromData(data);
+
+      // crisis
+      case '/cosmos.crisis.v1beta1.MsgVerifyInvariant':
+        return MsgVerifyInvariant.fromData(data);
     }
   }
 
@@ -502,6 +515,11 @@ export namespace Msg {
         return MsgTimeout.unpackAny(proto);
       case '/ibc.core.channel.v1.MsgTimeoutOnClose':
         return MsgTimeoutOnClose.unpackAny(proto);
+
+      // crisis
+      case '/cosmos.crisis.v1beta1.MsgVerifyInvariant':
+        return MsgVerifyInvariant.unpackAny(proto);
+
       default:
         throw Error(`not supported msg ${proto.typeUrl}`);
     }
