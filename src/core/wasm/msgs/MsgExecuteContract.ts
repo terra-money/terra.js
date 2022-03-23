@@ -20,7 +20,7 @@ export class MsgExecuteContract extends JSONSerializable<
   constructor(
     public sender: AccAddress,
     public contract: AccAddress,
-    public execute_msg: object,
+    public execute_msg: object | string,
     coins: Coins.Input = {}
   ) {
     super();
@@ -113,7 +113,7 @@ export namespace MsgExecuteContract {
     value: {
       sender: AccAddress;
       contract: AccAddress;
-      execute_msg: object;
+      execute_msg: object | string;
       coins: Coins.Amino;
     };
   }
@@ -122,7 +122,7 @@ export namespace MsgExecuteContract {
     '@type': '/terra.wasm.v1beta1.MsgExecuteContract';
     sender: AccAddress;
     contract: AccAddress;
-    execute_msg: object;
+    execute_msg: object | string;
     coins: Coins.Data;
   }
 
