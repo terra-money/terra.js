@@ -85,7 +85,7 @@ export class WasmAPI extends BaseAPI {
 
   public async contractQuery<T>(
     contractAddress: AccAddress,
-    query: object,
+    query: object | string,
     params: APIParams = {}
   ): Promise<T> {
     return this.c
