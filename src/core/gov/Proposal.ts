@@ -3,6 +3,7 @@ import { Int } from '../numeric';
 import { JSONSerializable } from '../../util/json';
 import { CommunityPoolSpendProposal } from '../distribution/proposals';
 import { ParameterChangeProposal } from '../params/proposals';
+import { ClientUpdateProposal } from '../ibc/proposals';
 import { TextProposal } from './proposals';
 import {
   SoftwareUpgradeProposal,
@@ -229,7 +230,8 @@ export namespace Proposal {
     | CommunityPoolSpendProposal
     | ParameterChangeProposal
     | SoftwareUpgradeProposal
-    | CancelSoftwareUpgradeProposal;
+    | CancelSoftwareUpgradeProposal
+    | ClientUpdateProposal;
 
   export namespace Content {
     export type Amino =
@@ -237,21 +239,24 @@ export namespace Proposal {
       | CommunityPoolSpendProposal.Amino
       | ParameterChangeProposal.Amino
       | SoftwareUpgradeProposal.Amino
-      | CancelSoftwareUpgradeProposal.Amino;
+      | CancelSoftwareUpgradeProposal.Amino
+      | ClientUpdateProposal.Amino;
 
     export type Data =
       | TextProposal.Data
       | CommunityPoolSpendProposal.Data
       | ParameterChangeProposal.Data
       | SoftwareUpgradeProposal.Data
-      | CancelSoftwareUpgradeProposal.Data;
+      | CancelSoftwareUpgradeProposal.Data
+      | ClientUpdateProposal.Data;
 
     export type Proto =
       | TextProposal.Proto
       | CommunityPoolSpendProposal.Proto
       | ParameterChangeProposal.Proto
       | SoftwareUpgradeProposal.Proto
-      | CancelSoftwareUpgradeProposal.Proto;
+      | CancelSoftwareUpgradeProposal.Proto
+      | ClientUpdateProposal.Proto;
 
     export function fromAmino(amino: Proposal.Content.Amino): Proposal.Content {
       switch (amino.type) {
@@ -265,6 +270,8 @@ export namespace Proposal {
           return SoftwareUpgradeProposal.fromAmino(amino);
         case 'upgrade/CancelSoftwareUpgradeProposal':
           return CancelSoftwareUpgradeProposal.fromAmino(amino);
+        case 'ibc/ClientUpdateProposal':
+          return ClientUpdateProposal.fromAmino(amino);
       }
     }
 
@@ -280,6 +287,8 @@ export namespace Proposal {
           return SoftwareUpgradeProposal.fromData(data);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
           return CancelSoftwareUpgradeProposal.fromData(data);
+        case '/ibc.core.client.v1.ClientUpdateProposal':
+          return ClientUpdateProposal.fromData(data);
       }
     }
 
@@ -296,6 +305,8 @@ export namespace Proposal {
           return SoftwareUpgradeProposal.unpackAny(anyProto);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
           return CancelSoftwareUpgradeProposal.unpackAny(anyProto);
+        case '/ibc.core.client.v1.ClientUpdateProposal':
+          return ClientUpdateProposal.unpackAny(anyProto);
       }
 
       throw `Proposal content ${typeUrl} not recognized`;
