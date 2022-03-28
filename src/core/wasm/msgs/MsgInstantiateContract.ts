@@ -23,7 +23,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     public sender: AccAddress,
     public admin: AccAddress | undefined,
     public code_id: number,
-    public init_msg: object,
+    public init_msg: object | string,
     init_coins: Coins.Input = {}
   ) {
     super();
@@ -128,7 +128,7 @@ export namespace MsgInstantiateContract {
       sender: AccAddress;
       admin?: AccAddress;
       code_id: string;
-      init_msg: object;
+      init_msg: object | string;
       init_coins: Coins.Amino;
     };
   }
@@ -138,7 +138,7 @@ export namespace MsgInstantiateContract {
     sender: AccAddress;
     admin: AccAddress;
     code_id: string;
-    init_msg: object;
+    init_msg: object | string;
     init_coins: Coins.Data;
   }
 
