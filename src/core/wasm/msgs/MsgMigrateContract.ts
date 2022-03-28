@@ -19,7 +19,7 @@ export class MsgMigrateContract extends JSONSerializable<
     public admin: AccAddress,
     public contract: AccAddress,
     public new_code_id: number,
-    public migrate_msg: object // json object
+    public migrate_msg: object | string // json object or string
   ) {
     super();
   }
@@ -109,7 +109,7 @@ export namespace MsgMigrateContract {
       admin: AccAddress;
       contract: AccAddress;
       new_code_id: string;
-      migrate_msg: object;
+      migrate_msg: object | string;
     };
   }
 
@@ -118,7 +118,7 @@ export namespace MsgMigrateContract {
     admin: AccAddress;
     contract: AccAddress;
     new_code_id: string;
-    migrate_msg: object;
+    migrate_msg: object | string;
   }
 
   export type Proto = MsgMigrateContract_pb;

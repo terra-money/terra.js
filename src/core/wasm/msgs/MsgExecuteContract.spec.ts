@@ -46,4 +46,25 @@ describe('MsgExecuteContract', () => {
       },
     });
   });
+
+  it('with string msg', () => {
+    const msgWithExecuteString = new MsgExecuteContract(
+      'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+      'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+      'execute_msg_as_string',
+      { uluna: 120400 }
+    );
+    const aminoWithExecuteString = msgWithExecuteString.toAmino();
+    expect(aminoWithExecuteString.value.execute_msg).toEqual(
+      msgWithExecuteString.execute_msg
+    );
+    const protoWithExecuteString = msgWithExecuteString.toProto();
+    expect(protoWithExecuteString.executeMsg.toString()).toEqual(
+      JSON.stringify(msgWithExecuteString.execute_msg)
+    );
+    const dataWithExecuteString = msgWithExecuteString.toData();
+    expect(dataWithExecuteString.execute_msg).toEqual(
+      msgWithExecuteString.execute_msg
+    );
+  });
 });
