@@ -32,15 +32,7 @@ export class MsgVerifyInvariant extends JSONSerializable<
   }
 
   public toAmino(): MsgVerifyInvariant.Amino {
-    const { sender, invariantModuleName, invariantRoute } = this;
-    return {
-      type: 'crisis/MsgVerifyInvariant',
-      value: {
-        sender,
-        invariantModuleName,
-        invariantRoute,
-      },
-    };
+    throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
   public static fromData(data: MsgVerifyInvariant.Data): MsgVerifyInvariant {
@@ -68,12 +60,7 @@ export class MsgVerifyInvariant extends JSONSerializable<
   }
 
   public toProto(): MsgVerifyInvariant.Proto {
-    const { sender, invariantModuleName, invariantRoute } = this;
-    return MsgVerifyInvariant_pb.fromPartial({
-      sender,
-      invariantModuleName,
-      invariantRoute,
-    });
+    throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
   public packAny(): Any {
