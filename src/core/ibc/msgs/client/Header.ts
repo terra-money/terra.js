@@ -1,4 +1,3 @@
-import * as Long from 'long';
 import { JSONSerializable } from '../../../../util/json';
 import { Header as Header_pb } from '@terra-money/terra.proto/ibc/lightclients/tendermint/v1/tendermint';
 import { Height } from './Height';
@@ -36,6 +35,7 @@ export class Header extends JSONSerializable<any, Header.Data, Header.Proto> {
   }
 
   public static fromAmino(_: any): Header {
+    _;
     throw new Error('Amino not supported');
   }
 
