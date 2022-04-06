@@ -2,6 +2,7 @@ import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgUpdateClient as MsgUpdateClient_pb } from '@terra-money/terra.proto/ibc/core/client/v1/tx';
+import { Header } from './Header';
 /**
  * MsgUpdateClient defines an sdk.Msg to update a IBC client state using the given header
  */
@@ -17,7 +18,7 @@ export class MsgUpdateClient extends JSONSerializable<
    */
   constructor(
     public client_id: string,
-    public header: any,
+    public header: Header | undefined,
     public signer: string
   ) {
     super();
@@ -34,7 +35,12 @@ export class MsgUpdateClient extends JSONSerializable<
 
   public static fromData(data: MsgUpdateClient.Data): MsgUpdateClient {
     const { client_id, header, signer } = data;
-    return new MsgUpdateClient(client_id, header, signer);
+    console.log(JSON.stringify(header));
+    return new MsgUpdateClient(
+      client_id,
+      header ? Header.fromData(header) : undefined,
+      signer
+    );
   }
 
   public toData(): MsgUpdateClient.Data {
@@ -42,20 +48,24 @@ export class MsgUpdateClient extends JSONSerializable<
     return {
       '@type': '/ibc.core.client.v1.MsgUpdateClient',
       client_id,
-      header,
+      header: header?.toData() || undefined,
       signer,
     };
   }
 
   public static fromProto(proto: MsgUpdateClient.Proto): MsgUpdateClient {
-    return new MsgUpdateClient(proto.clientId, proto.header, proto.signer);
+    return new MsgUpdateClient(
+      proto.clientId,
+      proto.header ? Header.unpackAny(proto.header) : undefined,
+      proto.signer
+    );
   }
 
   public toProto(): MsgUpdateClient.Proto {
     const { client_id, header, signer } = this;
     return MsgUpdateClient_pb.fromPartial({
       clientId: client_id,
-      header,
+      header: header?.packAny() || undefined,
       signer,
     });
   }
@@ -76,7 +86,7 @@ export namespace MsgUpdateClient {
   export interface Data {
     '@type': '/ibc.core.client.v1.MsgUpdateClient';
     client_id: string;
-    header: any;
+    header?: Header.Data;
     signer: AccAddress;
   }
   export type Proto = MsgUpdateClient_pb;
