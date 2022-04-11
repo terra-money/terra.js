@@ -21,12 +21,9 @@ const commonConfig = {
   },
   plugins: [
     new webpack.IgnorePlugin({
-      resourceRegExp: /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese|czech|portuguese)\.json$/,
+      resourceRegExp: /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese)\.json$/,
     }),
   ],
-  experiments: {
-    asyncWebAssembly: true
-  }
 };
 
 const webConfig = {
