@@ -24,9 +24,6 @@ const commonConfig = {
       resourceRegExp: /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese|czech|portuguese)\.json$/,
     }),
   ],
-  experiments: {
-    asyncWebAssembly: true
-  }
 };
 
 const webConfig = {

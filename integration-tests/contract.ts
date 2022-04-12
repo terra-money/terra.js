@@ -2,7 +2,6 @@ import {
   MsgStoreCode,
   MsgInstantiateContract,
   MsgExecuteContract,
-  StdFee,
   isTxError,
   LocalTerra,
   getCodeId,
@@ -36,7 +35,7 @@ async function main(): Promise<void> {
 
   const instantiate = new MsgInstantiateContract(
     test1.key.accAddress,
-    null,
+    undefined,
     +codeId, // code ID
     { count: 0, }, // InitMsg
     { uluna: 10000000, ukrw: 1000000 } // init coins

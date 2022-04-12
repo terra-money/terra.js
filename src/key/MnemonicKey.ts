@@ -1,8 +1,6 @@
 // Adapted from https://github.com/terra-money/terra-js/blob/master/src/utils/keyUtils.ts
 
-import BIP32Factory from 'bip32';
-import * as ecc from 'tiny-secp256k1';
-import { BIP32Interface } from 'bip32';
+import * as bip32 from 'bip32';
 import * as bip39 from 'bip39';
 import { RawKey } from './RawKey';
 
@@ -79,11 +77,9 @@ export class MnemonicKey extends RawKey {
       mnemonic = bip39.generateMnemonic(256);
     }
     const seed: Buffer = bip39.mnemonicToSeedSync(mnemonic);
-    const bip32 = BIP32Factory(ecc);
-
     const masterKey = bip32.fromSeed(seed);
     const hdPathLuna = `m/44'/${coinType}'/${account}'/0/${index}`;
-    const terraHD: BIP32Interface = masterKey.derivePath(hdPathLuna);
+    const terraHD = masterKey.derivePath(hdPathLuna);
     const privateKey = terraHD.privateKey;
 
     if (!privateKey) {
