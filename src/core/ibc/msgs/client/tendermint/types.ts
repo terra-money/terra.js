@@ -6,6 +6,8 @@ import {
   Commit as Commit_pb,
   CommitSig as CommitSig_pb,
   BlockIDFlag,
+  blockIDFlagFromJSON,
+  blockIDFlagToJSON,
 } from '@terra-money/terra.proto/tendermint/types/types';
 import {
   Validator as Validator_pb,
@@ -500,9 +502,9 @@ export class CommitSig extends JSONSerializable<
    */
   constructor(
     public blockIdFlag: BlockIDFlag,
-    public validatorAddress: string,
+    public validatorAddress: string | undefined,
     public timestamp: Date | undefined,
-    public signature: string
+    public signature: string | undefined
   ) {
     super();
   }
@@ -517,15 +519,10 @@ export class CommitSig extends JSONSerializable<
   }
 
   public static fromData(data: CommitSig.Data): CommitSig {
-    const {
-      block_id_flag: blockIdFlag,
-      validator_address: validatorAddress,
-      timestamp,
-      signature,
-    } = data;
+    const { block_id_flag, validator_address, timestamp, signature } = data;
     return new CommitSig(
-      blockIdFlag,
-      validatorAddress,
+      blockIDFlagFromJSON(block_id_flag),
+      validator_address,
       timestamp ? new Date(timestamp) : undefined,
       signature
     );
@@ -534,12 +531,12 @@ export class CommitSig extends JSONSerializable<
   public toData(): CommitSig.Data {
     const { blockIdFlag, validatorAddress, timestamp, signature } = this;
     const res: CommitSig.Data = {
-      block_id_flag: blockIdFlag,
-      validator_address: validatorAddress,
+      block_id_flag: blockIDFlagToJSON(blockIdFlag),
+      validator_address: validatorAddress || '',
       timestamp: timestamp
         ? timestamp.toISOString().replace(/\.000Z$/, 'Z')
         : undefined,
-      signature,
+      signature: signature || '',
     };
     return res;
   }
@@ -558,19 +555,21 @@ export class CommitSig extends JSONSerializable<
     const { blockIdFlag, validatorAddress, timestamp, signature } = this;
     return CommitSig_pb.fromPartial({
       blockIdFlag,
-      validatorAddress: Buffer.from(validatorAddress, 'base64'),
+      validatorAddress: validatorAddress
+        ? Buffer.from(validatorAddress, 'base64')
+        : undefined,
       timestamp,
-      signature: Buffer.from(signature, 'base64'),
+      signature: signature ? Buffer.from(signature, 'base64') : undefined,
     });
   }
 }
 
 export namespace CommitSig {
   export interface Data {
-    block_id_flag: BlockIDFlag;
-    validator_address: string;
+    block_id_flag: string;
+    validator_address?: string;
     timestamp?: string;
-    signature: string;
+    signature?: string;
   }
 
   export type Proto = CommitSig_pb;

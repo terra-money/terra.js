@@ -128,8 +128,8 @@ export class PublicKey extends JSONSerializable<
   public toProto(): PublicKey.Proto {
     const { ed25519, secp256k1 } = this;
     return PublicKey_pb.fromPartial({
-      ed25519: ed25519 ? Buffer.from(ed25519) : undefined,
-      secp256k1: secp256k1 ? Buffer.from(secp256k1) : undefined,
+      ed25519: ed25519 ? Buffer.from(ed25519, 'base64') : undefined,
+      secp256k1: secp256k1 ? Buffer.from(secp256k1, 'base64') : undefined,
     });
   }
 }
