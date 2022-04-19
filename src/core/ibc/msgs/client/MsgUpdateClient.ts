@@ -35,7 +35,6 @@ export class MsgUpdateClient extends JSONSerializable<
 
   public static fromData(data: MsgUpdateClient.Data): MsgUpdateClient {
     const { client_id, header, signer } = data;
-    console.log(JSON.stringify(header));
     return new MsgUpdateClient(
       client_id,
       header ? Header.fromData(header) : undefined,
