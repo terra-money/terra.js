@@ -12,8 +12,8 @@ const test1 = terra.wallet(key1);
 async function main() {
   const execute = new MsgExecuteContract(
     test1.key.accAddress, // sender
-    "terra1vx6kj7afw7mqekzq7mce6q2rl54fly8yhyle85", // contract address
-    "test"
+    "terra1qjdyffc8qae9vxhhxxc5kr43thsamw4fp4gj6z", // contract address
+    "increment"
   );
   const executeTx = await test1.createAndSignTx({
     msgs: [execute],
@@ -21,7 +21,7 @@ async function main() {
   const executeTxResult = await terra.tx.broadcast(executeTx);
   console.log(`execute result: ${JSON.stringify(executeTxResult)}`);
 
-  const queryResult = await terra.wasm.contractQuery("terra1zfpmxxml57vcawqg2f9nxk85t0d588r8g3ptap", "test");
+  const queryResult = await terra.wasm.contractQuery("terra1qjdyffc8qae9vxhhxxc5kr43thsamw4fp4gj6z", "test");
   console.log(`query result: ${queryResult}`);
 }
 
