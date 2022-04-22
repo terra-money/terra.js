@@ -17,16 +17,19 @@ import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
 
-interface Block {
+interface Wait {
   height: number;
   txhash: string;
   raw_log: string;
   gas_wanted: number;
   gas_used: number;
-  data: string;
   logs: TxLog.Data[];
   timestamp: string;
+}
+
+interface Block extends Wait {
   info: string;
+  data: string;
 }
 
 interface Sync {
@@ -41,7 +44,7 @@ interface Async {
 }
 
 export type TxBroadcastResult<
-  B extends Block | Sync | Async,
+  B extends Wait | Block | Sync | Async,
   C extends TxSuccess | TxError | {}
 > = B & C;
 
@@ -54,6 +57,10 @@ export interface TxError {
   codespace?: string;
 }
 
+export type WaitTxBroadcastResult = TxBroadcastResult<
+  Wait,
+  TxSuccess | TxError
+>;
 export type BlockTxBroadcastResult = TxBroadcastResult<
   Block,
   TxSuccess | TxError
@@ -63,7 +70,7 @@ export type AsyncTxBroadcastResult = TxBroadcastResult<Async, {}>;
 
 export function isTxError<
   T extends TxBroadcastResult<B, C>,
-  B extends Block | Sync,
+  B extends Wait | Block | Sync,
   C extends TxSuccess | TxError | {}
 >(x: T): x is T & TxBroadcastResult<B, TxError> {
   return (
@@ -386,10 +393,61 @@ export class TxAPI extends BaseAPI {
   }
 
   /**
+   * Broadcast the transaction using "sync" mode, then wait for its inclusion in a block.
+   *
+   * This method polls txInfo using the txHash to confirm the transaction's execution.
+   *
+   * @param tx      transaction to broadcast
+   * @param timeout time in milliseconds to wait for transaction to be included in a block. defaults to 30000
+   */
+  public async broadcast(
+    tx: Tx,
+    timeout = 30000
+  ): Promise<WaitTxBroadcastResult> {
+    const POLL_INTERVAL = 500;
+    const { tx_response: txResponse } = await this._broadcast<{
+      tx_response: SyncTxBroadcastResult.Data;
+    }>(tx, 'BROADCAST_MODE_SYNC');
+
+    let txInfo: undefined | TxInfo;
+    for (let i = 0; i <= timeout / POLL_INTERVAL; i++) {
+      try {
+        txInfo = await this.txInfo(txResponse.txhash);
+      } catch (error) {
+        // Errors when transaction is not found.
+      }
+
+      if (txInfo) {
+        break;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL));
+    }
+
+    if (!txInfo) {
+      throw new Error(
+        `Transaction was not included in a block before timeout of ${timeout}ms`
+      );
+    }
+
+    return {
+      txhash: txInfo.txhash,
+      raw_log: txInfo.raw_log,
+      gas_wanted: txInfo.gas_wanted,
+      gas_used: txInfo.gas_used,
+      height: +txInfo.height,
+      logs: (txInfo.logs || []).map(l => TxLog.fromData(l)),
+      code: txInfo.code,
+      codespace: txInfo.codespace,
+      timestamp: txInfo.timestamp,
+    };
+  }
+
+  /**
    * Broadcast the transaction using the "block" mode, waiting for its inclusion in the blockchain.
    * @param tx transaction to broadcast
    */
-  public async broadcast(tx: Tx): Promise<BlockTxBroadcastResult> {
+  public async broadcastBlock(tx: Tx): Promise<BlockTxBroadcastResult> {
     return this._broadcast<{ tx_response: BlockTxBroadcastResult.Data }>(
       tx,
       'BROADCAST_MODE_BLOCK'
