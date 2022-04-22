@@ -1,10 +1,6 @@
-import {
-  LCDClient,
-  MnemonicKey,
-  MsgSubmitProposal,
-} from '../src';
-import { Plan } from '../src/core/upgrade/Plan'
-import { SoftwareUpgradeProposal } from '../src/core/upgrade/proposals'
+import { LCDClient, MnemonicKey, MsgSubmitProposal } from '../src';
+import { Plan } from '../src/core/upgrade/Plan';
+import { SoftwareUpgradeProposal } from '../src/core/upgrade/proposals';
 
 const client = new LCDClient({
   chainID: 'localterra',
@@ -20,10 +16,22 @@ const mk = new MnemonicKey({
 
 const wallet = client.wallet(mk);
 
-const plan = new Plan("v0.5.3", undefined/*new Date('2021-12-01T03:28:34.024363013Z')*/, 16333000, "planinfo", undefined/*{ "upgrade_client_state": "plan" }*/);
-const prop = new SoftwareUpgradeProposal("UPGRADE PROPOSAL", "SOFTWARE UPGRADE DESC", plan);
-
 async function main() {
+  const blockInfo = await client.tendermint.blockInfo();
+
+  const plan = new Plan(
+    'v0.5.3',
+    undefined,
+    (+blockInfo.block.header.height + 100).toString(),
+    'planinfo',
+    undefined
+  );
+  const prop = new SoftwareUpgradeProposal(
+    'UPGRADE PROPOSAL',
+    'SOFTWARE UPGRADE DESC',
+    plan
+  );
+
   const execute = new MsgSubmitProposal(
     prop,
     { uluna: 10000000 },
