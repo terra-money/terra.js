@@ -29,7 +29,7 @@ The JavaScript SDK for Terra
   <a href="https://github.com/terra-money/terra.js">GitHub</a>
 </p>
 
-Terra.js a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
+Terra.js is a JavaScript SDK for writing applications that interact with the Terra blockchain from either Node.js, browser, or React Native environments and provides simple abstractions over core data structures, serialization, key management, and API request generation.
 
 ## Features
 
@@ -51,7 +51,7 @@ npm install @terra-money/terra.js
 
 ## Usage
 
-Terra.js can be use in Node.js, as well as inside the browser. Please check the [docs](https://docs.terra.money/docs/develop/sdks/terra-js/README.html) for notes on how to get up and running.
+Terra.js can be used in Node.js, as well as inside the browser. Please check the [docs](https://docs.terra.money/docs/develop/sdks/terra-js/README.html) for notes on how to get up and running.
 
 ### Getting blockchain data
 
