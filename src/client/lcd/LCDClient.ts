@@ -12,7 +12,6 @@ import {
   SlashingAPI,
   StakingAPI,
   TendermintAPI,
-  TreasuryAPI,
   TxAPI,
   WasmAPI,
   IbcTransferAPI,
