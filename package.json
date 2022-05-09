@@ -84,6 +84,7 @@
   },
   "dependencies": {
     "@terra-money/terra.proto": "^0.1.7",
+    "@terra-money/terra.proto.legacy": "npm:@terra-money/terra.proto@^0.1.7",
     "axios": "^0.26.1",
     "bech32": "^2.0.0",
     "bip32": "^2.0.6",
