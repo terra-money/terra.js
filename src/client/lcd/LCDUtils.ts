@@ -13,21 +13,6 @@ export class LCDUtils {
   constructor(public lcd: LCDClient) {}
 
   /**
-   * Calculates the tax that would be applied for the Coin if sent.
-   * Tax = min(taxCap, taxRate * amount)
-   * @param coin
-   */
-  public async calculateTax(coin: Coin): Promise<Coin> {
-    const rate = await this.lcd.treasury.taxRate();
-    const cap = await this.lcd.treasury.taxCap(coin.denom);
-
-    return new Coin(
-      coin.denom,
-      Int.ceil(Dec.min(coin.amount.mul(rate), cap.amount))
-    );
-  }
-
-  /**
    * Gets current validators and merges their voting power from the validator set query.
    */
   public async validatorsWithVotingPower(): Promise<{

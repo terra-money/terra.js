@@ -96,7 +96,6 @@ export class LCDClient {
   public slashing: SlashingAPI;
   public staking: StakingAPI;
   public tendermint: TendermintAPI;
-  public treasury: TreasuryAPI;
   public wasm: WasmAPI;
   public tx: TxAPI;
   public ibcTransfer: IbcTransferAPI;
@@ -131,7 +130,6 @@ export class LCDClient {
     this.slashing = new SlashingAPI(this.apiRequester);
     this.staking = new StakingAPI(this.apiRequester);
     this.tendermint = new TendermintAPI(this.apiRequester);
-    this.treasury = new TreasuryAPI(this.apiRequester);
     this.wasm = new WasmAPI(this.apiRequester);
     this.ibcTransfer = new IbcTransferAPI(this.apiRequester);
     this.tx = new TxAPI(this);
