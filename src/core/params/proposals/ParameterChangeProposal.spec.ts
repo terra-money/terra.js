@@ -52,31 +52,6 @@ const aminoJson: ParameterChangeProposal.Amino = {
         key: 'SlashFractionDowntime',
         value: '"0.0001"',
       },
-      {
-        subspace: 'treasury',
-        key: 'TaxPolicy',
-        value:
-          '{"rate_min":"0.0","rate_max":"0.0","cap":{"denom":"usdr","amount":"0"},"change_rate_max":"0.0"}',
-      },
-      {
-        subspace: 'treasury',
-        key: 'RewardPolicy',
-        value:
-          '{"rate_min":"0.0","rate_max":"1.0","cap":{"denom":"unused","amount":"0"},"change_rate_max":"0.0"}',
-      },
-      {
-        subspace: 'treasury',
-        key: 'SeigniorageBurdenTarget',
-        value: '"0.67"',
-      },
-      {
-        subspace: 'treasury',
-        key: 'MiningIncrement',
-        value: '"1.07"',
-      },
-      { subspace: 'treasury', key: 'WindowShort', value: '"4"' },
-      { subspace: 'treasury', key: 'WindowLong', value: '"52"' },
-      { subspace: 'treasury', key: 'WindowProbation', value: '"12"' },
       { subspace: 'oracle', key: 'VotePeriod', value: '"5"' },
       {
         subspace: 'oracle',
