@@ -44,4 +44,16 @@ describe('APIRequester', () => {
       { params: {} }
     );
   });
+
+  it('accept an URL with credentials', async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: null });
+
+    const request = new APIRequester('https://:123@lcd.terra.dev');
+    await request.get('/foo');
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      'https://:123@lcd.terra.dev/foo',
+      { params: {} }
+    );
+  });
 });
