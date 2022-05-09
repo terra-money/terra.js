@@ -6,8 +6,8 @@ import { writeFileSync } from 'fs';
 import { SignDoc } from '../core/SignDoc';
 import { SignatureV2 } from '../core/SignatureV2';
 import { PublicKey } from '../core/PublicKey';
-import {resolve} from 'path'
-import {homedir} from 'os'
+import { resolve } from 'path';
+import { homedir } from 'os';
 
 interface CLIKeyParams {
   keyName: string;
@@ -36,8 +36,7 @@ export class CLIKey extends Key {
   constructor(private params: CLIKeyParams) {
     super();
     params.cliPath = params.cliPath || 'terrad';
-    params.cliPath = params.home    ||  resolve(homedir(), '.terrad', 'config');
-
+    params.cliPath = params.home || resolve(homedir(), '.terrad', 'config');
   }
 
   private generateCommand(args: string) {
