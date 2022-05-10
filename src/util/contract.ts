@@ -1,8 +1,12 @@
-import { BlockTxBroadcastResult, isTxError } from '../client/lcd/api/TxAPI';
+import {
+  WaitTxBroadcastResult,
+  BlockTxBroadcastResult,
+  isTxError,
+} from '../client/lcd/api/TxAPI';
 import { TxInfo } from '../core/TxInfo';
 
 export function getCodeId(
-  txResult: BlockTxBroadcastResult | TxInfo,
+  txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
   msgIndex = 0
 ): string {
   if (
@@ -18,7 +22,7 @@ export function getCodeId(
 }
 
 export function getContractAddress(
-  txResult: BlockTxBroadcastResult | TxInfo,
+  txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
   msgIndex = 0
 ): string {
   if (
@@ -41,7 +45,7 @@ export interface ContractEvent {
 }
 
 export function getContractEvents(
-  txResult: BlockTxBroadcastResult | TxInfo,
+  txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
   msgIndex = 0
 ): ContractEvent[] {
   if (
