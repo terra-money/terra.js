@@ -23,6 +23,11 @@ const commonConfig = {
     new webpack.IgnorePlugin({
       resourceRegExp: /wordlists\/(french|spanish|italian|korean|chinese_simplified|chinese_traditional|japanese|czech|portuguese)\.json$/,
     }),
+    new webpack.IgnorePlugin({
+      checkResource(resource) {
+        return resource === './CLIKey'
+      }
+    }),
   ],
 };
 
