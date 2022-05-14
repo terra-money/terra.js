@@ -269,7 +269,13 @@ export class TxAPI extends BaseAPI {
       return [];
     } else {
       const txhashes = txs.map(txdata => hashToHex(txdata));
-      return Promise.all(txhashes.map(txhash => this.txInfo(txhash)));
+      const txInfos: TxInfo[] = [];
+
+      for (const txhash of txhashes) {
+        txInfos.push(await this.txInfo(txhash));
+      }
+
+      return txInfos;
     }
   }
 
