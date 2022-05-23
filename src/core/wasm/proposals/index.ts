@@ -6,5 +6,5 @@ export * from './PinCodesProposal';
 export * from './StoreCodeProposal';
 export * from './SudoContractProposal';
 export * from './UnpinCodesProposal';
-export * from './UpdateADminProposal';
+export * from './UpdateAdminProposal';
 export * from './UpdateInstantiateConfigProposal';
