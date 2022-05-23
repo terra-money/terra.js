@@ -1,7 +1,9 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// there's no difference between two protos
+// import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/distribution';
 import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/distribution';
 
 /**
@@ -31,8 +33,10 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: CommunityPoolSpendProposal.Amino
+    data: CommunityPoolSpendProposal.Amino,
+    _?: boolean
   ): CommunityPoolSpendProposal {
+    _;
     const {
       value: { title, description, recipient, amount },
     } = data;
@@ -44,10 +48,12 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(): CommunityPoolSpendProposal.Amino {
+  public toAmino(legacy?: boolean): CommunityPoolSpendProposal.Amino {
     const { title, description, recipient, amount } = this;
     return {
-      type: 'distribution/CommunityPoolSpendProposal',
+      type: legacy
+        ? 'distribution/CommunityPoolSpendProposal'
+        : 'cosmos-sdk/CommunityPoolSpendProposal',
       value: {
         title,
         description,
@@ -58,8 +64,10 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
   }
 
   public static fromData(
-    data: CommunityPoolSpendProposal.Data
+    data: CommunityPoolSpendProposal.Data,
+    _?: boolean
   ): CommunityPoolSpendProposal {
+    _;
     const { title, description, recipient, amount } = data;
     return new CommunityPoolSpendProposal(
       title,
@@ -69,7 +77,8 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toData(): CommunityPoolSpendProposal.Data {
+  public toData(_?: boolean): CommunityPoolSpendProposal.Data {
+    _;
     const { title, description, recipient, amount } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
@@ -81,8 +90,10 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: CommunityPoolSpendProposal.Proto
+    proto: CommunityPoolSpendProposal.Proto,
+    _?: boolean
   ): CommunityPoolSpendProposal {
+    _;
     return new CommunityPoolSpendProposal(
       proto.title,
       proto.description,
@@ -91,7 +102,8 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toProto(): CommunityPoolSpendProposal.Proto {
+  public toProto(_?: boolean): CommunityPoolSpendProposal.Proto {
+    _;
     const { title, description, recipient, amount } = this;
     return CommunityPoolSpendProposal_pb.fromPartial({
       amount: amount.toProto(),
@@ -101,14 +113,19 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
       value: CommunityPoolSpendProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): CommunityPoolSpendProposal {
+  public static unpackAny(
+    msgAny: Any,
+    _?: boolean
+  ): CommunityPoolSpendProposal {
+    _;
     return CommunityPoolSpendProposal.fromProto(
       CommunityPoolSpendProposal_pb.decode(msgAny.value)
     );
@@ -117,7 +134,9 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
 
 export namespace CommunityPoolSpendProposal {
   export interface Amino {
-    type: 'distribution/CommunityPoolSpendProposal';
+    type:
+      | 'distribution/CommunityPoolSpendProposal'
+      | 'cosmos-sdk/CommunityPoolSpendProposal';
     value: {
       title: string;
       description: string;

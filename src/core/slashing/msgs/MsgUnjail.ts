@@ -23,29 +23,32 @@ export class MsgUnjail extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgUnjail.Amino): MsgUnjail {
+  public static fromAmino(data: MsgUnjail.Amino, _?: boolean): MsgUnjail {
+    _;
     const {
       value: { address },
     } = data;
     return new MsgUnjail(address);
   }
 
-  public toAmino(): MsgUnjail.Amino {
+  public toAmino(legacy?: boolean): MsgUnjail.Amino {
     const { address } = this;
     return {
-      type: 'slashing/MsgUnjail',
+      type: legacy ? 'slashing/MsgUnjail' : 'cosmos-sdk/MsgUnjail',
       value: {
         address,
       },
     };
   }
 
-  public static fromData(proto: MsgUnjail.Data): MsgUnjail {
+  public static fromData(proto: MsgUnjail.Data, _?: boolean): MsgUnjail {
+    _;
     const { address } = proto;
     return new MsgUnjail(address);
   }
 
-  public toData(): MsgUnjail.Data {
+  public toData(_?: boolean): MsgUnjail.Data {
+    _;
     const { address } = this;
     return {
       '@type': '/cosmos.slashing.v1beta1.MsgUnjail',
@@ -53,32 +56,36 @@ export class MsgUnjail extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgUnjail.Proto): MsgUnjail {
+  public static fromProto(proto: MsgUnjail.Proto, _?: boolean): MsgUnjail {
+    _;
     return new MsgUnjail(proto.validatorAddr);
   }
 
-  public toProto(): MsgUnjail.Proto {
+  public toProto(_?: boolean): MsgUnjail.Proto {
+    _;
     const { address } = this;
     return MsgUnjail_pb.fromPartial({
       validatorAddr: address,
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail',
       value: MsgUnjail_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgUnjail {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgUnjail {
+    _;
     return MsgUnjail.fromProto(MsgUnjail_pb.decode(msgAny.value));
   }
 }
 
 export namespace MsgUnjail {
   export interface Amino {
-    type: 'slashing/MsgUnjail';
+    type: 'slashing/MsgUnjail' | 'cosmos-sdk/MsgUnjail';
     value: {
       address: ValAddress;
     };

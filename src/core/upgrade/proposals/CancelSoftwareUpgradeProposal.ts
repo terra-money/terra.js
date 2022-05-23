@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { CancelSoftwareUpgradeProposal as CancelSoftwareUpgradeProposal_pb } from '@terra-money/terra.proto/cosmos/upgrade/v1beta1/upgrade';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { CancelSoftwareUpgradeProposal as CancelSoftwareUpgradeProposal_pb } from '@terra-money/legacy.proto/cosmos/upgrade/v1beta1/upgrade';
 
 /**
  *  CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software upgrade
@@ -20,18 +20,20 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: CancelSoftwareUpgradeProposal.Amino
+    data: CancelSoftwareUpgradeProposal.Amino,
+    _?: boolean
   ): CancelSoftwareUpgradeProposal {
+    _;
     const {
       value: { title, description },
     } = data;
     return new CancelSoftwareUpgradeProposal(title, description);
   }
 
-  public toAmino(): CancelSoftwareUpgradeProposal.Amino {
+  public toAmino(legacy?: boolean): CancelSoftwareUpgradeProposal.Amino {
     const { title, description } = this;
     return {
-      type: 'upgrade/CancelSoftwareUpgradeProposal',
+      type: legacy ? 'upgrade/CancelSoftwareUpgradeProposal' : 'cosmos-sdk/CancelSoftwareUpgradeProposal',
       value: {
         title,
         description,
@@ -40,13 +42,16 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromData(
-    data: CancelSoftwareUpgradeProposal.Data
+    data: CancelSoftwareUpgradeProposal.Data,
+    _?: boolean
   ): CancelSoftwareUpgradeProposal {
+    _;
     const { title, description } = data;
     return new CancelSoftwareUpgradeProposal(title, description);
   }
 
-  public toData(): CancelSoftwareUpgradeProposal.Data {
+  public toData(_?: boolean): CancelSoftwareUpgradeProposal.Data {
+    _;
     const { title, description } = this;
     return {
       '@type': '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
@@ -56,12 +61,14 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: CancelSoftwareUpgradeProposal.Proto
+    proto: CancelSoftwareUpgradeProposal.Proto, _?: boolean
   ): CancelSoftwareUpgradeProposal {
+    _;
     return new CancelSoftwareUpgradeProposal(proto.title, proto.description);
   }
 
-  public toProto(): CancelSoftwareUpgradeProposal.Proto {
+  public toProto(_?: boolean): CancelSoftwareUpgradeProposal.Proto {
+    _;
     const { title, description } = this;
     return CancelSoftwareUpgradeProposal_pb.fromPartial({
       title,
@@ -69,14 +76,16 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
       value: CancelSoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): CancelSoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any, _?: boolean): CancelSoftwareUpgradeProposal {
+    _;
     return CancelSoftwareUpgradeProposal.fromProto(
       CancelSoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
@@ -85,7 +94,7 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
 
 export namespace CancelSoftwareUpgradeProposal {
   export interface Amino {
-    type: 'upgrade/CancelSoftwareUpgradeProposal';
+    type: 'upgrade/CancelSoftwareUpgradeProposal' | 'cosmos-sdk/CancelSoftwareUpgradeProposal';
     value: {
       title: string;
       description: string;

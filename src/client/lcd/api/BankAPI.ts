@@ -1,8 +1,14 @@
 import { BaseAPI } from './BaseAPI';
 import { Coins, AccAddress } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export class BankAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Look up the balance of an account by its address.
    * @param address address of account to look up.
@@ -31,5 +37,24 @@ export class BankAPI extends BaseAPI {
         params
       )
       .then(d => [Coins.fromData(d.supply), d.pagination]);
+  }
+
+  /**
+   * Lqueries the spenable balance of all coins for a single account.
+   * @param address address of account to look up.
+   */
+  public async spendableBalances(
+    address: AccAddress,
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<[Coins, Pagination]> {
+    if (this.lcd.config.legacy) {
+      throw new Error('Not supported for the network');
+    }
+    return this.c
+      .get<{
+        balances: Coins.Data;
+        pagination: Pagination;
+      }>(`/cosmos/bank/v1beta1/spendable_balances/${address}`, params)
+      .then(d => [Coins.fromData(d.balances), d.pagination]);
   }
 }

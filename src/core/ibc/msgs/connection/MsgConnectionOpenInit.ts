@@ -41,18 +41,21 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     this.version = version;
   }
 
-  public static fromAmino(_: any): MsgConnectionOpenInit {
+  public static fromAmino(_: any, legacy?: boolean): MsgConnectionOpenInit {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
   public static fromData(
-    data: MsgConnectionOpenInit.Data
+    data: MsgConnectionOpenInit.Data,
+    _?: boolean
   ): MsgConnectionOpenInit {
+    _;
     const { client_id, counterparty, version, delay_period, signer } = data;
     return new MsgConnectionOpenInit(
       client_id,
@@ -63,7 +66,8 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     );
   }
 
-  public toData(): MsgConnectionOpenInit.Data {
+  public toData(_?: boolean): MsgConnectionOpenInit.Data {
+    _;
     const { client_id, counterparty, version, delay_period, signer } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenInit',
@@ -76,8 +80,10 @@ export class MsgConnectionOpenInit extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgConnectionOpenInit.Proto
+    proto: MsgConnectionOpenInit.Proto,
+    _?: boolean
   ): MsgConnectionOpenInit {
+    _;
     return new MsgConnectionOpenInit(
       proto.clientId,
       proto.delayPeriod.toNumber(),
@@ -89,7 +95,8 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgConnectionOpenInit.Proto {
+  public toProto(_?: boolean): MsgConnectionOpenInit.Proto {
+    _;
     const { client_id, counterparty, version, delay_period, signer } = this;
     return MsgConnectionOpenInit_pb.fromPartial({
       clientId: client_id,
@@ -100,14 +107,16 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenInit',
       value: MsgConnectionOpenInit_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgConnectionOpenInit {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgConnectionOpenInit {
+    _;
     return MsgConnectionOpenInit.fromProto(
       MsgConnectionOpenInit_pb.decode(msgAny.value)
     );

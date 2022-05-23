@@ -1,6 +1,8 @@
 import { PublicKey } from '../PublicKey';
 import { JSONSerializable } from '../../util/json';
 import { AccAddress } from '../bech32';
+// import { BaseAccount as BaseAccount_pb } from '@terra-money/legacy.proto/cosmos/auth/v1beta1/auth';
+// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
 import { BaseAccount as BaseAccount_pb } from '@terra-money/terra.proto/cosmos/auth/v1beta1/auth';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import * as Long from 'long';
@@ -17,7 +19,6 @@ export class BaseAccount extends JSONSerializable<
    * Creates a new Account object, holding information about a basic account.
    *
    * @param address account address
-   * @param coins account's balance
    * @param public_key account's public key information
    * @param account_number account number on the blockchain
    * @param sequence sequence number, or number of transactions that have been posted
@@ -43,10 +44,10 @@ export class BaseAccount extends JSONSerializable<
     return this.public_key;
   }
 
-  public toAmino(): BaseAccount.Amino {
+  public toAmino(legacy?: boolean): BaseAccount.Amino {
     const { address, public_key, account_number, sequence } = this;
     return {
-      type: 'core/Account',
+      type: legacy ? 'core/Account' : 'cosmos-sdk/BaseAccount',
       value: {
         address,
         public_key: public_key ? public_key.toAmino() : null,
@@ -56,7 +57,8 @@ export class BaseAccount extends JSONSerializable<
     };
   }
 
-  public static fromAmino(data: BaseAccount.Amino): BaseAccount {
+  public static fromAmino(data: BaseAccount.Amino, _?: boolean): BaseAccount {
+    _;
     const {
       value: { address, public_key, account_number, sequence },
     } = data;
@@ -69,7 +71,8 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public static fromData(data: BaseAccount.Data): BaseAccount {
+  public static fromData(data: BaseAccount.Data, _?: boolean): BaseAccount {
+    _;
     const { address, pub_key, account_number, sequence } = data;
 
     return new BaseAccount(
@@ -80,7 +83,8 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public toData(): BaseAccount.Data {
+  public toData(_?: boolean): BaseAccount.Data {
+    _;
     const { address, public_key, account_number, sequence } = this;
     return {
       '@type': '/cosmos.auth.v1beta1.BaseAccount',
@@ -91,7 +95,8 @@ export class BaseAccount extends JSONSerializable<
     };
   }
 
-  public toProto(): BaseAccount.Proto {
+  public toProto(_?: boolean): BaseAccount.Proto {
+    _;
     const { address, public_key, account_number, sequence } = this;
     return BaseAccount_pb.fromPartial({
       address,
@@ -101,7 +106,8 @@ export class BaseAccount extends JSONSerializable<
     });
   }
 
-  public static fromProto(baseAccountProto: BaseAccount.Proto): BaseAccount {
+  public static fromProto(baseAccountProto: BaseAccount.Proto, _?: boolean): BaseAccount {
+    _;
     const pubkey = baseAccountProto.pubKey;
     return new BaseAccount(
       baseAccountProto.address,
@@ -111,14 +117,16 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.auth.v1beta1.BaseAccount',
       value: BaseAccount_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(pubkeyAny: Any): BaseAccount {
+  public static unpackAny(pubkeyAny: Any, _?: boolean): BaseAccount {
+    _;
     return BaseAccount.fromProto(BaseAccount_pb.decode(pubkeyAny.value));
   }
 }
@@ -132,7 +140,7 @@ export namespace BaseAccount {
   }
 
   export interface Amino {
-    type: 'core/Account';
+    type: 'core/Account' | 'cosmos-sdk/BaseAccount';
     value: AminoValue;
   }
 

@@ -68,7 +68,7 @@ describe('MnemonicKey', () => {
 
     const {
       data: { single },
-    } = await mk.createSignatureAmino(signDoc);
+    } = await mk.createSignatureAmino(signDoc, true);
     expect((single as any).signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );
@@ -115,17 +115,17 @@ describe('MnemonicKey', () => {
       new TxBody([msgSend])
     );
 
-    const a1Signature = await a1Key.createSignatureAmino(signDoc);
+    const a1Signature = await a1Key.createSignatureAmino(signDoc, true);
     expect((a1Signature.data.single as any).signature).toEqual(
       '/kIFqGnmgOqMzf7guoe1eDTA1W5TjJcelJSRBdN0CTRyyxTMIbsxd+wL4fatHAq4hYOTf/zxD4l5xyU7/POZyg=='
     );
 
-    const a2Signature = await a2Key.createSignatureAmino(signDoc);
+    const a2Signature = await a2Key.createSignatureAmino(signDoc, true);
     expect((a2Signature.data.single as any).signature).toEqual(
       'hEjv9CnXQa89robHVsHS3GDZJiunnNb8xqziWD8D4aAuBXwxDzUXY14IE7q9Z3Qh0VMb3FBHuogHi7QZn2pM9g=='
     );
 
-    const a3Signature = await a3Key.createSignatureAmino(signDoc);
+    const a3Signature = await a3Key.createSignatureAmino(signDoc, true);
     expect((a3Signature.data.single as any).signature).toEqual(
       'CwHdmwC9ADtr5cTUdRZEfAcA8d1bgkF8fB+DcbB6MBB6amJz51WQYfVE1VgVTEY8Lyzg8+s8gX6nkqkXPeX72A=='
     );
@@ -172,7 +172,7 @@ describe('MnemonicKey', () => {
       )
     );
 
-    const signature = await key.createSignatureAmino(signDoc);
+    const signature = await key.createSignatureAmino(signDoc, true);
     expect((signature.data.single as any).signature).toEqual(
       'YA/ToXLxuuAOQlpm5trbIUu2zv5NfBmeHz2jmXgNrt8jP+odukerfri3DUXAJuhETAMHVVV78t7Q4xC0j+CVkA=='
     );

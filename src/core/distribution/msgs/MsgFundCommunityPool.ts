@@ -2,6 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+// there's no difference between two protos
+// import { MsgFundCommunityPool as MsgFundCommunityPool_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
 import { MsgFundCommunityPool as MsgFundCommunityPool_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 export class MsgFundCommunityPool extends JSONSerializable<
@@ -20,18 +22,22 @@ export class MsgFundCommunityPool extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgFundCommunityPool.Amino
+    data: MsgFundCommunityPool.Amino,
+    _?: boolean
   ): MsgFundCommunityPool {
     const {
       value: { depositor, amount },
     } = data;
+    _;
     return new MsgFundCommunityPool(depositor, Coins.fromAmino(amount));
   }
 
-  public toAmino(): MsgFundCommunityPool.Amino {
+  public toAmino(legacy?: boolean): MsgFundCommunityPool.Amino {
     const { depositor, amount } = this;
     return {
-      type: 'distribution/MsgFundCommunityPool',
+      type: legacy
+        ? 'distribution/MsgFundCommunityPool'
+        : 'cosmos-sdk/MsgFundCommunityPool',
       value: {
         depositor,
         amount: amount.toAmino(),
@@ -40,13 +46,16 @@ export class MsgFundCommunityPool extends JSONSerializable<
   }
 
   public static fromData(
-    proto: MsgFundCommunityPool.Data
+    proto: MsgFundCommunityPool.Data,
+    _?: boolean
   ): MsgFundCommunityPool {
+    _;
     const { depositor, amount } = proto;
     return new MsgFundCommunityPool(depositor, Coins.fromData(amount));
   }
 
-  public toData(): MsgFundCommunityPool.Data {
+  public toData(_?: boolean): MsgFundCommunityPool.Data {
+    _;
     const { depositor, amount } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
@@ -56,15 +65,18 @@ export class MsgFundCommunityPool extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgFundCommunityPool.Proto
+    proto: MsgFundCommunityPool.Proto,
+    _?: Boolean
   ): MsgFundCommunityPool {
+    _;
     return new MsgFundCommunityPool(
       proto.depositor,
       Coins.fromProto(proto.amount)
     );
   }
 
-  public toProto(): MsgFundCommunityPool.Proto {
+  public toProto(_?: boolean): MsgFundCommunityPool.Proto {
+    _;
     const { depositor, amount } = this;
     return MsgFundCommunityPool_pb.fromPartial({
       amount: amount.toProto(),
@@ -72,14 +84,16 @@ export class MsgFundCommunityPool extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
       value: MsgFundCommunityPool_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgFundCommunityPool {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgFundCommunityPool {
+    _;
     return MsgFundCommunityPool.fromProto(
       MsgFundCommunityPool_pb.decode(msgAny.value)
     );
@@ -88,7 +102,9 @@ export class MsgFundCommunityPool extends JSONSerializable<
 
 export namespace MsgFundCommunityPool {
   export interface Amino {
-    type: 'distribution/MsgFundCommunityPool';
+    type:
+    | 'distribution/MsgFundCommunityPool'
+    | 'cosmos-sdk/MsgFundCommunityPool';
     value: {
       depositor: AccAddress;
       amount: Coins.Amino;

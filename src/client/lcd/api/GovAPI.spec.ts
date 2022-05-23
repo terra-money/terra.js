@@ -1,9 +1,10 @@
-import { APIRequester } from '../APIRequester';
 import { GovAPI } from './GovAPI';
-import { Coins, Dec, Int } from '../../../core';
+import { Coins, Dec, Int, Proposal } from '../../../core';
+import { LocalTerra } from '../../LocalTerra';
+import { Deposit } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const gov = new GovAPI(c);
+const terra = new LocalTerra();
+const gov = new GovAPI(terra);
 
 describe('GovAPI', () => {
   it('parameters', async () => {
@@ -24,11 +25,49 @@ describe('GovAPI', () => {
   });
 
   it('tally', async () => {
-    await expect(gov.tally(5333)).resolves.toMatchObject({
+    const proposals = (await gov.proposals())[0];
+    const proposalId = proposals[0].id;
+    await expect(gov.tally(proposalId)).resolves.toMatchObject({
       yes: expect.any(Int),
       abstain: expect.any(Int),
       no: expect.any(Int),
       no_with_veto: expect.any(Int),
     });
+  });
+
+  it('proposals', async () => {
+    const proposals = (await gov.proposals())[0];
+    expect(proposals).toContainEqual(expect.any(Proposal));
+  });
+
+  it('proposal', async () => {
+    const proposals = (await gov.proposals())[0];
+    const proposalId = proposals[0].id;
+    const proposal = await gov.proposal(proposalId);
+    expect(proposal).toEqual(expect.any(Proposal));
+  });
+
+  it('proposer', async () => {
+    const proposals = (await gov.proposals())[0];
+    const proposalId = proposals[0].id;
+    const proposer = await gov.proposer(proposalId);
+    expect(proposer).toEqual(expect.any(String));
+  });
+
+  it('initialDeposit', async () => {
+    const proposals = (await gov.proposals())[0];
+    const proposalId = proposals[0].id;
+    const initialDeposit = await gov.initialDeposit(proposalId);
+    expect(initialDeposit).toEqual(expect.any(Coins));
+  });
+
+  it('deposits', async () => {
+    const proposals = (await gov.proposals())[0];
+    const proposalId = proposals[0].id;
+    const deposits = (await gov.deposits(proposalId))[0][0];
+    console.log(deposits);
+    if (deposits !== undefined) {
+      expect(deposits).toEqual(expect.any(Deposit));
+    }
   });
 });

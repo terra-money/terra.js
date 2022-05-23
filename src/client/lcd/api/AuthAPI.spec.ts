@@ -1,17 +1,20 @@
-import { APIRequester } from '../APIRequester';
 import { AuthAPI } from './AuthAPI';
 import { BaseAccount } from '../../../core';
 import { MnemonicKey } from '../../../key';
+import { LCDClient } from '../LCDClient';
 
 // TODO - restore to https://lcd.terra.dev
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const auth = new AuthAPI(c);
+const terra = new LCDClient({
+  chainID: 'localterra',
+  URL: 'http://localhost:1317',
+});
+const auth = new AuthAPI(terra);
 
 describe('AuthAPI', () => {
   describe('accounts', () => {
     it('account exists', async () => {
       const acct = await auth.accountInfo(
-        'terra1fa0trn2nqjc2n6mmz9txta7ky5h5nnp9m6cra3'
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
       );
 
       expect(acct instanceof BaseAccount).toBe(true);

@@ -1,6 +1,7 @@
 import { BaseAPI } from './BaseAPI';
 import { Dec, ValConsAddress } from '../../../core';
 import { APIParams, Pagination } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export interface SlashingParams {
   /** Number of blocks over which missed blocks are tallied for downtime. */
@@ -61,6 +62,11 @@ export namespace SigningInfo {
 }
 
 export class SlashingAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets all signing info, or just the signing info of a particular validator.
    *

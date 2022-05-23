@@ -12,15 +12,17 @@ export class GenericAuthorization extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: GenericAuthorization.Amino
+    data: GenericAuthorization.Amino,
+    _?: boolean
   ): GenericAuthorization {
+    _;
     return new GenericAuthorization(data.value.msg);
   }
 
-  public toAmino(): GenericAuthorization.Amino {
+  public toAmino(legacy?: boolean): GenericAuthorization.Amino {
     const { msg } = this;
     return {
-      type: 'msgauth/GenericAuthorization',
+      type: legacy ? 'msgauth/GenericAuthorization' : 'cosmos-sdk/GenericAuthorization',
       value: {
         msg,
       },
@@ -28,12 +30,15 @@ export class GenericAuthorization extends JSONSerializable<
   }
 
   public static fromData(
-    data: GenericAuthorization.Data
+    data: GenericAuthorization.Data,
+    _?: boolean
   ): GenericAuthorization {
+    _;
     return new GenericAuthorization(data.msg);
   }
 
-  public toData(): GenericAuthorization.Data {
+  public toData(_?: boolean): GenericAuthorization.Data {
+    _;
     const { msg } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.GenericAuthorization',
@@ -42,25 +47,30 @@ export class GenericAuthorization extends JSONSerializable<
   }
 
   public static fromProto(
-    data: GenericAuthorization.Proto
+    data: GenericAuthorization.Proto,
+    _?: boolean
   ): GenericAuthorization {
+    _;
     return new GenericAuthorization(data.msg);
   }
 
-  public toProto(): GenericAuthorization.Proto {
+  public toProto(_?: boolean): GenericAuthorization.Proto {
+    _;
     return GenericAuthorization_pb.fromPartial({
       msg: this.msg,
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.GenericAuthorization',
       value: GenericAuthorization_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): GenericAuthorization {
+  public static unpackAny(msgAny: Any, _?: boolean): GenericAuthorization {
+    _;
     return GenericAuthorization.fromProto(
       GenericAuthorization_pb.decode(msgAny.value)
     );
@@ -69,7 +79,7 @@ export class GenericAuthorization extends JSONSerializable<
 
 export namespace GenericAuthorization {
   export interface Amino {
-    type: 'msgauth/GenericAuthorization';
+    type: 'msgauth/GenericAuthorization' | 'cosmos-sdk/GenericAuthorization';
     value: {
       msg: string;
     };

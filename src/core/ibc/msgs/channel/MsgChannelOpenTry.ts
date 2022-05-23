@@ -34,16 +34,18 @@ export class MsgChannelOpenTry extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgChannelOpenTry {
+  public static fromAmino(_: any, legacy?: boolean): MsgChannelOpenTry {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgChannelOpenTry.Data): MsgChannelOpenTry {
+  public static fromData(data: MsgChannelOpenTry.Data, _?: boolean): MsgChannelOpenTry {
+    _;
     const {
       port_id,
       previous_channel_id,
@@ -64,7 +66,8 @@ export class MsgChannelOpenTry extends JSONSerializable<
     );
   }
 
-  public toData(): MsgChannelOpenTry.Data {
+  public toData(_?: boolean): MsgChannelOpenTry.Data {
+    _;
     const {
       port_id,
       previous_channel_id,
@@ -86,7 +89,8 @@ export class MsgChannelOpenTry extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgChannelOpenTry.Proto): MsgChannelOpenTry {
+  public static fromProto(proto: MsgChannelOpenTry.Proto, _?: boolean): MsgChannelOpenTry {
+    _;
     return new MsgChannelOpenTry(
       proto.portId,
       proto.previousChannelId,
@@ -98,7 +102,8 @@ export class MsgChannelOpenTry extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgChannelOpenTry.Proto {
+  public toProto(_?: boolean): MsgChannelOpenTry.Proto {
+    _;
     const {
       port_id,
       previous_channel_id,
@@ -119,14 +124,16 @@ export class MsgChannelOpenTry extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenTry',
       value: MsgChannelOpenTry_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgChannelOpenTry {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenTry {
+    _;
     return MsgChannelOpenTry.fromProto(
       MsgChannelOpenTry_pb.decode(msgAny.value)
     );

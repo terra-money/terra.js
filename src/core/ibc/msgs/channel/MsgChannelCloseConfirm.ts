@@ -29,18 +29,20 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgChannelCloseConfirm {
+  public static fromAmino(_: any, legacy?: boolean): MsgChannelCloseConfirm {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
   public static fromData(
-    data: MsgChannelCloseConfirm.Data
+    data: MsgChannelCloseConfirm.Data, _?: boolean
   ): MsgChannelCloseConfirm {
+    _;
     const { port_id, channel_id, proof_init, proof_height, signer } = data;
     return new MsgChannelCloseConfirm(
       port_id,
@@ -51,7 +53,8 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     );
   }
 
-  public toData(): MsgChannelCloseConfirm.Data {
+  public toData(_?: boolean): MsgChannelCloseConfirm.Data {
+    _;
     const { port_id, channel_id, proof_init, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelCloseConfirm',
@@ -64,8 +67,10 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgChannelCloseConfirm.Proto
+    proto: MsgChannelCloseConfirm.Proto,
+    _?: boolean
   ): MsgChannelCloseConfirm {
+    _;
     return new MsgChannelCloseConfirm(
       proto.portId,
       proto.channelId,
@@ -75,7 +80,8 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgChannelCloseConfirm.Proto {
+  public toProto(_?: boolean): MsgChannelCloseConfirm.Proto {
+    _;
     const { port_id, channel_id, proof_init, proof_height, signer } = this;
     return MsgChannelCloseConfirm_pb.fromPartial({
       portId: port_id,
@@ -86,14 +92,16 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelCloseConfirm',
       value: MsgChannelCloseConfirm_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgChannelCloseConfirm {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelCloseConfirm {
+    _;
     return MsgChannelCloseConfirm.fromProto(
       MsgChannelCloseConfirm_pb.decode(msgAny.value)
     );

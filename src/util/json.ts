@@ -20,14 +20,14 @@ export function prepareSignBytes(obj: any): any {
 }
 
 export abstract class JSONSerializable<A, D, P> {
-  public abstract toAmino(): A;
-  public abstract toData(): D;
-  public abstract toProto(): P;
-  public toJSON(): string {
-    return JSON.stringify(prepareSignBytes(this.toData()));
+  public abstract toAmino(legacy?: boolean): A;
+  public abstract toData(legacy?: boolean): D;
+  public abstract toProto(legacy?: boolean): P;
+  public toJSON(legacy?: boolean): string {
+    return JSON.stringify(prepareSignBytes(this.toData(legacy)));
   }
-  public toAminoJSON(): string {
-    return JSON.stringify(prepareSignBytes(this.toAmino()));
+  public toAminoJSON(legacy?: boolean): string {
+    return JSON.stringify(prepareSignBytes(this.toAmino(legacy)));
   }
 }
 

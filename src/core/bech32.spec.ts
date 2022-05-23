@@ -25,8 +25,13 @@ describe('AccAddress', () => {
     const badAddress = bech32.encode('terra', words);
 
     expect(AccAddress.validate(badAddress)).toBe(false);
+    // normal account address
     expect(
       AccAddress.validate('terra1pdx498r0hrc2fj36sjhs8vuhrz9hd2cw0tmam9')
+    ).toBe(true);
+    // contract account address
+    expect(
+      AccAddress.validate('terra1uj9dm5xdm34fy5xwd84lfakarcnlpxw0ppgy7vpsruj0vtks29cqn0ztcs')
     ).toBe(true);
   });
 

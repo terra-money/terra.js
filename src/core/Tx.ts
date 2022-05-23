@@ -30,14 +30,14 @@ export class Tx {
     public body: TxBody,
     public auth_info: AuthInfo,
     public signatures: string[]
-  ) {}
+  ) { }
 
-  public static fromAmino(data: Tx.Amino): Tx {
+  public static fromAmino(data: Tx.Amino, legacy?: boolean): Tx {
     const signatures = data.value.signatures.map(s => SignatureV2.fromAmino(s));
 
     return new Tx(
       new TxBody(
-        data.value.msg.map(m => Msg.fromAmino(m)),
+        data.value.msg.map(m => Msg.fromAmino(m, legacy)),
         data.value.memo,
         Number.parseInt(data.value.timeout_height)
       ),
@@ -46,48 +46,48 @@ export class Tx {
     );
   }
 
-  public static fromData(data: Tx.Data): Tx {
+  public static fromData(data: Tx.Data, legacy?: boolean): Tx {
     return new Tx(
-      TxBody.fromData(data.body),
+      TxBody.fromData(data.body, legacy),
       AuthInfo.fromData(data.auth_info),
       data.signatures
     );
   }
 
-  public toData(): Tx.Data {
+  public toData(legacy?: boolean): Tx.Data {
     return {
-      body: this.body.toData(),
+      body: this.body.toData(legacy),
       auth_info: this.auth_info.toData(),
       signatures: this.signatures,
     };
   }
 
-  public static unpackAny(anyProto: Any): Tx {
-    return this.fromProto(Tx_pb.decode(anyProto.value));
+  public static unpackAny(anyProto: Any, legacy?: boolean): Tx {
+    return this.fromProto(Tx_pb.decode(anyProto.value), legacy);
   }
 
-  public static fromProto(proto: Tx.Proto): Tx {
+  public static fromProto(proto: Tx.Proto, legacy?: boolean): Tx {
     return new Tx(
-      TxBody.fromProto(proto.body as TxBody_pb),
+      TxBody.fromProto(proto.body as TxBody_pb, legacy),
       AuthInfo.fromProto(proto.authInfo as AuthInfo_pb),
       proto.signatures.map(sig => Buffer.from(sig).toString('base64'))
     );
   }
 
-  public toProto(): Tx.Proto {
+  public toProto(legacy?: boolean): Tx.Proto {
     return Tx_pb.fromPartial({
-      body: this.body.toProto(),
+      body: this.body.toProto(legacy),
       authInfo: this.auth_info.toProto(),
       signatures: this.signatures.map(s => Buffer.from(s, 'base64')),
     });
   }
 
-  public toBytes(): Uint8Array {
-    return Tx_pb.encode(this.toProto()).finish();
+  public toBytes(legacy?: boolean): Uint8Array {
+    return Tx_pb.encode(this.toProto(legacy)).finish();
   }
 
-  public static fromBuffer(buf: Buffer): Tx {
-    return Tx.fromProto(Tx_pb.decode(buf));
+  public static fromBuffer(buf: Buffer, legacy?: boolean): Tx {
+    return Tx.fromProto(Tx_pb.decode(buf), legacy);
   }
 
   public appendEmptySignatures(signers: SignerData[]) {
@@ -169,42 +169,42 @@ export class TxBody {
     public messages: Msg[],
     public memo?: string,
     public timeout_height?: number
-  ) {}
+  ) { }
 
-  public static fromData(data: TxBody.Data): TxBody {
+  public static fromData(data: TxBody.Data, legacy?: boolean): TxBody {
     return new TxBody(
-      data.messages.map(m => Msg.fromData(m)),
+      data.messages.map(m => Msg.fromData(m, legacy)),
       data.memo,
       Number.parseInt(data.timeout_height)
     );
   }
 
-  public toData(): TxBody.Data {
+  public toData(legacy?: boolean): TxBody.Data {
     return {
       memo: this.memo ?? '',
-      messages: this.messages.map(m => m.toData()),
+      messages: this.messages.map(m => m.toData(legacy)),
       timeout_height: (this.timeout_height ?? 0).toFixed(),
     };
   }
 
-  public static fromProto(proto: TxBody.Proto): TxBody {
+  public static fromProto(proto: TxBody.Proto, legacy?: boolean): TxBody {
     return new TxBody(
-      proto.messages.map(m => Msg.fromProto(m)),
+      proto.messages.map(m => Msg.fromProto(m, legacy)),
       proto.memo,
       proto.timeoutHeight.toNumber()
     );
   }
 
-  public toProto(): TxBody.Proto {
+  public toProto(legacy?: boolean): TxBody.Proto {
     return TxBody_pb.fromPartial({
       memo: this.memo,
-      messages: this.messages.map(m => m.packAny()),
+      messages: this.messages.map(m => m.packAny(legacy)),
       timeoutHeight: Long.fromNumber(this.timeout_height ?? 0),
     });
   }
 
-  public toBytes(): Uint8Array {
-    return TxBody_pb.encode(this.toProto()).finish();
+  public toBytes(legacy?: boolean): Uint8Array {
+    return TxBody_pb.encode(this.toProto(legacy)).finish();
   }
 }
 
@@ -218,7 +218,7 @@ export namespace TxBody {
 }
 
 export class AuthInfo {
-  constructor(public signer_infos: SignerInfo[], public fee: Fee) {}
+  constructor(public signer_infos: SignerInfo[], public fee: Fee) { }
 
   public static fromData(data: AuthInfo.Data): AuthInfo {
     return new AuthInfo(
@@ -266,7 +266,7 @@ export class SignerInfo {
     public public_key: PublicKey,
     public sequence: number,
     public mode_info: ModeInfo
-  ) {}
+  ) { }
 
   public static fromData(data: SignerInfo.Data): SignerInfo {
     return new SignerInfo(
@@ -372,7 +372,7 @@ export namespace ModeInfo {
   export type SignMode = SignMode_pb;
 
   export class Single {
-    constructor(public mode: SignMode) {}
+    constructor(public mode: SignMode) { }
 
     public static fromData(data: Single.Data): Single {
       return new Single(signModeFromJSON(data.mode));
@@ -407,7 +407,7 @@ export namespace ModeInfo {
     constructor(
       public bitarray: CompactBitArray,
       public modeInfos: ModeInfo[]
-    ) {}
+    ) { }
 
     public static fromData(proto: Multi.Data): Multi {
       return new Multi(

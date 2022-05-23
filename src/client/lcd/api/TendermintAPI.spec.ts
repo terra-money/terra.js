@@ -1,14 +1,14 @@
-import { APIRequester } from '../APIRequester';
 import { TendermintAPI } from './TendermintAPI';
 import { Tx } from '../../../core/Tx';
-import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
+import { Tx as Tx_pb } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/tx';
+import { LCDClient } from '../LCDClient';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const tendermint = new TendermintAPI(c);
+const terra = new LCDClient({ chainID: 'localterra', URL: "http://localhost:1317" });
+const tendermint = new TendermintAPI(terra);
 
 describe('TendermintAPI', () => {
   it('load block and decode txs', async () => {
-    const blockInfo = await tendermint.blockInfo(6389857);
+    const blockInfo = await tendermint.blockInfo(1);
     if (blockInfo.block.data.txs != null) {
       blockInfo.block.data.txs.every(txBytes => {
         const txProto = Tx_pb.decode(Buffer.from(txBytes, 'base64'));
@@ -39,8 +39,8 @@ describe('TendermintAPI', () => {
     });
   });
 
-  it('validator set (5900001)', async () => {
-    const vals = await tendermint.validatorSet(5900001);
+  it('validator set (1)', async () => {
+    const vals = await tendermint.validatorSet(1);
 
     expect(vals[0]).toContainEqual({
       address: expect.any(String),

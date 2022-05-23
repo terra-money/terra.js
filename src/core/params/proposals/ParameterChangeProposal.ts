@@ -57,8 +57,10 @@ export class ParameterChangeProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: ParameterChangeProposal.Amino
+    data: ParameterChangeProposal.Amino,
+    _?: boolean
   ): ParameterChangeProposal {
+    _;
     const {
       value: { title, description, changes },
     } = data;
@@ -69,10 +71,10 @@ export class ParameterChangeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(): ParameterChangeProposal.Amino {
+  public toAmino(legacy?: boolean): ParameterChangeProposal.Amino {
     const { title, description, changes } = this;
     return {
-      type: 'params/ParameterChangeProposal',
+      type: legacy ? 'params/ParameterChangeProposal' : 'cosmos-sdk/ParameterChangeProposal',
       value: {
         title,
         description,
@@ -82,8 +84,10 @@ export class ParameterChangeProposal extends JSONSerializable<
   }
 
   public static fromData(
-    proto: ParameterChangeProposal.Data
+    proto: ParameterChangeProposal.Data,
+    _?: boolean
   ): ParameterChangeProposal {
+    _;
     const { title, description, changes } = proto;
     return new ParameterChangeProposal(
       title,
@@ -92,7 +96,8 @@ export class ParameterChangeProposal extends JSONSerializable<
     );
   }
 
-  public toData(): ParameterChangeProposal.Data {
+  public toData(_?: boolean): ParameterChangeProposal.Data {
+    _;
     const { title, description, changes } = this;
     return {
       '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
@@ -103,8 +108,10 @@ export class ParameterChangeProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: ParameterChangeProposal.Proto
+    proto: ParameterChangeProposal.Proto,
+    _?: boolean
   ): ParameterChangeProposal {
+    _;
     return new ParameterChangeProposal(
       proto.title,
       proto.description,
@@ -112,7 +119,8 @@ export class ParameterChangeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(): ParameterChangeProposal.Proto {
+  public toProto(_?: boolean): ParameterChangeProposal.Proto {
+    _;
     const { title, description, changes } = this;
     return ParameterChangeProposal_pb.fromPartial({
       changes: changes.toProto(),
@@ -121,23 +129,23 @@ export class ParameterChangeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.params.v1beta1.ParameterChangeProposal',
-      value: ParameterChangeProposal_pb.encode(this.toProto()).finish(),
+      value: ParameterChangeProposal_pb.encode(this.toProto(legacy)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): ParameterChangeProposal {
+  public static unpackAny(msgAny: Any, legacy?: boolean): ParameterChangeProposal {
     return ParameterChangeProposal.fromProto(
-      ParameterChangeProposal_pb.decode(msgAny.value)
+      ParameterChangeProposal_pb.decode(msgAny.value), legacy
     );
   }
 }
 
 export namespace ParameterChangeProposal {
   export interface Amino {
-    type: 'params/ParameterChangeProposal';
+    type: 'params/ParameterChangeProposal' | 'cosmos-sdk/ParameterChangeProposal';
     value: {
       title: string;
       description: string;

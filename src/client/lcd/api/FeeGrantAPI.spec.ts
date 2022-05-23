@@ -1,8 +1,9 @@
 import { APIRequester } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 import { FeeGrantAPI } from './FeeGrantAPI';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const feeGrant = new FeeGrantAPI(c);
+const terra = new LCDClient({ chainID: 'bombay-12', URL: "https://bombay-lcd.terra.dev" });
+const feeGrant = new FeeGrantAPI(terra);
 
 describe('FeeGrantAPI', () => {
   it('allowances', async () => {

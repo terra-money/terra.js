@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
+import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all
@@ -21,18 +21,22 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgWithdrawValidatorCommission.Amino
+    data: MsgWithdrawValidatorCommission.Amino,
+    _?: boolean
   ): MsgWithdrawValidatorCommission {
+    _;
     const {
       value: { validator_address },
     } = data;
     return new MsgWithdrawValidatorCommission(validator_address);
   }
 
-  public toAmino(): MsgWithdrawValidatorCommission.Amino {
+  public toAmino(legacy?: boolean): MsgWithdrawValidatorCommission.Amino {
     const { validator_address } = this;
     return {
-      type: 'distribution/MsgWithdrawValidatorCommission',
+      type: legacy
+        ? 'distribution/MsgWithdrawValidatorCommission'
+        : 'cosmos-sdk/MsgWithdrawValCommission',
       value: {
         validator_address,
       },
@@ -40,13 +44,16 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
   }
 
   public static fromData(
-    proto: MsgWithdrawValidatorCommission.Data
+    proto: MsgWithdrawValidatorCommission.Data,
+    _?: boolean
   ): MsgWithdrawValidatorCommission {
+    _;
     const { validator_address } = proto;
     return new MsgWithdrawValidatorCommission(validator_address);
   }
 
-  public toData(): MsgWithdrawValidatorCommission.Data {
+  public toData(_?: boolean): MsgWithdrawValidatorCommission.Data {
+    _;
     const { validator_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
@@ -55,26 +62,34 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgWithdrawValidatorCommission.Proto
+    proto: MsgWithdrawValidatorCommission.Proto,
+    _?: boolean
   ): MsgWithdrawValidatorCommission {
+    _;
     return new MsgWithdrawValidatorCommission(proto.validatorAddress);
   }
 
-  public toProto(): MsgWithdrawValidatorCommission.Proto {
+  public toProto(_?: boolean): MsgWithdrawValidatorCommission.Proto {
+    _;
     const { validator_address } = this;
     return MsgWithdrawValidatorCommission_pb.fromPartial({
       validatorAddress: validator_address,
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
       value: MsgWithdrawValidatorCommission_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgWithdrawValidatorCommission {
+  public static unpackAny(
+    msgAny: Any,
+    _?: boolean
+  ): MsgWithdrawValidatorCommission {
+    _;
     return MsgWithdrawValidatorCommission.fromProto(
       MsgWithdrawValidatorCommission_pb.decode(msgAny.value)
     );
@@ -83,7 +98,9 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
 
 export namespace MsgWithdrawValidatorCommission {
   export interface Amino {
-    type: 'distribution/MsgWithdrawValidatorCommission';
+    type:
+    | 'distribution/MsgWithdrawValidatorCommission'
+    | 'cosmos-sdk/MsgWithdrawValCommission';
     value: {
       validator_address: ValAddress;
     };

@@ -10,6 +10,7 @@ import { Validator } from '../../../core/staking/Validator';
 import { Redelegation } from '../../../core/staking/Redelegation';
 import { Denom } from '../../../core/Denom';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export interface StakingParams {
   /** Amount of time, in seconds, for bonded staking tokens to be unbonded. */
@@ -53,6 +54,11 @@ export namespace StakingPool {
 }
 
 export class StakingAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Queries all delegations, filtering by delegator, validator, or both.
    *

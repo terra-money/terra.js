@@ -1,6 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+// there's no difference between two protos
+// import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
 import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
@@ -27,18 +29,22 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgWithdrawDelegatorReward.Amino
+    data: MsgWithdrawDelegatorReward.Amino,
+    _?: boolean
   ): MsgWithdrawDelegatorReward {
+    _;
     const {
       value: { delegator_address, validator_address },
     } = data;
     return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
   }
 
-  public toAmino(): MsgWithdrawDelegatorReward.Amino {
+  public toAmino(legacy?: boolean): MsgWithdrawDelegatorReward.Amino {
     const { delegator_address, validator_address } = this;
     return {
-      type: 'distribution/MsgWithdrawDelegationReward',
+      type: legacy
+        ? 'distribution/MsgWithdrawDelegationReward'
+        : 'cosmos-sdk/MsgWithdrawDelegationReward',
       value: {
         delegator_address,
         validator_address,
@@ -47,13 +53,16 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
   }
 
   public static fromData(
-    proto: MsgWithdrawDelegatorReward.Data
+    proto: MsgWithdrawDelegatorReward.Data,
+    _?: boolean
   ): MsgWithdrawDelegatorReward {
+    _;
     const { delegator_address, validator_address } = proto;
     return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
   }
 
-  public toData(): MsgWithdrawDelegatorReward.Data {
+  public toData(_?: boolean): MsgWithdrawDelegatorReward.Data {
+    _;
     const { delegator_address, validator_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
@@ -63,15 +72,18 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgWithdrawDelegatorReward.Proto
+    proto: MsgWithdrawDelegatorReward.Proto,
+    _?: boolean
   ): MsgWithdrawDelegatorReward {
+    _;
     return new MsgWithdrawDelegatorReward(
       proto.delegatorAddress,
       proto.validatorAddress
     );
   }
 
-  public toProto(): MsgWithdrawDelegatorReward.Proto {
+  public toProto(_?: boolean): MsgWithdrawDelegatorReward.Proto {
+    _;
     const { delegator_address, validator_address } = this;
     return MsgWithdrawDelegatorReward_pb.fromPartial({
       delegatorAddress: delegator_address,
@@ -79,14 +91,19 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
       value: MsgWithdrawDelegatorReward_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgWithdrawDelegatorReward {
+  public static unpackAny(
+    msgAny: Any,
+    _?: boolean
+  ): MsgWithdrawDelegatorReward {
+    _;
     return MsgWithdrawDelegatorReward.fromProto(
       MsgWithdrawDelegatorReward_pb.decode(msgAny.value)
     );
@@ -95,7 +112,9 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
 
 export namespace MsgWithdrawDelegatorReward {
   export interface Amino {
-    type: 'distribution/MsgWithdrawDelegationReward';
+    type:
+    | 'distribution/MsgWithdrawDelegationReward'
+    | 'cosmos-sdk/MsgWithdrawDelegationReward';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;

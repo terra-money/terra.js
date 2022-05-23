@@ -24,21 +24,24 @@ export class MsgChannelCloseInit extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgChannelCloseInit {
+  public static fromAmino(_: any, legacy?: boolean): MsgChannelCloseInit {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgChannelCloseInit.Data): MsgChannelCloseInit {
+  public static fromData(data: MsgChannelCloseInit.Data, _?: boolean): MsgChannelCloseInit {
+    _;
     const { port_id, channel_id, signer } = data;
     return new MsgChannelCloseInit(port_id, channel_id, signer);
   }
 
-  public toData(): MsgChannelCloseInit.Data {
+  public toData(_?: boolean): MsgChannelCloseInit.Data {
+    _;
     const { port_id, channel_id, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelCloseInit',
@@ -49,12 +52,15 @@ export class MsgChannelCloseInit extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgChannelCloseInit.Proto
+    proto: MsgChannelCloseInit.Proto,
+    _?: boolean
   ): MsgChannelCloseInit {
+    _;
     return new MsgChannelCloseInit(proto.portId, proto.channelId, proto.signer);
   }
 
-  public toProto(): MsgChannelCloseInit.Proto {
+  public toProto(_?: boolean): MsgChannelCloseInit.Proto {
+    _;
     const { port_id, channel_id, signer } = this;
     return MsgChannelCloseInit_pb.fromPartial({
       portId: port_id,
@@ -63,14 +69,16 @@ export class MsgChannelCloseInit extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelCloseInit',
       value: MsgChannelCloseInit_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgChannelCloseInit {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelCloseInit {
+    _;
     return MsgChannelCloseInit.fromProto(
       MsgChannelCloseInit_pb.decode(msgAny.value)
     );

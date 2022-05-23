@@ -11,9 +11,11 @@ const lcdUtils = new LCDUtils(
 
 describe('LCDUtils', () => {
   it('calculateTax', async () => {
-    await expect(
-      lcdUtils.calculateTax(new Coin('uluna', '0.0'))
-    ).resolves.toBeInstanceOf(Coin);
+    if (lcdUtils.lcd.config.legacy) {
+      await expect(
+        lcdUtils.calculateTax(new Coin('uluna', '0.0'))
+      ).resolves.toBeInstanceOf(Coin);
+    }
   });
 
   it('validatorsWithVotingPower', async () => {

@@ -20,17 +20,18 @@ export class TextProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: TextProposal.Amino): TextProposal {
+  public static fromAmino(data: TextProposal.Amino, _?: boolean): TextProposal {
+    _;
     const {
       value: { title, description },
     } = data;
     return new TextProposal(title, description);
   }
 
-  public toAmino(): TextProposal.Amino {
+  public toAmino(legacy?: boolean): TextProposal.Amino {
     const { title, description } = this;
     return {
-      type: 'gov/TextProposal',
+      type: legacy ? 'gov/TextProposal' : 'cosmos-sdk/TextProposal',
       value: {
         title,
         description,
@@ -38,12 +39,14 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: TextProposal.Data): TextProposal {
+  public static fromData(proto: TextProposal.Data, _?: boolean): TextProposal {
+    _;
     const { title, description } = proto;
     return new TextProposal(title, description);
   }
 
-  public toData(): TextProposal.Data {
+  public toData(_?: boolean): TextProposal.Data {
+    _;
     const { title, description } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.TextProposal',
@@ -52,11 +55,13 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: TextProposal.Proto): TextProposal {
+  public static fromProto(proto: TextProposal.Proto, _?: boolean): TextProposal {
+    _;
     return new TextProposal(proto.title, proto.description);
   }
 
-  public toProto(): TextProposal.Proto {
+  public toProto(_?: boolean): TextProposal.Proto {
+    _;
     const { title, description } = this;
     return TextProposal_pb.fromPartial({
       description,
@@ -64,21 +69,21 @@ export class TextProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-      value: TextProposal_pb.encode(this.toProto()).finish(),
+      value: TextProposal_pb.encode(this.toProto(legacy)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): TextProposal {
-    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, legacy?: boolean): TextProposal {
+    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value), legacy);
   }
 }
 
 export namespace TextProposal {
   export interface Amino {
-    type: 'gov/TextProposal';
+    type: 'gov/TextProposal' | 'cosmos-sdk/TextProposal';
     value: {
       title: string;
       description: string;

@@ -31,16 +31,18 @@ export class MsgTimeout extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgTimeout {
+  public static fromAmino(_: any, legacy?: boolean): MsgTimeout {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgTimeout.Data): MsgTimeout {
+  public static fromData(data: MsgTimeout.Data, _?: boolean): MsgTimeout {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -57,7 +59,8 @@ export class MsgTimeout extends JSONSerializable<
     );
   }
 
-  public toData(): MsgTimeout.Data {
+  public toData(_?: boolean): MsgTimeout.Data {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -75,7 +78,8 @@ export class MsgTimeout extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgTimeout.Proto): MsgTimeout {
+  public static fromProto(proto: MsgTimeout.Proto, _?: boolean): MsgTimeout {
+    _;
     return new MsgTimeout(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofUnreceived).toString('base64'),
@@ -85,7 +89,8 @@ export class MsgTimeout extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgTimeout.Proto {
+  public toProto(_?: boolean): MsgTimeout.Proto {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -102,14 +107,16 @@ export class MsgTimeout extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgTimeout',
       value: MsgTimeout_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgTimeout {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgTimeout {
+    _;
     return MsgTimeout.fromProto(MsgTimeout_pb.decode(msgAny.value));
   }
 }

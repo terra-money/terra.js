@@ -13,28 +13,28 @@ describe('RawKey', () => {
       mnemonic?: string;
       publicKey: PublicKey;
     }[] = [
-      {
-        mnemonic:
-          'wonder caution square unveil april art add hover spend smile proud admit modify old copper throw crew happy nature luggage reopen exhibit ordinary napkin',
-        publicKey: new SimplePublicKey(
-          'As9+0LWDJTjNibVQhM6TOZsYbjgWhLMTiHY4AUOcvdIK'
-        ),
-      },
-      {
-        mnemonic:
-          'speak scatter present rice cattle sight amateur novel dizzy wheel cannon mango model sunset smooth appear impose want lunar tattoo theme zero misery flower',
-        publicKey: new SimplePublicKey(
-          'A3rCe3YxpfO1tN4t5eUnGM293FCK4PQOcf9wJsoLXpi5'
-        ),
-      },
-      {
-        mnemonic:
-          'pool december kitchen crouch robot relax oppose system virtual spread pistol obtain vicious bless salmon drive repeat when frost summer render shed bone limb',
-        publicKey: new SimplePublicKey(
-          'AzoigD/43c9+s0xcJExaZOlTVhODvD9ZOyIS/TQKXK2F'
-        ),
-      },
-    ];
+        {
+          mnemonic:
+            'wonder caution square unveil april art add hover spend smile proud admit modify old copper throw crew happy nature luggage reopen exhibit ordinary napkin',
+          publicKey: new SimplePublicKey(
+            'As9+0LWDJTjNibVQhM6TOZsYbjgWhLMTiHY4AUOcvdIK'
+          ),
+        },
+        {
+          mnemonic:
+            'speak scatter present rice cattle sight amateur novel dizzy wheel cannon mango model sunset smooth appear impose want lunar tattoo theme zero misery flower',
+          publicKey: new SimplePublicKey(
+            'A3rCe3YxpfO1tN4t5eUnGM293FCK4PQOcf9wJsoLXpi5'
+          ),
+        },
+        {
+          mnemonic:
+            'pool december kitchen crouch robot relax oppose system virtual spread pistol obtain vicious bless salmon drive repeat when frost summer render shed bone limb',
+          publicKey: new SimplePublicKey(
+            'AzoigD/43c9+s0xcJExaZOlTVhODvD9ZOyIS/TQKXK2F'
+          ),
+        },
+      ];
 
     examples.forEach(example => {
       const { mnemonic } = example;
@@ -70,7 +70,7 @@ describe('RawKey', () => {
 
     const {
       data: { single },
-    } = await rk.createSignatureAmino(signDoc);
+    } = await rk.createSignatureAmino(signDoc, true);
     expect((single as SignatureV2.Descriptor.Single).signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );

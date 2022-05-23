@@ -37,7 +37,7 @@ export class SignDoc extends JSONSerializable<
     super();
   }
 
-  public toAmino(): SignDoc.Amino {
+  public toAmino(legacy?: boolean): SignDoc.Amino {
     const {
       chain_id,
       account_number,
@@ -55,25 +55,25 @@ export class SignDoc extends JSONSerializable<
           ? timeout_height.toString()
           : undefined,
       fee: fee.toAmino(),
-      msgs: messages.map(m => m.toAmino()),
+      msgs: messages.map(m => m.toAmino(legacy)),
       memo: memo ?? '',
     };
   }
 
-  public toData(): SignDoc.Data {
+  public toData(legacy?: boolean): SignDoc.Data {
     const { account_number, chain_id, tx_body, auth_info } = this;
     return {
-      body_bytes: Buffer.from(tx_body.toBytes()).toString('base64'),
+      body_bytes: Buffer.from(tx_body.toBytes(legacy)).toString('base64'),
       auth_info_bytes: Buffer.from(auth_info.toBytes()).toString('base64'),
       account_number: account_number.toFixed(),
       chain_id,
     };
   }
 
-  public toProto(): SignDoc.Proto {
+  public toProto(legacy?: boolean): SignDoc.Proto {
     const { account_number, chain_id, tx_body, auth_info } = this;
     return SignDoc_pb.fromPartial({
-      bodyBytes: tx_body.toBytes(),
+      bodyBytes: tx_body.toBytes(legacy),
       authInfoBytes: auth_info.toBytes(),
       accountNumber: Long.fromNumber(account_number),
       chainId: chain_id,
@@ -84,8 +84,8 @@ export class SignDoc extends JSONSerializable<
     return new Tx(this.tx_body, this.auth_info, []);
   }
 
-  public toBytes(): Uint8Array {
-    return SignDoc_pb.encode(this.toProto()).finish();
+  public toBytes(legacy?: boolean): Uint8Array {
+    return SignDoc_pb.encode(this.toProto(legacy)).finish();
   }
 }
 

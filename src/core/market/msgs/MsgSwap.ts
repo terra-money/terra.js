@@ -2,8 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { MsgSwap as MsgSwap_pb } from '@terra-money/terra.proto/terra/market/v1beta1/tx';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgSwap as MsgSwap_pb } from '@terra-money/legacy.proto/terra/market/v1beta1/tx';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
 
 /**
  * Executes a market swap between 2 denominations at the exchange rate registered by the
@@ -28,14 +28,20 @@ export class MsgSwap extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgSwap.Amino): MsgSwap {
+  public static fromAmino(data: MsgSwap.Amino, legacy?: boolean): MsgSwap {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const {
       value: { trader, offer_coin, ask_denom },
     } = data;
     return new MsgSwap(trader, Coin.fromAmino(offer_coin), ask_denom);
   }
 
-  public toAmino(): MsgSwap.Amino {
+  public toAmino(legacy?: boolean): MsgSwap.Amino {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { trader, offer_coin, ask_denom } = this;
     return {
       type: 'market/MsgSwap',
@@ -47,7 +53,10 @@ export class MsgSwap extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSwap.Proto): MsgSwap {
+  public static fromProto(proto: MsgSwap.Proto, legacy?: boolean): MsgSwap {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return new MsgSwap(
       proto.trader,
       Coin.fromProto(proto.offerCoin as Coin.Proto),
@@ -55,7 +64,10 @@ export class MsgSwap extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgSwap.Proto {
+  public toProto(legacy?: boolean): MsgSwap.Proto {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { trader, offer_coin, ask_denom } = this;
     return MsgSwap_pb.fromPartial({
       askDenom: ask_denom,
@@ -64,23 +76,35 @@ export class MsgSwap extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwap',
       value: MsgSwap_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgSwap {
+  public static unpackAny(msgAny: Any, legacy?: boolean): MsgSwap {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return MsgSwap.fromProto(MsgSwap_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgSwap.Data): MsgSwap {
+  public static fromData(data: MsgSwap.Data, legacy?: boolean): MsgSwap {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { trader, offer_coin, ask_denom } = data;
     return new MsgSwap(trader, Coin.fromData(offer_coin), ask_denom);
   }
 
-  public toData(): MsgSwap.Data {
+  public toData(legacy?: boolean): MsgSwap.Data {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { trader, offer_coin, ask_denom } = this;
     return {
       '@type': '/terra.market.v1beta1.MsgSwap',

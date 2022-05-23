@@ -1,7 +1,7 @@
 import { MsgVerifyInvariant } from './MsgVerifyInvariant';
 
 describe('MsgVerifyInvariant', () => {
-  it('deserialize correctly', () => {
+  it('legacy: deserialize correctly', () => {
     const send = MsgVerifyInvariant.fromAmino({
       type: 'crisis/MsgVerifyInvariant',
       value: {
@@ -9,7 +9,24 @@ describe('MsgVerifyInvariant', () => {
         invariantModuleName: 'bank',
         invariantRoute: 'nonnegative-outstanding-supply',
       },
+    }, true);
+
+    expect(send).toMatchObject({
+      sender: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+      invariantModuleName: 'bank',
+      invariantRoute: 'nonnegative-outstanding-supply',
     });
+  });
+
+  it('deserialize correctly', () => {
+    const send = MsgVerifyInvariant.fromAmino({
+      type: 'cosmos-sdk/MsgVerifyInvariant',
+      value: {
+        sender: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+        invariantModuleName: 'bank',
+        invariantRoute: 'nonnegative-outstanding-supply',
+      },
+    }, false);
 
     expect(send).toMatchObject({
       sender: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',

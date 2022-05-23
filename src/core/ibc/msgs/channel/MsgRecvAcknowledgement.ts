@@ -30,16 +30,18 @@ export class MsgAcknowledgement extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgAcknowledgement {
+  public static fromAmino(_: any, legacy?: boolean): MsgAcknowledgement {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgAcknowledgement.Data): MsgAcknowledgement {
+  public static fromData(data: MsgAcknowledgement.Data, _?: boolean): MsgAcknowledgement {
+    _;
     const { packet, acknowledgement, proof_acked, proof_height, signer } = data;
     return new MsgAcknowledgement(
       packet ? Packet.fromData(packet) : undefined,
@@ -50,7 +52,8 @@ export class MsgAcknowledgement extends JSONSerializable<
     );
   }
 
-  public toData(): MsgAcknowledgement.Data {
+  public toData(_?: boolean): MsgAcknowledgement.Data {
+    _;
     const { packet, acknowledgement, proof_acked, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgAcknowledgement',
@@ -62,7 +65,8 @@ export class MsgAcknowledgement extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgAcknowledgement.Proto): MsgAcknowledgement {
+  public static fromProto(proto: MsgAcknowledgement.Proto, _?: boolean): MsgAcknowledgement {
+    _;
     return new MsgAcknowledgement(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.acknowledgement).toString('base64'),
@@ -72,7 +76,8 @@ export class MsgAcknowledgement extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgAcknowledgement.Proto {
+  public toProto(_?: boolean): MsgAcknowledgement.Proto {
+    _;
     const { packet, acknowledgement, proof_acked, proof_height, signer } = this;
     return MsgAcknowledgement_pb.fromPartial({
       packet: packet ? packet.toProto() : undefined,
@@ -83,14 +88,16 @@ export class MsgAcknowledgement extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgAcknowledgement',
       value: MsgAcknowledgement_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgAcknowledgement {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgAcknowledgement {
+    _;
     return MsgAcknowledgement.fromProto(
       MsgAcknowledgement_pb.decode(msgAny.value)
     );

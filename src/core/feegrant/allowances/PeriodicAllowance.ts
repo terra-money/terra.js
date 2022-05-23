@@ -36,7 +36,7 @@ export class PeriodicAllowance extends JSONSerializable<
     this.period_can_spend = new Coins(period_can_spend);
   }
 
-  public static fromAmino(data: PeriodicAllowance.Amino): PeriodicAllowance {
+  public static fromAmino(data: PeriodicAllowance.Amino, legacy?: boolean): PeriodicAllowance {
     const {
       value: {
         basic,
@@ -48,7 +48,7 @@ export class PeriodicAllowance extends JSONSerializable<
     } = data;
 
     return new PeriodicAllowance(
-      BasicAllowance.fromAmino(basic),
+      BasicAllowance.fromAmino(basic, legacy),
       Number.parseInt(period),
       Coins.fromAmino(period_spend_limit),
       Coins.fromAmino(period_can_spend),
@@ -56,7 +56,7 @@ export class PeriodicAllowance extends JSONSerializable<
     );
   }
 
-  public toAmino(): PeriodicAllowance.Amino {
+  public toAmino(legacy?: boolean): PeriodicAllowance.Amino {
     const {
       basic,
       period,
@@ -65,9 +65,9 @@ export class PeriodicAllowance extends JSONSerializable<
       period_reset,
     } = this;
     return {
-      type: 'feegrant/PeriodicAllowance',
+      type: legacy ? 'feegrant/PeriodicAllowance' : 'cosmos-sdk/PeriodicAllowance',
       value: {
-        basic: basic.toAmino(),
+        basic: basic.toAmino(legacy),
         period: period.toString(),
         period_spend_limit: period_spend_limit.toAmino(),
         period_can_spend: period_can_spend.toAmino(),
@@ -76,7 +76,8 @@ export class PeriodicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: PeriodicAllowance.Data): PeriodicAllowance {
+  public static fromData(proto: PeriodicAllowance.Data, _?: boolean): PeriodicAllowance {
+    _;
     const {
       basic,
       period,
@@ -93,7 +94,8 @@ export class PeriodicAllowance extends JSONSerializable<
     );
   }
 
-  public toData(): PeriodicAllowance.Data {
+  public toData(_?: boolean): PeriodicAllowance.Data {
+    _;
     const {
       basic,
       period,
@@ -111,7 +113,8 @@ export class PeriodicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: PeriodicAllowance.Proto): PeriodicAllowance {
+  public static fromProto(proto: PeriodicAllowance.Proto, _?: boolean): PeriodicAllowance {
+    _;
     return new PeriodicAllowance(
       BasicAllowance.fromProto(proto.basic as BasicAllowance.Proto),
       proto.period?.seconds.toNumber() as number,
@@ -121,7 +124,8 @@ export class PeriodicAllowance extends JSONSerializable<
     );
   }
 
-  public toProto(): PeriodicAllowance.Proto {
+  public toProto(_?: boolean): PeriodicAllowance.Proto {
+    _;
     const {
       basic,
       period,
@@ -139,14 +143,16 @@ export class PeriodicAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.PeriodicAllowance',
       value: PeriodicAllowance_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): PeriodicAllowance {
+  public static unpackAny(msgAny: Any, _?: boolean): PeriodicAllowance {
+    _;
     return PeriodicAllowance.fromProto(
       PeriodicAllowance_pb.decode(msgAny.value)
     );
@@ -155,7 +161,7 @@ export class PeriodicAllowance extends JSONSerializable<
 
 export namespace PeriodicAllowance {
   export interface Amino {
-    type: 'feegrant/PeriodicAllowance';
+    type: 'feegrant/PeriodicAllowance' | 'cosmos-sdk/PeriodicAllowance';
     value: {
       basic: BasicAllowance.Amino;
       period: string;

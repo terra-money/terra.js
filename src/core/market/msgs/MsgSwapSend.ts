@@ -2,8 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgSwapSend as MsgSwapSend_pb } from '@terra-money/terra.proto/terra/market/v1beta1/tx';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { MsgSwapSend as MsgSwapSend_pb } from '@terra-money/legacy.proto/terra/market/v1beta1/tx';
 
 /**
  * Executes a market swap send between 2 denominations at the exchange rate registered by the
@@ -30,7 +30,10 @@ export class MsgSwapSend extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgSwapSend.Amino): MsgSwapSend {
+  public static fromAmino(data: MsgSwapSend.Amino, legacy?: boolean): MsgSwapSend {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const {
       value: { from_address, to_address, offer_coin, ask_denom },
     } = data;
@@ -42,7 +45,10 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgSwapSend.Amino {
+  public toAmino(legacy?: boolean): MsgSwapSend.Amino {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
       type: 'market/MsgSwapSend',
@@ -55,7 +61,10 @@ export class MsgSwapSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSwapSend.Proto): MsgSwapSend {
+  public static fromProto(proto: MsgSwapSend.Proto, legacy?: boolean): MsgSwapSend {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return new MsgSwapSend(
       proto.fromAddress,
       proto.toAddress,
@@ -64,7 +73,10 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgSwapSend.Proto {
+  public toProto(legacy?: boolean): MsgSwapSend.Proto {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return MsgSwapSend_pb.fromPartial({
       askDenom: ask_denom,
@@ -74,18 +86,27 @@ export class MsgSwapSend extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwapSend',
       value: MsgSwapSend_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgSwapSend {
+  public static unpackAny(msgAny: Any, legacy?: boolean): MsgSwapSend {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return MsgSwapSend.fromProto(MsgSwapSend_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgSwapSend.Data): MsgSwapSend {
+  public static fromData(data: MsgSwapSend.Data, legacy?: boolean): MsgSwapSend {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { from_address, to_address, offer_coin, ask_denom } = data;
     return new MsgSwapSend(
       from_address,
@@ -95,7 +116,10 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toData(): MsgSwapSend.Data {
+  public toData(legacy?: boolean): MsgSwapSend.Data {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
       '@type': '/terra.market.v1beta1.MsgSwapSend',

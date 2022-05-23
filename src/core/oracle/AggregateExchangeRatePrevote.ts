@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../util/json';
 import { ValAddress } from '../bech32';
-import { AggregateExchangeRatePrevote as AggregateExchangeRatePrevote_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/oracle';
+import { AggregateExchangeRatePrevote as AggregateExchangeRatePrevote_pb } from '@terra-money/legacy.proto/terra/oracle/v1beta1/oracle';
 import * as Long from 'long';
 
 /**

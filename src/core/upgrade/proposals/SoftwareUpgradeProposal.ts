@@ -1,6 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { SoftwareUpgradeProposal as SoftwareUpgradeProposal_pb } from '@terra-money/terra.proto/cosmos/upgrade/v1beta1/upgrade';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { SoftwareUpgradeProposal as SoftwareUpgradeProposal_pb } from '@terra-money/legacy.proto/cosmos/upgrade/v1beta1/upgrade';
 import { Plan } from '../Plan';
 
 /**
@@ -26,8 +26,10 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: SoftwareUpgradeProposal.Amino
+    data: SoftwareUpgradeProposal.Amino,
+    _?: boolean
   ): SoftwareUpgradeProposal {
+    _;
     const {
       value: { title, description, plan },
     } = data;
@@ -38,10 +40,10 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(): SoftwareUpgradeProposal.Amino {
+  public toAmino(legacy?: boolean): SoftwareUpgradeProposal.Amino {
     const { title, description, plan } = this;
     return {
-      type: 'upgrade/SoftwareUpgradeProposal',
+      type: legacy ? 'upgrade/SoftwareUpgradeProposal' : 'cosmos-sdk/SoftwareUpgradeProposal',
       value: {
         title,
         description,
@@ -51,8 +53,10 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromData(
-    data: SoftwareUpgradeProposal.Data
+    data: SoftwareUpgradeProposal.Data,
+    _?: boolean
   ): SoftwareUpgradeProposal {
+    _;
     const { title, description, plan } = data;
     return new SoftwareUpgradeProposal(
       title,
@@ -61,7 +65,8 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toData(): SoftwareUpgradeProposal.Data {
+  public toData(_?: boolean): SoftwareUpgradeProposal.Data {
+    _;
     const { title, description, plan } = this;
     return {
       '@type': '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
@@ -72,8 +77,10 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: SoftwareUpgradeProposal.Proto
+    proto: SoftwareUpgradeProposal.Proto,
+    _?: boolean
   ): SoftwareUpgradeProposal {
+    _;
     return new SoftwareUpgradeProposal(
       proto.title,
       proto.description,
@@ -81,7 +88,8 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(): SoftwareUpgradeProposal.Proto {
+  public toProto(_?: boolean): SoftwareUpgradeProposal.Proto {
+    _;
     const { title, description, plan } = this;
     return SoftwareUpgradeProposal_pb.fromPartial({
       title,
@@ -90,14 +98,16 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
       value: SoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): SoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any, _?: boolean): SoftwareUpgradeProposal {
+    _;
     return SoftwareUpgradeProposal.fromProto(
       SoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
@@ -106,7 +116,7 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
 
 export namespace SoftwareUpgradeProposal {
   export interface Amino {
-    type: 'upgrade/SoftwareUpgradeProposal';
+    type: 'upgrade/SoftwareUpgradeProposal' | 'cosmos-sdk/SoftwareUpgradeProposal';
     value: {
       title: string;
       description: string;

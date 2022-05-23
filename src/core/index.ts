@@ -17,7 +17,11 @@ export * from './MultiSignature';
 // Auth
 export * from './auth/Account';
 export * from './auth/BaseAccount';
+export * from './auth/BaseVestingAccount';
 export * from './auth/LazyGradedVestingAccount';
+export * from './auth/DelayedVestingAccount';
+export * from './auth/ContinuousVestingAccount';
+export * from './auth/PeriodicVestingAccount';
 
 // Bank
 export * from './bank/msgs';
@@ -74,7 +78,7 @@ export * from './ibc/msgs/client';
 export * from './ibc/msgs/connection';
 
 // IBC-transfer
-export * from './ibc-transfer/msgs';
+export * from './ibc/applications/transfer';
 
 // bech32 types
 export * from './bech32';

@@ -4,7 +4,7 @@ import { Denom } from '../Denom';
 import {
   ExchangeRateTuple as ExchangeRateTuple_pb,
   AggregateExchangeRateVote as AggregateExchangeRateVote_pb,
-} from '@terra-money/terra.proto/terra/oracle/v1beta1/oracle';
+} from '@terra-money/legacy.proto/terra/oracle/v1beta1/oracle';
 import { Numeric, Dec } from '../numeric';
 
 /**

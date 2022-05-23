@@ -1,6 +1,8 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
+// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// import { MsgUndelegate as MsgUndelegate_pb } from '@terra-money/legacy.proto/cosmos/staking/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgUndelegate as MsgUndelegate_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 
@@ -27,7 +29,11 @@ export class MsgUndelegate extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgUndelegate.Amino): MsgUndelegate {
+  public static fromAmino(
+    data: MsgUndelegate.Amino,
+    _?: boolean
+  ): MsgUndelegate {
+    _;
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
@@ -38,10 +44,10 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgUndelegate.Amino {
+  public toAmino(legacy?: boolean): MsgUndelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
-      type: 'staking/MsgUndelegate',
+      type: legacy ? 'staking/MsgUndelegate' : 'cosmos-sdk/MsgUndelegate',
       value: {
         delegator_address,
         validator_address,
@@ -50,7 +56,11 @@ export class MsgUndelegate extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgUndelegate.Proto): MsgUndelegate {
+  public static fromProto(
+    proto: MsgUndelegate.Proto,
+    _?: boolean
+  ): MsgUndelegate {
+    _;
     return new MsgUndelegate(
       proto.delegatorAddress,
       proto.validatorAddress,
@@ -58,7 +68,8 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgUndelegate.Proto {
+  public toProto(_?: boolean): MsgUndelegate.Proto {
+    _;
     const { delegator_address, validator_address, amount } = this;
     return MsgUndelegate_pb.fromPartial({
       amount: amount.toProto(),
@@ -67,18 +78,21 @@ export class MsgUndelegate extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
       value: MsgUndelegate_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgUndelegate {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgUndelegate {
+    _;
     return MsgUndelegate.fromProto(MsgUndelegate_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgUndelegate.Data): MsgUndelegate {
+  public static fromData(data: MsgUndelegate.Data, _?: boolean): MsgUndelegate {
+    _;
     const { delegator_address, validator_address, amount } = data;
     return new MsgUndelegate(
       delegator_address,
@@ -87,7 +101,8 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toData(): MsgUndelegate.Data {
+  public toData(_?: boolean): MsgUndelegate.Data {
+    _;
     const { delegator_address, validator_address, amount } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.MsgUndelegate',
@@ -100,7 +115,7 @@ export class MsgUndelegate extends JSONSerializable<
 
 export namespace MsgUndelegate {
   export interface Amino {
-    type: 'staking/MsgUndelegate';
+    type: 'staking/MsgUndelegate' | 'cosmos-sdk/MsgUndelegate';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;

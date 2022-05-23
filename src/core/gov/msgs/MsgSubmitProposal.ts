@@ -29,82 +29,82 @@ export class MsgSubmitProposal extends JSONSerializable<
     this.initial_deposit = new Coins(initial_deposit);
   }
 
-  public static fromAmino(data: MsgSubmitProposal.Amino): MsgSubmitProposal {
+  public static fromAmino(data: MsgSubmitProposal.Amino, legacy?: boolean): MsgSubmitProposal {
     const {
       value: { content, initial_deposit, proposer },
     } = data;
     return new MsgSubmitProposal(
-      Proposal.Content.fromAmino(content),
+      Proposal.Content.fromAmino(content, legacy),
       Coins.fromAmino(initial_deposit),
       proposer
     );
   }
 
-  public toAmino(): MsgSubmitProposal.Amino {
+  public toAmino(legacy?: boolean): MsgSubmitProposal.Amino {
     const { content, initial_deposit, proposer } = this;
     return {
-      type: 'gov/MsgSubmitProposal',
+      type: legacy ? 'gov/MsgSubmitProposal' : 'cosmos-sdk/MsgSubmitProposal',
       value: {
-        content: content.toAmino(),
+        content: content.toAmino(legacy),
         initial_deposit: initial_deposit.toAmino(),
         proposer,
       },
     };
   }
 
-  public static fromData(data: MsgSubmitProposal.Data): MsgSubmitProposal {
+  public static fromData(data: MsgSubmitProposal.Data, legacy?: boolean): MsgSubmitProposal {
     const { content, initial_deposit, proposer } = data;
     return new MsgSubmitProposal(
-      Proposal.Content.fromData(content),
+      Proposal.Content.fromData(content, legacy),
       Coins.fromData(initial_deposit),
       proposer
     );
   }
 
-  public toData(): MsgSubmitProposal.Data {
+  public toData(legacy?: boolean): MsgSubmitProposal.Data {
     const { content, initial_deposit, proposer } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal',
-      content: content.toData(),
+      content: content.toData(legacy),
       initial_deposit: initial_deposit.toData(),
       proposer,
     };
   }
 
-  public static fromProto(proto: MsgSubmitProposal.Proto): MsgSubmitProposal {
+  public static fromProto(proto: MsgSubmitProposal.Proto, legacy?: boolean): MsgSubmitProposal {
     return new MsgSubmitProposal(
-      Proposal.Content.fromProto(proto.content as any),
+      Proposal.Content.fromProto(proto.content as any, legacy),
       Coins.fromProto(proto.initialDeposit),
       proto.proposer
     );
   }
 
-  public toProto(): MsgSubmitProposal.Proto {
+  public toProto(legacy?: boolean): MsgSubmitProposal.Proto {
     const { content, initial_deposit, proposer } = this;
     return MsgSubmitProposal_pb.fromPartial({
-      content: content.packAny(),
+      content: content.packAny(legacy),
       initialDeposit: initial_deposit.toProto(),
       proposer,
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal',
-      value: MsgSubmitProposal_pb.encode(this.toProto()).finish(),
+      value: MsgSubmitProposal_pb.encode(this.toProto(legacy)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgSubmitProposal {
+  public static unpackAny(msgAny: Any, legacy?: boolean): MsgSubmitProposal {
     return MsgSubmitProposal.fromProto(
-      MsgSubmitProposal_pb.decode(msgAny.value)
+      MsgSubmitProposal_pb.decode(msgAny.value), legacy
     );
   }
 }
 
 export namespace MsgSubmitProposal {
   export interface Amino {
-    type: 'gov/MsgSubmitProposal';
+    type: 'gov/MsgSubmitProposal' | 'cosmos-sdk/MsgSubmitProposal';
     value: {
       content: Proposal.Content.Amino;
       initial_deposit: Coins.Amino;

@@ -1,5 +1,6 @@
 import { Coin, Dec, Numeric, Denom } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 import { BaseAPI } from './BaseAPI';
 
 export interface MarketParams {
@@ -24,6 +25,11 @@ export namespace MarketParams {
 }
 
 export class MarketAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets the Market's swap rate for a given coin to a requested denomination.
    * @param offerCoin coin to convert
@@ -34,6 +40,10 @@ export class MarketAPI extends BaseAPI {
     askDenom: Denom,
     _params: APIParams = {}
   ): Promise<Coin> {
+    if (!this.lcd.config.legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     const params = {
       ..._params,
       offer_coin: offerCoin.toString(),
@@ -49,6 +59,10 @@ export class MarketAPI extends BaseAPI {
    * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
    */
   public async poolDelta(params: APIParams = {}): Promise<Dec> {
+    if (!this.lcd.config.legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     return this.c
       .get<{ terra_pool_delta: Numeric.Input }>(
         `/terra/market/v1beta1/terra_pool_delta`,
@@ -61,6 +75,10 @@ export class MarketAPI extends BaseAPI {
    * Gets the current Market module's parameters.
    */
   public async parameters(params: APIParams = {}): Promise<MarketParams> {
+    if (!this.lcd.config.legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     return this.c
       .get<{ params: MarketParams.Data }>(
         `/terra/market/v1beta1/params`,

@@ -9,8 +9,8 @@ async function main() {
   });
 
   const bombay = new LCDClient({
-    chainID: 'bombay-12',
-    URL: 'https://bombay-lcd.terra.dev',
+    chainID: 'localterra',
+    URL: 'http://localhost:1317',
   });
 
   // a wallet can be created out of any key
@@ -21,7 +21,7 @@ async function main() {
   const send = new MsgSend(
     'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
     'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-    { uluna: 1312029 }
+    { uluna: 1000 }
   );
 
   wallet
@@ -31,6 +31,13 @@ async function main() {
       memo: 'test from terra.js!',
     })
     .then(tx => {
+    	/*
+    	tx.body.messages[0] = new MsgSend(
+    'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
+    'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
+    { uluna: 2000 }
+		);
+		*/
       return bombay.tx.broadcast(tx);
     })
     .then(result => {

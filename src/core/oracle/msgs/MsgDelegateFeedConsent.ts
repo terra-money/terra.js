@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/terra.proto/terra/oracle/v1beta1/tx';
+import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/legacy.proto/terra/oracle/v1beta1/tx';
 
 /**
  * A **feeeder** is an account which is responsible for signing transactions with Oracle vote
@@ -26,15 +26,24 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgDelegateFeedConsent.Amino
+    data: MsgDelegateFeedConsent.Amino,
+    legacy?: boolean
   ): MsgDelegateFeedConsent {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     const {
       value: { operator, delegate },
     } = data;
     return new MsgDelegateFeedConsent(operator, delegate);
   }
 
-  public toAmino(): MsgDelegateFeedConsent.Amino {
+  public toAmino(legacy?: boolean): MsgDelegateFeedConsent.Amino {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     const { operator, delegate } = this;
     return {
       type: 'oracle/MsgDelegateFeedConsent',
@@ -46,13 +55,21 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
   }
 
   public static fromData(
-    data: MsgDelegateFeedConsent.Data
+    data: MsgDelegateFeedConsent.Data,
+    legacy?: boolean
   ): MsgDelegateFeedConsent {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     const { operator, delegate } = data;
     return new MsgDelegateFeedConsent(operator, delegate);
   }
 
-  public toData(): MsgDelegateFeedConsent.Data {
+  public toData(legacy?: boolean): MsgDelegateFeedConsent.Data {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     const { operator, delegate } = this;
     return {
       '@type': '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
@@ -62,12 +79,21 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgDelegateFeedConsent.Proto
+    proto: MsgDelegateFeedConsent.Proto,
+    legacy?: boolean
   ): MsgDelegateFeedConsent {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     return new MsgDelegateFeedConsent(proto.operator, proto.delegate);
   }
 
-  public toProto(): MsgDelegateFeedConsent.Proto {
+  public toProto(legacy?: boolean): MsgDelegateFeedConsent.Proto {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
+
     const { operator, delegate } = this;
     return MsgDelegateFeedConsent_pb.fromPartial({
       delegate,
@@ -75,14 +101,20 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(legacy?: boolean): Any {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
       value: MsgDelegateFeedConsent_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgDelegateFeedConsent {
+  public static unpackAny(msgAny: Any, legacy?: boolean): MsgDelegateFeedConsent {
+    if (!legacy) {
+      throw new Error('Not supported for the network')
+    }
     return MsgDelegateFeedConsent.fromProto(
       MsgDelegateFeedConsent_pb.decode(msgAny.value)
     );

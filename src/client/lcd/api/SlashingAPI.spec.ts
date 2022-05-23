@@ -1,9 +1,9 @@
-import { APIRequester } from '../APIRequester';
 import { SlashingAPI } from './SlashingAPI';
 import { Dec } from '../../../core/numeric';
+import { LCDClient } from '../LCDClient';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const slashing = new SlashingAPI(c);
+const terra = new LCDClient({ chainID: 'localterra', URL: "http://localhost:1317" });
+const slashing = new SlashingAPI(terra);
 
 describe('SlashingAPI', () => {
   it('parameters', async () => {

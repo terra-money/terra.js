@@ -33,7 +33,7 @@ export class TxInfo {
     public timestamp: string,
     public code?: number,
     public codespace?: string
-  ) {}
+  ) { }
 
   public static fromProto(proto: TxInfo.Proto): TxInfo {
     return new TxInfo(
@@ -50,7 +50,7 @@ export class TxInfo {
     );
   }
 
-  public static fromData(data: TxInfo.Data): TxInfo {
+  public static fromData(data: TxInfo.Data, legacy?: boolean): TxInfo {
     return new TxInfo(
       Number.parseInt(data.height),
       data.txhash,
@@ -58,7 +58,7 @@ export class TxInfo {
       data.logs.map(log => TxLog.fromData(log)),
       Number.parseInt(data.gas_wanted),
       Number.parseInt(data.gas_used),
-      Tx.fromData(data.tx),
+      Tx.fromData(data.tx, legacy),
       data.timestamp,
       data.code,
       data.codespace

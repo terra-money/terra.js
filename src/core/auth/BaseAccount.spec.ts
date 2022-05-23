@@ -4,7 +4,7 @@ import { SimplePublicKey } from '../PublicKey';
 const data = require('./BaseAccount.data.json');
 
 describe('Account', () => {
-  it('deserializes accounts correctly', () => {
+  it('legacy deserializes accounts correctly', () => {
     const data: BaseAccount.Amino = {
       type: 'core/Account',
       value: {
@@ -26,10 +26,10 @@ describe('Account', () => {
       account_number: 251248,
       sequence: 58,
     });
-    expect(acct.toAmino()).toMatchObject(data);
+    expect(acct.toAmino(true)).toMatchObject(data);
   });
 
-  it('deserializes a new account correctly', () => {
+  it('legacy deserializes a new account correctly', () => {
     // a new account does not yet have a public key
     const newAccount: BaseAccount.Amino = {
       type: 'core/Account',
@@ -41,12 +41,12 @@ describe('Account', () => {
       },
     };
 
-    expect(BaseAccount.fromAmino(newAccount).toAmino()).toMatchObject(
+    expect(BaseAccount.fromAmino(newAccount).toAmino(true)).toMatchObject(
       newAccount
     );
   });
 
-  it('serializes accounts correctly', () => {
+  it('legacy serializes accounts correctly', () => {
     const acct = new BaseAccount(
       'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
       new SimplePublicKey('abc'),
@@ -54,7 +54,7 @@ describe('Account', () => {
       58
     );
 
-    expect(acct.toAmino()).toMatchObject({
+    expect(acct.toAmino(true)).toMatchObject({
       type: 'core/Account',
       value: {
         address: 'terra12fm3tql2uu0gheuj3st9cwz7ml97tq9mla88c2',
@@ -68,9 +68,9 @@ describe('Account', () => {
     });
   });
 
-  it('deserializes from example data', () => {
+  it('legacy deserializes from example data', () => {
     data.forEach((ex: BaseAccount.Amino) => {
-      expect(BaseAccount.fromAmino(ex).toAmino()).toMatchObject(ex);
+      expect(BaseAccount.fromAmino(ex).toAmino(true)).toMatchObject(ex);
     });
   });
 });

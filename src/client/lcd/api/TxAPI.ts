@@ -15,7 +15,8 @@ import { hashToHex } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
-import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { BroadcastMode as BroadcastModeV1 } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/service';
+import { BroadcastMode as BroadcastModeV2 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
 
 interface Wait {
   height: number;
@@ -46,7 +47,7 @@ interface Async {
 export type TxBroadcastResult<
   B extends Wait | Block | Sync | Async,
   C extends TxSuccess | TxError | {}
-> = B & C;
+  > = B & C;
 
 export interface TxSuccess {
   logs: TxLog[];
@@ -161,7 +162,7 @@ export class SimulateResponse {
       log: string;
       events: { type: string; attributes: { key: string; value: string }[] }[];
     }
-  ) {}
+  ) { }
 
   public static fromData(data: SimulateResponse.Data): SimulateResponse {
     return new SimulateResponse(
@@ -204,7 +205,7 @@ export class TxAPI extends BaseAPI {
   public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
     return this.c
       .getRaw<TxResult.Data>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
-      .then(v => TxInfo.fromData(v.tx_response));
+      .then(v => TxInfo.fromData(v.tx_response, this.lcd.config.legacy));
   }
 
   /**
@@ -292,7 +293,7 @@ export class TxAPI extends BaseAPI {
     const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options.feeDenoms || ['uusd'];
+    const feeDenoms = options.feeDenoms || [(this.lcd.config.legacy ? 'uusd' : 'uluna')];
     let gas = options.gas;
     let gasPricesCoins: Coins | undefined;
 
@@ -324,7 +325,7 @@ export class TxAPI extends BaseAPI {
 
     const feeAmount = gasPricesCoins
       ? gasPricesCoins.mul(gas).toIntCeilCoins()
-      : '0uusd';
+      : (this.lcd.config.legacy ? '0uusd' : '0uluna');
 
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
@@ -368,7 +369,7 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to encode
    */
   public encode(tx: Tx): string {
-    return Buffer.from(tx.toBytes()).toString('base64');
+    return Buffer.from(tx.toBytes(this.lcd.config.legacy)).toString('base64');
   }
 
   /**
@@ -390,7 +391,7 @@ export class TxAPI extends BaseAPI {
 
   private async _broadcast<T>(
     tx: Tx,
-    mode: keyof typeof BroadcastMode
+    mode: keyof typeof BroadcastModeV1 | BroadcastModeV2
   ): Promise<T> {
     return await this.c.post<any>(`/cosmos/tx/v1beta1/txs`, {
       tx_bytes: this.encode(tx),
@@ -414,6 +415,21 @@ export class TxAPI extends BaseAPI {
     const { tx_response: txResponse } = await this._broadcast<{
       tx_response: SyncTxBroadcastResult.Data;
     }>(tx, 'BROADCAST_MODE_SYNC');
+
+    if (txResponse.code != 0) {
+      const result: WaitTxBroadcastResult = {
+        height: Number.parseInt(txResponse.height),
+        txhash: txResponse.txhash,
+        raw_log: txResponse.raw_log,
+        code: txResponse.code,
+        codespace: txResponse.codespace,
+        gas_used: 0,
+        gas_wanted: 0,
+        timestamp: "",
+        logs: [],
+      }
+      return result;
+    }
 
     let txInfo: undefined | TxInfo;
     for (let i = 0; i <= timeout / POLL_INTERVAL; i++) {
@@ -547,7 +563,7 @@ export class TxAPI extends BaseAPI {
       .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, params)
       .then(d => {
         return {
-          txs: d.tx_responses.map(tx_response => TxInfo.fromData(tx_response)),
+          txs: d.tx_responses.map(tx_response => TxInfo.fromData(tx_response, this.lcd.config.legacy)),
           pagination: d.pagination,
         };
       });

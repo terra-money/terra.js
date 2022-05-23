@@ -26,17 +26,18 @@ export class MsgVote extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgVote.Amino): MsgVote {
+  public static fromAmino(data: MsgVote.Amino, _?: boolean): MsgVote {
+    _
     const {
       value: { proposal_id, voter, option },
     } = data;
     return new MsgVote(Number.parseInt(proposal_id), voter, option);
   }
 
-  public toAmino(): MsgVote.Amino {
+  public toAmino(legacy?: boolean): MsgVote.Amino {
     const { proposal_id, voter, option } = this;
     return {
-      type: 'gov/MsgVote',
+      type: legacy ? 'gov/MsgVote' : 'cosmos-sdk/MsgVote',
       value: {
         proposal_id: proposal_id.toFixed(),
         voter,
@@ -45,12 +46,14 @@ export class MsgVote extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgVote.Data): MsgVote {
+  public static fromData(data: MsgVote.Data, _?: boolean): MsgVote {
+    _;
     const { proposal_id, voter, option } = data;
     return new MsgVote(Number.parseInt(proposal_id), voter, option);
   }
 
-  public toData(): MsgVote.Data {
+  public toData(_?: boolean): MsgVote.Data {
+    _;
     const { proposal_id, voter, option } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgVote',
@@ -60,11 +63,13 @@ export class MsgVote extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgVote.Proto): MsgVote {
+  public static fromProto(proto: MsgVote.Proto, _?: boolean): MsgVote {
+    _;
     return new MsgVote(proto.proposalId.toNumber(), proto.voter, proto.option);
   }
 
-  public toProto(): MsgVote.Proto {
+  public toProto(_?: boolean): MsgVote.Proto {
+    _;
     const { proposal_id, voter, option } = this;
     return MsgVote_pb.fromPartial({
       option,
@@ -73,14 +78,16 @@ export class MsgVote extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgVote',
       value: MsgVote_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgVote {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgVote {
+    _;
     return MsgVote.fromProto(MsgVote_pb.decode(msgAny.value));
   }
 }
@@ -90,7 +97,7 @@ export namespace MsgVote {
   export type Option = VoteOption;
 
   export interface Amino {
-    type: 'gov/MsgVote';
+    type: 'gov/MsgVote' | 'cosmos-sdk/MsgVote';
     value: {
       proposal_id: string;
       voter: AccAddress;

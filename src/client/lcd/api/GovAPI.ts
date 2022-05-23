@@ -13,7 +13,8 @@ import {
 
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { TxSearchResult } from './TxAPI';
-import { ProposalStatus } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
+import { ProposalStatus } from '@terra-money/legacy.proto/cosmos/gov/v1beta1/gov';
+import { LCDClient } from '../LCDClient';
 
 export interface GovParams {
   /**
@@ -102,6 +103,10 @@ export namespace Tally {
 }
 
 export class GovAPI extends BaseAPI {
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets all proposals.
    */
@@ -113,7 +118,12 @@ export class GovAPI extends BaseAPI {
         proposals: Proposal.Data[];
         pagination: Pagination;
       }>(`/cosmos/gov/v1beta1/proposals`, params)
-      .then(d => [d.proposals.map(Proposal.fromData), d.pagination]);
+      .then(d => [
+        d.proposals.map(prop =>
+          Proposal.fromData(prop, this.lcd.config.legacy)
+        ),
+        d.pagination,
+      ]);
   }
 
   /**
@@ -129,7 +139,7 @@ export class GovAPI extends BaseAPI {
         `/cosmos/gov/v1beta1/proposals/${proposalId}`,
         params
       )
-      .then(d => Proposal.fromData(d.proposal));
+      .then(d => Proposal.fromData(d.proposal, this.lcd.config.legacy));
   }
 
   /**
@@ -137,6 +147,7 @@ export class GovAPI extends BaseAPI {
    * @param proposalId proposal's ID
    */
   public async proposer(proposalId: number): Promise<AccAddress> {
+    proposalId;
     const creationTx = await this.searchProposalCreationTx(proposalId);
     const msg = creationTx.body.messages.find(
       msg => msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal'
@@ -154,6 +165,7 @@ export class GovAPI extends BaseAPI {
    * @param proposalId proposal's ID
    */
   public async initialDeposit(proposalId: number): Promise<Coins> {
+    proposalId;
     const creationTx = await this.searchProposalCreationTx(proposalId);
     const msg = creationTx.body.messages.find(
       msg => msg['@type'] === '/cosmos.gov.v1beta1.MsgSubmitProposal'
@@ -174,6 +186,8 @@ export class GovAPI extends BaseAPI {
     proposalId: number,
     _params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Deposit[], Pagination]> {
+    proposalId;
+    _params;
     const proposal = await this.proposal(proposalId);
     if (
       proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD ||
@@ -238,7 +252,6 @@ export class GovAPI extends BaseAPI {
         if (d.tx_responses.length === 0) {
           throw Error('failed to fetch submit_proposer tx');
         }
-
         return d.txs[0];
       });
   }
@@ -251,6 +264,8 @@ export class GovAPI extends BaseAPI {
     proposalId: number,
     _params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Vote[], Pagination]> {
+    proposalId;
+    _params;
     const proposal = await this.proposal(proposalId);
     if (proposal.status === ProposalStatus.PROPOSAL_STATUS_DEPOSIT_PERIOD) {
       return this.c
@@ -302,6 +317,7 @@ export class GovAPI extends BaseAPI {
 
         return [votes, d.pagination];
       });
+    throw Error('temp error: remove me');
   }
 
   /**

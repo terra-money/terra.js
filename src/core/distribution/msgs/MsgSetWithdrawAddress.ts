@@ -1,6 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+// there's no difference between two protos
+// import { MsgSetWithdrawAddress as MsgSetWithdrawAddress_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
 import { MsgSetWithdrawAddress as MsgSetWithdrawAddress_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
@@ -25,18 +27,22 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgSetWithdrawAddress.Amino
+    data: MsgSetWithdrawAddress.Amino,
+    _?: boolean
   ): MsgSetWithdrawAddress {
+    _;
     const {
       value: { delegator_address, withdraw_address },
     } = data;
     return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
   }
 
-  public toAmino(): MsgSetWithdrawAddress.Amino {
+  public toAmino(legacy?: boolean): MsgSetWithdrawAddress.Amino {
     const { delegator_address, withdraw_address } = this;
     return {
-      type: 'distribution/MsgModifyWithdrawAddress',
+      type: legacy
+        ? 'distribution/MsgModifyWithdrawAddress'
+        : 'cosmos-sdk/MsgModifyWithdrawAddress',
       value: {
         delegator_address,
         withdraw_address,
@@ -45,13 +51,16 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
   }
 
   public static fromData(
-    data: MsgSetWithdrawAddress.Data
+    data: MsgSetWithdrawAddress.Data,
+    _?: boolean
   ): MsgSetWithdrawAddress {
+    _;
     const { delegator_address, withdraw_address } = data;
     return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
   }
 
-  public toData(): MsgSetWithdrawAddress.Data {
+  public toData(_?: boolean): MsgSetWithdrawAddress.Data {
+    _;
     const { delegator_address, withdraw_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
@@ -61,15 +70,18 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgSetWithdrawAddress.Proto
+    proto: MsgSetWithdrawAddress.Proto,
+    _?: boolean
   ): MsgSetWithdrawAddress {
+    _;
     return new MsgSetWithdrawAddress(
       proto.delegatorAddress,
       proto.withdrawAddress
     );
   }
 
-  public toProto(): MsgSetWithdrawAddress.Proto {
+  public toProto(_?: boolean): MsgSetWithdrawAddress.Proto {
+    _;
     const { delegator_address, withdraw_address } = this;
     return MsgSetWithdrawAddress_pb.fromPartial({
       delegatorAddress: delegator_address,
@@ -77,14 +89,16 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
       value: MsgSetWithdrawAddress_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgSetWithdrawAddress {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgSetWithdrawAddress {
+    _;
     return MsgSetWithdrawAddress.fromProto(
       MsgSetWithdrawAddress_pb.decode(msgAny.value)
     );
@@ -93,7 +107,9 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
 
 export namespace MsgSetWithdrawAddress {
   export interface Amino {
-    type: 'distribution/MsgModifyWithdrawAddress';
+    type:
+    | 'distribution/MsgModifyWithdrawAddress'
+    | 'cosmos-sdk/MsgModifyWithdrawAddress';
     value: {
       delegator_address: AccAddress;
       withdraw_address: AccAddress;

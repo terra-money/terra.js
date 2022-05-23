@@ -29,18 +29,21 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgChannelOpenConfirm {
+  public static fromAmino(_: any, legacy?: boolean): MsgChannelOpenConfirm {
+    _; legacy;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
   public static fromData(
-    data: MsgChannelOpenConfirm.Data
+    data: MsgChannelOpenConfirm.Data,
+    _?: boolean
   ): MsgChannelOpenConfirm {
+    _;
     const { port_id, channel_id, proof_ack, proof_height, signer } = data;
     return new MsgChannelOpenConfirm(
       port_id,
@@ -51,7 +54,8 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     );
   }
 
-  public toData(): MsgChannelOpenConfirm.Data {
+  public toData(_?: boolean): MsgChannelOpenConfirm.Data {
+    _;
     const { port_id, channel_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenConfirm',
@@ -64,8 +68,10 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgChannelOpenConfirm.Proto
+    proto: MsgChannelOpenConfirm.Proto,
+    _?: boolean
   ): MsgChannelOpenConfirm {
+    _;
     return new MsgChannelOpenConfirm(
       proto.portId,
       proto.channelId,
@@ -75,7 +81,8 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgChannelOpenConfirm.Proto {
+  public toProto(_?: boolean): MsgChannelOpenConfirm.Proto {
+    _;
     const { port_id, channel_id, proof_ack, proof_height, signer } = this;
     return MsgChannelOpenConfirm_pb.fromPartial({
       portId: port_id,
@@ -86,14 +93,16 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenConfirm',
       value: MsgChannelOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgChannelOpenConfirm {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenConfirm {
+    _;
     return MsgChannelOpenConfirm.fromProto(
       MsgChannelOpenConfirm_pb.decode(msgAny.value)
     );
