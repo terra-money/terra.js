@@ -71,7 +71,6 @@ export class BaseVestingAccount extends JSONSerializable<
     amino: BaseVestingAccount.Amino,
     legacy?: boolean
   ): BaseVestingAccount {
-    _;
     const base_account = BaseAccount.fromAmino({
       type: legacy ? 'core/Account' : 'cosmos-sdk/BaseAccount',
       value: amino.value.base_account,
