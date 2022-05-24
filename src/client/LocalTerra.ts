@@ -44,8 +44,8 @@ export class LocalTerra extends LCDClient {
 
   constructor(legacy?: boolean) {
     super({
-      URL: 'https://pisco-lcd.terra.dev',
-      chainID: 'pisco-1',
+      URL: 'http://localhost:1317',
+      chainID: 'localterra',
       legacy,
     });
 
