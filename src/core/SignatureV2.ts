@@ -13,7 +13,7 @@ export class SignatureV2 {
     public public_key: PublicKey,
     public data: SignatureV2.Descriptor,
     public sequence: number
-  ) { }
+  ) {}
 
   public static fromData(data: SignatureV2.Data): SignatureV2 {
     return new SignatureV2(
@@ -139,7 +139,7 @@ export namespace SignatureV2 {
     }
 
     export class Single {
-      constructor(public mode: SignMode, public signature: string) { }
+      constructor(public mode: SignMode, public signature: string) {}
 
       public static fromData(data: Single.Data): Single {
         return new Single(signModeFromJSON(data.mode), data.signature);
@@ -165,7 +165,7 @@ export namespace SignatureV2 {
       constructor(
         public bitarray: CompactBitArray,
         public signatures: Descriptor[]
-      ) { }
+      ) {}
 
       public static fromData(data: Multi.Data): Multi {
         return new Multi(

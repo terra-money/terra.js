@@ -13,8 +13,8 @@ const mk = new MnemonicKey({
 const terra = new LCDClient({
   //chainID: 'fake-1',
   //URL: 'https://fake-lcd.terra.dev',
-  chainID: 'localterra',
-  URL: 'http://localhost:1317'
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
 });
 
 const txAPI = new TxAPI(terra);

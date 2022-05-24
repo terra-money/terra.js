@@ -16,7 +16,7 @@ const distribution = new DistributionAPI(terra);
 
 const delegatorWallet = terra.wallets.test1;
 const depositorWallet = terra.wallets.test2;
-const withdrawerWallet = terra.wallets.test3;
+const withdrawerWallet = terra.wallets.test1;
 const validatorWallet = terra.wallets.validator;
 
 async function FundCommunityPool() {

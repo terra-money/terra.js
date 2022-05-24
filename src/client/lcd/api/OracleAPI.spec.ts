@@ -2,12 +2,16 @@ import { OracleAPI } from './OracleAPI';
 import { Dec } from '../../../core/numeric';
 import { LCDClient } from '../LCDClient';
 
-const terra = new LCDClient({ chainID: 'bombay-12', URL: "https://bombay-lcd.terra.dev/" });
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev/',
+});
 const oracle = new OracleAPI(terra);
 
 describe('OracleAPI', () => {
   it('parameters', async () => {
-    if (terra.config.legacy) { // only legacy network has param query
+    if (terra.config.legacy) {
+      // only legacy network has param query
       await expect(oracle.parameters()).resolves.toMatchObject({
         vote_period: expect.any(Number),
         vote_threshold: expect.any(Dec),

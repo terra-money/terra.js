@@ -33,7 +33,7 @@ export class TxInfo {
     public timestamp: string,
     public code?: number,
     public codespace?: string
-  ) { }
+  ) {}
 
   public static fromProto(proto: TxInfo.Proto): TxInfo {
     return new TxInfo(

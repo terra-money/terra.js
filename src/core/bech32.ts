@@ -36,7 +36,10 @@ export namespace AccAddress {
    */
   export function validate(data: string): boolean {
     // 44 for normal account and 64 for contract account
-    return checkPrefixAndLength('terra', data, 44) || checkPrefixAndLength('terra', data, 64);
+    return (
+      checkPrefixAndLength('terra', data, 44) ||
+      checkPrefixAndLength('terra', data, 64)
+    );
   }
 
   /**

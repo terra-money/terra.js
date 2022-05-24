@@ -5,8 +5,8 @@ import { LCDClient } from '../LCDClient';
 
 // TODO - restore to https://lcd.terra.dev
 const terra = new LCDClient({
-  chainID: 'localterra',
-  URL: 'http://localhost:1317',
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
 });
 const auth = new AuthAPI(terra);
 
@@ -14,7 +14,7 @@ describe('AuthAPI', () => {
   describe('accounts', () => {
     it('account exists', async () => {
       const acct = await auth.accountInfo(
-        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
+        'terra1h8ljdmae7lx05kjj79c9ekscwsyjd3yr8wyvdn'
       );
 
       expect(acct instanceof BaseAccount).toBe(true);

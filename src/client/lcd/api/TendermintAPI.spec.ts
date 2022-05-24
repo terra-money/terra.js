@@ -3,7 +3,10 @@ import { Tx } from '../../../core/Tx';
 import { Tx as Tx_pb } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/tx';
 import { LCDClient } from '../LCDClient';
 
-const terra = new LCDClient({ chainID: 'localterra', URL: "http://localhost:1317" });
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
 const tendermint = new TendermintAPI(terra);
 
 describe('TendermintAPI', () => {

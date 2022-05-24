@@ -2,7 +2,10 @@ import { Dec } from '../../../core/numeric';
 import { LCDClient } from '../LCDClient';
 import { MintAPI } from './MintAPI';
 
-const terra = new LCDClient({ chainID: 'localterra', URL: "http://localhost:1317" });
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
 const api = new MintAPI(terra);
 
 describe('MintAPI', () => {

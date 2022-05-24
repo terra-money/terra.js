@@ -205,7 +205,7 @@ export namespace Coin {
   }
 
   export class ArithmeticError {
-    constructor(public readonly message: string) { }
+    constructor(public readonly message: string) {}
   }
 
   export type Proto = Coin_pb;

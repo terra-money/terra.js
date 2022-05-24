@@ -31,7 +31,9 @@ describe('AccAddress', () => {
     ).toBe(true);
     // contract account address
     expect(
-      AccAddress.validate('terra1uj9dm5xdm34fy5xwd84lfakarcnlpxw0ppgy7vpsruj0vtks29cqn0ztcs')
+      AccAddress.validate(
+        'terra1uj9dm5xdm34fy5xwd84lfakarcnlpxw0ppgy7vpsruj0vtks29cqn0ztcs'
+      )
     ).toBe(true);
   });
 

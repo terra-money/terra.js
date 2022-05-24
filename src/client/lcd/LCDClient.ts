@@ -61,7 +61,8 @@ const DEFAULT_NETWORK_TYPE_BY_CHAIN_ID: { [key: string]: boolean } = {
   default: false,
   'columbus-5': true,
   'bombay-12': true,
-}
+  'pisco-1': false,
+};
 
 const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
   default: {
@@ -72,6 +73,9 @@ const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
   },
   'bombay-12': {
     uusd: 0.15,
+  },
+  'pisco-1': {
+    uluna: 0.15, // FIXME: how much?
   },
 };
 

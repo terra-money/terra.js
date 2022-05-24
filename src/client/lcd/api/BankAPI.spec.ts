@@ -1,7 +1,10 @@
 import { LCDClient } from '../LCDClient';
 import { BankAPI } from './BankAPI';
 
-const terra = new LCDClient({ chainID: 'localterra', URL: "http://localhost:1317" });
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
 const bank = new BankAPI(terra);
 
 describe('BankAPI', () => {

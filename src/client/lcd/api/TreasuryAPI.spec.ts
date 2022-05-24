@@ -2,18 +2,23 @@ import { TreasuryAPI } from './TreasuryAPI';
 import { Coins, Dec, PolicyConstraints } from '../../../core';
 import { LCDClient } from '../LCDClient';
 
-const terra = new LCDClient({ chainID: 'bombay-12', URL: "https://bombay-lcd.terra.dev/" });
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev/',
+});
 const treasury = new TreasuryAPI(terra);
 
 describe('TreasuryAPI', () => {
   it('taxCaps', async () => {
-    if (terra.config.legacy) { // only legacy network has param query
+    if (terra.config.legacy) {
+      // only legacy network has param query
       await expect(treasury.taxCaps()).resolves.toBeInstanceOf(Coins);
     }
   });
 
   it('taxCap (uusd)', async () => {
-    if (terra.config.legacy) { // only legacy network has param query
+    if (terra.config.legacy) {
+      // only legacy network has param query
       await expect(
         treasury.taxCap('uusd').then(r => r.toData())
       ).resolves.toMatchObject({
@@ -24,13 +29,15 @@ describe('TreasuryAPI', () => {
   });
 
   it('taxCap (invalid)', async () => {
-    if (terra.config.legacy) { // only legacy network has param query
+    if (terra.config.legacy) {
+      // only legacy network has param query
       await expect(treasury.taxCap('x')).rejects.toThrow();
     }
   });
 
   it('parameters', async () => {
-    if (terra.config.legacy) { // only legacy network has param query
+    if (terra.config.legacy) {
+      // only legacy network has param query
       await expect(treasury.parameters()).resolves.toMatchObject({
         tax_policy: expect.any(PolicyConstraints),
         reward_policy: expect.any(PolicyConstraints),

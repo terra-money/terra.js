@@ -30,7 +30,7 @@ export class Tx {
     public body: TxBody,
     public auth_info: AuthInfo,
     public signatures: string[]
-  ) { }
+  ) {}
 
   public static fromAmino(data: Tx.Amino, legacy?: boolean): Tx {
     const signatures = data.value.signatures.map(s => SignatureV2.fromAmino(s));
@@ -169,7 +169,7 @@ export class TxBody {
     public messages: Msg[],
     public memo?: string,
     public timeout_height?: number
-  ) { }
+  ) {}
 
   public static fromData(data: TxBody.Data, legacy?: boolean): TxBody {
     return new TxBody(
@@ -218,7 +218,7 @@ export namespace TxBody {
 }
 
 export class AuthInfo {
-  constructor(public signer_infos: SignerInfo[], public fee: Fee) { }
+  constructor(public signer_infos: SignerInfo[], public fee: Fee) {}
 
   public static fromData(data: AuthInfo.Data): AuthInfo {
     return new AuthInfo(
@@ -266,7 +266,7 @@ export class SignerInfo {
     public public_key: PublicKey,
     public sequence: number,
     public mode_info: ModeInfo
-  ) { }
+  ) {}
 
   public static fromData(data: SignerInfo.Data): SignerInfo {
     return new SignerInfo(
@@ -372,7 +372,7 @@ export namespace ModeInfo {
   export type SignMode = SignMode_pb;
 
   export class Single {
-    constructor(public mode: SignMode) { }
+    constructor(public mode: SignMode) {}
 
     public static fromData(data: Single.Data): Single {
       return new Single(signModeFromJSON(data.mode));
@@ -407,7 +407,7 @@ export namespace ModeInfo {
     constructor(
       public bitarray: CompactBitArray,
       public modeInfos: ModeInfo[]
-    ) { }
+    ) {}
 
     public static fromData(proto: Multi.Data): Multi {
       return new Multi(

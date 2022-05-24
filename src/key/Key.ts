@@ -59,7 +59,7 @@ export abstract class Key {
    *
    * @param publicKey raw compressed bytes public key
    */
-  constructor(public publicKey?: PublicKey) { }
+  constructor(public publicKey?: PublicKey) {}
 
   /**
    * Signs a [[StdSignMsg]] with the method supplied by the child class.
@@ -68,7 +68,10 @@ export abstract class Key {
    * @param tx sign-message of the transaction to sign
    * @param legacy target network is legacy or not?
    */
-  public async createSignatureAmino(tx: SignDoc, legacy?: boolean): Promise<SignatureV2> {
+  public async createSignatureAmino(
+    tx: SignDoc,
+    legacy?: boolean
+  ): Promise<SignatureV2> {
     if (!this.publicKey) {
       throw new Error(
         'Signature could not be created: Key instance missing publicKey'
@@ -80,7 +83,9 @@ export abstract class Key {
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(
           SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
-          (await this.sign(Buffer.from(tx.toAminoJSON(legacy)))).toString('base64')
+          (await this.sign(Buffer.from(tx.toAminoJSON(legacy)))).toString(
+            'base64'
+          )
         )
       ),
       tx.sequence
@@ -93,7 +98,10 @@ export abstract class Key {
    * @param tx sign-message of the transaction to sign
    * @param legacy target network is legacy or not?
    */
-  public async createSignature(signDoc: SignDoc, legacy?: boolean): Promise<SignatureV2> {
+  public async createSignature(
+    signDoc: SignDoc,
+    legacy?: boolean
+  ): Promise<SignatureV2> {
     if (!this.publicKey) {
       throw new Error(
         'Signature could not be created: Key instance missing publicKey'
@@ -110,9 +118,9 @@ export abstract class Key {
       ),
     ];
 
-    const sigBytes = (await this.sign(Buffer.from(signDoc.toBytes(legacy)))).toString(
-      'base64'
-    );
+    const sigBytes = (
+      await this.sign(Buffer.from(signDoc.toBytes(legacy)))
+    ).toString('base64');
 
     // restore signDoc to origin
     signDoc.auth_info.signer_infos = signerInfos;
@@ -130,7 +138,11 @@ export abstract class Key {
    * Signs a [[Tx]] and adds the signature to a generated StdTx that is ready to be broadcasted.
    * @param tx
    */
-  public async signTx(tx: Tx, options: SignOptions, legacy?: boolean): Promise<Tx> {
+  public async signTx(
+    tx: Tx,
+    options: SignOptions,
+    legacy?: boolean
+  ): Promise<Tx> {
     const copyTx = new Tx(tx.body, new AuthInfo([], tx.auth_info.fee), []);
     const sign_doc = new SignDoc(
       options.chainID,
