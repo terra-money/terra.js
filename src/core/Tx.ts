@@ -146,7 +146,7 @@ export class Tx {
 
 export namespace Tx {
   export interface Amino {
-    type: 'core/StdTx';
+    type: 'core/StdTx' | 'cosmos-sdk/StdTx';
     value: {
       msg: Msg.Amino[];
       fee: Fee.Amino;
