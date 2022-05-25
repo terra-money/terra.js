@@ -62,6 +62,7 @@ import { LCDClient, Coin } from '@terra-money/terra.js';
 const terra = new LCDClient({
   URL: 'https://bombay-lcd.terra.dev',
   chainID: 'bombay-12',
+  legacy: false // false by default, change to true to connect to Terra Classic
 });
 
 // To use LocalTerra
