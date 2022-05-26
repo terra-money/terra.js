@@ -48,7 +48,7 @@ export interface LCDClientConfig {
   /**
    * is it connected to forked network?
    */
-  isClassic?: boolean; // FIXME: rename it
+  isClassic?: boolean;
 }
 
 const DEFAULT_LCD_OPTIONS: Partial<LCDClientConfig> = {

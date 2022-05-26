@@ -40,7 +40,6 @@ export function getContractAddress(
     attributeKey = 'contract_address';
   } else {
     eventName = 'wasm';
-    // TODO: prefix `_` attached by cosmwasm. check to remove it or not
     attributeKey = '_contract_address';
   }
   console.log(txResult.logs[msgIndex].eventsByType['wasm']);
@@ -74,7 +73,6 @@ export function getContractEvents(
     attributeKey = 'contract_address';
   } else {
     eventName = 'instantiate';
-    // TODO: prefix `_` attached by cosmwasm. check to remove it or not
     attributeKey = '_contract_address';
   }
 
