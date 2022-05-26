@@ -3,7 +3,7 @@ import {
   accessTypeToJSON,
   AccessConfig as AccessConfig_pb,
 } from '@terra-money/terra.proto/cosmwasm/wasm/v1/types';
-import { AccAddress } from 'core/bech32';
+import { AccAddress } from '../bech32';
 import { JSONSerializable } from '../../util/json';
 import { convertAccessTypeFromJSON } from './util';
 
