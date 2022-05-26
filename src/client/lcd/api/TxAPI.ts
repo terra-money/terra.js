@@ -47,7 +47,7 @@ interface Async {
 export type TxBroadcastResult<
   B extends Wait | Block | Sync | Async,
   C extends TxSuccess | TxError | {}
-  > = B & C;
+> = B & C;
 
 export interface TxSuccess {
   logs: TxLog[];
@@ -162,7 +162,7 @@ export class SimulateResponse {
       log: string;
       events: { type: string; attributes: { key: string; value: string }[] }[];
     }
-  ) { }
+  ) {}
 
   public static fromData(data: SimulateResponse.Data): SimulateResponse {
     return new SimulateResponse(
@@ -205,7 +205,7 @@ export class TxAPI extends BaseAPI {
   public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
     return this.c
       .getRaw<TxResult.Data>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
-      .then(v => TxInfo.fromData(v.tx_response, this.lcd.config.legacy));
+      .then(v => TxInfo.fromData(v.tx_response, this.lcd.config.isClassic));
   }
 
   /**
@@ -293,7 +293,9 @@ export class TxAPI extends BaseAPI {
     const gasPrices = options.gasPrices || this.lcd.config.gasPrices;
     const gasAdjustment =
       options.gasAdjustment || this.lcd.config.gasAdjustment;
-    const feeDenoms = options.feeDenoms || [(this.lcd.config.legacy ? 'uusd' : 'uluna')];
+    const feeDenoms = options.feeDenoms || [
+      this.lcd.config.isClassic ? 'uusd' : 'uluna',
+    ];
     let gas = options.gas;
     let gasPricesCoins: Coins | undefined;
 
@@ -325,7 +327,9 @@ export class TxAPI extends BaseAPI {
 
     const feeAmount = gasPricesCoins
       ? gasPricesCoins.mul(gas).toIntCeilCoins()
-      : (this.lcd.config.legacy ? '0uusd' : '0uluna');
+      : this.lcd.config.isClassic
+      ? '0uusd'
+      : '0uluna';
 
     return new Fee(Number.parseInt(gas), feeAmount, '', '');
   }
@@ -369,7 +373,9 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to encode
    */
   public encode(tx: Tx): string {
-    return Buffer.from(tx.toBytes(this.lcd.config.legacy)).toString('base64');
+    return Buffer.from(tx.toBytes(this.lcd.config.isClassic)).toString(
+      'base64'
+    );
   }
 
   /**
@@ -425,9 +431,9 @@ export class TxAPI extends BaseAPI {
         codespace: txResponse.codespace,
         gas_used: 0,
         gas_wanted: 0,
-        timestamp: "",
+        timestamp: '',
         logs: [],
-      }
+      };
       return result;
     }
 
@@ -563,7 +569,9 @@ export class TxAPI extends BaseAPI {
       .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, params)
       .then(d => {
         return {
-          txs: d.tx_responses.map(tx_response => TxInfo.fromData(tx_response, this.lcd.config.legacy)),
+          txs: d.tx_responses.map(tx_response =>
+            TxInfo.fromData(tx_response, this.lcd.config.isClassic)
+          ),
           pagination: d.pagination,
         };
       });

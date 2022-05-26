@@ -36,8 +36,8 @@ export class DelayedVestingAccount extends JSONSerializable<
     return this.base_vesting_account.base_account.public_key;
   }
 
-  public toAmino(legacy?: boolean): DelayedVestingAccount.Amino {
-    if (legacy) {
+  public toAmino(isClassic?: boolean): DelayedVestingAccount.Amino {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account } = this;
@@ -51,20 +51,20 @@ export class DelayedVestingAccount extends JSONSerializable<
 
   public static fromAmino(
     data: DelayedVestingAccount.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): DelayedVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromAmino({
       type: 'cosmos-sdk/BaseVestingAccount',
       value: data.value.base_vesting_account,
     });
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return new DelayedVestingAccount(base_vesting_account);
   }
 
-  public toData(legacy?: boolean): DelayedVestingAccount.Data {
-    if (legacy) {
+  public toData(isClassic?: boolean): DelayedVestingAccount.Data {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account } = this;
@@ -76,20 +76,20 @@ export class DelayedVestingAccount extends JSONSerializable<
 
   public static fromData(
     data: DelayedVestingAccount.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): DelayedVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromData({
       '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount',
       ...data.base_vesting_account,
     });
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return new DelayedVestingAccount(base_vesting_account);
   }
 
-  public toProto(legacy?: boolean): DelayedVestingAccount.Proto {
-    if (legacy) {
+  public toProto(isClassic?: boolean): DelayedVestingAccount.Proto {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account } = this;
@@ -101,19 +101,19 @@ export class DelayedVestingAccount extends JSONSerializable<
 
   public static fromProto(
     DelayedVestingAccountProto: DelayedVestingAccount.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): DelayedVestingAccount {
     const baseVestingAccount = BaseVestingAccount.fromProto(
       DelayedVestingAccountProto.baseVestingAccount as BaseVestingAccount_pb
     );
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return new DelayedVestingAccount(baseVestingAccount);
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return Any.fromPartial({
@@ -124,9 +124,9 @@ export class DelayedVestingAccount extends JSONSerializable<
 
   public static unpackAny(
     pubkeyAny: Any,
-    legacy?: boolean
+    isClassic?: boolean
   ): DelayedVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return DelayedVestingAccount.fromProto(

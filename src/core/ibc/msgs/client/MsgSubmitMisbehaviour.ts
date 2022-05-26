@@ -23,8 +23,9 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgSubmitMisbehaviour {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgSubmitMisbehaviour {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 

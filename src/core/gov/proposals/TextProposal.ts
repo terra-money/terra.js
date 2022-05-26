@@ -28,10 +28,10 @@ export class TextProposal extends JSONSerializable<
     return new TextProposal(title, description);
   }
 
-  public toAmino(legacy?: boolean): TextProposal.Amino {
+  public toAmino(isClassic?: boolean): TextProposal.Amino {
     const { title, description } = this;
     return {
-      type: legacy ? 'gov/TextProposal' : 'cosmos-sdk/TextProposal',
+      type: isClassic ? 'gov/TextProposal' : 'cosmos-sdk/TextProposal',
       value: {
         title,
         description,
@@ -55,7 +55,10 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: TextProposal.Proto, _?: boolean): TextProposal {
+  public static fromProto(
+    proto: TextProposal.Proto,
+    _?: boolean
+  ): TextProposal {
     _;
     return new TextProposal(proto.title, proto.description);
   }
@@ -69,15 +72,18 @@ export class TextProposal extends JSONSerializable<
     });
   }
 
-  public packAny(legacy?: boolean): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-      value: TextProposal_pb.encode(this.toProto(legacy)).finish(),
+      value: TextProposal_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): TextProposal {
-    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value), legacy);
+  public static unpackAny(msgAny: Any, isClassic?: boolean): TextProposal {
+    return TextProposal.fromProto(
+      TextProposal_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 

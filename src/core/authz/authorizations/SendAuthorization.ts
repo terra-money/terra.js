@@ -14,22 +14,30 @@ export class SendAuthorization extends JSONSerializable<
     this.spend_limit = new Coins(spend_limit);
   }
 
-  public static fromAmino(data: SendAuthorization.Amino, _?: boolean): SendAuthorization {
+  public static fromAmino(
+    data: SendAuthorization.Amino,
+    _?: boolean
+  ): SendAuthorization {
     _;
     return new SendAuthorization(Coins.fromAmino(data.value.spend_limit));
   }
 
-  public toAmino(legacy?: boolean): SendAuthorization.Amino {
+  public toAmino(isClassic?: boolean): SendAuthorization.Amino {
     const { spend_limit } = this;
     return {
-      type: legacy ? 'msgauth/SendAuthorization' : 'cosmos-sdk/SendAuthorization',
+      type: isClassic
+        ? 'msgauth/SendAuthorization'
+        : 'cosmos-sdk/SendAuthorization',
       value: {
         spend_limit: spend_limit.toAmino(),
       },
     };
   }
 
-  public static fromData(data: SendAuthorization.Data, _?: boolean): SendAuthorization {
+  public static fromData(
+    data: SendAuthorization.Data,
+    _?: boolean
+  ): SendAuthorization {
     _;
     return new SendAuthorization(Coins.fromData(data.spend_limit));
   }
@@ -43,7 +51,10 @@ export class SendAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: SendAuthorization.Proto, _?: boolean): SendAuthorization {
+  public static fromProto(
+    proto: SendAuthorization.Proto,
+    _?: boolean
+  ): SendAuthorization {
     _;
     return new SendAuthorization(Coins.fromProto(proto.spendLimit));
   }

@@ -25,8 +25,9 @@ export class MsgChannelOpenInit extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgChannelOpenInit {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenInit {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -35,7 +36,10 @@ export class MsgChannelOpenInit extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgChannelOpenInit.Data, _?: boolean): MsgChannelOpenInit {
+  public static fromData(
+    data: MsgChannelOpenInit.Data,
+    _?: boolean
+  ): MsgChannelOpenInit {
     _;
     const { port_id, channel, signer } = data;
     return new MsgChannelOpenInit(
@@ -56,7 +60,10 @@ export class MsgChannelOpenInit extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgChannelOpenInit.Proto, _?: boolean): MsgChannelOpenInit {
+  public static fromProto(
+    proto: MsgChannelOpenInit.Proto,
+    _?: boolean
+  ): MsgChannelOpenInit {
     _;
     return new MsgChannelOpenInit(
       proto.portId,

@@ -30,10 +30,12 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     return new CancelSoftwareUpgradeProposal(title, description);
   }
 
-  public toAmino(legacy?: boolean): CancelSoftwareUpgradeProposal.Amino {
+  public toAmino(isClassic?: boolean): CancelSoftwareUpgradeProposal.Amino {
     const { title, description } = this;
     return {
-      type: legacy ? 'upgrade/CancelSoftwareUpgradeProposal' : 'cosmos-sdk/CancelSoftwareUpgradeProposal',
+      type: isClassic
+        ? 'upgrade/CancelSoftwareUpgradeProposal'
+        : 'cosmos-sdk/CancelSoftwareUpgradeProposal',
       value: {
         title,
         description,
@@ -61,7 +63,8 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: CancelSoftwareUpgradeProposal.Proto, _?: boolean
+    proto: CancelSoftwareUpgradeProposal.Proto,
+    _?: boolean
   ): CancelSoftwareUpgradeProposal {
     _;
     return new CancelSoftwareUpgradeProposal(proto.title, proto.description);
@@ -84,7 +87,10 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): CancelSoftwareUpgradeProposal {
+  public static unpackAny(
+    msgAny: Any,
+    _?: boolean
+  ): CancelSoftwareUpgradeProposal {
     _;
     return CancelSoftwareUpgradeProposal.fromProto(
       CancelSoftwareUpgradeProposal_pb.decode(msgAny.value)
@@ -94,7 +100,9 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
 
 export namespace CancelSoftwareUpgradeProposal {
   export interface Amino {
-    type: 'upgrade/CancelSoftwareUpgradeProposal' | 'cosmos-sdk/CancelSoftwareUpgradeProposal';
+    type:
+      | 'upgrade/CancelSoftwareUpgradeProposal'
+      | 'cosmos-sdk/CancelSoftwareUpgradeProposal';
     value: {
       title: string;
       description: string;

@@ -11,7 +11,7 @@ const lcdUtils = new LCDUtils(
 
 describe('LCDUtils', () => {
   it('calculateTax', async () => {
-    if (lcdUtils.lcd.config.legacy) {
+    if (lcdUtils.lcd.config.isClassic) {
       await expect(
         lcdUtils.calculateTax(new Coin('uluna', '0.0'))
       ).resolves.toBeInstanceOf(Coin);

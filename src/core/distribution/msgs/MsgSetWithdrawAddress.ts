@@ -37,10 +37,10 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
   }
 
-  public toAmino(legacy?: boolean): MsgSetWithdrawAddress.Amino {
+  public toAmino(isClassic?: boolean): MsgSetWithdrawAddress.Amino {
     const { delegator_address, withdraw_address } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'distribution/MsgModifyWithdrawAddress'
         : 'cosmos-sdk/MsgModifyWithdrawAddress',
       value: {
@@ -108,8 +108,8 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
 export namespace MsgSetWithdrawAddress {
   export interface Amino {
     type:
-    | 'distribution/MsgModifyWithdrawAddress'
-    | 'cosmos-sdk/MsgModifyWithdrawAddress';
+      | 'distribution/MsgModifyWithdrawAddress'
+      | 'cosmos-sdk/MsgModifyWithdrawAddress';
     value: {
       delegator_address: AccAddress;
       withdraw_address: AccAddress;

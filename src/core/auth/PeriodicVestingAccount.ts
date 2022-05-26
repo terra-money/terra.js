@@ -45,8 +45,8 @@ export class PeriodicVestingAccount extends JSONSerializable<
     return this.base_vesting_account.base_account.public_key;
   }
 
-  public toAmino(legacy?: boolean): PeriodicVestingAccount.Amino {
-    if (legacy) {
+  public toAmino(isClassic?: boolean): PeriodicVestingAccount.Amino {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, start_time, vesting_periods } = this;
@@ -62,13 +62,13 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public static fromAmino(
     data: PeriodicVestingAccount.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): PeriodicVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromAmino({
       type: 'cosmos-sdk/BaseVestingAccount',
       value: data.value.base_vesting_account,
     });
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
 
@@ -81,8 +81,8 @@ export class PeriodicVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(legacy?: boolean): PeriodicVestingAccount.Data {
-    if (legacy) {
+  public toData(isClassic?: boolean): PeriodicVestingAccount.Data {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, start_time, vesting_periods } = this;
@@ -96,13 +96,13 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public static fromData(
     data: PeriodicVestingAccount.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): PeriodicVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromData({
       '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount',
       ...data.base_vesting_account,
     });
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return new PeriodicVestingAccount(
@@ -112,8 +112,8 @@ export class PeriodicVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(legacy?: boolean): PeriodicVestingAccount.Proto {
-    if (legacy) {
+  public toProto(isClassic?: boolean): PeriodicVestingAccount.Proto {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, vesting_periods } = this;
@@ -126,9 +126,9 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public static fromProto(
     proto: PeriodicVestingAccount.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): PeriodicVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const baseVestingAccount = BaseVestingAccount.fromProto(
@@ -142,8 +142,8 @@ export class PeriodicVestingAccount extends JSONSerializable<
     );
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return Any.fromPartial({
@@ -154,9 +154,9 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public static unpackAny(
     pubkeyAny: Any,
-    legacy?: boolean
+    isClassic?: boolean
   ): PeriodicVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return PeriodicVestingAccount.fromProto(

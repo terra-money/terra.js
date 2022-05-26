@@ -66,11 +66,11 @@ export abstract class Key {
    * only used Amino sign
    *
    * @param tx sign-message of the transaction to sign
-   * @param legacy target network is legacy or not?
+   * @param isClassic target network is isClassic or not?
    */
   public async createSignatureAmino(
     tx: SignDoc,
-    legacy?: boolean
+    isClassic?: boolean
   ): Promise<SignatureV2> {
     if (!this.publicKey) {
       throw new Error(
@@ -83,7 +83,7 @@ export abstract class Key {
       new SignatureV2.Descriptor(
         new SignatureV2.Descriptor.Single(
           SignMode.SIGN_MODE_LEGACY_AMINO_JSON,
-          (await this.sign(Buffer.from(tx.toAminoJSON(legacy)))).toString(
+          (await this.sign(Buffer.from(tx.toAminoJSON(isClassic)))).toString(
             'base64'
           )
         )
@@ -96,11 +96,11 @@ export abstract class Key {
    * Signs a [[SignDoc]] with the method supplied by the child class.
    *
    * @param tx sign-message of the transaction to sign
-   * @param legacy target network is legacy or not?
+   * @param isClassic target network is isClassic or not?
    */
   public async createSignature(
     signDoc: SignDoc,
-    legacy?: boolean
+    isClassic?: boolean
   ): Promise<SignatureV2> {
     if (!this.publicKey) {
       throw new Error(
@@ -119,7 +119,7 @@ export abstract class Key {
     ];
 
     const sigBytes = (
-      await this.sign(Buffer.from(signDoc.toBytes(legacy)))
+      await this.sign(Buffer.from(signDoc.toBytes(isClassic)))
     ).toString('base64');
 
     // restore signDoc to origin
@@ -141,7 +141,7 @@ export abstract class Key {
   public async signTx(
     tx: Tx,
     options: SignOptions,
-    legacy?: boolean
+    isClassic?: boolean
   ): Promise<Tx> {
     const copyTx = new Tx(tx.body, new AuthInfo([], tx.auth_info.fee), []);
     const sign_doc = new SignDoc(
@@ -154,9 +154,9 @@ export abstract class Key {
 
     let signature: SignatureV2;
     if (options.signMode === SignMode.SIGN_MODE_LEGACY_AMINO_JSON) {
-      signature = await this.createSignatureAmino(sign_doc, legacy);
+      signature = await this.createSignatureAmino(sign_doc, isClassic);
     } else {
-      signature = await this.createSignature(sign_doc, legacy);
+      signature = await this.createSignature(sign_doc, isClassic);
     }
 
     const sigData = signature.data.single as SignatureV2.Descriptor.Single;

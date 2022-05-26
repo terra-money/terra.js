@@ -31,10 +31,10 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     return new MsgWithdrawValidatorCommission(validator_address);
   }
 
-  public toAmino(legacy?: boolean): MsgWithdrawValidatorCommission.Amino {
+  public toAmino(isClassic?: boolean): MsgWithdrawValidatorCommission.Amino {
     const { validator_address } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'distribution/MsgWithdrawValidatorCommission'
         : 'cosmos-sdk/MsgWithdrawValCommission',
       value: {
@@ -99,8 +99,8 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
 export namespace MsgWithdrawValidatorCommission {
   export interface Amino {
     type:
-    | 'distribution/MsgWithdrawValidatorCommission'
-    | 'cosmos-sdk/MsgWithdrawValCommission';
+      | 'distribution/MsgWithdrawValidatorCommission'
+      | 'cosmos-sdk/MsgWithdrawValCommission';
     value: {
       validator_address: ValAddress;
     };

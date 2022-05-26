@@ -40,10 +40,10 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgDeposit.Amino {
+  public toAmino(isClassic?: boolean): MsgDeposit.Amino {
     const { proposal_id, depositor, amount } = this;
     return {
-      type: legacy ? 'gov/MsgDeposit' : 'cosmos-sdk/MsgDeposit',
+      type: isClassic ? 'gov/MsgDeposit' : 'cosmos-sdk/MsgDeposit',
       value: {
         proposal_id: proposal_id.toString(),
         depositor,
@@ -92,15 +92,15 @@ export class MsgDeposit extends JSONSerializable<
     });
   }
 
-  public packAny(legacy?: boolean): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
-      value: MsgDeposit_pb.encode(this.toProto(legacy)).finish(),
+      value: MsgDeposit_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgDeposit {
-    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value), legacy);
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgDeposit {
+    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value), isClassic);
   }
 }
 

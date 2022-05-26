@@ -24,8 +24,9 @@ export class MsgUpdateClient extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgUpdateClient {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgUpdateClient {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -33,7 +34,10 @@ export class MsgUpdateClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgUpdateClient.Data, _?: boolean): MsgUpdateClient {
+  public static fromData(
+    data: MsgUpdateClient.Data,
+    _?: boolean
+  ): MsgUpdateClient {
     _;
     const { client_id, header, signer } = data;
     return new MsgUpdateClient(
@@ -54,7 +58,10 @@ export class MsgUpdateClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgUpdateClient.Proto, _?: boolean): MsgUpdateClient {
+  public static fromProto(
+    proto: MsgUpdateClient.Proto,
+    _?: boolean
+  ): MsgUpdateClient {
     _;
     return new MsgUpdateClient(
       proto.clientId,

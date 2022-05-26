@@ -10,8 +10,8 @@ const oracle = new OracleAPI(terra);
 
 describe('OracleAPI', () => {
   it('parameters', async () => {
-    if (terra.config.legacy) {
-      // only legacy network has param query
+    if (terra.config.isClassic) {
+      // only classic network has param query
       await expect(oracle.parameters()).resolves.toMatchObject({
         vote_period: expect.any(Number),
         vote_threshold: expect.any(Dec),

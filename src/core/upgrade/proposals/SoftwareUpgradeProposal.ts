@@ -40,10 +40,12 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): SoftwareUpgradeProposal.Amino {
+  public toAmino(isClassic?: boolean): SoftwareUpgradeProposal.Amino {
     const { title, description, plan } = this;
     return {
-      type: legacy ? 'upgrade/SoftwareUpgradeProposal' : 'cosmos-sdk/SoftwareUpgradeProposal',
+      type: isClassic
+        ? 'upgrade/SoftwareUpgradeProposal'
+        : 'cosmos-sdk/SoftwareUpgradeProposal',
       value: {
         title,
         description,
@@ -116,7 +118,9 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
 
 export namespace SoftwareUpgradeProposal {
   export interface Amino {
-    type: 'upgrade/SoftwareUpgradeProposal' | 'cosmos-sdk/SoftwareUpgradeProposal';
+    type:
+      | 'upgrade/SoftwareUpgradeProposal'
+      | 'cosmos-sdk/SoftwareUpgradeProposal';
     value: {
       title: string;
       description: string;

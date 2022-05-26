@@ -25,8 +25,9 @@ export class MsgCreateClient extends JSONSerializable<
     this.signer = signer;
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgCreateClient {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgCreateClient {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -35,7 +36,10 @@ export class MsgCreateClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgCreateClient.Data, _?: boolean): MsgCreateClient {
+  public static fromData(
+    data: MsgCreateClient.Data,
+    _?: boolean
+  ): MsgCreateClient {
     _;
     const { client_state, consensus_state, signer } = data;
     return new MsgCreateClient(client_state, consensus_state, signer);
@@ -52,7 +56,10 @@ export class MsgCreateClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgCreateClient.Proto, _?: boolean): MsgCreateClient {
+  public static fromProto(
+    proto: MsgCreateClient.Proto,
+    _?: boolean
+  ): MsgCreateClient {
     _;
     return new MsgCreateClient(
       proto.clientState,

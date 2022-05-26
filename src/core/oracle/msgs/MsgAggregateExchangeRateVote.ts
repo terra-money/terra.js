@@ -52,10 +52,10 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
 
   public static fromAmino(
     data: MsgAggregateExchangeRateVote.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgAggregateExchangeRateVote {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const {
@@ -65,9 +65,9 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
     return new MsgAggregateExchangeRateVote(xrs, salt, feeder, validator);
   }
 
-  public toAmino(legacy?: boolean): MsgAggregateExchangeRateVote.Amino {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toAmino(isClassic?: boolean): MsgAggregateExchangeRateVote.Amino {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const { exchange_rates, salt, feeder, validator } = this;
@@ -84,19 +84,19 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
 
   public static fromData(
     proto: MsgAggregateExchangeRateVote.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgAggregateExchangeRateVote {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { exchange_rates, salt, feeder, validator } = proto;
     const xrs = Coins.fromString(exchange_rates);
     return new MsgAggregateExchangeRateVote(xrs, salt, feeder, validator);
   }
 
-  public toData(legacy?: boolean): MsgAggregateExchangeRateVote.Data {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toData(isClassic?: boolean): MsgAggregateExchangeRateVote.Data {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { exchange_rates, salt, feeder, validator } = this;
     return {
@@ -110,10 +110,10 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
 
   public static fromProto(
     proto: MsgAggregateExchangeRateVote.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgAggregateExchangeRateVote {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const xrs = Coins.fromString(proto.exchangeRates);
     return new MsgAggregateExchangeRateVote(
@@ -124,9 +124,9 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
     );
   }
 
-  public toProto(legacy?: boolean): MsgAggregateExchangeRateVote.Proto {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toProto(isClassic?: boolean): MsgAggregateExchangeRateVote.Proto {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { exchange_rates, salt, feeder, validator } = this;
     return MsgAggregateExchangeRateVote_pb.fromPartial({
@@ -160,9 +160,9 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
     );
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public packAny(isClassic?: boolean): Any {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote',
@@ -170,9 +170,12 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgAggregateExchangeRateVote {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgAggregateExchangeRateVote {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return MsgAggregateExchangeRateVote.fromProto(
       MsgAggregateExchangeRateVote_pb.decode(msgAny.value)

@@ -67,7 +67,7 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgCreateValidator.Amino {
+  public toAmino(isClassic?: boolean): MsgCreateValidator.Amino {
     const {
       description,
       commission,
@@ -78,7 +78,7 @@ export class MsgCreateValidator extends JSONSerializable<
       value,
     } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'staking/MsgCreateValidator'
         : 'cosmos-sdk/MsgCreateValidator',
       value: {

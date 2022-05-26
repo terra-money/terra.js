@@ -37,7 +37,10 @@ export class BasicAllowance extends JSONSerializable<
     }
   }
 
-  public static fromAmino(data: BasicAllowance.Amino, _?: boolean): BasicAllowance {
+  public static fromAmino(
+    data: BasicAllowance.Amino,
+    _?: boolean
+  ): BasicAllowance {
     _;
     const {
       value: { spend_limit, expiration },
@@ -51,10 +54,10 @@ export class BasicAllowance extends JSONSerializable<
     new BasicAllowance('');
   }
 
-  public toAmino(legacy?: boolean): BasicAllowance.Amino {
+  public toAmino(isClassic?: boolean): BasicAllowance.Amino {
     const { spend_limit, expiration } = this;
     return {
-      type: legacy ? 'feegrant/BasicAllowance' : 'cosmos-sdk/BasicAllowance',
+      type: isClassic ? 'feegrant/BasicAllowance' : 'cosmos-sdk/BasicAllowance',
       value: {
         spend_limit: spend_limit?.toAmino() || undefined,
         expiration:
@@ -63,7 +66,10 @@ export class BasicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: BasicAllowance.Data, _?: boolean): BasicAllowance {
+  public static fromData(
+    proto: BasicAllowance.Data,
+    _?: boolean
+  ): BasicAllowance {
     _;
     const { spend_limit, expiration } = proto;
     return new BasicAllowance(
@@ -83,7 +89,10 @@ export class BasicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: BasicAllowance.Proto, _?: boolean): BasicAllowance {
+  public static fromProto(
+    proto: BasicAllowance.Proto,
+    _?: boolean
+  ): BasicAllowance {
     _;
     return new BasicAllowance(
       Coins.fromProto(proto.spendLimit),

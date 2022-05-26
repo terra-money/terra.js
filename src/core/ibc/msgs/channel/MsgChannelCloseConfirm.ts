@@ -29,8 +29,9 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgChannelCloseConfirm {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgChannelCloseConfirm {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -40,7 +41,8 @@ export class MsgChannelCloseConfirm extends JSONSerializable<
   }
 
   public static fromData(
-    data: MsgChannelCloseConfirm.Data, _?: boolean
+    data: MsgChannelCloseConfirm.Data,
+    _?: boolean
   ): MsgChannelCloseConfirm {
     _;
     const { port_id, channel_id, proof_init, proof_height, signer } = data;

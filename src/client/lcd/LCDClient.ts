@@ -48,14 +48,14 @@ export interface LCDClientConfig {
   /**
    * is it connected to forked network?
    */
-  legacy?: boolean; // FIXME: rename it
+  isClassic?: boolean; // FIXME: rename it
 }
 
 const DEFAULT_LCD_OPTIONS: Partial<LCDClientConfig> = {
   gasAdjustment: 1.75,
 };
 
-// legacy network: true
+// isClassic network: true
 // forked network : false
 const DEFAULT_NETWORK_TYPE_BY_CHAIN_ID: { [key: string]: boolean } = {
   default: false,
@@ -132,7 +132,7 @@ export class LCDClient {
       gasPrices:
         DEFAULT_GAS_PRICES_BY_CHAIN_ID[config.chainID] ||
         DEFAULT_GAS_PRICES_BY_CHAIN_ID['default'],
-      legacy:
+      isClassic:
         DEFAULT_NETWORK_TYPE_BY_CHAIN_ID[config.chainID] ||
         DEFAULT_NETWORK_TYPE_BY_CHAIN_ID['default'],
       ...config,

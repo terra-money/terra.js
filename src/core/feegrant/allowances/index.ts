@@ -28,39 +28,45 @@ export namespace Allowance {
     | PeriodicAllowance.Proto
     | AllowedMsgAllowance.Proto;
 
-  export function fromAmino(data: Allowance.Amino, legacy?: boolean): Allowance {
+  export function fromAmino(
+    data: Allowance.Amino,
+    isClassic?: boolean
+  ): Allowance {
     switch (data.type) {
       case 'feegrant/BasicAllowance':
       case 'cosmos-sdk/BasicAllowance':
-        return BasicAllowance.fromAmino(data, legacy);
+        return BasicAllowance.fromAmino(data, isClassic);
       case 'feegrant/PeriodicAllowance':
       case 'cosmos-sdk/PeriodicAllowance':
-        return PeriodicAllowance.fromAmino(data, legacy);
+        return PeriodicAllowance.fromAmino(data, isClassic);
       case 'feegrant/AllowedMsgAllowance':
       case 'cosmos-sdk/AllowedMsgAllowance':
-        return AllowedMsgAllowance.fromAmino(data, legacy);
+        return AllowedMsgAllowance.fromAmino(data, isClassic);
     }
   }
 
-  export function fromData(data: Allowance.Data, legacy?: boolean): Allowance {
+  export function fromData(
+    data: Allowance.Data,
+    isClassic?: boolean
+  ): Allowance {
     switch (data['@type']) {
       case '/cosmos.feegrant.v1beta1.PeriodicAllowance':
-        return PeriodicAllowance.fromData(data, legacy);
+        return PeriodicAllowance.fromData(data, isClassic);
       case '/cosmos.feegrant.v1beta1.BasicAllowance':
-        return BasicAllowance.fromData(data, legacy);
+        return BasicAllowance.fromData(data, isClassic);
       case '/cosmos.feegrant.v1beta1.AllowedMsgAllowance':
-        return AllowedMsgAllowance.fromData(data, legacy);
+        return AllowedMsgAllowance.fromData(data, isClassic);
     }
   }
 
-  export function fromProto(proto: Any, legacy?: boolean): Allowance {
+  export function fromProto(proto: Any, isClassic?: boolean): Allowance {
     switch (proto.typeUrl) {
       case '/cosmos.feegrant.v1beta1.PeriodicAllowance':
-        return PeriodicAllowance.unpackAny(proto, legacy);
+        return PeriodicAllowance.unpackAny(proto, isClassic);
       case '/cosmos.feegrant.v1beta1.BasicAllowance':
-        return BasicAllowance.unpackAny(proto, legacy);
+        return BasicAllowance.unpackAny(proto, isClassic);
       case '/cosmos.feegrant.v1beta1.AllowedMsgAllowance':
-        return AllowedMsgAllowance.unpackAny(proto, legacy);
+        return AllowedMsgAllowance.unpackAny(proto, isClassic);
     }
 
     throw new Error(`not supported allowance ${proto.typeUrl}`);

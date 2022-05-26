@@ -24,8 +24,9 @@ export class MsgChannelCloseInit extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgChannelCloseInit {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgChannelCloseInit {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -34,7 +35,10 @@ export class MsgChannelCloseInit extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgChannelCloseInit.Data, _?: boolean): MsgChannelCloseInit {
+  public static fromData(
+    data: MsgChannelCloseInit.Data,
+    _?: boolean
+  ): MsgChannelCloseInit {
     _;
     const { port_id, channel_id, signer } = data;
     return new MsgChannelCloseInit(port_id, channel_id, signer);

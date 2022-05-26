@@ -14,49 +14,58 @@ export class AuthorizationGrant extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(amino: AuthorizationGrant.Amino, legacy?: boolean): AuthorizationGrant {
+  public static fromAmino(
+    amino: AuthorizationGrant.Amino,
+    isClassic?: boolean
+  ): AuthorizationGrant {
     const { authorization, expiration } = amino;
     return new AuthorizationGrant(
-      Authorization.fromAmino(authorization, legacy),
+      Authorization.fromAmino(authorization, isClassic),
       new Date(expiration)
     );
   }
 
-  public toAmino(legacy?: boolean): AuthorizationGrant.Amino {
+  public toAmino(isClassic?: boolean): AuthorizationGrant.Amino {
     const { authorization, expiration } = this;
     return {
-      authorization: authorization.toAmino(legacy),
+      authorization: authorization.toAmino(isClassic),
       expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 
-  public static fromData(data: AuthorizationGrant.Data, legacy?: boolean): AuthorizationGrant {
+  public static fromData(
+    data: AuthorizationGrant.Data,
+    isClassic?: boolean
+  ): AuthorizationGrant {
     const { authorization, expiration } = data;
     return new AuthorizationGrant(
-      Authorization.fromData(authorization, legacy),
+      Authorization.fromData(authorization, isClassic),
       new Date(expiration)
     );
   }
 
-  public toData(legacy?: boolean): AuthorizationGrant.Data {
+  public toData(isClassic?: boolean): AuthorizationGrant.Data {
     const { authorization, expiration } = this;
     return {
-      authorization: authorization.toData(legacy),
+      authorization: authorization.toData(isClassic),
       expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 
-  public static fromProto(proto: AuthorizationGrant.Proto, legacy?: boolean): AuthorizationGrant {
+  public static fromProto(
+    proto: AuthorizationGrant.Proto,
+    isClassic?: boolean
+  ): AuthorizationGrant {
     return new AuthorizationGrant(
-      Authorization.fromProto(proto.authorization as Any, legacy),
+      Authorization.fromProto(proto.authorization as Any, isClassic),
       proto.expiration as Date
     );
   }
 
-  public toProto(legacy?: boolean): AuthorizationGrant.Proto {
+  public toProto(isClassic?: boolean): AuthorizationGrant.Proto {
     const { authorization, expiration } = this;
     return Grant_pb.fromPartial({
-      authorization: authorization.packAny(legacy),
+      authorization: authorization.packAny(isClassic),
       expiration,
     });
   }
@@ -88,38 +97,47 @@ export namespace Authorization {
     | GenericAuthorization.Data
     | StakeAuthorization.Data;
   export type Proto = Any;
-  export function fromAmino(data: Authorization.Amino, legacy?: boolean): Authorization {
+  export function fromAmino(
+    data: Authorization.Amino,
+    isClassic?: boolean
+  ): Authorization {
     switch (data.type) {
       case 'msgauth/SendAuthorization':
       case 'cosmos-sdk/SendAuthorization':
-        return SendAuthorization.fromAmino(data, legacy);
+        return SendAuthorization.fromAmino(data, isClassic);
       case 'msgauth/GenericAuthorization':
       case 'cosmos-sdk/GenericAuthorization':
-        return GenericAuthorization.fromAmino(data, legacy);
+        return GenericAuthorization.fromAmino(data, isClassic);
     }
   }
 
-  export function fromData(data: Authorization.Data, legacy?: boolean): Authorization {
+  export function fromData(
+    data: Authorization.Data,
+    isClassic?: boolean
+  ): Authorization {
     switch (data['@type']) {
       case '/cosmos.authz.v1beta1.GenericAuthorization':
-        return GenericAuthorization.fromData(data, legacy);
+        return GenericAuthorization.fromData(data, isClassic);
       case '/cosmos.bank.v1beta1.SendAuthorization':
-        return SendAuthorization.fromData(data, legacy);
+        return SendAuthorization.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.StakeAuthorization':
-        return StakeAuthorization.fromData(data, legacy);
+        return StakeAuthorization.fromData(data, isClassic);
     }
   }
 
-  export function fromProto(proto: Authorization.Proto, legacy?: boolean): Authorization {
+  export function fromProto(
+    proto: Authorization.Proto,
+    isClassic?: boolean
+  ): Authorization {
     const typeUrl = proto.typeUrl;
     switch (typeUrl) {
       case '/cosmos.authz.v1beta1.GenericAuthorization':
-        return GenericAuthorization.unpackAny(proto, legacy);
+        return GenericAuthorization.unpackAny(proto, isClassic);
 
       case '/cosmos.bank.v1beta1.SendAuthorization':
-        return SendAuthorization.unpackAny(proto, legacy);
+        return SendAuthorization.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.StakeAuthorization':
-        return StakeAuthorization.unpackAny(proto, legacy);
+        return StakeAuthorization.unpackAny(proto, isClassic);
     }
 
     throw new Error(`Authorization type ${typeUrl} not recognized`);

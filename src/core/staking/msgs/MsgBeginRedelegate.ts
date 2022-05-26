@@ -52,7 +52,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgBeginRedelegate.Amino {
+  public toAmino(isClassic?: boolean): MsgBeginRedelegate.Amino {
     const {
       delegator_address,
       validator_src_address,
@@ -60,7 +60,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
       amount,
     } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'staking/MsgBeginRedelegate'
         : 'cosmos-sdk/MsgBeginRedelegate',
       value: {

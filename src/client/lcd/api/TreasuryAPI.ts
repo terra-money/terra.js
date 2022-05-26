@@ -52,7 +52,6 @@ export namespace TreasuryParams {
   }
 }
 export class TreasuryAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -62,8 +61,8 @@ export class TreasuryAPI extends BaseAPI {
    * @returns Coin[]
    */
   public async taxCaps(params: APIParams = {}): Promise<Coins> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -79,8 +78,8 @@ export class TreasuryAPI extends BaseAPI {
    * @param denom denomination desired for Tax Cap query.
    */
   public async taxCap(denom: Denom, params: APIParams = {}): Promise<Coin> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -95,8 +94,8 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current registered Tax Rate.
    */
   public async taxRate(height?: number, _params: APIParams = {}): Promise<Dec> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const params = { ..._params };
@@ -114,8 +113,8 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current registered Reward Weight monetary policy lever.
    */
   public async rewardWeight(params: APIParams = {}): Promise<Dec> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -130,8 +129,8 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the tax proceeds for the epoch.
    */
   public async taxProceeds(params: APIParams = {}): Promise<Coins> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -146,8 +145,8 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the seigniorage proceeds for the epoch.
    */
   public async seigniorageProceeds(params: APIParams = {}): Promise<Coin> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -162,8 +161,8 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current Treasury module's parameters.
    */
   public async parameters(params: APIParams = {}): Promise<TreasuryParams> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c

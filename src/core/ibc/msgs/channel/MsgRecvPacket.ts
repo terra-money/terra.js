@@ -28,8 +28,9 @@ export class MsgRecvPacket extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgRecvPacket {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgRecvPacket {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -61,7 +62,10 @@ export class MsgRecvPacket extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgRecvPacket.Proto, _?: boolean): MsgRecvPacket {
+  public static fromProto(
+    proto: MsgRecvPacket.Proto,
+    _?: boolean
+  ): MsgRecvPacket {
     _;
     return new MsgRecvPacket(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,

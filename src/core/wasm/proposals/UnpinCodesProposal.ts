@@ -8,137 +8,148 @@ import * as Long from 'long';
  * the wasmvm cache.
  */
 export class UnpinCodesProposal extends JSONSerializable<
-    UnpinCodesProposal.Amino,
-    UnpinCodesProposal.Data,
-    UnpinCodesProposal.Proto
+  UnpinCodesProposal.Amino,
+  UnpinCodesProposal.Data,
+  UnpinCodesProposal.Proto
 > {
-    /**
-     * @param title a short summary
-     * @param description a human readable text
-     * @param code_ids the address of the smart code_ids
-     */
-    constructor(
-        public title: string,
-        public description: string,
-        public code_ids: number[],
-    ) {
-        super();
-    }
+  /**
+   * @param title a short summary
+   * @param description a human readable text
+   * @param code_ids the address of the smart code_ids
+   */
+  constructor(
+    public title: string,
+    public description: string,
+    public code_ids: number[]
+  ) {
+    super();
+  }
 
-    public static fromAmino(data: UnpinCodesProposal.Amino, legacy?: boolean): UnpinCodesProposal {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        const {
-            value: { title, description, code_ids },
-        } = data as UnpinCodesProposal.Amino;
-        return new UnpinCodesProposal(
-            title,
-            description,
-            code_ids.map(cid => Number.parseInt(cid)),
-        );
+  public static fromAmino(
+    data: UnpinCodesProposal.Amino,
+    isClassic?: boolean
+  ): UnpinCodesProposal {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    const {
+      value: { title, description, code_ids },
+    } = data as UnpinCodesProposal.Amino;
+    return new UnpinCodesProposal(
+      title,
+      description,
+      code_ids.map(cid => Number.parseInt(cid))
+    );
+  }
 
-    public toAmino(legacy?: boolean): UnpinCodesProposal.Amino {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        const { title, description, code_ids } = this;
-        return {
-            type: 'wasm/UnpinCodesProposal',
-            value: {
-                title,
-                description,
-                code_ids: code_ids.map(cid => cid.toFixed()),
-            },
-        };
+  public toAmino(isClassic?: boolean): UnpinCodesProposal.Amino {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    const { title, description, code_ids } = this;
+    return {
+      type: 'wasm/UnpinCodesProposal',
+      value: {
+        title,
+        description,
+        code_ids: code_ids.map(cid => cid.toFixed()),
+      },
+    };
+  }
 
-    public static fromProto(proto: UnpinCodesProposal.Proto, legacy?: boolean): UnpinCodesProposal {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        return new UnpinCodesProposal(
-            proto.title,
-            proto.description,
-            proto.codeIds.map(codeId => codeId.toNumber()),
-        );
+  public static fromProto(
+    proto: UnpinCodesProposal.Proto,
+    isClassic?: boolean
+  ): UnpinCodesProposal {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    return new UnpinCodesProposal(
+      proto.title,
+      proto.description,
+      proto.codeIds.map(codeId => codeId.toNumber())
+    );
+  }
 
-    public toProto(legacy?: boolean): UnpinCodesProposal.Proto {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        const { title, description, code_ids } = this;
-        return UnpinCodesProposal_pb.fromPartial({
-            title,
-            description,
-            codeIds: code_ids.map(cid => Long.fromNumber(cid)),
-        });
+  public toProto(isClassic?: boolean): UnpinCodesProposal.Proto {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
-    public packAny(legacy?: boolean): Any {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        return Any.fromPartial({
-            typeUrl: '/cosmwasm.wasm.v1.UnpinCodesProposal',
-            value: UnpinCodesProposal_pb.encode(this.toProto(legacy)).finish(),
-        });
+    const { title, description, code_ids } = this;
+    return UnpinCodesProposal_pb.fromPartial({
+      title,
+      description,
+      codeIds: code_ids.map(cid => Long.fromNumber(cid)),
+    });
+  }
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.UnpinCodesProposal',
+      value: UnpinCodesProposal_pb.encode(this.toProto(isClassic)).finish(),
+    });
+  }
 
-    public static unpackAny(msgAny: Any, legacy?: boolean): UnpinCodesProposal {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        return UnpinCodesProposal.fromProto(
-            UnpinCodesProposal_pb.decode(msgAny.value),
-            legacy
-        );
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): UnpinCodesProposal {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    return UnpinCodesProposal.fromProto(
+      UnpinCodesProposal_pb.decode(msgAny.value),
+      isClassic
+    );
+  }
 
-    public static fromData(data: UnpinCodesProposal.Data, legacy?: boolean): UnpinCodesProposal {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        const { title, description, code_ids } = data as UnpinCodesProposal.Data;
-        return new UnpinCodesProposal(
-            title,
-            description,
-            code_ids.map(cid => Number.parseInt(cid)),
-        );
+  public static fromData(
+    data: UnpinCodesProposal.Data,
+    isClassic?: boolean
+  ): UnpinCodesProposal {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    const { title, description, code_ids } = data as UnpinCodesProposal.Data;
+    return new UnpinCodesProposal(
+      title,
+      description,
+      code_ids.map(cid => Number.parseInt(cid))
+    );
+  }
 
-    public toData(legacy?: boolean): UnpinCodesProposal.Data {
-        if (legacy) {
-            throw new Error('Not supported for the network');
-        }
-        const { title, description, code_ids } = this;
-        return {
-            '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal',
-            title,
-            description,
-            code_ids: code_ids.map(cid => cid.toFixed()),
-        };
+  public toData(isClassic?: boolean): UnpinCodesProposal.Data {
+    if (isClassic) {
+      throw new Error('Not supported for the network');
     }
+    const { title, description, code_ids } = this;
+    return {
+      '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal',
+      title,
+      description,
+      code_ids: code_ids.map(cid => cid.toFixed()),
+    };
+  }
 }
 
 export namespace UnpinCodesProposal {
-    export interface Amino {
-        type: 'wasm/UnpinCodesProposal';
-        value: {
-            title: string;
-            description: string;
-            code_ids: string[];
-        };
-    }
+  export interface Amino {
+    type: 'wasm/UnpinCodesProposal';
+    value: {
+      title: string;
+      description: string;
+      code_ids: string[];
+    };
+  }
 
-    export interface Data {
-        '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal';
-        title: string;
-        description: string;
-        code_ids: string[];
-    }
+  export interface Data {
+    '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal';
+    title: string;
+    description: string;
+    code_ids: string[];
+  }
 
-
-    export type Proto = UnpinCodesProposal_pb;
+  export type Proto = UnpinCodesProposal_pb;
 }

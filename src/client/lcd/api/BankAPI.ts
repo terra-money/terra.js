@@ -4,7 +4,6 @@ import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { LCDClient } from '../LCDClient';
 
 export class BankAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -47,7 +46,7 @@ export class BankAPI extends BaseAPI {
     address: AccAddress,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Coins, Pagination]> {
-    if (this.lcd.config.legacy) {
+    if (this.lcd.config.isClassic) {
       throw new Error('Not supported for the network');
     }
     return this.c

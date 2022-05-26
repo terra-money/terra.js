@@ -16,7 +16,7 @@ async function main() {
     chainID: 'localterra',
     URL: 'http://localhost:1317',
     gasPrices: { uluna: 0.38 },
-    legacy: true
+    isClassic: true
   });
 
   // create a simple message that moves coin balances
@@ -63,7 +63,7 @@ async function main() {
       tx.auth_info,
       tx.body
     ),
-    bombay.config.legacy
+    bombay.config.isClassic
   );
   console.log(`accinfo1:${accInfo}`);
 
@@ -75,7 +75,7 @@ async function main() {
       tx.auth_info,
       tx.body
     ),
-    bombay.config.legacy
+    bombay.config.isClassic
   );
 
   tx.appendSignatures([sig1, sig2]);

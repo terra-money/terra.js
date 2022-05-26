@@ -41,8 +41,9 @@ export class MsgConnectionOpenInit extends JSONSerializable<
     this.version = version;
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgConnectionOpenInit {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgConnectionOpenInit {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 

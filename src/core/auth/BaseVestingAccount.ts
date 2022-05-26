@@ -44,7 +44,7 @@ export class BaseVestingAccount extends JSONSerializable<
     return this.base_account.public_key;
   }
 
-  public toAmino(legacy?: boolean): BaseVestingAccount.Amino {
+  public toAmino(isClassic?: boolean): BaseVestingAccount.Amino {
     const {
       base_account,
       original_vesting,
@@ -54,7 +54,7 @@ export class BaseVestingAccount extends JSONSerializable<
     } = this;
 
     return {
-      type: legacy
+      type: isClassic
         ? 'core/BaseVestingAccount'
         : 'cosmos-sdk/BaseVestingAccount',
       value: {
@@ -69,10 +69,10 @@ export class BaseVestingAccount extends JSONSerializable<
 
   public static fromAmino(
     amino: BaseVestingAccount.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): BaseVestingAccount {
     const base_account = BaseAccount.fromAmino({
-      type: legacy ? 'core/Account' : 'cosmos-sdk/BaseAccount',
+      type: isClassic ? 'core/Account' : 'cosmos-sdk/BaseAccount',
       value: amino.value.base_account,
     });
 

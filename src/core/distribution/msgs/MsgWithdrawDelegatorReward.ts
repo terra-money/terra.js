@@ -39,10 +39,10 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
   }
 
-  public toAmino(legacy?: boolean): MsgWithdrawDelegatorReward.Amino {
+  public toAmino(isClassic?: boolean): MsgWithdrawDelegatorReward.Amino {
     const { delegator_address, validator_address } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'distribution/MsgWithdrawDelegationReward'
         : 'cosmos-sdk/MsgWithdrawDelegationReward',
       value: {
@@ -113,8 +113,8 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
 export namespace MsgWithdrawDelegatorReward {
   export interface Amino {
     type:
-    | 'distribution/MsgWithdrawDelegationReward'
-    | 'cosmos-sdk/MsgWithdrawDelegationReward';
+      | 'distribution/MsgWithdrawDelegationReward'
+      | 'cosmos-sdk/MsgWithdrawDelegationReward';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;

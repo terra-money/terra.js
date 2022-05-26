@@ -5,7 +5,6 @@ import { APIParams, Pagination } from '../APIRequester';
 import { LCDClient } from '../LCDClient';
 
 export class AuthzAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -31,18 +30,22 @@ export class AuthzAPI extends BaseAPI {
           params
         )
       )
-      .then(d => [d.grants.map(grant => AuthorizationGrant.fromData(grant, this.lcd.config.legacy))
-        , d.pagination]);
+      .then(d => [
+        d.grants.map(grant =>
+          AuthorizationGrant.fromData(grant, this.lcd.config.isClassic)
+        ),
+        d.pagination,
+      ]);
   }
 
   /**
- * get list of `GrantAuthorization`, granted by granter.
- */
+   * get list of `GrantAuthorization`, granted by granter.
+   */
   public async granter(
     granter: AccAddress,
     params: APIParams = {}
   ): Promise<[AuthorizationGrant[], Pagination]> {
-    if (this.lcd.config.legacy) {
+    if (this.lcd.config.isClassic) {
       throw new Error('Not supported for the network');
     }
     return this.c
@@ -50,7 +53,12 @@ export class AuthzAPI extends BaseAPI {
         `/cosmos/authz/v1beta1/grants/granter/${granter}`,
         params
       )
-      .then(d => [d.grants.map(g => AuthorizationGrant.fromData(g, this.lcd.config.legacy)), d.pagination]);
+      .then(d => [
+        d.grants.map(g =>
+          AuthorizationGrant.fromData(g, this.lcd.config.isClassic)
+        ),
+        d.pagination,
+      ]);
   }
 
   /**
@@ -60,7 +68,7 @@ export class AuthzAPI extends BaseAPI {
     grantee: AccAddress,
     params: APIParams = {}
   ): Promise<[AuthorizationGrant[], Pagination]> {
-    if (this.lcd.config.legacy) {
+    if (this.lcd.config.isClassic) {
       throw new Error('Not supported for the network');
     }
     return this.c
@@ -68,6 +76,11 @@ export class AuthzAPI extends BaseAPI {
         `/cosmos/authz/v1beta1/grants/grantee/${grantee}`,
         params
       )
-      .then(d => [d.grants.map(g => AuthorizationGrant.fromData(g, this.lcd.config.legacy)), d.pagination]);
+      .then(d => [
+        d.grants.map(g =>
+          AuthorizationGrant.fromData(g, this.lcd.config.isClassic)
+        ),
+        d.pagination,
+      ]);
   }
 }

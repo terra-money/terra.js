@@ -15,19 +15,23 @@ export class MsgStoreCode extends JSONSerializable<
    * @param wasm_byte_code base64-encoded bytecode contents
    * @param instantiate_permission  InstantiatePermission access control to apply on contract creation, optional. v2 supported only
    */
-  constructor(public sender: AccAddress, public wasm_byte_code: string, public instantiate_permission?: AccessConfig) {
+  constructor(
+    public sender: AccAddress,
+    public wasm_byte_code: string,
+    public instantiate_permission?: AccessConfig
+  ) {
     super();
   }
 
-  public static fromAmino(data: MsgStoreCode.AminoV2 | MsgStoreCode.AminoV1, legacy?: boolean): MsgStoreCode {
-    if (legacy) {
+  public static fromAmino(
+    data: MsgStoreCode.AminoV2 | MsgStoreCode.AminoV1,
+    isClassic?: boolean
+  ): MsgStoreCode {
+    if (isClassic) {
       const {
         value: { sender, wasm_byte_code },
       } = data as MsgStoreCode.AminoV1;
-      return new MsgStoreCode(
-        sender,
-        wasm_byte_code,
-      );
+      return new MsgStoreCode(sender, wasm_byte_code);
     } else {
       const {
         value: { sender, wasm_byte_code, instantiate_permission },
@@ -35,20 +39,22 @@ export class MsgStoreCode extends JSONSerializable<
       return new MsgStoreCode(
         sender,
         wasm_byte_code,
-        instantiate_permission ? AccessConfig.fromAmino(instantiate_permission) : undefined
+        instantiate_permission
+          ? AccessConfig.fromAmino(instantiate_permission)
+          : undefined
       );
     }
   }
 
-  public toAmino(legacy?: boolean): MsgStoreCode.AminoV2 {
+  public toAmino(isClassic?: boolean): MsgStoreCode.AminoV2 {
     const { sender, wasm_byte_code, instantiate_permission } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         type: 'wasm/MsgStoreCode',
         value: {
           sender,
           wasm_byte_code,
-        }
+        },
       };
     } else {
       return {
@@ -57,30 +63,35 @@ export class MsgStoreCode extends JSONSerializable<
           sender,
           wasm_byte_code,
           instantiate_permission: instantiate_permission?.toAmino(),
-        }
+        },
       };
     }
   }
 
-  public static fromProto(proto: MsgStoreCode.Proto, legacy?: boolean): MsgStoreCode {
-    if (legacy) {
+  public static fromProto(
+    proto: MsgStoreCode.Proto,
+    isClassic?: boolean
+  ): MsgStoreCode {
+    if (isClassic) {
       return new MsgStoreCode(
         proto.sender,
-        Buffer.from(proto.wasmByteCode).toString('base64'),
+        Buffer.from(proto.wasmByteCode).toString('base64')
       );
     } else {
       const p = proto as MsgStoreCode_pb;
       return new MsgStoreCode(
         p.sender,
         Buffer.from(p.wasmByteCode).toString('base64'),
-        p.instantiatePermission ? AccessConfig.fromProto(p.instantiatePermission) : undefined
+        p.instantiatePermission
+          ? AccessConfig.fromProto(p.instantiatePermission)
+          : undefined
       );
     }
   }
 
-  public toProto(legacy?: boolean): MsgStoreCode.Proto {
+  public toProto(isClassic?: boolean): MsgStoreCode.Proto {
     const { sender, wasm_byte_code, instantiate_permission } = this;
-    if (legacy) {
+    if (isClassic) {
       return MsgStoreCode_legacy_pb.fromPartial({
         sender,
         wasmByteCode: Buffer.from(wasm_byte_code, 'base64'),
@@ -90,54 +101,63 @@ export class MsgStoreCode extends JSONSerializable<
         sender,
         wasmByteCode: Buffer.from(wasm_byte_code, 'base64'),
         instantiatePermission: instantiate_permission?.toProto(),
-      })
+      });
     }
   }
 
-  public packAny(legacy?: boolean): Any {
+  public packAny(isClassic?: boolean): Any {
     let typeUrl: string;
-    if (legacy) {
+    if (isClassic) {
       typeUrl = '/terra.wasm.v1beta1.MsgStoreCode';
     } else {
       typeUrl = '/cosmwasm.wasm.v1.MsgStoreCode';
     }
     const any = Any.fromPartial({
       typeUrl,
-      value: legacy ?
-        MsgStoreCode_legacy_pb.encode(this.toProto(legacy)).finish() :
-        MsgStoreCode_pb.encode(this.toProto(legacy)).finish(),
+      value: isClassic
+        ? MsgStoreCode_legacy_pb.encode(this.toProto(isClassic)).finish()
+        : MsgStoreCode_pb.encode(this.toProto(isClassic)).finish(),
     });
     return any;
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgStoreCode {
-    if (legacy) {
-      return MsgStoreCode.fromProto(MsgStoreCode_legacy_pb.decode(msgAny.value), legacy);
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgStoreCode {
+    if (isClassic) {
+      return MsgStoreCode.fromProto(
+        MsgStoreCode_legacy_pb.decode(msgAny.value),
+        isClassic
+      );
     } else {
-      return MsgStoreCode.fromProto(MsgStoreCode_pb.decode(msgAny.value), legacy);
+      return MsgStoreCode.fromProto(
+        MsgStoreCode_pb.decode(msgAny.value),
+        isClassic
+      );
     }
   }
 
-  public static fromData(data: MsgStoreCode.DataV2 | MsgStoreCode.DataV1, legacy?: boolean): MsgStoreCode {
-    if (legacy) {
+  public static fromData(
+    data: MsgStoreCode.DataV2 | MsgStoreCode.DataV1,
+    isClassic?: boolean
+  ): MsgStoreCode {
+    if (isClassic) {
       const { sender, wasm_byte_code } = data as MsgStoreCode.DataV1;
-      return new MsgStoreCode(
-        sender,
-        wasm_byte_code
-      );
+      return new MsgStoreCode(sender, wasm_byte_code);
     } else {
-      const { sender, wasm_byte_code, instantiate_permission } = data as MsgStoreCode.DataV2;
+      const { sender, wasm_byte_code, instantiate_permission } =
+        data as MsgStoreCode.DataV2;
       return new MsgStoreCode(
         sender,
         wasm_byte_code,
-        instantiate_permission ? AccessConfig.fromData(instantiate_permission) : undefined
+        instantiate_permission
+          ? AccessConfig.fromData(instantiate_permission)
+          : undefined
       );
     }
   }
 
-  public toData(legacy?: boolean): MsgStoreCode.Data {
+  public toData(isClassic?: boolean): MsgStoreCode.Data {
     const { sender, wasm_byte_code, instantiate_permission } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         '@type': '/terra.wasm.v1beta1.MsgStoreCode',
         sender,

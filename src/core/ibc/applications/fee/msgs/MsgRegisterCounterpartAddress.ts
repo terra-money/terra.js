@@ -6,108 +6,128 @@ import { MsgRegisterCounterpartyAddress as MsgRegisterCounterpartyAddress_pb } f
  * MsgRegisterCounterpartyAddress defines the request type for the RegisterCounterpartyAddress rpc
  */
 export class MsgRegisterCounterpartyAddress extends JSONSerializable<
-    any,
-    MsgRegisterCounterpartyAddress.Data,
-    MsgRegisterCounterpartyAddress.Proto
+  any,
+  MsgRegisterCounterpartyAddress.Data,
+  MsgRegisterCounterpartyAddress.Proto
 > {
-    /**
-     * @param address the relayer address 
-     * @param counterparty_adress the counterparty relayer address
-     * @param channel_id unique channel identifier
-     */
-    constructor(
-        public address: string,
-        public counterparty_address: string,
-        public channel_id: string,
-    ) {
-        super();
-    }
+  /**
+   * @param address the relayer address
+   * @param counterparty_adress the counterparty relayer address
+   * @param channel_id unique channel identifier
+   */
+  constructor(
+    public address: string,
+    public counterparty_address: string,
+    public channel_id: string
+  ) {
+    super();
+  }
 
-    public static fromAmino(_: any, legacy?: boolean): MsgRegisterCounterpartyAddress {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        _;
-        throw new Error('Amino not supported');
+  public static fromAmino(
+    _: any,
+    isClassic?: boolean
+  ): MsgRegisterCounterpartyAddress {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    _;
+    throw new Error('Amino not supported');
+  }
 
-    public toAmino(legacy?: boolean): any {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        throw new Error('Amino not supported');
+  public toAmino(isClassic?: boolean): any {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    throw new Error('Amino not supported');
+  }
 
-    public static fromData(data: MsgRegisterCounterpartyAddress.Data, legacy?: boolean): MsgRegisterCounterpartyAddress {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        const { address, counterparty_address, channel_id } = data;
-
-        return new MsgRegisterCounterpartyAddress(address, counterparty_address, channel_id);
+  public static fromData(
+    data: MsgRegisterCounterpartyAddress.Data,
+    isClassic?: boolean
+  ): MsgRegisterCounterpartyAddress {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    const { address, counterparty_address, channel_id } = data;
 
-    public toData(legacy?: boolean): MsgRegisterCounterpartyAddress.Data {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        const { address, counterparty_address, channel_id } = this;
-        return {
-            '@type': '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
-            address,
-            counterparty_address,
-            channel_id
-        };
-    }
+    return new MsgRegisterCounterpartyAddress(
+      address,
+      counterparty_address,
+      channel_id
+    );
+  }
 
-    public static fromProto(proto: MsgRegisterCounterpartyAddress.Proto, legacy?: boolean): MsgRegisterCounterpartyAddress {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        return new MsgRegisterCounterpartyAddress(
-            proto.address,
-            proto.counterpartyAddress,
-            proto.channelId
-        );
+  public toData(isClassic?: boolean): MsgRegisterCounterpartyAddress.Data {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    const { address, counterparty_address, channel_id } = this;
+    return {
+      '@type': '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
+      address,
+      counterparty_address,
+      channel_id,
+    };
+  }
 
-    public toProto(legacy?: boolean): MsgRegisterCounterpartyAddress.Proto {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        const { address, counterparty_address, channel_id } = this;
-        return MsgRegisterCounterpartyAddress_pb.fromPartial({
-            address,
-            counterpartyAddress: counterparty_address,
-            channelId: channel_id
-        });
+  public static fromProto(
+    proto: MsgRegisterCounterpartyAddress.Proto,
+    isClassic?: boolean
+  ): MsgRegisterCounterpartyAddress {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    return new MsgRegisterCounterpartyAddress(
+      proto.address,
+      proto.counterpartyAddress,
+      proto.channelId
+    );
+  }
 
-    public packAny(legacy?: boolean): Any {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        return Any.fromPartial({
-            typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
-            value: MsgRegisterCounterpartyAddress_pb.encode(this.toProto(legacy)).finish(),
-        });
+  public toProto(isClassic?: boolean): MsgRegisterCounterpartyAddress.Proto {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    const { address, counterparty_address, channel_id } = this;
+    return MsgRegisterCounterpartyAddress_pb.fromPartial({
+      address,
+      counterpartyAddress: counterparty_address,
+      channelId: channel_id,
+    });
+  }
 
-    public static unpackAny(msgAny: Any, legacy?: boolean): MsgRegisterCounterpartyAddress {
-        if (legacy) {
-            throw new Error('Net supported for the network')
-        }
-        return MsgRegisterCounterpartyAddress.fromProto(MsgRegisterCounterpartyAddress_pb.decode(msgAny.value));
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
     }
+    return Any.fromPartial({
+      typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
+      value: MsgRegisterCounterpartyAddress_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
+    });
+  }
+
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgRegisterCounterpartyAddress {
+    if (isClassic) {
+      throw new Error('Net supported for the network');
+    }
+    return MsgRegisterCounterpartyAddress.fromProto(
+      MsgRegisterCounterpartyAddress_pb.decode(msgAny.value)
+    );
+  }
 }
 
 export namespace MsgRegisterCounterpartyAddress {
-    export interface Data {
-        '@type': '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress';
-        address: string;
-        counterparty_address: string;
-        channel_id: string;
-    }
+  export interface Data {
+    '@type': '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress';
+    address: string;
+    counterparty_address: string;
+    channel_id: string;
+  }
 
-    export type Proto = MsgRegisterCounterpartyAddress_pb;
+  export type Proto = MsgRegisterCounterpartyAddress_pb;
 }
