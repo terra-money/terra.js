@@ -54,15 +54,15 @@ npm install @terra-money/terra.js
 Terra.js can be used in Node.js, as well as inside the browser. Please check the [docs](https://docs.terra.money/docs/develop/sdks/terra-js/README.html) for notes on how to get up and running.
 
 ### Getting blockchain data
-:exclamation: terra.js can connect both legacy and current network. If you want to communicate legacy chain, you have to set legacy as `true`.
+:exclamation: terra.js can connect both terra-classic and terra network. If you want to communicate with classic chain, you have to set isClassic as `true`.
 ```ts
 import { LCDClient, Coin } from '@terra-money/terra.js';
 
 // connect to bombay testnet
 const terra = new LCDClient({
-  URL: 'https://bombay-lcd.terra.dev',
-  chainID: 'bombay-12',
-  legacy: false  // *set to true to connect legacy chain*
+  URL: 'https://pisco-lcd.terra.dev',
+  chainID: 'pisco-1',
+  isClassic: false  // *set to true to connect terra-classic chain*
 });
 
 // To use LocalTerra
