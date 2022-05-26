@@ -58,11 +58,18 @@ Terra.js can be used in Node.js, as well as inside the browser. Please check the
 ```ts
 import { LCDClient, Coin } from '@terra-money/terra.js';
 
-// connect to bombay testnet
+// connect to pisco testnet
 const terra = new LCDClient({
   URL: 'https://pisco-lcd.terra.dev',
   chainID: 'pisco-1',
-  isClassic: false  // *set to true to connect terra-classic chain*
+  isClassic: false  // if it is unset, LCDClient assumes the flag is false.
+});
+
+// connect to bombay testnet
+const terra_bombay = new LCDClient({
+  URL: 'https://pisco-lcd.terra.dev',
+  chainID: 'pisco-1',
+  isClassic: true  // *set to true to connect terra-classic chain*
 });
 
 // To use LocalTerra
