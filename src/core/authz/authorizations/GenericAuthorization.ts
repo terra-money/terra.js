@@ -19,10 +19,12 @@ export class GenericAuthorization extends JSONSerializable<
     return new GenericAuthorization(data.value.msg);
   }
 
-  public toAmino(legacy?: boolean): GenericAuthorization.Amino {
+  public toAmino(isClassic?: boolean): GenericAuthorization.Amino {
     const { msg } = this;
     return {
-      type: legacy ? 'msgauth/GenericAuthorization' : 'cosmos-sdk/GenericAuthorization',
+      type: isClassic
+        ? 'msgauth/GenericAuthorization'
+        : 'cosmos-sdk/GenericAuthorization',
       value: {
         msg,
       },

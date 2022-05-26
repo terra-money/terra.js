@@ -31,10 +31,10 @@ export class MsgUnjail extends JSONSerializable<
     return new MsgUnjail(address);
   }
 
-  public toAmino(legacy?: boolean): MsgUnjail.Amino {
+  public toAmino(isClassic?: boolean): MsgUnjail.Amino {
     const { address } = this;
     return {
-      type: legacy ? 'slashing/MsgUnjail' : 'cosmos-sdk/MsgUnjail',
+      type: isClassic ? 'slashing/MsgUnjail' : 'cosmos-sdk/MsgUnjail',
       value: {
         address,
       },

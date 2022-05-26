@@ -29,8 +29,9 @@ export class MsgChannelOpenConfirm extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgChannelOpenConfirm {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenConfirm {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 

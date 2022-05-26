@@ -25,7 +25,6 @@ export namespace MarketParams {
 }
 
 export class MarketAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -40,8 +39,8 @@ export class MarketAPI extends BaseAPI {
     askDenom: Denom,
     _params: APIParams = {}
   ): Promise<Coin> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const params = {
@@ -59,8 +58,8 @@ export class MarketAPI extends BaseAPI {
    * Gets current value of the pool delta, which is used to determine Terra<>Luna swap rates.
    */
   public async poolDelta(params: APIParams = {}): Promise<Dec> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c
@@ -75,8 +74,8 @@ export class MarketAPI extends BaseAPI {
    * Gets the current Market module's parameters.
    */
   public async parameters(params: APIParams = {}): Promise<MarketParams> {
-    if (!this.lcd.config.legacy) {
-      throw new Error('Not supported for the network')
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return this.c

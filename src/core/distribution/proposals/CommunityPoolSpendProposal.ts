@@ -48,10 +48,10 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): CommunityPoolSpendProposal.Amino {
+  public toAmino(isClassic?: boolean): CommunityPoolSpendProposal.Amino {
     const { title, description, recipient, amount } = this;
     return {
-      type: legacy
+      type: isClassic
         ? 'distribution/CommunityPoolSpendProposal'
         : 'cosmos-sdk/CommunityPoolSpendProposal',
       value: {

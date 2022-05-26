@@ -41,10 +41,10 @@ export class MsgSend extends JSONSerializable<
     return new MsgSend(from_address, to_address, Coins.fromAmino(amount));
   }
 
-  public toAmino(legacy?: boolean): MsgSend.Amino {
+  public toAmino(isClassic?: boolean): MsgSend.Amino {
     const { from_address, to_address, amount } = this;
     return {
-      type: legacy ? 'bank/MsgSend' : 'cosmos-sdk/MsgSend',
+      type: isClassic ? 'bank/MsgSend' : 'cosmos-sdk/MsgSend',
       value: {
         from_address,
         to_address,
@@ -53,8 +53,8 @@ export class MsgSend extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgSend.Data, legacy?: boolean): MsgSend {
-    legacy;
+  public static fromData(data: MsgSend.Data, isClassic?: boolean): MsgSend {
+    isClassic;
     const { from_address, to_address, amount } = data;
 
     return new MsgSend(from_address, to_address, Coins.fromData(amount));

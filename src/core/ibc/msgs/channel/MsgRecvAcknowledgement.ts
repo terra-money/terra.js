@@ -30,8 +30,9 @@ export class MsgAcknowledgement extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgAcknowledgement {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgAcknowledgement {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -40,7 +41,10 @@ export class MsgAcknowledgement extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgAcknowledgement.Data, _?: boolean): MsgAcknowledgement {
+  public static fromData(
+    data: MsgAcknowledgement.Data,
+    _?: boolean
+  ): MsgAcknowledgement {
     _;
     const { packet, acknowledgement, proof_acked, proof_height, signer } = data;
     return new MsgAcknowledgement(
@@ -65,7 +69,10 @@ export class MsgAcknowledgement extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgAcknowledgement.Proto, _?: boolean): MsgAcknowledgement {
+  public static fromProto(
+    proto: MsgAcknowledgement.Proto,
+    _?: boolean
+  ): MsgAcknowledgement {
     _;
     return new MsgAcknowledgement(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,

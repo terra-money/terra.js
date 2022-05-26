@@ -24,7 +24,7 @@ export function getCodeId(
 export function getContractAddress(
   txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
   msgIndex = 0,
-  legacy = false
+  isClassic = false
 ): string {
   if (
     isTxError(txResult) ||
@@ -35,7 +35,7 @@ export function getContractAddress(
   }
   let eventName: string;
   let attributeKey: string;
-  if (legacy) {
+  if (isClassic) {
     eventName = 'instantiate_contract';
     attributeKey = 'contract_address';
   } else {
@@ -57,7 +57,7 @@ export interface ContractEvent {
 export function getContractEvents(
   txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
   msgIndex = 0,
-  legacy = false
+  isClassic = false
 ): ContractEvent[] {
   if (
     isTxError(txResult) ||
@@ -69,7 +69,7 @@ export function getContractEvents(
 
   let eventName: string;
   let attributeKey: string;
-  if (legacy) {
+  if (isClassic) {
     eventName = 'from_contract';
     attributeKey = 'contract_address';
   } else {

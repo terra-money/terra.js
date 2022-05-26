@@ -40,10 +40,10 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgDelegate.Amino {
+  public toAmino(isClassic?: boolean): MsgDelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
-      type: legacy ? 'staking/MsgDelegate' : 'cosmos-sdk/MsgDelegate',
+      type: isClassic ? 'staking/MsgDelegate' : 'cosmos-sdk/MsgDelegate',
       value: {
         delegator_address,
         validator_address,

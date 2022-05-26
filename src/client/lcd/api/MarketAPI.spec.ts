@@ -10,8 +10,8 @@ const market = new MarketAPI(terra);
 
 describe('MarketAPI', () => {
   it('parameters', async () => {
-    if (terra.config.legacy) {
-      // only legacy network has param query
+    if (terra.config.isClassic) {
+      // only classic network has param query
       await expect(market.parameters()).resolves.toMatchObject({
         pool_recovery_period: expect.any(Number),
         base_pool: expect.any(Dec),

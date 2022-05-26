@@ -40,8 +40,8 @@ export class ContinuousVestingAccount extends JSONSerializable<
     return this.base_vesting_account.base_account.public_key;
   }
 
-  public toAmino(legacy?: boolean): ContinuousVestingAccount.Amino {
-    if (legacy) {
+  public toAmino(isClassic?: boolean): ContinuousVestingAccount.Amino {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, start_time } = this;
@@ -56,13 +56,13 @@ export class ContinuousVestingAccount extends JSONSerializable<
 
   public static fromAmino(
     data: ContinuousVestingAccount.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): ContinuousVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromAmino({
       type: 'cosmos-sdk/BaseVestingAccount',
       value: data.value.base_vesting_account,
     });
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return new ContinuousVestingAccount(
@@ -71,8 +71,8 @@ export class ContinuousVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(legacy?: boolean): ContinuousVestingAccount.Data {
-    if (legacy) {
+  public toData(isClassic?: boolean): ContinuousVestingAccount.Data {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, start_time } = this;
@@ -85,9 +85,9 @@ export class ContinuousVestingAccount extends JSONSerializable<
 
   public static fromData(
     data: ContinuousVestingAccount.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): ContinuousVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const base_vesting_account = BaseVestingAccount.fromData({
@@ -101,8 +101,8 @@ export class ContinuousVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(legacy?: boolean): ContinuousVestingAccount.Proto {
-    if (legacy) {
+  public toProto(isClassic?: boolean): ContinuousVestingAccount.Proto {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const { base_vesting_account, start_time } = this;
@@ -115,9 +115,9 @@ export class ContinuousVestingAccount extends JSONSerializable<
 
   public static fromProto(
     ContinuousVestingAccountProto: ContinuousVestingAccount.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): ContinuousVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     const baseVestingAccount = BaseVestingAccount.fromProto(
@@ -130,8 +130,8 @@ export class ContinuousVestingAccount extends JSONSerializable<
     );
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return Any.fromPartial({
@@ -142,9 +142,9 @@ export class ContinuousVestingAccount extends JSONSerializable<
 
   public static unpackAny(
     pubkeyAny: Any,
-    legacy?: boolean
+    isClassic?: boolean
   ): ContinuousVestingAccount {
-    if (legacy) {
+    if (isClassic) {
       throw new Error('Net supported for the network');
     }
     return ContinuousVestingAccount.fromProto(

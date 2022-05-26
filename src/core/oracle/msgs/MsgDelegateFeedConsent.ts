@@ -27,10 +27,10 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
 
   public static fromAmino(
     data: MsgDelegateFeedConsent.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgDelegateFeedConsent {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const {
@@ -39,9 +39,9 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
     return new MsgDelegateFeedConsent(operator, delegate);
   }
 
-  public toAmino(legacy?: boolean): MsgDelegateFeedConsent.Amino {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toAmino(isClassic?: boolean): MsgDelegateFeedConsent.Amino {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const { operator, delegate } = this;
@@ -56,19 +56,19 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
 
   public static fromData(
     data: MsgDelegateFeedConsent.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgDelegateFeedConsent {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const { operator, delegate } = data;
     return new MsgDelegateFeedConsent(operator, delegate);
   }
 
-  public toData(legacy?: boolean): MsgDelegateFeedConsent.Data {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toData(isClassic?: boolean): MsgDelegateFeedConsent.Data {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { operator, delegate } = this;
     return {
@@ -80,18 +80,18 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
 
   public static fromProto(
     proto: MsgDelegateFeedConsent.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgDelegateFeedConsent {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     return new MsgDelegateFeedConsent(proto.operator, proto.delegate);
   }
 
-  public toProto(legacy?: boolean): MsgDelegateFeedConsent.Proto {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toProto(isClassic?: boolean): MsgDelegateFeedConsent.Proto {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
 
     const { operator, delegate } = this;
@@ -101,9 +101,9 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
     });
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public packAny(isClassic?: boolean): Any {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
@@ -111,9 +111,12 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgDelegateFeedConsent {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgDelegateFeedConsent {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return MsgDelegateFeedConsent.fromProto(
       MsgDelegateFeedConsent_pb.decode(msgAny.value)

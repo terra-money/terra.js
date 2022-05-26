@@ -28,8 +28,11 @@ export class MsgExecuteContract extends JSONSerializable<
     this.coins = new Coins(coins);
   }
 
-  public static fromAmino(data: MsgExecuteContract.Amino, legacy?: boolean): MsgExecuteContract {
-    if (legacy) {
+  public static fromAmino(
+    data: MsgExecuteContract.Amino,
+    isClassic?: boolean
+  ): MsgExecuteContract {
+    if (isClassic) {
       const {
         value: { sender, contract, execute_msg, coins },
       } = data as MsgExecuteContract.AminoV1;
@@ -52,9 +55,9 @@ export class MsgExecuteContract extends JSONSerializable<
     }
   }
 
-  public toAmino(legacy?: boolean): MsgExecuteContract.Amino {
+  public toAmino(isClassic?: boolean): MsgExecuteContract.Amino {
     const { sender, contract, execute_msg, coins } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         type: 'wasm/MsgExecuteContract',
         value: {
@@ -77,8 +80,11 @@ export class MsgExecuteContract extends JSONSerializable<
     }
   }
 
-  public static fromProto(proto: MsgExecuteContract.Proto, legacy?: boolean): MsgExecuteContract {
-    if (legacy) {
+  public static fromProto(
+    proto: MsgExecuteContract.Proto,
+    isClassic?: boolean
+  ): MsgExecuteContract {
+    if (isClassic) {
       const p = proto as MsgExecuteContract_legacy_pb;
       return new MsgExecuteContract(
         p.sender,
@@ -97,14 +103,17 @@ export class MsgExecuteContract extends JSONSerializable<
     }
   }
 
-  public toProto(legacy?: boolean): MsgExecuteContract.Proto {
+  public toProto(isClassic?: boolean): MsgExecuteContract.Proto {
     const { sender, contract, execute_msg, coins } = this;
-    if (legacy) {
+    if (isClassic) {
       return MsgExecuteContract_legacy_pb.fromPartial({
         coins: coins.toProto(),
         contract,
         sender,
-        executeMsg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
+        executeMsg: Buffer.from(
+          JSON.stringify(removeNull(execute_msg)),
+          'utf-8'
+        ),
       });
     } else {
       return MsgExecuteContract_pb.fromPartial({
@@ -116,32 +125,43 @@ export class MsgExecuteContract extends JSONSerializable<
     }
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       return Any.fromPartial({
         typeUrl: '/terra.wasm.v1beta1.MsgExecuteContract',
-        value: MsgExecuteContract_legacy_pb.encode(this.toProto(legacy) as MsgExecuteContract_legacy_pb).finish(),
+        value: MsgExecuteContract_legacy_pb.encode(
+          this.toProto(isClassic) as MsgExecuteContract_legacy_pb
+        ).finish(),
       });
     } else {
       return Any.fromPartial({
         typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
-        value: MsgExecuteContract_pb.encode(this.toProto(legacy) as MsgExecuteContract_pb).finish(),
+        value: MsgExecuteContract_pb.encode(
+          this.toProto(isClassic) as MsgExecuteContract_pb
+        ).finish(),
       });
     }
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgExecuteContract {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgExecuteContract {
     return MsgExecuteContract.fromProto(
-      legacy
+      isClassic
         ? MsgExecuteContract_legacy_pb.decode(msgAny.value)
         : MsgExecuteContract_pb.decode(msgAny.value),
-      legacy
+      isClassic
     );
   }
 
-  public static fromData(data: MsgExecuteContract.Data, legacy?: boolean): MsgExecuteContract {
-    if (legacy) {
-      const { sender, contract, execute_msg, coins } = data as MsgExecuteContract.DataV1;
+  public static fromData(
+    data: MsgExecuteContract.Data,
+    isClassic?: boolean
+  ): MsgExecuteContract {
+    if (isClassic) {
+      const { sender, contract, execute_msg, coins } =
+        data as MsgExecuteContract.DataV1;
       return new MsgExecuteContract(
         sender,
         contract,
@@ -149,7 +169,8 @@ export class MsgExecuteContract extends JSONSerializable<
         Coins.fromData(coins)
       );
     } else {
-      const { sender, contract, msg, funds } = data as MsgExecuteContract.DataV2;
+      const { sender, contract, msg, funds } =
+        data as MsgExecuteContract.DataV2;
       return new MsgExecuteContract(
         sender,
         contract,
@@ -159,9 +180,9 @@ export class MsgExecuteContract extends JSONSerializable<
     }
   }
 
-  public toData(legacy?: boolean): MsgExecuteContract.Data {
+  public toData(isClassic?: boolean): MsgExecuteContract.Data {
     const { sender, contract, execute_msg, coins } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         '@type': '/terra.wasm.v1beta1.MsgExecuteContract',
         sender,
@@ -210,7 +231,6 @@ export namespace MsgExecuteContract {
     coins: Coins.Data;
   }
   export interface DataV2 {
-
     '@type': '/cosmwasm.wasm.v1.MsgExecuteContract';
     sender: AccAddress;
     contract: AccAddress;

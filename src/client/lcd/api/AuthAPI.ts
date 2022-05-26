@@ -33,6 +33,6 @@ export class AuthAPI extends BaseAPI {
         | PeriodicVestingAccount.Data
         | ContinuousVestingAccount.Data;
     }>(`/cosmos/auth/v1beta1/accounts/${address}`, params);
-    return Account.fromData(account, this.lcd.config.legacy);
+    return Account.fromData(account, this.lcd.config.isClassic);
   }
 }

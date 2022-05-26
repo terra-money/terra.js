@@ -56,7 +56,7 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgEditValidator.Amino {
+  public toAmino(isClassic?: boolean): MsgEditValidator.Amino {
     const {
       description,
       validator_address,
@@ -64,7 +64,9 @@ export class MsgEditValidator extends JSONSerializable<
       min_self_delegation,
     } = this;
     return {
-      type: legacy ? 'staking/MsgEditValidator' : 'cosmos-sdk/MsgEditValidator',
+      type: isClassic
+        ? 'staking/MsgEditValidator'
+        : 'cosmos-sdk/MsgEditValidator',
       value: {
         description,
         validator_address,

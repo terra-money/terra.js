@@ -42,11 +42,11 @@ export class LocalTerra extends LCDClient {
     test10: Wallet;
   };
 
-  constructor(legacy?: boolean) {
+  constructor(isClassic?: boolean) {
     super({
       URL: 'http://localhost:1317',
       chainID: 'localterra',
-      legacy,
+      isClassic,
     });
 
     this.wallets = {

@@ -26,7 +26,10 @@ export class MsgVoteWeighted extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgVoteWeighted.Amino, _?: boolean): MsgVoteWeighted {
+  public static fromAmino(
+    data: MsgVoteWeighted.Amino,
+    _?: boolean
+  ): MsgVoteWeighted {
     _;
     const {
       value: { proposal_id, voter, options },
@@ -38,10 +41,10 @@ export class MsgVoteWeighted extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgVoteWeighted.Amino {
+  public toAmino(isClassic?: boolean): MsgVoteWeighted.Amino {
     const { proposal_id, voter, options } = this;
     return {
-      type: legacy ? 'gov/MsgVoteWeighted' : 'cosmos-sdk/MsgVoteWeighted',
+      type: isClassic ? 'gov/MsgVoteWeighted' : 'cosmos-sdk/MsgVoteWeighted',
       value: {
         proposal_id: proposal_id.toFixed(),
         voter,
@@ -50,7 +53,10 @@ export class MsgVoteWeighted extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgVoteWeighted.Data, _?: boolean): MsgVoteWeighted {
+  public static fromData(
+    data: MsgVoteWeighted.Data,
+    _?: boolean
+  ): MsgVoteWeighted {
     _;
     const { proposal_id, voter, options } = data;
     return new MsgVoteWeighted(
@@ -71,7 +77,10 @@ export class MsgVoteWeighted extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgVoteWeighted.Proto, _?: boolean): MsgVoteWeighted {
+  public static fromProto(
+    proto: MsgVoteWeighted.Proto,
+    _?: boolean
+  ): MsgVoteWeighted {
     _;
     return new MsgVoteWeighted(
       proto.proposalId.toNumber(),

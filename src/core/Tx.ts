@@ -32,12 +32,12 @@ export class Tx {
     public signatures: string[]
   ) {}
 
-  public static fromAmino(data: Tx.Amino, legacy?: boolean): Tx {
+  public static fromAmino(data: Tx.Amino, isClassic?: boolean): Tx {
     const signatures = data.value.signatures.map(s => SignatureV2.fromAmino(s));
 
     return new Tx(
       new TxBody(
-        data.value.msg.map(m => Msg.fromAmino(m, legacy)),
+        data.value.msg.map(m => Msg.fromAmino(m, isClassic)),
         data.value.memo,
         Number.parseInt(data.value.timeout_height)
       ),
@@ -46,48 +46,48 @@ export class Tx {
     );
   }
 
-  public static fromData(data: Tx.Data, legacy?: boolean): Tx {
+  public static fromData(data: Tx.Data, isClassic?: boolean): Tx {
     return new Tx(
-      TxBody.fromData(data.body, legacy),
+      TxBody.fromData(data.body, isClassic),
       AuthInfo.fromData(data.auth_info),
       data.signatures
     );
   }
 
-  public toData(legacy?: boolean): Tx.Data {
+  public toData(isClassic?: boolean): Tx.Data {
     return {
-      body: this.body.toData(legacy),
+      body: this.body.toData(isClassic),
       auth_info: this.auth_info.toData(),
       signatures: this.signatures,
     };
   }
 
-  public static unpackAny(anyProto: Any, legacy?: boolean): Tx {
-    return this.fromProto(Tx_pb.decode(anyProto.value), legacy);
+  public static unpackAny(anyProto: Any, isClassic?: boolean): Tx {
+    return this.fromProto(Tx_pb.decode(anyProto.value), isClassic);
   }
 
-  public static fromProto(proto: Tx.Proto, legacy?: boolean): Tx {
+  public static fromProto(proto: Tx.Proto, isClassic?: boolean): Tx {
     return new Tx(
-      TxBody.fromProto(proto.body as TxBody_pb, legacy),
+      TxBody.fromProto(proto.body as TxBody_pb, isClassic),
       AuthInfo.fromProto(proto.authInfo as AuthInfo_pb),
       proto.signatures.map(sig => Buffer.from(sig).toString('base64'))
     );
   }
 
-  public toProto(legacy?: boolean): Tx.Proto {
+  public toProto(isClassic?: boolean): Tx.Proto {
     return Tx_pb.fromPartial({
-      body: this.body.toProto(legacy),
+      body: this.body.toProto(isClassic),
       authInfo: this.auth_info.toProto(),
       signatures: this.signatures.map(s => Buffer.from(s, 'base64')),
     });
   }
 
-  public toBytes(legacy?: boolean): Uint8Array {
-    return Tx_pb.encode(this.toProto(legacy)).finish();
+  public toBytes(isClassic?: boolean): Uint8Array {
+    return Tx_pb.encode(this.toProto(isClassic)).finish();
   }
 
-  public static fromBuffer(buf: Buffer, legacy?: boolean): Tx {
-    return Tx.fromProto(Tx_pb.decode(buf), legacy);
+  public static fromBuffer(buf: Buffer, isClassic?: boolean): Tx {
+    return Tx.fromProto(Tx_pb.decode(buf), isClassic);
   }
 
   public appendEmptySignatures(signers: SignerData[]) {
@@ -171,40 +171,40 @@ export class TxBody {
     public timeout_height?: number
   ) {}
 
-  public static fromData(data: TxBody.Data, legacy?: boolean): TxBody {
+  public static fromData(data: TxBody.Data, isClassic?: boolean): TxBody {
     return new TxBody(
-      data.messages.map(m => Msg.fromData(m, legacy)),
+      data.messages.map(m => Msg.fromData(m, isClassic)),
       data.memo,
       Number.parseInt(data.timeout_height)
     );
   }
 
-  public toData(legacy?: boolean): TxBody.Data {
+  public toData(isClassic?: boolean): TxBody.Data {
     return {
       memo: this.memo ?? '',
-      messages: this.messages.map(m => m.toData(legacy)),
+      messages: this.messages.map(m => m.toData(isClassic)),
       timeout_height: (this.timeout_height ?? 0).toFixed(),
     };
   }
 
-  public static fromProto(proto: TxBody.Proto, legacy?: boolean): TxBody {
+  public static fromProto(proto: TxBody.Proto, isClassic?: boolean): TxBody {
     return new TxBody(
-      proto.messages.map(m => Msg.fromProto(m, legacy)),
+      proto.messages.map(m => Msg.fromProto(m, isClassic)),
       proto.memo,
       proto.timeoutHeight.toNumber()
     );
   }
 
-  public toProto(legacy?: boolean): TxBody.Proto {
+  public toProto(isClassic?: boolean): TxBody.Proto {
     return TxBody_pb.fromPartial({
       memo: this.memo,
-      messages: this.messages.map(m => m.packAny(legacy)),
+      messages: this.messages.map(m => m.packAny(isClassic)),
       timeoutHeight: Long.fromNumber(this.timeout_height ?? 0),
     });
   }
 
-  public toBytes(legacy?: boolean): Uint8Array {
-    return TxBody_pb.encode(this.toProto(legacy)).finish();
+  public toBytes(isClassic?: boolean): Uint8Array {
+    return TxBody_pb.encode(this.toProto(isClassic)).finish();
   }
 }
 

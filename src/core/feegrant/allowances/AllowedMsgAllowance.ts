@@ -25,33 +25,41 @@ export class AllowedMsgAllowance extends JSONSerializable<
 
   public static fromAmino(
     data: AllowedMsgAllowance.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): AllowedMsgAllowance {
     const {
       value: { allowance, allowed_messages },
     } = data;
 
     return new AllowedMsgAllowance(
-      (allowance.type === 'feegrant/BasicAllowance' ||
-        allowance.type === 'cosmos-sdk/BasicAllowance')
-        ? BasicAllowance.fromAmino(allowance as BasicAllowance.Amino, legacy)
-        : PeriodicAllowance.fromAmino(allowance as PeriodicAllowance.Amino, legacy),
+      allowance.type === 'feegrant/BasicAllowance' ||
+      allowance.type === 'cosmos-sdk/BasicAllowance'
+        ? BasicAllowance.fromAmino(allowance as BasicAllowance.Amino, isClassic)
+        : PeriodicAllowance.fromAmino(
+            allowance as PeriodicAllowance.Amino,
+            isClassic
+          ),
       allowed_messages
     );
   }
 
-  public toAmino(legacy?: boolean): AllowedMsgAllowance.Amino {
+  public toAmino(isClassic?: boolean): AllowedMsgAllowance.Amino {
     const { allowance, allowed_messages } = this;
     return {
-      type: legacy ? 'feegrant/AllowedMsgAllowance' : 'cosmos-sdk/AllowedMsgAllowance',
+      type: isClassic
+        ? 'feegrant/AllowedMsgAllowance'
+        : 'cosmos-sdk/AllowedMsgAllowance',
       value: {
-        allowance: allowance.toAmino(legacy),
+        allowance: allowance.toAmino(isClassic),
         allowed_messages,
       },
     };
   }
 
-  public static fromData(proto: AllowedMsgAllowance.Data, _?: boolean): AllowedMsgAllowance {
+  public static fromData(
+    proto: AllowedMsgAllowance.Data,
+    _?: boolean
+  ): AllowedMsgAllowance {
     _;
     const { allowance, allowed_messages } = proto;
     return new AllowedMsgAllowance(

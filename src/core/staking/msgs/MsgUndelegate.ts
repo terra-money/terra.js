@@ -44,10 +44,10 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgUndelegate.Amino {
+  public toAmino(isClassic?: boolean): MsgUndelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
-      type: legacy ? 'staking/MsgUndelegate' : 'cosmos-sdk/MsgUndelegate',
+      type: isClassic ? 'staking/MsgUndelegate' : 'cosmos-sdk/MsgUndelegate',
       value: {
         delegator_address,
         validator_address,

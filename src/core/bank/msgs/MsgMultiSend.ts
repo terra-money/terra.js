@@ -77,10 +77,10 @@ export class MsgMultiSend extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgMultiSend.Amino {
+  public toAmino(isClassic?: boolean): MsgMultiSend.Amino {
     const { inputs, outputs } = this;
     return {
-      type: legacy ? 'bank/MsgMultiSend' : 'cosmos-sdk/MsgMultiSend',
+      type: isClassic ? 'bank/MsgMultiSend' : 'cosmos-sdk/MsgMultiSend',
       value: {
         inputs: inputs.map(i => i.toAmino()),
         outputs: outputs.map(o => o.toAmino()),
@@ -107,7 +107,10 @@ export class MsgMultiSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgMultiSend.Proto, _?: boolean): MsgMultiSend {
+  public static fromProto(
+    proto: MsgMultiSend.Proto,
+    _?: boolean
+  ): MsgMultiSend {
     _;
     return new MsgMultiSend(
       proto.inputs.map(i => MsgMultiSend.Input.fromProto(i)),

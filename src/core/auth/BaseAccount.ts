@@ -44,10 +44,10 @@ export class BaseAccount extends JSONSerializable<
     return this.public_key;
   }
 
-  public toAmino(legacy?: boolean): BaseAccount.Amino {
+  public toAmino(isClassic?: boolean): BaseAccount.Amino {
     const { address, public_key, account_number, sequence } = this;
     return {
-      type: legacy ? 'core/Account' : 'cosmos-sdk/BaseAccount',
+      type: isClassic ? 'core/Account' : 'cosmos-sdk/BaseAccount',
       value: {
         address,
         public_key: public_key ? public_key.toAmino() : null,
@@ -106,7 +106,10 @@ export class BaseAccount extends JSONSerializable<
     });
   }
 
-  public static fromProto(baseAccountProto: BaseAccount.Proto, _?: boolean): BaseAccount {
+  public static fromProto(
+    baseAccountProto: BaseAccount.Proto,
+    _?: boolean
+  ): BaseAccount {
     _;
     const pubkey = baseAccountProto.pubKey;
     return new BaseAccount(

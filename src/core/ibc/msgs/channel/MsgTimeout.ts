@@ -31,8 +31,9 @@ export class MsgTimeout extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgTimeout {
-    _; legacy;
+  public static fromAmino(_: any, isClassic?: boolean): MsgTimeout {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 

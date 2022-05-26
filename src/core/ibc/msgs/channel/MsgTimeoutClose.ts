@@ -33,8 +33,9 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, legacy?: boolean): MsgTimeoutOnClose {
-    _; legacy
+  public static fromAmino(_: any, isClassic?: boolean): MsgTimeoutOnClose {
+    _;
+    isClassic;
     throw new Error('Amino not supported');
   }
 
@@ -43,7 +44,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(data: MsgTimeoutOnClose.Data, _?: boolean): MsgTimeoutOnClose {
+  public static fromData(
+    data: MsgTimeoutOnClose.Data,
+    _?: boolean
+  ): MsgTimeoutOnClose {
     _;
     const {
       packet,
@@ -84,7 +88,10 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgTimeoutOnClose.Proto, _?: boolean): MsgTimeoutOnClose {
+  public static fromProto(
+    proto: MsgTimeoutOnClose.Proto,
+    _?: boolean
+  ): MsgTimeoutOnClose {
     _;
     return new MsgTimeoutOnClose(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,

@@ -19,9 +19,9 @@ export class MsgClearContractAdmin extends JSONSerializable<
 
   public static fromAmino(
     data: MsgClearContractAdmin.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    if (legacy) {
+    if (isClassic) {
       const {
         value: { admin, contract },
       } = data as MsgClearContractAdmin.AminoV1;
@@ -35,9 +35,9 @@ export class MsgClearContractAdmin extends JSONSerializable<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public toAmino(legacy?: boolean): MsgClearContractAdmin.Amino {
+  public toAmino(isClassic?: boolean): MsgClearContractAdmin.Amino {
     const { admin, contract } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         type: 'wasm/MsgClearContractAdmin',
         value: {
@@ -58,9 +58,9 @@ export class MsgClearContractAdmin extends JSONSerializable<
 
   public static fromProto(
     data: MsgClearContractAdmin.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    if (legacy) {
+    if (isClassic) {
       const { admin, contract } = data as MsgClearContractAdmin.DataV1;
       return new MsgClearContractAdmin(admin, contract);
     } else {
@@ -69,8 +69,8 @@ export class MsgClearContractAdmin extends JSONSerializable<
     }
   }
 
-  public toProto(legacy?: boolean): MsgClearContractAdmin.Proto {
-    if (legacy) {
+  public toProto(isClassic?: boolean): MsgClearContractAdmin.Proto {
+    if (isClassic) {
       return MsgClearContractAdmin_legacy_pb.fromPartial({
         admin: this.admin,
         contract: this.contract,
@@ -83,37 +83,46 @@ export class MsgClearContractAdmin extends JSONSerializable<
     }
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       return Any.fromPartial({
         typeUrl: '/terra.wasm.v1beta1.MsgClearContractAdmin',
-        value: MsgClearContractAdmin_legacy_pb.encode(this.toProto(legacy) as MsgClearContractAdmin_legacy_pb).finish(),
+        value: MsgClearContractAdmin_legacy_pb.encode(
+          this.toProto(isClassic) as MsgClearContractAdmin_legacy_pb
+        ).finish(),
       });
     } else {
       return Any.fromPartial({
         typeUrl: '/cosmwasm.wasm.v1.MsgClearAdmin',
-        value: MsgClearAdmin_pb.encode(this.toProto(legacy) as MsgClearAdmin_pb).finish(),
+        value: MsgClearAdmin_pb.encode(
+          this.toProto(isClassic) as MsgClearAdmin_pb
+        ).finish(),
       });
     }
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgClearContractAdmin {
-    if (legacy) {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgClearContractAdmin {
+    if (isClassic) {
       return MsgClearContractAdmin.fromProto(
-        MsgClearContractAdmin_legacy_pb.decode(msgAny.value), legacy
+        MsgClearContractAdmin_legacy_pb.decode(msgAny.value),
+        isClassic
       );
     } else {
       return MsgClearContractAdmin.fromProto(
-        MsgClearAdmin_pb.decode(msgAny.value), legacy
+        MsgClearAdmin_pb.decode(msgAny.value),
+        isClassic
       );
     }
   }
 
   public static fromData(
     data: MsgClearContractAdmin.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    if (legacy) {
+    if (isClassic) {
       const { admin, contract } = data as MsgClearContractAdmin.DataV1;
       return new MsgClearContractAdmin(admin, contract);
     } else {
@@ -122,8 +131,8 @@ export class MsgClearContractAdmin extends JSONSerializable<
     }
   }
 
-  public toData(legacy?: boolean): MsgClearContractAdmin.Data {
-    if (legacy) {
+  public toData(isClassic?: boolean): MsgClearContractAdmin.Data {
+    if (isClassic) {
       return {
         '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
         admin: this.admin,

@@ -17,70 +17,82 @@ export class MsgExecAuthorized extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgExecAuthorized.Amino, legacy?: boolean): MsgExecAuthorized {
+  public static fromAmino(
+    data: MsgExecAuthorized.Amino,
+    isClassic?: boolean
+  ): MsgExecAuthorized {
     const {
       value: { grantee, msgs },
     } = data;
     return new MsgExecAuthorized(
       grantee,
-      msgs.map(x => Msg.fromAmino(x, legacy))
+      msgs.map(x => Msg.fromAmino(x, isClassic))
     );
   }
 
-  public toAmino(legacy?: boolean): MsgExecAuthorized.Amino {
+  public toAmino(isClassic?: boolean): MsgExecAuthorized.Amino {
     const { grantee, msgs } = this;
     return {
-      type: legacy ? 'msgauth/MsgExecAuthorized' : 'cosmos-sdk/MsgExec',
+      type: isClassic ? 'msgauth/MsgExecAuthorized' : 'cosmos-sdk/MsgExec',
       value: {
         grantee,
         msgs: msgs.map(msg => {
-          return msg.toAmino(legacy);
+          return msg.toAmino(isClassic);
         }),
       },
     };
   }
 
-  public static fromData(proto: MsgExecAuthorized.Data, legacy?: boolean): MsgExecAuthorized {
+  public static fromData(
+    proto: MsgExecAuthorized.Data,
+    isClassic?: boolean
+  ): MsgExecAuthorized {
     const { grantee, msgs } = proto;
     return new MsgExecAuthorized(
       grantee,
-      msgs.map(x => Msg.fromData(x, legacy))
+      msgs.map(x => Msg.fromData(x, isClassic))
     );
   }
 
-  public toData(legacy?: boolean): MsgExecAuthorized.Data {
+  public toData(isClassic?: boolean): MsgExecAuthorized.Data {
     const { grantee, msgs } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.MsgExec',
       grantee,
-      msgs: msgs.map(msg => msg.toData(legacy)),
+      msgs: msgs.map(msg => msg.toData(isClassic)),
     };
   }
 
-  public static fromProto(proto: MsgExecAuthorized.Proto, legacy?: boolean): MsgExecAuthorized {
+  public static fromProto(
+    proto: MsgExecAuthorized.Proto,
+    isClassic?: boolean
+  ): MsgExecAuthorized {
     return new MsgExecAuthorized(
       proto.grantee,
-      proto.msgs.map(x => Msg.fromProto(x, legacy))
+      proto.msgs.map(x => Msg.fromProto(x, isClassic))
     );
   }
 
-  public toProto(legacy?: boolean): MsgExecAuthorized.Proto {
+  public toProto(isClassic?: boolean): MsgExecAuthorized.Proto {
     const { grantee, msgs } = this;
     return MsgExec_pb.fromPartial({
       grantee,
-      msgs: msgs.map(m => m.packAny(legacy)),
+      msgs: msgs.map(m => m.packAny(isClassic)),
     });
   }
 
-  public packAny(legacy?: boolean): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgExec',
-      value: MsgExec_pb.encode(this.toProto(legacy)).finish(),
+      value: MsgExec_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgExecAuthorized {
-    return MsgExecAuthorized.fromProto(MsgExec_pb.decode(msgAny.value), legacy);
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgExecAuthorized {
+    return MsgExecAuthorized.fromProto(
+      MsgExec_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 

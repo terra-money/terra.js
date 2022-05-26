@@ -27,17 +27,17 @@ export class MsgVote extends JSONSerializable<
   }
 
   public static fromAmino(data: MsgVote.Amino, _?: boolean): MsgVote {
-    _
+    _;
     const {
       value: { proposal_id, voter, option },
     } = data;
     return new MsgVote(Number.parseInt(proposal_id), voter, option);
   }
 
-  public toAmino(legacy?: boolean): MsgVote.Amino {
+  public toAmino(isClassic?: boolean): MsgVote.Amino {
     const { proposal_id, voter, option } = this;
     return {
-      type: legacy ? 'gov/MsgVote' : 'cosmos-sdk/MsgVote',
+      type: isClassic ? 'gov/MsgVote' : 'cosmos-sdk/MsgVote',
       value: {
         proposal_id: proposal_id.toFixed(),
         voter,

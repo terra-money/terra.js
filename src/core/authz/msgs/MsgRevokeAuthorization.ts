@@ -32,10 +32,12 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
   }
 
-  public toAmino(legacy?: boolean): MsgRevokeAuthorization.Amino {
+  public toAmino(isClassic?: boolean): MsgRevokeAuthorization.Amino {
     const { granter, grantee, msg_type_url } = this;
     return {
-      type: legacy ? 'msgauth/MsgRevokeAuthorization' : 'cosmos-sdk/MsgRevoke',
+      type: isClassic
+        ? 'msgauth/MsgRevokeAuthorization'
+        : 'cosmos-sdk/MsgRevoke',
       value: {
         granter,
         grantee,
@@ -86,15 +88,21 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     });
   }
 
-  public packAny(legacy?: boolean): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgRevoke',
-      value: MsgRevoke_pb.encode(this.toProto(legacy)).finish(),
+      value: MsgRevoke_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgRevokeAuthorization {
-    return MsgRevokeAuthorization.fromProto(MsgRevoke_pb.decode(msgAny.value), legacy);
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgRevokeAuthorization {
+    return MsgRevokeAuthorization.fromProto(
+      MsgRevoke_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 

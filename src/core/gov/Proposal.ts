@@ -19,8 +19,8 @@ import {
   SudoContractProposal,
   UnpinCodesProposal,
   UpdateAdminProposal,
-  UpdateInstantiateConfigProposal
-} from '../wasm/proposals'
+  UpdateInstantiateConfigProposal,
+} from '../wasm/proposals';
 import {
   Proposal as Proposal_pb,
   ProposalStatus,
@@ -66,7 +66,7 @@ export class Proposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: Proposal.Amino, legacy?: boolean): Proposal {
+  public static fromAmino(data: Proposal.Amino, isClassic?: boolean): Proposal {
     const {
       id,
       content,
@@ -81,7 +81,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       Number.parseInt(id),
-      Proposal.Content.fromAmino(content, legacy),
+      Proposal.Content.fromAmino(content, isClassic),
       status,
       {
         yes: new Int(final_tally_result.yes || 0),
@@ -97,12 +97,12 @@ export class Proposal extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): Proposal.Amino {
+  public toAmino(isClassic?: boolean): Proposal.Amino {
     const { status, final_tally_result } = this;
 
     return {
       id: this.id.toFixed(),
-      content: this.content.toAmino(legacy),
+      content: this.content.toAmino(isClassic),
       status: status,
       final_tally_result: {
         yes: final_tally_result.yes.toFixed(),
@@ -118,7 +118,7 @@ export class Proposal extends JSONSerializable<
     };
   }
 
-  public static fromData(data: Proposal.Data, legacy?: boolean): Proposal {
+  public static fromData(data: Proposal.Data, isClassic?: boolean): Proposal {
     const {
       proposal_id,
       content,
@@ -133,7 +133,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       Number.parseInt(proposal_id),
-      Proposal.Content.fromData(content, legacy),
+      Proposal.Content.fromData(content, isClassic),
       proposalStatusFromJSON(status),
       {
         yes: new Int(final_tally_result?.yes || 0),
@@ -149,12 +149,12 @@ export class Proposal extends JSONSerializable<
     );
   }
 
-  public toData(legacy?: boolean): Proposal.Data {
+  public toData(isClassic?: boolean): Proposal.Data {
     const { status, final_tally_result } = this;
 
     return {
       proposal_id: this.id.toFixed(),
-      content: this.content.toData(legacy),
+      content: this.content.toData(isClassic),
       status: proposalStatusToJSON(status),
       final_tally_result: {
         yes: final_tally_result.yes.toString(),
@@ -170,7 +170,7 @@ export class Proposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(data: Proposal.Proto, legacy?: boolean): Proposal {
+  public static fromProto(data: Proposal.Proto, isClassic?: boolean): Proposal {
     const id = data.proposalId;
     const content = data.content;
     const status = data.status;
@@ -183,7 +183,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       id.toNumber(),
-      Proposal.Content.fromProto(content as Any, legacy),
+      Proposal.Content.fromProto(content as Any, isClassic),
       status,
       {
         yes: new Int(final_tally_result?.yes || 0),
@@ -199,7 +199,7 @@ export class Proposal extends JSONSerializable<
     );
   }
 
-  public toProto(legacy?: boolean): Proposal.Proto {
+  public toProto(isClassic?: boolean): Proposal.Proto {
     const { status, final_tally_result } = this;
 
     let ftr: TallyResult | undefined;
@@ -214,7 +214,7 @@ export class Proposal extends JSONSerializable<
 
     return Proposal_pb.fromPartial({
       proposalId: Long.fromNumber(this.id),
-      content: this.content.packAny(legacy),
+      content: this.content.packAny(isClassic),
       status,
       finalTallyResult: ftr,
       submitTime: this.submit_time,
@@ -253,8 +253,7 @@ export namespace Proposal {
     | SudoContractProposal
     | UnpinCodesProposal
     | UpdateAdminProposal
-    | UpdateInstantiateConfigProposal
-    ;
+    | UpdateInstantiateConfigProposal;
 
   export namespace Content {
     export type Amino =
@@ -273,8 +272,7 @@ export namespace Proposal {
       | SudoContractProposal.Amino
       | UnpinCodesProposal.Amino
       | UpdateAdminProposal.Amino
-      | UpdateInstantiateConfigProposal.Amino
-      ;
+      | UpdateInstantiateConfigProposal.Amino;
 
     export type Data =
       | TextProposal.Data
@@ -292,8 +290,7 @@ export namespace Proposal {
       | SudoContractProposal.Data
       | UnpinCodesProposal.Data
       | UpdateAdminProposal.Data
-      | UpdateInstantiateConfigProposal.Data
-      ;
+      | UpdateInstantiateConfigProposal.Data;
 
     export type Proto =
       | TextProposal.Proto
@@ -311,123 +308,131 @@ export namespace Proposal {
       | SudoContractProposal.Proto
       | UnpinCodesProposal.Proto
       | UpdateAdminProposal.Proto
-      | UpdateInstantiateConfigProposal.Proto
-      ;
+      | UpdateInstantiateConfigProposal.Proto;
 
-    export function fromAmino(amino: Proposal.Content.Amino, legacy?: boolean): Proposal.Content {
+    export function fromAmino(
+      amino: Proposal.Content.Amino,
+      isClassic?: boolean
+    ): Proposal.Content {
       switch (amino.type) {
         case 'gov/TextProposal':
         case 'cosmos-sdk/TextProposal':
-          return TextProposal.fromAmino(amino, legacy);
+          return TextProposal.fromAmino(amino, isClassic);
         case 'distribution/CommunityPoolSpendProposal':
         case 'cosmos-sdk/CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.fromAmino(amino, legacy);
+          return CommunityPoolSpendProposal.fromAmino(amino, isClassic);
         case 'params/ParameterChangeProposal':
         case 'cosmos-sdk/ParameterChangeProposal':
-          return ParameterChangeProposal.fromAmino(amino, legacy);
+          return ParameterChangeProposal.fromAmino(amino, isClassic);
         case 'upgrade/SoftwareUpgradeProposal':
         case 'cosmos-sdk/SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.fromAmino(amino, legacy);
+          return SoftwareUpgradeProposal.fromAmino(amino, isClassic);
         case 'upgrade/CancelSoftwareUpgradeProposal':
         case 'cosmos-sdk/CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.fromAmino(amino, legacy);
+          return CancelSoftwareUpgradeProposal.fromAmino(amino, isClassic);
         case 'ibc/ClientUpdateProposal':
-          return ClientUpdateProposal.fromAmino(amino, legacy);
+          return ClientUpdateProposal.fromAmino(amino, isClassic);
         case 'wasm/ClearAdminProposal':
-          return ClearAdminProposal.fromAmino(amino, legacy);
+          return ClearAdminProposal.fromAmino(amino, isClassic);
         case 'wasm/ExecuteContractProposal':
-          return ExecuteContractProposal.fromAmino(amino, legacy);
+          return ExecuteContractProposal.fromAmino(amino, isClassic);
         case 'wasm/InstantiateContractProposal':
-          return InstantiateContractProposal.fromAmino(amino, legacy);
+          return InstantiateContractProposal.fromAmino(amino, isClassic);
         case 'wasm/MigrateContractProposal':
-          return MigrateContractProposal.fromAmino(amino, legacy);
+          return MigrateContractProposal.fromAmino(amino, isClassic);
         case 'wasm/PinCodesProposal':
-          return PinCodesProposal.fromAmino(amino, legacy);
+          return PinCodesProposal.fromAmino(amino, isClassic);
         case 'wasm/StoreCodeProposal':
-          return StoreCodeProposal.fromAmino(amino, legacy);
+          return StoreCodeProposal.fromAmino(amino, isClassic);
         case 'wasm/SudoContractProposal':
-          return SudoContractProposal.fromAmino(amino, legacy);
+          return SudoContractProposal.fromAmino(amino, isClassic);
         case 'wasm/UnpinCodesProposal':
-          return UnpinCodesProposal.fromAmino(amino, legacy);
+          return UnpinCodesProposal.fromAmino(amino, isClassic);
         case 'wasm/UpdateAdminProposal':
-          return UpdateAdminProposal.fromAmino(amino, legacy);
+          return UpdateAdminProposal.fromAmino(amino, isClassic);
         case 'wasm/UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.fromAmino(amino, legacy);
+          return UpdateInstantiateConfigProposal.fromAmino(amino, isClassic);
       }
     }
 
-    export function fromData(data: Proposal.Content.Data, legacy?: boolean): Proposal.Content {
+    export function fromData(
+      data: Proposal.Content.Data,
+      isClassic?: boolean
+    ): Proposal.Content {
       switch (data['@type']) {
         case '/cosmos.gov.v1beta1.TextProposal':
-          return TextProposal.fromData(data, legacy);
+          return TextProposal.fromData(data, isClassic);
         case '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.fromData(data, legacy);
+          return CommunityPoolSpendProposal.fromData(data, isClassic);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
-          return ParameterChangeProposal.fromData(data, legacy);
+          return ParameterChangeProposal.fromData(data, isClassic);
         case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.fromData(data, legacy);
+          return SoftwareUpgradeProposal.fromData(data, isClassic);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.fromData(data, legacy);
+          return CancelSoftwareUpgradeProposal.fromData(data, isClassic);
         case '/ibc.core.client.v1.ClientUpdateProposal':
-          return ClientUpdateProposal.fromData(data, legacy);
+          return ClientUpdateProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.ClearAdminProposal':
-          return ClearAdminProposal.fromData(data, legacy);
+          return ClearAdminProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.ExecuteContractProposal':
-          return ExecuteContractProposal.fromData(data, legacy);
+          return ExecuteContractProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.InstantiateContractProposal':
-          return InstantiateContractProposal.fromData(data, legacy);
+          return InstantiateContractProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.MigrateContractProposal':
-          return MigrateContractProposal.fromData(data, legacy);
+          return MigrateContractProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.PinCodesProposal':
-          return PinCodesProposal.fromData(data, legacy);
+          return PinCodesProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.StoreCodeProposal':
-          return StoreCodeProposal.fromData(data, legacy);
+          return StoreCodeProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.SudoContractProposal':
-          return SudoContractProposal.fromData(data, legacy);
+          return SudoContractProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.UnpinCodesProposal':
-          return UnpinCodesProposal.fromData(data, legacy);
+          return UnpinCodesProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.UpdateAdminProposal':
-          return UpdateAdminProposal.fromData(data, legacy);
+          return UpdateAdminProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.fromData(data, legacy);
+          return UpdateInstantiateConfigProposal.fromData(data, isClassic);
       }
     }
 
-    export function fromProto(anyProto: Any, legacy?: boolean): Proposal.Content {
+    export function fromProto(
+      anyProto: Any,
+      isClassic?: boolean
+    ): Proposal.Content {
       const typeUrl = anyProto.typeUrl;
       switch (typeUrl) {
         case '/cosmos.gov.v1beta1.TextProposal':
-          return TextProposal.unpackAny(anyProto, legacy);
+          return TextProposal.unpackAny(anyProto, isClassic);
         case '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.unpackAny(anyProto, legacy);
+          return CommunityPoolSpendProposal.unpackAny(anyProto, isClassic);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
-          return ParameterChangeProposal.unpackAny(anyProto, legacy);
+          return ParameterChangeProposal.unpackAny(anyProto, isClassic);
         case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.unpackAny(anyProto, legacy);
+          return SoftwareUpgradeProposal.unpackAny(anyProto, isClassic);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.unpackAny(anyProto, legacy);
+          return CancelSoftwareUpgradeProposal.unpackAny(anyProto, isClassic);
         case '/ibc.core.client.v1.ClientUpdateProposal':
-          return ClientUpdateProposal.unpackAny(anyProto, legacy);
+          return ClientUpdateProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.ClearAdminProposal':
-          return ClearAdminProposal.unpackAny(anyProto, legacy);
+          return ClearAdminProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.ExecuteContractProposal':
-          return ExecuteContractProposal.unpackAny(anyProto, legacy);
+          return ExecuteContractProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.InstantiateContractProposal':
-          return InstantiateContractProposal.unpackAny(anyProto, legacy);
+          return InstantiateContractProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.MigrateContractProposal':
-          return MigrateContractProposal.unpackAny(anyProto, legacy);
+          return MigrateContractProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.PinCodesProposal':
-          return PinCodesProposal.unpackAny(anyProto, legacy);
+          return PinCodesProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.StoreCodeProposal':
-          return StoreCodeProposal.unpackAny(anyProto, legacy);
+          return StoreCodeProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.SudoContractProposal':
-          return SudoContractProposal.unpackAny(anyProto, legacy);
+          return SudoContractProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.UnpinCodesProposal':
-          return UnpinCodesProposal.unpackAny(anyProto, legacy);
+          return UnpinCodesProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.UpdateAdminProposal':
-          return UpdateAdminProposal.unpackAny(anyProto, legacy);
+          return UpdateAdminProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.unpackAny(anyProto, legacy);
+          return UpdateInstantiateConfigProposal.unpackAny(anyProto, isClassic);
       }
 
       throw `Proposal content ${typeUrl} not recognized`;

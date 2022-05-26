@@ -17,7 +17,6 @@ export namespace IbcTransferParams {
 }
 
 export class IbcTransferAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -43,22 +42,20 @@ export class IbcTransferAPI extends BaseAPI {
       .then(d => [d.denom_traces.map(DenomTrace.fromData), d.pagination]);
   }
 
-
   /** Gets a denomination hash information */
-  public async denomHash(trace: string,
+  public async denomHash(
+    trace: string,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<string> {
-    if (this.lcd.config.legacy) {
+    if (this.lcd.config.isClassic) {
       throw new Error('Not supported for the network');
     }
 
-    return await this.c
-      .get<string>(
-        `/ibc/apps/transfer/v1/denom_hashes/${trace}`,
-        params
-      );
+    return await this.c.get<string>(
+      `/ibc/apps/transfer/v1/denom_hashes/${trace}`,
+      params
+    );
   }
-
 
   /**
    * Gets the current transfer application parameters.

@@ -25,8 +25,11 @@ export class MsgMigrateContract extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgMigrateContract.Amino, legacy?: boolean): MsgMigrateContract {
-    if (legacy) {
+  public static fromAmino(
+    data: MsgMigrateContract.Amino,
+    isClassic?: boolean
+  ): MsgMigrateContract {
+    if (isClassic) {
       const {
         value: { admin, contract, new_code_id, migrate_msg },
       } = data as MsgMigrateContract.AminoV1;
@@ -49,8 +52,8 @@ export class MsgMigrateContract extends JSONSerializable<
     }
   }
 
-  public toAmino(legacy?: boolean): MsgMigrateContract.Amino {
-    if (legacy) {
+  public toAmino(isClassic?: boolean): MsgMigrateContract.Amino {
+    if (isClassic) {
       const { admin, contract, new_code_id, migrate_msg } = this;
       return {
         type: 'wasm/MsgMigrateContract',
@@ -75,8 +78,11 @@ export class MsgMigrateContract extends JSONSerializable<
     }
   }
 
-  public static fromProto(proto: MsgMigrateContract.Proto, legacy?: boolean): MsgMigrateContract {
-    if (legacy) {
+  public static fromProto(
+    proto: MsgMigrateContract.Proto,
+    isClassic?: boolean
+  ): MsgMigrateContract {
+    if (isClassic) {
       const p = proto as MsgMigrateContract_legacy_pb;
       return new MsgMigrateContract(
         p.admin,
@@ -95,9 +101,9 @@ export class MsgMigrateContract extends JSONSerializable<
     }
   }
 
-  public toProto(legacy?: boolean): MsgMigrateContract.Proto {
+  public toProto(isClassic?: boolean): MsgMigrateContract.Proto {
     const { admin, contract, new_code_id, migrate_msg } = this;
-    if (legacy) {
+    if (isClassic) {
       return MsgMigrateContract_legacy_pb.fromPartial({
         admin,
         contract,
@@ -113,32 +119,43 @@ export class MsgMigrateContract extends JSONSerializable<
       });
     }
   }
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       return Any.fromPartial({
         typeUrl: '/terra.wasm.v1beta1.MsgMigrateContract',
-        value: MsgMigrateContract_legacy_pb.encode(this.toProto(legacy) as MsgMigrateContract_legacy_pb).finish(),
+        value: MsgMigrateContract_legacy_pb.encode(
+          this.toProto(isClassic) as MsgMigrateContract_legacy_pb
+        ).finish(),
       });
     } else {
       return Any.fromPartial({
         typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
-        value: MsgMigrateContract_pb.encode(this.toProto(legacy) as MsgMigrateContract_pb).finish(),
+        value: MsgMigrateContract_pb.encode(
+          this.toProto(isClassic) as MsgMigrateContract_pb
+        ).finish(),
       });
     }
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgMigrateContract {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgMigrateContract {
     return MsgMigrateContract.fromProto(
-      legacy
+      isClassic
         ? MsgMigrateContract_legacy_pb.decode(msgAny.value)
         : MsgMigrateContract_pb.decode(msgAny.value),
-      legacy
+      isClassic
     );
   }
 
-  public static fromData(data: MsgMigrateContract.Data, legacy?: boolean): MsgMigrateContract {
-    if (legacy) {
-      const { admin, contract, new_code_id, migrate_msg } = data as MsgMigrateContract.DataV1;
+  public static fromData(
+    data: MsgMigrateContract.Data,
+    isClassic?: boolean
+  ): MsgMigrateContract {
+    if (isClassic) {
+      const { admin, contract, new_code_id, migrate_msg } =
+        data as MsgMigrateContract.DataV1;
       return new MsgMigrateContract(
         admin,
         contract,
@@ -146,7 +163,8 @@ export class MsgMigrateContract extends JSONSerializable<
         migrate_msg
       );
     } else {
-      const { sender, contract, code_id, msg } = data as MsgMigrateContract.DataV2;
+      const { sender, contract, code_id, msg } =
+        data as MsgMigrateContract.DataV2;
       return new MsgMigrateContract(
         sender,
         contract,
@@ -156,9 +174,9 @@ export class MsgMigrateContract extends JSONSerializable<
     }
   }
 
-  public toData(legacy?: boolean): MsgMigrateContract.Data {
+  public toData(isClassic?: boolean): MsgMigrateContract.Data {
     const { admin, contract, new_code_id, migrate_msg } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         '@type': '/terra.wasm.v1beta1.MsgMigrateContract',
         admin,
@@ -213,7 +231,6 @@ export namespace MsgMigrateContract {
     code_id: string;
     msg: object | string;
   }
-
 
   export type Amino = AminoV1 | AminoV2;
   export type Data = DataV1 | DataV2;

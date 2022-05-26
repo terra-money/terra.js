@@ -24,9 +24,9 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
 
   public static fromAmino(
     data: MsgUpdateContractAdmin.Amino,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgUpdateContractAdmin {
-    if (legacy) {
+    if (isClassic) {
       const {
         value: { admin, new_admin, contract },
       } = data as MsgUpdateContractAdmin.AminoV1;
@@ -39,9 +39,9 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
     }
   }
 
-  public toAmino(legacy?: boolean): MsgUpdateContractAdmin.Amino {
+  public toAmino(isClassic?: boolean): MsgUpdateContractAdmin.Amino {
     const { admin, new_admin, contract } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         type: 'wasm/MsgUpdateContractAdmin',
         value: {
@@ -64,28 +64,20 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
 
   public static fromProto(
     proto: MsgUpdateContractAdmin.Proto,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgUpdateContractAdmin {
-    if (legacy) {
+    if (isClassic) {
       const p = proto as MsgUpdateContractAdmin_legacy_pb;
-      return new MsgUpdateContractAdmin(
-        p.admin,
-        p.newAdmin,
-        p.contract
-      );
+      return new MsgUpdateContractAdmin(p.admin, p.newAdmin, p.contract);
     } else {
       const p = proto as MsgUpdateAdmin_pb;
-      return new MsgUpdateContractAdmin(
-        p.sender,
-        p.newAdmin,
-        p.contract
-      );
+      return new MsgUpdateContractAdmin(p.sender, p.newAdmin, p.contract);
     }
   }
 
-  public toProto(legacy?: boolean): MsgUpdateContractAdmin.Proto {
+  public toProto(isClassic?: boolean): MsgUpdateContractAdmin.Proto {
     const { admin, new_admin, contract } = this;
-    if (legacy) {
+    if (isClassic) {
       return MsgUpdateContractAdmin_legacy_pb.fromPartial({
         admin,
         contract,
@@ -100,48 +92,59 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
     }
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (legacy) {
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
       return Any.fromPartial({
         typeUrl: '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
-        value: MsgUpdateContractAdmin_legacy_pb.encode(this.toProto(legacy) as MsgUpdateContractAdmin_legacy_pb).finish(),
+        value: MsgUpdateContractAdmin_legacy_pb.encode(
+          this.toProto(isClassic) as MsgUpdateContractAdmin_legacy_pb
+        ).finish(),
       });
     } else {
       return Any.fromPartial({
         typeUrl: '/coswasm.wasm.v1.MsgUpdateAdmin',
-        value: MsgUpdateAdmin_pb.encode(this.toProto(legacy) as MsgUpdateAdmin_pb).finish(),
+        value: MsgUpdateAdmin_pb.encode(
+          this.toProto(isClassic) as MsgUpdateAdmin_pb
+        ).finish(),
       });
     }
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgUpdateContractAdmin {
-    if (legacy) {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgUpdateContractAdmin {
+    if (isClassic) {
       return MsgUpdateContractAdmin.fromProto(
-        MsgUpdateContractAdmin_legacy_pb.decode(msgAny.value), legacy
+        MsgUpdateContractAdmin_legacy_pb.decode(msgAny.value),
+        isClassic
       );
     } else {
       return MsgUpdateContractAdmin.fromProto(
-        MsgUpdateAdmin_pb.decode(msgAny.value), legacy
+        MsgUpdateAdmin_pb.decode(msgAny.value),
+        isClassic
       );
     }
   }
 
   public static fromData(
     data: MsgUpdateContractAdmin.Data,
-    legacy?: boolean
+    isClassic?: boolean
   ): MsgUpdateContractAdmin {
-    if (legacy) {
-      const { admin, new_admin, contract } = data as MsgUpdateContractAdmin.DataV1;
+    if (isClassic) {
+      const { admin, new_admin, contract } =
+        data as MsgUpdateContractAdmin.DataV1;
       return new MsgUpdateContractAdmin(admin, new_admin, contract);
     } else {
-      const { sender, new_admin, contract } = data as MsgUpdateContractAdmin.DataV2;
+      const { sender, new_admin, contract } =
+        data as MsgUpdateContractAdmin.DataV2;
       return new MsgUpdateContractAdmin(sender, new_admin, contract);
     }
   }
 
-  public toData(legacy?: boolean): MsgUpdateContractAdmin.Data {
+  public toData(isClassic?: boolean): MsgUpdateContractAdmin.Data {
     const { admin, new_admin, contract } = this;
-    if (legacy) {
+    if (isClassic) {
       return {
         '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
         admin,

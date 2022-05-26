@@ -30,9 +30,12 @@ export class MsgSwapSend extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgSwapSend.Amino, legacy?: boolean): MsgSwapSend {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static fromAmino(
+    data: MsgSwapSend.Amino,
+    isClassic?: boolean
+  ): MsgSwapSend {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const {
       value: { from_address, to_address, offer_coin, ask_denom },
@@ -45,9 +48,9 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toAmino(legacy?: boolean): MsgSwapSend.Amino {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toAmino(isClassic?: boolean): MsgSwapSend.Amino {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
@@ -61,9 +64,12 @@ export class MsgSwapSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSwapSend.Proto, legacy?: boolean): MsgSwapSend {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static fromProto(
+    proto: MsgSwapSend.Proto,
+    isClassic?: boolean
+  ): MsgSwapSend {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return new MsgSwapSend(
       proto.fromAddress,
@@ -73,9 +79,9 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toProto(legacy?: boolean): MsgSwapSend.Proto {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toProto(isClassic?: boolean): MsgSwapSend.Proto {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return MsgSwapSend_pb.fromPartial({
@@ -86,9 +92,9 @@ export class MsgSwapSend extends JSONSerializable<
     });
   }
 
-  public packAny(legacy?: boolean): Any {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public packAny(isClassic?: boolean): Any {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwapSend',
@@ -96,16 +102,19 @@ export class MsgSwapSend extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any, legacy?: boolean): MsgSwapSend {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgSwapSend {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     return MsgSwapSend.fromProto(MsgSwapSend_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgSwapSend.Data, legacy?: boolean): MsgSwapSend {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public static fromData(
+    data: MsgSwapSend.Data,
+    isClassic?: boolean
+  ): MsgSwapSend {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { from_address, to_address, offer_coin, ask_denom } = data;
     return new MsgSwapSend(
@@ -116,9 +125,9 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toData(legacy?: boolean): MsgSwapSend.Data {
-    if (!legacy) {
-      throw new Error('Not supported for the network')
+  public toData(isClassic?: boolean): MsgSwapSend.Data {
+    if (!isClassic) {
+      throw new Error('Not supported for the network');
     }
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
