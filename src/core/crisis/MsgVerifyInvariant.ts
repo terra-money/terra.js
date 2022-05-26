@@ -1,5 +1,6 @@
 import { JSONSerializable } from '../../util/json';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+//import { MsgVerifyInvariant as MsgVerifyInvariant_pb } from '@terra-money/legacy.proto/cosmos/crisis/v1beta1/tx';
 import { MsgVerifyInvariant as MsgVerifyInvariant_pb } from '@terra-money/terra.proto/cosmos/crisis/v1beta1/tx';
 import { AccAddress } from '../bech32';
 
@@ -24,24 +25,27 @@ export class MsgVerifyInvariant extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgVerifyInvariant.Amino): MsgVerifyInvariant {
+  public static fromAmino(data: MsgVerifyInvariant.Amino, _?: boolean): MsgVerifyInvariant {
+    _;
     const {
       value: { sender, invariantModuleName, invariantRoute },
     } = data;
     return new MsgVerifyInvariant(sender, invariantModuleName, invariantRoute);
   }
 
-  public toAmino(): MsgVerifyInvariant.Amino {
+  public toAmino(_?: boolean): MsgVerifyInvariant.Amino {
+    _;
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public static fromData(data: MsgVerifyInvariant.Data): MsgVerifyInvariant {
+  public static fromData(data: MsgVerifyInvariant.Data, _?: boolean): MsgVerifyInvariant {
+    _;
     const { sender, invariantModuleName, invariantRoute } = data;
-
     return new MsgVerifyInvariant(sender, invariantModuleName, invariantRoute);
   }
 
-  public toData(): MsgVerifyInvariant.Data {
+  public toData(_?: boolean): MsgVerifyInvariant.Data {
+    _;
     const { sender, invariantModuleName, invariantRoute } = this;
     return {
       '@type': '/cosmos.crisis.v1beta1.MsgVerifyInvariant',
@@ -51,7 +55,8 @@ export class MsgVerifyInvariant extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgVerifyInvariant.Proto): MsgVerifyInvariant {
+  public static fromProto(proto: MsgVerifyInvariant.Proto, _?: boolean): MsgVerifyInvariant {
+    _;
     return new MsgVerifyInvariant(
       proto.sender,
       proto.invariantModuleName,
@@ -59,18 +64,21 @@ export class MsgVerifyInvariant extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgVerifyInvariant.Proto {
+  public toProto(_?: boolean): MsgVerifyInvariant.Proto {
+    _;
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant',
       value: MsgVerifyInvariant_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgVerifyInvariant {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgVerifyInvariant {
+    _;
     return MsgVerifyInvariant.fromProto(
       MsgVerifyInvariant_pb.decode(msgAny.value)
     );
@@ -79,7 +87,7 @@ export class MsgVerifyInvariant extends JSONSerializable<
 
 export namespace MsgVerifyInvariant {
   export interface Amino {
-    type: 'crisis/MsgVerifyInvariant';
+    type: 'crisis/MsgVerifyInvariant' | 'cosmos-sdk/MsgVerifyInvariant';
     value: {
       sender: AccAddress;
       invariantModuleName: string;

@@ -1,9 +1,12 @@
 import { Dec } from '../../../core/numeric';
-import { APIRequester } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 import { MintAPI } from './MintAPI';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-const api = new MintAPI(c);
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
+const api = new MintAPI(terra);
 
 describe('MintAPI', () => {
   it('inflation', async () => {

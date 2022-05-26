@@ -11,8 +11,10 @@ const mk = new MnemonicKey({
 });
 
 const terra = new LCDClient({
-  chainID: 'fake-1',
-  URL: 'https://fake-lcd.terra.dev',
+  //chainID: 'fake-1',
+  //URL: 'https://fake-lcd.terra.dev',
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
 });
 
 const txAPI = new TxAPI(terra);
@@ -132,7 +134,7 @@ describe('TxAPI', () => {
       const tx = await wallet.createAndSignTx({ msgs: [send] });
 
       await expect(async () => {
-        await txAPI.broadcast(tx, 500);
+        await txAPI.broadcast(tx, 1);
       }).rejects.toThrow('Transaction was not included in a block');
     });
   });

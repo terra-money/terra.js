@@ -16,6 +16,7 @@ import {
   TxAPI,
   WasmAPI,
   IbcTransferAPI,
+  IbcAPI,
 } from './api';
 import { LCDUtils } from './LCDUtils';
 import { Wallet } from './Wallet';
@@ -43,21 +44,38 @@ export interface LCDClientConfig {
    * Number presenting the default gas adjustment value to use for fee estimation.
    */
   gasAdjustment?: Numeric.Input;
+
+  /**
+   * is it connected to forked network?
+   */
+  isClassic?: boolean;
 }
 
 const DEFAULT_LCD_OPTIONS: Partial<LCDClientConfig> = {
   gasAdjustment: 1.75,
 };
 
+// isClassic network: true
+// forked network : false
+const DEFAULT_NETWORK_TYPE_BY_CHAIN_ID: { [key: string]: boolean } = {
+  default: false,
+  'columbus-5': true,
+  'bombay-12': true,
+  'pisco-1': false,
+};
+
 const DEFAULT_GAS_PRICES_BY_CHAIN_ID: { [key: string]: Coins.Input } = {
   default: {
-    uusd: 0.15,
+    uluna: 0.15,
   },
   'columbus-5': {
     uusd: 0.15,
   },
   'bombay-12': {
     uusd: 0.15,
+  },
+  'pisco-1': {
+    uluna: 0.15,
   },
 };
 
@@ -99,6 +117,7 @@ export class LCDClient {
   public treasury: TreasuryAPI;
   public wasm: WasmAPI;
   public tx: TxAPI;
+  public ibc: IbcAPI;
   public ibcTransfer: IbcTransferAPI;
   public utils: LCDUtils;
 
@@ -113,29 +132,32 @@ export class LCDClient {
       gasPrices:
         DEFAULT_GAS_PRICES_BY_CHAIN_ID[config.chainID] ||
         DEFAULT_GAS_PRICES_BY_CHAIN_ID['default'],
+      isClassic:
+        DEFAULT_NETWORK_TYPE_BY_CHAIN_ID[config.chainID] ||
+        DEFAULT_NETWORK_TYPE_BY_CHAIN_ID['default'],
       ...config,
     };
 
     this.apiRequester = new APIRequester(this.config.URL);
 
     // instantiate APIs
-    this.auth = new AuthAPI(this.apiRequester);
-    this.bank = new BankAPI(this.apiRequester);
-    this.distribution = new DistributionAPI(this.apiRequester);
-    this.feeGrant = new FeeGrantAPI(this.apiRequester);
-    this.gov = new GovAPI(this.apiRequester);
-    this.market = new MarketAPI(this.apiRequester);
-    this.mint = new MintAPI(this.apiRequester);
-    this.authz = new AuthzAPI(this.apiRequester);
-    this.oracle = new OracleAPI(this.apiRequester);
-    this.slashing = new SlashingAPI(this.apiRequester);
-    this.staking = new StakingAPI(this.apiRequester);
-    this.tendermint = new TendermintAPI(this.apiRequester);
-    this.treasury = new TreasuryAPI(this.apiRequester);
-    this.wasm = new WasmAPI(this.apiRequester);
-    this.ibcTransfer = new IbcTransferAPI(this.apiRequester);
+    this.auth = new AuthAPI(this);
+    this.bank = new BankAPI(this);
+    this.distribution = new DistributionAPI(this);
+    this.feeGrant = new FeeGrantAPI(this);
+    this.gov = new GovAPI(this);
+    this.market = new MarketAPI(this);
+    this.mint = new MintAPI(this);
+    this.authz = new AuthzAPI(this);
+    this.oracle = new OracleAPI(this);
+    this.slashing = new SlashingAPI(this);
+    this.staking = new StakingAPI(this);
+    this.tendermint = new TendermintAPI(this);
+    this.treasury = new TreasuryAPI(this);
+    this.wasm = new WasmAPI(this);
+    this.ibc = new IbcAPI(this);
+    this.ibcTransfer = new IbcTransferAPI(this);
     this.tx = new TxAPI(this);
-
     this.utils = new LCDUtils(this);
   }
 

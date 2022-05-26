@@ -28,7 +28,8 @@ export class MsgDeposit extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(data: MsgDeposit.Amino): MsgDeposit {
+  public static fromAmino(data: MsgDeposit.Amino, _?: boolean): MsgDeposit {
+    _;
     const {
       value: { proposal_id, depositor, amount },
     } = data;
@@ -39,10 +40,10 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgDeposit.Amino {
+  public toAmino(isClassic?: boolean): MsgDeposit.Amino {
     const { proposal_id, depositor, amount } = this;
     return {
-      type: 'gov/MsgDeposit',
+      type: isClassic ? 'gov/MsgDeposit' : 'cosmos-sdk/MsgDeposit',
       value: {
         proposal_id: proposal_id.toString(),
         depositor,
@@ -51,7 +52,8 @@ export class MsgDeposit extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgDeposit.Data): MsgDeposit {
+  public static fromData(data: MsgDeposit.Data, _?: boolean): MsgDeposit {
+    _;
     const { proposal_id, depositor, amount } = data;
     return new MsgDeposit(
       Number.parseInt(proposal_id),
@@ -60,7 +62,8 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toData(): MsgDeposit.Data {
+  public toData(_?: boolean): MsgDeposit.Data {
+    _;
     const { proposal_id, depositor, amount } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgDeposit',
@@ -70,7 +73,8 @@ export class MsgDeposit extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgDeposit.Proto): MsgDeposit {
+  public static fromProto(proto: MsgDeposit.Proto, _?: boolean): MsgDeposit {
+    _;
     return new MsgDeposit(
       proto.proposalId.toNumber(),
       proto.depositor,
@@ -78,7 +82,8 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgDeposit.Proto {
+  public toProto(_?: boolean): MsgDeposit.Proto {
+    _;
     const { proposal_id, depositor, amount } = this;
     return MsgDeposit_pb.fromPartial({
       amount: amount.toProto(),
@@ -87,21 +92,21 @@ export class MsgDeposit extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
-      value: MsgDeposit_pb.encode(this.toProto()).finish(),
+      value: MsgDeposit_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgDeposit {
-    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgDeposit {
+    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value), isClassic);
   }
 }
 
 export namespace MsgDeposit {
   export interface Amino {
-    type: 'gov/MsgDeposit';
+    type: 'gov/MsgDeposit' | 'cosmos-sdk/MsgDeposit';
     value: {
       proposal_id: string;
       depositor: AccAddress;

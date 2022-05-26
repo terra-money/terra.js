@@ -46,18 +46,22 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgConnectionOpenTry {
+  public static fromAmino(_: any, isClassic?: boolean): MsgConnectionOpenTry {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
   public static fromData(
-    data: MsgConnectionOpenTry.Data
+    data: MsgConnectionOpenTry.Data,
+    _?: boolean
   ): MsgConnectionOpenTry {
+    _;
     const {
       client_id,
       previous_connection_id,
@@ -90,7 +94,8 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     );
   }
 
-  public toData(): MsgConnectionOpenTry.Data {
+  public toData(_?: boolean): MsgConnectionOpenTry.Data {
+    _;
     const {
       client_id,
       previous_connection_id,
@@ -128,8 +133,10 @@ export class MsgConnectionOpenTry extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgConnectionOpenTry.Proto
+    proto: MsgConnectionOpenTry.Proto,
+    _?: boolean
   ): MsgConnectionOpenTry {
+    _;
     return new MsgConnectionOpenTry(
       proto.clientId,
       proto.previousConnectionId,
@@ -152,7 +159,8 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgConnectionOpenTry.Proto {
+  public toProto(_?: boolean): MsgConnectionOpenTry.Proto {
+    _;
     const {
       client_id,
       previous_connection_id,
@@ -188,14 +196,16 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenTry',
       value: MsgConnectionOpenTry_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgConnectionOpenTry {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgConnectionOpenTry {
+    _;
     return MsgConnectionOpenTry.fromProto(
       MsgConnectionOpenTry_pb.decode(msgAny.value)
     );

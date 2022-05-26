@@ -16,12 +16,11 @@ export class BaseVestingAccount extends JSONSerializable<
 > {
   /**
    *
-   * @param BaseAccount account information
+   * @param base_account account information
    * @param original_vesting initial vesting amount
    * @param delegated_free
    * @param delegated_vesting
-   * @param end_time  -not used-
-   * @param vesting_schedules Entries that make up vesting
+   * @param end_time
    */
   constructor(
     public base_account: BaseAccount,
@@ -45,8 +44,7 @@ export class BaseVestingAccount extends JSONSerializable<
     return this.base_account.public_key;
   }
 
-  public toAmino(): BaseVestingAccount.Amino {
-    undefined;
+  public toAmino(isClassic?: boolean): BaseVestingAccount.Amino {
     const {
       base_account,
       original_vesting,
@@ -56,7 +54,9 @@ export class BaseVestingAccount extends JSONSerializable<
     } = this;
 
     return {
-      type: 'core/BaseVestingAccount',
+      type: isClassic
+        ? 'core/BaseVestingAccount'
+        : 'cosmos-sdk/BaseVestingAccount',
       value: {
         base_account: base_account.toAmino().value,
         delegated_free: delegated_free.toAmino(),
@@ -67,9 +67,12 @@ export class BaseVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromAmino(amino: BaseVestingAccount.Amino): BaseVestingAccount {
+  public static fromAmino(
+    amino: BaseVestingAccount.Amino,
+    isClassic?: boolean
+  ): BaseVestingAccount {
     const base_account = BaseAccount.fromAmino({
-      type: 'core/Account',
+      type: isClassic ? 'core/Account' : 'cosmos-sdk/BaseAccount',
       value: amino.value.base_account,
     });
 
@@ -82,7 +85,8 @@ export class BaseVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(): BaseVestingAccount.Data {
+  public toData(_?: boolean): BaseVestingAccount.Data {
+    _;
     const {
       base_account,
       original_vesting,
@@ -92,7 +96,7 @@ export class BaseVestingAccount extends JSONSerializable<
     } = this;
 
     return {
-      '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount',
+      '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount',
       base_account: base_account.toData(),
       delegated_free: delegated_free.toData(),
       delegated_vesting: delegated_vesting.toData(),
@@ -101,7 +105,11 @@ export class BaseVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromData(data: BaseVestingAccount.Data): BaseVestingAccount {
+  public static fromData(
+    data: BaseVestingAccount.Data,
+    _?: boolean
+  ): BaseVestingAccount {
+    _;
     const base_account = BaseAccount.fromData({
       '@type': '/cosmos.auth.v1beta1.BaseAccount',
       ...data.base_account,
@@ -116,7 +124,8 @@ export class BaseVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(): BaseVestingAccount.Proto {
+  public toProto(_?: boolean): BaseVestingAccount.Proto {
+    _;
     const {
       base_account,
       original_vesting,
@@ -134,7 +143,11 @@ export class BaseVestingAccount extends JSONSerializable<
     });
   }
 
-  public static fromProto(proto: BaseVestingAccount.Proto): BaseVestingAccount {
+  public static fromProto(
+    proto: BaseVestingAccount.Proto,
+    _?: boolean
+  ): BaseVestingAccount {
+    _;
     const baseAccount = BaseAccount.fromProto(
       proto.baseAccount as BaseAccount_pb
     );
@@ -159,7 +172,7 @@ export namespace BaseVestingAccount {
   }
 
   export interface Amino {
-    type: 'core/BaseVestingAccount';
+    type: 'core/BaseVestingAccount' | 'cosmos-sdk/BaseVestingAccount';
     value: AminoValue;
   }
 
@@ -172,7 +185,7 @@ export namespace BaseVestingAccount {
   }
 
   export interface Data extends DataValue {
-    '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount';
+    '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount';
   }
 
   export type Proto = BaseVestingAccount_pb;

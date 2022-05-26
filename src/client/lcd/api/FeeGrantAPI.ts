@@ -2,8 +2,14 @@ import { AccAddress } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 import { Allowance } from '../../../core/feegrant/allowances';
 import { Pagination, PaginationOptions } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export class FeeGrantAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   public async allowances(
     grantee: AccAddress,
     params: Partial<PaginationOptions> = {}

@@ -33,16 +33,22 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgTimeoutOnClose {
+  public static fromAmino(_: any, isClassic?: boolean): MsgTimeoutOnClose {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgTimeoutOnClose.Data): MsgTimeoutOnClose {
+  public static fromData(
+    data: MsgTimeoutOnClose.Data,
+    _?: boolean
+  ): MsgTimeoutOnClose {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -61,7 +67,8 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     );
   }
 
-  public toData(): MsgTimeoutOnClose.Data {
+  public toData(_?: boolean): MsgTimeoutOnClose.Data {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -81,7 +88,11 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgTimeoutOnClose.Proto): MsgTimeoutOnClose {
+  public static fromProto(
+    proto: MsgTimeoutOnClose.Proto,
+    _?: boolean
+  ): MsgTimeoutOnClose {
+    _;
     return new MsgTimeoutOnClose(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofUnreceived).toString('base64'),
@@ -92,7 +103,8 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgTimeoutOnClose.Proto {
+  public toProto(_?: boolean): MsgTimeoutOnClose.Proto {
+    _;
     const {
       packet,
       proof_unreceived,
@@ -111,14 +123,16 @@ export class MsgTimeoutOnClose extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgTimeoutOnClose',
       value: MsgTimeoutOnClose_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgTimeoutOnClose {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgTimeoutOnClose {
+    _;
     return MsgTimeoutOnClose.fromProto(
       MsgTimeoutOnClose_pb.decode(msgAny.value)
     );

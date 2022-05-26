@@ -10,6 +10,7 @@ import {
   AggregateExchangeRateVote,
 } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export interface OracleWhitelist {
   name: string;
@@ -77,10 +78,18 @@ export namespace OracleWhitelist {
 }
 
 export class OracleAPI extends BaseAPI {
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets the Oracle module's currently registered exchange rate for uluna in all available denominations.
    */
   public async exchangeRates(params: APIParams = {}): Promise<Coins> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ exchange_rates: Coins.Data }>(
         `/terra/oracle/v1beta1/denoms/exchange_rates`,
@@ -97,6 +106,10 @@ export class OracleAPI extends BaseAPI {
     denom: Denom,
     params: APIParams = {}
   ): Promise<Coin | undefined> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ exchange_rate: string }>(
         `/terra/oracle/v1beta1/denoms/${denom}/exchange_rate`,
@@ -114,6 +127,10 @@ export class OracleAPI extends BaseAPI {
    * Gets the current list of active denominations.
    */
   public async activeDenoms(params: APIParams = {}): Promise<Denom[]> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ actives: Denom[] }>(`/terra/oracle/v1beta1/denoms/actives`, params)
       .then(d => d.actives);
@@ -128,6 +145,10 @@ export class OracleAPI extends BaseAPI {
     validator: ValAddress,
     params: APIParams = {}
   ): Promise<AccAddress> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ feeder_addr: AccAddress }>(
         `/terra/oracle/v1beta1/validators/${validator}/feeder`,
@@ -144,6 +165,10 @@ export class OracleAPI extends BaseAPI {
     validator: ValAddress,
     params: APIParams = {}
   ): Promise<number> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ miss_counter: string }>(
         `/terra/oracle/v1beta1/validators/${validator}/miss`,
@@ -160,6 +185,10 @@ export class OracleAPI extends BaseAPI {
     validator: ValAddress,
     params: APIParams = {}
   ): Promise<AggregateExchangeRatePrevote> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ aggregate_prevote: AggregateExchangeRatePrevote.Data }>(
         `/terra/oracle/v1beta1/validators/${validator}/aggregate_prevote`,
@@ -176,6 +205,10 @@ export class OracleAPI extends BaseAPI {
     validator: ValAddress,
     params: APIParams = {}
   ): Promise<AggregateExchangeRateVote> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ aggregate_vote: AggregateExchangeRateVote.Data }>(
         `/terra/oracle/v1beta1/validators/${validator}/aggregate_vote`,
@@ -188,6 +221,10 @@ export class OracleAPI extends BaseAPI {
    * Gets the current Oracle module's parameters.
    */
   public async parameters(params: APIParams = {}): Promise<OracleParams> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ params: OracleParams.Data }>(
         `/terra/oracle/v1beta1/params`,

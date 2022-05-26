@@ -23,7 +23,8 @@ export function getCodeId(
 
 export function getContractAddress(
   txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
-  msgIndex = 0
+  msgIndex = 0,
+  isClassic = false
 ): string {
   if (
     isTxError(txResult) ||
@@ -32,10 +33,18 @@ export function getContractAddress(
   ) {
     throw new Error('could not parse contract address -- tx logs are empty.');
   }
+  let eventName: string;
+  let attributeKey: string;
+  if (isClassic) {
+    eventName = 'instantiate_contract';
+    attributeKey = 'contract_address';
+  } else {
+    eventName = 'wasm';
+    attributeKey = '_contract_address';
+  }
+  console.log(txResult.logs[msgIndex].eventsByType['wasm']);
   const contractAddress =
-    txResult.logs[msgIndex].eventsByType['instantiate_contract'][
-      'contract_address'
-    ][0];
+    txResult.logs[msgIndex].eventsByType[eventName][attributeKey][0];
   return contractAddress;
 }
 
@@ -46,7 +55,8 @@ export interface ContractEvent {
 
 export function getContractEvents(
   txResult: WaitTxBroadcastResult | BlockTxBroadcastResult | TxInfo,
-  msgIndex = 0
+  msgIndex = 0,
+  isClassic = false
 ): ContractEvent[] {
   if (
     isTxError(txResult) ||
@@ -55,16 +65,24 @@ export function getContractEvents(
   ) {
     throw new Error('could not parse contract events -- tx logs are empty.');
   }
+
+  let eventName: string;
+  let attributeKey: string;
+  if (isClassic) {
+    eventName = 'from_contract';
+    attributeKey = 'contract_address';
+  } else {
+    eventName = 'instantiate';
+    attributeKey = '_contract_address';
+  }
+
   const contractEvents: ContractEvent[] = [];
   for (const event of txResult.logs[msgIndex].events) {
-    if (event.type === 'from_contract') {
+    if (event.type === eventName) {
       let eventData: ContractEvent = { contract_address: '' }; // will be overwritten
       let currentContractAddress = event.attributes[0].value;
       for (const att of event.attributes) {
-        if (
-          att.key == 'contract_address' &&
-          currentContractAddress !== att.value
-        ) {
+        if (att.key == attributeKey && currentContractAddress !== att.value) {
           contractEvents.push(eventData);
           eventData = { contract_address: '' };
           currentContractAddress = att.value;
@@ -75,5 +93,5 @@ export function getContractEvents(
       return contractEvents;
     }
   }
-  throw new Error("could not find event type 'from_contract' in logs");
+  throw new Error(`could not find event type ${eventName} in logs`);
 }

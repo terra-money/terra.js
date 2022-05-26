@@ -25,7 +25,7 @@ describe('MsgSend', () => {
       }),
     });
 
-    expect(send.toAmino()).toMatchObject({
+    expect(send.toAmino(true)).toMatchObject({
       type: 'bank/MsgSend',
       value: {
         from_address: 'terra1y4umfuqfg76t8mfcff6zzx7elvy93jtp4xcdvw',

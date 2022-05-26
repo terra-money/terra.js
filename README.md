@@ -54,14 +54,22 @@ npm install @terra-money/terra.js
 Terra.js can be used in Node.js, as well as inside the browser. Please check the [docs](https://docs.terra.money/docs/develop/sdks/terra-js/README.html) for notes on how to get up and running.
 
 ### Getting blockchain data
-
+:exclamation: terra.js can connect both terra-classic and terra network. If you want to communicate with classic chain, you have to set isClassic as `true`.
 ```ts
 import { LCDClient, Coin } from '@terra-money/terra.js';
 
-// connect to bombay testnet
-const terra = new LCDClient({
-  URL: 'https://bombay-lcd.terra.dev',
-  chainID: 'bombay-12',
+// connect to pisco testnet
+const client = new LCDClient({
+  URL: 'https://pisco-lcd.terra.dev',
+  chainID: 'pisco-1',
+  isClassic: false  // if it is unset, LCDClient assumes the flag is false.
+});
+
+// connect to columbus-5 terra classic network
+const client = new LCDClient({
+  URL: 'https://columbus-lcd.terra.dev',
+  chainID: 'columbus-5',
+  isClassic: true  // *set to true to connect terra-classic chain*
 });
 
 // To use LocalTerra
@@ -70,11 +78,9 @@ const terra = new LCDClient({
 //   chainID: 'localterra'
 // });
 
-// get the current swap rate from 1 TerraUSD to TerraKRW
-const offerCoin = new Coin('uusd', '1000000');
-terra.market.swapRate(offerCoin, 'ukrw').then(c => {
-  console.log(`${offerCoin.toString()} can be swapped for ${c.toString()}`);
-});
+// get the current balance of `terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v`
+const balance = terra.bank.balance('terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v');
+console.log(balance);
 ```
 
 ### Broadcasting transactions
@@ -92,8 +98,8 @@ const mk = new MnemonicKey({
 
 // connect to bombay testnet
 const terra = new LCDClient({
-  URL: 'https://bombay-lcd.terra.dev',
-  chainID: 'bombay-12',
+  URL: 'https://pisco-lcd.terra.dev',
+  chainID: 'pisco-1',
 });
 
 // To use LocalTerra
@@ -110,7 +116,7 @@ const wallet = terra.wallet(mk);
 const send = new MsgSend(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   'terra17lmam6zguazs5q5u6z5mmx76uj63gldnse2pdp',
-  { uluna: 1000000, ukrw: 1230201, uusd: 1312029 }
+  { uluna: 1200000}
 );
 
 wallet

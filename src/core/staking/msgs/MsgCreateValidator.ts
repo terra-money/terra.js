@@ -3,6 +3,8 @@ import { Coin } from '../../Coin';
 import { Int } from '../../numeric';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
+// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/legacy.proto/cosmos/staking/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 import { ValConsPublicKey, PublicKey } from '../../PublicKey';
@@ -38,7 +40,11 @@ export class MsgCreateValidator extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgCreateValidator.Amino): MsgCreateValidator {
+  public static fromAmino(
+    data: MsgCreateValidator.Amino,
+    _?: boolean
+  ): MsgCreateValidator {
+    _;
     const {
       value: {
         description,
@@ -61,7 +67,7 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgCreateValidator.Amino {
+  public toAmino(isClassic?: boolean): MsgCreateValidator.Amino {
     const {
       description,
       commission,
@@ -72,7 +78,9 @@ export class MsgCreateValidator extends JSONSerializable<
       value,
     } = this;
     return {
-      type: 'staking/MsgCreateValidator',
+      type: isClassic
+        ? 'staking/MsgCreateValidator'
+        : 'cosmos-sdk/MsgCreateValidator',
       value: {
         description,
         commission: commission.toAmino(),
@@ -85,7 +93,11 @@ export class MsgCreateValidator extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgCreateValidator.Data): MsgCreateValidator {
+  public static fromData(
+    data: MsgCreateValidator.Data,
+    _?: boolean
+  ): MsgCreateValidator {
+    _;
     const {
       description,
       commission,
@@ -106,7 +118,8 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toData(): MsgCreateValidator.Data {
+  public toData(_?: boolean): MsgCreateValidator.Data {
+    _;
     const {
       description,
       commission,
@@ -128,7 +141,11 @@ export class MsgCreateValidator extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgCreateValidator.Proto): MsgCreateValidator {
+  public static fromProto(
+    proto: MsgCreateValidator.Proto,
+    _?: boolean
+  ): MsgCreateValidator {
+    _;
     return new MsgCreateValidator(
       Validator.Description.fromProto(
         proto.description as Validator.Description.Proto
@@ -144,7 +161,8 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgCreateValidator.Proto {
+  public toProto(_?: boolean): MsgCreateValidator.Proto {
+    _;
     const {
       description,
       commission,
@@ -165,14 +183,16 @@ export class MsgCreateValidator extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator',
       value: MsgCreateValidator_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgCreateValidator {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgCreateValidator {
+    _;
     return MsgCreateValidator.fromProto(
       MsgCreateValidator_pb.decode(msgAny.value)
     );
@@ -181,7 +201,7 @@ export class MsgCreateValidator extends JSONSerializable<
 
 export namespace MsgCreateValidator {
   export interface Amino {
-    type: 'staking/MsgCreateValidator';
+    type: 'staking/MsgCreateValidator' | 'cosmos-sdk/MsgCreateValidator';
     value: {
       description: Validator.Description;
       commission: Validator.CommissionRates.Amino;

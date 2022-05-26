@@ -14,25 +14,36 @@ export class SendAuthorization extends JSONSerializable<
     this.spend_limit = new Coins(spend_limit);
   }
 
-  public static fromAmino(data: SendAuthorization.Amino): SendAuthorization {
+  public static fromAmino(
+    data: SendAuthorization.Amino,
+    _?: boolean
+  ): SendAuthorization {
+    _;
     return new SendAuthorization(Coins.fromAmino(data.value.spend_limit));
   }
 
-  public toAmino(): SendAuthorization.Amino {
+  public toAmino(isClassic?: boolean): SendAuthorization.Amino {
     const { spend_limit } = this;
     return {
-      type: 'msgauth/SendAuthorization',
+      type: isClassic
+        ? 'msgauth/SendAuthorization'
+        : 'cosmos-sdk/SendAuthorization',
       value: {
         spend_limit: spend_limit.toAmino(),
       },
     };
   }
 
-  public static fromData(data: SendAuthorization.Data): SendAuthorization {
+  public static fromData(
+    data: SendAuthorization.Data,
+    _?: boolean
+  ): SendAuthorization {
+    _;
     return new SendAuthorization(Coins.fromData(data.spend_limit));
   }
 
-  public toData(): SendAuthorization.Data {
+  public toData(_?: boolean): SendAuthorization.Data {
+    _;
     const { spend_limit } = this;
     return {
       '@type': '/cosmos.bank.v1beta1.SendAuthorization',
@@ -40,24 +51,31 @@ export class SendAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: SendAuthorization.Proto): SendAuthorization {
+  public static fromProto(
+    proto: SendAuthorization.Proto,
+    _?: boolean
+  ): SendAuthorization {
+    _;
     return new SendAuthorization(Coins.fromProto(proto.spendLimit));
   }
 
-  public toProto(): SendAuthorization.Proto {
+  public toProto(_?: boolean): SendAuthorization.Proto {
+    _;
     return SendAuthorization_pb.fromPartial({
       spendLimit: this.spend_limit.toProto(),
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.SendAuthorization',
       value: SendAuthorization_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): SendAuthorization {
+  public static unpackAny(msgAny: Any, _?: boolean): SendAuthorization {
+    _;
     return SendAuthorization.fromProto(
       SendAuthorization_pb.decode(msgAny.value)
     );
@@ -66,7 +84,7 @@ export class SendAuthorization extends JSONSerializable<
 
 export namespace SendAuthorization {
   export interface Amino {
-    type: 'msgauth/SendAuthorization';
+    type: 'msgauth/SendAuthorization' | 'cosmos-sdk/SendAuthorization';
     value: {
       spend_limit: Coins.Amino;
     };

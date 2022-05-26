@@ -1,9 +1,10 @@
 import { Coin } from '../../Coin';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
+// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// import { MsgDelegate as MsgDelegate_pb } from '@terra-money/legacy.proto/cosmos/staking/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgDelegate as MsgDelegate_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
-
 /**
  * A delegator can submit this message to send more Luna to be staked through a
  * validator delegate.
@@ -27,7 +28,8 @@ export class MsgDelegate extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgDelegate.Amino): MsgDelegate {
+  public static fromAmino(data: MsgDelegate.Amino, _?: boolean): MsgDelegate {
+    _;
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
@@ -38,10 +40,10 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgDelegate.Amino {
+  public toAmino(isClassic?: boolean): MsgDelegate.Amino {
     const { delegator_address, validator_address, amount } = this;
     return {
-      type: 'staking/MsgDelegate',
+      type: isClassic ? 'staking/MsgDelegate' : 'cosmos-sdk/MsgDelegate',
       value: {
         delegator_address,
         validator_address,
@@ -50,7 +52,8 @@ export class MsgDelegate extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgDelegate.Proto): MsgDelegate {
+  public static fromProto(proto: MsgDelegate.Proto, _?: boolean): MsgDelegate {
+    _;
     return new MsgDelegate(
       proto.delegatorAddress,
       proto.validatorAddress,
@@ -58,7 +61,8 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgDelegate.Proto {
+  public toProto(_?: boolean): MsgDelegate.Proto {
+    _;
     const { delegator_address, validator_address, amount } = this;
     return MsgDelegate_pb.fromPartial({
       amount: amount.toProto(),
@@ -67,18 +71,21 @@ export class MsgDelegate extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
       value: MsgDelegate_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgDelegate {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgDelegate {
+    _;
     return MsgDelegate.fromProto(MsgDelegate_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgDelegate.Data): MsgDelegate {
+  public static fromData(data: MsgDelegate.Data, _?: boolean): MsgDelegate {
+    _;
     const { delegator_address, validator_address, amount } = data;
     return new MsgDelegate(
       delegator_address,
@@ -87,7 +94,8 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toData(): MsgDelegate.Data {
+  public toData(_?: boolean): MsgDelegate.Data {
+    _;
     const { delegator_address, validator_address, amount } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.MsgDelegate',
@@ -100,7 +108,7 @@ export class MsgDelegate extends JSONSerializable<
 
 export namespace MsgDelegate {
   export interface Amino {
-    type: 'staking/MsgDelegate';
+    type: 'staking/MsgDelegate' | 'cosmos-sdk/MsgDelegate';
     value: {
       delegator_address: AccAddress;
       validator_address: ValAddress;

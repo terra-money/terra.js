@@ -33,16 +33,22 @@ export class MsgChannelOpenAck extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgChannelOpenAck {
+  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenAck {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgChannelOpenAck.Data): MsgChannelOpenAck {
+  public static fromData(
+    data: MsgChannelOpenAck.Data,
+    _?: boolean
+  ): MsgChannelOpenAck {
+    _;
     const {
       port_id,
       channel_id,
@@ -63,7 +69,8 @@ export class MsgChannelOpenAck extends JSONSerializable<
     );
   }
 
-  public toData(): MsgChannelOpenAck.Data {
+  public toData(_?: boolean): MsgChannelOpenAck.Data {
+    _;
     const {
       port_id,
       channel_id,
@@ -85,7 +92,11 @@ export class MsgChannelOpenAck extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgChannelOpenAck.Proto): MsgChannelOpenAck {
+  public static fromProto(
+    proto: MsgChannelOpenAck.Proto,
+    _?: boolean
+  ): MsgChannelOpenAck {
+    _;
     return new MsgChannelOpenAck(
       proto.portId,
       proto.channelId,
@@ -97,7 +108,8 @@ export class MsgChannelOpenAck extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgChannelOpenAck.Proto {
+  public toProto(_?: boolean): MsgChannelOpenAck.Proto {
+    _;
     const {
       port_id,
       channel_id,
@@ -118,14 +130,16 @@ export class MsgChannelOpenAck extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenAck',
       value: MsgChannelOpenAck_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgChannelOpenAck {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenAck {
+    _;
     return MsgChannelOpenAck.fromProto(
       MsgChannelOpenAck_pb.decode(msgAny.value)
     );

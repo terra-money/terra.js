@@ -1,5 +1,6 @@
 import { Dec, Numeric, Denom } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 import { BaseAPI } from './BaseAPI';
 
 export interface MintingParams {
@@ -23,6 +24,11 @@ export namespace MintingParams {
 }
 
 export class MintAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets the current minting inflation value
    */

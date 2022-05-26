@@ -1,6 +1,7 @@
 import { BaseAPI } from './BaseAPI';
 import { Coin, Denom, Dec, Coins, PolicyConstraints } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export interface TreasuryParams {
   /**
@@ -51,11 +52,19 @@ export namespace TreasuryParams {
   }
 }
 export class TreasuryAPI extends BaseAPI {
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets the current registered Tax caps for all denomination
    * @returns Coin[]
    */
   public async taxCaps(params: APIParams = {}): Promise<Coins> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ tax_caps: { denom: string; tax_cap: string }[] }>(
         `/terra/treasury/v1beta1/tax_caps`,
@@ -69,6 +78,10 @@ export class TreasuryAPI extends BaseAPI {
    * @param denom denomination desired for Tax Cap query.
    */
   public async taxCap(denom: Denom, params: APIParams = {}): Promise<Coin> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ tax_cap: string }>(
         `/terra/treasury/v1beta1/tax_caps/${denom}`,
@@ -81,6 +94,10 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current registered Tax Rate.
    */
   public async taxRate(height?: number, _params: APIParams = {}): Promise<Dec> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     const params = { ..._params };
 
     if (height) {
@@ -96,6 +113,10 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current registered Reward Weight monetary policy lever.
    */
   public async rewardWeight(params: APIParams = {}): Promise<Dec> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ reward_weight: string }>(
         `/terra/treasury/v1beta1/reward_weight`,
@@ -108,6 +129,10 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the tax proceeds for the epoch.
    */
   public async taxProceeds(params: APIParams = {}): Promise<Coins> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ tax_proceeds: Coins.Data }>(
         `/terra/treasury/v1beta1/tax_proceeds`,
@@ -120,6 +145,10 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the seigniorage proceeds for the epoch.
    */
   public async seigniorageProceeds(params: APIParams = {}): Promise<Coin> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ seigniorage_proceeds: string }>(
         `/terra/treasury/v1beta1/seigniorage_proceeds`,
@@ -132,6 +161,10 @@ export class TreasuryAPI extends BaseAPI {
    * Gets the current Treasury module's parameters.
    */
   public async parameters(params: APIParams = {}): Promise<TreasuryParams> {
+    if (!this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
+
     return this.c
       .get<{ params: TreasuryParams.Data }>(
         `/terra/treasury/v1beta1/params`,

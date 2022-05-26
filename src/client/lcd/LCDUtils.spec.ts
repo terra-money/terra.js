@@ -4,16 +4,18 @@ import { Coin, Validator } from '../../core';
 
 const lcdUtils = new LCDUtils(
   new LCDClient({
-    chainID: 'bombay-12',
-    URL: 'https://bombay-lcd.terra.dev',
+    chainID: 'pisco-1',
+    URL: 'https://pisco-lcd.terra.dev',
   })
 );
 
 describe('LCDUtils', () => {
   it('calculateTax', async () => {
-    await expect(
-      lcdUtils.calculateTax(new Coin('uluna', '0.0'))
-    ).resolves.toBeInstanceOf(Coin);
+    if (lcdUtils.lcd.config.isClassic) {
+      await expect(
+        lcdUtils.calculateTax(new Coin('uluna', '0.0'))
+      ).resolves.toBeInstanceOf(Coin);
+    }
   });
 
   it('validatorsWithVotingPower', async () => {

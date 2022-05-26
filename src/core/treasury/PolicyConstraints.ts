@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../util/json';
 import { Coin } from '../Coin';
 import { Dec, Numeric } from '../numeric';
-import { PolicyConstraints as PolicyConstraints_pb } from '@terra-money/terra.proto/terra/treasury/v1beta1/treasury';
+import { PolicyConstraints as PolicyConstraints_pb } from '@terra-money/legacy.proto/terra/treasury/v1beta1/treasury';
 
 /**
  * This captures the Treasury module's `tax_policy` and `reward_policy` parameters, which

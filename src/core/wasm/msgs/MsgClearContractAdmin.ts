@@ -1,7 +1,8 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgClearContractAdmin as MsgClearContractAdmin_pb } from '@terra-money/terra.proto/terra/wasm/v1beta1/tx';
+import { MsgClearContractAdmin as MsgClearContractAdmin_legacy_pb } from '@terra-money/legacy.proto/terra/wasm/v1beta1/tx';
+import { MsgClearAdmin as MsgClearAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 export class MsgClearContractAdmin extends JSONSerializable<
   MsgClearContractAdmin.Amino,
@@ -10,7 +11,6 @@ export class MsgClearContractAdmin extends JSONSerializable<
 > {
   /**
    * @param admin contract admin
-   * @param new_admin new admin
    * @param contract contract address
    */
   constructor(public admin: AccAddress, public contract: AccAddress) {
@@ -18,69 +18,138 @@ export class MsgClearContractAdmin extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgClearContractAdmin.Amino
+    data: MsgClearContractAdmin.Amino,
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    const {
-      value: { admin, contract },
-    } = data;
-    return new MsgClearContractAdmin(admin, contract);
+    if (isClassic) {
+      const {
+        value: { admin, contract },
+      } = data as MsgClearContractAdmin.AminoV1;
+      return new MsgClearContractAdmin(admin, contract);
+    } else {
+      const {
+        value: { sender, contract },
+      } = data as MsgClearContractAdmin.AminoV2;
+      return new MsgClearContractAdmin(sender, contract);
+    }
   }
 
-  public toAmino(): MsgClearContractAdmin.Amino {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public toAmino(isClassic?: boolean): MsgClearContractAdmin.Amino {
     const { admin, contract } = this;
-    return {
-      type: 'wasm/MsgClearContractAdmin',
-      value: {
-        admin,
-        contract,
-      },
-    };
+    if (isClassic) {
+      return {
+        type: 'wasm/MsgClearContractAdmin',
+        value: {
+          admin,
+          contract,
+        },
+      };
+    } else {
+      return {
+        type: 'wasm/MsgClearAdmin',
+        value: {
+          sender: admin,
+          contract,
+        },
+      };
+    }
   }
 
   public static fromProto(
-    data: MsgClearContractAdmin.Proto
+    data: MsgClearContractAdmin.Proto,
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    return new MsgClearContractAdmin(data.admin, data.contract);
+    if (isClassic) {
+      const { admin, contract } = data as MsgClearContractAdmin.DataV1;
+      return new MsgClearContractAdmin(admin, contract);
+    } else {
+      const { sender, contract } = data as MsgClearContractAdmin.DataV2;
+      return new MsgClearContractAdmin(sender, contract);
+    }
   }
 
-  public toProto(): MsgClearContractAdmin.Proto {
-    return MsgClearContractAdmin_pb.fromPartial({
-      admin: this.admin,
-      contract: this.contract,
-    });
+  public toProto(isClassic?: boolean): MsgClearContractAdmin.Proto {
+    if (isClassic) {
+      return MsgClearContractAdmin_legacy_pb.fromPartial({
+        admin: this.admin,
+        contract: this.contract,
+      });
+    } else {
+      return MsgClearAdmin_pb.fromPartial({
+        sender: this.admin,
+        contract: this.contract,
+      });
+    }
   }
 
-  public packAny(): Any {
-    return Any.fromPartial({
-      typeUrl: '/terra.wasm.v1beta1.MsgClearContractAdmin',
-      value: MsgClearContractAdmin_pb.encode(this.toProto()).finish(),
-    });
+  public packAny(isClassic?: boolean): Any {
+    if (isClassic) {
+      return Any.fromPartial({
+        typeUrl: '/terra.wasm.v1beta1.MsgClearContractAdmin',
+        value: MsgClearContractAdmin_legacy_pb.encode(
+          this.toProto(isClassic) as MsgClearContractAdmin_legacy_pb
+        ).finish(),
+      });
+    } else {
+      return Any.fromPartial({
+        typeUrl: '/cosmwasm.wasm.v1.MsgClearAdmin',
+        value: MsgClearAdmin_pb.encode(
+          this.toProto(isClassic) as MsgClearAdmin_pb
+        ).finish(),
+      });
+    }
   }
 
-  public static unpackAny(msgAny: Any): MsgClearContractAdmin {
-    return MsgClearContractAdmin.fromProto(
-      MsgClearContractAdmin_pb.decode(msgAny.value)
-    );
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgClearContractAdmin {
+    if (isClassic) {
+      return MsgClearContractAdmin.fromProto(
+        MsgClearContractAdmin_legacy_pb.decode(msgAny.value),
+        isClassic
+      );
+    } else {
+      return MsgClearContractAdmin.fromProto(
+        MsgClearAdmin_pb.decode(msgAny.value),
+        isClassic
+      );
+    }
   }
 
   public static fromData(
-    data: MsgClearContractAdmin.Data
+    data: MsgClearContractAdmin.Data,
+    isClassic?: boolean
   ): MsgClearContractAdmin {
-    const { admin, contract } = data;
-    return new MsgClearContractAdmin(admin, contract);
+    if (isClassic) {
+      const { admin, contract } = data as MsgClearContractAdmin.DataV1;
+      return new MsgClearContractAdmin(admin, contract);
+    } else {
+      const { sender, contract } = data as MsgClearContractAdmin.DataV2;
+      return new MsgClearContractAdmin(sender, contract);
+    }
   }
 
-  public toData(): MsgClearContractAdmin.Data {
-    return {
-      '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
-      admin: this.admin,
-      contract: this.contract,
-    };
+  public toData(isClassic?: boolean): MsgClearContractAdmin.Data {
+    if (isClassic) {
+      return {
+        '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin',
+        admin: this.admin,
+        contract: this.contract,
+      };
+    } else {
+      return {
+        '@type': '/cosmwasm.wasm.v1.MsgClearAdmin',
+        sender: this.admin,
+        contract: this.contract,
+      };
+    }
   }
 }
 
 export namespace MsgClearContractAdmin {
-  export interface Amino {
+  export interface AminoV1 {
     type: 'wasm/MsgClearContractAdmin';
     value: {
       admin: AccAddress;
@@ -88,11 +157,26 @@ export namespace MsgClearContractAdmin {
     };
   }
 
-  export interface Data {
+  export interface AminoV2 {
+    type: 'wasm/MsgClearAdmin';
+    value: {
+      sender: AccAddress;
+      contract: AccAddress;
+    };
+  }
+  export interface DataV1 {
     '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin';
     admin: string;
     contract: string;
   }
 
-  export type Proto = MsgClearContractAdmin_pb;
+  export interface DataV2 {
+    '@type': '/cosmwasm.wasm.v1.MsgClearAdmin';
+    sender: string;
+    contract: string;
+  }
+
+  export type Amino = AminoV1 | AminoV2;
+  export type Data = DataV1 | DataV2;
+  export type Proto = MsgClearContractAdmin_legacy_pb | MsgClearAdmin_pb;
 }

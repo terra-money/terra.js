@@ -1,6 +1,7 @@
 import { BaseAPI } from './BaseAPI';
 import { Coins, AccAddress, Dec, ValAddress } from '../../../core';
 import { APIParams } from '../APIRequester';
+import { LCDClient } from '../LCDClient';
 
 export interface DistributionParams {
   /**
@@ -61,6 +62,11 @@ export namespace Rewards {
 }
 
 export class DistributionAPI extends BaseAPI {
+
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /**
    * Gets a delegator's rewards.
    * @param delegator delegator's account address

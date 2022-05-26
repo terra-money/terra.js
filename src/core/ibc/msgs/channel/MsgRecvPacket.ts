@@ -28,16 +28,19 @@ export class MsgRecvPacket extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgRecvPacket {
+  public static fromAmino(_: any, isClassic?: boolean): MsgRecvPacket {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgRecvPacket.Data): MsgRecvPacket {
+  public static fromData(data: MsgRecvPacket.Data, _?: boolean): MsgRecvPacket {
+    _;
     const { packet, proof_commitment, proof_height, signer } = data;
     return new MsgRecvPacket(
       packet ? Packet.fromData(packet) : undefined,
@@ -47,7 +50,8 @@ export class MsgRecvPacket extends JSONSerializable<
     );
   }
 
-  public toData(): MsgRecvPacket.Data {
+  public toData(_?: boolean): MsgRecvPacket.Data {
+    _;
     const { packet, proof_commitment, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgRecvPacket',
@@ -58,7 +62,11 @@ export class MsgRecvPacket extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgRecvPacket.Proto): MsgRecvPacket {
+  public static fromProto(
+    proto: MsgRecvPacket.Proto,
+    _?: boolean
+  ): MsgRecvPacket {
+    _;
     return new MsgRecvPacket(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.proofCommitment).toString('base64'),
@@ -67,7 +75,8 @@ export class MsgRecvPacket extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgRecvPacket.Proto {
+  public toProto(_?: boolean): MsgRecvPacket.Proto {
+    _;
     const { packet, proof_commitment, proof_height, signer } = this;
     return MsgRecvPacket_pb.fromPartial({
       packet: packet ? packet.toProto() : undefined,
@@ -77,14 +86,16 @@ export class MsgRecvPacket extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgRecvPacket',
       value: MsgRecvPacket_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgRecvPacket {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgRecvPacket {
+    _;
     return MsgRecvPacket.fromProto(MsgRecvPacket_pb.decode(msgAny.value));
   }
 }

@@ -20,17 +20,23 @@ export class MsgRevokeAllowance extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgRevokeAllowance.Amino): MsgRevokeAllowance {
+  public static fromAmino(
+    data: MsgRevokeAllowance.Amino,
+    _?: boolean
+  ): MsgRevokeAllowance {
+    _;
     const {
       value: { granter, grantee },
     } = data;
     return new MsgRevokeAllowance(granter, grantee);
   }
 
-  public toAmino(): MsgRevokeAllowance.Amino {
+  public toAmino(isClassic?: boolean): MsgRevokeAllowance.Amino {
     const { granter, grantee } = this;
     return {
-      type: 'feegrant/MsgRevokeAllowance',
+      type: isClassic
+        ? 'feegrant/MsgRevokeAllowance'
+        : 'cosmos-sdk/MsgRevokeAllowance',
       value: {
         granter,
         grantee,
@@ -38,12 +44,17 @@ export class MsgRevokeAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: MsgRevokeAllowance.Data): MsgRevokeAllowance {
+  public static fromData(
+    proto: MsgRevokeAllowance.Data,
+    _?: boolean
+  ): MsgRevokeAllowance {
+    _;
     const { granter, grantee } = proto;
     return new MsgRevokeAllowance(granter, grantee);
   }
 
-  public toData(): MsgRevokeAllowance.Data {
+  public toData(_?: boolean): MsgRevokeAllowance.Data {
+    _;
     const { granter, grantee } = this;
     return {
       '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
@@ -52,11 +63,16 @@ export class MsgRevokeAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgRevokeAllowance.Proto): MsgRevokeAllowance {
+  public static fromProto(
+    proto: MsgRevokeAllowance.Proto,
+    _?: boolean
+  ): MsgRevokeAllowance {
+    _;
     return new MsgRevokeAllowance(proto.granter, proto.grantee);
   }
 
-  public toProto(): MsgRevokeAllowance.Proto {
+  public toProto(_?: boolean): MsgRevokeAllowance.Proto {
+    _;
     const { granter, grantee } = this;
     return MsgRevokeAllowance_pb.fromPartial({
       grantee,
@@ -64,23 +80,27 @@ export class MsgRevokeAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
-      value: MsgRevokeAllowance_pb.encode(this.toProto()).finish(),
+      value: MsgRevokeAllowance_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgRevokeAllowance {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgRevokeAllowance {
     return MsgRevokeAllowance.fromProto(
-      MsgRevokeAllowance_pb.decode(msgAny.value)
+      MsgRevokeAllowance_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }
 
 export namespace MsgRevokeAllowance {
   export interface Amino {
-    type: 'feegrant/MsgRevokeAllowance';
+    type: 'feegrant/MsgRevokeAllowance' | 'cosmos-sdk/MsgRevokeAllowance';
     value: {
       granter: AccAddress;
       grantee: AccAddress;

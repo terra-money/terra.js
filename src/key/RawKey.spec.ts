@@ -70,7 +70,7 @@ describe('RawKey', () => {
 
     const {
       data: { single },
-    } = await rk.createSignatureAmino(signDoc);
+    } = await rk.createSignatureAmino(signDoc, true);
     expect((single as SignatureV2.Descriptor.Single).signature).toEqual(
       'FJKAXRxNB5ruqukhVqZf3S/muZEUmZD10fVmWycdVIxVWiCXXFsUy2VY2jINEOUGNwfrqEZsT2dUfAvWj8obLg=='
     );

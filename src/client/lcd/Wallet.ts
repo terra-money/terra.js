@@ -2,7 +2,8 @@ import { LCDClient } from './LCDClient';
 import { Key } from '../../key';
 import { CreateTxOptions } from '../lcd/api/TxAPI';
 import { Tx } from '../../core/Tx';
-import { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+import { SignMode as SignModeV1 } from '@terra-money/legacy.proto/cosmos/tx/signing/v1beta1/signing';
+import { SignMode as SignModeV2 } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 
 export class Wallet {
   constructor(public lcd: LCDClient, public key: Key) {}
@@ -52,7 +53,7 @@ export class Wallet {
     options: CreateTxOptions & {
       sequence?: number;
       accountNumber?: number;
-      signMode?: SignMode;
+      signMode?: SignModeV1 | SignModeV2;
     }
   ): Promise<Tx> {
     let accountNumber = options.accountNumber;
@@ -72,12 +73,20 @@ export class Wallet {
     options.sequence = sequence;
     options.accountNumber = accountNumber;
 
-    const tx = await this.createTx(options);
-    return this.key.signTx(tx, {
-      accountNumber,
-      sequence,
-      chainID: this.lcd.config.chainID,
-      signMode: options.signMode || SignMode.SIGN_MODE_DIRECT,
-    });
+    const tx = await this.createTx(options); // don't need isClassic because lcd already have it
+    return this.key.signTx(
+      tx,
+      {
+        accountNumber,
+        sequence,
+        chainID: this.lcd.config.chainID,
+        signMode:
+          options.signMode ||
+          (this.lcd.config.isClassic
+            ? SignModeV1.SIGN_MODE_DIRECT
+            : SignModeV2.SIGN_MODE_DIRECT),
+      },
+      this.lcd.config.isClassic
+    );
   }
 }

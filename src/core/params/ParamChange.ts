@@ -1,5 +1,5 @@
 import { JSONSerializable } from '../../util/json';
-import { ParamChange as ParamChange_pb } from '@terra-money/terra.proto/cosmos/params/v1beta1/params';
+import { ParamChange as ParamChange_pb } from '@terra-money/legacy.proto/cosmos/params/v1beta1/params';
 
 export class ParamChanges extends JSONSerializable<
   ParamChanges.Amino,

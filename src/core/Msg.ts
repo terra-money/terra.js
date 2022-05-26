@@ -50,7 +50,7 @@ import {
   MsgClearContractAdmin,
   WasmMsg,
 } from './wasm/msgs';
-import { MsgTransfer, IbcTransferMsg } from './ibc-transfer/msgs';
+import { MsgTransfer, IbcTransferMsg } from './ibc/applications/transfer';
 import {
   MsgCreateClient,
   MsgUpdateClient,
@@ -147,379 +147,410 @@ export namespace Msg {
     | IbcChannelMsg.Proto
     | CrisisMsg.Proto;
 
-  export function fromAmino(data: Msg.Amino): Msg {
+  export function fromAmino(data: Msg.Amino, isClassic?: boolean): Msg {
     switch (data.type) {
       // bank
       case 'bank/MsgSend':
-        return MsgSend.fromAmino(data);
+      case 'cosmos-sdk/MsgSend':
+        return MsgSend.fromAmino(data, isClassic);
       case 'bank/MsgMultiSend':
-        return MsgMultiSend.fromAmino(data);
+      case 'cosmos-sdk/MsgMultiSend':
+        return MsgMultiSend.fromAmino(data, isClassic);
 
       // distribution
       case 'distribution/MsgModifyWithdrawAddress':
-        return MsgSetWithdrawAddress.fromAmino(data);
+      case 'cosmos-sdk/MsgModifyWithdrawAddress':
+        return MsgSetWithdrawAddress.fromAmino(data, isClassic);
       case 'distribution/MsgWithdrawDelegationReward':
-        return MsgWithdrawDelegatorReward.fromAmino(data);
+      case 'cosmos-sdk/MsgWithdrawDelegationReward':
+        return MsgWithdrawDelegatorReward.fromAmino(data, isClassic);
       case 'distribution/MsgWithdrawValidatorCommission':
-        return MsgWithdrawValidatorCommission.fromAmino(data);
+      case 'cosmos-sdk/MsgWithdrawValCommission':
+        return MsgWithdrawValidatorCommission.fromAmino(data, isClassic);
       case 'distribution/MsgFundCommunityPool':
-        return MsgFundCommunityPool.fromAmino(data);
+      case 'cosmos-sdk/MsgFundCommunityPool':
+        return MsgFundCommunityPool.fromAmino(data, isClassic);
 
       // feegrant
       case 'feegrant/MsgGrantAllowance':
-        return MsgGrantAllowance.fromAmino(data);
+      case 'cosmos-sdk/MsgGrantAllowance':
+        return MsgGrantAllowance.fromAmino(data, isClassic);
       case 'feegrant/MsgRevokeAllowance':
-        return MsgRevokeAllowance.fromAmino(data);
-
+      case 'cosmos-sdk/MsgRevokeAllowance':
+        return MsgRevokeAllowance.fromAmino(data, isClassic);
       // gov
       case 'gov/MsgDeposit':
-        return MsgDeposit.fromAmino(data);
+      case 'cosmos-sdk/MsgDeposit':
+        return MsgDeposit.fromAmino(data, isClassic);
       case 'gov/MsgSubmitProposal':
-        return MsgSubmitProposal.fromAmino(data);
+      case 'cosmos-sdk/MsgSubmitProposal':
+        return MsgSubmitProposal.fromAmino(data, isClassic);
       case 'gov/MsgVote':
-        return MsgVote.fromAmino(data);
+      case 'cosmos-sdk/MsgVote':
+        return MsgVote.fromAmino(data, isClassic);
       case 'gov/MsgVoteWeighted':
-        return MsgVoteWeighted.fromAmino(data);
+      case 'cosmos-sdk/MsgVoteWeighted':
+        return MsgVoteWeighted.fromAmino(data, isClassic);
 
       // market
       case 'market/MsgSwap':
-        return MsgSwap.fromAmino(data);
+        return MsgSwap.fromAmino(data, isClassic);
       case 'market/MsgSwapSend':
-        return MsgSwapSend.fromAmino(data);
+        return MsgSwapSend.fromAmino(data, isClassic);
 
       // msgauth
       case 'msgauth/MsgGrantAuthorization':
-        return MsgGrantAuthorization.fromAmino(data);
+      case 'cosmos-sdk/MsgGrant':
+        return MsgGrantAuthorization.fromAmino(data, isClassic);
       case 'msgauth/MsgRevokeAuthorization':
-        return MsgRevokeAuthorization.fromAmino(data);
+      case 'cosmos-sdk/MsgRevoke':
+        return MsgRevokeAuthorization.fromAmino(data, isClassic);
       case 'msgauth/MsgExecAuthorized':
-        return MsgExecAuthorized.fromAmino(data);
+      case 'cosmos-sdk/MsgExec':
+        return MsgExecAuthorized.fromAmino(data, isClassic);
 
       // oracle
       case 'oracle/MsgDelegateFeedConsent':
-        return MsgDelegateFeedConsent.fromAmino(data);
+        return MsgDelegateFeedConsent.fromAmino(data, isClassic);
       case 'oracle/MsgAggregateExchangeRatePrevote':
-        return MsgAggregateExchangeRatePrevote.fromAmino(data);
+        return MsgAggregateExchangeRatePrevote.fromAmino(data, isClassic);
       case 'oracle/MsgAggregateExchangeRateVote':
-        return MsgAggregateExchangeRateVote.fromAmino(data);
-
+        return MsgAggregateExchangeRateVote.fromAmino(data, isClassic);
       // slashing
       case 'slashing/MsgUnjail':
-        return MsgUnjail.fromAmino(data);
+      case 'cosmos-sdk/MsgUnjail':
+        return MsgUnjail.fromAmino(data, isClassic);
 
       // staking
       case 'staking/MsgDelegate':
-        return MsgDelegate.fromAmino(data);
+      case 'cosmos-sdk/MsgDelegate':
+        return MsgDelegate.fromAmino(data, isClassic);
       case 'staking/MsgUndelegate':
-        return MsgUndelegate.fromAmino(data);
+      case 'cosmos-sdk/MsgUndelegate':
+        return MsgUndelegate.fromAmino(data, isClassic);
       case 'staking/MsgBeginRedelegate':
-        return MsgBeginRedelegate.fromAmino(data);
+      case 'cosmos-sdk/MsgBeginRedelegate':
+        return MsgBeginRedelegate.fromAmino(data, isClassic);
       case 'staking/MsgCreateValidator':
-        return MsgCreateValidator.fromAmino(data);
+      case 'cosmos-sdk/MsgCreateValidator':
+        return MsgCreateValidator.fromAmino(data, isClassic);
       case 'staking/MsgEditValidator':
-        return MsgEditValidator.fromAmino(data);
+      case 'cosmos-sdk/MsgEditValidator':
+        return MsgEditValidator.fromAmino(data, isClassic);
 
       // wasm
       case 'wasm/MsgStoreCode':
-        return MsgStoreCode.fromAmino(data);
+        return MsgStoreCode.fromAmino(data, isClassic);
       case 'wasm/MsgMigrateCode':
-        return MsgMigrateCode.fromAmino(data);
+        return MsgMigrateCode.fromAmino(data, isClassic);
       case 'wasm/MsgInstantiateContract':
-        return MsgInstantiateContract.fromAmino(data);
+        return MsgInstantiateContract.fromAmino(data, isClassic);
       case 'wasm/MsgExecuteContract':
-        return MsgExecuteContract.fromAmino(data);
+        return MsgExecuteContract.fromAmino(data, isClassic);
       case 'wasm/MsgMigrateContract':
-        return MsgMigrateContract.fromAmino(data);
+        return MsgMigrateContract.fromAmino(data, isClassic);
       case 'wasm/MsgUpdateContractAdmin':
-        return MsgUpdateContractAdmin.fromAmino(data);
+      case 'wasm/MsgUpdateAdmin':
+        return MsgUpdateContractAdmin.fromAmino(data, isClassic);
       case 'wasm/MsgClearContractAdmin':
-        return MsgClearContractAdmin.fromAmino(data);
-
+      case 'wasm/MsgClearAdmin':
+        return MsgClearContractAdmin.fromAmino(data, isClassic);
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
-        return MsgTransfer.fromAmino(data);
-
+        return MsgTransfer.fromAmino(data, isClassic);
       // crisis
       case 'crisis/MsgVerifyInvariant':
-        return MsgVerifyInvariant.fromAmino(data);
+      case 'cosmos-sdk/MsgVerifyInvariant':
+        return MsgVerifyInvariant.fromAmino(data, isClassic);
     }
   }
-  export function fromData(data: Msg.Data): Msg {
+  export function fromData(data: Msg.Data, isClassic?: boolean): Msg {
     switch (data['@type']) {
       // bank
       case '/cosmos.bank.v1beta1.MsgSend':
-        return MsgSend.fromData(data);
+        return MsgSend.fromData(data, isClassic);
       case '/cosmos.bank.v1beta1.MsgMultiSend':
-        return MsgMultiSend.fromData(data);
+        return MsgMultiSend.fromData(data, isClassic);
 
       // distribution
       case '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress':
-        return MsgSetWithdrawAddress.fromData(data);
+        return MsgSetWithdrawAddress.fromData(data, isClassic);
       case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
-        return MsgWithdrawDelegatorReward.fromData(data);
+        return MsgWithdrawDelegatorReward.fromData(data, isClassic);
       case '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission':
-        return MsgWithdrawValidatorCommission.fromData(data);
+        return MsgWithdrawValidatorCommission.fromData(data, isClassic);
       case '/cosmos.distribution.v1beta1.MsgFundCommunityPool':
-        return MsgFundCommunityPool.fromData(data);
+        return MsgFundCommunityPool.fromData(data, isClassic);
 
       // feegrant
       case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
-        return MsgGrantAllowance.fromData(data);
+        return MsgGrantAllowance.fromData(data, isClassic);
       case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
-        return MsgRevokeAllowance.fromData(data);
+        return MsgRevokeAllowance.fromData(data, isClassic);
 
       // gov
       case '/cosmos.gov.v1beta1.MsgDeposit':
-        return MsgDeposit.fromData(data);
+        return MsgDeposit.fromData(data, isClassic);
       case '/cosmos.gov.v1beta1.MsgSubmitProposal':
-        return MsgSubmitProposal.fromData(data);
+        return MsgSubmitProposal.fromData(data, isClassic);
       case '/cosmos.gov.v1beta1.MsgVote':
-        return MsgVote.fromData(data);
+        return MsgVote.fromData(data, isClassic);
       case '/cosmos.gov.v1beta1.MsgVoteWeighted':
-        return MsgVoteWeighted.fromData(data);
+        return MsgVoteWeighted.fromData(data, isClassic);
 
       // market
       case '/terra.market.v1beta1.MsgSwap':
-        return MsgSwap.fromData(data);
+        return MsgSwap.fromData(data, isClassic);
       case '/terra.market.v1beta1.MsgSwapSend':
-        return MsgSwapSend.fromData(data);
+        return MsgSwapSend.fromData(data, isClassic);
 
       // authz
       case '/cosmos.authz.v1beta1.MsgGrant':
-        return MsgGrantAuthorization.fromData(data);
+        return MsgGrantAuthorization.fromData(data, isClassic);
       case '/cosmos.authz.v1beta1.MsgRevoke':
-        return MsgRevokeAuthorization.fromData(data);
+        return MsgRevokeAuthorization.fromData(data, isClassic);
       case '/cosmos.authz.v1beta1.MsgExec':
-        return MsgExecAuthorized.fromData(data);
+        return MsgExecAuthorized.fromData(data, isClassic);
 
       // oracle
       case '/terra.oracle.v1beta1.MsgDelegateFeedConsent':
-        return MsgDelegateFeedConsent.fromData(data);
+        return MsgDelegateFeedConsent.fromData(data, isClassic);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote':
-        return MsgAggregateExchangeRatePrevote.fromData(data);
+        return MsgAggregateExchangeRatePrevote.fromData(data, isClassic);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote':
-        return MsgAggregateExchangeRateVote.fromData(data);
-
+        return MsgAggregateExchangeRateVote.fromData(data, isClassic);
       // slashing
       case '/cosmos.slashing.v1beta1.MsgUnjail':
-        return MsgUnjail.fromData(data);
+        return MsgUnjail.fromData(data, isClassic);
 
       // staking
       case '/cosmos.staking.v1beta1.MsgDelegate':
-        return MsgDelegate.fromData(data);
+        return MsgDelegate.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.MsgUndelegate':
-        return MsgUndelegate.fromData(data);
+        return MsgUndelegate.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
-        return MsgBeginRedelegate.fromData(data);
+        return MsgBeginRedelegate.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.MsgCreateValidator':
-        return MsgCreateValidator.fromData(data);
+        return MsgCreateValidator.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.MsgEditValidator':
-        return MsgEditValidator.fromData(data);
+        return MsgEditValidator.fromData(data, isClassic);
 
       // wasm
       case '/terra.wasm.v1beta1.MsgStoreCode':
-        return MsgStoreCode.fromData(data);
-      case '/terra.wasm.v1beta1.MsgMigrateCode':
-        return MsgMigrateCode.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgStoreCode':
+        return MsgStoreCode.fromData(data, isClassic);
+      case '/terra.wasm.v1beta1.MsgMigrateCode': // isClassic only
+        return MsgMigrateCode.fromData(data, isClassic);
       case '/terra.wasm.v1beta1.MsgInstantiateContract':
-        return MsgInstantiateContract.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgInstantiateContract':
+        return MsgInstantiateContract.fromData(data, isClassic);
       case '/terra.wasm.v1beta1.MsgExecuteContract':
-        return MsgExecuteContract.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgExecuteContract':
+        return MsgExecuteContract.fromData(data, isClassic);
       case '/terra.wasm.v1beta1.MsgMigrateContract':
-        return MsgMigrateContract.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgMigrateContract':
+        return MsgMigrateContract.fromData(data, isClassic);
       case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
-        return MsgUpdateContractAdmin.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgUpdateAdmin':
+        return MsgUpdateContractAdmin.fromData(data, isClassic);
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
-        return MsgClearContractAdmin.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgClearAdmin':
+        return MsgClearContractAdmin.fromData(data, isClassic);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':
-        return MsgTransfer.fromData(data);
+        return MsgTransfer.fromData(data, isClassic);
 
       // ibc-client
       case '/ibc.core.client.v1.MsgCreateClient':
-        return MsgCreateClient.fromData(data);
+        return MsgCreateClient.fromData(data, isClassic);
       case '/ibc.core.client.v1.MsgUpdateClient':
-        return MsgUpdateClient.fromData(data);
+        return MsgUpdateClient.fromData(data, isClassic);
       case '/ibc.core.client.v1.MsgUpgradeClient':
-        return MsgUpgradeClient.fromData(data);
+        return MsgUpgradeClient.fromData(data, isClassic);
       case '/ibc.core.client.v1.MsgSubmitMisbehaviour':
-        return MsgSubmitMisbehaviour.fromData(data);
+        return MsgSubmitMisbehaviour.fromData(data, isClassic);
 
       // ibc-connection
       case '/ibc.core.connection.v1.MsgConnectionOpenInit':
-        return MsgConnectionOpenInit.fromData(data);
+        return MsgConnectionOpenInit.fromData(data, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenTry':
-        return MsgConnectionOpenTry.fromData(data);
+        return MsgConnectionOpenTry.fromData(data, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenConfirm':
-        return MsgConnectionOpenConfirm.fromData(data);
+        return MsgConnectionOpenConfirm.fromData(data, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenAck':
-        return MsgConnectionOpenAck.fromData(data);
+        return MsgConnectionOpenAck.fromData(data, isClassic);
 
       // ibc-channel
       case '/ibc.core.channel.v1.MsgChannelOpenInit':
-        return MsgChannelOpenInit.fromData(data);
+        return MsgChannelOpenInit.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenTry':
-        return MsgChannelOpenTry.fromData(data);
+        return MsgChannelOpenTry.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenConfirm':
-        return MsgChannelOpenConfirm.fromData(data);
+        return MsgChannelOpenConfirm.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenAck':
-        return MsgChannelOpenAck.fromData(data);
+        return MsgChannelOpenAck.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgChannelCloseInit':
-        return MsgChannelCloseInit.fromData(data);
+        return MsgChannelCloseInit.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgChannelCloseConfirm':
-        return MsgChannelCloseConfirm.fromData(data);
+        return MsgChannelCloseConfirm.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgRecvPacket':
-        return MsgRecvPacket.fromData(data);
+        return MsgRecvPacket.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgAcknowledgement':
-        return MsgAcknowledgement.fromData(data);
+        return MsgAcknowledgement.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgTimeout':
-        return MsgTimeout.fromData(data);
+        return MsgTimeout.fromData(data, isClassic);
       case '/ibc.core.channel.v1.MsgTimeoutOnClose':
-        return MsgTimeoutOnClose.fromData(data);
+        return MsgTimeoutOnClose.fromData(data, isClassic);
 
       // crisis
       case '/cosmos.crisis.v1beta1.MsgVerifyInvariant':
-        return MsgVerifyInvariant.fromData(data);
+        return MsgVerifyInvariant.fromData(data, isClassic);
+      default:
+        throw Error(`not supported msg ${data['@type']}`);
     }
   }
 
-  export function fromProto(proto: Any): Msg {
+  export function fromProto(proto: Any, isClassic?: boolean): Msg {
     switch (proto.typeUrl) {
       // bank
       case '/cosmos.bank.v1beta1.MsgSend':
-        return MsgSend.unpackAny(proto);
+        return MsgSend.unpackAny(proto, isClassic);
       case '/cosmos.bank.v1beta1.MsgMultiSend':
-        return MsgMultiSend.unpackAny(proto);
+        return MsgMultiSend.unpackAny(proto, isClassic);
 
       // distribution
       case '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress':
-        return MsgSetWithdrawAddress.unpackAny(proto);
+        return MsgSetWithdrawAddress.unpackAny(proto, isClassic);
       case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
-        return MsgWithdrawDelegatorReward.unpackAny(proto);
+        return MsgWithdrawDelegatorReward.unpackAny(proto, isClassic);
       case '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission':
-        return MsgWithdrawValidatorCommission.unpackAny(proto);
+        return MsgWithdrawValidatorCommission.unpackAny(proto, isClassic);
       case '/cosmos.distribution.v1beta1.MsgFundCommunityPool':
-        return MsgFundCommunityPool.unpackAny(proto);
+        return MsgFundCommunityPool.unpackAny(proto, isClassic);
 
       // feegrant
       case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
-        return MsgGrantAllowance.unpackAny(proto);
+        return MsgGrantAllowance.unpackAny(proto, isClassic);
       case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
-        return MsgRevokeAllowance.unpackAny(proto);
+        return MsgRevokeAllowance.unpackAny(proto, isClassic);
 
       // gov
       case '/cosmos.gov.v1beta1.MsgDeposit':
-        return MsgDeposit.unpackAny(proto);
+        return MsgDeposit.unpackAny(proto, isClassic);
       case '/cosmos.gov.v1beta1.MsgSubmitProposal':
-        return MsgSubmitProposal.unpackAny(proto);
+        return MsgSubmitProposal.unpackAny(proto, isClassic);
       case '/cosmos.gov.v1beta1.MsgVote':
-        return MsgVote.unpackAny(proto);
+        return MsgVote.unpackAny(proto, isClassic);
 
       // market
       case '/terra.market.v1beta1.MsgSwap':
-        return MsgSwap.unpackAny(proto);
+        return MsgSwap.unpackAny(proto, isClassic);
       case '/terra.market.v1beta1.MsgSwapSend':
-        return MsgSwapSend.unpackAny(proto);
+        return MsgSwapSend.unpackAny(proto, isClassic);
 
       // authz
       case '/cosmos.authz.v1beta1.MsgGrant':
-        return MsgGrantAuthorization.unpackAny(proto);
+        return MsgGrantAuthorization.unpackAny(proto, isClassic);
       case '/cosmos.authz.v1beta1.MsgRevoke':
-        return MsgRevokeAuthorization.unpackAny(proto);
+        return MsgRevokeAuthorization.unpackAny(proto, isClassic);
       case '/cosmos.authz.v1beta1.MsgExec':
-        return MsgExecAuthorized.unpackAny(proto);
+        return MsgExecAuthorized.unpackAny(proto, isClassic);
 
       // oracle
       case '/terra.oracle.v1beta1.MsgDelegateFeedConsent':
-        return MsgDelegateFeedConsent.unpackAny(proto);
+        return MsgDelegateFeedConsent.unpackAny(proto, isClassic);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote':
-        return MsgAggregateExchangeRatePrevote.unpackAny(proto);
+        return MsgAggregateExchangeRatePrevote.unpackAny(proto, isClassic);
       case '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote':
-        return MsgAggregateExchangeRateVote.unpackAny(proto);
-
+        return MsgAggregateExchangeRateVote.unpackAny(proto, isClassic);
       // slashing
       case '/cosmos.slashing.v1beta1.MsgUnjail':
-        return MsgUnjail.unpackAny(proto);
+        return MsgUnjail.unpackAny(proto, isClassic);
 
       // staking
       case '/cosmos.staking.v1beta1.MsgDelegate':
-        return MsgDelegate.unpackAny(proto);
+        return MsgDelegate.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.MsgUndelegate':
-        return MsgUndelegate.unpackAny(proto);
+        return MsgUndelegate.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
-        return MsgBeginRedelegate.unpackAny(proto);
+        return MsgBeginRedelegate.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.MsgCreateValidator':
-        return MsgCreateValidator.unpackAny(proto);
+        return MsgCreateValidator.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.MsgEditValidator':
-        return MsgEditValidator.unpackAny(proto);
+        return MsgEditValidator.unpackAny(proto, isClassic);
 
       // wasm
       case '/terra.wasm.v1beta1.MsgStoreCode':
-        return MsgStoreCode.unpackAny(proto);
-      case '/terra.wasm.v1beta1.MsgMigrateCode':
-        return MsgMigrateCode.unpackAny(proto);
+      case '/cosmwasm.wasm.v1.MsgStoreCode':
+        return MsgStoreCode.unpackAny(proto, isClassic);
+      case '/terra.wasm.v1beta1.MsgMigrateCode': // isClassic only
+        return MsgMigrateCode.unpackAny(proto, isClassic);
       case '/terra.wasm.v1beta1.MsgInstantiateContract':
-        return MsgInstantiateContract.unpackAny(proto);
+      case '/cosmwasm.wasm.v1.MsgInstantiateContract':
+        return MsgInstantiateContract.unpackAny(proto, isClassic);
       case '/terra.wasm.v1beta1.MsgExecuteContract':
-        return MsgExecuteContract.unpackAny(proto);
+      case '/cosmwasm.wasm.v1.MsgExecuteContract':
+        return MsgExecuteContract.unpackAny(proto, isClassic);
       case '/terra.wasm.v1beta1.MsgMigrateContract':
-        return MsgMigrateContract.unpackAny(proto);
+      case '/cosmwasm.wasm.v1beta1.MsgMigrateContract':
+        return MsgMigrateContract.unpackAny(proto, isClassic);
       case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
-        return MsgUpdateContractAdmin.unpackAny(proto);
+      case '/cosmwasm.wasm.v1beta1.MsgUpdateAdmin':
+        return MsgUpdateContractAdmin.unpackAny(proto, isClassic);
       case '/terra.wasm.v1beta1.MsgClearContractAdmin':
-        return MsgClearContractAdmin.unpackAny(proto);
+      case '/cosmwasm.wasm.v1.MsgClearAdmin':
+        return MsgClearContractAdmin.unpackAny(proto, isClassic);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':
-        return MsgTransfer.unpackAny(proto);
+        return MsgTransfer.unpackAny(proto, isClassic);
 
       // ibc-client
       case '/ibc.core.client.v1.MsgCreateClient':
-        return MsgCreateClient.unpackAny(proto);
+        return MsgCreateClient.unpackAny(proto, isClassic);
       case '/ibc.core.client.v1.MsgUpdateClient':
-        return MsgUpdateClient.unpackAny(proto);
+        return MsgUpdateClient.unpackAny(proto, isClassic);
       case '/ibc.core.client.v1.MsgUpgradeClient':
-        return MsgUpgradeClient.unpackAny(proto);
+        return MsgUpgradeClient.unpackAny(proto, isClassic);
       case '/ibc.core.client.v1.MsgSubmitMisbehaviour':
-        return MsgSubmitMisbehaviour.unpackAny(proto);
+        return MsgSubmitMisbehaviour.unpackAny(proto, isClassic);
 
       // ibc-connection
       case '/ibc.core.connection.v1.MsgConnectionOpenInit':
-        return MsgConnectionOpenInit.unpackAny(proto);
+        return MsgConnectionOpenInit.unpackAny(proto, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenTry':
-        return MsgConnectionOpenTry.unpackAny(proto);
+        return MsgConnectionOpenTry.unpackAny(proto, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenConfirm':
-        return MsgConnectionOpenConfirm.unpackAny(proto);
+        return MsgConnectionOpenConfirm.unpackAny(proto, isClassic);
       case '/ibc.core.connection.v1.MsgConnectionOpenAck':
-        return MsgConnectionOpenAck.unpackAny(proto);
+        return MsgConnectionOpenAck.unpackAny(proto, isClassic);
 
       // ibc-channel
       case '/ibc.core.channel.v1.MsgChannelOpenInit':
-        return MsgChannelOpenInit.unpackAny(proto);
+        return MsgChannelOpenInit.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenTry':
-        return MsgChannelOpenTry.unpackAny(proto);
+        return MsgChannelOpenTry.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenConfirm':
-        return MsgChannelOpenConfirm.unpackAny(proto);
+        return MsgChannelOpenConfirm.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgChannelOpenAck':
-        return MsgChannelOpenAck.unpackAny(proto);
+        return MsgChannelOpenAck.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgChannelCloseInit':
-        return MsgChannelCloseInit.unpackAny(proto);
+        return MsgChannelCloseInit.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgChannelCloseConfirm':
-        return MsgChannelCloseConfirm.unpackAny(proto);
+        return MsgChannelCloseConfirm.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgRecvPacket':
-        return MsgRecvPacket.unpackAny(proto);
+        return MsgRecvPacket.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgAcknowledgement':
-        return MsgAcknowledgement.unpackAny(proto);
+        return MsgAcknowledgement.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgTimeout':
-        return MsgTimeout.unpackAny(proto);
+        return MsgTimeout.unpackAny(proto, isClassic);
       case '/ibc.core.channel.v1.MsgTimeoutOnClose':
-        return MsgTimeoutOnClose.unpackAny(proto);
+        return MsgTimeoutOnClose.unpackAny(proto, isClassic);
 
       // crisis
       case '/cosmos.crisis.v1beta1.MsgVerifyInvariant':
-        return MsgVerifyInvariant.unpackAny(proto);
-
+        return MsgVerifyInvariant.unpackAny(proto, isClassic);
       default:
         throw Error(`not supported msg ${proto.typeUrl}`);
     }

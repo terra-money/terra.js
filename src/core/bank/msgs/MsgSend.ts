@@ -1,7 +1,9 @@
 import { Coins } from '../../Coins';
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// there's no difference between two protos
+//import { MsgSend as MsgSend_legacy_pb } from '@terra-money/legacy.proto/cosmos/bank/v1beta1/tx';
 import { MsgSend as MsgSend_pb } from '@terra-money/terra.proto/cosmos/bank/v1beta1/tx';
 
 /**
@@ -31,17 +33,18 @@ export class MsgSend extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(data: MsgSend.Amino): MsgSend {
+  public static fromAmino(data: MsgSend.Amino, _?: boolean): MsgSend {
+    _;
     const {
       value: { from_address, to_address, amount },
     } = data;
     return new MsgSend(from_address, to_address, Coins.fromAmino(amount));
   }
 
-  public toAmino(): MsgSend.Amino {
+  public toAmino(isClassic?: boolean): MsgSend.Amino {
     const { from_address, to_address, amount } = this;
     return {
-      type: 'bank/MsgSend',
+      type: isClassic ? 'bank/MsgSend' : 'cosmos-sdk/MsgSend',
       value: {
         from_address,
         to_address,
@@ -50,13 +53,15 @@ export class MsgSend extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgSend.Data): MsgSend {
+  public static fromData(data: MsgSend.Data, isClassic?: boolean): MsgSend {
+    isClassic;
     const { from_address, to_address, amount } = data;
 
     return new MsgSend(from_address, to_address, Coins.fromData(amount));
   }
 
-  public toData(): MsgSend.Data {
+  public toData(_?: boolean): MsgSend.Data {
+    _;
     const { from_address, to_address, amount } = this;
     return {
       '@type': '/cosmos.bank.v1beta1.MsgSend',
@@ -66,7 +71,8 @@ export class MsgSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSend.Proto): MsgSend {
+  public static fromProto(proto: MsgSend.Proto, _?: boolean): MsgSend {
+    _;
     return new MsgSend(
       proto.fromAddress,
       proto.toAddress,
@@ -74,7 +80,8 @@ export class MsgSend extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgSend.Proto {
+  public toProto(_?: boolean): MsgSend.Proto {
+    _;
     const { from_address, to_address, amount } = this;
     return MsgSend_pb.fromPartial({
       fromAddress: from_address,
@@ -83,21 +90,23 @@ export class MsgSend extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.MsgSend',
       value: MsgSend_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgSend {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgSend {
+    _;
     return MsgSend.fromProto(MsgSend_pb.decode(msgAny.value));
   }
 }
 
 export namespace MsgSend {
   export interface Amino {
-    type: 'bank/MsgSend';
+    type: 'bank/MsgSend' | 'cosmos-sdk/MsgSend';
     value: {
       from_address: AccAddress;
       to_address: AccAddress;

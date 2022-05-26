@@ -1,9 +1,11 @@
-import { APIRequester } from '../APIRequester';
-import { IbcClientAPI } from './IbcAPI';
+import { LCDClient } from '../LCDClient';
+import { IbcAPI } from './IbcAPI';
 
-const c = new APIRequester('https://bombay-lcd.terra.dev/');
-//const c = new APIRequester('http://localhost:1317/');
-const ibc = new IbcClientAPI(c);
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
+const ibc = new IbcAPI(terra);
 
 describe('IbcClientAPI', () => {
   it('params', async () => {

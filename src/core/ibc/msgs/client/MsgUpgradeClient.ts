@@ -29,16 +29,22 @@ export class MsgUpgradeClient extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): MsgUpgradeClient {
+  public static fromAmino(_: any, isClassic?: boolean): MsgUpgradeClient {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: MsgUpgradeClient.Data): MsgUpgradeClient {
+  public static fromData(
+    data: MsgUpgradeClient.Data,
+    _?: boolean
+  ): MsgUpgradeClient {
+    _;
     const {
       client_id,
       client_state,
@@ -57,7 +63,8 @@ export class MsgUpgradeClient extends JSONSerializable<
     );
   }
 
-  public toData(): MsgUpgradeClient.Data {
+  public toData(_?: boolean): MsgUpgradeClient.Data {
+    _;
     const {
       client_id,
       client_state,
@@ -77,7 +84,11 @@ export class MsgUpgradeClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgUpgradeClient.Proto): MsgUpgradeClient {
+  public static fromProto(
+    proto: MsgUpgradeClient.Proto,
+    _?: boolean
+  ): MsgUpgradeClient {
+    _;
     return new MsgUpgradeClient(
       proto.clientId,
       proto.clientState,
@@ -88,7 +99,8 @@ export class MsgUpgradeClient extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgUpgradeClient.Proto {
+  public toProto(_?: boolean): MsgUpgradeClient.Proto {
+    _;
     const {
       client_id,
       client_state,
@@ -110,14 +122,16 @@ export class MsgUpgradeClient extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/ibc.core.client.v1.MsgUpgradeClient',
       value: MsgUpgradeClient_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgUpgradeClient {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgUpgradeClient {
+    _;
     return MsgUpgradeClient.fromProto(MsgUpgradeClient_pb.decode(msgAny.value));
   }
 }

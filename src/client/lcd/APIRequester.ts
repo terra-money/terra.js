@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance } from 'axios';
-import { OrderBy as OrderBy_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { OrderBy as OrderBy_pb } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/service';
 
 export type APIParams = Record<string, string | number | null | undefined>;
 

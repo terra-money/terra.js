@@ -2,6 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Dec, Int } from '../../numeric';
 import { ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
+// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+// import { MsgEditValidator as MsgEditValidator_pb } from '@terra-money/legacy.proto/cosmos/staking/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgEditValidator as MsgEditValidator_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 
@@ -33,7 +35,11 @@ export class MsgEditValidator extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgEditValidator.Amino): MsgEditValidator {
+  public static fromAmino(
+    data: MsgEditValidator.Amino,
+    _?: boolean
+  ): MsgEditValidator {
+    _;
     const {
       value: {
         description,
@@ -50,7 +56,7 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toAmino(): MsgEditValidator.Amino {
+  public toAmino(isClassic?: boolean): MsgEditValidator.Amino {
     const {
       description,
       validator_address,
@@ -58,7 +64,9 @@ export class MsgEditValidator extends JSONSerializable<
       min_self_delegation,
     } = this;
     return {
-      type: 'staking/MsgEditValidator',
+      type: isClassic
+        ? 'staking/MsgEditValidator'
+        : 'cosmos-sdk/MsgEditValidator',
       value: {
         description,
         validator_address,
@@ -72,7 +80,11 @@ export class MsgEditValidator extends JSONSerializable<
     };
   }
 
-  public static fromProto(data: MsgEditValidator.Proto): MsgEditValidator {
+  public static fromProto(
+    data: MsgEditValidator.Proto,
+    _?: boolean
+  ): MsgEditValidator {
+    _;
     return new MsgEditValidator(
       Validator.Description.fromProto(
         data.description as Validator.Description.Proto
@@ -85,7 +97,8 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toProto(): MsgEditValidator.Proto {
+  public toProto(_?: boolean): MsgEditValidator.Proto {
+    _;
     const {
       description,
       validator_address,
@@ -100,18 +113,24 @@ export class MsgEditValidator extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny(_?: boolean): Any {
+    _;
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator',
       value: MsgEditValidator_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgEditValidator {
+  public static unpackAny(msgAny: Any, _?: boolean): MsgEditValidator {
+    _;
     return MsgEditValidator.fromProto(MsgEditValidator_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgEditValidator.Data): MsgEditValidator {
+  public static fromData(
+    data: MsgEditValidator.Data,
+    _?: boolean
+  ): MsgEditValidator {
+    _;
     const {
       description,
       validator_address,
@@ -126,7 +145,8 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toData(): MsgEditValidator.Data {
+  public toData(_?: boolean): MsgEditValidator.Data {
+    _;
     const {
       description,
       validator_address,
@@ -155,7 +175,7 @@ export namespace MsgEditValidator {
   };
 
   export interface Amino {
-    type: 'staking/MsgEditValidator';
+    type: 'staking/MsgEditValidator' | 'cosmos-sdk/MsgEditValidator';
     value: {
       description: Validator.Description.Amino;
       validator_address: ValAddress;

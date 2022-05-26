@@ -23,7 +23,8 @@ export class MsgGrantAuthorization extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgGrantAuthorization.Amino
+    data: MsgGrantAuthorization.Amino,
+    isClassic?: boolean
   ): MsgGrantAuthorization {
     const {
       value: { granter, grantee, grant },
@@ -31,77 +32,85 @@ export class MsgGrantAuthorization extends JSONSerializable<
     return new MsgGrantAuthorization(
       granter,
       grantee,
-      AuthorizationGrant.fromAmino(grant)
+      AuthorizationGrant.fromAmino(grant, isClassic)
     );
   }
 
-  public toAmino(): MsgGrantAuthorization.Amino {
+  public toAmino(isClassic?: boolean): MsgGrantAuthorization.Amino {
     const { granter, grantee, grant } = this;
     return {
-      type: 'msgauth/MsgGrantAuthorization',
+      type: isClassic ? 'msgauth/MsgGrantAuthorization' : 'cosmos-sdk/MsgGrant',
       value: {
         granter,
         grantee,
-        grant: grant.toAmino(),
+        grant: grant.toAmino(isClassic),
       },
     };
   }
 
   public static fromData(
-    data: MsgGrantAuthorization.Data
+    data: MsgGrantAuthorization.Data,
+    isClassic?: boolean
   ): MsgGrantAuthorization {
     const { granter, grantee, grant } = data;
     return new MsgGrantAuthorization(
       granter,
       grantee,
-      AuthorizationGrant.fromData(grant)
+      AuthorizationGrant.fromData(grant, isClassic)
     );
   }
 
-  public toData(): MsgGrantAuthorization.Data {
+  public toData(isClassic?: boolean): MsgGrantAuthorization.Data {
     const { granter, grantee, grant } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.MsgGrant',
       granter,
       grantee,
-      grant: grant.toData(),
+      grant: grant.toData(isClassic),
     };
   }
 
   public static fromProto(
-    data: MsgGrantAuthorization.Proto
+    data: MsgGrantAuthorization.Proto,
+    isClassic?: boolean
   ): MsgGrantAuthorization {
     return new MsgGrantAuthorization(
       data.granter,
       data.grantee,
-      AuthorizationGrant.fromProto(data.grant as Grant_pb)
+      AuthorizationGrant.fromProto(data.grant as Grant_pb, isClassic)
     );
   }
 
-  public toProto(): MsgGrantAuthorization.Proto {
+  public toProto(isClassic?: boolean): MsgGrantAuthorization.Proto {
     const { grant, granter, grantee } = this;
     return MsgGrant_pb.fromPartial({
-      grant: grant.toProto(),
+      grant: grant.toProto(isClassic),
       grantee,
       granter,
     });
   }
 
-  public packAny(): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgGrant',
-      value: MsgGrant_pb.encode(this.toProto()).finish(),
+      value: MsgGrant_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgGrantAuthorization {
-    return MsgGrantAuthorization.fromProto(MsgGrant_pb.decode(msgAny.value));
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgGrantAuthorization {
+    return MsgGrantAuthorization.fromProto(
+      MsgGrant_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 
 export namespace MsgGrantAuthorization {
   export interface Amino {
-    type: 'msgauth/MsgGrantAuthorization';
+    type: 'msgauth/MsgGrantAuthorization' | 'cosmos-sdk/MsgGrant';
     value: {
       granter: AccAddress;
       grantee: AccAddress;

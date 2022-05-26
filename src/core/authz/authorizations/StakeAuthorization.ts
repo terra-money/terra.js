@@ -24,72 +24,87 @@ export class StakeAuthorization extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): StakeAuthorizationValidators {
+  public static fromAmino(
+    _: any,
+    isClassic?: boolean
+  ): StakeAuthorizationValidators {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
-  public static fromData(data: StakeAuthorization.Data): StakeAuthorization {
+  public static fromData(
+    data: StakeAuthorization.Data,
+    isClassic?: boolean
+  ): StakeAuthorization {
     return new StakeAuthorization(
       authorizationTypeFromJSON(data.authorization_type),
       data.max_tokens ? Coin.fromProto(data.max_tokens) : undefined,
       data.allow_list
-        ? StakeAuthorizationValidators.fromData(data.allow_list)
+        ? StakeAuthorizationValidators.fromData(data.allow_list, isClassic)
         : undefined,
       data.deny_list
-        ? StakeAuthorizationValidators.fromData(data.deny_list)
+        ? StakeAuthorizationValidators.fromData(data.deny_list, isClassic)
         : undefined
     );
   }
 
-  public toData(): StakeAuthorization.Data {
+  public toData(isClassic?: boolean): StakeAuthorization.Data {
     const { max_tokens, allow_list, deny_list, authorization_type } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.StakeAuthorization',
       authorization_type: authorizationTypeToJSON(authorization_type),
       max_tokens: max_tokens?.toData(),
-      allow_list: allow_list?.toData(),
-      deny_list: deny_list?.toData(),
+      allow_list: allow_list?.toData(isClassic),
+      deny_list: deny_list?.toData(isClassic),
     };
   }
 
-  public static fromProto(proto: StakeAuthorization.Proto): StakeAuthorization {
+  public static fromProto(
+    proto: StakeAuthorization.Proto,
+    isClassic?: boolean
+  ): StakeAuthorization {
     return new StakeAuthorization(
       proto.authorizationType,
       proto.maxTokens ? Coin.fromProto(proto.maxTokens) : undefined,
       proto.allowList
-        ? StakeAuthorizationValidators.fromProto(proto.allowList)
+        ? StakeAuthorizationValidators.fromProto(proto.allowList, isClassic)
         : undefined,
       proto.denyList
-        ? StakeAuthorizationValidators.fromProto(proto.denyList)
+        ? StakeAuthorizationValidators.fromProto(proto.denyList, isClassic)
         : undefined
     );
   }
 
-  public toProto(): StakeAuthorization.Proto {
+  public toProto(isClassic?: boolean): StakeAuthorization.Proto {
     const { max_tokens, allow_list, deny_list, authorization_type } = this;
     return StakeAuthorization_pb.fromPartial({
-      allowList: allow_list?.toProto(),
+      allowList: allow_list?.toProto(isClassic),
       authorizationType: authorization_type,
-      denyList: deny_list?.toProto(),
+      denyList: deny_list?.toProto(isClassic),
       maxTokens: max_tokens?.toProto(),
     });
   }
 
-  public packAny(): Any {
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.StakeAuthorization',
-      value: StakeAuthorization_pb.encode(this.toProto()).finish(),
+      value: StakeAuthorization_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): StakeAuthorization {
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): StakeAuthorization {
     return StakeAuthorization.fromProto(
-      StakeAuthorization_pb.decode(msgAny.value)
+      StakeAuthorization_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }
@@ -103,34 +118,45 @@ export class StakeAuthorizationValidators extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): StakeAuthorizationValidators {
+  public static fromAmino(
+    _: any,
+    isClassic?: boolean
+  ): StakeAuthorizationValidators {
+    _;
+    isClassic;
+    throw new Error('Amino not supported');
+  }
+
+  public toAmino(_?: boolean): any {
     _;
     throw new Error('Amino not supported');
   }
 
-  public toAmino(): any {
-    throw new Error('Amino not supported');
-  }
-
   public static fromData(
-    data: StakeAuthorizationValidators.Data
+    data: StakeAuthorizationValidators.Data,
+    _?: boolean
   ): StakeAuthorizationValidators {
+    _;
     return new StakeAuthorizationValidators(data.address);
   }
 
-  public toData(): StakeAuthorizationValidators.Data {
+  public toData(_?: boolean): StakeAuthorizationValidators.Data {
+    _;
     return {
       address: this.address,
     };
   }
 
   public static fromProto(
-    proto: StakeAuthorizationValidators.Proto
+    proto: StakeAuthorizationValidators.Proto,
+    _?: boolean
   ): StakeAuthorizationValidators {
+    _;
     return new StakeAuthorizationValidators(proto.address);
   }
 
-  public toProto(): StakeAuthorizationValidators.Proto {
+  public toProto(_?: boolean): StakeAuthorizationValidators.Proto {
+    _;
     return StakeAuthorizationValidators_pb.fromPartial({
       address: this.address,
     });

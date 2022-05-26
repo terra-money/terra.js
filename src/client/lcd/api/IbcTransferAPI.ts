@@ -1,7 +1,8 @@
 import { BaseAPI } from './BaseAPI';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
-//import { DenomTrace } from '@terra-money/terra.proto/ibc/applications/transfer/v1/query'
-import { DenomTrace } from '../../../core/ibc-transfer/DenomTrace';
+//import { DenomTrace } from '@terra-money/legacy.proto/ibc/applications/transfer/v1/query'
+import { DenomTrace } from '../../../core/ibc/applications/transfer/v1/DenomTrace';
+import { LCDClient } from '../LCDClient';
 
 export interface IbcTransferParams {
   send_enabled: boolean;
@@ -16,6 +17,10 @@ export namespace IbcTransferParams {
 }
 
 export class IbcTransferAPI extends BaseAPI {
+  constructor(public lcd: LCDClient) {
+    super(lcd.apiRequester);
+  }
+
   /** Gets a denomTrace for the hash */
   public async denomTrace(hash: string): Promise<DenomTrace> {
     return this.c
@@ -37,13 +42,20 @@ export class IbcTransferAPI extends BaseAPI {
       .then(d => [d.denom_traces.map(DenomTrace.fromData), d.pagination]);
   }
 
-  /* not supoorted
-    public async escrowAddress(
-        port: string,
-        channelId: string
-    ): Promise<[Coins, Pagination]> {
+  /** Gets a denomination hash information */
+  public async denomHash(
+    trace: string,
+    params: Partial<PaginationOptions & APIParams> = {}
+  ): Promise<string> {
+    if (this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
     }
-    */
+
+    return await this.c.get<string>(
+      `/ibc/apps/transfer/v1/denom_hashes/${trace}`,
+      params
+    );
+  }
 
   /**
    * Gets the current transfer application parameters.
