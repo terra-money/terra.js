@@ -17,6 +17,7 @@ interface Option extends CreateTxOptions {
   purgeQueue?: boolean; // default true
   sequence?: number;
   accountNumber?: number;
+  isClassic?: boolean; // default fase. set to true when you intract with terra Classic
 }
 
 interface SignBytesOption {
@@ -170,7 +171,7 @@ export class Extension {
   sign(options: Option): number {
     return this.send('sign', {
       ...options,
-      msgs: options.msgs.map(msg => msg.toJSON()),
+      msgs: options.msgs.map(msg => msg.toJSON(options.isClassic)),
       fee: options.fee?.toJSON(),
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
@@ -218,7 +219,7 @@ export class Extension {
    */
   post(options: Option): number {
     return this.send('post', {
-      msgs: options.msgs.map(msg => msg.toJSON()),
+      msgs: options.msgs.map(msg => msg.toJSON(options.isClassic)),
       fee: options.fee?.toJSON(),
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
