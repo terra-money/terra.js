@@ -171,7 +171,7 @@ export class Extension {
   sign(options: Option): number {
     return this.send('sign', {
       ...options,
-      msgs: options.msgs.map(msg => msg.toJSON()),
+      msgs: options.msgs.map(msg => msg.toJSON(options.isClassic)),
       fee: options.fee?.toJSON(),
       memo: options.memo,
       gasPrices: options.gasPrices?.toString(),
