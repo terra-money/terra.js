@@ -128,6 +128,7 @@ export interface CreateTxOptions {
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
   timeoutHeight?: number;
+  isClassic?: boolean;
 }
 
 export interface TxResult {
