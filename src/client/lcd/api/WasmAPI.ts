@@ -23,7 +23,7 @@ export namespace CodeInfo {
     code_id: string;
     code_hash: string;
     creator: AccAddress;
-    instantiate_config?: AccessConfig.Data;
+    instantiate_permission?: AccessConfig.Data;
   }
 }
 
@@ -129,8 +129,8 @@ export class WasmAPI extends BaseAPI {
         code_id: +d.code_id,
         code_hash: d.code_hash,
         creator: d.creator,
-        instantiate_config: d.instantiate_config
-          ? AccessConfig.fromData(d.instantiate_config)
+        instantiate_permission: d.instantiate_permission
+          ? AccessConfig.fromData(d.instantiate_permission)
           : undefined,
       }));
   }
@@ -322,8 +322,8 @@ export class WasmAPI extends BaseAPI {
             code_id: +codeInfo.code_id,
             code_hash: codeInfo.code_hash,
             creator: codeInfo.creator,
-            instantiate_config: codeInfo.instantiate_config
-              ? AccessConfig.fromData(codeInfo.instantiate_config)
+            instantiate_permission: codeInfo.instantiate_permission
+              ? AccessConfig.fromData(codeInfo.instantiate_permission)
               : undefined,
           };
         }),
