@@ -102,7 +102,7 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
       });
     } else {
       return Any.fromPartial({
-        typeUrl: '/coswasm.wasm.v1.MsgUpdateAdmin',
+        typeUrl: '/cosmwasm.wasm.v1.MsgUpdateAdmin',
         value: MsgUpdateAdmin_pb.encode(
           this.toProto(isClassic) as MsgUpdateAdmin_pb
         ).finish(),
