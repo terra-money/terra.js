@@ -31,7 +31,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public static fromAmino(_: any, isClassic?: boolean): MsgPayPacketFee {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     _;
     throw new Error('Amino not supported');
@@ -39,7 +39,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public toAmino(isClassic?: boolean): any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     throw new Error('Amino not supported');
   }
@@ -49,7 +49,7 @@ export class MsgPayPacketFee extends JSONSerializable<
     isClassic?: boolean
   ): MsgPayPacketFee {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { fee, source_port_id, source_channel_id, signer, relayers } = data;
 
@@ -64,7 +64,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public toData(isClassic?: boolean): MsgPayPacketFee.Data {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { fee, source_port_id, source_channel_id, signer, relayers } = this;
     return {
@@ -82,7 +82,7 @@ export class MsgPayPacketFee extends JSONSerializable<
     isClassic?: boolean
   ): MsgPayPacketFee {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return new MsgPayPacketFee(
       proto.fee ? Fee.fromProto(proto.fee) : undefined,
@@ -95,7 +95,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public toProto(isClassic?: boolean): MsgPayPacketFee.Proto {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { fee, source_port_id, source_channel_id, signer, relayers } = this;
     return MsgPayPacketFee_pb.fromPartial({
@@ -109,7 +109,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public packAny(isClassic?: boolean): Any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee',
@@ -119,7 +119,7 @@ export class MsgPayPacketFee extends JSONSerializable<
 
   public static unpackAny(msgAny: Any, isClassic?: boolean): MsgPayPacketFee {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return MsgPayPacketFee.fromProto(
       MsgPayPacketFee_pb.decode(msgAny.value),

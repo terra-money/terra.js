@@ -28,7 +28,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     isClassic?: boolean
   ): MsgRegisterCounterpartyAddress {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     _;
     throw new Error('Amino not supported');
@@ -36,7 +36,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
 
   public toAmino(isClassic?: boolean): any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     throw new Error('Amino not supported');
   }
@@ -46,7 +46,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     isClassic?: boolean
   ): MsgRegisterCounterpartyAddress {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { address, counterparty_address, channel_id } = data;
 
@@ -59,7 +59,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
 
   public toData(isClassic?: boolean): MsgRegisterCounterpartyAddress.Data {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { address, counterparty_address, channel_id } = this;
     return {
@@ -75,7 +75,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     isClassic?: boolean
   ): MsgRegisterCounterpartyAddress {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return new MsgRegisterCounterpartyAddress(
       proto.address,
@@ -86,7 +86,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
 
   public toProto(isClassic?: boolean): MsgRegisterCounterpartyAddress.Proto {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { address, counterparty_address, channel_id } = this;
     return MsgRegisterCounterpartyAddress_pb.fromPartial({
@@ -98,7 +98,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
 
   public packAny(isClassic?: boolean): Any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
@@ -113,7 +113,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     isClassic?: boolean
   ): MsgRegisterCounterpartyAddress {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return MsgRegisterCounterpartyAddress.fromProto(
       MsgRegisterCounterpartyAddress_pb.decode(msgAny.value)
