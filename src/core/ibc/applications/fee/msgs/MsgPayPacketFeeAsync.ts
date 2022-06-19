@@ -23,7 +23,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
 
   public static fromAmino(_: any, isClassic?: boolean): any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     _;
     throw new Error('Amino not supported');
@@ -31,7 +31,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
 
   public toAmino(isClassic?: boolean): any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     throw new Error('Amino not supported');
   }
@@ -41,7 +41,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     isClassic?: boolean
   ): MsgPayPacketFeeAsync {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { packet_id, packet_fee } = data;
 
@@ -53,7 +53,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
 
   public toData(isClassic?: boolean): MsgPayPacketFeeAsync.Data {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { packet_id, packet_fee } = this;
     return {
@@ -68,7 +68,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     isClassic?: boolean
   ): MsgPayPacketFeeAsync {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return new MsgPayPacketFeeAsync(
       proto.packetId ? PacketId.fromProto(proto.packetId) : undefined,
@@ -78,7 +78,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
 
   public toProto(isClassic?: boolean): MsgPayPacketFeeAsync.Proto {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
 
     const { packet_id, packet_fee } = this;
@@ -90,7 +90,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
 
   public packAny(isClassic?: boolean): Any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync',
@@ -103,7 +103,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     isClassic?: boolean
   ): MsgPayPacketFeeAsync {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return MsgPayPacketFeeAsync.fromProto(
       MsgPayPacketFeeAsync_pb.decode(msgAny.value),

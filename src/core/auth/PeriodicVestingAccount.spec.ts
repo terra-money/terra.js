@@ -101,7 +101,7 @@ describe('PeriodicVestingAccount', () => {
     });
 
     expect(() => acct.toAmino(true)).toThrow(
-      Error('Net supported for the network')
+      Error('Not supported for the network')
     );
   });
 });

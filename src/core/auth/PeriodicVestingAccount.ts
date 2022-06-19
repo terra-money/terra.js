@@ -47,7 +47,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public toAmino(isClassic?: boolean): PeriodicVestingAccount.Amino {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { base_vesting_account, start_time, vesting_periods } = this;
     return {
@@ -69,7 +69,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
       value: data.value.base_vesting_account,
     });
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
 
     return new PeriodicVestingAccount(
@@ -83,7 +83,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public toData(isClassic?: boolean): PeriodicVestingAccount.Data {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { base_vesting_account, start_time, vesting_periods } = this;
     return {
@@ -103,7 +103,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
       ...data.base_vesting_account,
     });
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return new PeriodicVestingAccount(
       base_vesting_account,
@@ -114,7 +114,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public toProto(isClassic?: boolean): PeriodicVestingAccount.Proto {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const { base_vesting_account, vesting_periods } = this;
 
@@ -129,7 +129,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
     isClassic?: boolean
   ): PeriodicVestingAccount {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     const baseVestingAccount = BaseVestingAccount.fromProto(
       proto.baseVestingAccount as BaseVestingAccount_pb
@@ -144,7 +144,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
 
   public packAny(isClassic?: boolean): Any {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.PeriodicVestingAccount',
@@ -157,7 +157,7 @@ export class PeriodicVestingAccount extends JSONSerializable<
     isClassic?: boolean
   ): PeriodicVestingAccount {
     if (isClassic) {
-      throw new Error('Net supported for the network');
+      throw new Error('Not supported for the network');
     }
     return PeriodicVestingAccount.fromProto(
       PeriodicVestingAccount_pb.decode(pubkeyAny.value)
