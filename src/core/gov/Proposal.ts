@@ -21,6 +21,7 @@ import {
   UpdateAdminProposal,
   UpdateInstantiateConfigProposal,
 } from '../wasm/proposals';
+import { MinimumCommissionUpdateProposal } from '../ante/proposals';
 import {
   Proposal as Proposal_pb,
   ProposalStatus,
@@ -253,7 +254,8 @@ export namespace Proposal {
     | SudoContractProposal
     | UnpinCodesProposal
     | UpdateAdminProposal
-    | UpdateInstantiateConfigProposal;
+    | UpdateInstantiateConfigProposal
+    | MinimumCommissionUpdateProposal;
 
   export namespace Content {
     export type Amino =
@@ -290,7 +292,8 @@ export namespace Proposal {
       | SudoContractProposal.Data
       | UnpinCodesProposal.Data
       | UpdateAdminProposal.Data
-      | UpdateInstantiateConfigProposal.Data;
+      | UpdateInstantiateConfigProposal.Data
+      | MinimumCommissionUpdateProposal.Data;
 
     export type Proto =
       | TextProposal.Proto
@@ -308,7 +311,8 @@ export namespace Proposal {
       | SudoContractProposal.Proto
       | UnpinCodesProposal.Proto
       | UpdateAdminProposal.Proto
-      | UpdateInstantiateConfigProposal.Proto;
+      | UpdateInstantiateConfigProposal.Proto
+      | MinimumCommissionUpdateProposal.Proto;
 
     export function fromAmino(
       amino: Proposal.Content.Amino,
@@ -392,6 +396,8 @@ export namespace Proposal {
           return UpdateAdminProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.fromData(data, isClassic);
+        case '/terra.ante.v2.MinimumCommissionUpdateProposal':
+          return MinimumCommissionUpdateProposal.fromData(data, isClassic);
       }
     }
 
@@ -433,6 +439,8 @@ export namespace Proposal {
           return UpdateAdminProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.unpackAny(anyProto, isClassic);
+        case '/terra.ante.v2.MinimumCommissionUpdateProposal':
+          return MinimumCommissionUpdateProposal.unpackAny(anyProto, isClassic);
       }
 
       throw `Proposal content ${typeUrl} not recognized`;
