@@ -24,7 +24,6 @@ export class AnteAPI extends BaseAPI {
     if (this.lcd.config.isClassic) {
       throw new Error('Not supported for the network');
     }
-    Number.parseFloat;
 
     return this.c
       .get<{ minimum_commission: string }>(
