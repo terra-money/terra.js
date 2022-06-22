@@ -1,9 +1,19 @@
 {
-  "name": "@terra-money/terra.js",
-  "version": "3.1.3",
+  "name": "@terra-rebels/terra.js",
+  "version": "0.0.1",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
+  "contributors": [
+    {
+      "name": "Terra Rebels",
+      "url": "https://github.com/terra-rebels/"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/terra-rebels/terra.js/issues"
+  },
+  "homepage": "https://github.com/terra-rebels/terra.js#readme",
   "keywords": [
     "terra",
     "stablecoin",
@@ -17,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/terra-money/terra.js.git"
+    "url": "git://github.com/terra-rebels/terra.js.git"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
