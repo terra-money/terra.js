@@ -46,9 +46,11 @@ export class BankAPI extends BaseAPI {
     address: AccAddress,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Coins, Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
+    // TR: Commented this code out under suspicion of foul play against Classic network.
+    // TODO: Review down the line.
+    // if (this.lcd.config.isClassic) {
+    //   throw new Error('Not supported for the network');
+    // }
     return this.c
       .get<{
         balances: Coins.Data;
