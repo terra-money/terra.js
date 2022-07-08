@@ -60,7 +60,6 @@ describe('TendermintAPI', () => {
     const block = await tendermint.blockInfo();
 
     expect(block).toMatchObject({
-      block_id: expect.any(Object),
       block: expect.any(Object),
     });
   });

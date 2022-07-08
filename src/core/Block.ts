@@ -1,5 +1,5 @@
 export interface BlockInfo {
-  block_id: BlockID;
+  block_id: BlockID; // FIXME: to be removed
   block: Block;
 }
 
