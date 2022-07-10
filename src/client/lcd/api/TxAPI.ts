@@ -418,11 +418,12 @@ export class TxAPI extends BaseAPI {
     timeout = 30000
   ): Promise<WaitTxBroadcastResult> {
     const POLL_INTERVAL = 500;
+
     const { tx_response: txResponse } = await this._broadcast<{
       tx_response: SyncTxBroadcastResult.Data;
     }>(tx, 'BROADCAST_MODE_SYNC');
 
-    if (txResponse.code != 0) {
+    if (txResponse.code != undefined && txResponse.code != 0) {
       const result: WaitTxBroadcastResult = {
         height: Number.parseInt(txResponse.height),
         txhash: txResponse.txhash,

@@ -114,16 +114,14 @@ describe('TxAPI', () => {
     });
 
     it('broadcast timeout if txInfo not found in time', async () => {
-      /*
-			jest.spyOn(APIRequester.prototype, 'getRaw').mockImplementation(route => {
-				if (route.includes('/cosmos/tx/v1beta1/txs/')) {
-					// Force an error to emulate a transaction not found.
-					return Promise.reject();
-				}
+      jest.spyOn(APIRequester.prototype, 'getRaw').mockImplementation(route => {
+        if (route.includes('/cosmos/tx/v1beta1/txs/')) {
+          // Force an error to emulate a transaction not found.
+          return Promise.reject();
+        }
 
-				return Promise.resolve();
-			});
-			*/
+        return Promise.resolve();
+      });
 
       const send = new MsgSend(
         'terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8',
