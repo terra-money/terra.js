@@ -8,7 +8,7 @@ import { AccessConfig } from '../../../core/wasm';
 
 export interface CodeInfo {
   code_id: number;
-  code_hash: string;
+  code_hash: string; // TODO: rename it to data_hash when bumping to v4
   creator: AccAddress;
   instantiate_config?: AccessConfig;
 }
@@ -21,7 +21,7 @@ export namespace CodeInfo {
   }
   export interface DataV2 {
     code_id: string;
-    code_hash: string;
+    data_hash: string;
     creator: AccAddress;
     instantiate_permission?: AccessConfig.Data;
   }
@@ -127,7 +127,7 @@ export class WasmAPI extends BaseAPI {
       .get<{ code_info: CodeInfo.DataV2 }>(endpoint, params)
       .then(({ code_info: d }) => ({
         code_id: +d.code_id,
-        code_hash: d.code_hash,
+        code_hash: d.data_hash,
         creator: d.creator,
         instantiate_permission: d.instantiate_permission
           ? AccessConfig.fromData(d.instantiate_permission)
@@ -320,7 +320,7 @@ export class WasmAPI extends BaseAPI {
         d.codeInfos.map(codeInfo => {
           return {
             code_id: +codeInfo.code_id,
-            code_hash: codeInfo.code_hash,
+            code_hash: codeInfo.data_hash,
             creator: codeInfo.creator,
             instantiate_permission: codeInfo.instantiate_permission
               ? AccessConfig.fromData(codeInfo.instantiate_permission)
