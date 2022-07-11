@@ -70,7 +70,9 @@ export * from './staking/Validator';
 export * from './treasury/PolicyConstraints';
 
 // WASM
+export * from './wasm';
 export * from './wasm/msgs';
+export * from './wasm/proposals';
 
 // IBC
 export * from './ibc/msgs/channel';
