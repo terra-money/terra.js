@@ -26,7 +26,6 @@ export namespace Status {
 }
 
 export class IbcAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -42,7 +41,7 @@ export class IbcAPI extends BaseAPI {
       }));
   }
 
-  public async client_states(
+  public async clientStates(
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[IdentifiedClientState[], Pagination]> {
     return this.c
@@ -56,7 +55,7 @@ export class IbcAPI extends BaseAPI {
       ]);
   }
 
-  public async client_state(
+  public async clientState(
     client_id: string,
     params: APIParams = {}
   ): Promise<IdentifiedClientState> {
@@ -67,7 +66,7 @@ export class IbcAPI extends BaseAPI {
       .then();
   }
 
-  public async client_status(
+  public async clientStatus(
     client_id: string,
     params: APIParams = {}
   ): Promise<Status> {
@@ -78,7 +77,7 @@ export class IbcAPI extends BaseAPI {
       .then();
   }
 
-  public async consensus_states(
+  public async consensusStates(
     client_id: string,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[ClientConsensusStates, Pagination]> {
@@ -92,22 +91,28 @@ export class IbcAPI extends BaseAPI {
   /**
    * Gets paramaters for interchain account controller.
    */
-  public async interchainAccountControllerParameters(params: APIParams = {}): Promise<ControllerParams> {
+  public async interchainAccountControllerParameters(
+    params: APIParams = {}
+  ): Promise<ControllerParams> {
     return this.c
-      .get<{ params: ControllerParams.Data }>(`/ibc/apps/interchain_accounts/controller/v1/params`, params)
-      .then(({ params: d }) => (
-        ControllerParams.fromData(d)
-      ));
+      .get<{ params: ControllerParams.Data }>(
+        `/ibc/apps/interchain_accounts/controller/v1/params`,
+        params
+      )
+      .then(({ params: d }) => ControllerParams.fromData(d));
   }
 
   /**
    * Gets paramaters for interchain account host.
    */
-  public async interchainAccountHostParameters(params: APIParams = {}): Promise<HostParams> {
+  public async interchainAccountHostParameters(
+    params: APIParams = {}
+  ): Promise<HostParams> {
     return this.c
-      .get<{ params: HostParams.Data }>(`/ibc/apps/interchain_accounts/host/v1/params`, params)
-      .then(({ params: d }) => (
-        HostParams.fromData(d)
-      ));
+      .get<{ params: HostParams.Data }>(
+        `/ibc/apps/interchain_accounts/host/v1/params`,
+        params
+      )
+      .then(({ params: d }) => HostParams.fromData(d));
   }
 }

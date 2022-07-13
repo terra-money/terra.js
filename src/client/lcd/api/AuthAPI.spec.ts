@@ -40,4 +40,16 @@ describe('AuthAPI', () => {
       );
     });
   });
+
+  describe('parameters', () => {
+    it('parameters', async () => {
+      const param = await auth.parameters();
+
+      expect(param.max_memo_characters).toBeGreaterThanOrEqual(0);
+      expect(param.tx_sig_limit).toBeGreaterThanOrEqual(0);
+      expect(param.tx_size_cost_per_byte).toBeGreaterThanOrEqual(0);
+      expect(param.sig_verify_cost_ed25519).toBeGreaterThanOrEqual(0);
+      expect(param.sig_verify_cost_secp256k1).toBeGreaterThanOrEqual(0);
+    });
+  });
 });

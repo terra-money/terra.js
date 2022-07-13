@@ -235,11 +235,14 @@ export class WasmAPI extends BaseAPI {
     }
     return this.c
       .get<{ result: QueryResult.Data }>(
-        `/cosmwasm/wasm/v1/contract/${contractAddress}/raw/${query_data}`,
+        `/cosmwasm/wasm/v1/contract/${contractAddress}/raw/${Buffer.from(
+          query_data,
+          'utf-8'
+        ).toString('base64')}`,
         params
       )
       .then(({ result: d }) => ({
-        data: d.data,
+        data: Buffer.from(d.data, 'base64').toString(),
       }));
   }
 
