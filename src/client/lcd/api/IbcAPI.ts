@@ -1,11 +1,12 @@
 import { BaseAPI } from './BaseAPI';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
-import { IdentifiedClientState } from '../../../core/ibc/msgs/client/IdentifiedClient';
-import { ClientConsensusStates } from '../../../core/ibc/msgs/client/ClientConsensusStates';
+import { IdentifiedClientState } from '../../../core/ibc/core/client/IdentifiedClient';
+import { ClientConsensusStates } from '../../../core/ibc/core/client/ClientConsensusStates';
 import { LCDClient } from '../LCDClient';
 //import { Params as ControllerParams } from '../../../core/ibc/applications/interchain-account/controller/Params';
 import { Params as HostParams } from '../../../core/ibc/applications/interchain-account/host/Params';
-import { Channel } from '../../../core/ibc/msgs/channel/Channel';
+import { Channel } from '../../../core/ibc/core/channel';
+import { IdentifiedConnection } from '../../../core/ibc/core/connection';
 export interface IbcClientParams {
   allowed_clients: string[];
 }
@@ -40,6 +41,20 @@ export class IbcAPI extends BaseAPI {
         pagination: Pagination;
       }>(`/ibc/core/channel/v1/channels`, params)
       .then(d => [d.channels.map(Channel.fromData), d.pagination]);
+  }
+
+  public async connections(
+    params: APIParams = {}
+  ): Promise<[IdentifiedConnection[], Pagination]> {
+    return this.c
+      .get<{
+        connections: IdentifiedConnection.Data[];
+        pagination: Pagination;
+      }>(`/ibc/core/connection/v1/connections`, params)
+      .then(d => [
+        d.connections.map(IdentifiedConnection.fromData),
+        d.pagination,
+      ]);
   }
 
   /**

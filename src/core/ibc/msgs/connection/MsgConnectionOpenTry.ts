@@ -1,11 +1,11 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Counterparty } from './Counterparty';
-import { Version } from './Version';
+import { Counterparty } from '../../core/connection/Counterparty';
+import { Version } from '../../core/connection/Version';
 import { MsgConnectionOpenTry as MsgConnectionOpenTry_pb } from '@terra-money/terra.proto/ibc/core/connection/v1/tx';
 import Long from 'long';
-import { Height } from '../client/Height';
+import { Height } from '../../core/client/Height';
 
 /**
  *  MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a connection on Chain B.

@@ -54,7 +54,13 @@ describe('IbcClientAPI', () => {
 
   it('channels', async () => {
     const [res, _] = await ibc.channels();
-    console.log(res);
+    expect(res).not.toBeNull();
+    expect(res).not.toBeUndefined();
+    expect(res.length).toBeGreaterThan(0);
+  });
+
+  it('connections', async () => {
+    const [res, _] = await ibc.connections();
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
     expect(res.length).toBeGreaterThan(0);
