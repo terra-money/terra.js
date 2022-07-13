@@ -19,10 +19,10 @@ describe('IbcTransferAPI', () => {
 
   it('denomTrace', async () => {
     const denomTrace = await ibctx.denomTrace(
-      'B8AF5D92165F35AB31F3FC7C7B444B9D240760FA5D406C49D24862BD0284E395'
+      '6DD0D40C3A5FE38336FC5EF017CC248E11C15E28C76F95C83A8FFE61E1566063'
     );
-    expect(denomTrace.path).toEqual('transfer/channel-4');
-    expect(denomTrace.base_denom).toEqual('uluna');
+    expect(denomTrace.path).toEqual('transfer/channel-7');
+    expect(denomTrace.base_denom).toEqual('ukuji');
   });
 
   it('params', async () => {

@@ -1,9 +1,12 @@
 import { GovAPI } from './GovAPI';
 import { Coins, Dec, Int, Proposal } from '../../../core';
-import { LocalTerra } from '../../LocalTerra';
 import { Deposit } from '@terra-money/terra.proto/cosmos/gov/v1beta1/gov';
+import { LCDClient } from '../LCDClient';
 
-const terra = new LocalTerra();
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
 const gov = new GovAPI(terra);
 
 describe('GovAPI', () => {
@@ -25,7 +28,7 @@ describe('GovAPI', () => {
   });
 
   it('tally', async () => {
-    const proposalId = await gov.proposals().then(v => v[0][0].id)
+    const proposalId = await gov.proposals().then(v => v[0][0].id);
     await expect(gov.tally(proposalId)).resolves.toMatchObject({
       yes: expect.any(Int),
       abstain: expect.any(Int),
@@ -35,30 +38,30 @@ describe('GovAPI', () => {
   });
 
   it('proposals', async () => {
-    const proposals = await gov.proposals().then(v => v[0])
+    const proposals = await gov.proposals().then(v => v[0]);
     expect(proposals).toContainEqual(expect.any(Proposal));
   });
 
   it('proposal', async () => {
-    const proposalId = await gov.proposals().then(v => v[0][0].id)
+    const proposalId = await gov.proposals().then(v => v[0][0].id);
     const proposal = await gov.proposal(proposalId);
     expect(proposal).toEqual(expect.any(Proposal));
   });
 
   it('proposer', async () => {
-    const proposalId = await gov.proposals().then(v => v[0][0].id)
+    const proposalId = await gov.proposals().then(v => v[0][0].id);
     const proposer = await gov.proposer(proposalId);
     expect(proposer).toEqual(expect.any(String));
   });
 
   it('initialDeposit', async () => {
-    const proposalId = await gov.proposals().then(v => v[0][0].id)
+    const proposalId = await gov.proposals().then(v => v[0][0].id);
     const initialDeposit = await gov.initialDeposit(proposalId);
     expect(initialDeposit).toEqual(expect.any(Coins));
   });
 
   it('deposits', async () => {
-    const proposals = await gov.proposals().then(v => v[0])
+    const proposals = await gov.proposals().then(v => v[0]);
     const proposalId = proposals[0].id;
     const deposits = await gov.deposits(proposalId).then(v => v[0][0]);
     if (deposits !== undefined) {

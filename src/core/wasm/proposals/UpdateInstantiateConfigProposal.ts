@@ -1,7 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { UpdateInstantiateConfigProposal as UpdateInstantiateConfigProposal_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/proposal';
-import * as Long from 'long';
 import { AccessConfigUpdate } from '../AccessConfigUpdate';
 
 /**

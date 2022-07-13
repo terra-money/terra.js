@@ -1,89 +1,14 @@
-import { DistributionAPI, Rewards } from './DistributionAPI';
+import { DistributionAPI } from './DistributionAPI';
 
-import {
-  Dec,
-  MsgFundCommunityPool,
-  MsgSetWithdrawAddress,
-  MsgWithdrawDelegatorReward,
-  MsgWithdrawValidatorCommission,
-  Coin,
-  Coins,
-} from '../../../core';
-import { LocalTerra } from '../../LocalTerra';
+import { Dec, Coins } from '../../../core';
+import { LCDClient } from '../LCDClient';
 
-const terra = new LocalTerra();
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
 const distribution = new DistributionAPI(terra);
 
-const delegatorWallet = terra.wallets.test1;
-const depositorWallet = terra.wallets.test2;
-const withdrawerWallet = terra.wallets.test1;
-const validatorWallet = terra.wallets.validator;
-
-async function FundCommunityPool() {
-  const msgFundCommunityPool = new MsgFundCommunityPool(
-    depositorWallet.key.accAddress,
-    new Coins([new Coin('uluna', 100)])
-  );
-  depositorWallet
-    .createAndSignTx({
-      msgs: [msgFundCommunityPool],
-      memo: 'msgFundCommunityPool',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-}
-
-async function SetWithdrawAddress() {
-  const msgSetWithdrawAddress = new MsgSetWithdrawAddress(
-    delegatorWallet.key.accAddress,
-    withdrawerWallet.key.accAddress
-  );
-  delegatorWallet
-    .createAndSignTx({
-      msgs: [msgSetWithdrawAddress],
-      memo: 'msgSetWithdrawAddress',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-}
-
-async function WithdrawDelegatorReward() {
-  const msgWithdrawDelegatorReward = new MsgWithdrawDelegatorReward(
-    delegatorWallet.key.accAddress,
-    validatorWallet.key.valAddress
-  );
-
-  delegatorWallet
-    .createAndSignTx({
-      msgs: [msgWithdrawDelegatorReward],
-      memo: 'msgWithdrawDelegatorReward',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-}
-
-async function WithdrawValidatorCommission() {
-  const msgWithdrawValidatorCommission = new MsgWithdrawValidatorCommission(
-    validatorWallet.key.valAddress
-  );
-  validatorWallet
-    .createAndSignTx({
-      msgs: [msgWithdrawValidatorCommission],
-      memo: 'msgWithdrawValidatorCommission',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-}
-function distributionForTest() {
-  FundCommunityPool();
-  SetWithdrawAddress();
-  WithdrawDelegatorReward();
-  WithdrawValidatorCommission();
-}
 // distributionForTest()
 describe('DistributionAPI', () => {
   it('parameters', async () => {
@@ -97,7 +22,7 @@ describe('DistributionAPI', () => {
 
   it('rewards', async () => {
     await expect(
-      distribution.rewards(delegatorWallet.key.accAddress)
+      distribution.rewards('terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v')
     ).resolves.toMatchObject({
       rewards: expect.anything(),
       total: expect.any(Coins),
@@ -110,8 +35,10 @@ describe('DistributionAPI', () => {
 
   it('withdrawAddress', async () => {
     await expect(
-      distribution.withdrawAddress(delegatorWallet.key.accAddress)
-    ).resolves.toEqual(withdrawerWallet.key.accAddress);
+      distribution.withdrawAddress(
+        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
+      )
+    ).resolves.toEqual('terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v');
   });
 
   it('communityPool', async () => {

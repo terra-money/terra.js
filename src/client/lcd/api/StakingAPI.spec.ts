@@ -1,17 +1,18 @@
 import { StakingAPI } from './StakingAPI';
 import { Dec, Int } from '../../../core/numeric';
 import { Coin } from '../../../core/Coin';
-import {
-  ValConsPublicKey,
-  Delegation,
-  // UnbondingDelegation,
-  MsgDelegate,
-  MsgUndelegate,
-  // MsgBeginRedelegate,
-} from '../../../core';
-import { LocalTerra } from '../../../../src';
+import { ValConsPublicKey, Delegation } from '../../../core';
+import { LCDClient } from '../LCDClient';
+import { MnemonicKey } from '../../../key';
 
-const terra = new LocalTerra();
+const terra = new LCDClient({
+  chainID: 'pisco-1',
+  URL: 'https://pisco-lcd.terra.dev',
+});
+const test1 = new MnemonicKey({
+  mnemonic:
+    'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius',
+});
 const staking = new StakingAPI(terra);
 
 const checkDelegations = (delegations: Delegation[]) => {
@@ -38,56 +39,10 @@ const checkDelegations = (delegations: Delegation[]) => {
 //   });
 // };
 
-const delegator = terra.wallets.test1.key.accAddress;
-const validator = terra.wallets.validator.key.valAddress;
-const delegatorWallet = terra.wallets.test1;
-
-async function stakingForTest() {
-  const delegateMsg = new MsgDelegate(
-    delegator,
-    validator,
-    new Coin('uluna', 100)
-  );
-  const unDelegateMsg = new MsgUndelegate(
-    delegator,
-    validator,
-    new Coin('uluna', 10)
-  );
-  // ToDo : Add different validators
-  //const reDelegateMsg = new MsgBeginRedelegate(delegator,validator1,validator2, new Coin("uluna",10))
-
-  delegatorWallet
-    .createAndSignTx({
-      msgs: [delegateMsg],
-      memo: 'staking',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-
-  delegatorWallet
-    .createAndSignTx({
-      msgs: [unDelegateMsg],
-      memo: 'staking',
-    })
-    .then(tx => {
-      return terra.tx.broadcast(tx);
-    });
-
-  // delegatorWallet.createAndSignTx({
-  //   msgs:[reDelegateMsg],
-  //   memo: 'staking'
-  // })
-  // .then(tx =>{
-  //   return terra.tx.broadcast(tx)
-  // })
-  // .then(result =>{
-  //   console.log(`ReDelegate TX hash: ${result.txhash}  ${result.raw_log}`);
-  // })
-}
+const delegator = test1.accAddress;
+const validator = 'terravaloper1gtw2uxdkdt3tvq790ckjz8jm8qgwkdw3uptstn';
 
 describe('StakingAPI', () => {
-  // stakingForTest();
   it('parameters', async () => {
     await expect(staking.parameters()).resolves.toMatchObject({
       unbonding_time: expect.any(Number),

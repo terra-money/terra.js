@@ -18,11 +18,11 @@ describe('SignatureV2', () => {
     );
 
     const toData = sigv2.toData();
-    console.log(`toData : ${JSON.stringify(toData)}`);
+    //console.log(`toData : ${JSON.stringify(toData)}`);
     const fromData = SignatureV2.fromData(toData);
-    console.log(`fromData : ${JSON.stringify(fromData)}`);
+    //console.log(`fromData : ${JSON.stringify(fromData)}`);
     const toData2 = fromData.toData();
-    console.log(`toData2 : ${JSON.stringify(toData2)}`);
+    //console.log(`toData2 : ${JSON.stringify(toData2)}`);
 
     expect(toData.public_key).toEqual(toData2.public_key);
     expect(toData.sequence).toEqual(toData2.sequence);
@@ -50,11 +50,11 @@ describe('SignatureV2', () => {
     );
 
     const toData = sigv2.toData();
-    console.log(`toData : ${JSON.stringify(toData)}`);
+    //console.log(`toData : ${JSON.stringify(toData)}`);
     const fromData = SignatureV2.fromData(toData);
-    console.log(`fromData : ${JSON.stringify(fromData)}`);
+    //console.log(`fromData : ${JSON.stringify(fromData)}`);
     const toData2 = fromData.toData();
-    console.log(`toData2 : ${JSON.stringify(toData2)}`);
+    //console.log(`toData2 : ${JSON.stringify(toData2)}`);
 
     expect(toData.public_key).toEqual(toData2.public_key);
     expect(toData.sequence).toEqual(toData2.sequence);
