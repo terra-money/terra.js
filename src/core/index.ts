@@ -73,7 +73,9 @@ export * from './treasury/PolicyConstraints';
 export * from './upgrade';
 
 // WASM
+export * from './wasm';
 export * from './wasm/msgs';
+export * from './wasm/proposals';
 
 // IBC
 export * from './ibc/msgs/channel';

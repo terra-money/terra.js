@@ -11,8 +11,6 @@ const mk = new MnemonicKey({
 });
 
 const terra = new LCDClient({
-  //chainID: 'fake-1',
-  //URL: 'https://fake-lcd.terra.dev',
   chainID: 'pisco-1',
   URL: 'https://pisco-lcd.terra.dev',
 });
@@ -115,7 +113,7 @@ describe('TxAPI', () => {
       expect(isTxError(txInfo)).toBeFalsy();
     });
 
-    it('broadcast timesout if txInfo not found in time', async () => {
+    it('broadcast timeout if txInfo not found in time', async () => {
       jest.spyOn(APIRequester.prototype, 'getRaw').mockImplementation(route => {
         if (route.includes('/cosmos/tx/v1beta1/txs/')) {
           // Force an error to emulate a transaction not found.
@@ -128,13 +126,14 @@ describe('TxAPI', () => {
       const send = new MsgSend(
         'terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8',
         'terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8',
-        { uluna: '1000000' }
+        { uluna: '1' }
       );
 
       const tx = await wallet.createAndSignTx({ msgs: [send] });
 
       await expect(async () => {
-        await txAPI.broadcast(tx, 1);
+        const res = await txAPI.broadcast(tx, 1);
+        console.log(res);
       }).rejects.toThrow('Transaction was not included in a block');
     });
   });
