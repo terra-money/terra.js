@@ -3,8 +3,9 @@ import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
 import { IdentifiedClientState } from '../../../core/ibc/msgs/client/IdentifiedClient';
 import { ClientConsensusStates } from '../../../core/ibc/msgs/client/ClientConsensusStates';
 import { LCDClient } from '../LCDClient';
-import { Params as ControllerParams } from '../../../core/ibc/applications/interchain-account/controller/Params';
+//import { Params as ControllerParams } from '../../../core/ibc/applications/interchain-account/controller/Params';
 import { Params as HostParams } from '../../../core/ibc/applications/interchain-account/host/Params';
+import { Channel } from '../../../core/ibc/msgs/channel/Channel';
 export interface IbcClientParams {
   allowed_clients: string[];
 }
@@ -28,6 +29,17 @@ export namespace Status {
 export class IbcAPI extends BaseAPI {
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
+  }
+
+  public async channels(
+    params: APIParams = {}
+  ): Promise<[Channel[], Pagination]> {
+    return this.c
+      .get<{
+        channels: Channel.Data[];
+        pagination: Pagination;
+      }>(`/ibc/core/channel/v1/channels`, params)
+      .then(d => [d.channels.map(Channel.fromData), d.pagination]);
   }
 
   /**
@@ -88,9 +100,11 @@ export class IbcAPI extends BaseAPI {
       }>(`/ibc/core/client/v1/consensus_states/${client_id}`, params)
       .then();
   }
+
   /**
    * Gets paramaters for interchain account controller.
-   */
+   * NOTE: CURRENTLY LCD DOESN'T SERVE THE ENDPOINT
+  /*
   public async interchainAccountControllerParameters(
     params: APIParams = {}
   ): Promise<ControllerParams> {
@@ -101,6 +115,7 @@ export class IbcAPI extends BaseAPI {
       )
       .then(({ params: d }) => ControllerParams.fromData(d));
   }
+  */
 
   /**
    * Gets paramaters for interchain account host.

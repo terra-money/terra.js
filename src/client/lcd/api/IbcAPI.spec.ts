@@ -37,4 +37,26 @@ describe('IbcClientAPI', () => {
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
   });
+
+  it('ica host paramaters', async () => {
+    const res = await ibc.interchainAccountHostParameters();
+    expect(res).not.toBeNull();
+    expect(res).not.toBeUndefined();
+  });
+
+  /*
+  it('ica controller paramaters', async () => {
+    const res = await ibc.interchainAccountControllerParameters();
+    expect(res).not.toBeNull();
+    expect(res).not.toBeUndefined();
+  });
+  */
+
+  it('channels', async () => {
+    const [res, _] = await ibc.channels();
+    console.log(res);
+    expect(res).not.toBeNull();
+    expect(res).not.toBeUndefined();
+    expect(res.length).toBeGreaterThan(0);
+  });
 });
