@@ -22,4 +22,12 @@ describe('BankAPI', () => {
     const totalSupply = await bank.total();
     expect(totalSupply[0].toArray().length).toBeGreaterThan(0);
   });
+
+  describe('parameters', () => {
+    it('parameters', async () => {
+      const param = await bank.parameters();
+
+      expect(param.default_send_enabled).toBeDefined();
+    });
+  });
 });

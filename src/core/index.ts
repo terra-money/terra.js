@@ -69,6 +69,9 @@ export * from './staking/Validator';
 // Treasury
 export * from './treasury/PolicyConstraints';
 
+// Upgrade
+export * from './upgrade';
+
 // WASM
 export * from './wasm';
 export * from './wasm/msgs';

@@ -1,8 +1,8 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Channel } from './Channel';
-import { Height } from '../client/Height';
+import { Channel } from '../../core/channel/Channel';
+import { Height } from '../../core/client/Height';
 import { MsgChannelOpenTry as MsgChannelOpenTry_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**

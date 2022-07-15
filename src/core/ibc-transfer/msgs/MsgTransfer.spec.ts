@@ -1,6 +1,6 @@
 import { MsgTransfer } from './MsgTransfer';
 import { Coin } from '../../Coin';
-import { Height } from '../../ibc/msgs/client/Height';
+import { Height } from '../../ibc/core/client/Height';
 import { Numeric } from '../..';
 
 describe('MsgTransfer', () => {

@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../../util/json';
 import { AccAddress } from '../../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { Height } from '../client/Height';
+import { Height } from '../../core/client/Height';
 import { MsgChannelOpenAck as MsgChannelOpenAck_pb } from '@terra-money/terra.proto/ibc/core/channel/v1/tx';
 
 /**

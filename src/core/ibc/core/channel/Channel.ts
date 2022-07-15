@@ -90,7 +90,9 @@ export class Channel extends JSONSerializable<
     return new Channel(
       proto.state,
       proto.ordering,
-      proto.counterparty ? Counterparty.fromProto(proto.counterparty) : undefined,
+      proto.counterparty
+        ? Counterparty.fromProto(proto.counterparty)
+        : undefined,
       proto.connectionHops,
       proto.version
     );

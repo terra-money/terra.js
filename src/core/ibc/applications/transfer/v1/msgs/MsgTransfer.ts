@@ -4,7 +4,7 @@ import { Coin } from '../../../../../Coin';
 import * as Long from 'long';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgTransfer as MsgTransfer_pb } from '@terra-money/terra.proto/ibc/applications/transfer/v1/tx';
-import { Height } from '../../../../msgs/client/Height';
+import { Height } from '../../../../core/client/Height';
 import { Numeric } from '../../../../../numeric';
 /**
  * A basic message for transfer [[Coin]] via IBC.
