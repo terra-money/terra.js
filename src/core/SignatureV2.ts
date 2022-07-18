@@ -8,6 +8,8 @@ import {
 } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
 import { MultiSignature } from '@terra-money/terra.proto/cosmos/crypto/multisig/v1beta1/multisig';
 
+export { SignMode } from '@terra-money/terra.proto/cosmos/tx/signing/v1beta1/signing';
+
 export class SignatureV2 {
   constructor(
     public public_key: PublicKey,

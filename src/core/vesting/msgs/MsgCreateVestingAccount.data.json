@@ -1,0 +1,13 @@
+{
+	"@type": "/cosmos.vesting.v1beta1.MsgCreateVestingAccount",
+	"from_address": "terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v",
+	"to_address": "terra1av6ssz7k4xpc5nsjj2884nugakpp874ae0krx7",
+	"amount": [
+		{
+			"denom": "uluna",
+			"amount": "3000000"
+		}
+	],
+	"end_time": "1658121411",
+	"delayed": false
+}

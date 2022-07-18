@@ -1,0 +1,26 @@
+{
+	"@type": "/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount",
+	"from_address": "terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v",
+	"to_address": "terra1av6ssz7k4xpc5nsjj2884nugakpp874ae0krx7",
+	"start_time": "1658121411",
+	"vesting_periods": [
+		{
+			"length": "100",
+			"amount": [
+				{
+					"denom": "uluna",
+					"amount": "1000000"
+				}
+			]
+		},
+		{
+			"length": "200",
+			"amount": [
+				{
+					"denom": "uluna",
+					"amount": "2000000"
+				}
+			]
+		}
+	]
+}

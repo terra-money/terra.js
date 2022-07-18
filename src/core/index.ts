@@ -72,6 +72,9 @@ export * from './treasury/PolicyConstraints';
 // Upgrade
 export * from './upgrade';
 
+// Vesting
+export * from './vesting';
+
 // WASM
 export * from './wasm';
 export * from './wasm/msgs';
