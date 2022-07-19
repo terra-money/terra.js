@@ -44,22 +44,4 @@ describe('FeeGrantAPI', () => {
       ).rejects.toThrow();
     });
   });
-
-  /* TODO: unblock after v2.1.0-beta.1 applied
-  it('allowancesByGranter', async () => {
-    const res = await feeGrant.allowancesByGranter(
-      'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v'
-    );
-
-    expect(res.allowances[0]).toMatchObject({
-      granter: expect.any(String),
-      grantee: expect.any(String),
-    });
-
-    const allowanceData = res.allowances[0].allowance.toData();
-    expect(allowanceData['@type']).toMatch(/cosmos.feegrant.v1beta1/g);
-
-    expect(res.pagination).not.toBeUndefined();
-  });
-  */
 });
