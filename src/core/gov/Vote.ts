@@ -16,7 +16,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
   /**
    * @param proposal_id ID of proposal to vote on
    * @param voter voter's account address
-   * @param options one of voting options
+   * @param options voting options
    */
   constructor(
     public proposal_id: number,
