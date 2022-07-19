@@ -113,21 +113,22 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
-      value: CommunityPoolSpendProposal_pb.encode(this.toProto()).finish(),
+      value: CommunityPoolSpendProposal_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
   public static unpackAny(
     msgAny: Any,
-    _?: boolean
+    isClassic?: boolean
   ): CommunityPoolSpendProposal {
-    _;
     return CommunityPoolSpendProposal.fromProto(
-      CommunityPoolSpendProposal_pb.decode(msgAny.value)
+      CommunityPoolSpendProposal_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

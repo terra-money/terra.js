@@ -82,39 +82,39 @@ export class AllowedMsgAllowance extends JSONSerializable<
 
   public static fromProto(
     proto: AllowedMsgAllowance.Proto,
-    _?: boolean
+    isClassic?: boolean
   ): AllowedMsgAllowance {
-    _;
     const allowance = proto.allowance as Any;
     return new AllowedMsgAllowance(
       allowance?.typeUrl === '/cosmos.feegrant.v1beta1.BasicAllowance'
-        ? BasicAllowance.unpackAny(allowance)
-        : PeriodicAllowance.unpackAny(allowance),
+        ? BasicAllowance.unpackAny(allowance, isClassic)
+        : PeriodicAllowance.unpackAny(allowance, isClassic),
       proto.allowedMessages
     );
   }
 
-  public toProto(_?: boolean): AllowedMsgAllowance.Proto {
-    _;
+  public toProto(isClassic?: boolean): AllowedMsgAllowance.Proto {
     const { allowance, allowed_messages } = this;
     return AllowedMsgAllowance_pb.fromPartial({
-      allowance: allowance.packAny(),
+      allowance: allowance.packAny(isClassic),
       allowedMessages: allowed_messages,
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.AllowedMsgAllowance',
-      value: AllowedMsgAllowance_pb.encode(this.toProto()).finish(),
+      value: AllowedMsgAllowance_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): AllowedMsgAllowance {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): AllowedMsgAllowance {
     return AllowedMsgAllowance.fromProto(
-      AllowedMsgAllowance_pb.decode(msgAny.value)
+      AllowedMsgAllowance_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

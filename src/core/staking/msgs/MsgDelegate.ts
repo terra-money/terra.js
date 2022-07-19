@@ -71,17 +71,18 @@ export class MsgDelegate extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
-      value: MsgDelegate_pb.encode(this.toProto()).finish(),
+      value: MsgDelegate_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgDelegate {
-    _;
-    return MsgDelegate.fromProto(MsgDelegate_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgDelegate {
+    return MsgDelegate.fromProto(
+      MsgDelegate_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 
   public static fromData(data: MsgDelegate.Data, _?: boolean): MsgDelegate {

@@ -113,17 +113,18 @@ export class MsgEditValidator extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator',
-      value: MsgEditValidator_pb.encode(this.toProto()).finish(),
+      value: MsgEditValidator_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgEditValidator {
-    _;
-    return MsgEditValidator.fromProto(MsgEditValidator_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgEditValidator {
+    return MsgEditValidator.fromProto(
+      MsgEditValidator_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 
   public static fromData(

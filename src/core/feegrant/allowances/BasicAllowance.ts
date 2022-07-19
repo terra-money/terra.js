@@ -109,17 +109,18 @@ export class BasicAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.BasicAllowance',
-      value: BasicAllowance_pb.encode(this.toProto()).finish(),
+      value: BasicAllowance_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): BasicAllowance {
-    _;
-    return BasicAllowance.fromProto(BasicAllowance_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): BasicAllowance {
+    return BasicAllowance.fromProto(
+      BasicAllowance_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 

@@ -79,21 +79,22 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
-      value: CancelSoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
+      value: CancelSoftwareUpgradeProposal_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
   public static unpackAny(
     msgAny: Any,
-    _?: boolean
+    isClassic?: boolean
   ): CancelSoftwareUpgradeProposal {
-    _;
     return CancelSoftwareUpgradeProposal.fromProto(
-      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value)
+      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

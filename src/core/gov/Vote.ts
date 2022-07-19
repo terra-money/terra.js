@@ -16,7 +16,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
   /**
    * @param proposal_id ID of proposal to vote on
    * @param voter voter's account address
-   * @param option one of voting options
+   * @param options one of voting options
    */
   constructor(
     public proposal_id: number,
@@ -122,7 +122,10 @@ export class WeightedVoteOption extends JSONSerializable<
     this.weight = new Dec(weight);
   }
 
-  public static fromAmino(data: WeightedVoteOption.Amino, _?: boolean): WeightedVoteOption {
+  public static fromAmino(
+    data: WeightedVoteOption.Amino,
+    _?: boolean
+  ): WeightedVoteOption {
     _;
     const { option, weight } = data;
     return new WeightedVoteOption(option, weight);
@@ -137,7 +140,10 @@ export class WeightedVoteOption extends JSONSerializable<
     };
   }
 
-  public static fromData(data: WeightedVoteOption.Data, _?: boolean): WeightedVoteOption {
+  public static fromData(
+    data: WeightedVoteOption.Data,
+    _?: boolean
+  ): WeightedVoteOption {
     _;
     const { option, weight } = data;
     return new WeightedVoteOption(option, weight);
@@ -152,7 +158,10 @@ export class WeightedVoteOption extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: WeightedVoteOption.Proto, _?: boolean): WeightedVoteOption {
+  public static fromProto(
+    proto: WeightedVoteOption.Proto,
+    _?: boolean
+  ): WeightedVoteOption {
     _;
     return new WeightedVoteOption(proto.option, proto.weight);
   }

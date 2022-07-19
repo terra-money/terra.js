@@ -118,7 +118,7 @@ export class DelayedVestingAccount extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.DelayedVestingAccount',
-      value: DelayedVestingAccount_pb.encode(this.toProto()).finish(),
+      value: DelayedVestingAccount_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
@@ -130,7 +130,8 @@ export class DelayedVestingAccount extends JSONSerializable<
       throw new Error('Not supported for the network');
     }
     return DelayedVestingAccount.fromProto(
-      DelayedVestingAccount_pb.decode(pubkeyAny.value)
+      DelayedVestingAccount_pb.decode(pubkeyAny.value),
+      isClassic
     );
   }
 }

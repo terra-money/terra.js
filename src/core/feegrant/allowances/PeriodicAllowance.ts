@@ -154,18 +154,17 @@ export class PeriodicAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.PeriodicAllowance',
-      value: PeriodicAllowance_pb.encode(this.toProto()).finish(),
+      value: PeriodicAllowance_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): PeriodicAllowance {
-    _;
+  public static unpackAny(msgAny: Any, isClassic?: boolean): PeriodicAllowance {
     return PeriodicAllowance.fromProto(
-      PeriodicAllowance_pb.decode(msgAny.value)
+      PeriodicAllowance_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

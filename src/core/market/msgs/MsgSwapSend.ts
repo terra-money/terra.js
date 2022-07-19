@@ -98,7 +98,7 @@ export class MsgSwapSend extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwapSend',
-      value: MsgSwapSend_pb.encode(this.toProto()).finish(),
+      value: MsgSwapSend_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
@@ -106,7 +106,10 @@ export class MsgSwapSend extends JSONSerializable<
     if (!isClassic) {
       throw new Error('Not supported for the network');
     }
-    return MsgSwapSend.fromProto(MsgSwapSend_pb.decode(msgAny.value));
+    return MsgSwapSend.fromProto(
+      MsgSwapSend_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 
   public static fromData(

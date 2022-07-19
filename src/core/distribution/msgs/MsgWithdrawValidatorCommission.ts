@@ -77,21 +77,22 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
-      value: MsgWithdrawValidatorCommission_pb.encode(this.toProto()).finish(),
+      value: MsgWithdrawValidatorCommission_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
   public static unpackAny(
     msgAny: Any,
-    _?: boolean
+    isClassic?: boolean
   ): MsgWithdrawValidatorCommission {
-    _;
     return MsgWithdrawValidatorCommission.fromProto(
-      MsgWithdrawValidatorCommission_pb.decode(msgAny.value)
+      MsgWithdrawValidatorCommission_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

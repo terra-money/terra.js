@@ -25,7 +25,10 @@ export class MsgVerifyInvariant extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgVerifyInvariant.Amino, _?: boolean): MsgVerifyInvariant {
+  public static fromAmino(
+    data: MsgVerifyInvariant.Amino,
+    _?: boolean
+  ): MsgVerifyInvariant {
     _;
     const {
       value: { sender, invariantModuleName, invariantRoute },
@@ -38,7 +41,10 @@ export class MsgVerifyInvariant extends JSONSerializable<
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public static fromData(data: MsgVerifyInvariant.Data, _?: boolean): MsgVerifyInvariant {
+  public static fromData(
+    data: MsgVerifyInvariant.Data,
+    _?: boolean
+  ): MsgVerifyInvariant {
     _;
     const { sender, invariantModuleName, invariantRoute } = data;
     return new MsgVerifyInvariant(sender, invariantModuleName, invariantRoute);
@@ -55,7 +61,10 @@ export class MsgVerifyInvariant extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgVerifyInvariant.Proto, _?: boolean): MsgVerifyInvariant {
+  public static fromProto(
+    proto: MsgVerifyInvariant.Proto,
+    _?: boolean
+  ): MsgVerifyInvariant {
     _;
     return new MsgVerifyInvariant(
       proto.sender,
@@ -69,18 +78,20 @@ export class MsgVerifyInvariant extends JSONSerializable<
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant',
-      value: MsgVerifyInvariant_pb.encode(this.toProto()).finish(),
+      value: MsgVerifyInvariant_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgVerifyInvariant {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgVerifyInvariant {
     return MsgVerifyInvariant.fromProto(
-      MsgVerifyInvariant_pb.decode(msgAny.value)
+      MsgVerifyInvariant_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

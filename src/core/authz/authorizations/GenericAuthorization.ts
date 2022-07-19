@@ -63,18 +63,20 @@ export class GenericAuthorization extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.GenericAuthorization',
-      value: GenericAuthorization_pb.encode(this.toProto()).finish(),
+      value: GenericAuthorization_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): GenericAuthorization {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): GenericAuthorization {
     return GenericAuthorization.fromProto(
-      GenericAuthorization_pb.decode(msgAny.value)
+      GenericAuthorization_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

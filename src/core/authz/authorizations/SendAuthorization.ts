@@ -66,18 +66,17 @@ export class SendAuthorization extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.SendAuthorization',
-      value: SendAuthorization_pb.encode(this.toProto()).finish(),
+      value: SendAuthorization_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): SendAuthorization {
-    _;
+  public static unpackAny(msgAny: Any, isClassic?: boolean): SendAuthorization {
     return SendAuthorization.fromProto(
-      SendAuthorization_pb.decode(msgAny.value)
+      SendAuthorization_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

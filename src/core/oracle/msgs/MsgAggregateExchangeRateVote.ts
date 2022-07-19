@@ -166,7 +166,9 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRateVote',
-      value: MsgAggregateExchangeRateVote_pb.encode(this.toProto()).finish(),
+      value: MsgAggregateExchangeRateVote_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
@@ -178,7 +180,8 @@ export class MsgAggregateExchangeRateVote extends JSONSerializable<
       throw new Error('Not supported for the network');
     }
     return MsgAggregateExchangeRateVote.fromProto(
-      MsgAggregateExchangeRateVote_pb.decode(msgAny.value)
+      MsgAggregateExchangeRateVote_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

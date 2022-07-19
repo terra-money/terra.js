@@ -120,17 +120,18 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.auth.v1beta1.BaseAccount',
-      value: BaseAccount_pb.encode(this.toProto()).finish(),
+      value: BaseAccount_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(pubkeyAny: Any, _?: boolean): BaseAccount {
-    _;
-    return BaseAccount.fromProto(BaseAccount_pb.decode(pubkeyAny.value));
+  public static unpackAny(pubkeyAny: Any, isClassic?: boolean): BaseAccount {
+    return BaseAccount.fromProto(
+      BaseAccount_pb.decode(pubkeyAny.value),
+      isClassic
+    );
   }
 }
 
