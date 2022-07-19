@@ -127,17 +127,18 @@ export class MsgMultiSend extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend',
-      value: MsgMultiSend_pb.encode(this.toProto()).finish(),
+      value: MsgMultiSend_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgMultiSend {
-    _;
-    return MsgMultiSend.fromProto(MsgMultiSend_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgMultiSend {
+    return MsgMultiSend.fromProto(
+      MsgMultiSend_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 }
 

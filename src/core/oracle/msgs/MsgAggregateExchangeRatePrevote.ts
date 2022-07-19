@@ -115,7 +115,9 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
 
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
-      value: MsgAggregateExchangeRatePrevote_pb.encode(this.toProto()).finish(),
+      value: MsgAggregateExchangeRatePrevote_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
@@ -128,7 +130,8 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     }
 
     return MsgAggregateExchangeRatePrevote.fromProto(
-      MsgAggregateExchangeRatePrevote_pb.decode(msgAny.value)
+      MsgAggregateExchangeRatePrevote_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

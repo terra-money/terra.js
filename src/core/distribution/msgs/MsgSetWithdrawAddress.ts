@@ -89,18 +89,20 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
-      value: MsgSetWithdrawAddress_pb.encode(this.toProto()).finish(),
+      value: MsgSetWithdrawAddress_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgSetWithdrawAddress {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgSetWithdrawAddress {
     return MsgSetWithdrawAddress.fromProto(
-      MsgSetWithdrawAddress_pb.decode(msgAny.value)
+      MsgSetWithdrawAddress_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

@@ -100,18 +100,22 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
-      value: SoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
+      value: SoftwareUpgradeProposal_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): SoftwareUpgradeProposal {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): SoftwareUpgradeProposal {
     return SoftwareUpgradeProposal.fromProto(
-      SoftwareUpgradeProposal_pb.decode(msgAny.value)
+      SoftwareUpgradeProposal_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

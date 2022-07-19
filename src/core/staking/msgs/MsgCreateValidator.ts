@@ -183,18 +183,20 @@ export class MsgCreateValidator extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator',
-      value: MsgCreateValidator_pb.encode(this.toProto()).finish(),
+      value: MsgCreateValidator_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgCreateValidator {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgCreateValidator {
     return MsgCreateValidator.fromProto(
-      MsgCreateValidator_pb.decode(msgAny.value)
+      MsgCreateValidator_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

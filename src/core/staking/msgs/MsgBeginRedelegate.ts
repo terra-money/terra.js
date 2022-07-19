@@ -137,18 +137,20 @@ export class MsgBeginRedelegate extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate',
-      value: MsgBeginRedelegate_pb.encode(this.toProto()).finish(),
+      value: MsgBeginRedelegate_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgBeginRedelegate {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgBeginRedelegate {
     return MsgBeginRedelegate.fromProto(
-      MsgBeginRedelegate_pb.decode(msgAny.value)
+      MsgBeginRedelegate_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }
