@@ -82,7 +82,7 @@ export class MsgMigrateCode extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/terra.wasm.v1beta1.MsgMigrateCode',
-      value: MsgMigrateCode_legacy_pb.encode(this.toProto()).finish(),
+      value: MsgMigrateCode_legacy_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
@@ -91,7 +91,8 @@ export class MsgMigrateCode extends JSONSerializable<
       throw new Error('Not supported for the network');
     }
     return MsgMigrateCode.fromProto(
-      MsgMigrateCode_legacy_pb.decode(msgAny.value)
+      MsgMigrateCode_legacy_pb.decode(msgAny.value),
+      isClassic
     );
   }
 

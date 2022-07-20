@@ -136,7 +136,9 @@ export class ContinuousVestingAccount extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.ContinuousVestingAccount',
-      value: ContinuousVestingAccount_pb.encode(this.toProto()).finish(),
+      value: ContinuousVestingAccount_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
@@ -148,7 +150,8 @@ export class ContinuousVestingAccount extends JSONSerializable<
       throw new Error('Not supported for the network');
     }
     return ContinuousVestingAccount.fromProto(
-      ContinuousVestingAccount_pb.decode(pubkeyAny.value)
+      ContinuousVestingAccount_pb.decode(pubkeyAny.value),
+      isClassic
     );
   }
 }

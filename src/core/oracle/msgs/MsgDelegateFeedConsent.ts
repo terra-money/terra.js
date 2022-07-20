@@ -107,7 +107,7 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
     }
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgDelegateFeedConsent',
-      value: MsgDelegateFeedConsent_pb.encode(this.toProto()).finish(),
+      value: MsgDelegateFeedConsent_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
@@ -119,7 +119,8 @@ export class MsgDelegateFeedConsent extends JSONSerializable<
       throw new Error('Not supported for the network');
     }
     return MsgDelegateFeedConsent.fromProto(
-      MsgDelegateFeedConsent_pb.decode(msgAny.value)
+      MsgDelegateFeedConsent_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

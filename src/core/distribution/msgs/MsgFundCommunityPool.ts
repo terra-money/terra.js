@@ -84,18 +84,20 @@ export class MsgFundCommunityPool extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
-      value: MsgFundCommunityPool_pb.encode(this.toProto()).finish(),
+      value: MsgFundCommunityPool_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgFundCommunityPool {
-    _;
+  public static unpackAny(
+    msgAny: Any,
+    isClassic?: boolean
+  ): MsgFundCommunityPool {
     return MsgFundCommunityPool.fromProto(
-      MsgFundCommunityPool_pb.decode(msgAny.value)
+      MsgFundCommunityPool_pb.decode(msgAny.value),
+      isClassic
     );
   }
 }

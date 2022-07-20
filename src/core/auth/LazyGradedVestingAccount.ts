@@ -129,21 +129,22 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     );
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/terra.vesting.v1beta1.LazyGradedVestingAccount',
-      value: LazyGradedVestingAccount_pb.encode(this.toProto()).finish(),
+      value: LazyGradedVestingAccount_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
     });
   }
 
   public static unpackAny(
     pubkeyAny: Any,
-    _?: boolean
+    isClassic?: boolean
   ): LazyGradedVestingAccount {
-    _;
     return LazyGradedVestingAccount.fromProto(
-      LazyGradedVestingAccount_pb.decode(pubkeyAny.value)
+      LazyGradedVestingAccount_pb.decode(pubkeyAny.value),
+      isClassic
     );
   }
 }

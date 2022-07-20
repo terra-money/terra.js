@@ -78,17 +78,18 @@ export class MsgUndelegate extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(isClassic?: boolean): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
-      value: MsgUndelegate_pb.encode(this.toProto()).finish(),
+      value: MsgUndelegate_pb.encode(this.toProto(isClassic)).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgUndelegate {
-    _;
-    return MsgUndelegate.fromProto(MsgUndelegate_pb.decode(msgAny.value));
+  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgUndelegate {
+    return MsgUndelegate.fromProto(
+      MsgUndelegate_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 
   public static fromData(data: MsgUndelegate.Data, _?: boolean): MsgUndelegate {
