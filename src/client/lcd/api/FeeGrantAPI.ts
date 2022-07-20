@@ -65,6 +65,9 @@ export class FeeGrantAPI extends BaseAPI {
     }[];
     pagination: Pagination;
   }> {
+    if (this.lcd.config.isClassic) {
+      throw new Error('Not supported for the network');
+    }
     return this.c
       .get<{
         allowances: {
