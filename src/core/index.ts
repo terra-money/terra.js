@@ -69,6 +69,9 @@ export * from './staking/Validator';
 // Treasury
 export * from './treasury/PolicyConstraints';
 
+// Vesting
+export * from './vesting';
+
 // Upgrade
 export * from './upgrade';
 

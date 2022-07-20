@@ -5,7 +5,6 @@ import { Pagination, PaginationOptions } from '../APIRequester';
 import { LCDClient } from '../LCDClient';
 
 export class FeeGrantAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -53,5 +52,35 @@ export class FeeGrantAPI extends BaseAPI {
         };
       }>(`/cosmos/feegrant/v1beta1/allowance/${granter}/${grantee}`)
       .then(d => Allowance.fromData(d.allowance.allowance));
+  }
+
+  public async allowancesByGranter(
+    granter: AccAddress,
+    params: Partial<PaginationOptions> = {}
+  ): Promise<{
+    allowances: {
+      granter: AccAddress;
+      grantee: AccAddress;
+      allowance: Allowance;
+    }[];
+    pagination: Pagination;
+  }> {
+    return this.c
+      .get<{
+        allowances: {
+          granter: AccAddress;
+          grantee: AccAddress;
+          allowance: Allowance.Data;
+        }[];
+        pagination: Pagination;
+      }>(`/cosmos/feegrant/v1beta1/issued/${granter}`, params)
+      .then(d => ({
+        allowances: d.allowances.map(allowance => ({
+          granter: allowance.granter,
+          grantee: allowance.grantee,
+          allowance: Allowance.fromData(allowance.allowance),
+        })),
+        pagination: d.pagination,
+      }));
   }
 }

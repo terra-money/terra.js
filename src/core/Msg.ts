@@ -41,6 +41,12 @@ import {
   StakingMsg,
 } from './staking/msgs';
 import {
+  MsgCreatePeriodicVestingAccount,
+  MsgCreateVestingAccount,
+  MsgDonateAllVestingTokens,
+  VestingMsg,
+} from './vesting/msgs';
+import {
   MsgStoreCode,
   MsgMigrateCode,
   MsgInstantiateContract,
@@ -91,6 +97,7 @@ export type Msg =
   | OracleMsg
   | SlashingMsg
   | StakingMsg
+  | VestingMsg
   | WasmMsg
   | IbcTransferMsg
   | IbcClientMsg
@@ -109,6 +116,7 @@ export namespace Msg {
     | OracleMsg.Amino
     | SlashingMsg.Amino
     | StakingMsg.Amino
+    | VestingMsg.Amino
     | WasmMsg.Amino
     | IbcTransferMsg.Amino
     | CrisisMsg.Amino;
@@ -123,6 +131,7 @@ export namespace Msg {
     | OracleMsg.Data
     | SlashingMsg.Data
     | StakingMsg.Data
+    | VestingMsg.Data
     | WasmMsg.Data
     | IbcTransferMsg.Data
     | IbcClientMsg.Data
@@ -140,6 +149,7 @@ export namespace Msg {
     | OracleMsg.Proto
     | SlashingMsg.Proto
     | StakingMsg.Proto
+    | VestingMsg.Proto
     | WasmMsg.Proto
     | IbcTransferMsg.Proto
     | IbcClientMsg.Proto
@@ -238,6 +248,14 @@ export namespace Msg {
       case 'cosmos-sdk/MsgEditValidator':
         return MsgEditValidator.fromAmino(data, isClassic);
 
+      // vesting
+      case 'cosmos-sdk/MsgCreatePeriodicVestingAccount':
+        return MsgCreatePeriodicVestingAccount.fromAmino(data, isClassic);
+      case 'cosmos-sdk/MsgCreateVestingAccount':
+        return MsgCreateVestingAccount.fromAmino(data, isClassic);
+      case 'cosmos-sdk/MsgDonateAllVestingTokens':
+        return MsgDonateAllVestingTokens.fromAmino(data, isClassic);
+
       // wasm
       case 'wasm/MsgStoreCode':
         return MsgStoreCode.fromAmino(data, isClassic);
@@ -334,6 +352,14 @@ export namespace Msg {
         return MsgCreateValidator.fromData(data, isClassic);
       case '/cosmos.staking.v1beta1.MsgEditValidator':
         return MsgEditValidator.fromData(data, isClassic);
+
+      // vesting
+      case '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount':
+        return MsgCreatePeriodicVestingAccount.fromData(data, isClassic);
+      case '/cosmos.vesting.v1beta1.MsgCreateVestingAccount':
+        return MsgCreateVestingAccount.fromData(data, isClassic);
+      case '/cosmos.vesting.v1beta1.MsgDonateAllVestingTokens':
+        return MsgDonateAllVestingTokens.fromData(data, isClassic);
 
       // wasm
       case '/terra.wasm.v1beta1.MsgStoreCode':
@@ -479,6 +505,14 @@ export namespace Msg {
         return MsgCreateValidator.unpackAny(proto, isClassic);
       case '/cosmos.staking.v1beta1.MsgEditValidator':
         return MsgEditValidator.unpackAny(proto, isClassic);
+
+      // vesting
+      case '/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount':
+        return MsgCreatePeriodicVestingAccount.unpackAny(proto, isClassic);
+      case '/cosmos.vesting.v1beta1.MsgCreateVestingAccount':
+        return MsgCreateVestingAccount.unpackAny(proto, isClassic);
+      case '/cosmos.vesting.v1beta1.MsgDonateAllVestingTokens':
+        return MsgDonateAllVestingTokens.unpackAny(proto, isClassic);
 
       // wasm
       case '/terra.wasm.v1beta1.MsgStoreCode':
