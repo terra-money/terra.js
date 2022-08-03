@@ -383,7 +383,10 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction string to decode
    */
   public decode(encodedTx: string): Tx {
-    return Tx.fromBuffer(Buffer.from(encodedTx, 'base64'));
+    return Tx.fromBuffer(
+      Buffer.from(encodedTx, 'base64'),
+      this.lcd.config.isClassic
+    );
   }
 
   /**
