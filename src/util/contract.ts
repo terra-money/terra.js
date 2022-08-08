@@ -42,7 +42,6 @@ export function getContractAddress(
     eventName = 'wasm';
     attributeKey = '_contract_address';
   }
-  console.log(txResult.logs[msgIndex].eventsByType['wasm']);
   const contractAddress =
     txResult.logs[msgIndex].eventsByType[eventName][attributeKey][0];
   return contractAddress;
