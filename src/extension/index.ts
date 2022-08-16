@@ -17,7 +17,6 @@ interface Option extends CreateTxOptions {
   purgeQueue?: boolean; // default true
   sequence?: number;
   accountNumber?: number;
-  isClassic?: boolean; // default fase. set to true when you intract with terra Classic
 }
 
 interface SignBytesOption {
