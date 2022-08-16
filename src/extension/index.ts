@@ -1,6 +1,14 @@
 import { CreateTxOptions } from '../client';
 import PostMessageStream from './PostMessageStream';
 
+export interface ExtensionOptions extends CreateTxOptions {
+  waitForConfirmation?: boolean; // default false
+  purgeQueue?: boolean; // default true
+  sequence?: number;
+  accountNumber?: number;
+  isClassic?: boolean; // default false. set to true when you intract with terra Classic
+}
+
 interface ResponseData {
   name: string;
   payload: object;
@@ -10,13 +18,6 @@ type SendDataType = 'connect' | 'post' | 'sign' | 'info';
 
 interface SendData {
   [key: string]: any;
-}
-
-interface Option extends CreateTxOptions {
-  waitForConfirmation?: boolean; // default false
-  purgeQueue?: boolean; // default true
-  sequence?: number;
-  accountNumber?: number;
 }
 
 interface SignBytesOption {
@@ -167,7 +168,7 @@ export class Extension {
    * @return {number}  payload.result.recid      Recovery id
    * @return {StdSignMsg.Data} payload.result.stdSignMsgData
    */
-  sign(options: Option): number {
+  sign(options: ExtensionOptions): number {
     return this.send('sign', {
       ...options,
       msgs: options.msgs.map(msg => msg.toJSON(options.isClassic)),
@@ -216,7 +217,7 @@ export class Extension {
    * @return {string}  payload.result.raw_log raw log
    * @return {string}  payload.result.txhash  transaction hash
    */
-  post(options: Option): number {
+  post(options: ExtensionOptions): number {
     return this.send('post', {
       msgs: options.msgs.map(msg => msg.toJSON(options.isClassic)),
       fee: options.fee?.toJSON(),

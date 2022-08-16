@@ -128,7 +128,6 @@ export interface CreateTxOptions {
   gasAdjustment?: Numeric.Input;
   feeDenoms?: string[];
   timeoutHeight?: number;
-  isClassic?: boolean; // default false. set to true when you intract with terra Classic
 }
 
 export interface TxResult {
