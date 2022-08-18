@@ -570,7 +570,7 @@ export class TxAPI extends BaseAPI {
     });
 
     return this.c
-      .getRaw<TxSearchResult.Data>(`cosmos/tx/v1beta1/txs`, params)
+      .getRaw<TxSearchResult.Data>(`/cosmos/tx/v1beta1/txs`, params)
       .then(d => {
         return {
           txs: d.tx_responses.map(tx_response =>
