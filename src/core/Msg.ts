@@ -175,7 +175,7 @@ export namespace Msg {
       case 'cosmos-sdk/MsgWithdrawDelegationReward':
         return MsgWithdrawDelegatorReward.fromAmino(data, isClassic);
       case 'distribution/MsgWithdrawValidatorCommission':
-      case 'cosmos-sdk/MsgWithdrawValCommission':
+      case 'cosmos-sdk/MsgWithdrawValidatorCommission':
         return MsgWithdrawValidatorCommission.fromAmino(data, isClassic);
       case 'distribution/MsgFundCommunityPool':
       case 'cosmos-sdk/MsgFundCommunityPool':
