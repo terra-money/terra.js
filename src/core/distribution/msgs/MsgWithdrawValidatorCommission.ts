@@ -36,7 +36,7 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     return {
       type: isClassic
         ? 'distribution/MsgWithdrawValidatorCommission'
-        : 'cosmos-sdk/MsgWithdrawValCommission',
+        : 'cosmos-sdk/MsgWithdrawValidatorCommission',
       value: {
         validator_address,
       },
@@ -101,7 +101,7 @@ export namespace MsgWithdrawValidatorCommission {
   export interface Amino {
     type:
       | 'distribution/MsgWithdrawValidatorCommission'
-      | 'cosmos-sdk/MsgWithdrawValCommission';
+      | 'cosmos-sdk/MsgWithdrawValidatorCommission';
     value: {
       validator_address: ValAddress;
     };
