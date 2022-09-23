@@ -29,6 +29,7 @@ const LOCALTERRA_MNEMONICS = {
 
 export class LocalTerra extends LCDClient {
   public wallets: {
+    [key: string]: Wallet,
     validator: Wallet;
     test1: Wallet;
     test2: Wallet;
