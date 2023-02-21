@@ -2,7 +2,7 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgSwapSend as MsgSwapSend_pb } from '@terra-money/legacy.proto/terra/market/v1beta1/tx';
 
 /**

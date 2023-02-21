@@ -1,6 +1,6 @@
 import { TendermintAPI } from './TendermintAPI';
 import { Tx } from '../../../core/Tx';
-import { Tx as Tx_pb } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/tx';
+import { Tx as Tx_pb } from '@terra-money/terra.proto/cosmos/tx/v1beta1/tx';
 import { LCDClient } from '../LCDClient';
 
 const terra = new LCDClient({

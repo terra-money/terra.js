@@ -1,9 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Coins } from '../../Coins';
 import { AccAddress } from '../../bech32';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
-// there's no difference between two protos
-// import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/distribution';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { CommunityPoolSpendProposal as CommunityPoolSpendProposal_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/distribution';
 
 /**

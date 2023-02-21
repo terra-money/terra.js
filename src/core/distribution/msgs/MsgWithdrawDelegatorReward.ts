@@ -1,8 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-// there's no difference between two protos
-// import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_legacy_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
 import { MsgWithdrawDelegatorReward as MsgWithdrawDelegatorReward_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**

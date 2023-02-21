@@ -8,7 +8,7 @@ import {
   Schedule as Schedule_pb,
   VestingSchedule as VestingSchedule_pb,
 } from '@terra-money/legacy.proto/terra/vesting/v1beta1/vesting';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import * as Long from 'long';
 import { PublicKey } from '../PublicKey';
 

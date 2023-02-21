@@ -3,8 +3,6 @@ import { Coin } from '../../Coin';
 import { Int } from '../../numeric';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Validator } from '../Validator';
-// import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
-// import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/legacy.proto/cosmos/staking/v1beta1/tx';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgCreateValidator as MsgCreateValidator_pb } from '@terra-money/terra.proto/cosmos/staking/v1beta1/tx';
 import { ValConsPublicKey, PublicKey } from '../../PublicKey';
