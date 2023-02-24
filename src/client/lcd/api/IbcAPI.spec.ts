@@ -54,14 +54,14 @@ describe('IbcClientAPI', () => {
   */
 
   it('channels', async () => {
-    const [res, _] = await ibc.channels();
+    const [res] = await ibc.channels();
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
     expect(res.length).toBeGreaterThan(0);
   });
 
   it('channels for a connection', async () => {
-    const [res, height, _] = await ibc.connectionChannels('connection-3');
+    const [res, height] = await ibc.connectionChannels('connection-3');
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
     expect(height).not.toBeNull();
@@ -79,7 +79,7 @@ describe('IbcClientAPI', () => {
   });
 
   it('connections', async () => {
-    const [res, _] = await ibc.connections();
+    const [res] = await ibc.connections();
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
     expect(res.length).toBeGreaterThan(0);

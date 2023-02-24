@@ -15,8 +15,7 @@ import { hashToHex } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
-import { BroadcastMode as BroadcastModeV1 } from '@terra-money/legacy.proto/cosmos/tx/v1beta1/service';
-import { BroadcastMode as BroadcastModeV2 } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
+import { BroadcastMode } from '@terra-money/terra.proto/cosmos/tx/v1beta1/service';
 
 interface Wait {
   height: number;
@@ -400,7 +399,7 @@ export class TxAPI extends BaseAPI {
 
   private async _broadcast<T>(
     tx: Tx,
-    mode: keyof typeof BroadcastModeV1 | BroadcastModeV2
+    mode: keyof typeof BroadcastMode
   ): Promise<T> {
     return await this.c.post<any>(`/cosmos/tx/v1beta1/txs`, {
       tx_bytes: this.encode(tx),

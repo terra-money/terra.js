@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgMigrateCode as MsgMigrateCode_legacy_pb } from '@terra-money/legacy.proto/terra/wasm/v1beta1/tx';
+import { MsgMigrateCode as MsgMigrateCode_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import * as Long from 'long';
 
 export class MsgMigrateCode extends JSONSerializable<

@@ -1,6 +1,5 @@
 import { JSONSerializable } from '../../util/json';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
-//import { MsgVerifyInvariant as MsgVerifyInvariant_pb } from '@terra-money/legacy.proto/cosmos/crisis/v1beta1/tx';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgVerifyInvariant as MsgVerifyInvariant_pb } from '@terra-money/terra.proto/cosmos/crisis/v1beta1/tx';
 import { AccAddress } from '../bech32';
 

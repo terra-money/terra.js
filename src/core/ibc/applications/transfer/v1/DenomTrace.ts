@@ -1,4 +1,4 @@
-import { DenomTrace as DenomTrace_pb } from '@terra-money/legacy.proto/ibc/applications/transfer/v1/transfer';
+import { DenomTrace as DenomTrace_pb } from '@terra-money/terra.proto/ibc/applications/transfer/v1/transfer';
 import { JSONSerializable } from '../../../../../util/json';
 
 /**

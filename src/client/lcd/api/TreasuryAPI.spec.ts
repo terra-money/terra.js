@@ -46,6 +46,7 @@ describe('TreasuryAPI', () => {
         window_short: expect.any(Number),
         window_long: expect.any(Number),
         window_probation: expect.any(Number),
+        burn_tax_split: expect.any(Dec),
       });
     }
   });

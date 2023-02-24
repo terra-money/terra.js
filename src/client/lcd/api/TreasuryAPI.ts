@@ -38,6 +38,11 @@ export interface TreasuryParams {
    * Number of epochs defining the probationary period after genesis, during which monetary policy levers Tax Rate and Reward Weight do not change.
    */
   window_probation: number;
+
+  /**
+   * Factor that determines how much tax will be allocated to the community pool
+   */
+  burn_tax_split: Dec;
 }
 
 export namespace TreasuryParams {
@@ -49,6 +54,7 @@ export namespace TreasuryParams {
     window_short: string;
     window_long: string;
     window_probation: string;
+    burn_tax_split: string;
   }
 }
 export class TreasuryAPI extends BaseAPI {
@@ -178,6 +184,7 @@ export class TreasuryAPI extends BaseAPI {
         window_long: Number.parseInt(d.window_long),
         window_short: Number.parseInt(d.window_short),
         window_probation: Number.parseInt(d.window_probation),
+        burn_tax_split: new Dec(d.burn_tax_split),
       }));
   }
 }

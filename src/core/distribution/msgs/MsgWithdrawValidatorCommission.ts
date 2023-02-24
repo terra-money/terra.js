@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/legacy.proto/cosmos/distribution/v1beta1/tx';
+import { MsgWithdrawValidatorCommission as MsgWithdrawValidatorCommission_pb } from '@terra-money/terra.proto/cosmos/distribution/v1beta1/tx';
 
 /**
  * A validator can withdraw their outstanding commission rewards accrued from all

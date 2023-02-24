@@ -3,8 +3,8 @@ import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { MsgAggregateExchangeRatePrevote } from './MsgAggregateExchangeRatePrevote';
 import { Coins } from '../../Coins';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
-import { MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_pb } from '@terra-money/legacy.proto/terra/oracle/v1beta1/tx';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
+import { MsgAggregateExchangeRateVote as MsgAggregateExchangeRateVote_pb } from '@classic-terra/terra.proto/terra/oracle/v1beta1/tx';
 
 /**
  * Calculates the aggregate vote hash

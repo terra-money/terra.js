@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -83,7 +83,7 @@
     "webpack-cli": "^4.3.0"
   },
   "dependencies": {
-    "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7",
+    "@classic-terra/terra.proto": "^1.1.0",
     "@terra-money/terra.proto": "^2.1.0",
     "axios": "^0.27.2",
     "bech32": "^2.0.0",

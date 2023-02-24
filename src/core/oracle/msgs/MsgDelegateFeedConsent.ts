@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress, ValAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@terra-money/legacy.proto/terra/oracle/v1beta1/tx';
+import { MsgDelegateFeedConsent as MsgDelegateFeedConsent_pb } from '@classic-terra/terra.proto/terra/oracle/v1beta1/tx';
 
 /**
  * A **feeeder** is an account which is responsible for signing transactions with Oracle vote

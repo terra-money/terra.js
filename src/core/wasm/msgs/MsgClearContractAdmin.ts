@@ -1,7 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgClearContractAdmin as MsgClearContractAdmin_legacy_pb } from '@terra-money/legacy.proto/terra/wasm/v1beta1/tx';
+import { MsgClearContractAdmin as MsgClearContractAdmin_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgClearAdmin as MsgClearAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 export class MsgClearContractAdmin extends JSONSerializable<
