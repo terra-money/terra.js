@@ -5,6 +5,7 @@ import { IbcAPI } from './IbcAPI';
 const terra = new LCDClient({
   chainID: 'pisco-1',
   URL: 'https://pisco-lcd.terra.dev',
+  isClassic: false,
 });
 const ibc = new IbcAPI(terra);
 
