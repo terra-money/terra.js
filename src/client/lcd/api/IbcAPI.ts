@@ -142,8 +142,12 @@ export class IbcAPI extends BaseAPI {
    * Gets the current transfer application parameters.
    */
   public async parameters(params: APIParams = {}): Promise<IbcClientParams> {
+    const url = this.lcd.config.isClassic
+      ? `/ibc/client/v1/params`
+      : `/ibc/core/client/v1/params`;
+
     return this.c
-      .get<{ params: IbcClientParams.Data }>(`/ibc/client/v1/params`, params)
+      .get<{ params: IbcClientParams.Data }>(url, params)
       .then(({ params: d }) => ({
         allowed_clients: d.allowed_clients,
       }));
