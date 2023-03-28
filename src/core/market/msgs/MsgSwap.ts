@@ -2,8 +2,8 @@ import { JSONSerializable } from '../../../util/json';
 import { Coin } from '../../Coin';
 import { Denom } from '../../Denom';
 import { AccAddress } from '../../bech32';
-import { MsgSwap as MsgSwap_pb } from '@terra-money/legacy.proto/terra/market/v1beta1/tx';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { MsgSwap as MsgSwap_pb } from '@classic-terra/terra.proto/terra/market/v1beta1/tx';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 /**
  * Executes a market swap between 2 denominations at the exchange rate registered by the

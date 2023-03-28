@@ -22,6 +22,10 @@ import {
   UpdateInstantiateConfigProposal,
 } from '../wasm/proposals';
 import {
+  AddBurnTaxExemptionAddressProposal,
+  RemoveBurnTaxExemptionAddressProposal,
+} from '../treasury/proposals';
+import {
   Proposal as Proposal_pb,
   ProposalStatus,
   TallyResult,
@@ -253,7 +257,9 @@ export namespace Proposal {
     | SudoContractProposal
     | UnpinCodesProposal
     | UpdateAdminProposal
-    | UpdateInstantiateConfigProposal;
+    | UpdateInstantiateConfigProposal
+    | AddBurnTaxExemptionAddressProposal
+    | RemoveBurnTaxExemptionAddressProposal;
 
   export namespace Content {
     export type Amino =
@@ -272,7 +278,9 @@ export namespace Proposal {
       | SudoContractProposal.Amino
       | UnpinCodesProposal.Amino
       | UpdateAdminProposal.Amino
-      | UpdateInstantiateConfigProposal.Amino;
+      | UpdateInstantiateConfigProposal.Amino
+      | AddBurnTaxExemptionAddressProposal.Amino
+      | RemoveBurnTaxExemptionAddressProposal.Amino;
 
     export type Data =
       | TextProposal.Data
@@ -290,7 +298,9 @@ export namespace Proposal {
       | SudoContractProposal.Data
       | UnpinCodesProposal.Data
       | UpdateAdminProposal.Data
-      | UpdateInstantiateConfigProposal.Data;
+      | UpdateInstantiateConfigProposal.Data
+      | AddBurnTaxExemptionAddressProposal.Data
+      | RemoveBurnTaxExemptionAddressProposal.Data;
 
     export type Proto =
       | TextProposal.Proto
@@ -308,7 +318,9 @@ export namespace Proposal {
       | SudoContractProposal.Proto
       | UnpinCodesProposal.Proto
       | UpdateAdminProposal.Proto
-      | UpdateInstantiateConfigProposal.Proto;
+      | UpdateInstantiateConfigProposal.Proto
+      | AddBurnTaxExemptionAddressProposal.Proto
+      | RemoveBurnTaxExemptionAddressProposal.Proto;
 
     export function fromAmino(
       amino: Proposal.Content.Amino,
@@ -352,6 +364,13 @@ export namespace Proposal {
           return UpdateAdminProposal.fromAmino(amino, isClassic);
         case 'wasm/UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.fromAmino(amino, isClassic);
+        case 'treasury/AddBurnTaxExemptionAddressProposal':
+          return AddBurnTaxExemptionAddressProposal.fromAmino(amino, isClassic);
+        case 'treasury/RemoveBurnTaxExemptionAddressProposal':
+          return RemoveBurnTaxExemptionAddressProposal.fromAmino(
+            amino,
+            isClassic
+          );
       }
     }
 
@@ -392,6 +411,13 @@ export namespace Proposal {
           return UpdateAdminProposal.fromData(data, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.fromData(data, isClassic);
+        case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
+          return AddBurnTaxExemptionAddressProposal.fromData(data, isClassic);
+        case '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal':
+          return RemoveBurnTaxExemptionAddressProposal.fromData(
+            data,
+            isClassic
+          );
       }
     }
 
@@ -433,6 +459,16 @@ export namespace Proposal {
           return UpdateAdminProposal.unpackAny(anyProto, isClassic);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.unpackAny(anyProto, isClassic);
+        case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
+          return AddBurnTaxExemptionAddressProposal.unpackAny(
+            anyProto,
+            isClassic
+          );
+        case '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal':
+          return RemoveBurnTaxExemptionAddressProposal.unpackAny(
+            anyProto,
+            isClassic
+          );
       }
 
       throw `Proposal content ${typeUrl} not recognized`;

@@ -1,5 +1,4 @@
 const data = require('./MsgDonateAllVestingTokens.data.json');
-import { Coins } from '../../Coins';
 import { MsgDonateAllVestingTokens } from './MsgDonateAllVestingTokens';
 
 describe('MsgDonateAllVestingTokens', () => {

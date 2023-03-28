@@ -5,7 +5,7 @@ import { AllowedMsgAllowance } from './AllowedMsgAllowance';
 export * from './BasicAllowance';
 export * from './PeriodicAllowance';
 export * from './AllowedMsgAllowance';
-import { Any } from '@terra-money/legacy.proto/google/protobuf/any';
+import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 
 export type Allowance =
   | BasicAllowance

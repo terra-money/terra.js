@@ -1,8 +1,7 @@
 import { BaseAPI } from './BaseAPI';
-import { Coins, Plan } from '../../../core';
-import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { Plan } from '../../../core';
+import { APIParams, PaginationOptions } from '../APIRequester';
 import { LCDClient } from '../LCDClient';
-import { publicEncrypt } from 'crypto';
 
 export interface ModuleVersion {
   name: string;
