@@ -35,196 +35,109 @@ export class MsgInstantiateContract extends JSONSerializable<
 
   public static fromAmino(
     data: MsgInstantiateContract.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MsgInstantiateContract {
-    if (isClassic) {
-      const {
-        value: { sender, admin, code_id, init_msg, init_coins },
-      } = data as MsgInstantiateContract.AminoV1;
-      return new MsgInstantiateContract(
-        sender,
-        admin,
-        Number.parseInt(code_id),
-        init_msg,
-        Coins.fromAmino(init_coins)
-      );
-    }
-    {
-      const {
-        value: { sender, admin, code_id, msg, funds, label },
-      } = data as MsgInstantiateContract.AminoV2;
-      return new MsgInstantiateContract(
-        sender,
-        admin,
-        Number.parseInt(code_id),
-        msg,
-        Coins.fromAmino(funds),
-        label
-      );
-    }
+    const {
+      value: { sender, admin, code_id, msg, funds, label },
+    } = data as MsgInstantiateContract.AminoV2;
+    return new MsgInstantiateContract(
+      sender,
+      admin,
+      Number.parseInt(code_id),
+      msg,
+      Coins.fromAmino(funds),
+      label
+    );
   }
 
-  public toAmino(isClassic?: boolean): MsgInstantiateContract.Amino {
+  public toAmino(_isClassic?: boolean): MsgInstantiateContract.Amino {
     const { sender, admin, code_id, init_msg, init_coins, label } = this;
-    if (isClassic) {
-      return {
-        type: 'wasm/MsgInstantiateContract',
-        value: {
-          sender,
-          admin,
-          code_id: code_id.toFixed(),
-          init_msg: removeNull(init_msg),
-          init_coins: init_coins.toAmino(),
-        },
-      };
-    } else {
-      return {
-        type: 'wasm/MsgInstantiateContract',
-        value: {
-          sender,
-          admin,
-          code_id: code_id.toFixed(),
-          label,
-          msg: removeNull(init_msg),
-          funds: init_coins.toAmino(),
-        },
-      };
-    }
+    return {
+      type: 'wasm/MsgInstantiateContract',
+      value: {
+        sender,
+        admin,
+        code_id: code_id.toFixed(),
+        label,
+        msg: removeNull(init_msg),
+        funds: init_coins.toAmino(),
+      },
+    };
   }
 
   public static fromProto(
     proto: MsgInstantiateContract.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MsgInstantiateContract {
-    if (isClassic) {
-      const p = proto as MsgInstantiateContract_legacy_pb;
-      return new MsgInstantiateContract(
-        p.sender,
-        p.admin !== '' ? p.admin : undefined,
-        p.codeId.toNumber(),
-        JSON.parse(Buffer.from(p.initMsg).toString('utf-8')),
-        Coins.fromProto(p.initCoins)
-      );
-    } else {
-      const p = proto as MsgInstantiateContract_pb;
-      return new MsgInstantiateContract(
-        p.sender,
-        p.admin !== '' ? p.admin : undefined,
-        p.codeId.toNumber(),
-        JSON.parse(Buffer.from(p.msg).toString('utf-8')),
-        Coins.fromProto(p.funds),
-        p.label !== '' ? p.label : undefined
-      );
-    }
+    const p = proto as MsgInstantiateContract_pb;
+    return new MsgInstantiateContract(
+      p.sender,
+      p.admin !== '' ? p.admin : undefined,
+      p.codeId.toNumber(),
+      JSON.parse(Buffer.from(p.msg).toString('utf-8')),
+      Coins.fromProto(p.funds),
+      p.label !== '' ? p.label : undefined
+    );
   }
 
-  public toProto(isClassic?: boolean): MsgInstantiateContract.Proto {
+  public toProto(_isClassic?: boolean): MsgInstantiateContract.Proto {
     const { sender, admin, code_id, init_msg, init_coins, label } = this;
-    if (isClassic) {
-      return MsgInstantiateContract_legacy_pb.fromPartial({
-        admin,
-        codeId: Long.fromNumber(code_id),
-        initCoins: init_coins.toProto(),
-        initMsg: Buffer.from(JSON.stringify(init_msg), 'utf-8'),
-        sender,
-      });
-    } else {
-      return MsgInstantiateContract_pb.fromPartial({
-        admin,
-        codeId: Long.fromNumber(code_id),
-        funds: init_coins.toProto(),
-        msg: Buffer.from(JSON.stringify(init_msg), 'utf-8'),
-        sender,
-        label,
-      });
-    }
+    return MsgInstantiateContract_pb.fromPartial({
+      admin,
+      codeId: Long.fromNumber(code_id),
+      funds: init_coins.toProto(),
+      msg: Buffer.from(JSON.stringify(init_msg), 'utf-8'),
+      sender,
+      label,
+    });
   }
 
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      return Any.fromPartial({
-        typeUrl: '/terra.wasm.v1beta1.MsgInstantiateContract',
-        value: MsgInstantiateContract_legacy_pb.encode(
-          this.toProto(isClassic) as MsgInstantiateContract_legacy_pb
-        ).finish(),
-      });
-    } else {
-      return Any.fromPartial({
-        typeUrl: '/cosmwasm.wasm.v1.MsgInstantiateContract',
-        value: MsgInstantiateContract_pb.encode(
-          this.toProto(isClassic) as MsgInstantiateContract_pb
-        ).finish(),
-      });
-    }
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.MsgInstantiateContract',
+      value: MsgInstantiateContract_pb.encode(
+        this.toProto(isClassic) as MsgInstantiateContract_pb
+      ).finish(),
+    });
   }
 
   public static unpackAny(
     msgAny: Any,
     isClassic?: boolean
   ): MsgInstantiateContract {
-    if (isClassic) {
-      return MsgInstantiateContract.fromProto(
-        MsgInstantiateContract_legacy_pb.decode(msgAny.value),
-        isClassic
-      );
-    } else {
-      return MsgInstantiateContract.fromProto(
-        MsgInstantiateContract_pb.decode(msgAny.value),
-        isClassic
-      );
-    }
+    return MsgInstantiateContract.fromProto(
+      MsgInstantiateContract_pb.decode(msgAny.value),
+      isClassic
+    );
   }
 
   public static fromData(
     data: MsgInstantiateContract.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MsgInstantiateContract {
-    if (isClassic) {
-      const { sender, admin, code_id, init_msg, init_coins } =
-        data as MsgInstantiateContract.DataV1;
-      return new MsgInstantiateContract(
-        sender,
-        admin !== '' ? admin : undefined,
-        Number.parseInt(code_id),
-        init_msg,
-        Coins.fromData(init_coins)
-      );
-    } else {
-      const { sender, admin, code_id, label, msg, funds } =
-        data as MsgInstantiateContract.DataV2;
-      return new MsgInstantiateContract(
-        sender,
-        admin !== '' ? admin : undefined,
-        Number.parseInt(code_id),
-        msg,
-        Coins.fromData(funds),
-        label
-      );
-    }
+    const { sender, admin, code_id, label, msg, funds } =
+      data as MsgInstantiateContract.DataV2;
+    return new MsgInstantiateContract(
+      sender,
+      admin !== '' ? admin : undefined,
+      Number.parseInt(code_id),
+      msg,
+      Coins.fromData(funds),
+      label
+    );
   }
 
-  public toData(isClassic?: boolean): MsgInstantiateContract.Data {
+  public toData(_isClassic?: boolean): MsgInstantiateContract.Data {
     const { sender, admin, code_id, label, init_msg, init_coins } = this;
-    if (isClassic) {
-      return {
-        '@type': '/terra.wasm.v1beta1.MsgInstantiateContract',
-        sender,
-        admin: admin || '',
-        code_id: code_id.toFixed(),
-        init_msg: removeNull(init_msg),
-        init_coins: init_coins.toData(),
-      };
-    } else {
-      return {
-        '@type': '/cosmwasm.wasm.v1.MsgInstantiateContract',
-        sender,
-        admin: admin || '',
-        code_id: code_id.toFixed(),
-        label,
-        msg: removeNull(init_msg),
-        funds: init_coins.toData(),
-      };
-    }
+    return {
+      '@type': '/cosmwasm.wasm.v1.MsgInstantiateContract',
+      sender,
+      admin: admin || '',
+      code_id: code_id.toFixed(),
+      label,
+      msg: removeNull(init_msg),
+      funds: init_coins.toData(),
+    };
   }
 }
 
