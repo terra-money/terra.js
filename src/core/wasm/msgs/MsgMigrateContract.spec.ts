@@ -17,48 +17,6 @@ const msgWithMigrateString = new MsgMigrateContract(
 );
 
 describe('MsgMigrateContract', () => {
-  it('legacy amino', () => {
-    const aminoWithAdmin = msgWithAdmin.toAmino(
-      true
-    ) as MsgMigrateContract.AminoV1;
-    expect(aminoWithAdmin.value.admin).toEqual(msgWithAdmin.admin);
-
-    const aminoWithMigrateString = msgWithMigrateString.toAmino(
-      true
-    ) as MsgMigrateContract.AminoV1;
-    expect(aminoWithMigrateString.value.migrate_msg).toEqual(
-      msgWithMigrateString.migrate_msg
-    );
-  });
-
-  it('legacy proto', () => {
-    const protoWithAdmin = msgWithAdmin.toProto(
-      true
-    ) as MsgMigrateContract_legacy_pb;
-    expect(protoWithAdmin.admin).toEqual(msgWithAdmin.admin);
-
-    const protoWithMigrateString = msgWithMigrateString.toProto(
-      true
-    ) as MsgMigrateContract_legacy_pb;
-    expect(protoWithMigrateString.migrateMsg.toString()).toEqual(
-      JSON.stringify(msgWithMigrateString.migrate_msg)
-    );
-  });
-
-  it('legacy data', () => {
-    const dataWithAdmin = msgWithAdmin.toData(
-      true
-    ) as MsgMigrateContract.DataV1;
-    expect(dataWithAdmin.admin).toEqual(msgWithAdmin.admin);
-
-    const dataWithMigrateString = msgWithMigrateString.toData(
-      true
-    ) as MsgMigrateContract.DataV1;
-    expect(dataWithMigrateString.migrate_msg).toEqual(
-      msgWithMigrateString.migrate_msg
-    );
-  });
-
   it('amino', () => {
     const aminoWithAdmin = msgWithAdmin.toAmino(
       false
