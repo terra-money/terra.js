@@ -24,7 +24,7 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
 
   public static fromAmino(
     data: MsgUpdateContractAdmin.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgUpdateContractAdmin {
     const {
       value: { sender, new_admin, contract },
@@ -32,7 +32,7 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
     return new MsgUpdateContractAdmin(sender, new_admin, contract);
   }
 
-  public toAmino(_isClassic?: boolean): MsgUpdateContractAdmin.Amino {
+  public toAmino(_?: boolean): MsgUpdateContractAdmin.Amino {
     const { admin, new_admin, contract } = this;
     return {
       type: 'wasm/MsgUpdateAdmin',
@@ -46,13 +46,13 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
 
   public static fromProto(
     proto: MsgUpdateContractAdmin.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgUpdateContractAdmin {
     const p = proto as MsgUpdateAdmin_pb;
     return new MsgUpdateContractAdmin(p.sender, p.newAdmin, p.contract);
   }
 
-  public toProto(_isClassic?: boolean): MsgUpdateContractAdmin.Proto {
+  public toProto(_?: boolean): MsgUpdateContractAdmin.Proto {
     const { admin, new_admin, contract } = this;
     return MsgUpdateAdmin_pb.fromPartial({
       sender: admin,

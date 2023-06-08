@@ -19,7 +19,7 @@ export class MsgClearContractAdmin extends JSONSerializable<
 
   public static fromAmino(
     data: MsgClearContractAdmin.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgClearContractAdmin {
     const {
       value: { sender, contract },
@@ -28,7 +28,7 @@ export class MsgClearContractAdmin extends JSONSerializable<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public toAmino(_isClassic?: boolean): MsgClearContractAdmin.Amino {
+  public toAmino(_?: boolean): MsgClearContractAdmin.Amino {
     const { admin, contract } = this;
     return {
       type: 'wasm/MsgClearAdmin',
@@ -41,13 +41,13 @@ export class MsgClearContractAdmin extends JSONSerializable<
 
   public static fromProto(
     data: MsgClearContractAdmin.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgClearContractAdmin {
     const { sender, contract } = data as MsgClearContractAdmin.DataV2;
     return new MsgClearContractAdmin(sender, contract);
   }
 
-  public toProto(_isClassic?: boolean): MsgClearContractAdmin.Proto {
+  public toProto(_?: boolean): MsgClearContractAdmin.Proto {
     return MsgClearAdmin_pb.fromPartial({
       sender: this.admin,
       contract: this.contract,
@@ -75,13 +75,13 @@ export class MsgClearContractAdmin extends JSONSerializable<
 
   public static fromData(
     data: MsgClearContractAdmin.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgClearContractAdmin {
     const { sender, contract } = data as MsgClearContractAdmin.DataV2;
     return new MsgClearContractAdmin(sender, contract);
   }
 
-  public toData(_isClassic?: boolean): MsgClearContractAdmin.Data {
+  public toData(_?: boolean): MsgClearContractAdmin.Data {
     return {
       '@type': '/cosmwasm.wasm.v1.MsgClearAdmin',
       sender: this.admin,

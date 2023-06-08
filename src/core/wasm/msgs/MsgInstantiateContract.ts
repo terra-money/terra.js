@@ -35,7 +35,7 @@ export class MsgInstantiateContract extends JSONSerializable<
 
   public static fromAmino(
     data: MsgInstantiateContract.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgInstantiateContract {
     const {
       value: { sender, admin, code_id, msg, funds, label },
@@ -50,7 +50,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): MsgInstantiateContract.Amino {
+  public toAmino(_?: boolean): MsgInstantiateContract.Amino {
     const { sender, admin, code_id, init_msg, init_coins, label } = this;
     return {
       type: 'wasm/MsgInstantiateContract',
@@ -67,7 +67,7 @@ export class MsgInstantiateContract extends JSONSerializable<
 
   public static fromProto(
     proto: MsgInstantiateContract.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgInstantiateContract {
     const p = proto as MsgInstantiateContract_pb;
     return new MsgInstantiateContract(
@@ -80,7 +80,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): MsgInstantiateContract.Proto {
+  public toProto(_?: boolean): MsgInstantiateContract.Proto {
     const { sender, admin, code_id, init_msg, init_coins, label } = this;
     return MsgInstantiateContract_pb.fromPartial({
       admin,
@@ -113,7 +113,7 @@ export class MsgInstantiateContract extends JSONSerializable<
 
   public static fromData(
     data: MsgInstantiateContract.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgInstantiateContract {
     const { sender, admin, code_id, label, msg, funds } =
       data as MsgInstantiateContract.DataV2;
@@ -127,7 +127,7 @@ export class MsgInstantiateContract extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): MsgInstantiateContract.Data {
+  public toData(_?: boolean): MsgInstantiateContract.Data {
     const { sender, admin, code_id, label, init_msg, init_coins } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgInstantiateContract',

@@ -27,7 +27,7 @@ export class MsgMigrateContract extends JSONSerializable<
 
   public static fromAmino(
     data: MsgMigrateContract.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
     const {
       value: { sender, contract, code_id, msg },
@@ -40,7 +40,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): MsgMigrateContract.Amino {
+  public toAmino(_?: boolean): MsgMigrateContract.Amino {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return {
       type: 'wasm/MsgMigrateContract',
@@ -55,7 +55,7 @@ export class MsgMigrateContract extends JSONSerializable<
 
   public static fromProto(
     proto: MsgMigrateContract.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
     const p = proto as MsgMigrateContract_pb;
     return new MsgMigrateContract(
@@ -66,7 +66,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): MsgMigrateContract.Proto {
+  public toProto(_?: boolean): MsgMigrateContract.Proto {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return MsgMigrateContract_pb.fromPartial({
       sender: admin,
@@ -96,7 +96,7 @@ export class MsgMigrateContract extends JSONSerializable<
 
   public static fromData(
     data: MsgMigrateContract.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
     const { sender, contract, code_id, msg } =
       data as MsgMigrateContract.DataV2;
@@ -108,7 +108,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): MsgMigrateContract.Data {
+  public toData(_?: boolean): MsgMigrateContract.Data {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',

@@ -30,7 +30,7 @@ export class MsgExecuteContract extends JSONSerializable<
 
   public static fromAmino(
     data: MsgExecuteContract.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgExecuteContract {
     const {
       value: { sender, contract, msg, funds },
@@ -43,7 +43,7 @@ export class MsgExecuteContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): MsgExecuteContract.Amino {
+  public toAmino(_?: boolean): MsgExecuteContract.Amino {
     const { sender, contract, execute_msg, coins } = this;
     return {
       type: 'wasm/MsgExecuteContract',
@@ -58,7 +58,7 @@ export class MsgExecuteContract extends JSONSerializable<
 
   public static fromProto(
     proto: MsgExecuteContract.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgExecuteContract {
     const p = proto as MsgExecuteContract_pb;
     return new MsgExecuteContract(
@@ -69,7 +69,7 @@ export class MsgExecuteContract extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): MsgExecuteContract.Proto {
+  public toProto(_?: boolean): MsgExecuteContract.Proto {
     const { sender, contract, execute_msg, coins } = this;
     return MsgExecuteContract_pb.fromPartial({
       funds: coins.toProto(),
@@ -100,13 +100,13 @@ export class MsgExecuteContract extends JSONSerializable<
 
   public static fromData(
     data: MsgExecuteContract.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): MsgExecuteContract {
     const { sender, contract, msg, funds } = data as MsgExecuteContract.DataV2;
     return new MsgExecuteContract(sender, contract, msg, Coins.fromData(funds));
   }
 
-  public toData(_isClassic?: boolean): MsgExecuteContract.Data {
+  public toData(_?: boolean): MsgExecuteContract.Data {
     const { sender, contract, execute_msg, coins } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgExecuteContract',
