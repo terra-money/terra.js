@@ -23,101 +23,44 @@ export class MsgMigrateCode extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgMigrateCode.Amino,
-    isClassic?: boolean
+    _data: MsgMigrateCode.Amino,
+    _?: boolean
   ): MsgMigrateCode {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const {
-      value: { sender, code_id, wasm_byte_code },
-    } = data;
-    return new MsgMigrateCode(sender, Number.parseInt(code_id), wasm_byte_code);
+    throw new Error('Not supported for the network');
   }
 
-  public toAmino(isClassic?: boolean): MsgMigrateCode.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { sender, code_id, wasm_byte_code } = this;
-    return {
-      type: 'wasm/MsgMigrateCode',
-      value: {
-        sender,
-        code_id: code_id.toFixed(),
-        wasm_byte_code,
-      },
-    };
+  public toAmino(_?: boolean): MsgMigrateCode.Amino {
+    throw new Error('Not supported for the network');
   }
 
   public static fromProto(
-    proto: MsgMigrateCode.Proto,
-    isClassic?: boolean
+    _proto: MsgMigrateCode.Proto,
+    _?: boolean
   ): MsgMigrateCode {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return new MsgMigrateCode(
-      proto.sender,
-      proto.codeId.toNumber(),
-      Buffer.from(proto.wasmByteCode).toString('base64')
-    );
+    throw new Error('Not supported for the network');
   }
 
-  public toProto(isClassic?: boolean): MsgMigrateCode.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { sender, code_id, wasm_byte_code } = this;
-    return MsgMigrateCode_legacy_pb.fromPartial({
-      codeId: Long.fromNumber(code_id),
-      sender,
-      wasmByteCode: Buffer.from(wasm_byte_code, 'base64'),
-    });
+  public toProto(_?: boolean): MsgMigrateCode.Proto {
+    throw new Error('Not supported for the network');
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return Any.fromPartial({
-      typeUrl: '/terra.wasm.v1beta1.MsgMigrateCode',
-      value: MsgMigrateCode_legacy_pb.encode(this.toProto(isClassic)).finish(),
-    });
+  public packAny(_?: boolean): Any {
+    throw new Error('Not supported for the network');
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgMigrateCode {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return MsgMigrateCode.fromProto(
-      MsgMigrateCode_legacy_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(_msgAny: Any, _?: boolean): MsgMigrateCode {
+    throw new Error('Not supported for the network');
   }
 
   public static fromData(
-    data: MsgMigrateCode.Data,
-    isClassic?: boolean
+    _data: MsgMigrateCode.Data,
+    _?: boolean
   ): MsgMigrateCode {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { sender, code_id, wasm_byte_code } = data;
-    return new MsgMigrateCode(sender, Number.parseInt(code_id), wasm_byte_code);
+    throw new Error('Not supported for the network');
   }
 
-  public toData(isClassic?: boolean): MsgMigrateCode.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { sender, code_id, wasm_byte_code } = this;
-    return {
-      '@type': '/terra.wasm.v1beta1.MsgMigrateCode',
-      sender,
-      code_id: code_id.toFixed(),
-      wasm_byte_code,
-    };
+  public toData(_?: boolean): MsgMigrateCode.Data {
+    throw new Error('Not supported for the network');
   }
 }
 

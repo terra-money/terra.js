@@ -27,21 +27,6 @@ const msgWithInitString = new MsgInstantiateContract(
 );
 
 describe('MsgInstantiateContract', () => {
-  it('legacy amino', () => {
-    const aminoWithAdmin = msgWithAdmin.toAmino(true);
-    expect(aminoWithAdmin.value.admin).toEqual(msgWithAdmin.admin);
-
-    const aminoWithoutAdmin = msgWithoutAdmin.toAmino(true);
-    expect(aminoWithoutAdmin.value.admin).toEqual(msgWithoutAdmin.admin);
-
-    const aminoWithInitString = msgWithInitString.toAmino(
-      true
-    ) as MsgInstantiateContract.AminoV1;
-    expect(aminoWithInitString.value.init_msg).toEqual(
-      msgWithInitString.init_msg
-    );
-  });
-
   it('amino', () => {
     const aminoWithAdmin = msgWithAdmin.toAmino(false);
     expect(aminoWithAdmin.value.admin).toEqual(msgWithAdmin.admin);
@@ -53,21 +38,6 @@ describe('MsgInstantiateContract', () => {
       false
     ) as MsgInstantiateContract.AminoV2;
     expect(aminoWithInitString.value.msg).toEqual(msgWithInitString.init_msg);
-  });
-
-  it('legacy proto', () => {
-    const protoWithAdmin = msgWithAdmin.toProto(true);
-    expect(protoWithAdmin.admin).toEqual(msgWithAdmin.admin);
-
-    const protoWithoutAdmin = msgWithoutAdmin.toProto(true);
-    expect(protoWithoutAdmin.admin).toEqual('');
-
-    const protoWithInitString = msgWithInitString.toProto(
-      true
-    ) as MsgInstantiateContract_legacy_pb;
-    expect(protoWithInitString.initMsg.toString()).toEqual(
-      JSON.stringify(msgWithInitString.init_msg)
-    );
   });
 
   it('proto', () => {
@@ -82,19 +52,6 @@ describe('MsgInstantiateContract', () => {
     expect(protoWithInitString.msg.toString()).toEqual(
       JSON.stringify(msgWithInitString.init_msg)
     );
-  });
-
-  it('legacy data', () => {
-    const dataWithAdmin = msgWithAdmin.toData(true);
-    expect(dataWithAdmin.admin).toEqual(msgWithAdmin.admin);
-
-    const dataWithoutAdmin = msgWithoutAdmin.toData(true);
-    expect(dataWithoutAdmin.admin).toEqual('');
-
-    const dataWithInitString = msgWithInitString.toData(
-      true
-    ) as MsgInstantiateContract.DataV1;
-    expect(dataWithInitString.init_msg).toEqual(msgWithInitString.init_msg);
   });
 
   it('data', () => {

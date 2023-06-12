@@ -27,114 +27,61 @@ export class MsgMigrateContract extends JSONSerializable<
 
   public static fromAmino(
     data: MsgMigrateContract.Amino,
-    isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
-    if (isClassic) {
-      const {
-        value: { admin, contract, new_code_id, migrate_msg },
-      } = data as MsgMigrateContract.AminoV1;
-      return new MsgMigrateContract(
-        admin,
-        contract,
-        Number.parseInt(new_code_id),
-        migrate_msg
-      );
-    } else {
-      const {
-        value: { sender, contract, code_id, msg },
-      } = data as MsgMigrateContract.AminoV2;
-      return new MsgMigrateContract(
-        sender,
-        contract,
-        Number.parseInt(code_id),
-        msg
-      );
-    }
+    const {
+      value: { sender, contract, code_id, msg },
+    } = data as MsgMigrateContract.AminoV2;
+    return new MsgMigrateContract(
+      sender,
+      contract,
+      Number.parseInt(code_id),
+      msg
+    );
   }
 
-  public toAmino(isClassic?: boolean): MsgMigrateContract.Amino {
-    if (isClassic) {
-      const { admin, contract, new_code_id, migrate_msg } = this;
-      return {
-        type: 'wasm/MsgMigrateContract',
-        value: {
-          admin,
-          contract,
-          new_code_id: new_code_id.toFixed(),
-          migrate_msg: removeNull(migrate_msg),
-        },
-      };
-    } else {
-      const { admin, contract, new_code_id, migrate_msg } = this;
-      return {
-        type: 'wasm/MsgMigrateContract',
-        value: {
-          sender: admin,
-          contract,
-          code_id: new_code_id.toFixed(),
-          msg: removeNull(migrate_msg),
-        },
-      };
-    }
+  public toAmino(_?: boolean): MsgMigrateContract.Amino {
+    const { admin, contract, new_code_id, migrate_msg } = this;
+    return {
+      type: 'wasm/MsgMigrateContract',
+      value: {
+        sender: admin,
+        contract,
+        code_id: new_code_id.toFixed(),
+        msg: removeNull(migrate_msg),
+      },
+    };
   }
 
   public static fromProto(
     proto: MsgMigrateContract.Proto,
-    isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
-    if (isClassic) {
-      const p = proto as MsgMigrateContract_legacy_pb;
-      return new MsgMigrateContract(
-        p.admin,
-        p.contract,
-        p.newCodeId.toNumber(),
-        JSON.parse(Buffer.from(p.migrateMsg).toString('utf-8'))
-      );
-    } else {
-      const p = proto as MsgMigrateContract_pb;
-      return new MsgMigrateContract(
-        p.sender,
-        p.contract,
-        p.codeId.toNumber(),
-        JSON.parse(Buffer.from(p.msg).toString('utf-8'))
-      );
-    }
+    const p = proto as MsgMigrateContract_pb;
+    return new MsgMigrateContract(
+      p.sender,
+      p.contract,
+      p.codeId.toNumber(),
+      JSON.parse(Buffer.from(p.msg).toString('utf-8'))
+    );
   }
 
-  public toProto(isClassic?: boolean): MsgMigrateContract.Proto {
+  public toProto(_?: boolean): MsgMigrateContract.Proto {
     const { admin, contract, new_code_id, migrate_msg } = this;
-    if (isClassic) {
-      return MsgMigrateContract_legacy_pb.fromPartial({
-        admin,
-        contract,
-        newCodeId: Long.fromNumber(new_code_id),
-        migrateMsg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
-      });
-    } else {
-      return MsgMigrateContract_pb.fromPartial({
-        sender: admin,
-        contract,
-        codeId: Long.fromNumber(new_code_id),
-        msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
-      });
-    }
+    return MsgMigrateContract_pb.fromPartial({
+      sender: admin,
+      contract,
+      codeId: Long.fromNumber(new_code_id),
+      msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
+    });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      return Any.fromPartial({
-        typeUrl: '/terra.wasm.v1beta1.MsgMigrateContract',
-        value: MsgMigrateContract_legacy_pb.encode(
-          this.toProto(isClassic) as MsgMigrateContract_legacy_pb
-        ).finish(),
-      });
-    } else {
-      return Any.fromPartial({
-        typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
-        value: MsgMigrateContract_pb.encode(
-          this.toProto(isClassic) as MsgMigrateContract_pb
-        ).finish(),
-      });
-    }
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
+      value: MsgMigrateContract_pb.encode(
+        this.toProto(isClassic) as MsgMigrateContract_pb
+      ).finish(),
+    });
   }
 
   public static unpackAny(
@@ -142,57 +89,34 @@ export class MsgMigrateContract extends JSONSerializable<
     isClassic?: boolean
   ): MsgMigrateContract {
     return MsgMigrateContract.fromProto(
-      isClassic
-        ? MsgMigrateContract_legacy_pb.decode(msgAny.value)
-        : MsgMigrateContract_pb.decode(msgAny.value),
+      MsgMigrateContract_pb.decode(msgAny.value),
       isClassic
     );
   }
 
   public static fromData(
     data: MsgMigrateContract.Data,
-    isClassic?: boolean
+    _?: boolean
   ): MsgMigrateContract {
-    if (isClassic) {
-      const { admin, contract, new_code_id, migrate_msg } =
-        data as MsgMigrateContract.DataV1;
-      return new MsgMigrateContract(
-        admin,
-        contract,
-        Number.parseInt(new_code_id),
-        migrate_msg
-      );
-    } else {
-      const { sender, contract, code_id, msg } =
-        data as MsgMigrateContract.DataV2;
-      return new MsgMigrateContract(
-        sender,
-        contract,
-        Number.parseInt(code_id),
-        msg
-      );
-    }
+    const { sender, contract, code_id, msg } =
+      data as MsgMigrateContract.DataV2;
+    return new MsgMigrateContract(
+      sender,
+      contract,
+      Number.parseInt(code_id),
+      msg
+    );
   }
 
-  public toData(isClassic?: boolean): MsgMigrateContract.Data {
+  public toData(_?: boolean): MsgMigrateContract.Data {
     const { admin, contract, new_code_id, migrate_msg } = this;
-    if (isClassic) {
-      return {
-        '@type': '/terra.wasm.v1beta1.MsgMigrateContract',
-        admin,
-        contract,
-        new_code_id: new_code_id.toFixed(),
-        migrate_msg: removeNull(migrate_msg),
-      };
-    } else {
-      return {
-        '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
-        sender: admin,
-        contract,
-        code_id: new_code_id.toFixed(),
-        msg: removeNull(migrate_msg),
-      };
-    }
+    return {
+      '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
+      sender: admin,
+      contract,
+      code_id: new_code_id.toFixed(),
+      msg: removeNull(migrate_msg),
+    };
   }
 }
 
