@@ -48,7 +48,6 @@ import {
 } from './vesting/msgs';
 import {
   MsgStoreCode,
-  MsgMigrateCode,
   MsgInstantiateContract,
   MsgExecuteContract,
   MsgMigrateContract,
@@ -258,21 +257,17 @@ export namespace Msg {
 
       // wasm
       case 'wasm/MsgStoreCode':
-        return MsgStoreCode.fromAmino(data, isClassic);
-      case 'wasm/MsgMigrateCode':
-        return MsgMigrateCode.fromAmino(data, isClassic);
+        return MsgStoreCode.fromAmino(data);
       case 'wasm/MsgInstantiateContract':
-        return MsgInstantiateContract.fromAmino(data, isClassic);
+        return MsgInstantiateContract.fromAmino(data);
       case 'wasm/MsgExecuteContract':
-        return MsgExecuteContract.fromAmino(data, isClassic);
+        return MsgExecuteContract.fromAmino(data);
       case 'wasm/MsgMigrateContract':
-        return MsgMigrateContract.fromAmino(data, isClassic);
-      case 'wasm/MsgUpdateContractAdmin':
+        return MsgMigrateContract.fromAmino(data);
       case 'wasm/MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.fromAmino(data, isClassic);
-      case 'wasm/MsgClearContractAdmin':
+        return MsgUpdateContractAdmin.fromAmino(data);
       case 'wasm/MsgClearAdmin':
-        return MsgClearContractAdmin.fromAmino(data, isClassic);
+        return MsgClearContractAdmin.fromAmino(data);
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
         return MsgTransfer.fromAmino(data, isClassic);
@@ -362,26 +357,18 @@ export namespace Msg {
         return MsgDonateAllVestingTokens.fromData(data, isClassic);
 
       // wasm
-      case '/terra.wasm.v1beta1.MsgStoreCode':
       case '/cosmwasm.wasm.v1.MsgStoreCode':
-        return MsgStoreCode.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgMigrateCode': // isClassic only
-        return MsgMigrateCode.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgInstantiateContract':
+        return MsgStoreCode.fromData(data);
       case '/cosmwasm.wasm.v1.MsgInstantiateContract':
-        return MsgInstantiateContract.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgExecuteContract':
+        return MsgInstantiateContract.fromData(data);
       case '/cosmwasm.wasm.v1.MsgExecuteContract':
-        return MsgExecuteContract.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgMigrateContract':
+        return MsgExecuteContract.fromData(data);
       case '/cosmwasm.wasm.v1.MsgMigrateContract':
-        return MsgMigrateContract.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
+        return MsgMigrateContract.fromData(data);
       case '/cosmwasm.wasm.v1.MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.fromData(data, isClassic);
-      case '/terra.wasm.v1beta1.MsgClearContractAdmin':
+        return MsgUpdateContractAdmin.fromData(data);
       case '/cosmwasm.wasm.v1.MsgClearAdmin':
-        return MsgClearContractAdmin.fromData(data, isClassic);
+        return MsgClearContractAdmin.fromData(data);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':
@@ -515,26 +502,18 @@ export namespace Msg {
         return MsgDonateAllVestingTokens.unpackAny(proto, isClassic);
 
       // wasm
-      case '/terra.wasm.v1beta1.MsgStoreCode':
       case '/cosmwasm.wasm.v1.MsgStoreCode':
-        return MsgStoreCode.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgMigrateCode': // isClassic only
-        return MsgMigrateCode.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgInstantiateContract':
+        return MsgStoreCode.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgInstantiateContract':
-        return MsgInstantiateContract.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgExecuteContract':
+        return MsgInstantiateContract.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgExecuteContract':
-        return MsgExecuteContract.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgMigrateContract':
+        return MsgExecuteContract.unpackAny(proto);
       case '/cosmwasm.wasm.v1beta1.MsgMigrateContract':
-        return MsgMigrateContract.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgUpdateContractAdmin':
+        return MsgMigrateContract.unpackAny(proto);
       case '/cosmwasm.wasm.v1beta1.MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.unpackAny(proto, isClassic);
-      case '/terra.wasm.v1beta1.MsgClearContractAdmin':
+        return MsgUpdateContractAdmin.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgClearAdmin':
-        return MsgClearContractAdmin.unpackAny(proto, isClassic);
+        return MsgClearContractAdmin.unpackAny(proto);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':

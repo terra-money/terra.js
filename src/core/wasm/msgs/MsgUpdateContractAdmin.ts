@@ -1,7 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgUpdateContractAdmin as MsgUpdateContractAdmin_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgUpdateAdmin as MsgUpdateAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 export class MsgUpdateContractAdmin extends JSONSerializable<
@@ -23,16 +22,15 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgUpdateContractAdmin.Amino,
-    _?: boolean
+    data: MsgUpdateContractAdmin.Amino
   ): MsgUpdateContractAdmin {
     const {
       value: { sender, new_admin, contract },
-    } = data as MsgUpdateContractAdmin.AminoV2;
+    } = data;
     return new MsgUpdateContractAdmin(sender, new_admin, contract);
   }
 
-  public toAmino(_?: boolean): MsgUpdateContractAdmin.Amino {
+  public toAmino(): MsgUpdateContractAdmin.Amino {
     const { admin, new_admin, contract } = this;
     return {
       type: 'wasm/MsgUpdateAdmin',
@@ -45,14 +43,13 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgUpdateContractAdmin.Proto,
-    _?: boolean
+    proto: MsgUpdateContractAdmin.Proto
   ): MsgUpdateContractAdmin {
     const p = proto as MsgUpdateAdmin_pb;
     return new MsgUpdateContractAdmin(p.sender, p.newAdmin, p.contract);
   }
 
-  public toProto(_?: boolean): MsgUpdateContractAdmin.Proto {
+  public toProto(): MsgUpdateContractAdmin.Proto {
     const { admin, new_admin, contract } = this;
     return MsgUpdateAdmin_pb.fromPartial({
       sender: admin,
@@ -61,71 +58,41 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MsgUpdateAdmin',
       value: MsgUpdateAdmin_pb.encode(
-        this.toProto(isClassic) as MsgUpdateAdmin_pb
+        this.toProto() as MsgUpdateAdmin_pb
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgUpdateContractAdmin {
+  public static unpackAny(msgAny: Any): MsgUpdateContractAdmin {
     return MsgUpdateContractAdmin.fromProto(
-      MsgUpdateAdmin_pb.decode(msgAny.value),
-      isClassic
+      MsgUpdateAdmin_pb.decode(msgAny.value)
     );
   }
 
   public static fromData(
-    data: MsgUpdateContractAdmin.Data,
-    isClassic?: boolean
+    data: MsgUpdateContractAdmin.Data
   ): MsgUpdateContractAdmin {
-    if (isClassic) {
-      const { admin, new_admin, contract } =
-        data as MsgUpdateContractAdmin.DataV1;
-      return new MsgUpdateContractAdmin(admin, new_admin, contract);
-    } else {
-      const { sender, new_admin, contract } =
-        data as MsgUpdateContractAdmin.DataV2;
-      return new MsgUpdateContractAdmin(sender, new_admin, contract);
-    }
+    const { sender, new_admin, contract } = data;
+    return new MsgUpdateContractAdmin(sender, new_admin, contract);
   }
 
-  public toData(isClassic?: boolean): MsgUpdateContractAdmin.Data {
+  public toData(): MsgUpdateContractAdmin.Data {
     const { admin, new_admin, contract } = this;
-    if (isClassic) {
-      return {
-        '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin',
-        admin,
-        new_admin,
-        contract,
-      };
-    } else {
-      return {
-        '@type': '/cosmwasm.wasm.v1.MsgUpdateAdmin',
-        sender: admin,
-        new_admin,
-        contract,
-      };
-    }
+    return {
+      '@type': '/cosmwasm.wasm.v1.MsgUpdateAdmin',
+      sender: admin,
+      new_admin,
+      contract,
+    };
   }
 }
 
 export namespace MsgUpdateContractAdmin {
-  export interface AminoV1 {
-    type: 'wasm/MsgUpdateContractAdmin';
-    value: {
-      admin: AccAddress;
-      new_admin: AccAddress;
-      contract: AccAddress;
-    };
-  }
-
-  export interface AminoV2 {
+  export interface Amino {
     type: 'wasm/MsgUpdateAdmin';
     value: {
       sender: AccAddress;
@@ -134,21 +101,12 @@ export namespace MsgUpdateContractAdmin {
     };
   }
 
-  export interface DataV1 {
-    '@type': '/terra.wasm.v1beta1.MsgUpdateContractAdmin';
-    admin: AccAddress;
-    new_admin: AccAddress;
-    contract: AccAddress;
-  }
-
-  export interface DataV2 {
+  export interface Data {
     '@type': '/cosmwasm.wasm.v1.MsgUpdateAdmin';
     sender: AccAddress;
     new_admin: AccAddress;
     contract: AccAddress;
   }
 
-  export type Amino = AminoV1 | AminoV2;
-  export type Data = DataV1 | DataV2;
-  export type Proto = MsgUpdateContractAdmin_legacy_pb | MsgUpdateAdmin_pb;
+  export type Proto = MsgUpdateAdmin_pb;
 }

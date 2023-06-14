@@ -25,22 +25,15 @@ export class UpdateAdminProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: UpdateAdminProposal.Amino,
-    isClassic?: boolean
+    data: UpdateAdminProposal.Amino
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract, new_admin },
-    } = data as UpdateAdminProposal.Amino;
+    } = data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toAmino(isClassic?: boolean): UpdateAdminProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): UpdateAdminProposal.Amino {
     const { title, description, contract, new_admin } = this;
     return {
       type: 'wasm/UpdateAdminProposal',
@@ -54,12 +47,8 @@ export class UpdateAdminProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: UpdateAdminProposal.Proto,
-    isClassic?: boolean
+    proto: UpdateAdminProposal.Proto
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new UpdateAdminProposal(
       proto.title,
       proto.description,
@@ -68,10 +57,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): UpdateAdminProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): UpdateAdminProposal.Proto {
     const { title, description, contract, new_admin } = this;
     return UpdateAdminProposal_pb.fromPartial({
       title,
@@ -80,45 +66,25 @@ export class UpdateAdminProposal extends JSONSerializable<
       newAdmin: new_admin,
     });
   }
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateAdminProposal',
-      value: UpdateAdminProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: UpdateAdminProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any): UpdateAdminProposal {
     return UpdateAdminProposal.fromProto(
-      UpdateAdminProposal_pb.decode(msgAny.value),
-      isClassic
+      UpdateAdminProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: UpdateAdminProposal.Data,
-    isClassic?: boolean
-  ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, new_admin } =
-      data as UpdateAdminProposal.Data;
+  public static fromData(data: UpdateAdminProposal.Data): UpdateAdminProposal {
+    const { title, description, contract, new_admin } = data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toData(isClassic?: boolean): UpdateAdminProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): UpdateAdminProposal.Data {
     const { title, description, contract, new_admin } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateAdminProposal',

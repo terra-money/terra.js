@@ -110,10 +110,8 @@ export class ParameterChangeProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: ParameterChangeProposal.Proto,
-    _?: boolean
+    proto: ParameterChangeProposal.Proto
   ): ParameterChangeProposal {
-    _;
     return new ParameterChangeProposal(
       proto.title,
       proto.description,
@@ -140,13 +138,9 @@ export class ParameterChangeProposal extends JSONSerializable<
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): ParameterChangeProposal {
+  public static unpackAny(msgAny: Any): ParameterChangeProposal {
     return ParameterChangeProposal.fromProto(
-      ParameterChangeProposal_pb.decode(msgAny.value),
-      isClassic
+      ParameterChangeProposal_pb.decode(msgAny.value)
     );
   }
 }

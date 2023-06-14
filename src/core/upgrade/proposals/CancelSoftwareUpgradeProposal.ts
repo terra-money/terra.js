@@ -70,8 +70,7 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     return new CancelSoftwareUpgradeProposal(proto.title, proto.description);
   }
 
-  public toProto(_?: boolean): CancelSoftwareUpgradeProposal.Proto {
-    _;
+  public toProto(): CancelSoftwareUpgradeProposal.Proto {
     const { title, description } = this;
     return CancelSoftwareUpgradeProposal_pb.fromPartial({
       title,
@@ -79,22 +78,16 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
-      value: CancelSoftwareUpgradeProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: CancelSoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): CancelSoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any): CancelSoftwareUpgradeProposal {
     return CancelSoftwareUpgradeProposal.fromProto(
-      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value),
-      isClassic
+      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
   }
 }

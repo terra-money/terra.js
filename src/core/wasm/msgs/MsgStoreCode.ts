@@ -1,7 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgStoreCode as MsgStoreCode_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgStoreCode as MsgStoreCode_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 import { AccessConfig } from '../AccessConfig';
 
@@ -23,13 +22,10 @@ export class MsgStoreCode extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgStoreCode.AminoV2 | MsgStoreCode.AminoV1,
-    _?: boolean
-  ): MsgStoreCode {
+  public static fromAmino(data: MsgStoreCode.Amino): MsgStoreCode {
     const {
       value: { sender, wasm_byte_code, instantiate_permission },
-    } = data as MsgStoreCode.AminoV2;
+    } = data;
     return new MsgStoreCode(
       sender,
       wasm_byte_code,
@@ -39,7 +35,7 @@ export class MsgStoreCode extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): MsgStoreCode.AminoV2 {
+  public toAmino(): MsgStoreCode.Amino {
     const { sender, wasm_byte_code, instantiate_permission } = this;
     return {
       type: 'wasm/MsgStoreCode',
@@ -51,10 +47,7 @@ export class MsgStoreCode extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgStoreCode.Proto,
-    _?: boolean
-  ): MsgStoreCode {
+  public static fromProto(proto: MsgStoreCode.Proto): MsgStoreCode {
     const p = proto as MsgStoreCode_pb;
     return new MsgStoreCode(
       p.sender,
@@ -65,7 +58,7 @@ export class MsgStoreCode extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgStoreCode.Proto {
+  public toProto(): MsgStoreCode.Proto {
     const { sender, wasm_byte_code, instantiate_permission } = this;
     return MsgStoreCode_pb.fromPartial({
       sender,
@@ -74,27 +67,20 @@ export class MsgStoreCode extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     const any = Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MsgStoreCode',
-      value: MsgStoreCode_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgStoreCode_pb.encode(this.toProto()).finish(),
     });
     return any;
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgStoreCode {
-    return MsgStoreCode.fromProto(
-      MsgStoreCode_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any): MsgStoreCode {
+    return MsgStoreCode.fromProto(MsgStoreCode_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: MsgStoreCode.DataV2 | MsgStoreCode.DataV1,
-    _?: boolean
-  ): MsgStoreCode {
-    const { sender, wasm_byte_code, instantiate_permission } =
-      data as MsgStoreCode.DataV2;
+  public static fromData(data: MsgStoreCode.Data): MsgStoreCode {
+    const { sender, wasm_byte_code, instantiate_permission } = data;
     return new MsgStoreCode(
       sender,
       wasm_byte_code,
@@ -104,7 +90,7 @@ export class MsgStoreCode extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgStoreCode.Data {
+  public toData(): MsgStoreCode.Data {
     const { sender, wasm_byte_code, instantiate_permission } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgStoreCode',
@@ -116,15 +102,7 @@ export class MsgStoreCode extends JSONSerializable<
 }
 
 export namespace MsgStoreCode {
-  export interface AminoV1 {
-    type: 'wasm/MsgStoreCode';
-    value: {
-      sender: AccAddress;
-      wasm_byte_code: string;
-    };
-  }
-
-  export interface AminoV2 {
+  export interface Amino {
     type: 'wasm/MsgStoreCode';
     value: {
       sender: AccAddress;
@@ -132,21 +110,12 @@ export namespace MsgStoreCode {
       instantiate_permission?: AccessConfig.Amino;
     };
   }
-  export type Amino = AminoV1 | AminoV2;
 
-  export interface DataV1 {
-    '@type': '/terra.wasm.v1beta1.MsgStoreCode';
-    sender: AccAddress;
-    wasm_byte_code: string;
-  }
-
-  export interface DataV2 {
+  export interface Data {
     '@type': '/cosmwasm.wasm.v1.MsgStoreCode';
     sender: AccAddress;
     wasm_byte_code: string;
     instantiate_permission?: AccessConfig.Data;
   }
-  export type Data = DataV1 | DataV2;
-
-  export type Proto = MsgStoreCode_legacy_pb | MsgStoreCode_pb;
+  export type Proto = MsgStoreCode_pb;
 }

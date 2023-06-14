@@ -11,7 +11,7 @@ describe('Tx', () => {
             value: {
               sender: 'terra15d7zke8yrwvz360es5gr97y8upktm79q6j33de',
               contract: 'terra1a06dgl27rhujjphsn4drl242ufws267qxypptx',
-              execute_msg: {
+              msg: {
                 adjust_premium: {
                   asset_tokens: [
                     'terra15t9afkpj0wnh8m74n8n2f8tspkn7r65vnru45s',
@@ -44,7 +44,7 @@ describe('Tx', () => {
                   ],
                 },
               },
-              coins: [],
+              funds: [],
             },
           },
         ],

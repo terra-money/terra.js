@@ -29,13 +29,7 @@ export class StoreCodeProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: StoreCodeProposal.Amino,
-    isClassic?: boolean
-  ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: StoreCodeProposal.Amino): StoreCodeProposal {
     const {
       value: {
         title,
@@ -56,10 +50,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): StoreCodeProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): StoreCodeProposal.Amino {
     const {
       title,
       description,
@@ -79,13 +70,7 @@ export class StoreCodeProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: StoreCodeProposal.Data,
-    isClassic?: boolean
-  ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: StoreCodeProposal.Data): StoreCodeProposal {
     const {
       title,
       description,
@@ -104,10 +89,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): StoreCodeProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): StoreCodeProposal.Data {
     const {
       title,
       description,
@@ -125,13 +107,7 @@ export class StoreCodeProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: StoreCodeProposal.Proto,
-    isClassic?: boolean
-  ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: StoreCodeProposal.Proto): StoreCodeProposal {
     return new StoreCodeProposal(
       proto.title,
       proto.description,
@@ -143,10 +119,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): StoreCodeProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): StoreCodeProposal.Proto {
     const {
       title,
       description,
@@ -163,23 +136,16 @@ export class StoreCodeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.StoreCodeProposal',
-      value: StoreCodeProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: StoreCodeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any): StoreCodeProposal {
     return StoreCodeProposal.fromProto(
-      StoreCodeProposal_pb.decode(msgAny.value),
-      isClassic
+      StoreCodeProposal_pb.decode(msgAny.value)
     );
   }
 }

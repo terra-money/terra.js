@@ -41,15 +41,11 @@ export class InstantiateContractProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: InstantiateContractProposal.Amino,
-    isClassic?: boolean
+    data: InstantiateContractProposal.Amino
   ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, run_as, admin, code_id, msg, funds, label },
-    } = data as InstantiateContractProposal.Amino;
+    } = data;
     return new InstantiateContractProposal(
       title,
       description,
@@ -62,7 +58,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): InstantiateContractProposal.Amino {
+  public toAmino(): InstantiateContractProposal.Amino {
     const {
       title,
       description,
@@ -73,9 +69,6 @@ export class InstantiateContractProposal extends JSONSerializable<
       init_coins,
       label,
     } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return {
       type: 'wasm/InstantiateContractProposal',
       value: {
@@ -92,12 +85,8 @@ export class InstantiateContractProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: InstantiateContractProposal.Proto,
-    isClassic?: boolean
+    proto: InstantiateContractProposal.Proto
   ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new InstantiateContractProposal(
       proto.title,
       proto.description,
@@ -110,7 +99,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): InstantiateContractProposal.Proto {
+  public toProto(): InstantiateContractProposal.Proto {
     const {
       title,
       description,
@@ -121,9 +110,6 @@ export class InstantiateContractProposal extends JSONSerializable<
       init_coins,
       label,
     } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return InstantiateContractProposal_pb.fromPartial({
       title,
       description,
@@ -136,40 +122,24 @@ export class InstantiateContractProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.InstantiateContractProposal',
-      value: InstantiateContractProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: InstantiateContractProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any): InstantiateContractProposal {
     return InstantiateContractProposal.fromProto(
-      InstantiateContractProposal_pb.decode(msgAny.value),
-      isClassic
+      InstantiateContractProposal_pb.decode(msgAny.value)
     );
   }
 
   public static fromData(
-    data: InstantiateContractProposal.Data,
-    isClassic?: boolean
+    data: InstantiateContractProposal.Data
   ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, run_as, admin, code_id, label, msg, funds } =
-      data as InstantiateContractProposal.Data;
+      data;
     return new InstantiateContractProposal(
       title,
       description,
@@ -182,7 +152,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): InstantiateContractProposal.Data {
+  public toData(): InstantiateContractProposal.Data {
     const {
       title,
       description,
@@ -193,9 +163,6 @@ export class InstantiateContractProposal extends JSONSerializable<
       init_msg,
       init_coins,
     } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return {
       '@type': '/cosmwasm.wasm.v1.InstantiateContractProposal',
       title,

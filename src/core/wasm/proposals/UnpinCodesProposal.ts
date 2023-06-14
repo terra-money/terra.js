@@ -25,16 +25,10 @@ export class UnpinCodesProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: UnpinCodesProposal.Amino,
-    isClassic?: boolean
-  ): UnpinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: UnpinCodesProposal.Amino): UnpinCodesProposal {
     const {
       value: { title, description, code_ids },
-    } = data as UnpinCodesProposal.Amino;
+    } = data;
     return new UnpinCodesProposal(
       title,
       description,
@@ -42,10 +36,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): UnpinCodesProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): UnpinCodesProposal.Amino {
     const { title, description, code_ids } = this;
     return {
       type: 'wasm/UnpinCodesProposal',
@@ -57,13 +48,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: UnpinCodesProposal.Proto,
-    isClassic?: boolean
-  ): UnpinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: UnpinCodesProposal.Proto): UnpinCodesProposal {
     return new UnpinCodesProposal(
       proto.title,
       proto.description,
@@ -71,10 +56,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): UnpinCodesProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): UnpinCodesProposal.Proto {
     const { title, description, code_ids } = this;
     return UnpinCodesProposal_pb.fromPartial({
       title,
@@ -82,37 +64,21 @@ export class UnpinCodesProposal extends JSONSerializable<
       codeIds: code_ids.map(cid => Long.fromNumber(cid)),
     });
   }
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UnpinCodesProposal',
-      value: UnpinCodesProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: UnpinCodesProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): UnpinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any): UnpinCodesProposal {
     return UnpinCodesProposal.fromProto(
-      UnpinCodesProposal_pb.decode(msgAny.value),
-      isClassic
+      UnpinCodesProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: UnpinCodesProposal.Data,
-    isClassic?: boolean
-  ): UnpinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, code_ids } = data as UnpinCodesProposal.Data;
+  public static fromData(data: UnpinCodesProposal.Data): UnpinCodesProposal {
+    const { title, description, code_ids } = data;
     return new UnpinCodesProposal(
       title,
       description,
@@ -120,10 +86,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): UnpinCodesProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): UnpinCodesProposal.Data {
     const { title, description, code_ids } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal',

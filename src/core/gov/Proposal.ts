@@ -329,41 +329,41 @@ export namespace Proposal {
       switch (amino.type) {
         case 'gov/TextProposal':
         case 'cosmos-sdk/TextProposal':
-          return TextProposal.fromAmino(amino, isClassic);
+          return TextProposal.fromAmino(amino);
         case 'distribution/CommunityPoolSpendProposal':
         case 'cosmos-sdk/CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.fromAmino(amino, isClassic);
+          return CommunityPoolSpendProposal.fromAmino(amino);
         case 'params/ParameterChangeProposal':
         case 'cosmos-sdk/ParameterChangeProposal':
-          return ParameterChangeProposal.fromAmino(amino, isClassic);
+          return ParameterChangeProposal.fromAmino(amino);
         case 'upgrade/SoftwareUpgradeProposal':
         case 'cosmos-sdk/SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.fromAmino(amino, isClassic);
+          return SoftwareUpgradeProposal.fromAmino(amino);
         case 'upgrade/CancelSoftwareUpgradeProposal':
         case 'cosmos-sdk/CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.fromAmino(amino, isClassic);
+          return CancelSoftwareUpgradeProposal.fromAmino(amino);
         case 'ibc/ClientUpdateProposal':
-          return ClientUpdateProposal.fromAmino(amino, isClassic);
+          return ClientUpdateProposal.fromAmino(amino);
         case 'wasm/ClearAdminProposal':
-          return ClearAdminProposal.fromAmino(amino, isClassic);
+          return ClearAdminProposal.fromAmino(amino);
         case 'wasm/ExecuteContractProposal':
-          return ExecuteContractProposal.fromAmino(amino, isClassic);
+          return ExecuteContractProposal.fromAmino(amino);
         case 'wasm/InstantiateContractProposal':
-          return InstantiateContractProposal.fromAmino(amino, isClassic);
+          return InstantiateContractProposal.fromAmino(amino);
         case 'wasm/MigrateContractProposal':
-          return MigrateContractProposal.fromAmino(amino, isClassic);
+          return MigrateContractProposal.fromAmino(amino);
         case 'wasm/PinCodesProposal':
-          return PinCodesProposal.fromAmino(amino, isClassic);
+          return PinCodesProposal.fromAmino(amino);
         case 'wasm/StoreCodeProposal':
-          return StoreCodeProposal.fromAmino(amino, isClassic);
+          return StoreCodeProposal.fromAmino(amino);
         case 'wasm/SudoContractProposal':
-          return SudoContractProposal.fromAmino(amino, isClassic);
+          return SudoContractProposal.fromAmino(amino);
         case 'wasm/UnpinCodesProposal':
-          return UnpinCodesProposal.fromAmino(amino, isClassic);
+          return UnpinCodesProposal.fromAmino(amino);
         case 'wasm/UpdateAdminProposal':
-          return UpdateAdminProposal.fromAmino(amino, isClassic);
+          return UpdateAdminProposal.fromAmino(amino);
         case 'wasm/UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.fromAmino(amino, isClassic);
+          return UpdateInstantiateConfigProposal.fromAmino(amino);
         case 'treasury/AddBurnTaxExemptionAddressProposal':
           return AddBurnTaxExemptionAddressProposal.fromAmino(amino, isClassic);
         case 'treasury/RemoveBurnTaxExemptionAddressProposal':
@@ -380,37 +380,37 @@ export namespace Proposal {
     ): Proposal.Content {
       switch (data['@type']) {
         case '/cosmos.gov.v1beta1.TextProposal':
-          return TextProposal.fromData(data, isClassic);
+          return TextProposal.fromData(data);
         case '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.fromData(data, isClassic);
+          return CommunityPoolSpendProposal.fromData(data);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
-          return ParameterChangeProposal.fromData(data, isClassic);
+          return ParameterChangeProposal.fromData(data);
         case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.fromData(data, isClassic);
+          return SoftwareUpgradeProposal.fromData(data);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.fromData(data, isClassic);
+          return CancelSoftwareUpgradeProposal.fromData(data);
         case '/ibc.core.client.v1.ClientUpdateProposal':
-          return ClientUpdateProposal.fromData(data, isClassic);
+          return ClientUpdateProposal.fromData(data);
         case '/cosmwasm.wasm.v1.ClearAdminProposal':
-          return ClearAdminProposal.fromData(data, isClassic);
+          return ClearAdminProposal.fromData(data);
         case '/cosmwasm.wasm.v1.ExecuteContractProposal':
-          return ExecuteContractProposal.fromData(data, isClassic);
+          return ExecuteContractProposal.fromData(data);
         case '/cosmwasm.wasm.v1.InstantiateContractProposal':
-          return InstantiateContractProposal.fromData(data, isClassic);
+          return InstantiateContractProposal.fromData(data);
         case '/cosmwasm.wasm.v1.MigrateContractProposal':
-          return MigrateContractProposal.fromData(data, isClassic);
+          return MigrateContractProposal.fromData(data);
         case '/cosmwasm.wasm.v1.PinCodesProposal':
-          return PinCodesProposal.fromData(data, isClassic);
+          return PinCodesProposal.fromData(data);
         case '/cosmwasm.wasm.v1.StoreCodeProposal':
-          return StoreCodeProposal.fromData(data, isClassic);
+          return StoreCodeProposal.fromData(data);
         case '/cosmwasm.wasm.v1.SudoContractProposal':
-          return SudoContractProposal.fromData(data, isClassic);
+          return SudoContractProposal.fromData(data);
         case '/cosmwasm.wasm.v1.UnpinCodesProposal':
-          return UnpinCodesProposal.fromData(data, isClassic);
+          return UnpinCodesProposal.fromData(data);
         case '/cosmwasm.wasm.v1.UpdateAdminProposal':
-          return UpdateAdminProposal.fromData(data, isClassic);
+          return UpdateAdminProposal.fromData(data);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.fromData(data, isClassic);
+          return UpdateInstantiateConfigProposal.fromData(data);
         case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
           return AddBurnTaxExemptionAddressProposal.fromData(data, isClassic);
         case '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal':
@@ -428,37 +428,37 @@ export namespace Proposal {
       const typeUrl = anyProto.typeUrl;
       switch (typeUrl) {
         case '/cosmos.gov.v1beta1.TextProposal':
-          return TextProposal.unpackAny(anyProto, isClassic);
+          return TextProposal.unpackAny(anyProto);
         case '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal':
-          return CommunityPoolSpendProposal.unpackAny(anyProto, isClassic);
+          return CommunityPoolSpendProposal.unpackAny(anyProto);
         case '/cosmos.params.v1beta1.ParameterChangeProposal':
-          return ParameterChangeProposal.unpackAny(anyProto, isClassic);
+          return ParameterChangeProposal.unpackAny(anyProto);
         case '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal':
-          return SoftwareUpgradeProposal.unpackAny(anyProto, isClassic);
+          return SoftwareUpgradeProposal.unpackAny(anyProto);
         case '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal':
-          return CancelSoftwareUpgradeProposal.unpackAny(anyProto, isClassic);
+          return CancelSoftwareUpgradeProposal.unpackAny(anyProto);
         case '/ibc.core.client.v1.ClientUpdateProposal':
-          return ClientUpdateProposal.unpackAny(anyProto, isClassic);
+          return ClientUpdateProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.ClearAdminProposal':
-          return ClearAdminProposal.unpackAny(anyProto, isClassic);
+          return ClearAdminProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.ExecuteContractProposal':
-          return ExecuteContractProposal.unpackAny(anyProto, isClassic);
+          return ExecuteContractProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.InstantiateContractProposal':
-          return InstantiateContractProposal.unpackAny(anyProto, isClassic);
+          return InstantiateContractProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.MigrateContractProposal':
-          return MigrateContractProposal.unpackAny(anyProto, isClassic);
+          return MigrateContractProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.PinCodesProposal':
-          return PinCodesProposal.unpackAny(anyProto, isClassic);
+          return PinCodesProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.StoreCodeProposal':
-          return StoreCodeProposal.unpackAny(anyProto, isClassic);
+          return StoreCodeProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.SudoContractProposal':
-          return SudoContractProposal.unpackAny(anyProto, isClassic);
+          return SudoContractProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.UnpinCodesProposal':
-          return UnpinCodesProposal.unpackAny(anyProto, isClassic);
+          return UnpinCodesProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.UpdateAdminProposal':
-          return UpdateAdminProposal.unpackAny(anyProto, isClassic);
+          return UpdateAdminProposal.unpackAny(anyProto);
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
-          return UpdateInstantiateConfigProposal.unpackAny(anyProto, isClassic);
+          return UpdateInstantiateConfigProposal.unpackAny(anyProto);
         case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
           return AddBurnTaxExemptionAddressProposal.unpackAny(
             anyProto,

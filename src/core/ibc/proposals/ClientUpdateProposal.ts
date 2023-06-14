@@ -119,8 +119,7 @@ export class ClientUpdateProposal extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): ClientUpdateProposal {
-    _;
+  public static unpackAny(msgAny: Any): ClientUpdateProposal {
     return ClientUpdateProposal.fromProto(
       ClientUpdateProposal_pb.decode(msgAny.value)
     );

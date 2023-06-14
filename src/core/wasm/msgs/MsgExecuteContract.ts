@@ -2,7 +2,6 @@ import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Coins } from '../../Coins';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgExecuteContract as MsgExecuteContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgExecuteContract as MsgExecuteContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 export class MsgExecuteContract extends JSONSerializable<
@@ -28,13 +27,10 @@ export class MsgExecuteContract extends JSONSerializable<
     this.coins = new Coins(coins);
   }
 
-  public static fromAmino(
-    data: MsgExecuteContract.Amino,
-    _?: boolean
-  ): MsgExecuteContract {
+  public static fromAmino(data: MsgExecuteContract.Amino): MsgExecuteContract {
     const {
       value: { sender, contract, msg, funds },
-    } = data as MsgExecuteContract.AminoV2;
+    } = data;
     return new MsgExecuteContract(
       sender,
       contract,
@@ -43,7 +39,7 @@ export class MsgExecuteContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): MsgExecuteContract.Amino {
+  public toAmino(): MsgExecuteContract.Amino {
     const { sender, contract, execute_msg, coins } = this;
     return {
       type: 'wasm/MsgExecuteContract',
@@ -56,10 +52,7 @@ export class MsgExecuteContract extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgExecuteContract.Proto,
-    _?: boolean
-  ): MsgExecuteContract {
+  public static fromProto(proto: MsgExecuteContract.Proto): MsgExecuteContract {
     const p = proto as MsgExecuteContract_pb;
     return new MsgExecuteContract(
       p.sender,
@@ -69,7 +62,7 @@ export class MsgExecuteContract extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgExecuteContract.Proto {
+  public toProto(): MsgExecuteContract.Proto {
     const { sender, contract, execute_msg, coins } = this;
     return MsgExecuteContract_pb.fromPartial({
       funds: coins.toProto(),
@@ -79,34 +72,27 @@ export class MsgExecuteContract extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
       value: MsgExecuteContract_pb.encode(
-        this.toProto(isClassic) as MsgExecuteContract_pb
+        this.toProto() as MsgExecuteContract_pb
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgExecuteContract {
+  public static unpackAny(msgAny: Any): MsgExecuteContract {
     return MsgExecuteContract.fromProto(
-      MsgExecuteContract_pb.decode(msgAny.value),
-      isClassic
+      MsgExecuteContract_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: MsgExecuteContract.Data,
-    _?: boolean
-  ): MsgExecuteContract {
-    const { sender, contract, msg, funds } = data as MsgExecuteContract.DataV2;
+  public static fromData(data: MsgExecuteContract.Data): MsgExecuteContract {
+    const { sender, contract, msg, funds } = data;
     return new MsgExecuteContract(sender, contract, msg, Coins.fromData(funds));
   }
 
-  public toData(_?: boolean): MsgExecuteContract.Data {
+  public toData(): MsgExecuteContract.Data {
     const { sender, contract, execute_msg, coins } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgExecuteContract',
@@ -119,17 +105,7 @@ export class MsgExecuteContract extends JSONSerializable<
 }
 
 export namespace MsgExecuteContract {
-  export interface AminoV1 {
-    type: 'wasm/MsgExecuteContract';
-    value: {
-      sender: AccAddress;
-      contract: AccAddress;
-      execute_msg: object | string;
-      coins: Coins.Amino;
-    };
-  }
-
-  export interface AminoV2 {
+  export interface Amino {
     type: 'wasm/MsgExecuteContract';
     value: {
       sender: AccAddress;
@@ -139,14 +115,7 @@ export namespace MsgExecuteContract {
     };
   }
 
-  export interface DataV1 {
-    '@type': '/terra.wasm.v1beta1.MsgExecuteContract';
-    sender: AccAddress;
-    contract: AccAddress;
-    execute_msg: object | string;
-    coins: Coins.Data;
-  }
-  export interface DataV2 {
+  export interface Data {
     '@type': '/cosmwasm.wasm.v1.MsgExecuteContract';
     sender: AccAddress;
     contract: AccAddress;
@@ -154,7 +123,5 @@ export namespace MsgExecuteContract {
     funds: Coins.Data;
   }
 
-  export type Amino = AminoV1 | AminoV2;
-  export type Data = DataV1 | DataV2;
-  export type Proto = MsgExecuteContract_legacy_pb | MsgExecuteContract_pb;
+  export type Proto = MsgExecuteContract_pb;
 }

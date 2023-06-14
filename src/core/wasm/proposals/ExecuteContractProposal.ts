@@ -36,15 +36,11 @@ export class ExecuteContractProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: ExecuteContractProposal.Amino,
-    isClassic?: boolean
+    data: ExecuteContractProposal.Amino
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, run_as, contract, msg, funds },
-    } = data as ExecuteContractProposal.Amino;
+    } = data;
     return new ExecuteContractProposal(
       title,
       description,
@@ -55,11 +51,9 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): ExecuteContractProposal.Amino {
+  public toAmino(): ExecuteContractProposal.Amino {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+
     return {
       type: 'wasm/ExecuteContractProposal',
       value: {
@@ -74,12 +68,8 @@ export class ExecuteContractProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: ExecuteContractProposal.Proto,
-    isClassic?: boolean
+    proto: ExecuteContractProposal.Proto
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new ExecuteContractProposal(
       proto.title,
       proto.description,
@@ -90,54 +80,35 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): ExecuteContractProposal.Proto {
+  public toProto(): ExecuteContractProposal.Proto {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return ExecuteContractProposal_pb.fromPartial({
-        title,
-        description,
-        funds: coins.toProto(),
-        contract,
-        runAs: run_as,
-        msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
-      });
-    }
+    return ExecuteContractProposal_pb.fromPartial({
+      title,
+      description,
+      funds: coins.toProto(),
+      contract,
+      runAs: run_as,
+      msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
+    });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return Any.fromPartial({
-        typeUrl: '/cosmwasm.wasm.v1.ExecuteContractProposal',
-        value: ExecuteContractProposal_pb.encode(
-          this.toProto(isClassic)
-        ).finish(),
-      });
-    }
+  public packAny(): Any {
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.ExecuteContractProposal',
+      value: ExecuteContractProposal_pb.encode(this.toProto()).finish(),
+    });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): ExecuteContractProposal {
+  public static unpackAny(msgAny: Any): ExecuteContractProposal {
     return ExecuteContractProposal.fromProto(
-      ExecuteContractProposal_pb.decode(msgAny.value),
-      isClassic
+      ExecuteContractProposal_pb.decode(msgAny.value)
     );
   }
 
   public static fromData(
-    data: ExecuteContractProposal.Data,
-    isClassic?: boolean
+    data: ExecuteContractProposal.Data
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, run_as, contract, msg, funds } =
-      data as ExecuteContractProposal.Data;
+    const { title, description, run_as, contract, msg, funds } = data;
     return new ExecuteContractProposal(
       title,
       description,
@@ -148,21 +119,17 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): ExecuteContractProposal.Data {
+  public toData(): ExecuteContractProposal.Data {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return {
-        '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',
-        title,
-        description,
-        run_as,
-        contract,
-        msg: execute_msg,
-        funds: coins.toData(),
-      };
-    }
+    return {
+      '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',
+      title,
+      description,
+      run_as,
+      contract,
+      msg: execute_msg,
+      funds: coins.toData(),
+    };
   }
 }
 

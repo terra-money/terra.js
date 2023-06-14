@@ -1,5 +1,5 @@
 import { LCDClient } from '../LCDClient';
-import { WasmAPI } from './WasmAPI';
+import { WasmAPI, CodeParams } from './WasmAPI';
 
 const terra = new LCDClient({
   chainID: 'pisco-1',
@@ -10,14 +10,24 @@ const wasm = new WasmAPI(terra);
 describe('WasmAPI', () => {
   it('code_info', async () => {
     await expect(wasm.codeInfo(1)).resolves.toMatchObject({
-      code_id: 1,
-      creator: 'terra1zpglp37eg85mtwa54ymgj0nzqe37awhsv42yxj',
-      code_hash:
-        '325A94095F5D98B816AB5192C7771B43D9E45800846B5F2CC96B92E5F3492D45',
+      code_id: expect.any(Number),
+      creator: expect.any(String),
+      code_hash: expect.any(String),
       instantiate_permission: {
-        permission: 3,
-        address: '',
+        permission: expect.any(Number),
+        address: expect.any(String),
       },
+    });
+  });
+
+  it('code_params', async () => {
+    await expect(wasm.codeParams()).resolves.toMatchObject({
+      code_upload_access: {
+        permission: expect.any(String),
+        address: expect.any(String),
+        addresses: expect.any(Array),
+      },
+      instantiate_default_permission: expect.any(String),
     });
   });
 

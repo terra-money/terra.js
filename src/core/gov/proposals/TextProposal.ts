@@ -55,16 +55,11 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: TextProposal.Proto,
-    _?: boolean
-  ): TextProposal {
-    _;
+  public static fromProto(proto: TextProposal.Proto): TextProposal {
     return new TextProposal(proto.title, proto.description);
   }
 
-  public toProto(_?: boolean): TextProposal.Proto {
-    _;
+  public toProto(): TextProposal.Proto {
     const { title, description } = this;
     return TextProposal_pb.fromPartial({
       description,
@@ -72,18 +67,15 @@ export class TextProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-      value: TextProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: TextProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): TextProposal {
-    return TextProposal.fromProto(
-      TextProposal_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any): TextProposal {
+    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value));
   }
 }
 

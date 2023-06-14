@@ -1,7 +1,6 @@
 import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgMigrateContract as MsgMigrateContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgMigrateContract as MsgMigrateContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 import * as Long from 'long';
 
@@ -25,13 +24,10 @@ export class MsgMigrateContract extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgMigrateContract.Amino,
-    _?: boolean
-  ): MsgMigrateContract {
+  public static fromAmino(data: MsgMigrateContract.Amino): MsgMigrateContract {
     const {
       value: { sender, contract, code_id, msg },
-    } = data as MsgMigrateContract.AminoV2;
+    } = data;
     return new MsgMigrateContract(
       sender,
       contract,
@@ -40,7 +36,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): MsgMigrateContract.Amino {
+  public toAmino(): MsgMigrateContract.Amino {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return {
       type: 'wasm/MsgMigrateContract',
@@ -53,10 +49,7 @@ export class MsgMigrateContract extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgMigrateContract.Proto,
-    _?: boolean
-  ): MsgMigrateContract {
+  public static fromProto(proto: MsgMigrateContract.Proto): MsgMigrateContract {
     const p = proto as MsgMigrateContract_pb;
     return new MsgMigrateContract(
       p.sender,
@@ -66,7 +59,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgMigrateContract.Proto {
+  public toProto(): MsgMigrateContract.Proto {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return MsgMigrateContract_pb.fromPartial({
       sender: admin,
@@ -75,31 +68,23 @@ export class MsgMigrateContract extends JSONSerializable<
       msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
     });
   }
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
       value: MsgMigrateContract_pb.encode(
-        this.toProto(isClassic) as MsgMigrateContract_pb
+        this.toProto() as MsgMigrateContract_pb
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgMigrateContract {
+  public static unpackAny(msgAny: Any): MsgMigrateContract {
     return MsgMigrateContract.fromProto(
-      MsgMigrateContract_pb.decode(msgAny.value),
-      isClassic
+      MsgMigrateContract_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: MsgMigrateContract.Data,
-    _?: boolean
-  ): MsgMigrateContract {
-    const { sender, contract, code_id, msg } =
-      data as MsgMigrateContract.DataV2;
+  public static fromData(data: MsgMigrateContract.Data): MsgMigrateContract {
+    const { sender, contract, code_id, msg } = data;
     return new MsgMigrateContract(
       sender,
       contract,
@@ -108,7 +93,7 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgMigrateContract.Data {
+  public toData(): MsgMigrateContract.Data {
     const { admin, contract, new_code_id, migrate_msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
@@ -121,16 +106,7 @@ export class MsgMigrateContract extends JSONSerializable<
 }
 
 export namespace MsgMigrateContract {
-  export interface AminoV1 {
-    type: 'wasm/MsgMigrateContract';
-    value: {
-      admin: AccAddress;
-      contract: AccAddress;
-      new_code_id: string;
-      migrate_msg: object | string;
-    };
-  }
-  export interface AminoV2 {
+  export interface Amino {
     type: 'wasm/MsgMigrateContract';
     value: {
       sender: AccAddress;
@@ -140,15 +116,7 @@ export namespace MsgMigrateContract {
     };
   }
 
-  export interface DataV1 {
-    '@type': '/terra.wasm.v1beta1.MsgMigrateContract';
-    admin: AccAddress;
-    contract: AccAddress;
-    new_code_id: string;
-    migrate_msg: object | string;
-  }
-
-  export interface DataV2 {
+  export interface Data {
     '@type': '/cosmwasm.wasm.v1.MsgMigrateContract';
     sender: AccAddress;
     contract: AccAddress;
@@ -156,7 +124,5 @@ export namespace MsgMigrateContract {
     msg: object | string;
   }
 
-  export type Amino = AminoV1 | AminoV2;
-  export type Data = DataV1 | DataV2;
-  export type Proto = MsgMigrateContract_legacy_pb | MsgMigrateContract_pb;
+  export type Proto = MsgMigrateContract_pb;
 }

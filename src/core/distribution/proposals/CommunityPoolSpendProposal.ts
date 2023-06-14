@@ -120,13 +120,9 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): CommunityPoolSpendProposal {
+  public static unpackAny(msgAny: Any): CommunityPoolSpendProposal {
     return CommunityPoolSpendProposal.fromProto(
-      CommunityPoolSpendProposal_pb.decode(msgAny.value),
-      isClassic
+      CommunityPoolSpendProposal_pb.decode(msgAny.value)
     );
   }
 }

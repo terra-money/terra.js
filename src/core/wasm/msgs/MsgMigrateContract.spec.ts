@@ -1,5 +1,4 @@
 import { MsgMigrateContract } from './MsgMigrateContract';
-import { MsgMigrateContract as MsgMigrateContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgMigrateContract as MsgMigrateContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 const msgWithAdmin = new MsgMigrateContract(
@@ -18,40 +17,32 @@ const msgWithMigrateString = new MsgMigrateContract(
 
 describe('MsgMigrateContract', () => {
   it('amino', () => {
-    const aminoWithAdmin = msgWithAdmin.toAmino(
-      false
-    ) as MsgMigrateContract.AminoV2;
+    const aminoWithAdmin = msgWithAdmin.toAmino() as MsgMigrateContract.Amino;
     expect(aminoWithAdmin.value.sender).toEqual(msgWithAdmin.admin);
 
-    const aminoWithMigrateString = msgWithMigrateString.toAmino(
-      false
-    ) as MsgMigrateContract.AminoV2;
+    const aminoWithMigrateString =
+      msgWithMigrateString.toAmino() as MsgMigrateContract.Amino;
     expect(aminoWithMigrateString.value.msg).toEqual(
       msgWithMigrateString.migrate_msg
     );
   });
 
   it('proto', () => {
-    const protoWithAdmin = msgWithAdmin.toProto(false) as MsgMigrateContract_pb;
+    const protoWithAdmin = msgWithAdmin.toProto() as MsgMigrateContract_pb;
     expect(protoWithAdmin.sender).toEqual(msgWithAdmin.admin);
 
-    const protoWithMigrateString = msgWithMigrateString.toProto(
-      false
-    ) as MsgMigrateContract_pb;
+    const protoWithMigrateString =
+      msgWithMigrateString.toProto() as MsgMigrateContract_pb;
     expect(protoWithMigrateString.msg.toString()).toEqual(
       JSON.stringify(msgWithMigrateString.migrate_msg)
     );
   });
 
   it('data', () => {
-    const dataWithAdmin = msgWithAdmin.toData(
-      false
-    ) as MsgMigrateContract.DataV2;
+    const dataWithAdmin = msgWithAdmin.toData();
     expect(dataWithAdmin.sender).toEqual(msgWithAdmin.admin);
 
-    const dataWithMigrateString = msgWithMigrateString.toData(
-      false
-    ) as MsgMigrateContract.DataV2;
+    const dataWithMigrateString = msgWithMigrateString.toData();
     expect(dataWithMigrateString.msg).toEqual(msgWithMigrateString.migrate_msg);
   });
 });

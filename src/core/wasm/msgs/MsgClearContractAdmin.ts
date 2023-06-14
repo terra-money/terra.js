@@ -1,7 +1,6 @@
 import { JSONSerializable } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgClearContractAdmin as MsgClearContractAdmin_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgClearAdmin as MsgClearAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 export class MsgClearContractAdmin extends JSONSerializable<
@@ -18,17 +17,16 @@ export class MsgClearContractAdmin extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgClearContractAdmin.Amino,
-    _?: boolean
+    data: MsgClearContractAdmin.Amino
   ): MsgClearContractAdmin {
     const {
       value: { sender, contract },
-    } = data as MsgClearContractAdmin.AminoV2;
+    } = data;
     return new MsgClearContractAdmin(sender, contract);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public toAmino(_?: boolean): MsgClearContractAdmin.Amino {
+  public toAmino(): MsgClearContractAdmin.Amino {
     const { admin, contract } = this;
     return {
       type: 'wasm/MsgClearAdmin',
@@ -40,48 +38,42 @@ export class MsgClearContractAdmin extends JSONSerializable<
   }
 
   public static fromProto(
-    data: MsgClearContractAdmin.Proto,
-    _?: boolean
+    data: MsgClearContractAdmin.Proto
   ): MsgClearContractAdmin {
-    const { sender, contract } = data as MsgClearContractAdmin.DataV2;
+    const { sender, contract } = data;
     return new MsgClearContractAdmin(sender, contract);
   }
 
-  public toProto(_?: boolean): MsgClearContractAdmin.Proto {
+  public toProto(): MsgClearContractAdmin.Proto {
     return MsgClearAdmin_pb.fromPartial({
       sender: this.admin,
       contract: this.contract,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MsgClearAdmin',
       value: MsgClearAdmin_pb.encode(
-        this.toProto(isClassic) as MsgClearAdmin_pb
+        this.toProto() as MsgClearAdmin_pb
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgClearContractAdmin {
+  public static unpackAny(msgAny: Any): MsgClearContractAdmin {
     return MsgClearContractAdmin.fromProto(
-      MsgClearAdmin_pb.decode(msgAny.value),
-      isClassic
+      MsgClearAdmin_pb.decode(msgAny.value)
     );
   }
 
   public static fromData(
-    data: MsgClearContractAdmin.Data,
-    _?: boolean
+    data: MsgClearContractAdmin.Data
   ): MsgClearContractAdmin {
-    const { sender, contract } = data as MsgClearContractAdmin.DataV2;
+    const { sender, contract } = data;
     return new MsgClearContractAdmin(sender, contract);
   }
 
-  public toData(_?: boolean): MsgClearContractAdmin.Data {
+  public toData(): MsgClearContractAdmin.Data {
     return {
       '@type': '/cosmwasm.wasm.v1.MsgClearAdmin',
       sender: this.admin,
@@ -91,34 +83,19 @@ export class MsgClearContractAdmin extends JSONSerializable<
 }
 
 export namespace MsgClearContractAdmin {
-  export interface AminoV1 {
-    type: 'wasm/MsgClearContractAdmin';
-    value: {
-      admin: AccAddress;
-      contract: AccAddress;
-    };
-  }
-
-  export interface AminoV2 {
+  export interface Amino {
     type: 'wasm/MsgClearAdmin';
     value: {
       sender: AccAddress;
       contract: AccAddress;
     };
   }
-  export interface DataV1 {
-    '@type': '/terra.wasm.v1beta1.MsgClearContractAdmin';
-    admin: string;
-    contract: string;
-  }
 
-  export interface DataV2 {
+  export interface Data {
     '@type': '/cosmwasm.wasm.v1.MsgClearAdmin';
     sender: string;
     contract: string;
   }
 
-  export type Amino = AminoV1 | AminoV2;
-  export type Data = DataV1 | DataV2;
-  export type Proto = MsgClearContractAdmin_legacy_pb | MsgClearAdmin_pb;
+  export type Proto = MsgClearAdmin_pb;
 }

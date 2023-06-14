@@ -24,22 +24,15 @@ export class SudoContractProposal extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: SudoContractProposal.Amino,
-    isClassic?: boolean
+    data: SudoContractProposal.Amino
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract, msg },
-    } = data as SudoContractProposal.Amino;
+    } = data;
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toAmino(isClassic?: boolean): SudoContractProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): SudoContractProposal.Amino {
     const { title, description, contract, msg } = this;
     return {
       type: 'wasm/SudoContractProposal',
@@ -53,12 +46,8 @@ export class SudoContractProposal extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: SudoContractProposal.Proto,
-    isClassic?: boolean
+    proto: SudoContractProposal.Proto
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new SudoContractProposal(
       proto.title,
       proto.description,
@@ -67,10 +56,7 @@ export class SudoContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): SudoContractProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): SudoContractProposal.Proto {
     const { title, description, contract, msg } = this;
     return SudoContractProposal_pb.fromPartial({
       title,
@@ -79,45 +65,27 @@ export class SudoContractProposal extends JSONSerializable<
       msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
     });
   }
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.SudoContractProposal',
-      value: SudoContractProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: SudoContractProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any): SudoContractProposal {
     return SudoContractProposal.fromProto(
-      SudoContractProposal_pb.decode(msgAny.value),
-      isClassic
+      SudoContractProposal_pb.decode(msgAny.value)
     );
   }
 
   public static fromData(
-    data: SudoContractProposal.Data,
-    isClassic?: boolean
+    data: SudoContractProposal.Data
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, msg } =
-      data as SudoContractProposal.Data;
+    const { title, description, contract, msg } = data;
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toData(isClassic?: boolean): SudoContractProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): SudoContractProposal.Data {
     const { title, description, contract, msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.SudoContractProposal',

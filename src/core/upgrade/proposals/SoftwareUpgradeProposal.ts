@@ -55,10 +55,8 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromData(
-    data: SoftwareUpgradeProposal.Data,
-    _?: boolean
+    data: SoftwareUpgradeProposal.Data
   ): SoftwareUpgradeProposal {
-    _;
     const { title, description, plan } = data;
     return new SoftwareUpgradeProposal(
       title,
@@ -100,22 +98,16 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
-      value: SoftwareUpgradeProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: SoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): SoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any): SoftwareUpgradeProposal {
     return SoftwareUpgradeProposal.fromProto(
-      SoftwareUpgradeProposal_pb.decode(msgAny.value),
-      isClassic
+      SoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
   }
 }

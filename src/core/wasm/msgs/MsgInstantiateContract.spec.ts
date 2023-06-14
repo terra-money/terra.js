@@ -1,5 +1,4 @@
 import { MsgInstantiateContract } from './MsgInstantiateContract';
-import { MsgInstantiateContract as MsgInstantiateContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgInstantiateContract as MsgInstantiateContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 const msgWithAdmin = new MsgInstantiateContract(
@@ -28,15 +27,13 @@ const msgWithInitString = new MsgInstantiateContract(
 
 describe('MsgInstantiateContract', () => {
   it('amino', () => {
-    const aminoWithAdmin = msgWithAdmin.toAmino(false);
+    const aminoWithAdmin = msgWithAdmin.toAmino();
     expect(aminoWithAdmin.value.admin).toEqual(msgWithAdmin.admin);
 
-    const aminoWithoutAdmin = msgWithoutAdmin.toAmino(false);
+    const aminoWithoutAdmin = msgWithoutAdmin.toAmino();
     expect(aminoWithoutAdmin.value.admin).toEqual(msgWithoutAdmin.admin);
 
-    const aminoWithInitString = msgWithInitString.toAmino(
-      false
-    ) as MsgInstantiateContract.AminoV2;
+    const aminoWithInitString = msgWithInitString.toAmino();
     expect(aminoWithInitString.value.msg).toEqual(msgWithInitString.init_msg);
   });
 
@@ -55,15 +52,14 @@ describe('MsgInstantiateContract', () => {
   });
 
   it('data', () => {
-    const dataWithAdmin2 = msgWithAdmin.toData(false);
+    const dataWithAdmin2 = msgWithAdmin.toData();
     expect(dataWithAdmin2.admin).toEqual(msgWithAdmin.admin);
 
-    const dataWithoutAdmin2 = msgWithoutAdmin.toData(false);
+    const dataWithoutAdmin2 = msgWithoutAdmin.toData();
     expect(dataWithoutAdmin2.admin).toEqual('');
 
-    const dataWithInitString2 = msgWithInitString.toData(
-      false
-    ) as MsgInstantiateContract.DataV2;
+    const dataWithInitString2 =
+      msgWithInitString.toData() as MsgInstantiateContract.Data;
     expect(dataWithInitString2.msg).toEqual(msgWithInitString.init_msg);
   });
 });
