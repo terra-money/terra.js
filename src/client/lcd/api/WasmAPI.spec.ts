@@ -1,5 +1,5 @@
 import { LCDClient } from '../LCDClient';
-import { WasmAPI, CodeParams } from './WasmAPI';
+import { WasmAPI } from './WasmAPI';
 
 const terra = new LCDClient({
   chainID: 'pisco-1',
