@@ -8,19 +8,7 @@ const terra = new LCDClient({
 const wasm = new WasmAPI(terra);
 
 describe('WasmAPI', () => {
-  it('parameters', async () => {
-    if (terra.config.isClassic) {
-      // only classic network has param query
-      await expect(wasm.parameters()).resolves.toMatchObject({
-        max_contract_size: expect.any(Number),
-        max_contract_gas: expect.any(Number),
-        max_contract_msg_size: expect.any(Number),
-      });
-    }
-  });
-
   it('code_info', async () => {
-    // only classic network has param query
     await expect(wasm.codeInfo(1)).resolves.toMatchObject({
       code_id: 1,
       creator: 'terra1zpglp37eg85mtwa54ymgj0nzqe37awhsv42yxj',
@@ -35,7 +23,6 @@ describe('WasmAPI', () => {
 
   /* access denied
   it('all_codes', async () => {
-    // only classic network has param query
     const [codes, _] = await wasm.allCodes();
     codes.forEach(code => {
       expect(code.code_id).toBeDefined();
