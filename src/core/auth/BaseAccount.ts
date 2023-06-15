@@ -55,8 +55,7 @@ export class BaseAccount extends JSONSerializable<
     };
   }
 
-  public static fromAmino(data: BaseAccount.Amino, _?: boolean): BaseAccount {
-    _;
+  public static fromAmino(data: BaseAccount.Amino): BaseAccount {
     const {
       value: { address, public_key, account_number, sequence },
     } = data;
@@ -69,8 +68,7 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public static fromData(data: BaseAccount.Data, _?: boolean): BaseAccount {
-    _;
+  public static fromData(data: BaseAccount.Data): BaseAccount {
     const { address, pub_key, account_number, sequence } = data;
 
     return new BaseAccount(
@@ -81,8 +79,7 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): BaseAccount.Data {
-    _;
+  public toData(): BaseAccount.Data {
     const { address, public_key, account_number, sequence } = this;
     return {
       '@type': '/cosmos.auth.v1beta1.BaseAccount',
@@ -93,8 +90,7 @@ export class BaseAccount extends JSONSerializable<
     };
   }
 
-  public toProto(_?: boolean): BaseAccount.Proto {
-    _;
+  public toProto(): BaseAccount.Proto {
     const { address, public_key, account_number, sequence } = this;
     return BaseAccount_pb.fromPartial({
       address,
@@ -104,11 +100,7 @@ export class BaseAccount extends JSONSerializable<
     });
   }
 
-  public static fromProto(
-    baseAccountProto: BaseAccount.Proto,
-    _?: boolean
-  ): BaseAccount {
-    _;
+  public static fromProto(baseAccountProto: BaseAccount.Proto): BaseAccount {
     const pubkey = baseAccountProto.pubKey;
     return new BaseAccount(
       baseAccountProto.address,
@@ -118,18 +110,15 @@ export class BaseAccount extends JSONSerializable<
     );
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.auth.v1beta1.BaseAccount',
-      value: BaseAccount_pb.encode(this.toProto(isClassic)).finish(),
+      value: BaseAccount_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(pubkeyAny: Any, isClassic?: boolean): BaseAccount {
-    return BaseAccount.fromProto(
-      BaseAccount_pb.decode(pubkeyAny.value),
-      isClassic
-    );
+  public static unpackAny(pubkeyAny: Any): BaseAccount {
+    return BaseAccount.fromProto(BaseAccount_pb.decode(pubkeyAny.value));
   }
 }
 

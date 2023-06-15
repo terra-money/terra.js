@@ -25,22 +25,15 @@ export class MsgChannelOpenInit extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenInit {
-    _;
-    isClassic;
+  public static fromAmino(): MsgChannelOpenInit {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgChannelOpenInit.Data,
-    _?: boolean
-  ): MsgChannelOpenInit {
-    _;
+  public static fromData(data: MsgChannelOpenInit.Data) {
     const { port_id, channel, signer } = data;
     return new MsgChannelOpenInit(
       port_id,
@@ -49,8 +42,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgChannelOpenInit.Data {
-    _;
+  public toData(): MsgChannelOpenInit.Data {
     const { port_id, channel, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgChannelOpenInit',
@@ -60,11 +52,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgChannelOpenInit.Proto,
-    _?: boolean
-  ): MsgChannelOpenInit {
-    _;
+  public static fromProto(proto: MsgChannelOpenInit.Proto) {
     return new MsgChannelOpenInit(
       proto.portId,
       proto.channel ? Channel.fromProto(proto.channel) : undefined,
@@ -72,8 +60,7 @@ export class MsgChannelOpenInit extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgChannelOpenInit.Proto {
-    _;
+  public toProto(): MsgChannelOpenInit.Proto {
     const { port_id, channel, signer } = this;
     return MsgChannelOpenInit_pb.fromPartial({
       portId: port_id,
@@ -82,16 +69,14 @@ export class MsgChannelOpenInit extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenInit',
       value: MsgChannelOpenInit_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenInit {
-    _;
+  public static unpackAny(msgAny: Any): MsgChannelOpenInit {
     return MsgChannelOpenInit.fromProto(
       MsgChannelOpenInit_pb.decode(msgAny.value)
     );

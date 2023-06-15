@@ -56,8 +56,7 @@ export class MsgTransfer extends JSONSerializable<
       : undefined;
   }
 
-  public static fromAmino(data: MsgTransfer.Amino, _?: boolean): MsgTransfer {
-    _;
+  public static fromAmino(data: MsgTransfer.Amino) {
     const {
       value: {
         source_port,
@@ -85,8 +84,7 @@ export class MsgTransfer extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): MsgTransfer.Amino {
-    _;
+  public toAmino(): MsgTransfer.Amino {
     const {
       source_port,
       source_channel,
@@ -110,8 +108,7 @@ export class MsgTransfer extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgTransfer.Data, _?: boolean): MsgTransfer {
-    _;
+  public static fromData(data: MsgTransfer.Data) {
     const {
       source_port,
       source_channel,
@@ -137,8 +134,7 @@ export class MsgTransfer extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgTransfer.Data {
-    _;
+  public toData(): MsgTransfer.Data {
     const {
       source_port,
       source_channel,
@@ -162,8 +158,7 @@ export class MsgTransfer extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgTransfer.Proto, _?: boolean): MsgTransfer {
-    _;
+  public static fromProto(proto: MsgTransfer.Proto) {
     if (!proto.timeoutHeight && proto.timeoutTimestamp.toNumber() == 0) {
       throw 'both of timeout_height and timeout_timestamp are empty';
     }
@@ -179,8 +174,7 @@ export class MsgTransfer extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgTransfer.Proto {
-    _;
+  public toProto(): MsgTransfer.Proto {
     const {
       source_port,
       source_channel,
@@ -201,18 +195,15 @@ export class MsgTransfer extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.applications.transfer.v1.MsgTransfer',
-      value: MsgTransfer_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgTransfer_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgTransfer {
-    return MsgTransfer.fromProto(
-      MsgTransfer_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgTransfer.fromProto(MsgTransfer_pb.decode(msgAny.value));
   }
 }
 

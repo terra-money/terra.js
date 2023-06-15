@@ -29,22 +29,15 @@ export class MsgUpgradeClient extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgUpgradeClient {
-    _;
-    isClassic;
+  public static fromAmino(): MsgUpgradeClient {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgUpgradeClient.Data,
-    _?: boolean
-  ): MsgUpgradeClient {
-    _;
+  public static fromData(data: MsgUpgradeClient.Data) {
     const {
       client_id,
       client_state,
@@ -63,8 +56,7 @@ export class MsgUpgradeClient extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgUpgradeClient.Data {
-    _;
+  public toData(): MsgUpgradeClient.Data {
     const {
       client_id,
       client_state,
@@ -84,11 +76,7 @@ export class MsgUpgradeClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgUpgradeClient.Proto,
-    _?: boolean
-  ): MsgUpgradeClient {
-    _;
+  public static fromProto(proto: MsgUpgradeClient.Proto) {
     return new MsgUpgradeClient(
       proto.clientId,
       proto.clientState,
@@ -99,8 +87,7 @@ export class MsgUpgradeClient extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgUpgradeClient.Proto {
-    _;
+  public toProto(): MsgUpgradeClient.Proto {
     const {
       client_id,
       client_state,
@@ -122,16 +109,14 @@ export class MsgUpgradeClient extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.client.v1.MsgUpgradeClient',
       value: MsgUpgradeClient_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgUpgradeClient {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgUpgradeClient.fromProto(MsgUpgradeClient_pb.decode(msgAny.value));
   }
 }

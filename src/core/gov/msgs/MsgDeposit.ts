@@ -28,8 +28,7 @@ export class MsgDeposit extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(data: MsgDeposit.Amino, _?: boolean): MsgDeposit {
-    _;
+  public static fromAmino(data: MsgDeposit.Amino): MsgDeposit {
     const {
       value: { proposal_id, depositor, amount },
     } = data;
@@ -52,8 +51,7 @@ export class MsgDeposit extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgDeposit.Data, _?: boolean): MsgDeposit {
-    _;
+  public static fromData(data: MsgDeposit.Data) {
     const { proposal_id, depositor, amount } = data;
     return new MsgDeposit(
       Number.parseInt(proposal_id),
@@ -62,8 +60,7 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgDeposit.Data {
-    _;
+  public toData(): MsgDeposit.Data {
     const { proposal_id, depositor, amount } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgDeposit',
@@ -73,8 +70,7 @@ export class MsgDeposit extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgDeposit.Proto, _?: boolean): MsgDeposit {
-    _;
+  public static fromProto(proto: MsgDeposit.Proto) {
     return new MsgDeposit(
       proto.proposalId.toNumber(),
       proto.depositor,
@@ -82,8 +78,7 @@ export class MsgDeposit extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgDeposit.Proto {
-    _;
+  public toProto(): MsgDeposit.Proto {
     const { proposal_id, depositor, amount } = this;
     return MsgDeposit_pb.fromPartial({
       amount: amount.toProto(),
@@ -92,15 +87,15 @@ export class MsgDeposit extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
-      value: MsgDeposit_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgDeposit_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgDeposit {
-    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value), isClassic);
+  public static unpackAny(msgAny: Any) {
+    return MsgDeposit.fromProto(MsgDeposit_pb.decode(msgAny.value));
   }
 }
 

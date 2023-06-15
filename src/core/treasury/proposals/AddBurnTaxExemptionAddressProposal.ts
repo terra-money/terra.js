@@ -23,13 +23,7 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: AddBurnTaxExemptionAddressProposal.Amino,
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: AddBurnTaxExemptionAddressProposal.Amino) {
     const {
       value: { title, description, addresses },
     } = data;
@@ -40,12 +34,7 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): AddBurnTaxExemptionAddressProposal.Amino {
     const { title, description, addresses } = this;
     return {
       type: 'treasury/AddBurnTaxExemptionAddressProposal',
@@ -57,13 +46,7 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: AddBurnTaxExemptionAddressProposal.Data,
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: AddBurnTaxExemptionAddressProposal.Data) {
     const { title, description, addresses } = data;
     return new AddBurnTaxExemptionAddressProposal(
       title,
@@ -72,10 +55,7 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): AddBurnTaxExemptionAddressProposal.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): AddBurnTaxExemptionAddressProposal.Data {
     const { title, description, addresses } = this;
     return {
       '@type': '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal',
@@ -85,13 +65,7 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: AddBurnTaxExemptionAddressProposal.Proto,
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: AddBurnTaxExemptionAddressProposal.Proto) {
     return new AddBurnTaxExemptionAddressProposal(
       proto.title,
       proto.description,
@@ -99,42 +73,27 @@ export class AddBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toProto(
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto() {
     const { title, description, addresses } = this;
     return AddBurnTaxExemptionAddressProposal_pb.fromPartial({
       title,
       description,
-      addresses,
+      addresses: addresses ? addresses : undefined,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal',
       value: AddBurnTaxExemptionAddressProposal_pb.encode(
-        this.toProto(isClassic)
+        this.toProto()
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): AddBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return AddBurnTaxExemptionAddressProposal.fromProto(
-      AddBurnTaxExemptionAddressProposal_pb.decode(msgAny.value),
-      isClassic
+      AddBurnTaxExemptionAddressProposal_pb.decode(msgAny.value)
     );
   }
 }

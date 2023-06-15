@@ -49,9 +49,5 @@ describe('ContinuousVestingAccount', () => {
         start_time: '1652000000',
       },
     });
-
-    expect(() => acct.toAmino(true)).toThrow(
-      Error('Not supported for the network')
-    );
   });
 });

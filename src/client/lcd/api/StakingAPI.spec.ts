@@ -43,6 +43,7 @@ const delegator = test1.accAddress;
 const validator = 'terravaloper1q8w4u2wyhx574m70gwe8km5za2ptanny9mnqy3';
 
 describe('StakingAPI', () => {
+  // TODO: min_commission_rate for classic network
   it('parameters', async () => {
     await expect(staking.parameters()).resolves.toMatchObject({
       unbonding_time: expect.any(Number),

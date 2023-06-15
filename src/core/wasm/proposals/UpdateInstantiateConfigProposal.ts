@@ -25,9 +25,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: UpdateInstantiateConfigProposal.Amino
-  ): UpdateInstantiateConfigProposal {
+  public static fromAmino(data: UpdateInstantiateConfigProposal.Amino) {
     const {
       value: { title, description, access_config_updates },
     } = data;
@@ -38,8 +36,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): UpdateInstantiateConfigProposal.Amino {
-    _;
+  public toAmino(): UpdateInstantiateConfigProposal.Amino {
     const { title, description, access_config_updates } = this;
     return {
       type: 'wasm/UpdateInstantiateConfigProposal',
@@ -51,9 +48,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: UpdateInstantiateConfigProposal.Proto
-  ): UpdateInstantiateConfigProposal {
+  public static fromProto(proto: UpdateInstantiateConfigProposal.Proto) {
     return new UpdateInstantiateConfigProposal(
       proto.title,
       proto.description,
@@ -69,22 +64,20 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
       accessConfigUpdates: access_config_updates.map(acu => acu.toProto()),
     });
   }
-  public packAny(): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal',
       value: UpdateInstantiateConfigProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): UpdateInstantiateConfigProposal {
+  public static unpackAny(msgAny: Any) {
     return UpdateInstantiateConfigProposal.fromProto(
       UpdateInstantiateConfigProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: UpdateInstantiateConfigProposal.Data
-  ): UpdateInstantiateConfigProposal {
+  public static fromData(data: UpdateInstantiateConfigProposal.Data) {
     const { title, description, access_config_updates } = data;
     return new UpdateInstantiateConfigProposal(
       title,

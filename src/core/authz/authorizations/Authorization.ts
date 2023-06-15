@@ -14,13 +14,10 @@ export class AuthorizationGrant extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    amino: AuthorizationGrant.Amino,
-    isClassic?: boolean
-  ): AuthorizationGrant {
+  public static fromAmino(amino: AuthorizationGrant.Amino): AuthorizationGrant {
     const { authorization, expiration } = amino;
     return new AuthorizationGrant(
-      Authorization.fromAmino(authorization, isClassic),
+      Authorization.fromAmino(authorization),
       new Date(expiration)
     );
   }
@@ -33,39 +30,33 @@ export class AuthorizationGrant extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: AuthorizationGrant.Data,
-    isClassic?: boolean
-  ): AuthorizationGrant {
+  public static fromData(data: AuthorizationGrant.Data): AuthorizationGrant {
     const { authorization, expiration } = data;
     return new AuthorizationGrant(
-      Authorization.fromData(authorization, isClassic),
+      Authorization.fromData(authorization),
       new Date(expiration)
     );
   }
 
-  public toData(isClassic?: boolean): AuthorizationGrant.Data {
+  public toData(): AuthorizationGrant.Data {
     const { authorization, expiration } = this;
     return {
-      authorization: authorization.toData(isClassic),
+      authorization: authorization.toData(),
       expiration: expiration.toISOString().replace(/\.000Z$/, 'Z'),
     };
   }
 
-  public static fromProto(
-    proto: AuthorizationGrant.Proto,
-    isClassic?: boolean
-  ): AuthorizationGrant {
+  public static fromProto(proto: AuthorizationGrant.Proto) {
     return new AuthorizationGrant(
-      Authorization.fromProto(proto.authorization as Any, isClassic),
+      Authorization.fromProto(proto.authorization as Any),
       proto.expiration as Date
     );
   }
 
-  public toProto(isClassic?: boolean): AuthorizationGrant.Proto {
+  public toProto(): AuthorizationGrant.Proto {
     const { authorization, expiration } = this;
     return Grant_pb.fromPartial({
-      authorization: authorization.packAny(isClassic),
+      authorization: authorization.packAny(),
       expiration,
     });
   }
@@ -97,47 +88,37 @@ export namespace Authorization {
     | GenericAuthorization.Data
     | StakeAuthorization.Data;
   export type Proto = Any;
-  export function fromAmino(
-    data: Authorization.Amino,
-    isClassic?: boolean
-  ): Authorization {
+  export function fromAmino(data: Authorization.Amino): Authorization {
     switch (data.type) {
       case 'msgauth/SendAuthorization':
       case 'cosmos-sdk/SendAuthorization':
-        return SendAuthorization.fromAmino(data, isClassic);
+        return SendAuthorization.fromAmino(data);
       case 'msgauth/GenericAuthorization':
       case 'cosmos-sdk/GenericAuthorization':
-        return GenericAuthorization.fromAmino(data, isClassic);
+        return GenericAuthorization.fromAmino(data);
     }
   }
 
-  export function fromData(
-    data: Authorization.Data,
-    isClassic?: boolean
-  ): Authorization {
+  export function fromData(data: Authorization.Data): Authorization {
     switch (data['@type']) {
       case '/cosmos.authz.v1beta1.GenericAuthorization':
-        return GenericAuthorization.fromData(data, isClassic);
+        return GenericAuthorization.fromData(data);
       case '/cosmos.bank.v1beta1.SendAuthorization':
-        return SendAuthorization.fromData(data, isClassic);
+        return SendAuthorization.fromData(data);
       case '/cosmos.staking.v1beta1.StakeAuthorization':
-        return StakeAuthorization.fromData(data, isClassic);
+        return StakeAuthorization.fromData(data);
     }
   }
 
-  export function fromProto(
-    proto: Authorization.Proto,
-    isClassic?: boolean
-  ): Authorization {
+  export function fromProto(proto: Authorization.Proto): Authorization {
     const typeUrl = proto.typeUrl;
     switch (typeUrl) {
       case '/cosmos.authz.v1beta1.GenericAuthorization':
-        return GenericAuthorization.unpackAny(proto, isClassic);
-
+        return GenericAuthorization.unpackAny(proto);
       case '/cosmos.bank.v1beta1.SendAuthorization':
-        return SendAuthorization.unpackAny(proto, isClassic);
+        return SendAuthorization.unpackAny(proto);
       case '/cosmos.staking.v1beta1.StakeAuthorization':
-        return StakeAuthorization.unpackAny(proto, isClassic);
+        return StakeAuthorization.unpackAny(proto);
     }
 
     throw new Error(`Authorization type ${typeUrl} not recognized`);

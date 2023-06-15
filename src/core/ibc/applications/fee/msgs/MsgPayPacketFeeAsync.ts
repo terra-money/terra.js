@@ -21,28 +21,15 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    _;
+  public static fromAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(isClassic?: boolean): any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgPayPacketFeeAsync.Data,
-    isClassic?: boolean
-  ): MsgPayPacketFeeAsync {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgPayPacketFeeAsync.Data) {
     const { packet_id, packet_fee } = data;
 
     return new MsgPayPacketFeeAsync(
@@ -51,10 +38,7 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MsgPayPacketFeeAsync.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgPayPacketFeeAsync.Data {
     const { packet_id, packet_fee } = this;
     return {
       '@type': '/ibc.applications.fee.v1.MsgPayPacketFeeAsync',
@@ -63,24 +47,14 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgPayPacketFeeAsync.Proto,
-    isClassic?: boolean
-  ): MsgPayPacketFeeAsync {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgPayPacketFeeAsync.Proto) {
     return new MsgPayPacketFeeAsync(
       proto.packetId ? PacketId.fromProto(proto.packetId) : undefined,
       proto.packetFee ? PacketFee.fromProto(proto.packetFee) : undefined
     );
   }
 
-  public toProto(isClassic?: boolean): MsgPayPacketFeeAsync.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public toProto(): MsgPayPacketFeeAsync.Proto {
     const { packet_id, packet_fee } = this;
     return MsgPayPacketFeeAsync_pb.fromPartial({
       packetId: packet_id?.toProto(),
@@ -88,26 +62,16 @@ export class MsgPayPacketFeeAsync extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFeeAsync',
-      value: MsgPayPacketFeeAsync_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgPayPacketFeeAsync_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgPayPacketFeeAsync {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return MsgPayPacketFeeAsync.fromProto(
-      MsgPayPacketFeeAsync_pb.decode(msgAny.value),
-      isClassic
+      MsgPayPacketFeeAsync_pb.decode(msgAny.value)
     );
   }
 }

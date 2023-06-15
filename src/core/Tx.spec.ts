@@ -55,6 +55,6 @@ describe('Tx', () => {
       },
     };
 
-    expect(Tx.fromAmino(txAmino, true)).toBeTruthy();
+    expect(Tx.fromAmino(txAmino)).toBeTruthy();
   });
 });

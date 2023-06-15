@@ -23,31 +23,15 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    _: any,
-    isClassic?: boolean
-  ): MsgRegisterCounterpartyAddress {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    _;
+  public static fromAmino(): MsgRegisterCounterpartyAddress {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(isClassic?: boolean): any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgRegisterCounterpartyAddress.Data,
-    isClassic?: boolean
-  ): MsgRegisterCounterpartyAddress {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgRegisterCounterpartyAddress.Data) {
     const { address, counterparty_address, channel_id } = data;
 
     return new MsgRegisterCounterpartyAddress(
@@ -57,10 +41,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MsgRegisterCounterpartyAddress.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgRegisterCounterpartyAddress.Data {
     const { address, counterparty_address, channel_id } = this;
     return {
       '@type': '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
@@ -70,13 +51,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgRegisterCounterpartyAddress.Proto,
-    isClassic?: boolean
-  ): MsgRegisterCounterpartyAddress {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgRegisterCounterpartyAddress.Proto) {
     return new MsgRegisterCounterpartyAddress(
       proto.address,
       proto.counterpartyAddress,
@@ -84,10 +59,7 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgRegisterCounterpartyAddress.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgRegisterCounterpartyAddress.Proto {
     const { address, counterparty_address, channel_id } = this;
     return MsgRegisterCounterpartyAddress_pb.fromPartial({
       address,
@@ -96,25 +68,14 @@ export class MsgRegisterCounterpartyAddress extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgRegisterCounterpartyAddress',
-      value: MsgRegisterCounterpartyAddress_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgRegisterCounterpartyAddress_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgRegisterCounterpartyAddress {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return MsgRegisterCounterpartyAddress.fromProto(
       MsgRegisterCounterpartyAddress_pb.decode(msgAny.value)
     );

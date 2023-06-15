@@ -64,8 +64,7 @@ export class MsgMultiSend extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgMultiSend.Amino, _?: boolean): MsgMultiSend {
-    _;
+  public static fromAmino(data: MsgMultiSend.Amino) {
     const {
       value: { inputs, outputs },
     } = data;
@@ -86,8 +85,7 @@ export class MsgMultiSend extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgMultiSend.Data, _?: boolean): MsgMultiSend {
-    _;
+  public static fromData(data: MsgMultiSend.Data) {
     const { inputs, outputs } = data;
     return new MsgMultiSend(
       inputs.map(i => MsgMultiSend.Input.fromData(i)),
@@ -95,8 +93,7 @@ export class MsgMultiSend extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgMultiSend.Data {
-    _;
+  public toData(): MsgMultiSend.Data {
     const { inputs, outputs } = this;
     return {
       '@type': '/cosmos.bank.v1beta1.MsgMultiSend',
@@ -105,19 +102,14 @@ export class MsgMultiSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgMultiSend.Proto,
-    _?: boolean
-  ): MsgMultiSend {
-    _;
+  public static fromProto(proto: MsgMultiSend.Proto) {
     return new MsgMultiSend(
       proto.inputs.map(i => MsgMultiSend.Input.fromProto(i)),
       proto.outputs.map(o => MsgMultiSend.Output.fromProto(o))
     );
   }
 
-  public toProto(_?: boolean): MsgMultiSend.Proto {
-    _;
+  public toProto(): MsgMultiSend.Proto {
     const { inputs, outputs } = this;
     return MsgMultiSend_pb.fromPartial({
       inputs: inputs.map(i => i.toProto()),
@@ -125,18 +117,15 @@ export class MsgMultiSend extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.MsgMultiSend',
-      value: MsgMultiSend_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgMultiSend_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgMultiSend {
-    return MsgMultiSend.fromProto(
-      MsgMultiSend_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgMultiSend.fromProto(MsgMultiSend_pb.decode(msgAny.value));
   }
 }
 
@@ -176,8 +165,7 @@ export namespace MsgMultiSend {
       this.coins = new Coins(coinsInput);
     }
 
-    public toAmino(_?: boolean): Input.Amino {
-      _;
+    public toAmino(): Input.Amino {
       const { address, coins } = this;
       return {
         address,
@@ -185,14 +173,12 @@ export namespace MsgMultiSend {
       };
     }
 
-    public static fromAmino(data: Input.Amino, _?: boolean): Input {
-      _;
+    public static fromAmino(data: Input.Amino): Input {
       const { address, coins } = data;
       return new Input(address, Coins.fromAmino(coins));
     }
 
-    public toData(_?: boolean): Input.Data {
-      _;
+    public toData(): Input.Data {
       const { address, coins } = this;
       return {
         address,
@@ -200,14 +186,12 @@ export namespace MsgMultiSend {
       };
     }
 
-    public static fromData(data: Input.Data, _?: boolean): Input {
-      _;
+    public static fromData(data: Input.Data): Input {
       const { address, coins } = data;
       return new Input(address, Coins.fromData(coins));
     }
 
-    public toProto(_?: boolean): Input.Proto {
-      _;
+    public toProto(): Input.Proto {
       const { address, coins } = this;
       return Input_pb.fromPartial({
         address,
@@ -215,8 +199,7 @@ export namespace MsgMultiSend {
       });
     }
 
-    public static fromProto(proto: Input.Proto, _?: boolean): Input {
-      _;
+    public static fromProto(proto: Input.Proto): Input {
       return new Input(proto.address, Coins.fromProto(proto.coins));
     }
   }
@@ -240,8 +223,7 @@ export namespace MsgMultiSend {
       this.coins = new Coins(coinsInput);
     }
 
-    public toAmino(_?: boolean): Output.Amino {
-      _;
+    public toAmino(): Output.Amino {
       const { address, coins } = this;
       return {
         address,
@@ -249,14 +231,12 @@ export namespace MsgMultiSend {
       };
     }
 
-    public static fromAmino(data: Output.Amino, _?: boolean): Output {
-      _;
+    public static fromAmino(data: Output.Amino): Output {
       const { address, coins } = data;
       return new Output(address, Coins.fromAmino(coins));
     }
 
-    public toData(_?: boolean): Output.Data {
-      _;
+    public toData(): Output.Data {
       const { address, coins } = this;
       return {
         address,
@@ -264,14 +244,12 @@ export namespace MsgMultiSend {
       };
     }
 
-    public static fromData(data: Output.Data, _?: boolean): Output {
-      _;
+    public static fromData(data: Output.Data): Output {
       const { address, coins } = data;
       return new Output(address, Coins.fromData(coins));
     }
 
-    public toProto(_?: boolean): Output.Proto {
-      _;
+    public toProto(): Output.Proto {
       const { address, coins } = this;
       return Output_pb.fromPartial({
         address,
@@ -279,8 +257,7 @@ export namespace MsgMultiSend {
       });
     }
 
-    public static fromProto(proto: Output.Proto, _?: boolean): Output {
-      _;
+    public static fromProto(proto: Output.Proto): Output {
       return new Output(proto.address, Coins.fromProto(proto.coins));
     }
   }

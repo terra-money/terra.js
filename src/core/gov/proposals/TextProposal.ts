@@ -20,8 +20,7 @@ export class TextProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: TextProposal.Amino, _?: boolean): TextProposal {
-    _;
+  public static fromAmino(data: TextProposal.Amino) {
     const {
       value: { title, description },
     } = data;
@@ -39,14 +38,12 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: TextProposal.Data, _?: boolean): TextProposal {
-    _;
+  public static fromData(proto: TextProposal.Data) {
     const { title, description } = proto;
     return new TextProposal(title, description);
   }
 
-  public toData(_?: boolean): TextProposal.Data {
-    _;
+  public toData(): TextProposal.Data {
     const { title, description } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.TextProposal',
@@ -55,7 +52,7 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: TextProposal.Proto): TextProposal {
+  public static fromProto(proto: TextProposal.Proto) {
     return new TextProposal(proto.title, proto.description);
   }
 
@@ -67,14 +64,14 @@ export class TextProposal extends JSONSerializable<
     });
   }
 
-  public packAny(): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.TextProposal',
       value: TextProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): TextProposal {
+  public static unpackAny(msgAny: Any) {
     return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value));
   }
 }

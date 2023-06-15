@@ -70,7 +70,7 @@ export class Proposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: Proposal.Amino, isClassic?: boolean): Proposal {
+  public static fromAmino(data: Proposal.Amino): Proposal {
     const {
       id,
       content,
@@ -85,7 +85,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       Number.parseInt(id),
-      Proposal.Content.fromAmino(content, isClassic),
+      Proposal.Content.fromAmino(content),
       status,
       {
         yes: new Int(final_tally_result.yes || 0),
@@ -122,7 +122,7 @@ export class Proposal extends JSONSerializable<
     };
   }
 
-  public static fromData(data: Proposal.Data, isClassic?: boolean): Proposal {
+  public static fromData(data: Proposal.Data): Proposal {
     const {
       proposal_id,
       content,
@@ -137,7 +137,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       Number.parseInt(proposal_id),
-      Proposal.Content.fromData(content, isClassic),
+      Proposal.Content.fromData(content),
       proposalStatusFromJSON(status),
       {
         yes: new Int(final_tally_result?.yes || 0),
@@ -153,12 +153,12 @@ export class Proposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): Proposal.Data {
+  public toData(): Proposal.Data {
     const { status, final_tally_result } = this;
 
     return {
       proposal_id: this.id.toFixed(),
-      content: this.content.toData(isClassic),
+      content: this.content.toData(),
       status: proposalStatusToJSON(status),
       final_tally_result: {
         yes: final_tally_result.yes.toString(),
@@ -174,7 +174,7 @@ export class Proposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(data: Proposal.Proto, isClassic?: boolean): Proposal {
+  public static fromProto(data: Proposal.Proto): Proposal {
     const id = data.proposalId;
     const content = data.content;
     const status = data.status;
@@ -187,7 +187,7 @@ export class Proposal extends JSONSerializable<
 
     return new Proposal(
       id.toNumber(),
-      Proposal.Content.fromProto(content as Any, isClassic),
+      Proposal.Content.fromProto(content as Any),
       status,
       {
         yes: new Int(final_tally_result?.yes || 0),
@@ -203,7 +203,7 @@ export class Proposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): Proposal.Proto {
+  public toProto(): Proposal.Proto {
     const { status, final_tally_result } = this;
 
     let ftr: TallyResult | undefined;
@@ -218,7 +218,7 @@ export class Proposal extends JSONSerializable<
 
     return Proposal_pb.fromPartial({
       proposalId: Long.fromNumber(this.id),
-      content: this.content.packAny(isClassic),
+      content: this.content.packAny(),
       status,
       finalTallyResult: ftr,
       submitTime: this.submit_time,
@@ -322,10 +322,7 @@ export namespace Proposal {
       | AddBurnTaxExemptionAddressProposal.Proto
       | RemoveBurnTaxExemptionAddressProposal.Proto;
 
-    export function fromAmino(
-      amino: Proposal.Content.Amino,
-      isClassic?: boolean
-    ): Proposal.Content {
+    export function fromAmino(amino: Proposal.Content.Amino): Proposal.Content {
       switch (amino.type) {
         case 'gov/TextProposal':
         case 'cosmos-sdk/TextProposal':
@@ -364,20 +361,15 @@ export namespace Proposal {
           return UpdateAdminProposal.fromAmino(amino);
         case 'wasm/UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.fromAmino(amino);
+        // Classic only
         case 'treasury/AddBurnTaxExemptionAddressProposal':
-          return AddBurnTaxExemptionAddressProposal.fromAmino(amino, isClassic);
+          return AddBurnTaxExemptionAddressProposal.fromAmino(amino);
         case 'treasury/RemoveBurnTaxExemptionAddressProposal':
-          return RemoveBurnTaxExemptionAddressProposal.fromAmino(
-            amino,
-            isClassic
-          );
+          return RemoveBurnTaxExemptionAddressProposal.fromAmino(amino);
       }
     }
 
-    export function fromData(
-      data: Proposal.Content.Data,
-      isClassic?: boolean
-    ): Proposal.Content {
+    export function fromData(data: Proposal.Content.Data): Proposal.Content {
       switch (data['@type']) {
         case '/cosmos.gov.v1beta1.TextProposal':
           return TextProposal.fromData(data);
@@ -412,19 +404,13 @@ export namespace Proposal {
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.fromData(data);
         case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
-          return AddBurnTaxExemptionAddressProposal.fromData(data, isClassic);
+          return AddBurnTaxExemptionAddressProposal.fromData(data);
         case '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal':
-          return RemoveBurnTaxExemptionAddressProposal.fromData(
-            data,
-            isClassic
-          );
+          return RemoveBurnTaxExemptionAddressProposal.fromData(data);
       }
     }
 
-    export function fromProto(
-      anyProto: Any,
-      isClassic?: boolean
-    ): Proposal.Content {
+    export function fromProto(anyProto: Any): Proposal.Content {
       const typeUrl = anyProto.typeUrl;
       switch (typeUrl) {
         case '/cosmos.gov.v1beta1.TextProposal':
@@ -460,15 +446,9 @@ export namespace Proposal {
         case '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal':
           return UpdateInstantiateConfigProposal.unpackAny(anyProto);
         case '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal':
-          return AddBurnTaxExemptionAddressProposal.unpackAny(
-            anyProto,
-            isClassic
-          );
+          return AddBurnTaxExemptionAddressProposal.unpackAny(anyProto);
         case '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal':
-          return RemoveBurnTaxExemptionAddressProposal.unpackAny(
-            anyProto,
-            isClassic
-          );
+          return RemoveBurnTaxExemptionAddressProposal.unpackAny(anyProto);
       }
 
       throw `Proposal content ${typeUrl} not recognized`;

@@ -33,22 +33,15 @@ export class MsgChannelOpenAck extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenAck {
-    _;
-    isClassic;
+  public static fromAmino(): MsgChannelOpenAck {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgChannelOpenAck.Data,
-    _?: boolean
-  ): MsgChannelOpenAck {
-    _;
+  public static fromData(data: MsgChannelOpenAck.Data) {
     const {
       port_id,
       channel_id,
@@ -69,8 +62,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgChannelOpenAck.Data {
-    _;
+  public toData(): MsgChannelOpenAck.Data {
     const {
       port_id,
       channel_id,
@@ -92,11 +84,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgChannelOpenAck.Proto,
-    _?: boolean
-  ): MsgChannelOpenAck {
-    _;
+  public static fromProto(proto: MsgChannelOpenAck.Proto) {
     return new MsgChannelOpenAck(
       proto.portId,
       proto.channelId,
@@ -108,8 +96,7 @@ export class MsgChannelOpenAck extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgChannelOpenAck.Proto {
-    _;
+  public toProto(): MsgChannelOpenAck.Proto {
     const {
       port_id,
       channel_id,
@@ -130,16 +117,14 @@ export class MsgChannelOpenAck extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenAck',
       value: MsgChannelOpenAck_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenAck {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgChannelOpenAck.fromProto(
       MsgChannelOpenAck_pb.decode(msgAny.value)
     );

@@ -44,8 +44,7 @@ export class Header extends JSONSerializable<any, Header.Data, Header.Proto> {
     super();
   }
 
-  public static fromAmino(_: any): Header {
-    _;
+  public static fromAmino(): Header {
     throw new Error('Amino not supported');
   }
 
@@ -229,8 +228,7 @@ export class SignedHeader extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): SignedHeader {
-    _;
+  public static fromAmino(): SignedHeader {
     throw new Error('Amino not supported');
   }
 
@@ -294,8 +292,7 @@ export class BlockID extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): BlockID {
-    _;
+  public static fromAmino(): BlockID {
     throw new Error('Amino not supported');
   }
 
@@ -361,8 +358,7 @@ export class PartSetHeader extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): PartSetHeader {
-    _;
+  public static fromAmino(): PartSetHeader {
     throw new Error('Amino not supported');
   }
 
@@ -426,8 +422,7 @@ export class Commit extends JSONSerializable<any, Commit.Data, Commit.Proto> {
     super();
   }
 
-  public static fromAmino(_: any): Commit {
-    _;
+  public static fromAmino(): Commit {
     throw new Error('Amino not supported');
   }
 
@@ -509,8 +504,7 @@ export class CommitSig extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): CommitSig {
-    _;
+  public static fromAmino(): CommitSig {
     throw new Error('Amino not supported');
   }
 
@@ -593,8 +587,7 @@ export class ValidatorSet extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): ValidatorSet {
-    _;
+  public static fromAmino(): ValidatorSet {
     throw new Error('Amino not supported');
   }
 
@@ -670,8 +663,7 @@ export class Validator extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): Validator {
-    _;
+  public static fromAmino(): Validator {
     throw new Error('Amino not supported');
   }
 

@@ -16,9 +16,9 @@ describe('MsgCreateVestingAccount', () => {
     expect(obj.end_time).toStrictEqual(p.endTime.toNumber());
     expect(obj.amount).toStrictEqual(Coins.fromProto(p.amount));
 
-    const d = obj.toData(false);
+    const d = obj.toData();
     expect(obj).toStrictEqual(MsgCreateVestingAccount.fromData(d));
-    const a = obj.toAmino(false);
+    const a = obj.toAmino();
     expect(obj).toStrictEqual(MsgCreateVestingAccount.fromAmino(a));
   });
 });

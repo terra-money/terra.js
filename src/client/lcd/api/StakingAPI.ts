@@ -3,6 +3,7 @@ import {
   ValAddress,
   UnbondingDelegation,
   Coin,
+  Dec,
 } from '../../../core';
 import { BaseAPI } from './BaseAPI';
 import { Delegation } from '../../../core/staking/Delegation';
@@ -26,6 +27,9 @@ export interface StakingParams {
 
   /** The denomination used as the staking token (probably Luna). */
   bond_denom: Denom;
+
+  /** Minimum commission rate */
+  min_commission_rate: Dec;
 }
 
 export namespace StakingParams {
@@ -35,6 +39,7 @@ export namespace StakingParams {
     max_entries: number;
     historical_entries: number;
     bond_denom: Denom;
+    min_commission_rate: string;
   }
 }
 
@@ -54,7 +59,6 @@ export namespace StakingPool {
 }
 
 export class StakingAPI extends BaseAPI {
-
   constructor(public lcd: LCDClient) {
     super(lcd.apiRequester);
   }
@@ -296,6 +300,7 @@ export class StakingAPI extends BaseAPI {
         max_entries: d.max_entries,
         historical_entries: d.historical_entries,
         bond_denom: d.bond_denom,
+        min_commission_rate: new Dec(d.min_commission_rate),
       }));
   }
 }

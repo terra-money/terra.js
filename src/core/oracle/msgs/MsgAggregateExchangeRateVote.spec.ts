@@ -28,7 +28,7 @@ describe('MsgAggregateExchangeRateVote', () => {
       'terra1krj7amhhagjnyg2tkkuh6l0550y733jnjulzjh',
       'terravaloper1krj7amhhagjnyg2tkkuh6l0550y733jnjnnlzy'
     );
-    const anyObj = msg.packAny(true);
-    expect(MsgAggregateExchangeRateVote.unpackAny(anyObj, true)).toBeDefined();
+    const anyObj = msg.packAny();
+    expect(MsgAggregateExchangeRateVote.unpackAny(anyObj)).toBeDefined();
   });
 });
