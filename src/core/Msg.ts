@@ -49,10 +49,11 @@ import {
 import {
   MsgStoreCode,
   MsgInstantiateContract,
+  MsgInstantiateContract2,
   MsgExecuteContract,
   MsgMigrateContract,
-  MsgUpdateContractAdmin,
-  MsgClearContractAdmin,
+  MsgUpdateAdmin,
+  MsgClearAdmin,
   WasmMsg,
 } from './wasm/msgs';
 import { MsgTransfer, IbcTransferMsg } from './ibc/applications/transfer';
@@ -260,14 +261,16 @@ export namespace Msg {
         return MsgStoreCode.fromAmino(data);
       case 'wasm/MsgInstantiateContract':
         return MsgInstantiateContract.fromAmino(data);
+      case 'wasm/MsgInstantiateContract2':
+        return MsgInstantiateContract2.fromAmino(data);
       case 'wasm/MsgExecuteContract':
         return MsgExecuteContract.fromAmino(data);
       case 'wasm/MsgMigrateContract':
         return MsgMigrateContract.fromAmino(data);
       case 'wasm/MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.fromAmino(data);
+        return MsgUpdateAdmin.fromAmino(data);
       case 'wasm/MsgClearAdmin':
-        return MsgClearContractAdmin.fromAmino(data);
+        return MsgClearAdmin.fromAmino(data);
       // ibc-transfer
       case 'cosmos-sdk/MsgTransfer':
         return MsgTransfer.fromAmino(data);
@@ -361,14 +364,16 @@ export namespace Msg {
         return MsgStoreCode.fromData(data);
       case '/cosmwasm.wasm.v1.MsgInstantiateContract':
         return MsgInstantiateContract.fromData(data);
+      case '/cosmwasm.wasm.v1.MsgInstantiateContract2':
+        return MsgInstantiateContract2.fromData(data);
       case '/cosmwasm.wasm.v1.MsgExecuteContract':
         return MsgExecuteContract.fromData(data);
       case '/cosmwasm.wasm.v1.MsgMigrateContract':
         return MsgMigrateContract.fromData(data);
       case '/cosmwasm.wasm.v1.MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.fromData(data);
+        return MsgUpdateAdmin.fromData(data);
       case '/cosmwasm.wasm.v1.MsgClearAdmin':
-        return MsgClearContractAdmin.fromData(data);
+        return MsgClearAdmin.fromData(data);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':
@@ -506,14 +511,16 @@ export namespace Msg {
         return MsgStoreCode.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgInstantiateContract':
         return MsgInstantiateContract.unpackAny(proto);
+      case '/cosmwasm.wasm.v1.MsgInstantiateContract2':
+        return MsgInstantiateContract2.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgExecuteContract':
         return MsgExecuteContract.unpackAny(proto);
       case '/cosmwasm.wasm.v1beta1.MsgMigrateContract':
         return MsgMigrateContract.unpackAny(proto);
       case '/cosmwasm.wasm.v1beta1.MsgUpdateAdmin':
-        return MsgUpdateContractAdmin.unpackAny(proto);
+        return MsgUpdateAdmin.unpackAny(proto);
       case '/cosmwasm.wasm.v1.MsgClearAdmin':
-        return MsgClearContractAdmin.unpackAny(proto);
+        return MsgClearAdmin.unpackAny(proto);
 
       // ibc-transfer
       case '/ibc.applications.transfer.v1.MsgTransfer':

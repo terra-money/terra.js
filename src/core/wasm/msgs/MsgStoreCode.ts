@@ -12,7 +12,7 @@ export class MsgStoreCode extends JSONSerializable<
   /**
    * @param sender code creator
    * @param wasm_byte_code base64-encoded bytecode contents
-   * @param instantiate_permission  InstantiatePermission access control to apply on contract creation, optional. v2 supported only
+   * @param instantiate_permission access control to apply on contract creation, optional
    */
   constructor(
     public sender: AccAddress,

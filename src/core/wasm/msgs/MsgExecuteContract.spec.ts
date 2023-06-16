@@ -17,7 +17,7 @@ describe('MsgExecuteContract', () => {
       },
     });
 
-    expect(msg1.execute_msg).toMatchObject({
+    expect(msg1.msg).toMatchObject({
       transfer: {
         recipient: 'terra13jqgrtqwucx4jdvhg0d4tc80892fscx54298yt',
         amount: 10000,
@@ -39,7 +39,7 @@ describe('MsgExecuteContract', () => {
       funds: [],
     });
 
-    expect(msg1.execute_msg).toMatchObject({
+    expect(msg1.msg).toMatchObject({
       transfer: {
         recipient: 'terra13jqgrtqwucx4jdvhg0d4tc80892fscx54298yt',
         amount: 10000,
@@ -55,14 +55,12 @@ describe('MsgExecuteContract', () => {
       { uluna: 120400 }
     );
     const aminoWithExecuteString = msgWithExecuteString.toAmino();
-    expect(aminoWithExecuteString.value.msg).toEqual(
-      msgWithExecuteString.execute_msg
-    );
+    expect(aminoWithExecuteString.value.msg).toEqual(msgWithExecuteString.msg);
     const protoWithExecuteString = msgWithExecuteString.toProto();
     expect(protoWithExecuteString.msg.toString()).toEqual(
-      JSON.stringify(msgWithExecuteString.execute_msg)
+      JSON.stringify(msgWithExecuteString.msg)
     );
     const dataWithExecuteString = msgWithExecuteString.toData();
-    expect(dataWithExecuteString.msg).toEqual(msgWithExecuteString.execute_msg);
+    expect(dataWithExecuteString.msg).toEqual(msgWithExecuteString.msg);
   });
 });

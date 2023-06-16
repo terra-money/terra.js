@@ -12,37 +12,35 @@ const msgWithMigrateString = new MsgMigrateContract(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   2,
-  'migrate_msg_as_string'
+  'msg_as_string'
 );
 
 describe('MsgMigrateContract', () => {
   it('amino', () => {
     const aminoWithAdmin = msgWithAdmin.toAmino() as MsgMigrateContract.Amino;
-    expect(aminoWithAdmin.value.sender).toEqual(msgWithAdmin.admin);
+    expect(aminoWithAdmin.value.sender).toEqual(msgWithAdmin.sender);
 
     const aminoWithMigrateString =
       msgWithMigrateString.toAmino() as MsgMigrateContract.Amino;
-    expect(aminoWithMigrateString.value.msg).toEqual(
-      msgWithMigrateString.migrate_msg
-    );
+    expect(aminoWithMigrateString.value.msg).toEqual(msgWithMigrateString.msg);
   });
 
   it('proto', () => {
     const protoWithAdmin = msgWithAdmin.toProto() as MsgMigrateContract_pb;
-    expect(protoWithAdmin.sender).toEqual(msgWithAdmin.admin);
+    expect(protoWithAdmin.sender).toEqual(msgWithAdmin.sender);
 
     const protoWithMigrateString =
       msgWithMigrateString.toProto() as MsgMigrateContract_pb;
     expect(protoWithMigrateString.msg.toString()).toEqual(
-      JSON.stringify(msgWithMigrateString.migrate_msg)
+      JSON.stringify(msgWithMigrateString.msg)
     );
   });
 
   it('data', () => {
     const dataWithAdmin = msgWithAdmin.toData();
-    expect(dataWithAdmin.sender).toEqual(msgWithAdmin.admin);
+    expect(dataWithAdmin.sender).toEqual(msgWithAdmin.sender);
 
     const dataWithMigrateString = msgWithMigrateString.toData();
-    expect(dataWithMigrateString.msg).toEqual(msgWithMigrateString.migrate_msg);
+    expect(dataWithMigrateString.msg).toEqual(msgWithMigrateString.msg);
   });
 });

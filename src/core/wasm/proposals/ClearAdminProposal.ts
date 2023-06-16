@@ -25,7 +25,7 @@ export class ClearAdminProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: ClearAdminProposal.Amino): ClearAdminProposal {
+  public static fromAmino(data: ClearAdminProposal.Amino) {
     const {
       value: { title, description, contract },
     } = data;
@@ -44,7 +44,7 @@ export class ClearAdminProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: ClearAdminProposal.Proto): ClearAdminProposal {
+  public static fromProto(proto: ClearAdminProposal.Proto) {
     return new ClearAdminProposal(
       proto.title,
       proto.description,
@@ -60,20 +60,20 @@ export class ClearAdminProposal extends JSONSerializable<
       contract,
     });
   }
-  public packAny(): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.ClearAdminProposal',
       value: ClearAdminProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): ClearAdminProposal {
+  public static unpackAny(msgAny: Any) {
     return ClearAdminProposal.fromProto(
       ClearAdminProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(data: ClearAdminProposal.Data): ClearAdminProposal {
+  public static fromData(data: ClearAdminProposal.Data) {
     const { title, description, contract } = data;
     return new ClearAdminProposal(title, description, contract);
   }

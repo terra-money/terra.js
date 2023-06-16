@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@classic-terra/terra.proto": "^2.1.1",
-    "@terra-money/terra.proto": "^2.1.0",
+    "@terra-money/terra.proto": "^3.0.5",
     "axios": "^0.27.2",
     "bech32": "^2.0.0",
     "bip32": "^2.0.6",

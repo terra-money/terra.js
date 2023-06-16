@@ -9,22 +9,22 @@ export class MsgExecuteContract extends JSONSerializable<
   MsgExecuteContract.Data,
   MsgExecuteContract.Proto
 > {
-  public coins: Coins;
+  public funds: Coins;
 
   /**
-   * @param sender contract user
-   * @param contract contract address
-   * @param execute_msg HandleMsg to pass as arguments for contract invocation
-   * @param coins coins to be sent to contract
+   * @param sender the that actor that signed the messages
+   * @param contract the address of the smart contract
+   * @param msg json encoded message to be passed to the contract
+   * @param funds coins that are transferred to the contract on execution
    */
   constructor(
     public sender: AccAddress,
     public contract: AccAddress,
-    public execute_msg: object | string,
-    coins: Coins.Input = {}
+    public msg: object | string,
+    funds: Coins.Input = {}
   ) {
     super();
-    this.coins = new Coins(coins);
+    this.funds = new Coins(funds);
   }
 
   public static fromAmino(data: MsgExecuteContract.Amino): MsgExecuteContract {
@@ -40,14 +40,14 @@ export class MsgExecuteContract extends JSONSerializable<
   }
 
   public toAmino(): MsgExecuteContract.Amino {
-    const { sender, contract, execute_msg, coins } = this;
+    const { sender, contract, msg, funds } = this;
     return {
       type: 'wasm/MsgExecuteContract',
       value: {
         sender,
         contract,
-        msg: removeNull(execute_msg),
-        funds: coins.toAmino(),
+        msg: removeNull(msg),
+        funds: funds.toAmino(),
       },
     };
   }
@@ -63,12 +63,12 @@ export class MsgExecuteContract extends JSONSerializable<
   }
 
   public toProto(): MsgExecuteContract.Proto {
-    const { sender, contract, execute_msg, coins } = this;
+    const { sender, contract, msg, funds } = this;
     return MsgExecuteContract_pb.fromPartial({
-      funds: coins.toProto(),
-      contract,
       sender,
-      msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
+      contract,
+      msg: Buffer.from(JSON.stringify(removeNull(msg)), 'utf-8'),
+      funds: funds.toProto(),
     });
   }
 
@@ -93,13 +93,13 @@ export class MsgExecuteContract extends JSONSerializable<
   }
 
   public toData(): MsgExecuteContract.Data {
-    const { sender, contract, execute_msg, coins } = this;
+    const { sender, contract, msg, funds } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgExecuteContract',
       sender,
       contract,
-      msg: execute_msg,
-      funds: coins.toData(),
+      msg,
+      funds: funds.toData(),
     };
   }
 }

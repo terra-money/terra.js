@@ -15,7 +15,7 @@ export class UnpinCodesProposal extends JSONSerializable<
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param code_ids the address of the smart code_ids
+   * @param code_ids references the WASM codes
    */
   constructor(
     public title: string,
@@ -25,7 +25,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: UnpinCodesProposal.Amino): UnpinCodesProposal {
+  public static fromAmino(data: UnpinCodesProposal.Amino) {
     const {
       value: { title, description, code_ids },
     } = data;
@@ -48,7 +48,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: UnpinCodesProposal.Proto): UnpinCodesProposal {
+  public static fromProto(proto: UnpinCodesProposal.Proto) {
     return new UnpinCodesProposal(
       proto.title,
       proto.description,
@@ -64,20 +64,21 @@ export class UnpinCodesProposal extends JSONSerializable<
       codeIds: code_ids.map(cid => Long.fromNumber(cid)),
     });
   }
-  public packAny(): Any {
+
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UnpinCodesProposal',
       value: UnpinCodesProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): UnpinCodesProposal {
+  public static unpackAny(msgAny: Any) {
     return UnpinCodesProposal.fromProto(
       UnpinCodesProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(data: UnpinCodesProposal.Data): UnpinCodesProposal {
+  public static fromData(data: UnpinCodesProposal.Data) {
     const { title, description, code_ids } = data;
     return new UnpinCodesProposal(
       title,

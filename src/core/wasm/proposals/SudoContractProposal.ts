@@ -11,8 +11,8 @@ export class SudoContractProposal extends JSONSerializable<
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param contract contract address to be migrated from
-   * @param msg JSON message to configure the migrate state of the contract
+   * @param contract the address of the smart contract
+   * @param msg json encoded message to be passed to the contract as sudo
    */
   constructor(
     public title: string,
@@ -23,9 +23,7 @@ export class SudoContractProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: SudoContractProposal.Amino
-  ): SudoContractProposal {
+  public static fromAmino(data: SudoContractProposal.Amino) {
     const {
       value: { title, description, contract, msg },
     } = data;
@@ -45,9 +43,7 @@ export class SudoContractProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: SudoContractProposal.Proto
-  ): SudoContractProposal {
+  public static fromProto(proto: SudoContractProposal.Proto) {
     return new SudoContractProposal(
       proto.title,
       proto.description,
@@ -65,22 +61,21 @@ export class SudoContractProposal extends JSONSerializable<
       msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
     });
   }
-  public packAny(): Any {
+
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.SudoContractProposal',
       value: SudoContractProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): SudoContractProposal {
+  public static unpackAny(msgAny: Any) {
     return SudoContractProposal.fromProto(
       SudoContractProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: SudoContractProposal.Data
-  ): SudoContractProposal {
+  public static fromData(data: SudoContractProposal.Data) {
     const { title, description, contract, msg } = data;
     return new SudoContractProposal(title, description, contract, msg);
   }

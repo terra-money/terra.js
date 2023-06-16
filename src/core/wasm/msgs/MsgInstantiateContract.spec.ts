@@ -6,7 +6,8 @@ const msgWithAdmin = new MsgInstantiateContract(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   1,
   { count: 0 },
-  { uluna: 120400 }
+  { uluna: 120400 },
+  ''
 );
 
 const msgWithoutAdmin = new MsgInstantiateContract(
@@ -14,15 +15,17 @@ const msgWithoutAdmin = new MsgInstantiateContract(
   undefined,
   1,
   { count: 0 },
-  { uluna: 120400 }
+  { uluna: 120400 },
+  undefined
 );
 
 const msgWithInitString = new MsgInstantiateContract(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   undefined,
   1,
-  'init_msg_as_string',
-  { uluna: 120400 }
+  'msg_as_string',
+  { uluna: 120400 },
+  undefined
 );
 
 describe('MsgInstantiateContract', () => {
@@ -34,7 +37,7 @@ describe('MsgInstantiateContract', () => {
     expect(aminoWithoutAdmin.value.admin).toEqual(msgWithoutAdmin.admin);
 
     const aminoWithInitString = msgWithInitString.toAmino();
-    expect(aminoWithInitString.value.msg).toEqual(msgWithInitString.init_msg);
+    expect(aminoWithInitString.value.msg).toEqual(msgWithInitString.msg);
   });
 
   it('proto', () => {
@@ -47,7 +50,7 @@ describe('MsgInstantiateContract', () => {
     const protoWithInitString =
       msgWithInitString.toProto() as MsgInstantiateContract_pb;
     expect(protoWithInitString.msg.toString()).toEqual(
-      JSON.stringify(msgWithInitString.init_msg)
+      JSON.stringify(msgWithInitString.msg)
     );
   });
 
@@ -60,6 +63,6 @@ describe('MsgInstantiateContract', () => {
 
     const dataWithInitString2 =
       msgWithInitString.toData() as MsgInstantiateContract.Data;
-    expect(dataWithInitString2.msg).toEqual(msgWithInitString.init_msg);
+    expect(dataWithInitString2.msg).toEqual(msgWithInitString.msg);
   });
 });

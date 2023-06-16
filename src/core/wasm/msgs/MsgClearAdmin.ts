@@ -3,31 +3,29 @@ import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgClearAdmin as MsgClearAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
-export class MsgClearContractAdmin extends JSONSerializable<
-  MsgClearContractAdmin.Amino,
-  MsgClearContractAdmin.Data,
-  MsgClearContractAdmin.Proto
+export class MsgClearAdmin extends JSONSerializable<
+  MsgClearAdmin.Amino,
+  MsgClearAdmin.Data,
+  MsgClearAdmin.Proto
 > {
   /**
-   * @param admin contract admin
-   * @param contract contract address
+   * @param sender the that actor that signed the messages
+   * @param contract the address of the smart contract
    */
-  constructor(public admin: AccAddress, public contract: AccAddress) {
+  constructor(public sender: AccAddress, public contract: AccAddress) {
     super();
   }
 
-  public static fromAmino(
-    data: MsgClearContractAdmin.Amino
-  ): MsgClearContractAdmin {
+  public static fromAmino(data: MsgClearAdmin.Amino): MsgClearAdmin {
     const {
       value: { sender, contract },
     } = data;
-    return new MsgClearContractAdmin(sender, contract);
+    return new MsgClearAdmin(sender, contract);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public toAmino(): MsgClearContractAdmin.Amino {
-    const { admin, contract } = this;
+  public toAmino(): MsgClearAdmin.Amino {
+    const { sender: admin, contract } = this;
     return {
       type: 'wasm/MsgClearAdmin',
       value: {
@@ -37,16 +35,14 @@ export class MsgClearContractAdmin extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    data: MsgClearContractAdmin.Proto
-  ): MsgClearContractAdmin {
+  public static fromProto(data: MsgClearAdmin.Proto): MsgClearAdmin {
     const { sender, contract } = data;
-    return new MsgClearContractAdmin(sender, contract);
+    return new MsgClearAdmin(sender, contract);
   }
 
-  public toProto(): MsgClearContractAdmin.Proto {
+  public toProto(): MsgClearAdmin.Proto {
     return MsgClearAdmin_pb.fromPartial({
-      sender: this.admin,
+      sender: this.sender,
       contract: this.contract,
     });
   }
@@ -60,29 +56,25 @@ export class MsgClearContractAdmin extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgClearContractAdmin {
-    return MsgClearContractAdmin.fromProto(
-      MsgClearAdmin_pb.decode(msgAny.value)
-    );
+  public static unpackAny(msgAny: Any): MsgClearAdmin {
+    return MsgClearAdmin.fromProto(MsgClearAdmin_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: MsgClearContractAdmin.Data
-  ): MsgClearContractAdmin {
+  public static fromData(data: MsgClearAdmin.Data): MsgClearAdmin {
     const { sender, contract } = data;
-    return new MsgClearContractAdmin(sender, contract);
+    return new MsgClearAdmin(sender, contract);
   }
 
-  public toData(): MsgClearContractAdmin.Data {
+  public toData(): MsgClearAdmin.Data {
     return {
       '@type': '/cosmwasm.wasm.v1.MsgClearAdmin',
-      sender: this.admin,
+      sender: this.sender,
       contract: this.contract,
     };
   }
 }
 
-export namespace MsgClearContractAdmin {
+export namespace MsgClearAdmin {
   export interface Amino {
     type: 'wasm/MsgClearAdmin';
     value: {

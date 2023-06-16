@@ -24,9 +24,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: UpdateAdminProposal.Amino
-  ): UpdateAdminProposal {
+  public static fromAmino(data: UpdateAdminProposal.Amino) {
     const {
       value: { title, description, contract, new_admin },
     } = data;
@@ -46,9 +44,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: UpdateAdminProposal.Proto
-  ): UpdateAdminProposal {
+  public static fromProto(proto: UpdateAdminProposal.Proto) {
     return new UpdateAdminProposal(
       proto.title,
       proto.description,
@@ -66,20 +62,21 @@ export class UpdateAdminProposal extends JSONSerializable<
       newAdmin: new_admin,
     });
   }
-  public packAny(): Any {
+
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateAdminProposal',
       value: UpdateAdminProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any): UpdateAdminProposal {
+  public static unpackAny(msgAny: Any) {
     return UpdateAdminProposal.fromProto(
       UpdateAdminProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(data: UpdateAdminProposal.Data): UpdateAdminProposal {
+  public static fromData(data: UpdateAdminProposal.Data) {
     const { title, description, contract, new_admin } = data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }

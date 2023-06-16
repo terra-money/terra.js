@@ -1,6 +1,7 @@
 import { JSONSerializable } from '../../../util/json';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { UpdateInstantiateConfigProposal as UpdateInstantiateConfigProposal_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/proposal';
+import {} from '@terra-money/terra.proto/cosmwasm/wasm/v1/proposal';
 import { AccessConfigUpdate } from '../AccessConfigUpdate';
 
 /**
@@ -15,7 +16,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param access_config_updates the address of the smart access_config_updates
+   * @param access_config_updates the list of code ids and the access config
    */
   constructor(
     public title: string,

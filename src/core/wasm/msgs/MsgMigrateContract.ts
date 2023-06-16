@@ -10,16 +10,16 @@ export class MsgMigrateContract extends JSONSerializable<
   MsgMigrateContract.Proto
 > {
   /**
-   * @param admin contract admin
-   * @param contract contract address to be migrated from
-   * @param new_code_id reference to the new code on the blockchain
-   * @param migrate_msg JSON message to configure the migrate state of the contract
+   * @param sender the that actor that signed the messages
+   * @param contract the address of the smart contract
+   * @param code_id references the new WASM code
+   * @param msg json encoded message to be passed to the contract on migration
    */
   constructor(
-    public admin: AccAddress,
+    public sender: AccAddress,
     public contract: AccAddress,
-    public new_code_id: number,
-    public migrate_msg: object | string // json object or string
+    public code_id: number,
+    public msg: object | string // json object or string
   ) {
     super();
   }
@@ -37,14 +37,14 @@ export class MsgMigrateContract extends JSONSerializable<
   }
 
   public toAmino(): MsgMigrateContract.Amino {
-    const { admin, contract, new_code_id, migrate_msg } = this;
+    const { sender, contract, code_id, msg } = this;
     return {
       type: 'wasm/MsgMigrateContract',
       value: {
-        sender: admin,
+        sender,
         contract,
-        code_id: new_code_id.toFixed(),
-        msg: removeNull(migrate_msg),
+        code_id: code_id.toFixed(),
+        msg: removeNull(msg),
       },
     };
   }
@@ -60,12 +60,12 @@ export class MsgMigrateContract extends JSONSerializable<
   }
 
   public toProto(): MsgMigrateContract.Proto {
-    const { admin, contract, new_code_id, migrate_msg } = this;
+    const { sender, contract, code_id, msg } = this;
     return MsgMigrateContract_pb.fromPartial({
-      sender: admin,
+      sender,
       contract,
-      codeId: Long.fromNumber(new_code_id),
-      msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
+      codeId: Long.fromNumber(code_id),
+      msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
     });
   }
   public packAny(): Any {
@@ -94,13 +94,13 @@ export class MsgMigrateContract extends JSONSerializable<
   }
 
   public toData(): MsgMigrateContract.Data {
-    const { admin, contract, new_code_id, migrate_msg } = this;
+    const { sender, contract, code_id, msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
-      sender: admin,
+      sender,
       contract,
-      code_id: new_code_id.toFixed(),
-      msg: removeNull(migrate_msg),
+      code_id: code_id.toFixed(),
+      msg: removeNull(msg),
     };
   }
 }

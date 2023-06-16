@@ -3,56 +3,52 @@ import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
 import { MsgUpdateAdmin as MsgUpdateAdmin_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
-export class MsgUpdateContractAdmin extends JSONSerializable<
-  MsgUpdateContractAdmin.Amino,
-  MsgUpdateContractAdmin.Data,
-  MsgUpdateContractAdmin.Proto
+export class MsgUpdateAdmin extends JSONSerializable<
+  MsgUpdateAdmin.Amino,
+  MsgUpdateAdmin.Data,
+  MsgUpdateAdmin.Proto
 > {
   /**
-   * @param admin contract admin
-   * @param new_admin new admin
-   * @param contract contract address
+   * @param sender the that actor that signed the messages
+   * @param new_admin address to be set
+   * @param contract the address of the smart contract
    */
   constructor(
-    public admin: AccAddress,
+    public sender: AccAddress,
     public new_admin: AccAddress,
     public contract: AccAddress
   ) {
     super();
   }
 
-  public static fromAmino(
-    data: MsgUpdateContractAdmin.Amino
-  ): MsgUpdateContractAdmin {
+  public static fromAmino(data: MsgUpdateAdmin.Amino) {
     const {
       value: { sender, new_admin, contract },
     } = data;
-    return new MsgUpdateContractAdmin(sender, new_admin, contract);
+    return new MsgUpdateAdmin(sender, new_admin, contract);
   }
 
-  public toAmino(): MsgUpdateContractAdmin.Amino {
-    const { admin, new_admin, contract } = this;
+  public toAmino(): MsgUpdateAdmin.Amino {
+    const { sender, new_admin, contract } = this;
     return {
       type: 'wasm/MsgUpdateAdmin',
       value: {
-        sender: admin,
+        sender,
         new_admin,
         contract,
       },
     };
   }
 
-  public static fromProto(
-    proto: MsgUpdateContractAdmin.Proto
-  ): MsgUpdateContractAdmin {
+  public static fromProto(proto: MsgUpdateAdmin.Proto) {
     const p = proto as MsgUpdateAdmin_pb;
-    return new MsgUpdateContractAdmin(p.sender, p.newAdmin, p.contract);
+    return new MsgUpdateAdmin(p.sender, p.newAdmin, p.contract);
   }
 
-  public toProto(): MsgUpdateContractAdmin.Proto {
-    const { admin, new_admin, contract } = this;
+  public toProto(): MsgUpdateAdmin.Proto {
+    const { sender, new_admin, contract } = this;
     return MsgUpdateAdmin_pb.fromPartial({
-      sender: admin,
+      sender,
       contract,
       newAdmin: new_admin,
     });
@@ -67,31 +63,27 @@ export class MsgUpdateContractAdmin extends JSONSerializable<
     });
   }
 
-  public static unpackAny(msgAny: Any): MsgUpdateContractAdmin {
-    return MsgUpdateContractAdmin.fromProto(
-      MsgUpdateAdmin_pb.decode(msgAny.value)
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgUpdateAdmin.fromProto(MsgUpdateAdmin_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: MsgUpdateContractAdmin.Data
-  ): MsgUpdateContractAdmin {
+  public static fromData(data: MsgUpdateAdmin.Data) {
     const { sender, new_admin, contract } = data;
-    return new MsgUpdateContractAdmin(sender, new_admin, contract);
+    return new MsgUpdateAdmin(sender, new_admin, contract);
   }
 
-  public toData(): MsgUpdateContractAdmin.Data {
-    const { admin, new_admin, contract } = this;
+  public toData(): MsgUpdateAdmin.Data {
+    const { sender, new_admin, contract } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MsgUpdateAdmin',
-      sender: admin,
+      sender,
       new_admin,
       contract,
     };
   }
 }
 
-export namespace MsgUpdateContractAdmin {
+export namespace MsgUpdateAdmin {
   export interface Amino {
     type: 'wasm/MsgUpdateAdmin';
     value: {
