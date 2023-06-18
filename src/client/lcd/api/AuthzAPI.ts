@@ -31,9 +31,7 @@ export class AuthzAPI extends BaseAPI {
         )
       )
       .then(d => [
-        d.grants.map(grant =>
-          AuthorizationGrant.fromData(grant, this.lcd.config.isClassic)
-        ),
+        d.grants.map(grant => AuthorizationGrant.fromData(grant)),
         d.pagination,
       ]);
   }
@@ -45,18 +43,13 @@ export class AuthzAPI extends BaseAPI {
     granter: AccAddress,
     params: APIParams = {}
   ): Promise<[AuthorizationGrant[], Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ grants: AuthorizationGrant.Data[]; pagination: Pagination }>(
         `/cosmos/authz/v1beta1/grants/granter/${granter}`,
         params
       )
       .then(d => [
-        d.grants.map(g =>
-          AuthorizationGrant.fromData(g, this.lcd.config.isClassic)
-        ),
+        d.grants.map(g => AuthorizationGrant.fromData(g)),
         d.pagination,
       ]);
   }
@@ -68,18 +61,13 @@ export class AuthzAPI extends BaseAPI {
     grantee: AccAddress,
     params: APIParams = {}
   ): Promise<[AuthorizationGrant[], Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ grants: AuthorizationGrant.Data[]; pagination: Pagination }>(
         `/cosmos/authz/v1beta1/grants/grantee/${grantee}`,
         params
       )
       .then(d => [
-        d.grants.map(g =>
-          AuthorizationGrant.fromData(g, this.lcd.config.isClassic)
-        ),
+        d.grants.map(g => AuthorizationGrant.fromData(g)),
         d.pagination,
       ]);
   }

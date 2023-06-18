@@ -417,8 +417,8 @@ describe('MsgMultiSend', () => {
 
   it('deserialize correctly proto', () => {
     const multisend = MsgMultiSend.fromProto(proto_example);
-    expect(multisend.toData(true)).toMatchObject(proto_example);
-    expect(multisend.toData(false)).toMatchObject(proto_example);
+    expect(multisend.toData()).toMatchObject(proto_example);
+    expect(multisend.toData()).toMatchObject(proto_example);
   });
 
   it('can be created manually', () => {

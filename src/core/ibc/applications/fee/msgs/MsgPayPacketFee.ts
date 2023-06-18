@@ -8,7 +8,7 @@ import { Fee } from '../Fee';
  * This Msg can be used to pay for a packet at the next sequence send & should be combined with the Msg that will be paid for
  */
 export class MsgPayPacketFee extends JSONSerializable<
-  any,
+  MsgPayPacketFee.Amino,
   MsgPayPacketFee.Data,
   MsgPayPacketFee.Proto
 > {
@@ -29,28 +29,35 @@ export class MsgPayPacketFee extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgPayPacketFee {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    _;
-    throw new Error('Amino not supported');
+  public static fromAmino(data: MsgPayPacketFee.Amino) {
+    const {
+      value: { fee, source_port_id, source_channel_id, signer, relayers },
+    } = data;
+
+    return new MsgPayPacketFee(
+      fee ? Fee.fromAmino(fee) : undefined,
+      source_port_id,
+      source_channel_id,
+      signer,
+      relayers
+    );
   }
 
-  public toAmino(isClassic?: boolean): any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    throw new Error('Amino not supported');
+  public toAmino(): MsgPayPacketFee.Amino {
+    const { fee, source_port_id, source_channel_id, signer, relayers } = this;
+    return {
+      type: 'cosmos-sdk/MsgPayPacketFee',
+      value: {
+        fee: fee?.toAmino(),
+        source_port_id,
+        source_channel_id,
+        signer,
+        relayers,
+      },
+    };
   }
 
-  public static fromData(
-    data: MsgPayPacketFee.Data,
-    isClassic?: boolean
-  ): MsgPayPacketFee {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgPayPacketFee.Data): MsgPayPacketFee {
     const { fee, source_port_id, source_channel_id, signer, relayers } = data;
 
     return new MsgPayPacketFee(
@@ -62,10 +69,7 @@ export class MsgPayPacketFee extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MsgPayPacketFee.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgPayPacketFee.Data {
     const { fee, source_port_id, source_channel_id, signer, relayers } = this;
     return {
       '@type': '/ibc.applications.fee.v1.MsgPayPacketFee',
@@ -77,13 +81,7 @@ export class MsgPayPacketFee extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgPayPacketFee.Proto,
-    isClassic?: boolean
-  ): MsgPayPacketFee {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgPayPacketFee.Proto) {
     return new MsgPayPacketFee(
       proto.fee ? Fee.fromProto(proto.fee) : undefined,
       proto.sourcePortId,
@@ -93,10 +91,7 @@ export class MsgPayPacketFee extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgPayPacketFee.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgPayPacketFee.Proto {
     const { fee, source_port_id, source_channel_id, signer, relayers } = this;
     return MsgPayPacketFee_pb.fromPartial({
       fee: fee?.toProto(),
@@ -107,28 +102,30 @@ export class MsgPayPacketFee extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.applications.fee.v1.MsgPayPacketFee',
-      value: MsgPayPacketFee_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgPayPacketFee_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgPayPacketFee {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return MsgPayPacketFee.fromProto(
-      MsgPayPacketFee_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgPayPacketFee.fromProto(MsgPayPacketFee_pb.decode(msgAny.value));
   }
 }
 
 export namespace MsgPayPacketFee {
+  export interface Amino {
+    type: 'cosmos-sdk/MsgPayPacketFee';
+    value: {
+      fee?: Fee.Amino;
+      source_port_id: string;
+      source_channel_id: string;
+      signer: string;
+      relayers: string[];
+    };
+  }
+
   export interface Data {
     '@type': '/ibc.applications.fee.v1.MsgPayPacketFee';
     fee?: Fee.Data;

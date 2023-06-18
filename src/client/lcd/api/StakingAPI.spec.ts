@@ -50,6 +50,7 @@ describe('StakingAPI', () => {
       max_entries: expect.any(Number),
       historical_entries: expect.any(Number),
       bond_denom: expect.any(String),
+      min_commission_rate: expect.any(Dec),
     });
   });
   it('delegations (delegator & validator)', async () => {

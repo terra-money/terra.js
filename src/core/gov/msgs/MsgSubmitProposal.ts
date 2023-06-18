@@ -29,15 +29,12 @@ export class MsgSubmitProposal extends JSONSerializable<
     this.initial_deposit = new Coins(initial_deposit);
   }
 
-  public static fromAmino(
-    data: MsgSubmitProposal.Amino,
-    isClassic?: boolean
-  ): MsgSubmitProposal {
+  public static fromAmino(data: MsgSubmitProposal.Amino) {
     const {
       value: { content, initial_deposit, proposer },
     } = data;
     return new MsgSubmitProposal(
-      Proposal.Content.fromAmino(content, isClassic),
+      Proposal.Content.fromAmino(content),
       Coins.fromAmino(initial_deposit),
       proposer
     );
@@ -57,59 +54,52 @@ export class MsgSubmitProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgSubmitProposal.Data,
-    isClassic?: boolean
-  ): MsgSubmitProposal {
+  public static fromData(data: MsgSubmitProposal.Data) {
     const { content, initial_deposit, proposer } = data;
     return new MsgSubmitProposal(
-      Proposal.Content.fromData(content, isClassic),
+      Proposal.Content.fromData(content),
       Coins.fromData(initial_deposit),
       proposer
     );
   }
 
-  public toData(isClassic?: boolean): MsgSubmitProposal.Data {
+  public toData(): MsgSubmitProposal.Data {
     const { content, initial_deposit, proposer } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgSubmitProposal',
-      content: content.toData(isClassic),
+      content: content.toData(),
       initial_deposit: initial_deposit.toData(),
       proposer,
     };
   }
 
-  public static fromProto(
-    proto: MsgSubmitProposal.Proto,
-    isClassic?: boolean
-  ): MsgSubmitProposal {
+  public static fromProto(proto: MsgSubmitProposal.Proto) {
     return new MsgSubmitProposal(
-      Proposal.Content.fromProto(proto.content as any, isClassic),
+      Proposal.Content.fromProto(proto.content as any),
       Coins.fromProto(proto.initialDeposit),
       proto.proposer
     );
   }
 
-  public toProto(isClassic?: boolean): MsgSubmitProposal.Proto {
+  public toProto(): MsgSubmitProposal.Proto {
     const { content, initial_deposit, proposer } = this;
     return MsgSubmitProposal_pb.fromPartial({
-      content: content.packAny(isClassic),
+      content: content.packAny(),
       initialDeposit: initial_deposit.toProto(),
       proposer,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgSubmitProposal',
-      value: MsgSubmitProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgSubmitProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgSubmitProposal {
+  public static unpackAny(msgAny: Any) {
     return MsgSubmitProposal.fromProto(
-      MsgSubmitProposal_pb.decode(msgAny.value),
-      isClassic
+      MsgSubmitProposal_pb.decode(msgAny.value)
     );
   }
 }

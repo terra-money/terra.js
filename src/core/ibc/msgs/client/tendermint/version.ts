@@ -21,8 +21,7 @@ export class Consensus extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any): Consensus {
-    _;
+  public static fromAmino(): Consensus {
     throw new Error('Amino not supported');
   }
 
@@ -80,8 +79,7 @@ export class App extends JSONSerializable<any, App.Data, App.Proto> {
     super();
   }
 
-  public static fromAmino(_: any): App {
-    _;
+  public static fromAmino(): App {
     throw new Error('Amino not supported');
   }
 

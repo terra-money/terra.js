@@ -18,20 +18,11 @@ export class MsgDonateAllVestingTokens extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgDonateAllVestingTokens.Amino,
-    isClassic?: boolean
-  ): MsgDonateAllVestingTokens {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: MsgDonateAllVestingTokens.Amino) {
     return new MsgDonateAllVestingTokens(data.value.from_address);
   }
 
-  public toAmino(isClassic?: boolean): MsgDonateAllVestingTokens.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): MsgDonateAllVestingTokens.Amino {
     return {
       type: 'cosmos-sdk/MsgDonateAllVestingTokens',
       value: {
@@ -40,67 +31,37 @@ export class MsgDonateAllVestingTokens extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgDonateAllVestingTokens.Data,
-    isClassic?: boolean
-  ): MsgDonateAllVestingTokens {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgDonateAllVestingTokens.Data) {
     return new MsgDonateAllVestingTokens(data.from_address);
   }
 
-  public toData(isClassic?: boolean): MsgDonateAllVestingTokens.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgDonateAllVestingTokens.Data {
     return {
       '@type': '/cosmos.vesting.v1beta1.MsgDonateAllVestingTokens',
       from_address: this.from_address,
     };
   }
 
-  public static fromProto(
-    proto: MsgDonateAllVestingTokens.Proto,
-    isClassic?: boolean
-  ): MsgDonateAllVestingTokens {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgDonateAllVestingTokens.Proto) {
     return new MsgDonateAllVestingTokens(proto.fromAddress);
   }
 
-  public toProto(isClassic?: boolean): MsgDonateAllVestingTokens.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgDonateAllVestingTokens.Proto {
     return MsgDonateAllVestingTokens_pb.fromPartial({
       fromAddress: this.from_address,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.MsgDonateAllVestingTokens',
-      value: MsgDonateAllVestingTokens_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgDonateAllVestingTokens_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgDonateAllVestingTokens {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return MsgDonateAllVestingTokens.fromProto(
-      MsgDonateAllVestingTokens_pb.decode(msgAny.value),
-      isClassic
+      MsgDonateAllVestingTokens_pb.decode(msgAny.value)
     );
   }
 }

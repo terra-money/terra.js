@@ -36,10 +36,7 @@ export class DelayedVestingAccount extends JSONSerializable<
     return this.base_vesting_account.base_account.public_key;
   }
 
-  public toAmino(isClassic?: boolean): DelayedVestingAccount.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): DelayedVestingAccount.Amino {
     const { base_vesting_account } = this;
     return {
       type: 'cosmos-sdk/DelayedVestingAccount',
@@ -50,23 +47,16 @@ export class DelayedVestingAccount extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: DelayedVestingAccount.Amino,
-    isClassic?: boolean
+    data: DelayedVestingAccount.Amino
   ): DelayedVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromAmino({
       type: 'cosmos-sdk/BaseVestingAccount',
       value: data.value.base_vesting_account,
     });
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new DelayedVestingAccount(base_vesting_account);
   }
 
-  public toData(isClassic?: boolean): DelayedVestingAccount.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): DelayedVestingAccount.Data {
     const { base_vesting_account } = this;
     return {
       '@type': '/cosmos.vesting.v1beta1.DelayedVestingAccount',
@@ -75,63 +65,41 @@ export class DelayedVestingAccount extends JSONSerializable<
   }
 
   public static fromData(
-    data: DelayedVestingAccount.Data,
-    isClassic?: boolean
+    data: DelayedVestingAccount.Data
   ): DelayedVestingAccount {
     const base_vesting_account = BaseVestingAccount.fromData({
       '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount',
       ...data.base_vesting_account,
     });
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new DelayedVestingAccount(base_vesting_account);
   }
 
-  public toProto(isClassic?: boolean): DelayedVestingAccount.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): DelayedVestingAccount.Proto {
     const { base_vesting_account } = this;
-
     return DelayedVestingAccount_pb.fromPartial({
       baseVestingAccount: base_vesting_account.toProto(),
     });
   }
 
   public static fromProto(
-    DelayedVestingAccountProto: DelayedVestingAccount.Proto,
-    isClassic?: boolean
+    DelayedVestingAccountProto: DelayedVestingAccount.Proto
   ): DelayedVestingAccount {
     const baseVestingAccount = BaseVestingAccount.fromProto(
       DelayedVestingAccountProto.baseVestingAccount as BaseVestingAccount_pb
     );
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new DelayedVestingAccount(baseVestingAccount);
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.DelayedVestingAccount',
-      value: DelayedVestingAccount_pb.encode(this.toProto(isClassic)).finish(),
+      value: DelayedVestingAccount_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    pubkeyAny: Any,
-    isClassic?: boolean
-  ): DelayedVestingAccount {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(pubkeyAny: Any): DelayedVestingAccount {
     return DelayedVestingAccount.fromProto(
-      DelayedVestingAccount_pb.decode(pubkeyAny.value),
-      isClassic
+      DelayedVestingAccount_pb.decode(pubkeyAny.value)
     );
   }
 }

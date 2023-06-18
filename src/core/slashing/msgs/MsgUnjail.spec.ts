@@ -6,7 +6,7 @@ describe('MsgUnjail', () => {
     MsgUnjailAmino.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'slashing/MsgUnjail') {
-          const e = MsgUnjail.fromAmino(msg, true);
+          const e = MsgUnjail.fromAmino(msg);
           expect(e.toAmino(true)).toEqual(msg);
         }
       });

@@ -30,11 +30,7 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(
-    data: CommunityPoolSpendProposal.Amino,
-    _?: boolean
-  ): CommunityPoolSpendProposal {
-    _;
+  public static fromAmino(data: CommunityPoolSpendProposal.Amino) {
     const {
       value: { title, description, recipient, amount },
     } = data;
@@ -61,11 +57,7 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: CommunityPoolSpendProposal.Data,
-    _?: boolean
-  ): CommunityPoolSpendProposal {
-    _;
+  public static fromData(data: CommunityPoolSpendProposal.Data) {
     const { title, description, recipient, amount } = data;
     return new CommunityPoolSpendProposal(
       title,
@@ -75,8 +67,7 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): CommunityPoolSpendProposal.Data {
-    _;
+  public toData(): CommunityPoolSpendProposal.Data {
     const { title, description, recipient, amount } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
@@ -87,11 +78,7 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: CommunityPoolSpendProposal.Proto,
-    _?: boolean
-  ): CommunityPoolSpendProposal {
-    _;
+  public static fromProto(proto: CommunityPoolSpendProposal.Proto) {
     return new CommunityPoolSpendProposal(
       proto.title,
       proto.description,
@@ -100,8 +87,7 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): CommunityPoolSpendProposal.Proto {
-    _;
+  public toProto(): CommunityPoolSpendProposal.Proto {
     const { title, description, recipient, amount } = this;
     return CommunityPoolSpendProposal_pb.fromPartial({
       amount: amount.toProto(),
@@ -111,22 +97,16 @@ export class CommunityPoolSpendProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
-      value: CommunityPoolSpendProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: CommunityPoolSpendProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): CommunityPoolSpendProposal {
+  public static unpackAny(msgAny: Any) {
     return CommunityPoolSpendProposal.fromProto(
-      CommunityPoolSpendProposal_pb.decode(msgAny.value),
-      isClassic
+      CommunityPoolSpendProposal_pb.decode(msgAny.value)
     );
   }
 }

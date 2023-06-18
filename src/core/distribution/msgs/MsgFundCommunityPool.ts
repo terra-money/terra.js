@@ -19,14 +19,10 @@ export class MsgFundCommunityPool extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(
-    data: MsgFundCommunityPool.Amino,
-    _?: boolean
-  ): MsgFundCommunityPool {
+  public static fromAmino(data: MsgFundCommunityPool.Amino) {
     const {
       value: { depositor, amount },
     } = data;
-    _;
     return new MsgFundCommunityPool(depositor, Coins.fromAmino(amount));
   }
 
@@ -44,16 +40,13 @@ export class MsgFundCommunityPool extends JSONSerializable<
   }
 
   public static fromData(
-    proto: MsgFundCommunityPool.Data,
-    _?: boolean
+    proto: MsgFundCommunityPool.Data
   ): MsgFundCommunityPool {
-    _;
     const { depositor, amount } = proto;
     return new MsgFundCommunityPool(depositor, Coins.fromData(amount));
   }
 
-  public toData(_?: boolean): MsgFundCommunityPool.Data {
-    _;
+  public toData(): MsgFundCommunityPool.Data {
     const { depositor, amount } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
@@ -62,19 +55,14 @@ export class MsgFundCommunityPool extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgFundCommunityPool.Proto,
-    _?: Boolean
-  ): MsgFundCommunityPool {
-    _;
+  public static fromProto(proto: MsgFundCommunityPool.Proto) {
     return new MsgFundCommunityPool(
       proto.depositor,
       Coins.fromProto(proto.amount)
     );
   }
 
-  public toProto(_?: boolean): MsgFundCommunityPool.Proto {
-    _;
+  public toProto(): MsgFundCommunityPool.Proto {
     const { depositor, amount } = this;
     return MsgFundCommunityPool_pb.fromPartial({
       amount: amount.toProto(),
@@ -82,20 +70,16 @@ export class MsgFundCommunityPool extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgFundCommunityPool',
-      value: MsgFundCommunityPool_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgFundCommunityPool_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgFundCommunityPool {
+  public static unpackAny(msgAny: Any) {
     return MsgFundCommunityPool.fromProto(
-      MsgFundCommunityPool_pb.decode(msgAny.value),
-      isClassic
+      MsgFundCommunityPool_pb.decode(msgAny.value)
     );
   }
 }

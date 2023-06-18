@@ -23,28 +23,20 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgSubmitMisbehaviour {
-    _;
-    isClassic;
+  public static fromAmino(): MsgSubmitMisbehaviour {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgSubmitMisbehaviour.Data,
-    _?: boolean
-  ): MsgSubmitMisbehaviour {
-    _;
+  public static fromData(data: MsgSubmitMisbehaviour.Data) {
     const { client_id, misbehaviour, signer } = data;
     return new MsgSubmitMisbehaviour(client_id, misbehaviour, signer);
   }
 
-  public toData(_?: boolean): MsgSubmitMisbehaviour.Data {
-    _;
+  public toData(): MsgSubmitMisbehaviour.Data {
     const { client_id, misbehaviour, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgSubmitMisbehaviour',
@@ -55,10 +47,8 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
   }
 
   public static fromProto(
-    proto: MsgSubmitMisbehaviour.Proto,
-    _?: boolean
+    proto: MsgSubmitMisbehaviour.Proto
   ): MsgSubmitMisbehaviour {
-    _;
     return new MsgSubmitMisbehaviour(
       proto.clientId,
       proto.misbehaviour,
@@ -66,8 +56,7 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgSubmitMisbehaviour.Proto {
-    _;
+  public toProto(): MsgSubmitMisbehaviour.Proto {
     const { client_id, misbehaviour, signer } = this;
     return MsgSubmitMisbehaviour_pb.fromPartial({
       clientId: client_id,
@@ -76,16 +65,14 @@ export class MsgSubmitMisbehaviour extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/ibc.core.client.v1.MsgSubmitMisbehaviour',
       value: MsgSubmitMisbehaviour_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgSubmitMisbehaviour {
-    _;
+  public static unpackAny(msgAny: Any): MsgSubmitMisbehaviour {
     return MsgSubmitMisbehaviour.fromProto(
       MsgSubmitMisbehaviour_pb.decode(msgAny.value)
     );

@@ -34,22 +34,15 @@ export class MsgChannelOpenTry extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgChannelOpenTry {
-    _;
-    isClassic;
+  public static fromAmino(): MsgChannelOpenTry {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgChannelOpenTry.Data,
-    _?: boolean
-  ): MsgChannelOpenTry {
-    _;
+  public static fromData(data: MsgChannelOpenTry.Data) {
     const {
       port_id,
       previous_channel_id,
@@ -70,8 +63,7 @@ export class MsgChannelOpenTry extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgChannelOpenTry.Data {
-    _;
+  public toData(): MsgChannelOpenTry.Data {
     const {
       port_id,
       previous_channel_id,
@@ -93,11 +85,7 @@ export class MsgChannelOpenTry extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgChannelOpenTry.Proto,
-    _?: boolean
-  ): MsgChannelOpenTry {
-    _;
+  public static fromProto(proto: MsgChannelOpenTry.Proto) {
     return new MsgChannelOpenTry(
       proto.portId,
       proto.previousChannelId,
@@ -109,8 +97,7 @@ export class MsgChannelOpenTry extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgChannelOpenTry.Proto {
-    _;
+  public toProto(): MsgChannelOpenTry.Proto {
     const {
       port_id,
       previous_channel_id,
@@ -131,16 +118,14 @@ export class MsgChannelOpenTry extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgChannelOpenTry',
       value: MsgChannelOpenTry_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgChannelOpenTry {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgChannelOpenTry.fromProto(
       MsgChannelOpenTry_pb.decode(msgAny.value)
     );

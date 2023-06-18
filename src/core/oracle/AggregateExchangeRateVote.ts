@@ -44,9 +44,7 @@ export class AggregateExchangeRateVote extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: AggregateExchangeRateVote.Data
-  ): AggregateExchangeRateVote {
+  public static fromData(data: AggregateExchangeRateVote.Data) {
     const { exchange_rate_tuples, voter } = data;
     return new AggregateExchangeRateVote(
       exchange_rate_tuples.map(t => ExchangeRateTuple.fromData(t)),
@@ -62,9 +60,7 @@ export class AggregateExchangeRateVote extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    data: AggregateExchangeRateVote.Proto
-  ): AggregateExchangeRateVote {
+  public static fromProto(data: AggregateExchangeRateVote.Proto) {
     return new AggregateExchangeRateVote(
       data.exchangeRateTuples.map(t => ExchangeRateTuple.fromProto(t)),
       data.voter
@@ -74,7 +70,9 @@ export class AggregateExchangeRateVote extends JSONSerializable<
   public toProto(): AggregateExchangeRateVote.Proto {
     const { exchange_rate_tuples, voter } = this;
     return AggregateExchangeRateVote_pb.fromPartial({
-      exchangeRateTuples: exchange_rate_tuples.map(t => t.toProto()),
+      exchangeRateTuples: exchange_rate_tuples
+        ? exchange_rate_tuples.map(t => t.toProto())
+        : undefined,
       voter,
     });
   }

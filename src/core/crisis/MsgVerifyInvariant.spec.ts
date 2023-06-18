@@ -9,7 +9,7 @@ describe('MsgVerifyInvariant', () => {
         invariantModuleName: 'bank',
         invariantRoute: 'nonnegative-outstanding-supply',
       },
-    }, true);
+    });
 
     expect(send).toMatchObject({
       sender: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
@@ -26,7 +26,7 @@ describe('MsgVerifyInvariant', () => {
         invariantModuleName: 'bank',
         invariantRoute: 'nonnegative-outstanding-supply',
       },
-    }, false);
+    });
 
     expect(send).toMatchObject({
       sender: 'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',

@@ -46,22 +46,15 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgConnectionOpenTry {
-    _;
-    isClassic;
+  public static fromAmino(): MsgConnectionOpenTry {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgConnectionOpenTry.Data,
-    _?: boolean
-  ): MsgConnectionOpenTry {
-    _;
+  public static fromData(data: MsgConnectionOpenTry.Data) {
     const {
       client_id,
       previous_connection_id,
@@ -94,8 +87,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgConnectionOpenTry.Data {
-    _;
+  public toData(): MsgConnectionOpenTry.Data {
     const {
       client_id,
       previous_connection_id,
@@ -132,11 +124,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgConnectionOpenTry.Proto,
-    _?: boolean
-  ): MsgConnectionOpenTry {
-    _;
+  public static fromProto(proto: MsgConnectionOpenTry.Proto) {
     return new MsgConnectionOpenTry(
       proto.clientId,
       proto.previousConnectionId,
@@ -159,8 +147,7 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgConnectionOpenTry.Proto {
-    _;
+  public toProto(): MsgConnectionOpenTry.Proto {
     const {
       client_id,
       previous_connection_id,
@@ -196,16 +183,14 @@ export class MsgConnectionOpenTry extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenTry',
       value: MsgConnectionOpenTry_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgConnectionOpenTry {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgConnectionOpenTry.fromProto(
       MsgConnectionOpenTry_pb.decode(msgAny.value)
     );

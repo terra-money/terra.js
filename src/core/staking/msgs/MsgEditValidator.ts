@@ -33,11 +33,7 @@ export class MsgEditValidator extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgEditValidator.Amino,
-    _?: boolean
-  ): MsgEditValidator {
-    _;
+  public static fromAmino(data: MsgEditValidator.Amino) {
     const {
       value: {
         description,
@@ -78,11 +74,7 @@ export class MsgEditValidator extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    data: MsgEditValidator.Proto,
-    _?: boolean
-  ): MsgEditValidator {
-    _;
+  public static fromProto(data: MsgEditValidator.Proto) {
     return new MsgEditValidator(
       Validator.Description.fromProto(
         data.description as Validator.Description.Proto
@@ -95,8 +87,7 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgEditValidator.Proto {
-    _;
+  public toProto(): MsgEditValidator.Proto {
     const {
       description,
       validator_address,
@@ -111,25 +102,18 @@ export class MsgEditValidator extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgEditValidator',
-      value: MsgEditValidator_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgEditValidator_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgEditValidator {
-    return MsgEditValidator.fromProto(
-      MsgEditValidator_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgEditValidator.fromProto(MsgEditValidator_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: MsgEditValidator.Data,
-    _?: boolean
-  ): MsgEditValidator {
-    _;
+  public static fromData(data: MsgEditValidator.Data) {
     const {
       description,
       validator_address,
@@ -144,8 +128,7 @@ export class MsgEditValidator extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgEditValidator.Data {
-    _;
+  public toData(): MsgEditValidator.Data {
     const {
       description,
       validator_address,

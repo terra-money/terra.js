@@ -25,28 +25,20 @@ export class MsgCreateClient extends JSONSerializable<
     this.signer = signer;
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgCreateClient {
-    _;
-    isClassic;
+  public static fromAmino(): MsgCreateClient {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgCreateClient.Data,
-    _?: boolean
-  ): MsgCreateClient {
-    _;
+  public static fromData(data: MsgCreateClient.Data) {
     const { client_state, consensus_state, signer } = data;
     return new MsgCreateClient(client_state, consensus_state, signer);
   }
 
-  public toData(_?: boolean): MsgCreateClient.Data {
-    _;
+  public toData(): MsgCreateClient.Data {
     const { client_state, consensus_state, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgCreateClient',
@@ -56,11 +48,7 @@ export class MsgCreateClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgCreateClient.Proto,
-    _?: boolean
-  ): MsgCreateClient {
-    _;
+  public static fromProto(proto: MsgCreateClient.Proto) {
     return new MsgCreateClient(
       proto.clientState,
       proto.consensusState,
@@ -68,8 +56,7 @@ export class MsgCreateClient extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgCreateClient.Proto {
-    _;
+  public toProto(): MsgCreateClient.Proto {
     const { client_state, consensus_state, signer } = this;
     return MsgCreateClient_pb.fromPartial({
       clientState: client_state,
@@ -78,16 +65,14 @@ export class MsgCreateClient extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.client.v1.MsgCreateClient',
       value: MsgCreateClient_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgCreateClient {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgCreateClient.fromProto(MsgCreateClient_pb.decode(msgAny.value));
   }
 }

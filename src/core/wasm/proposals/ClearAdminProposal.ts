@@ -25,23 +25,14 @@ export class ClearAdminProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: ClearAdminProposal.Amino,
-    isClassic?: boolean
-  ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: ClearAdminProposal.Amino) {
     const {
       value: { title, description, contract },
-    } = data as ClearAdminProposal.Amino;
+    } = data;
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toAmino(isClassic?: boolean): ClearAdminProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): ClearAdminProposal.Amino {
     const { title, description, contract } = this;
     return {
       type: 'wasm/ClearAdminProposal',
@@ -53,13 +44,7 @@ export class ClearAdminProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: ClearAdminProposal.Proto,
-    isClassic?: boolean
-  ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: ClearAdminProposal.Proto) {
     return new ClearAdminProposal(
       proto.title,
       proto.description,
@@ -67,10 +52,7 @@ export class ClearAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): ClearAdminProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): ClearAdminProposal.Proto {
     const { title, description, contract } = this;
     return ClearAdminProposal_pb.fromPartial({
       title,
@@ -78,44 +60,25 @@ export class ClearAdminProposal extends JSONSerializable<
       contract,
     });
   }
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.ClearAdminProposal',
-      value: ClearAdminProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: ClearAdminProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return ClearAdminProposal.fromProto(
-      ClearAdminProposal_pb.decode(msgAny.value),
-      isClassic
+      ClearAdminProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: ClearAdminProposal.Data,
-    isClassic?: boolean
-  ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract } = data as ClearAdminProposal.Data;
+  public static fromData(data: ClearAdminProposal.Data) {
+    const { title, description, contract } = data;
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toData(isClassic?: boolean): ClearAdminProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): ClearAdminProposal.Data {
     const { title, description, contract } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.ClearAdminProposal',

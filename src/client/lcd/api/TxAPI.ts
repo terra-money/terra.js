@@ -204,7 +204,7 @@ export class TxAPI extends BaseAPI {
   public async txInfo(txHash: string, params: APIParams = {}): Promise<TxInfo> {
     return this.c
       .getRaw<TxResult.Data>(`/cosmos/tx/v1beta1/txs/${txHash}`, params)
-      .then(v => TxInfo.fromData(v.tx_response, this.lcd.config.isClassic));
+      .then(v => TxInfo.fromData(v.tx_response));
   }
 
   /**
@@ -372,9 +372,7 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction to encode
    */
   public encode(tx: Tx): string {
-    return Buffer.from(tx.toBytes(this.lcd.config.isClassic)).toString(
-      'base64'
-    );
+    return Buffer.from(tx.toBytes()).toString('base64');
   }
 
   /**
@@ -382,10 +380,7 @@ export class TxAPI extends BaseAPI {
    * @param tx transaction string to decode
    */
   public decode(encodedTx: string): Tx {
-    return Tx.fromBuffer(
-      Buffer.from(encodedTx, 'base64'),
-      this.lcd.config.isClassic
-    );
+    return Tx.fromBuffer(Buffer.from(encodedTx, 'base64'));
   }
 
   /**
@@ -572,9 +567,7 @@ export class TxAPI extends BaseAPI {
       .getRaw<TxSearchResult.Data>(`/cosmos/tx/v1beta1/txs`, params)
       .then(d => {
         return {
-          txs: d.tx_responses.map(tx_response =>
-            TxInfo.fromData(tx_response, this.lcd.config.isClassic)
-          ),
+          txs: d.tx_responses.map(tx_response => TxInfo.fromData(tx_response)),
           pagination: d.pagination,
         };
       });

@@ -14,11 +14,7 @@ export class SendAuthorization extends JSONSerializable<
     this.spend_limit = new Coins(spend_limit);
   }
 
-  public static fromAmino(
-    data: SendAuthorization.Amino,
-    _?: boolean
-  ): SendAuthorization {
-    _;
+  public static fromAmino(data: SendAuthorization.Amino): SendAuthorization {
     return new SendAuthorization(Coins.fromAmino(data.value.spend_limit));
   }
 
@@ -34,16 +30,11 @@ export class SendAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: SendAuthorization.Data,
-    _?: boolean
-  ): SendAuthorization {
-    _;
+  public static fromData(data: SendAuthorization.Data) {
     return new SendAuthorization(Coins.fromData(data.spend_limit));
   }
 
-  public toData(_?: boolean): SendAuthorization.Data {
-    _;
+  public toData(): SendAuthorization.Data {
     const { spend_limit } = this;
     return {
       '@type': '/cosmos.bank.v1beta1.SendAuthorization',
@@ -51,32 +42,26 @@ export class SendAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: SendAuthorization.Proto,
-    _?: boolean
-  ): SendAuthorization {
-    _;
+  public static fromProto(proto: SendAuthorization.Proto) {
     return new SendAuthorization(Coins.fromProto(proto.spendLimit));
   }
 
-  public toProto(_?: boolean): SendAuthorization.Proto {
-    _;
+  public toProto(): SendAuthorization.Proto {
     return SendAuthorization_pb.fromPartial({
       spendLimit: this.spend_limit.toProto(),
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.SendAuthorization',
-      value: SendAuthorization_pb.encode(this.toProto(isClassic)).finish(),
+      value: SendAuthorization_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): SendAuthorization {
+  public static unpackAny(msgAny: Any): SendAuthorization {
     return SendAuthorization.fromProto(
-      SendAuthorization_pb.decode(msgAny.value),
-      isClassic
+      SendAuthorization_pb.decode(msgAny.value)
     );
   }
 }

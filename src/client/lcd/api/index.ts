@@ -15,3 +15,4 @@ export * from './WasmAPI';
 export * from './MintAPI';
 export * from './IbcAPI';
 export * from './IbcTransferAPI';
+export * from './IbcInterchainAccountsAPI';

@@ -11,9 +11,9 @@ describe('MsgDonateAllVestingTokens', () => {
     const p = obj.toProto();
     expect(obj.from_address).toStrictEqual(p.fromAddress);
 
-    const d = obj.toData(false);
+    const d = obj.toData();
     expect(obj).toStrictEqual(MsgDonateAllVestingTokens.fromData(d));
-    const a = obj.toAmino(false);
+    const a = obj.toAmino();
     expect(obj).toStrictEqual(MsgDonateAllVestingTokens.fromAmino(a));
   });
 });

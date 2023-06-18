@@ -13,30 +13,24 @@ export class MigrateContractProposal extends JSONSerializable<
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param contract contract address to be migrated from
-   * @param new_code_id reference to the new code on the blockchain
-   * @param migrate_msg JSON message to configure the migrate state of the contract
+   * @param contract the address of the smart contract
+   * @param code_id references the new WASM code
+   * @param msg json encoded message to be passed to the contract on migration
    */
   constructor(
     public title: string,
     public description: string,
     public contract: AccAddress,
-    public new_code_id: number,
-    public migrate_msg: object | string // json object or string
+    public code_id: number,
+    public msg: object | string // json object or string
   ) {
     super();
   }
 
-  public static fromAmino(
-    data: MigrateContractProposal.Amino,
-    isClassic?: boolean
-  ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: MigrateContractProposal.Amino) {
     const {
       value: { title, description, contract, code_id, msg },
-    } = data as MigrateContractProposal.Amino;
+    } = data;
     return new MigrateContractProposal(
       title,
       description,
@@ -46,30 +40,21 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): MigrateContractProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, new_code_id, migrate_msg } = this;
+  public toAmino(): MigrateContractProposal.Amino {
+    const { title, description, contract, code_id, msg } = this;
     return {
       type: 'wasm/MigrateContractProposal',
       value: {
         title,
         description,
         contract,
-        code_id: new_code_id.toFixed(),
-        msg: removeNull(migrate_msg),
+        code_id: code_id.toFixed(),
+        msg: removeNull(msg),
       },
     };
   }
 
-  public static fromProto(
-    proto: MigrateContractProposal.Proto,
-    isClassic?: boolean
-  ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MigrateContractProposal.Proto) {
     return new MigrateContractProposal(
       proto.title,
       proto.description,
@@ -79,53 +64,32 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MigrateContractProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, new_code_id, migrate_msg } = this;
+  public toProto(): MigrateContractProposal.Proto {
+    const { title, description, contract, code_id, msg } = this;
     return MigrateContractProposal_pb.fromPartial({
       title,
       description,
       contract,
-      codeId: Long.fromNumber(new_code_id),
-      msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
-    });
-  }
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return Any.fromPartial({
-      typeUrl: '/cosmwasm.wasm.v1.MigrateContractProposal',
-      value: MigrateContractProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      codeId: Long.fromNumber(code_id),
+      msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.MigrateContractProposal',
+      value: MigrateContractProposal_pb.encode(this.toProto()).finish(),
+    });
+  }
+
+  public static unpackAny(msgAny: Any) {
     return MigrateContractProposal.fromProto(
-      MigrateContractProposal_pb.decode(msgAny.value),
-      isClassic
+      MigrateContractProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: MigrateContractProposal.Data,
-    isClassic?: boolean
-  ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, code_id, msg } =
-      data as MigrateContractProposal.Data;
+  public static fromData(data: MigrateContractProposal.Data) {
+    const { title, description, contract, code_id, msg } = data;
     return new MigrateContractProposal(
       title,
       description,
@@ -135,18 +99,15 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MigrateContractProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    const { title, description, contract, new_code_id, migrate_msg } = this;
+  public toData(): MigrateContractProposal.Data {
+    const { title, description, contract, code_id, msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MigrateContractProposal',
       title,
       description,
       contract,
-      code_id: new_code_id.toFixed(),
-      msg: removeNull(migrate_msg),
+      code_id: code_id.toFixed(),
+      msg: removeNull(msg),
     };
   }
 }

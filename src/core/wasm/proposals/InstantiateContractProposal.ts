@@ -14,7 +14,7 @@ export class InstantiateContractProposal extends JSONSerializable<
   InstantiateContractProposal.Data,
   InstantiateContractProposal.Proto
 > {
-  public init_coins: Coins;
+  public funds: Coins;
 
   /**
    * @param title a short summary
@@ -22,9 +22,9 @@ export class InstantiateContractProposal extends JSONSerializable<
    * @param run_as is a run_as address
    * @param admin is an optional contract admin address who can migrate the contract, put empty string to disable migration
    * @param code_id is the reference to the stored WASM code
-   * @param init_msg json encoded message to be passed to the contract on instantiation
-   * @param init_coins are transferred to the contract on execution
-   * @param label label for the contract. v2 supported only
+   * @param msg json encoded message to be passed to the contract on instantiation
+   * @param funds are transferred to the contract on execution
+   * @param label label is optional metadata to be stored with a constract instance.
    */
   constructor(
     public title: string,
@@ -32,24 +32,18 @@ export class InstantiateContractProposal extends JSONSerializable<
     public run_as: AccAddress,
     public admin: AccAddress | undefined,
     public code_id: number,
-    public init_msg: object | string,
-    init_coins: Coins.Input = {},
-    public label: string
+    public msg: object | string,
+    funds: Coins.Input = {},
+    public label: string | undefined
   ) {
     super();
-    this.init_coins = new Coins(init_coins);
+    this.funds = new Coins(funds);
   }
 
-  public static fromAmino(
-    data: InstantiateContractProposal.Amino,
-    isClassic?: boolean
-  ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: InstantiateContractProposal.Amino) {
     const {
       value: { title, description, run_as, admin, code_id, msg, funds, label },
-    } = data as InstantiateContractProposal.Amino;
+    } = data;
     return new InstantiateContractProposal(
       title,
       description,
@@ -62,20 +56,9 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): InstantiateContractProposal.Amino {
-    const {
-      title,
-      description,
-      run_as,
-      admin,
-      code_id,
-      init_msg,
-      init_coins,
-      label,
-    } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): InstantiateContractProposal.Amino {
+    const { title, description, run_as, admin, code_id, msg, funds, label } =
+      this;
     return {
       type: 'wasm/InstantiateContractProposal',
       value: {
@@ -85,24 +68,18 @@ export class InstantiateContractProposal extends JSONSerializable<
         admin,
         code_id: code_id.toFixed(),
         label,
-        msg: removeNull(init_msg),
-        funds: init_coins.toAmino(),
+        msg: removeNull(msg),
+        funds: funds.toAmino(),
       },
     };
   }
 
-  public static fromProto(
-    proto: InstantiateContractProposal.Proto,
-    isClassic?: boolean
-  ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: InstantiateContractProposal.Proto) {
     return new InstantiateContractProposal(
       proto.title,
       proto.description,
       proto.runAs,
-      proto.admin !== '' ? proto.admin : undefined,
+      proto.admin,
       proto.codeId.toNumber(),
       JSON.parse(Buffer.from(proto.msg).toString('utf-8')),
       Coins.fromProto(proto.funds),
@@ -110,71 +87,42 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): InstantiateContractProposal.Proto {
-    const {
-      title,
-      description,
-      run_as,
-      admin,
-      code_id,
-      init_msg,
-      init_coins,
-      label,
-    } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): InstantiateContractProposal.Proto {
+    const { title, description, run_as, admin, code_id, msg, funds, label } =
+      this;
     return InstantiateContractProposal_pb.fromPartial({
       title,
       description,
       runAs: run_as,
       admin,
       codeId: Long.fromNumber(code_id),
-      funds: init_coins.toProto(),
-      msg: Buffer.from(JSON.stringify(init_msg), 'utf-8'),
+      funds: funds.toProto(),
+      msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
       label,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.InstantiateContractProposal',
-      value: InstantiateContractProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: InstantiateContractProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return InstantiateContractProposal.fromProto(
-      InstantiateContractProposal_pb.decode(msgAny.value),
-      isClassic
+      InstantiateContractProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: InstantiateContractProposal.Data,
-    isClassic?: boolean
-  ): InstantiateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: InstantiateContractProposal.Data) {
     const { title, description, run_as, admin, code_id, label, msg, funds } =
-      data as InstantiateContractProposal.Data;
+      data;
     return new InstantiateContractProposal(
       title,
       description,
       run_as,
-      admin !== '' ? admin : undefined,
+      admin,
       Number.parseInt(code_id),
       msg,
       Coins.fromData(funds),
@@ -182,30 +130,19 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): InstantiateContractProposal.Data {
-    const {
-      title,
-      description,
-      run_as,
-      admin,
-      code_id,
-      label,
-      init_msg,
-      init_coins,
-    } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): InstantiateContractProposal.Data {
+    const { title, description, run_as, admin, code_id, label, msg, funds } =
+      this;
     return {
       '@type': '/cosmwasm.wasm.v1.InstantiateContractProposal',
       title,
       description,
       run_as,
-      admin: admin || '',
+      admin,
       code_id: code_id.toFixed(),
       label,
-      msg: removeNull(init_msg),
-      funds: init_coins.toData(),
+      msg: removeNull(msg),
+      funds: funds.toData(),
     };
   }
 }
@@ -219,7 +156,7 @@ export namespace InstantiateContractProposal {
       run_as: AccAddress;
       admin?: AccAddress;
       code_id: string;
-      label: string;
+      label?: string;
       msg: object | string;
       funds: Coins.Amino;
     };
@@ -230,9 +167,9 @@ export namespace InstantiateContractProposal {
     title: string;
     description: string;
     run_as: AccAddress;
-    admin: AccAddress;
+    admin?: AccAddress;
     code_id: string;
-    label: string;
+    label?: string;
     msg: object | string;
     funds: Coins.Data;
   }

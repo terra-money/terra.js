@@ -241,7 +241,7 @@ export class Coins
   }
 
   public toProto(): Coins.Proto {
-    return this.toArray().map(c => c.toProto());
+    return this.toArray().map(c => c.toProto()) as Coins.Proto;
   }
 }
 

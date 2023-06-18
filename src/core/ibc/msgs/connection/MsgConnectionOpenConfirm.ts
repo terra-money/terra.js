@@ -28,25 +28,15 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    _: any,
-    isClassic?: boolean
-  ): MsgConnectionOpenConfirm {
-    _;
-    isClassic;
+  public static fromAmino(): MsgConnectionOpenConfirm {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgConnectionOpenConfirm.Data,
-    _?: boolean
-  ): MsgConnectionOpenConfirm {
-    _;
+  public static fromData(data: MsgConnectionOpenConfirm.Data) {
     const { connection_id, proof_ack, proof_height, signer } = data;
     return new MsgConnectionOpenConfirm(
       connection_id,
@@ -56,8 +46,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgConnectionOpenConfirm.Data {
-    _;
+  public toData(): MsgConnectionOpenConfirm.Data {
     const { connection_id, proof_ack, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
@@ -68,11 +57,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgConnectionOpenConfirm.Proto,
-    _?: boolean
-  ): MsgConnectionOpenConfirm {
-    _;
+  public static fromProto(proto: MsgConnectionOpenConfirm.Proto) {
     return new MsgConnectionOpenConfirm(
       proto.connectionId,
       Buffer.from(proto.proofAck).toString('base64'),
@@ -81,8 +66,7 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgConnectionOpenConfirm.Proto {
-    _;
+  public toProto(): MsgConnectionOpenConfirm.Proto {
     const { connection_id, proof_ack, proof_height, signer } = this;
     return MsgConnectionOpenConfirm_pb.fromPartial({
       connectionId: connection_id,
@@ -92,16 +76,14 @@ export class MsgConnectionOpenConfirm extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenConfirm',
       value: MsgConnectionOpenConfirm_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgConnectionOpenConfirm {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgConnectionOpenConfirm.fromProto(
       MsgConnectionOpenConfirm_pb.decode(msgAny.value)
     );

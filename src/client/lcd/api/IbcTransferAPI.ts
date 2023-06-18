@@ -46,10 +46,6 @@ export class IbcTransferAPI extends BaseAPI {
     trace: string,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<string> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
     return await this.c.get<string>(
       `/ibc/apps/transfer/v1/denom_hashes/${trace}`,
       params

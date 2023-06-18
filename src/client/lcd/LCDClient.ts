@@ -17,6 +17,7 @@ import {
   WasmAPI,
   IbcTransferAPI,
   IbcAPI,
+  IbcInterchainAccountsAPI,
 } from './api';
 import { LCDUtils } from './LCDUtils';
 import { Wallet } from './Wallet';
@@ -119,6 +120,7 @@ export class LCDClient {
   public tx: TxAPI;
   public ibc: IbcAPI;
   public ibcTransfer: IbcTransferAPI;
+  public ibcInterchainAccounts: IbcInterchainAccountsAPI;
   public utils: LCDUtils;
 
   /**
@@ -157,6 +159,7 @@ export class LCDClient {
     this.wasm = new WasmAPI(this);
     this.ibc = new IbcAPI(this);
     this.ibcTransfer = new IbcTransferAPI(this);
+    this.ibcInterchainAccounts = new IbcInterchainAccountsAPI(this);
     this.tx = new TxAPI(this);
     this.utils = new LCDUtils(this);
   }

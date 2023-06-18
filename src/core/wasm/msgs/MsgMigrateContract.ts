@@ -1,8 +1,8 @@
 import { JSONSerializable, removeNull } from '../../../util/json';
 import { AccAddress } from '../../bech32';
 import { Any } from '@terra-money/terra.proto/google/protobuf/any';
-import { MsgMigrateContract as MsgMigrateContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
-import { MsgMigrateContract as MsgMigrateContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
+import { MsgMigrateContract as MsgMigrateContractProtoV1 } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
+import { MsgMigrateContract as MsgMigrateContractProtoV2 } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 import * as Long from 'long';
 
 export class MsgMigrateContract extends JSONSerializable<
@@ -11,27 +11,36 @@ export class MsgMigrateContract extends JSONSerializable<
   MsgMigrateContract.Proto
 > {
   /**
-   * @param admin contract admin
-   * @param contract contract address to be migrated from
-   * @param new_code_id reference to the new code on the blockchain
-   * @param migrate_msg JSON message to configure the migrate state of the contract
+   * @param sender the that actor that signed the messages
+   * @param contract the address of the smart contract
+   * @param code_id references the new WASM code
+   * @param msg json encoded message to be passed to the contract on migration
    */
   constructor(
-    public admin: AccAddress,
+    public sender: AccAddress,
     public contract: AccAddress,
-    public new_code_id: number,
-    public migrate_msg: object | string // json object or string
+    public code_id: number,
+    public msg: object | string // json object or string
   ) {
     super();
   }
 
-  public static fromAmino(
-    data: MsgMigrateContract.Amino,
-    _?: boolean
-  ): MsgMigrateContract {
+  public static fromAmino(data: MsgMigrateContract.Amino) {
+    if ('new_code_id' in data.value) {
+      const {
+        value: { admin, contract, new_code_id, migrate_msg },
+      } = data;
+      return new MsgMigrateContract(
+        admin,
+        contract,
+        Number.parseInt(new_code_id),
+        migrate_msg
+      );
+    }
+
     const {
       value: { sender, contract, code_id, msg },
-    } = data as MsgMigrateContract.AminoV2;
+    } = data;
     return new MsgMigrateContract(
       sender,
       contract,
@@ -40,24 +49,56 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): MsgMigrateContract.Amino {
-    const { admin, contract, new_code_id, migrate_msg } = this;
+  public toAmino(): MsgMigrateContract.AminoV2 {
+    const { sender, contract, code_id, msg } = this;
     return {
       type: 'wasm/MsgMigrateContract',
       value: {
-        sender: admin,
+        sender,
         contract,
-        code_id: new_code_id.toFixed(),
-        msg: removeNull(migrate_msg),
+        code_id: code_id.toFixed(),
+        msg: removeNull(msg),
       },
     };
   }
 
-  public static fromProto(
-    proto: MsgMigrateContract.Proto,
-    _?: boolean
-  ): MsgMigrateContract {
-    const p = proto as MsgMigrateContract_pb;
+  public static fromData(d: MsgMigrateContract.Data) {
+    return d['@type'] === '/cosmwasm.wasm.v1.MsgMigrateContract'
+      ? new MsgMigrateContract(
+          d.sender,
+          d.contract,
+          Number.parseInt(d.code_id),
+          d.msg
+        )
+      : new MsgMigrateContract(
+          d.admin,
+          d.contract,
+          Number.parseInt(d.new_code_id),
+          d.migrate_msg
+        );
+  }
+
+  public toData(): MsgMigrateContract.DataV2 {
+    const { sender, contract, code_id, msg } = this;
+    return {
+      '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
+      sender,
+      contract,
+      code_id: code_id.toFixed(),
+      msg: removeNull(msg),
+    };
+  }
+
+  public static fromProtoV1(p: MsgMigrateContractProtoV1): MsgMigrateContract {
+    return new MsgMigrateContract(
+      p.admin,
+      p.contract,
+      p.newCodeId.toNumber(),
+      JSON.parse(Buffer.from(p.migrateMsg).toString('utf-8'))
+    );
+  }
+
+  public static fromProtoV2(p: MsgMigrateContractProtoV2): MsgMigrateContract {
     return new MsgMigrateContract(
       p.sender,
       p.contract,
@@ -66,57 +107,31 @@ export class MsgMigrateContract extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgMigrateContract.Proto {
-    const { admin, contract, new_code_id, migrate_msg } = this;
-    return MsgMigrateContract_pb.fromPartial({
-      sender: admin,
-      contract,
-      codeId: Long.fromNumber(new_code_id),
-      msg: Buffer.from(JSON.stringify(migrate_msg), 'utf-8'),
-    });
-  }
-  public packAny(isClassic?: boolean): Any {
-    return Any.fromPartial({
-      typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
-      value: MsgMigrateContract_pb.encode(
-        this.toProto(isClassic) as MsgMigrateContract_pb
-      ).finish(),
-    });
-  }
-
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgMigrateContract {
-    return MsgMigrateContract.fromProto(
-      MsgMigrateContract_pb.decode(msgAny.value),
-      isClassic
-    );
-  }
-
-  public static fromData(
-    data: MsgMigrateContract.Data,
-    _?: boolean
-  ): MsgMigrateContract {
-    const { sender, contract, code_id, msg } =
-      data as MsgMigrateContract.DataV2;
-    return new MsgMigrateContract(
+  public toProto() {
+    const { sender, contract, code_id, msg } = this;
+    return MsgMigrateContractProtoV2.fromPartial({
       sender,
       contract,
-      Number.parseInt(code_id),
-      msg
-    );
+      codeId: Long.fromNumber(code_id),
+      msg: Buffer.from(JSON.stringify(msg), 'utf-8'),
+    });
   }
 
-  public toData(_?: boolean): MsgMigrateContract.Data {
-    const { admin, contract, new_code_id, migrate_msg } = this;
-    return {
-      '@type': '/cosmwasm.wasm.v1.MsgMigrateContract',
-      sender: admin,
-      contract,
-      code_id: new_code_id.toFixed(),
-      msg: removeNull(migrate_msg),
-    };
+  public packAny() {
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.MsgMigrateContract',
+      value: MsgMigrateContractProtoV2.encode(this.toProto()).finish(),
+    });
+  }
+
+  public static unpackAny(msgAny: Any) {
+    return msgAny.typeUrl === '/cosmwasm.wasm.v1.MsgMigrateContract'
+      ? MsgMigrateContract.fromProtoV2(
+          MsgMigrateContractProtoV2.decode(msgAny.value)
+        )
+      : MsgMigrateContract.fromProtoV1(
+          MsgMigrateContractProtoV1.decode(msgAny.value)
+        );
   }
 }
 
@@ -130,6 +145,7 @@ export namespace MsgMigrateContract {
       migrate_msg: object | string;
     };
   }
+
   export interface AminoV2 {
     type: 'wasm/MsgMigrateContract';
     value: {
@@ -158,5 +174,5 @@ export namespace MsgMigrateContract {
 
   export type Amino = AminoV1 | AminoV2;
   export type Data = DataV1 | DataV2;
-  export type Proto = MsgMigrateContract_legacy_pb | MsgMigrateContract_pb;
+  export type Proto = MsgMigrateContractProtoV1 | MsgMigrateContractProtoV2;
 }

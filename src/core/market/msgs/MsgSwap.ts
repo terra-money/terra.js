@@ -28,20 +28,14 @@ export class MsgSwap extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgSwap.Amino, isClassic?: boolean): MsgSwap {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: MsgSwap.Amino): MsgSwap {
     const {
       value: { trader, offer_coin, ask_denom },
     } = data;
     return new MsgSwap(trader, Coin.fromAmino(offer_coin), ask_denom);
   }
 
-  public toAmino(isClassic?: boolean): MsgSwap.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): MsgSwap.Amino {
     const { trader, offer_coin, ask_denom } = this;
     return {
       type: 'market/MsgSwap',

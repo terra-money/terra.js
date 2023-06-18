@@ -85,8 +85,7 @@ export class BaseVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): BaseVestingAccount.Data {
-    _;
+  public toData(): BaseVestingAccount.Data {
     const {
       base_account,
       original_vesting,
@@ -105,11 +104,7 @@ export class BaseVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: BaseVestingAccount.Data,
-    _?: boolean
-  ): BaseVestingAccount {
-    _;
+  public static fromData(data: BaseVestingAccount.Data): BaseVestingAccount {
     const base_account = BaseAccount.fromData({
       '@type': '/cosmos.auth.v1beta1.BaseAccount',
       ...data.base_account,
@@ -124,8 +119,7 @@ export class BaseVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): BaseVestingAccount.Proto {
-    _;
+  public toProto(): BaseVestingAccount.Proto {
     const {
       base_account,
       original_vesting,
@@ -143,11 +137,7 @@ export class BaseVestingAccount extends JSONSerializable<
     });
   }
 
-  public static fromProto(
-    proto: BaseVestingAccount.Proto,
-    _?: boolean
-  ): BaseVestingAccount {
-    _;
+  public static fromProto(proto: BaseVestingAccount.Proto): BaseVestingAccount {
     const baseAccount = BaseAccount.fromProto(
       proto.baseAccount as BaseAccount_pb
     );

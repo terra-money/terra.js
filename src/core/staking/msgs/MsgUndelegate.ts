@@ -27,11 +27,7 @@ export class MsgUndelegate extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgUndelegate.Amino,
-    _?: boolean
-  ): MsgUndelegate {
-    _;
+  public static fromAmino(data: MsgUndelegate.Amino) {
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
@@ -54,11 +50,7 @@ export class MsgUndelegate extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgUndelegate.Proto,
-    _?: boolean
-  ): MsgUndelegate {
-    _;
+  public static fromProto(proto: MsgUndelegate.Proto) {
     return new MsgUndelegate(
       proto.delegatorAddress,
       proto.validatorAddress,
@@ -66,8 +58,7 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgUndelegate.Proto {
-    _;
+  public toProto(): MsgUndelegate.Proto {
     const { delegator_address, validator_address, amount } = this;
     return MsgUndelegate_pb.fromPartial({
       amount: amount.toProto(),
@@ -76,22 +67,18 @@ export class MsgUndelegate extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
-      value: MsgUndelegate_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgUndelegate_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgUndelegate {
-    return MsgUndelegate.fromProto(
-      MsgUndelegate_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgUndelegate.fromProto(MsgUndelegate_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgUndelegate.Data, _?: boolean): MsgUndelegate {
-    _;
+  public static fromData(data: MsgUndelegate.Data) {
     const { delegator_address, validator_address, amount } = data;
     return new MsgUndelegate(
       delegator_address,
@@ -100,8 +87,7 @@ export class MsgUndelegate extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgUndelegate.Data {
-    _;
+  public toData(): MsgUndelegate.Data {
     const { delegator_address, validator_address, amount } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.MsgUndelegate',

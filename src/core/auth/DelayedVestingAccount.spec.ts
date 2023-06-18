@@ -47,9 +47,5 @@ describe('DelayedVestingAccount', () => {
         },
       },
     });
-
-    expect(() => acct.toAmino(true)).toThrow(
-      Error('Not supported for the network')
-    );
   });
 });
