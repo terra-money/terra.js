@@ -21,10 +21,10 @@ export function prepareSignBytes(obj: any): any {
 
 export abstract class JSONSerializable<A, D, P> {
   public abstract toAmino(isClassic?: boolean): A;
-  public abstract toData(isClassic?: boolean): D;
-  public abstract toProto(isClassic?: boolean): P;
-  public toJSON(isClassic?: boolean): string {
-    return JSON.stringify(prepareSignBytes(this.toData(isClassic)));
+  public abstract toData(): D;
+  public abstract toProto(): P;
+  public toJSON(): string {
+    return JSON.stringify(prepareSignBytes(this.toData()));
   }
   public toAminoJSON(isClassic?: boolean): string {
     return JSON.stringify(prepareSignBytes(this.toAmino(isClassic)));

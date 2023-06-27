@@ -47,10 +47,7 @@ export class MsgSwap extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSwap.Proto, isClassic?: boolean): MsgSwap {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgSwap.Proto): MsgSwap {
     return new MsgSwap(
       proto.trader,
       Coin.fromProto(proto.offerCoin as Coin.Proto),
@@ -58,10 +55,7 @@ export class MsgSwap extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgSwap.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgSwap.Proto {
     const { trader, offer_coin, ask_denom } = this;
     return MsgSwap_pb.fromPartial({
       askDenom: ask_denom,
@@ -70,35 +64,23 @@ export class MsgSwap extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwap',
-      value: MsgSwap_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgSwap_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgSwap {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return MsgSwap.fromProto(MsgSwap_pb.decode(msgAny.value), isClassic);
+  public static unpackAny(msgAny: Any): MsgSwap {
+    return MsgSwap.fromProto(MsgSwap_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgSwap.Data, isClassic?: boolean): MsgSwap {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgSwap.Data): MsgSwap {
     const { trader, offer_coin, ask_denom } = data;
     return new MsgSwap(trader, Coin.fromData(offer_coin), ask_denom);
   }
 
-  public toData(isClassic?: boolean): MsgSwap.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgSwap.Data {
     const { trader, offer_coin, ask_denom } = this;
     return {
       '@type': '/terra.market.v1beta1.MsgSwap',
