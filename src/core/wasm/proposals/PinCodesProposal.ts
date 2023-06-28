@@ -27,11 +27,8 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromAmino(
     data: PinCodesProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): PinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, code_ids },
     } = data as PinCodesProposal.Amino;
@@ -42,10 +39,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): PinCodesProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): PinCodesProposal.Amino {
     const { title, description, code_ids } = this;
     return {
       type: 'wasm/PinCodesProposal',
@@ -59,11 +53,8 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromProto(
     proto: PinCodesProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): PinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new PinCodesProposal(
       proto.title,
       proto.description,
@@ -71,10 +62,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): PinCodesProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): PinCodesProposal.Proto {
     const { title, description, code_ids } = this;
     return PinCodesProposal_pb.fromPartial({
       title,
@@ -83,9 +71,6 @@ export class PinCodesProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.PinCodesProposal',
       value: PinCodesProposal_pb.encode(this.toProto(isClassic)).finish(),
@@ -93,9 +78,6 @@ export class PinCodesProposal extends JSONSerializable<
   }
 
   public static unpackAny(msgAny: Any, isClassic?: boolean): PinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return PinCodesProposal.fromProto(
       PinCodesProposal_pb.decode(msgAny.value),
       isClassic
@@ -104,11 +86,8 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromData(
     data: PinCodesProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): PinCodesProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, code_ids } = data as PinCodesProposal.Data;
     return new PinCodesProposal(
       title,
@@ -117,10 +96,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): PinCodesProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): PinCodesProposal.Data {
     const { title, description, code_ids } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.PinCodesProposal',

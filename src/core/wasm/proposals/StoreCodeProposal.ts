@@ -31,11 +31,8 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromAmino(
     data: StoreCodeProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: {
         title,
@@ -56,10 +53,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): StoreCodeProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): StoreCodeProposal.Amino {
     const {
       title,
       description,
@@ -81,11 +75,8 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromData(
     data: StoreCodeProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       title,
       description,
@@ -104,10 +95,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): StoreCodeProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): StoreCodeProposal.Data {
     const {
       title,
       description,
@@ -127,11 +115,8 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromProto(
     proto: StoreCodeProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new StoreCodeProposal(
       proto.title,
       proto.description,
@@ -143,10 +128,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): StoreCodeProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): StoreCodeProposal.Proto {
     const {
       title,
       description,
@@ -164,9 +146,6 @@ export class StoreCodeProposal extends JSONSerializable<
   }
 
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.StoreCodeProposal',
       value: StoreCodeProposal_pb.encode(this.toProto(isClassic)).finish(),
@@ -174,9 +153,6 @@ export class StoreCodeProposal extends JSONSerializable<
   }
 
   public static unpackAny(msgAny: Any, isClassic?: boolean): StoreCodeProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return StoreCodeProposal.fromProto(
       StoreCodeProposal_pb.decode(msgAny.value),
       isClassic

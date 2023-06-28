@@ -25,21 +25,15 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: SudoContractProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract, msg },
     } = data as SudoContractProposal.Amino;
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toAmino(isClassic?: boolean): SudoContractProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): SudoContractProposal.Amino {
     const { title, description, contract, msg } = this;
     return {
       type: 'wasm/SudoContractProposal',
@@ -54,11 +48,8 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: SudoContractProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new SudoContractProposal(
       proto.title,
       proto.description,
@@ -67,10 +58,7 @@ export class SudoContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): SudoContractProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): SudoContractProposal.Proto {
     const { title, description, contract, msg } = this;
     return SudoContractProposal_pb.fromPartial({
       title,
@@ -80,9 +68,6 @@ export class SudoContractProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.SudoContractProposal',
       value: SudoContractProposal_pb.encode(this.toProto(isClassic)).finish(),
@@ -93,9 +78,6 @@ export class SudoContractProposal extends JSONSerializable<
     msgAny: Any,
     isClassic?: boolean
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return SudoContractProposal.fromProto(
       SudoContractProposal_pb.decode(msgAny.value),
       isClassic
@@ -104,20 +86,14 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromData(
     data: SudoContractProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): SudoContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, contract, msg } =
       data as SudoContractProposal.Data;
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toData(isClassic?: boolean): SudoContractProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): SudoContractProposal.Data {
     const { title, description, contract, msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.SudoContractProposal',

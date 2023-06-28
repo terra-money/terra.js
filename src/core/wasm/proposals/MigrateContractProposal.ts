@@ -29,11 +29,8 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: MigrateContractProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract, code_id, msg },
     } = data as MigrateContractProposal.Amino;
@@ -46,10 +43,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): MigrateContractProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): MigrateContractProposal.Amino {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return {
       type: 'wasm/MigrateContractProposal',
@@ -65,11 +59,8 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: MigrateContractProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new MigrateContractProposal(
       proto.title,
       proto.description,
@@ -79,10 +70,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MigrateContractProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): MigrateContractProposal.Proto {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return MigrateContractProposal_pb.fromPartial({
       title,
@@ -93,9 +81,6 @@ export class MigrateContractProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.MigrateContractProposal',
       value: MigrateContractProposal_pb.encode(
@@ -108,9 +93,6 @@ export class MigrateContractProposal extends JSONSerializable<
     msgAny: Any,
     isClassic?: boolean
   ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return MigrateContractProposal.fromProto(
       MigrateContractProposal_pb.decode(msgAny.value),
       isClassic
@@ -119,11 +101,8 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromData(
     data: MigrateContractProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): MigrateContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, contract, code_id, msg } =
       data as MigrateContractProposal.Data;
     return new MigrateContractProposal(
@@ -135,10 +114,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MigrateContractProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): MigrateContractProposal.Data {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MigrateContractProposal',
