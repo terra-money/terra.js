@@ -27,7 +27,7 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromAmino(
     data: PinCodesProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): PinCodesProposal {
     const {
       value: { title, description, code_ids },
@@ -39,7 +39,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): PinCodesProposal.Amino {
+  public toAmino(_?: boolean): PinCodesProposal.Amino {
     const { title, description, code_ids } = this;
     return {
       type: 'wasm/PinCodesProposal',
@@ -53,7 +53,7 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromProto(
     proto: PinCodesProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): PinCodesProposal {
     return new PinCodesProposal(
       proto.title,
@@ -62,7 +62,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): PinCodesProposal.Proto {
+  public toProto(_?: boolean): PinCodesProposal.Proto {
     const { title, description, code_ids } = this;
     return PinCodesProposal_pb.fromPartial({
       title,
@@ -86,7 +86,7 @@ export class PinCodesProposal extends JSONSerializable<
 
   public static fromData(
     data: PinCodesProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): PinCodesProposal {
     const { title, description, code_ids } = data as PinCodesProposal.Data;
     return new PinCodesProposal(
@@ -96,7 +96,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): PinCodesProposal.Data {
+  public toData(_?: boolean): PinCodesProposal.Data {
     const { title, description, code_ids } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.PinCodesProposal',

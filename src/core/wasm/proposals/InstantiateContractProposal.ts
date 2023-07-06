@@ -42,7 +42,7 @@ export class InstantiateContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: InstantiateContractProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): InstantiateContractProposal {
     const {
       value: { title, description, run_as, admin, code_id, msg, funds, label },
@@ -59,7 +59,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): InstantiateContractProposal.Amino {
+  public toAmino(_?: boolean): InstantiateContractProposal.Amino {
     const {
       title,
       description,
@@ -87,7 +87,7 @@ export class InstantiateContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: InstantiateContractProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): InstantiateContractProposal {
     return new InstantiateContractProposal(
       proto.title,
@@ -101,7 +101,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): InstantiateContractProposal.Proto {
+  public toProto(_?: boolean): InstantiateContractProposal.Proto {
     const {
       title,
       description,
@@ -145,7 +145,7 @@ export class InstantiateContractProposal extends JSONSerializable<
 
   public static fromData(
     data: InstantiateContractProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): InstantiateContractProposal {
     const { title, description, run_as, admin, code_id, label, msg, funds } =
       data as InstantiateContractProposal.Data;
@@ -161,7 +161,7 @@ export class InstantiateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): InstantiateContractProposal.Data {
+  public toData(_?: boolean): InstantiateContractProposal.Data {
     const {
       title,
       description,

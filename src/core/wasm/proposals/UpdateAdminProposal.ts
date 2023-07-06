@@ -26,7 +26,7 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromAmino(
     data: UpdateAdminProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateAdminProposal {
     const {
       value: { title, description, contract, new_admin },
@@ -34,7 +34,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toAmino(_isClassic?: boolean): UpdateAdminProposal.Amino {
+  public toAmino(_?: boolean): UpdateAdminProposal.Amino {
     const { title, description, contract, new_admin } = this;
     return {
       type: 'wasm/UpdateAdminProposal',
@@ -49,7 +49,7 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromProto(
     proto: UpdateAdminProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateAdminProposal {
     return new UpdateAdminProposal(
       proto.title,
@@ -59,7 +59,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): UpdateAdminProposal.Proto {
+  public toProto(_?: boolean): UpdateAdminProposal.Proto {
     const { title, description, contract, new_admin } = this;
     return UpdateAdminProposal_pb.fromPartial({
       title,
@@ -87,14 +87,14 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromData(
     data: UpdateAdminProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateAdminProposal {
     const { title, description, contract, new_admin } =
       data as UpdateAdminProposal.Data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toData(_isClassic?: boolean): UpdateAdminProposal.Data {
+  public toData(_?: boolean): UpdateAdminProposal.Data {
     const { title, description, contract, new_admin } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateAdminProposal',

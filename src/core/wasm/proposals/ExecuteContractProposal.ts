@@ -37,7 +37,7 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: ExecuteContractProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): ExecuteContractProposal {
     const {
       value: { title, description, run_as, contract, msg, funds },
@@ -52,7 +52,7 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): ExecuteContractProposal.Amino {
+  public toAmino(_?: boolean): ExecuteContractProposal.Amino {
     const { title, description, run_as, contract, execute_msg, coins } = this;
     return {
       type: 'wasm/ExecuteContractProposal',
@@ -69,7 +69,7 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: ExecuteContractProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): ExecuteContractProposal {
     return new ExecuteContractProposal(
       proto.title,
@@ -81,7 +81,7 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): ExecuteContractProposal.Proto {
+  public toProto(_?: boolean): ExecuteContractProposal.Proto {
     const { title, description, run_as, contract, execute_msg, coins } = this;
     return ExecuteContractProposal_pb.fromPartial({
       title,
@@ -114,7 +114,7 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromData(
     data: ExecuteContractProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): ExecuteContractProposal {
     const { title, description, run_as, contract, msg, funds } =
       data as ExecuteContractProposal.Data;
@@ -128,7 +128,7 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): ExecuteContractProposal.Data {
+  public toData(_?: boolean): ExecuteContractProposal.Data {
     const { title, description, run_as, contract, execute_msg, coins } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',

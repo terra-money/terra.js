@@ -27,7 +27,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromAmino(
     data: UpdateInstantiateConfigProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateInstantiateConfigProposal {
     const {
       value: { title, description, access_config_updates },
@@ -39,7 +39,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): UpdateInstantiateConfigProposal.Amino {
+  public toAmino(_?: boolean): UpdateInstantiateConfigProposal.Amino {
     const { title, description, access_config_updates } = this;
     return {
       type: 'wasm/UpdateInstantiateConfigProposal',
@@ -53,7 +53,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromProto(
     proto: UpdateInstantiateConfigProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateInstantiateConfigProposal {
     return new UpdateInstantiateConfigProposal(
       proto.title,
@@ -62,7 +62,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): UpdateInstantiateConfigProposal.Proto {
+  public toProto(_?: boolean): UpdateInstantiateConfigProposal.Proto {
     const { title, description, access_config_updates } = this;
     return UpdateInstantiateConfigProposal_pb.fromPartial({
       title,
@@ -91,7 +91,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromData(
     data: UpdateInstantiateConfigProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): UpdateInstantiateConfigProposal {
     const { title, description, access_config_updates } =
       data as UpdateInstantiateConfigProposal.Data;
@@ -102,7 +102,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): UpdateInstantiateConfigProposal.Data {
+  public toData(_?: boolean): UpdateInstantiateConfigProposal.Data {
     const { title, description, access_config_updates } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal',

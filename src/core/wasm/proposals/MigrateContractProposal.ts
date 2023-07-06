@@ -29,7 +29,7 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: MigrateContractProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): MigrateContractProposal {
     const {
       value: { title, description, contract, code_id, msg },
@@ -43,7 +43,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): MigrateContractProposal.Amino {
+  public toAmino(_?: boolean): MigrateContractProposal.Amino {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return {
       type: 'wasm/MigrateContractProposal',
@@ -59,7 +59,7 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: MigrateContractProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): MigrateContractProposal {
     return new MigrateContractProposal(
       proto.title,
@@ -70,7 +70,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): MigrateContractProposal.Proto {
+  public toProto(_?: boolean): MigrateContractProposal.Proto {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return MigrateContractProposal_pb.fromPartial({
       title,
@@ -101,7 +101,7 @@ export class MigrateContractProposal extends JSONSerializable<
 
   public static fromData(
     data: MigrateContractProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): MigrateContractProposal {
     const { title, description, contract, code_id, msg } =
       data as MigrateContractProposal.Data;
@@ -114,7 +114,7 @@ export class MigrateContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): MigrateContractProposal.Data {
+  public toData(_?: boolean): MigrateContractProposal.Data {
     const { title, description, contract, new_code_id, migrate_msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.MigrateContractProposal',
