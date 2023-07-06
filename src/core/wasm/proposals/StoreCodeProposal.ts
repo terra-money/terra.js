@@ -31,7 +31,7 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromAmino(
     data: StoreCodeProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): StoreCodeProposal {
     const {
       value: {
@@ -53,7 +53,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): StoreCodeProposal.Amino {
+  public toAmino(_?: boolean): StoreCodeProposal.Amino {
     const {
       title,
       description,
@@ -75,7 +75,7 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromData(
     data: StoreCodeProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): StoreCodeProposal {
     const {
       title,
@@ -95,7 +95,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): StoreCodeProposal.Data {
+  public toData(_?: boolean): StoreCodeProposal.Data {
     const {
       title,
       description,
@@ -115,7 +115,7 @@ export class StoreCodeProposal extends JSONSerializable<
 
   public static fromProto(
     proto: StoreCodeProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): StoreCodeProposal {
     return new StoreCodeProposal(
       proto.title,
@@ -128,7 +128,7 @@ export class StoreCodeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): StoreCodeProposal.Proto {
+  public toProto(_?: boolean): StoreCodeProposal.Proto {
     const {
       title,
       description,

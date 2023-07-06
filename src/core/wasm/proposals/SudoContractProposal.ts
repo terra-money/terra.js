@@ -25,7 +25,7 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: SudoContractProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): SudoContractProposal {
     const {
       value: { title, description, contract, msg },
@@ -33,7 +33,7 @@ export class SudoContractProposal extends JSONSerializable<
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toAmino(_isClassic?: boolean): SudoContractProposal.Amino {
+  public toAmino(_?: boolean): SudoContractProposal.Amino {
     const { title, description, contract, msg } = this;
     return {
       type: 'wasm/SudoContractProposal',
@@ -48,7 +48,7 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: SudoContractProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): SudoContractProposal {
     return new SudoContractProposal(
       proto.title,
@@ -58,7 +58,7 @@ export class SudoContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): SudoContractProposal.Proto {
+  public toProto(_?: boolean): SudoContractProposal.Proto {
     const { title, description, contract, msg } = this;
     return SudoContractProposal_pb.fromPartial({
       title,
@@ -86,14 +86,14 @@ export class SudoContractProposal extends JSONSerializable<
 
   public static fromData(
     data: SudoContractProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): SudoContractProposal {
     const { title, description, contract, msg } =
       data as SudoContractProposal.Data;
     return new SudoContractProposal(title, description, contract, msg);
   }
 
-  public toData(_isClassic?: boolean): SudoContractProposal.Data {
+  public toData(_?: boolean): SudoContractProposal.Data {
     const { title, description, contract, msg } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.SudoContractProposal',

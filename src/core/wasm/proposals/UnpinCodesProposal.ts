@@ -27,7 +27,7 @@ export class UnpinCodesProposal extends JSONSerializable<
 
   public static fromAmino(
     data: UnpinCodesProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): UnpinCodesProposal {
     const {
       value: { title, description, code_ids },
@@ -39,7 +39,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_isClassic?: boolean): UnpinCodesProposal.Amino {
+  public toAmino(_?: boolean): UnpinCodesProposal.Amino {
     const { title, description, code_ids } = this;
     return {
       type: 'wasm/UnpinCodesProposal',
@@ -53,7 +53,7 @@ export class UnpinCodesProposal extends JSONSerializable<
 
   public static fromProto(
     proto: UnpinCodesProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): UnpinCodesProposal {
     return new UnpinCodesProposal(
       proto.title,
@@ -62,7 +62,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): UnpinCodesProposal.Proto {
+  public toProto(_?: boolean): UnpinCodesProposal.Proto {
     const { title, description, code_ids } = this;
     return UnpinCodesProposal_pb.fromPartial({
       title,
@@ -89,7 +89,7 @@ export class UnpinCodesProposal extends JSONSerializable<
 
   public static fromData(
     data: UnpinCodesProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): UnpinCodesProposal {
     const { title, description, code_ids } = data as UnpinCodesProposal.Data;
     return new UnpinCodesProposal(
@@ -99,7 +99,7 @@ export class UnpinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toData(_isClassic?: boolean): UnpinCodesProposal.Data {
+  public toData(_?: boolean): UnpinCodesProposal.Data {
     const { title, description, code_ids } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UnpinCodesProposal',

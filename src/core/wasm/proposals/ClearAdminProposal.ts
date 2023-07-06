@@ -27,7 +27,7 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromAmino(
     data: ClearAdminProposal.Amino,
-    _isClassic?: boolean
+    _?: boolean
   ): ClearAdminProposal {
     const {
       value: { title, description, contract },
@@ -35,7 +35,7 @@ export class ClearAdminProposal extends JSONSerializable<
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toAmino(_isClassic?: boolean): ClearAdminProposal.Amino {
+  public toAmino(_?: boolean): ClearAdminProposal.Amino {
     const { title, description, contract } = this;
     return {
       type: 'wasm/ClearAdminProposal',
@@ -49,7 +49,7 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromProto(
     proto: ClearAdminProposal.Proto,
-    _isClassic?: boolean
+    _?: boolean
   ): ClearAdminProposal {
     return new ClearAdminProposal(
       proto.title,
@@ -58,7 +58,7 @@ export class ClearAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_isClassic?: boolean): ClearAdminProposal.Proto {
+  public toProto(_?: boolean): ClearAdminProposal.Proto {
     const { title, description, contract } = this;
     return ClearAdminProposal_pb.fromPartial({
       title,
@@ -85,13 +85,13 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromData(
     data: ClearAdminProposal.Data,
-    _isClassic?: boolean
+    _?: boolean
   ): ClearAdminProposal {
     const { title, description, contract } = data as ClearAdminProposal.Data;
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toData(_isClassic?: boolean): ClearAdminProposal.Data {
+  public toData(_?: boolean): ClearAdminProposal.Data {
     const { title, description, contract } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.ClearAdminProposal',
