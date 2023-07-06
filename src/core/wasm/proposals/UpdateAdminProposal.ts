@@ -26,21 +26,15 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromAmino(
     data: UpdateAdminProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract, new_admin },
     } = data as UpdateAdminProposal.Amino;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toAmino(isClassic?: boolean): UpdateAdminProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): UpdateAdminProposal.Amino {
     const { title, description, contract, new_admin } = this;
     return {
       type: 'wasm/UpdateAdminProposal',
@@ -55,11 +49,8 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromProto(
     proto: UpdateAdminProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new UpdateAdminProposal(
       proto.title,
       proto.description,
@@ -68,10 +59,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): UpdateAdminProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): UpdateAdminProposal.Proto {
     const { title, description, contract, new_admin } = this;
     return UpdateAdminProposal_pb.fromPartial({
       title,
@@ -81,9 +69,6 @@ export class UpdateAdminProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateAdminProposal',
       value: UpdateAdminProposal_pb.encode(this.toProto(isClassic)).finish(),
@@ -94,9 +79,6 @@ export class UpdateAdminProposal extends JSONSerializable<
     msgAny: Any,
     isClassic?: boolean
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return UpdateAdminProposal.fromProto(
       UpdateAdminProposal_pb.decode(msgAny.value),
       isClassic
@@ -105,20 +87,14 @@ export class UpdateAdminProposal extends JSONSerializable<
 
   public static fromData(
     data: UpdateAdminProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, contract, new_admin } =
       data as UpdateAdminProposal.Data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toData(isClassic?: boolean): UpdateAdminProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): UpdateAdminProposal.Data {
     const { title, description, contract, new_admin } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateAdminProposal',

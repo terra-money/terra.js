@@ -37,11 +37,8 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromAmino(
     data: ExecuteContractProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, run_as, contract, msg, funds },
     } = data as ExecuteContractProposal.Amino;
@@ -55,11 +52,8 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): ExecuteContractProposal.Amino {
+  public toAmino(_isClassic?: boolean): ExecuteContractProposal.Amino {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return {
       type: 'wasm/ExecuteContractProposal',
       value: {
@@ -75,11 +69,8 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromProto(
     proto: ExecuteContractProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new ExecuteContractProposal(
       proto.title,
       proto.description,
@@ -90,33 +81,25 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): ExecuteContractProposal.Proto {
+  public toProto(_isClassic?: boolean): ExecuteContractProposal.Proto {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return ExecuteContractProposal_pb.fromPartial({
-        title,
-        description,
-        funds: coins.toProto(),
-        contract,
-        runAs: run_as,
-        msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
-      });
-    }
+    return ExecuteContractProposal_pb.fromPartial({
+      title,
+      description,
+      funds: coins.toProto(),
+      contract,
+      runAs: run_as,
+      msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
+    });
   }
 
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return Any.fromPartial({
-        typeUrl: '/cosmwasm.wasm.v1.ExecuteContractProposal',
-        value: ExecuteContractProposal_pb.encode(
-          this.toProto(isClassic)
-        ).finish(),
-      });
-    }
+    return Any.fromPartial({
+      typeUrl: '/cosmwasm.wasm.v1.ExecuteContractProposal',
+      value: ExecuteContractProposal_pb.encode(
+        this.toProto(isClassic)
+      ).finish(),
+    });
   }
 
   public static unpackAny(
@@ -131,11 +114,8 @@ export class ExecuteContractProposal extends JSONSerializable<
 
   public static fromData(
     data: ExecuteContractProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ExecuteContractProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, run_as, contract, msg, funds } =
       data as ExecuteContractProposal.Data;
     return new ExecuteContractProposal(
@@ -148,21 +128,17 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): ExecuteContractProposal.Data {
+  public toData(_isClassic?: boolean): ExecuteContractProposal.Data {
     const { title, description, run_as, contract, execute_msg, coins } = this;
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    } else {
-      return {
-        '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',
-        title,
-        description,
-        run_as,
-        contract,
-        msg: execute_msg,
-        funds: coins.toData(),
-      };
-    }
+    return {
+      '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',
+      title,
+      description,
+      run_as,
+      contract,
+      msg: execute_msg,
+      funds: coins.toData(),
+    };
   }
 }
 

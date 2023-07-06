@@ -27,21 +27,15 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromAmino(
     data: ClearAdminProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, contract },
     } = data as ClearAdminProposal.Amino;
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toAmino(isClassic?: boolean): ClearAdminProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): ClearAdminProposal.Amino {
     const { title, description, contract } = this;
     return {
       type: 'wasm/ClearAdminProposal',
@@ -55,11 +49,8 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromProto(
     proto: ClearAdminProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new ClearAdminProposal(
       proto.title,
       proto.description,
@@ -67,10 +58,7 @@ export class ClearAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): ClearAdminProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): ClearAdminProposal.Proto {
     const { title, description, contract } = this;
     return ClearAdminProposal_pb.fromPartial({
       title,
@@ -79,9 +67,6 @@ export class ClearAdminProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.ClearAdminProposal',
       value: ClearAdminProposal_pb.encode(this.toProto(isClassic)).finish(),
@@ -92,9 +77,6 @@ export class ClearAdminProposal extends JSONSerializable<
     msgAny: Any,
     isClassic?: boolean
   ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return ClearAdminProposal.fromProto(
       ClearAdminProposal_pb.decode(msgAny.value),
       isClassic
@@ -103,19 +85,13 @@ export class ClearAdminProposal extends JSONSerializable<
 
   public static fromData(
     data: ClearAdminProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): ClearAdminProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, contract } = data as ClearAdminProposal.Data;
     return new ClearAdminProposal(title, description, contract);
   }
 
-  public toData(isClassic?: boolean): ClearAdminProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): ClearAdminProposal.Data {
     const { title, description, contract } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.ClearAdminProposal',

@@ -111,16 +111,6 @@ export class WasmAPI extends BaseAPI {
     codeID: number,
     params: APIParams = {}
   ): Promise<CodeInfo> {
-    if (this.lcd.config.isClassic) {
-      const endpoint = `/terra/wasm/v1beta1/codes/${codeID}`;
-      return this.c
-        .get<{ code_info: CodeInfo.DataV1 }>(endpoint, params)
-        .then(({ code_info: d }) => ({
-          code_id: Number.parseInt(d.code_id),
-          code_hash: d.code_hash,
-          creator: d.creator,
-        }));
-    }
     const endpoint = `/cosmwasm/wasm/v1/code/${codeID}`;
 
     return this.c
@@ -139,19 +129,6 @@ export class WasmAPI extends BaseAPI {
     contractAddress: AccAddress,
     params: APIParams = {}
   ): Promise<ContractInfo> {
-    if (this.lcd.config.isClassic) {
-      const endpoint = `/terra/wasm/v1beta1/contracts/${contractAddress}`;
-      return this.c
-        .get<{ contract_info: ContractInfo.DataV1 }>(endpoint, params)
-        .then(({ contract_info: d }) => ({
-          code_id: Number.parseInt(d.code_id),
-          address: d.address,
-          creator: d.creator,
-          admin: d.admin !== '' ? d.admin : undefined,
-          init_msg: d.init_msg,
-        }));
-    }
-
     // new endpoint doesn't return init_msg so have to retrieve it from history
     const [historyEntry] = await this.contractHistory(contractAddress);
 
@@ -175,33 +152,18 @@ export class WasmAPI extends BaseAPI {
     query: object | string,
     params: APIParams = {}
   ): Promise<T> {
-    if (this.lcd.config.isClassic) {
-      const endpoint = `/terra/wasm/v1beta1/contracts/${contractAddress}/store`;
-      return this.c
-        .get<{ query_result: T }>(endpoint, {
-          ...params,
-          query_msg: Buffer.from(JSON.stringify(query), 'utf-8').toString(
-            'base64'
-          ),
-        })
-        .then(d => d.query_result);
-    } else {
-      const query_msg = Buffer.from(JSON.stringify(query), 'utf-8').toString(
-        'base64'
-      );
-      const endpoint = `/cosmwasm/wasm/v1/contract/${contractAddress}/smart/${query_msg}`;
-      return this.c
-        .get<{ data: T }>(endpoint, {
-          ...params,
-        })
-        .then(d => d.data);
-    }
+    const query_msg = Buffer.from(JSON.stringify(query), 'utf-8').toString(
+      'base64'
+    );
+    const endpoint = `/cosmwasm/wasm/v1/contract/${contractAddress}/smart/${query_msg}`;
+    return this.c
+      .get<{ data: T }>(endpoint, {
+        ...params,
+      })
+      .then(d => d.data);
   }
 
   public async parameters(params: APIParams = {}): Promise<WasmParams> {
-    if (!this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ params: WasmParams.Data }>(`/terra/wasm/v1beta1/params`, params)
       .then(({ params: d }) => ({
@@ -212,9 +174,6 @@ export class WasmAPI extends BaseAPI {
   }
 
   public async pinnedCodes(params: APIParams = {}): Promise<PinnedCodes> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ pinned_code: PinnedCodes.Data }>(
         `/cosmwasm/wasm/v1/codes/pinned`,
@@ -230,9 +189,6 @@ export class WasmAPI extends BaseAPI {
     query_data: string,
     params: APIParams = {}
   ): Promise<QueryResult> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ result: QueryResult.Data }>(
         `/cosmwasm/wasm/v1/contract/${contractAddress}/raw/${Buffer.from(
@@ -251,9 +207,6 @@ export class WasmAPI extends BaseAPI {
     query_data: object | string,
     params: APIParams = {}
   ): Promise<QueryResult> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ result: QueryResult.Data }>(
         `/cosmwasm/wasm/v1/contract/${contractAddress}/smart/${Buffer.from(
@@ -271,9 +224,6 @@ export class WasmAPI extends BaseAPI {
     contractAddress: AccAddress,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[HistoryEntry[], Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         entries: HistoryEntry.Data[];
@@ -289,9 +239,6 @@ export class WasmAPI extends BaseAPI {
     contractAddress: AccAddress,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Model[], Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         models: Model.Data[];
@@ -311,9 +258,6 @@ export class WasmAPI extends BaseAPI {
   public async allCodes(
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[CodeInfo[], Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         codeInfos: CodeInfo.DataV2[];

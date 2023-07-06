@@ -27,11 +27,8 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromAmino(
     data: UpdateInstantiateConfigProposal.Amino,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateInstantiateConfigProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const {
       value: { title, description, access_config_updates },
     } = data as UpdateInstantiateConfigProposal.Amino;
@@ -42,10 +39,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): UpdateInstantiateConfigProposal.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(_isClassic?: boolean): UpdateInstantiateConfigProposal.Amino {
     const { title, description, access_config_updates } = this;
     return {
       type: 'wasm/UpdateInstantiateConfigProposal',
@@ -59,11 +53,8 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromProto(
     proto: UpdateInstantiateConfigProposal.Proto,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateInstantiateConfigProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return new UpdateInstantiateConfigProposal(
       proto.title,
       proto.description,
@@ -71,10 +62,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): UpdateInstantiateConfigProposal.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(_isClassic?: boolean): UpdateInstantiateConfigProposal.Proto {
     const { title, description, access_config_updates } = this;
     return UpdateInstantiateConfigProposal_pb.fromPartial({
       title,
@@ -83,9 +71,6 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     });
   }
   public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal',
       value: UpdateInstantiateConfigProposal_pb.encode(
@@ -98,9 +83,6 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     msgAny: Any,
     isClassic?: boolean
   ): UpdateInstantiateConfigProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return UpdateInstantiateConfigProposal.fromProto(
       UpdateInstantiateConfigProposal_pb.decode(msgAny.value),
       isClassic
@@ -109,11 +91,8 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
 
   public static fromData(
     data: UpdateInstantiateConfigProposal.Data,
-    isClassic?: boolean
+    _isClassic?: boolean
   ): UpdateInstantiateConfigProposal {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
     const { title, description, access_config_updates } =
       data as UpdateInstantiateConfigProposal.Data;
     return new UpdateInstantiateConfigProposal(
@@ -123,10 +102,7 @@ export class UpdateInstantiateConfigProposal extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): UpdateInstantiateConfigProposal.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(_isClassic?: boolean): UpdateInstantiateConfigProposal.Data {
     const { title, description, access_config_updates } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal',
