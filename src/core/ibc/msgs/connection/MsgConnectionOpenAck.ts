@@ -41,22 +41,15 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgConnectionOpenAck {
-    _;
-    isClassic;
+  public static fromAmino(): MsgConnectionOpenAck {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgConnectionOpenAck.Data,
-    _?: boolean
-  ): MsgConnectionOpenAck {
-    _;
+  public static fromData(data: MsgConnectionOpenAck.Data) {
     const {
       connection_id,
       counterparty_connection_id,
@@ -83,8 +76,7 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgConnectionOpenAck.Data {
-    _;
+  public toData(): MsgConnectionOpenAck.Data {
     const {
       connection_id,
       counterparty_connection_id,
@@ -114,11 +106,7 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgConnectionOpenAck.Proto,
-    _?: boolean
-  ): MsgConnectionOpenAck {
-    _;
+  public static fromProto(proto: MsgConnectionOpenAck.Proto) {
     return new MsgConnectionOpenAck(
       proto.connectionId,
       proto.counterpartyConnectionId,
@@ -135,8 +123,7 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgConnectionOpenAck.Proto {
-    _;
+  public toProto(): MsgConnectionOpenAck.Proto {
     const {
       connection_id,
       counterparty_connection_id,
@@ -165,16 +152,14 @@ export class MsgConnectionOpenAck extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.connection.v1.MsgConnectionOpenAck',
       value: MsgConnectionOpenAck_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgConnectionOpenAck {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgConnectionOpenAck.fromProto(
       MsgConnectionOpenAck_pb.decode(msgAny.value)
     );

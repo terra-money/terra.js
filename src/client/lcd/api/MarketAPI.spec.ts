@@ -3,8 +3,9 @@ import { Dec } from '../../../core/numeric';
 import { LCDClient } from '../LCDClient';
 
 const terra = new LCDClient({
-  chainID: 'pisco-1',
-  URL: 'https://pisco-lcd.terra.dev/',
+  chainID: 'columbus-5',
+  URL: 'https://lcd.terrarebels.net/',
+  isClassic: true,
 });
 const market = new MarketAPI(terra);
 

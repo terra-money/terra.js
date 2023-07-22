@@ -21,11 +21,7 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgRevokeAuthorization.Amino,
-    _?: boolean
-  ): MsgRevokeAuthorization {
-    _;
+  public static fromAmino(data: MsgRevokeAuthorization.Amino) {
     const {
       value: { granter, grantee, msg_type_url },
     } = data;
@@ -46,17 +42,12 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgRevokeAuthorization.Data,
-    _?: boolean
-  ): MsgRevokeAuthorization {
-    _;
+  public static fromData(data: MsgRevokeAuthorization.Data) {
     const { granter, grantee, msg_type_url } = data;
     return new MsgRevokeAuthorization(granter, grantee, msg_type_url);
   }
 
-  public toData(_?: boolean): MsgRevokeAuthorization.Data {
-    _;
+  public toData(): MsgRevokeAuthorization.Data {
     const { granter, grantee, msg_type_url } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.MsgRevoke',
@@ -66,11 +57,7 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgRevokeAuthorization.Proto,
-    _?: boolean
-  ): MsgRevokeAuthorization {
-    _;
+  public static fromProto(proto: MsgRevokeAuthorization.Proto) {
     return new MsgRevokeAuthorization(
       proto.granter,
       proto.grantee,
@@ -78,8 +65,7 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgRevokeAuthorization.Proto {
-    _;
+  public toProto(): MsgRevokeAuthorization.Proto {
     const { granter, grantee, msg_type_url } = this;
     return MsgRevoke_pb.fromPartial({
       grantee,
@@ -88,21 +74,15 @@ export class MsgRevokeAuthorization extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgRevoke',
-      value: MsgRevoke_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgRevoke_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgRevokeAuthorization {
-    return MsgRevokeAuthorization.fromProto(
-      MsgRevoke_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgRevokeAuthorization.fromProto(MsgRevoke_pb.decode(msgAny.value));
   }
 }
 

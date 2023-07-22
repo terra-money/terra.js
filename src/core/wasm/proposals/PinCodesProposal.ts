@@ -15,7 +15,7 @@ export class PinCodesProposal extends JSONSerializable<
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param code_ids the address of the smart code_ids
+   * @param code_ids references the new WASM codes
    */
   constructor(
     public title: string,
@@ -25,13 +25,10 @@ export class PinCodesProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: PinCodesProposal.Amino,
-    _?: boolean
-  ): PinCodesProposal {
+  public static fromAmino(data: PinCodesProposal.Amino) {
     const {
       value: { title, description, code_ids },
-    } = data as PinCodesProposal.Amino;
+    } = data;
     return new PinCodesProposal(
       title,
       description,
@@ -39,7 +36,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): PinCodesProposal.Amino {
+  public toAmino(): PinCodesProposal.Amino {
     const { title, description, code_ids } = this;
     return {
       type: 'wasm/PinCodesProposal',
@@ -51,10 +48,7 @@ export class PinCodesProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: PinCodesProposal.Proto,
-    _?: boolean
-  ): PinCodesProposal {
+  public static fromProto(proto: PinCodesProposal.Proto) {
     return new PinCodesProposal(
       proto.title,
       proto.description,
@@ -62,7 +56,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): PinCodesProposal.Proto {
+  public toProto(): PinCodesProposal.Proto {
     const { title, description, code_ids } = this;
     return PinCodesProposal_pb.fromPartial({
       title,
@@ -70,25 +64,20 @@ export class PinCodesProposal extends JSONSerializable<
       codeIds: code_ids.map(cid => Long.fromNumber(cid)),
     });
   }
-  public packAny(isClassic?: boolean): Any {
+
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.PinCodesProposal',
-      value: PinCodesProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: PinCodesProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): PinCodesProposal {
-    return PinCodesProposal.fromProto(
-      PinCodesProposal_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return PinCodesProposal.fromProto(PinCodesProposal_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: PinCodesProposal.Data,
-    _?: boolean
-  ): PinCodesProposal {
-    const { title, description, code_ids } = data as PinCodesProposal.Data;
+  public static fromData(data: PinCodesProposal.Data) {
+    const { title, description, code_ids } = data;
     return new PinCodesProposal(
       title,
       description,
@@ -96,7 +85,7 @@ export class PinCodesProposal extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): PinCodesProposal.Data {
+  public toData(): PinCodesProposal.Data {
     const { title, description, code_ids } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.PinCodesProposal',

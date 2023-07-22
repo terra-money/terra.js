@@ -24,11 +24,7 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgSetWithdrawAddress.Amino,
-    _?: boolean
-  ): MsgSetWithdrawAddress {
-    _;
+  public static fromAmino(data: MsgSetWithdrawAddress.Amino) {
     const {
       value: { delegator_address, withdraw_address },
     } = data;
@@ -48,17 +44,12 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgSetWithdrawAddress.Data,
-    _?: boolean
-  ): MsgSetWithdrawAddress {
-    _;
+  public static fromData(data: MsgSetWithdrawAddress.Data) {
     const { delegator_address, withdraw_address } = data;
     return new MsgSetWithdrawAddress(delegator_address, withdraw_address);
   }
 
-  public toData(_?: boolean): MsgSetWithdrawAddress.Data {
-    _;
+  public toData(): MsgSetWithdrawAddress.Data {
     const { delegator_address, withdraw_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
@@ -67,19 +58,14 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgSetWithdrawAddress.Proto,
-    _?: boolean
-  ): MsgSetWithdrawAddress {
-    _;
+  public static fromProto(proto: MsgSetWithdrawAddress.Proto) {
     return new MsgSetWithdrawAddress(
       proto.delegatorAddress,
       proto.withdrawAddress
     );
   }
 
-  public toProto(_?: boolean): MsgSetWithdrawAddress.Proto {
-    _;
+  public toProto(): MsgSetWithdrawAddress.Proto {
     const { delegator_address, withdraw_address } = this;
     return MsgSetWithdrawAddress_pb.fromPartial({
       delegatorAddress: delegator_address,
@@ -87,20 +73,16 @@ export class MsgSetWithdrawAddress extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgSetWithdrawAddress',
-      value: MsgSetWithdrawAddress_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgSetWithdrawAddress_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgSetWithdrawAddress {
+  public static unpackAny(msgAny: Any) {
     return MsgSetWithdrawAddress.fromProto(
-      MsgSetWithdrawAddress_pb.decode(msgAny.value),
-      isClassic
+      MsgSetWithdrawAddress_pb.decode(msgAny.value)
     );
   }
 }

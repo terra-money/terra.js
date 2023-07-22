@@ -33,60 +33,54 @@ export namespace Account {
     | PeriodicVestingAccount.Data;
   export type Proto = Any;
 
-  export function fromAmino(
-    amino: Account.Amino,
-    isClassic?: boolean
-  ): Account {
+  export function fromAmino(amino: Account.Amino): Account {
     switch (amino.type) {
       case 'core/Account':
       case 'cosmos-sdk/BaseAccount':
-        return BaseAccount.fromAmino(amino, isClassic);
+        return BaseAccount.fromAmino(amino);
       case 'core/BaseVestingAccount':
       case 'cosmos-sdk/BaseVestingAccount':
-        return BaseVestingAccount.fromAmino(amino, isClassic);
+        return BaseVestingAccount.fromAmino(amino);
       case 'core/LazyGradedVestingAccount':
-        return LazyGradedVestingAccount.fromAmino(amino, isClassic);
+        return LazyGradedVestingAccount.fromAmino(amino);
       case 'cosmos-sdk/ContinuousVestingAccount':
-        return ContinuousVestingAccount.fromAmino(amino, isClassic);
+        return ContinuousVestingAccount.fromAmino(amino);
       case 'cosmos-sdk/DelayedVestingAccount':
-        return DelayedVestingAccount.fromAmino(amino, isClassic);
+        return DelayedVestingAccount.fromAmino(amino);
       case 'cosmos-sdk/PeriodicVestingAccount':
-        return PeriodicVestingAccount.fromAmino(amino, isClassic);
+        return PeriodicVestingAccount.fromAmino(amino);
     }
   }
 
-  export function fromData(data: Account.Data, isClassic?: boolean): Account {
+  export function fromData(data: Account.Data): Account {
     switch (data['@type']) {
       case '/cosmos.auth.v1beta1.BaseAccount':
-        return BaseAccount.fromData(data, isClassic);
+        return BaseAccount.fromData(data);
       case '/cosmos.vesting.v1beta1.BaseVestingAccount':
-        return BaseVestingAccount.fromData(data, isClassic);
+        return BaseVestingAccount.fromData(data);
       case '/terra.vesting.v1beta1.LazyGradedVestingAccount':
-        return LazyGradedVestingAccount.fromData(data, isClassic);
+        return LazyGradedVestingAccount.fromData(data);
       case '/cosmos.vesting.v1beta1.ContinuousVestingAccount':
-        return ContinuousVestingAccount.fromData(data, isClassic);
+        return ContinuousVestingAccount.fromData(data);
       case '/cosmos.vesting.v1beta1.DelayedVestingAccount':
-        return DelayedVestingAccount.fromData(data, isClassic);
+        return DelayedVestingAccount.fromData(data);
       case '/cosmos.vesting.v1beta1.PeriodicVestingAccount':
-        return PeriodicVestingAccount.fromData(data, isClassic);
+        return PeriodicVestingAccount.fromData(data);
     }
   }
 
-  export function fromProto(
-    accountAny: Account.Proto,
-    isClassic?: boolean
-  ): Account {
+  export function fromProto(accountAny: Account.Proto): Account {
     const typeUrl = accountAny.typeUrl;
     if (typeUrl === '/cosmos.auth.v1beta1.BaseAccount') {
-      return BaseAccount.unpackAny(accountAny, isClassic);
+      return BaseAccount.unpackAny(accountAny);
     } else if (typeUrl === '/terra.vesting.v1beta1.LazyGradedVestingAccount') {
-      return LazyGradedVestingAccount.unpackAny(accountAny, isClassic);
+      return LazyGradedVestingAccount.unpackAny(accountAny);
     } else if (typeUrl === '/cosmos.vesting.v1beta1.ContinuousVestingAccount') {
-      return ContinuousVestingAccount.unpackAny(accountAny, isClassic);
+      return ContinuousVestingAccount.unpackAny(accountAny);
     } else if (typeUrl === '/cosmos.vesting.v1beta1.DelayedVestingAccount') {
-      return DelayedVestingAccount.unpackAny(accountAny, isClassic);
+      return DelayedVestingAccount.unpackAny(accountAny);
     } else if (typeUrl === '/cosmos.vesting.v1beta1.PeriodicVestingAccount') {
-      return PeriodicVestingAccount.unpackAny(accountAny, isClassic);
+      return PeriodicVestingAccount.unpackAny(accountAny);
     }
 
     throw new Error(`Account type ${typeUrl} not recognized`);

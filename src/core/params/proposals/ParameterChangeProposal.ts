@@ -56,11 +56,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     }
   }
 
-  public static fromAmino(
-    data: ParameterChangeProposal.Amino,
-    _?: boolean
-  ): ParameterChangeProposal {
-    _;
+  public static fromAmino(data: ParameterChangeProposal.Amino) {
     const {
       value: { title, description, changes },
     } = data;
@@ -85,11 +81,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: ParameterChangeProposal.Data,
-    _?: boolean
-  ): ParameterChangeProposal {
-    _;
+  public static fromData(proto: ParameterChangeProposal.Data) {
     const { title, description, changes } = proto;
     return new ParameterChangeProposal(
       title,
@@ -98,8 +90,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): ParameterChangeProposal.Data {
-    _;
+  public toData(): ParameterChangeProposal.Data {
     const { title, description, changes } = this;
     return {
       '@type': '/cosmos.params.v1beta1.ParameterChangeProposal',
@@ -109,11 +100,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: ParameterChangeProposal.Proto,
-    _?: boolean
-  ): ParameterChangeProposal {
-    _;
+  public static fromProto(proto: ParameterChangeProposal.Proto) {
     return new ParameterChangeProposal(
       proto.title,
       proto.description,
@@ -121,8 +108,7 @@ export class ParameterChangeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): ParameterChangeProposal.Proto {
-    _;
+  public toProto(): ParameterChangeProposal.Proto {
     const { title, description, changes } = this;
     return ParameterChangeProposal_pb.fromPartial({
       changes: changes.toProto(),
@@ -131,22 +117,16 @@ export class ParameterChangeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.params.v1beta1.ParameterChangeProposal',
-      value: ParameterChangeProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: ParameterChangeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): ParameterChangeProposal {
+  public static unpackAny(msgAny: Any) {
     return ParameterChangeProposal.fromProto(
-      ParameterChangeProposal_pb.decode(msgAny.value),
-      isClassic
+      ParameterChangeProposal_pb.decode(msgAny.value)
     );
   }
 }

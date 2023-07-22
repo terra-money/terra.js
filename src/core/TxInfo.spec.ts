@@ -110,12 +110,12 @@ const instantiateContractTxAmino = {
 describe('TxInfo', () => {
   it('deserializes', () => {
     data.tx_responses.forEach((txInfo: TxInfo.Data) => {
-      expect(TxInfo.fromData(txInfo, true)).toBeTruthy();
+      expect(TxInfo.fromData(txInfo)).toBeTruthy();
     });
   });
 
   it('parses events correctly', () => {
-    const tx = TxInfo.fromData(instantiateContractTxAmino as TxInfo.Data, true);
+    const tx = TxInfo.fromData(instantiateContractTxAmino as TxInfo.Data);
 
     if (!tx.logs) {
       throw new Error('logs undefined');

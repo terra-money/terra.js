@@ -31,8 +31,7 @@ export class MsgSend extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(data: MsgSend.Amino, _?: boolean): MsgSend {
-    _;
+  public static fromAmino(data: MsgSend.Amino) {
     const {
       value: { from_address, to_address, amount },
     } = data;
@@ -51,15 +50,12 @@ export class MsgSend extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgSend.Data, isClassic?: boolean): MsgSend {
-    isClassic;
+  public static fromData(data: MsgSend.Data) {
     const { from_address, to_address, amount } = data;
-
     return new MsgSend(from_address, to_address, Coins.fromData(amount));
   }
 
-  public toData(_?: boolean): MsgSend.Data {
-    _;
+  public toData(): MsgSend.Data {
     const { from_address, to_address, amount } = this;
     return {
       '@type': '/cosmos.bank.v1beta1.MsgSend',
@@ -69,8 +65,7 @@ export class MsgSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgSend.Proto, _?: boolean): MsgSend {
-    _;
+  public static fromProto(proto: MsgSend.Proto) {
     return new MsgSend(
       proto.fromAddress,
       proto.toAddress,
@@ -78,8 +73,7 @@ export class MsgSend extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgSend.Proto {
-    _;
+  public toProto(): MsgSend.Proto {
     const { from_address, to_address, amount } = this;
     return MsgSend_pb.fromPartial({
       fromAddress: from_address,
@@ -88,15 +82,15 @@ export class MsgSend extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.bank.v1beta1.MsgSend',
-      value: MsgSend_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgSend_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgSend {
-    return MsgSend.fromProto(MsgSend_pb.decode(msgAny.value), isClassic);
+  public static unpackAny(msgAny: Any) {
+    return MsgSend.fromProto(MsgSend_pb.decode(msgAny.value));
   }
 }
 

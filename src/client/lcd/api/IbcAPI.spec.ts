@@ -9,7 +9,7 @@ const terra = new LCDClient({
 });
 const ibc = new IbcAPI(terra);
 
-describe('IbcClientAPI', () => {
+describe('IbcAPI', () => {
   it('params', async () => {
     const param = await ibc.parameters();
     expect(param.allowed_clients).not.toBeNull();
@@ -39,20 +39,6 @@ describe('IbcClientAPI', () => {
     expect(res).not.toBeNull();
     expect(res).not.toBeUndefined();
   });
-
-  it('ica host paramaters', async () => {
-    const res = await ibc.interchainAccountHostParameters();
-    expect(res).not.toBeNull();
-    expect(res).not.toBeUndefined();
-  });
-
-  /*
-  it('ica controller paramaters', async () => {
-    const res = await ibc.interchainAccountControllerParameters();
-    expect(res).not.toBeNull();
-    expect(res).not.toBeUndefined();
-  });
-  */
 
   it('channels', async () => {
     const [res] = await ibc.channels();

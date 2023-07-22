@@ -26,11 +26,7 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgWithdrawDelegatorReward.Amino,
-    _?: boolean
-  ): MsgWithdrawDelegatorReward {
-    _;
+  public static fromAmino(data: MsgWithdrawDelegatorReward.Amino) {
     const {
       value: { delegator_address, validator_address },
     } = data;
@@ -50,17 +46,12 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: MsgWithdrawDelegatorReward.Data,
-    _?: boolean
-  ): MsgWithdrawDelegatorReward {
-    _;
+  public static fromData(proto: MsgWithdrawDelegatorReward.Data) {
     const { delegator_address, validator_address } = proto;
     return new MsgWithdrawDelegatorReward(delegator_address, validator_address);
   }
 
-  public toData(_?: boolean): MsgWithdrawDelegatorReward.Data {
-    _;
+  public toData(): MsgWithdrawDelegatorReward.Data {
     const { delegator_address, validator_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
@@ -69,19 +60,14 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgWithdrawDelegatorReward.Proto,
-    _?: boolean
-  ): MsgWithdrawDelegatorReward {
-    _;
+  public static fromProto(proto: MsgWithdrawDelegatorReward.Proto) {
     return new MsgWithdrawDelegatorReward(
       proto.delegatorAddress,
       proto.validatorAddress
     );
   }
 
-  public toProto(_?: boolean): MsgWithdrawDelegatorReward.Proto {
-    _;
+  public toProto(): MsgWithdrawDelegatorReward.Proto {
     const { delegator_address, validator_address } = this;
     return MsgWithdrawDelegatorReward_pb.fromPartial({
       delegatorAddress: delegator_address,
@@ -89,22 +75,16 @@ export class MsgWithdrawDelegatorReward extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
-      value: MsgWithdrawDelegatorReward_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgWithdrawDelegatorReward_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgWithdrawDelegatorReward {
+  public static unpackAny(msgAny: Any) {
     return MsgWithdrawDelegatorReward.fromProto(
-      MsgWithdrawDelegatorReward_pb.decode(msgAny.value),
-      isClassic
+      MsgWithdrawDelegatorReward_pb.decode(msgAny.value)
     );
   }
 }

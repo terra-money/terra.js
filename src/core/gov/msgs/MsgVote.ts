@@ -26,8 +26,7 @@ export class MsgVote extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgVote.Amino, _?: boolean): MsgVote {
-    _;
+  public static fromAmino(data: MsgVote.Amino) {
     const {
       value: { proposal_id, voter, option },
     } = data;
@@ -46,14 +45,12 @@ export class MsgVote extends JSONSerializable<
     };
   }
 
-  public static fromData(data: MsgVote.Data, _?: boolean): MsgVote {
-    _;
+  public static fromData(data: MsgVote.Data) {
     const { proposal_id, voter, option } = data;
     return new MsgVote(Number.parseInt(proposal_id), voter, option);
   }
 
-  public toData(_?: boolean): MsgVote.Data {
-    _;
+  public toData(): MsgVote.Data {
     const { proposal_id, voter, option } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgVote',
@@ -63,13 +60,11 @@ export class MsgVote extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgVote.Proto, _?: boolean): MsgVote {
-    _;
+  public static fromProto(proto: MsgVote.Proto) {
     return new MsgVote(proto.proposalId.toNumber(), proto.voter, proto.option);
   }
 
-  public toProto(_?: boolean): MsgVote.Proto {
-    _;
+  public toProto(): MsgVote.Proto {
     const { proposal_id, voter, option } = this;
     return MsgVote_pb.fromPartial({
       option,
@@ -78,16 +73,14 @@ export class MsgVote extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgVote',
       value: MsgVote_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgVote {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgVote.fromProto(MsgVote_pb.decode(msgAny.value));
   }
 }

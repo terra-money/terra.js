@@ -24,9 +24,7 @@ export class MsgUpdateClient extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgUpdateClient {
-    _;
-    isClassic;
+  public static fromAmino(): MsgUpdateClient {
     throw new Error('Amino not supported');
   }
 
@@ -34,11 +32,7 @@ export class MsgUpdateClient extends JSONSerializable<
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgUpdateClient.Data,
-    _?: boolean
-  ): MsgUpdateClient {
-    _;
+  public static fromData(data: MsgUpdateClient.Data) {
     const { client_id, header, signer } = data;
     return new MsgUpdateClient(
       client_id,
@@ -47,8 +41,7 @@ export class MsgUpdateClient extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgUpdateClient.Data {
-    _;
+  public toData(): MsgUpdateClient.Data {
     const { client_id, header, signer } = this;
     return {
       '@type': '/ibc.core.client.v1.MsgUpdateClient',
@@ -58,11 +51,7 @@ export class MsgUpdateClient extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgUpdateClient.Proto,
-    _?: boolean
-  ): MsgUpdateClient {
-    _;
+  public static fromProto(proto: MsgUpdateClient.Proto) {
     return new MsgUpdateClient(
       proto.clientId,
       proto.header ? Header.unpackAny(proto.header) : undefined,
@@ -70,8 +59,7 @@ export class MsgUpdateClient extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgUpdateClient.Proto {
-    _;
+  public toProto(): MsgUpdateClient.Proto {
     const { client_id, header, signer } = this;
     return MsgUpdateClient_pb.fromPartial({
       clientId: client_id,
@@ -80,16 +68,14 @@ export class MsgUpdateClient extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/ibc.core.client.v1.MsgUpdateClient',
       value: MsgUpdateClient_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgUpdateClient {
-    _;
+  public static unpackAny(msgAny: Any): MsgUpdateClient {
     return MsgUpdateClient.fromProto(MsgUpdateClient_pb.decode(msgAny.value));
   }
 }

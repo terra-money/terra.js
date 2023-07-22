@@ -23,13 +23,7 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: RemoveBurnTaxExemptionAddressProposal.Amino,
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: RemoveBurnTaxExemptionAddressProposal.Amino) {
     const {
       value: { title, description, addresses },
     } = data;
@@ -40,12 +34,7 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): RemoveBurnTaxExemptionAddressProposal.Amino {
     const { title, description, addresses } = this;
     return {
       type: 'treasury/RemoveBurnTaxExemptionAddressProposal',
@@ -57,13 +46,7 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: RemoveBurnTaxExemptionAddressProposal.Data,
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: RemoveBurnTaxExemptionAddressProposal.Data) {
     const { title, description, addresses } = data;
     return new RemoveBurnTaxExemptionAddressProposal(
       title,
@@ -72,12 +55,7 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toData(
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): RemoveBurnTaxExemptionAddressProposal.Data {
     const { title, description, addresses } = this;
     return {
       '@type': '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal',
@@ -87,13 +65,7 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: RemoveBurnTaxExemptionAddressProposal.Proto,
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: RemoveBurnTaxExemptionAddressProposal.Proto) {
     return new RemoveBurnTaxExemptionAddressProposal(
       proto.title,
       proto.description,
@@ -101,42 +73,27 @@ export class RemoveBurnTaxExemptionAddressProposal extends JSONSerializable<
     );
   }
 
-  public toProto(
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): RemoveBurnTaxExemptionAddressProposal.Proto {
     const { title, description, addresses } = this;
     return RemoveBurnTaxExemptionAddressProposal_pb.fromPartial({
       title,
       description,
-      addresses,
+      addresses: addresses ? addresses : undefined,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/terra.treasury.v1beta1.RemoveBurnTaxExemptionAddressProposal',
       value: RemoveBurnTaxExemptionAddressProposal_pb.encode(
-        this.toProto(isClassic)
+        this.toProto()
       ).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): RemoveBurnTaxExemptionAddressProposal {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return RemoveBurnTaxExemptionAddressProposal.fromProto(
-      RemoveBurnTaxExemptionAddressProposal_pb.decode(msgAny.value),
-      isClassic
+      RemoveBurnTaxExemptionAddressProposal_pb.decode(msgAny.value)
     );
   }
 }

@@ -1,5 +1,4 @@
 import { MsgMigrateContract } from './MsgMigrateContract';
-import { MsgMigrateContract as MsgMigrateContract_legacy_pb } from '@classic-terra/terra.proto/terra/wasm/v1beta1/tx';
 import { MsgMigrateContract as MsgMigrateContract_pb } from '@terra-money/terra.proto/cosmwasm/wasm/v1/tx';
 
 const msgWithAdmin = new MsgMigrateContract(
@@ -13,45 +12,35 @@ const msgWithMigrateString = new MsgMigrateContract(
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
   2,
-  'migrate_msg_as_string'
+  'msg_as_string'
 );
 
 describe('MsgMigrateContract', () => {
   it('amino', () => {
-    const aminoWithAdmin = msgWithAdmin.toAmino(
-      false
-    ) as MsgMigrateContract.AminoV2;
-    expect(aminoWithAdmin.value.sender).toEqual(msgWithAdmin.admin);
+    const aminoWithAdmin = msgWithAdmin.toAmino() as MsgMigrateContract.AminoV2;
+    expect(aminoWithAdmin.value.sender).toEqual(msgWithAdmin.sender);
 
-    const aminoWithMigrateString = msgWithMigrateString.toAmino(
-      false
-    ) as MsgMigrateContract.AminoV2;
-    expect(aminoWithMigrateString.value.msg).toEqual(
-      msgWithMigrateString.migrate_msg
-    );
+    const aminoWithMigrateString =
+      msgWithMigrateString.toAmino() as MsgMigrateContract.AminoV2;
+    expect(aminoWithMigrateString.value.msg).toEqual(msgWithMigrateString.msg);
   });
 
   it('proto', () => {
-    const protoWithAdmin = msgWithAdmin.toProto(false) as MsgMigrateContract_pb;
-    expect(protoWithAdmin.sender).toEqual(msgWithAdmin.admin);
+    const protoWithAdmin = msgWithAdmin.toProto() as MsgMigrateContract_pb;
+    expect(protoWithAdmin.sender).toEqual(msgWithAdmin.sender);
 
-    const protoWithMigrateString = msgWithMigrateString.toProto(
-      false
-    ) as MsgMigrateContract_pb;
+    const protoWithMigrateString =
+      msgWithMigrateString.toProto() as MsgMigrateContract_pb;
     expect(protoWithMigrateString.msg.toString()).toEqual(
-      JSON.stringify(msgWithMigrateString.migrate_msg)
+      JSON.stringify(msgWithMigrateString.msg)
     );
   });
 
   it('data', () => {
-    const dataWithAdmin = msgWithAdmin.toData(
-      false
-    ) as MsgMigrateContract.DataV2;
-    expect(dataWithAdmin.sender).toEqual(msgWithAdmin.admin);
+    const dataWithAdmin = msgWithAdmin.toData();
+    expect(dataWithAdmin.sender).toEqual(msgWithAdmin.sender);
 
-    const dataWithMigrateString = msgWithMigrateString.toData(
-      false
-    ) as MsgMigrateContract.DataV2;
-    expect(dataWithMigrateString.msg).toEqual(msgWithMigrateString.migrate_msg);
+    const dataWithMigrateString = msgWithMigrateString.toData();
+    expect(dataWithMigrateString.msg).toEqual(msgWithMigrateString.msg);
   });
 });

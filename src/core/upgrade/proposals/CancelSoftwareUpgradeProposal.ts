@@ -19,11 +19,7 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: CancelSoftwareUpgradeProposal.Amino,
-    _?: boolean
-  ): CancelSoftwareUpgradeProposal {
-    _;
+  public static fromAmino(data: CancelSoftwareUpgradeProposal.Amino) {
     const {
       value: { title, description },
     } = data;
@@ -43,17 +39,12 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: CancelSoftwareUpgradeProposal.Data,
-    _?: boolean
-  ): CancelSoftwareUpgradeProposal {
-    _;
+  public static fromData(data: CancelSoftwareUpgradeProposal.Data) {
     const { title, description } = data;
     return new CancelSoftwareUpgradeProposal(title, description);
   }
 
-  public toData(_?: boolean): CancelSoftwareUpgradeProposal.Data {
-    _;
+  public toData(): CancelSoftwareUpgradeProposal.Data {
     const { title, description } = this;
     return {
       '@type': '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
@@ -62,16 +53,11 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: CancelSoftwareUpgradeProposal.Proto,
-    _?: boolean
-  ): CancelSoftwareUpgradeProposal {
-    _;
+  public static fromProto(proto: CancelSoftwareUpgradeProposal.Proto) {
     return new CancelSoftwareUpgradeProposal(proto.title, proto.description);
   }
 
-  public toProto(_?: boolean): CancelSoftwareUpgradeProposal.Proto {
-    _;
+  public toProto(): CancelSoftwareUpgradeProposal.Proto {
     const { title, description } = this;
     return CancelSoftwareUpgradeProposal_pb.fromPartial({
       title,
@@ -79,22 +65,16 @@ export class CancelSoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal',
-      value: CancelSoftwareUpgradeProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: CancelSoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): CancelSoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any) {
     return CancelSoftwareUpgradeProposal.fromProto(
-      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value),
-      isClassic
+      CancelSoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
   }
 }

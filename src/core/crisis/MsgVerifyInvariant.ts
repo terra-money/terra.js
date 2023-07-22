@@ -24,33 +24,23 @@ export class MsgVerifyInvariant extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgVerifyInvariant.Amino,
-    _?: boolean
-  ): MsgVerifyInvariant {
-    _;
+  public static fromAmino(data: MsgVerifyInvariant.Amino) {
     const {
       value: { sender, invariantModuleName, invariantRoute },
     } = data;
     return new MsgVerifyInvariant(sender, invariantModuleName, invariantRoute);
   }
 
-  public toAmino(_?: boolean): MsgVerifyInvariant.Amino {
-    _;
+  public toAmino(): MsgVerifyInvariant.Amino {
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public static fromData(
-    data: MsgVerifyInvariant.Data,
-    _?: boolean
-  ): MsgVerifyInvariant {
-    _;
+  public static fromData(data: MsgVerifyInvariant.Data) {
     const { sender, invariantModuleName, invariantRoute } = data;
     return new MsgVerifyInvariant(sender, invariantModuleName, invariantRoute);
   }
 
-  public toData(_?: boolean): MsgVerifyInvariant.Data {
-    _;
+  public toData(): MsgVerifyInvariant.Data {
     const { sender, invariantModuleName, invariantRoute } = this;
     return {
       '@type': '/cosmos.crisis.v1beta1.MsgVerifyInvariant',
@@ -60,11 +50,7 @@ export class MsgVerifyInvariant extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgVerifyInvariant.Proto,
-    _?: boolean
-  ): MsgVerifyInvariant {
-    _;
+  public static fromProto(proto: MsgVerifyInvariant.Proto) {
     return new MsgVerifyInvariant(
       proto.sender,
       proto.invariantModuleName,
@@ -72,25 +58,20 @@ export class MsgVerifyInvariant extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgVerifyInvariant.Proto {
-    _;
+  public toProto(): MsgVerifyInvariant.Proto {
     throw new Error('MsgVerifyInvarant is not allowed to send');
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.crisis.v1beta1.MsgVerifyInvariant',
-      value: MsgVerifyInvariant_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgVerifyInvariant_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgVerifyInvariant {
+  public static unpackAny(msgAny: Any) {
     return MsgVerifyInvariant.fromProto(
-      MsgVerifyInvariant_pb.decode(msgAny.value),
-      isClassic
+      MsgVerifyInvariant_pb.decode(msgAny.value)
     );
   }
 }

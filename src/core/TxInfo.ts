@@ -35,7 +35,7 @@ export class TxInfo {
     public codespace?: string
   ) {}
 
-  public static fromProto(proto: TxInfo.Proto): TxInfo {
+  public static fromProto(proto: TxInfo.Proto) {
     return new TxInfo(
       proto.height.toNumber(),
       proto.txhash,
@@ -50,7 +50,7 @@ export class TxInfo {
     );
   }
 
-  public static fromData(data: TxInfo.Data, isClassic?: boolean): TxInfo {
+  public static fromData(data: TxInfo.Data) {
     return new TxInfo(
       Number.parseInt(data.height),
       data.txhash,
@@ -58,7 +58,7 @@ export class TxInfo {
       data.logs.map(log => TxLog.fromData(log)),
       Number.parseInt(data.gas_wanted),
       Number.parseInt(data.gas_used),
-      Tx.fromData(data.tx, isClassic),
+      Tx.fromData(data.tx),
       data.timestamp,
       data.code,
       data.codespace

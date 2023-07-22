@@ -38,11 +38,7 @@ export class MsgCreateValidator extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgCreateValidator.Amino,
-    _?: boolean
-  ): MsgCreateValidator {
-    _;
+  public static fromAmino(data: MsgCreateValidator.Amino) {
     const {
       value: {
         description,
@@ -91,11 +87,7 @@ export class MsgCreateValidator extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgCreateValidator.Data,
-    _?: boolean
-  ): MsgCreateValidator {
-    _;
+  public static fromData(data: MsgCreateValidator.Data) {
     const {
       description,
       commission,
@@ -116,8 +108,7 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgCreateValidator.Data {
-    _;
+  public toData(): MsgCreateValidator.Data {
     const {
       description,
       commission,
@@ -139,11 +130,7 @@ export class MsgCreateValidator extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgCreateValidator.Proto,
-    _?: boolean
-  ): MsgCreateValidator {
-    _;
+  public static fromProto(proto: MsgCreateValidator.Proto) {
     return new MsgCreateValidator(
       Validator.Description.fromProto(
         proto.description as Validator.Description.Proto
@@ -159,8 +146,7 @@ export class MsgCreateValidator extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgCreateValidator.Proto {
-    _;
+  public toProto(): MsgCreateValidator.Proto {
     const {
       description,
       commission,
@@ -181,20 +167,16 @@ export class MsgCreateValidator extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgCreateValidator',
-      value: MsgCreateValidator_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgCreateValidator_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgCreateValidator {
+  public static unpackAny(msgAny: Any) {
     return MsgCreateValidator.fromProto(
-      MsgCreateValidator_pb.decode(msgAny.value),
-      isClassic
+      MsgCreateValidator_pb.decode(msgAny.value)
     );
   }
 }

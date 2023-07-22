@@ -26,8 +26,7 @@ export class MsgDelegate extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgDelegate.Amino, _?: boolean): MsgDelegate {
-    _;
+  public static fromAmino(data: MsgDelegate.Amino) {
     const {
       value: { delegator_address, validator_address, amount },
     } = data;
@@ -50,8 +49,7 @@ export class MsgDelegate extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgDelegate.Proto, _?: boolean): MsgDelegate {
-    _;
+  public static fromProto(proto: MsgDelegate.Proto) {
     return new MsgDelegate(
       proto.delegatorAddress,
       proto.validatorAddress,
@@ -59,8 +57,7 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgDelegate.Proto {
-    _;
+  public toProto(): MsgDelegate.Proto {
     const { delegator_address, validator_address, amount } = this;
     return MsgDelegate_pb.fromPartial({
       amount: amount.toProto(),
@@ -69,22 +66,18 @@ export class MsgDelegate extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
-      value: MsgDelegate_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgDelegate_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgDelegate {
-    return MsgDelegate.fromProto(
-      MsgDelegate_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgDelegate.fromProto(MsgDelegate_pb.decode(msgAny.value));
   }
 
-  public static fromData(data: MsgDelegate.Data, _?: boolean): MsgDelegate {
-    _;
+  public static fromData(data: MsgDelegate.Data) {
     const { delegator_address, validator_address, amount } = data;
     return new MsgDelegate(
       delegator_address,
@@ -93,8 +86,7 @@ export class MsgDelegate extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgDelegate.Data {
-    _;
+  public toData(): MsgDelegate.Data {
     const { delegator_address, validator_address, amount } = this;
     return {
       '@type': '/cosmos.staking.v1beta1.MsgDelegate',

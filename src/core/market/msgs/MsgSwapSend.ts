@@ -30,13 +30,7 @@ export class MsgSwapSend extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgSwapSend.Amino,
-    isClassic?: boolean
-  ): MsgSwapSend {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: MsgSwapSend.Amino) {
     const {
       value: { from_address, to_address, offer_coin, ask_denom },
     } = data;
@@ -48,10 +42,7 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): MsgSwapSend.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): MsgSwapSend.Amino {
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
       type: 'market/MsgSwapSend',
@@ -64,13 +55,7 @@ export class MsgSwapSend extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgSwapSend.Proto,
-    isClassic?: boolean
-  ): MsgSwapSend {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgSwapSend.Proto) {
     return new MsgSwapSend(
       proto.fromAddress,
       proto.toAddress,
@@ -79,10 +64,7 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgSwapSend.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgSwapSend.Proto {
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return MsgSwapSend_pb.fromPartial({
       askDenom: ask_denom,
@@ -92,33 +74,18 @@ export class MsgSwapSend extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/terra.market.v1beta1.MsgSwapSend',
-      value: MsgSwapSend_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgSwapSend_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgSwapSend {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-    return MsgSwapSend.fromProto(
-      MsgSwapSend_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgSwapSend.fromProto(MsgSwapSend_pb.decode(msgAny.value));
   }
 
-  public static fromData(
-    data: MsgSwapSend.Data,
-    isClassic?: boolean
-  ): MsgSwapSend {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgSwapSend.Data) {
     const { from_address, to_address, offer_coin, ask_denom } = data;
     return new MsgSwapSend(
       from_address,
@@ -128,10 +95,7 @@ export class MsgSwapSend extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MsgSwapSend.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgSwapSend.Data {
     const { from_address, to_address, offer_coin, ask_denom } = this;
     return {
       '@type': '/terra.market.v1beta1.MsgSwapSend',

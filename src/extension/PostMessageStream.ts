@@ -48,7 +48,7 @@ export default class PostMessageStream extends Duplex {
   }
 
   _onMessage(event: { source: Window; origin: string; data: Message }) {
-    const msg = event.data as Message;
+    const msg = event.data;
 
     // validate message
     if (this._origin !== '*' && event.origin !== this._origin) return;

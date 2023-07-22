@@ -60,20 +60,20 @@ export class SignDoc extends JSONSerializable<
     };
   }
 
-  public toData(isClassic?: boolean): SignDoc.Data {
+  public toData(): SignDoc.Data {
     const { account_number, chain_id, tx_body, auth_info } = this;
     return {
-      body_bytes: Buffer.from(tx_body.toBytes(isClassic)).toString('base64'),
+      body_bytes: Buffer.from(tx_body.toBytes()).toString('base64'),
       auth_info_bytes: Buffer.from(auth_info.toBytes()).toString('base64'),
       account_number: account_number.toFixed(),
       chain_id,
     };
   }
 
-  public toProto(isClassic?: boolean): SignDoc.Proto {
+  public toProto(): SignDoc.Proto {
     const { account_number, chain_id, tx_body, auth_info } = this;
     return SignDoc_pb.fromPartial({
-      bodyBytes: tx_body.toBytes(isClassic),
+      bodyBytes: tx_body.toBytes(),
       authInfoBytes: auth_info.toBytes(),
       accountNumber: Long.fromNumber(account_number),
       chainId: chain_id,
@@ -84,8 +84,8 @@ export class SignDoc extends JSONSerializable<
     return new Tx(this.tx_body, this.auth_info, []);
   }
 
-  public toBytes(isClassic?: boolean): Uint8Array {
-    return SignDoc_pb.encode(this.toProto(isClassic)).finish();
+  public toBytes(): Uint8Array {
+    return SignDoc_pb.encode(this.toProto()).finish();
   }
 }
 

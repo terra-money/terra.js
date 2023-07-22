@@ -26,8 +26,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     super();
   }
 
-  public static fromAmino(data: Vote.Amino, _?: boolean): Vote {
-    _;
+  public static fromAmino(data: Vote.Amino) {
     const { proposal_id, voter, options } = data;
     return new Vote(
       Number.parseInt(proposal_id),
@@ -36,8 +35,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     );
   }
 
-  public toAmino(_?: boolean): Vote.Amino {
-    _;
+  public toAmino(): Vote.Amino {
     const { proposal_id, voter, options } = this;
 
     const res: Vote.Amino = {
@@ -49,8 +47,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     return res;
   }
 
-  public static fromData(data: Vote.Data, _?: boolean): Vote {
-    _;
+  public static fromData(data: Vote.Data) {
     const { proposal_id, voter, options } = data;
     return new Vote(
       Number.parseInt(proposal_id),
@@ -59,8 +56,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     );
   }
 
-  public toData(_?: boolean): Vote.Data {
-    _;
+  public toData(): Vote.Data {
     const { proposal_id, voter, options } = this;
 
     const res: Vote.Data = {
@@ -72,8 +68,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     return res;
   }
 
-  public static fromProto(proto: Vote.Proto, _?: boolean): Vote {
-    _;
+  public static fromProto(proto: Vote.Proto) {
     return new Vote(
       proto.proposalId.toNumber(),
       proto.voter,
@@ -81,8 +76,7 @@ export class Vote extends JSONSerializable<Vote.Amino, Vote.Data, Vote.Proto> {
     );
   }
 
-  public toProto(_?: boolean): Vote.Proto {
-    _;
+  public toProto(): Vote.Proto {
     const { proposal_id, voter, options } = this;
     return Vote_pb.fromPartial({
       options: options.map(o => o.toProto()),
@@ -122,17 +116,12 @@ export class WeightedVoteOption extends JSONSerializable<
     this.weight = new Dec(weight);
   }
 
-  public static fromAmino(
-    data: WeightedVoteOption.Amino,
-    _?: boolean
-  ): WeightedVoteOption {
-    _;
+  public static fromAmino(data: WeightedVoteOption.Amino) {
     const { option, weight } = data;
     return new WeightedVoteOption(option, weight);
   }
 
-  public toAmino(_?: boolean): WeightedVoteOption.Amino {
-    _;
+  public toAmino(): WeightedVoteOption.Amino {
     const { option, weight } = this;
     return {
       option,
@@ -140,17 +129,12 @@ export class WeightedVoteOption extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: WeightedVoteOption.Data,
-    _?: boolean
-  ): WeightedVoteOption {
-    _;
+  public static fromData(data: WeightedVoteOption.Data) {
     const { option, weight } = data;
     return new WeightedVoteOption(option, weight);
   }
 
-  public toData(_?: boolean): WeightedVoteOption.Data {
-    _;
+  public toData(): WeightedVoteOption.Data {
     const { option, weight } = this;
     return {
       option,
@@ -158,16 +142,11 @@ export class WeightedVoteOption extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: WeightedVoteOption.Proto,
-    _?: boolean
-  ): WeightedVoteOption {
-    _;
+  public static fromProto(proto: WeightedVoteOption.Proto) {
     return new WeightedVoteOption(proto.option, proto.weight);
   }
 
-  public toProto(_?: boolean): WeightedVoteOption.Proto {
-    _;
+  public toProto(): WeightedVoteOption.Proto {
     const { option, weight } = this;
     return WeightedVoteOption_pb.fromPartial({
       option,

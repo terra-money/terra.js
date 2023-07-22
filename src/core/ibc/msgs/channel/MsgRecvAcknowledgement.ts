@@ -30,22 +30,15 @@ export class MsgAcknowledgement extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(_: any, isClassic?: boolean): MsgAcknowledgement {
-    _;
-    isClassic;
+  public static fromAmino(): MsgAcknowledgement {
     throw new Error('Amino not supported');
   }
 
-  public toAmino(_?: boolean): any {
-    _;
+  public toAmino(): any {
     throw new Error('Amino not supported');
   }
 
-  public static fromData(
-    data: MsgAcknowledgement.Data,
-    _?: boolean
-  ): MsgAcknowledgement {
-    _;
+  public static fromData(data: MsgAcknowledgement.Data) {
     const { packet, acknowledgement, proof_acked, proof_height, signer } = data;
     return new MsgAcknowledgement(
       packet ? Packet.fromData(packet) : undefined,
@@ -56,8 +49,7 @@ export class MsgAcknowledgement extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgAcknowledgement.Data {
-    _;
+  public toData(): MsgAcknowledgement.Data {
     const { packet, acknowledgement, proof_acked, proof_height, signer } = this;
     return {
       '@type': '/ibc.core.channel.v1.MsgAcknowledgement',
@@ -69,11 +61,7 @@ export class MsgAcknowledgement extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgAcknowledgement.Proto,
-    _?: boolean
-  ): MsgAcknowledgement {
-    _;
+  public static fromProto(proto: MsgAcknowledgement.Proto) {
     return new MsgAcknowledgement(
       proto.packet ? Packet.fromProto(proto.packet) : undefined,
       Buffer.from(proto.acknowledgement).toString('base64'),
@@ -83,8 +71,7 @@ export class MsgAcknowledgement extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgAcknowledgement.Proto {
-    _;
+  public toProto(): MsgAcknowledgement.Proto {
     const { packet, acknowledgement, proof_acked, proof_height, signer } = this;
     return MsgAcknowledgement_pb.fromPartial({
       packet: packet ? packet.toProto() : undefined,
@@ -95,16 +82,14 @@ export class MsgAcknowledgement extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/ibc.core.channel.v1.MsgAcknowledgement',
       value: MsgAcknowledgement_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgAcknowledgement {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgAcknowledgement.fromProto(
       MsgAcknowledgement_pb.decode(msgAny.value)
     );

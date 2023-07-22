@@ -14,12 +14,7 @@ export interface CodeInfo {
 }
 
 export namespace CodeInfo {
-  export interface DataV1 {
-    code_id: string;
-    code_hash: string;
-    creator: AccAddress;
-  }
-  export interface DataV2 {
+  export interface Data {
     code_id: string;
     data_hash: string;
     creator: AccAddress;
@@ -40,15 +35,7 @@ export interface ContractInfo {
 }
 
 export namespace ContractInfo {
-  export interface DataV1 {
-    code_id: string;
-    address: AccAddress;
-    creator: AccAddress;
-    admin: AccAddress;
-    init_msg: any; // object
-  }
-
-  export interface DataV2 {
+  export interface Data {
     code_id: string;
     creator: AccAddress;
     admin: AccAddress;
@@ -58,17 +45,28 @@ export namespace ContractInfo {
   }
 }
 
-export interface WasmParams {
-  max_contract_size: number;
-  max_contract_gas: number;
-  max_contract_msg_size: number;
+export interface CodeParams {
+  code_upload_access: {
+    permission: CodeParams.Permission;
+    address: AccAddress;
+    addresses: AccAddress[];
+  };
+  instantiate_default_permission: CodeParams.Permission;
 }
 
-export namespace WasmParams {
+export namespace CodeParams {
+  export type Permission =
+    | 'Nobody'
+    | 'OnlyAddress'
+    | 'Everybody'
+    | 'AnyOfAddresses';
   export interface Data {
-    max_contract_size: string;
-    max_contract_gas: string;
-    max_contract_msg_size: string;
+    code_upload_access: {
+      permission: Permission;
+      address: AccAddress;
+      addresses: AccAddress[];
+    };
+    instantiate_default_permission: Permission;
   }
 }
 
@@ -114,7 +112,7 @@ export class WasmAPI extends BaseAPI {
     const endpoint = `/cosmwasm/wasm/v1/code/${codeID}`;
 
     return this.c
-      .get<{ code_info: CodeInfo.DataV2 }>(endpoint, params)
+      .get<{ code_info: CodeInfo.Data }>(endpoint, params)
       .then(({ code_info: d }) => ({
         code_id: +d.code_id,
         code_hash: d.data_hash,
@@ -134,7 +132,7 @@ export class WasmAPI extends BaseAPI {
 
     const endpoint = `/cosmwasm/wasm/v1/contract/${contractAddress}`;
     return this.c
-      .get<{ contract_info: ContractInfo.DataV2 }>(endpoint, params)
+      .get<{ contract_info: ContractInfo.Data }>(endpoint, params)
       .then(({ contract_info: d }) => ({
         code_id: Number.parseInt(d.code_id),
         address: contractAddress,
@@ -163,13 +161,15 @@ export class WasmAPI extends BaseAPI {
       .then(d => d.data);
   }
 
-  public async parameters(params: APIParams = {}): Promise<WasmParams> {
+  public async codeParams(params: APIParams = {}): Promise<CodeParams> {
     return this.c
-      .get<{ params: WasmParams.Data }>(`/terra/wasm/v1beta1/params`, params)
+      .get<{ params: CodeParams.Data }>(
+        `/cosmwasm/wasm/v1/codes/params`,
+        params
+      )
       .then(({ params: d }) => ({
-        max_contract_size: Number.parseInt(d.max_contract_size),
-        max_contract_gas: Number.parseInt(d.max_contract_gas),
-        max_contract_msg_size: Number.parseInt(d.max_contract_msg_size),
+        code_upload_access: d.code_upload_access,
+        instantiate_default_permission: d.instantiate_default_permission,
       }));
   }
 
@@ -260,7 +260,7 @@ export class WasmAPI extends BaseAPI {
   ): Promise<[CodeInfo[], Pagination]> {
     return this.c
       .get<{
-        codeInfos: CodeInfo.DataV2[];
+        codeInfos: CodeInfo.Data[];
         pagination: Pagination;
       }>(`/cosmwasm/wasm/v1/code`, params)
       .then(d => [

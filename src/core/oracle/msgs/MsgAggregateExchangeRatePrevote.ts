@@ -24,25 +24,14 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgAggregateExchangeRatePrevote.Amino,
-    isClassic?: boolean
-  ): MsgAggregateExchangeRatePrevote {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public static fromAmino(data: MsgAggregateExchangeRatePrevote.Amino) {
     const {
       value: { hash, feeder, validator },
     } = data;
     return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
   }
 
-  public toAmino(isClassic?: boolean): MsgAggregateExchangeRatePrevote.Amino {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public toAmino(): MsgAggregateExchangeRatePrevote.Amino {
     const { hash, feeder, validator } = this;
     return {
       type: 'oracle/MsgAggregateExchangeRatePrevote',
@@ -54,23 +43,12 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgAggregateExchangeRatePrevote.Data,
-    isClassic?: boolean
-  ): MsgAggregateExchangeRatePrevote {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public static fromData(data: MsgAggregateExchangeRatePrevote.Data) {
     const { hash, feeder, validator } = data;
     return new MsgAggregateExchangeRatePrevote(hash, feeder, validator);
   }
 
-  public toData(isClassic?: boolean): MsgAggregateExchangeRatePrevote.Data {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public toData(): MsgAggregateExchangeRatePrevote.Data {
     const { hash, feeder, validator } = this;
     return {
       '@type': '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
@@ -80,14 +58,7 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgAggregateExchangeRatePrevote.Proto,
-    isClassic?: boolean
-  ): MsgAggregateExchangeRatePrevote {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public static fromProto(proto: MsgAggregateExchangeRatePrevote.Proto) {
     return new MsgAggregateExchangeRatePrevote(
       proto.hash,
       proto.feeder,
@@ -95,11 +66,7 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgAggregateExchangeRatePrevote.Proto {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public toProto(): MsgAggregateExchangeRatePrevote.Proto {
     const { hash, feeder, validator } = this;
     return MsgAggregateExchangeRatePrevote_pb.fromPartial({
       hash,
@@ -108,30 +75,16 @@ export class MsgAggregateExchangeRatePrevote extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/terra.oracle.v1beta1.MsgAggregateExchangeRatePrevote',
-      value: MsgAggregateExchangeRatePrevote_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgAggregateExchangeRatePrevote_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgAggregateExchangeRatePrevote {
-    if (!isClassic) {
-      throw new Error('Not supported for the network');
-    }
-
+  public static unpackAny(msgAny: Any) {
     return MsgAggregateExchangeRatePrevote.fromProto(
-      MsgAggregateExchangeRatePrevote_pb.decode(msgAny.value),
-      isClassic
+      MsgAggregateExchangeRatePrevote_pb.decode(msgAny.value)
     );
   }
 }

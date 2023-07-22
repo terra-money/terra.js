@@ -54,6 +54,7 @@ export class IdentifiedPacketFees extends JSONSerializable<
   public toData(): IdentifiedPacketFees.Data {
     const { packet_id, packet_fees } = this;
     const res: IdentifiedPacketFees.Data = {
+      '@type': '/ibc.applications.fee.v1.IdentifiedPacketFees',
       packet_id: packet_id?.toData(),
       packet_fees: packet_fees.map(fee => fee.toData()),
     };
@@ -86,6 +87,7 @@ export namespace IdentifiedPacketFees {
   }
 
   export interface Data {
+    '@type': '/ibc.applications.fee.v1.IdentifiedPacketFees';
     packet_id: PacketId.Data | undefined;
     packet_fees: PacketFee.Data[];
   }

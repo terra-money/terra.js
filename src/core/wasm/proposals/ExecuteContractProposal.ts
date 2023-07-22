@@ -13,35 +13,32 @@ export class ExecuteContractProposal extends JSONSerializable<
   ExecuteContractProposal.Data,
   ExecuteContractProposal.Proto
 > {
-  public coins: Coins;
+  public funds: Coins;
 
   /**
    * @param title a short summary
    * @param description a human readable text
-   * @param run_as contract user
-   * @param contract contract address
-   * @param execute_msg HandleMsg to pass as arguments for contract invocation
-   * @param coins coins to be sent to contract
+   * @param run_as the address that is passed to the contract's environment as sender
+   * @param contract the address of the smart contract
+   * @param msg json encoded message to be passed to the contract as execute
+   * @param funds coins that are transferred to the contract on instantiatio
    */
   constructor(
     public title: string,
     public description: string,
     public run_as: AccAddress,
     public contract: AccAddress,
-    public execute_msg: object | string,
-    coins: Coins.Input = {}
+    public msg: object | string,
+    funds: Coins.Input = {}
   ) {
     super();
-    this.coins = new Coins(coins);
+    this.funds = new Coins(funds);
   }
 
-  public static fromAmino(
-    data: ExecuteContractProposal.Amino,
-    _?: boolean
-  ): ExecuteContractProposal {
+  public static fromAmino(data: ExecuteContractProposal.Amino) {
     const {
       value: { title, description, run_as, contract, msg, funds },
-    } = data as ExecuteContractProposal.Amino;
+    } = data;
     return new ExecuteContractProposal(
       title,
       description,
@@ -52,8 +49,9 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toAmino(_?: boolean): ExecuteContractProposal.Amino {
-    const { title, description, run_as, contract, execute_msg, coins } = this;
+  public toAmino(): ExecuteContractProposal.Amino {
+    const { title, description, run_as, contract, msg, funds } = this;
+
     return {
       type: 'wasm/ExecuteContractProposal',
       value: {
@@ -61,16 +59,13 @@ export class ExecuteContractProposal extends JSONSerializable<
         description,
         run_as,
         contract,
-        msg: removeNull(execute_msg),
-        funds: coins.toAmino(),
+        msg: removeNull(msg),
+        funds: funds.toAmino(),
       },
     };
   }
 
-  public static fromProto(
-    proto: ExecuteContractProposal.Proto,
-    _?: boolean
-  ): ExecuteContractProposal {
+  public static fromProto(proto: ExecuteContractProposal.Proto) {
     return new ExecuteContractProposal(
       proto.title,
       proto.description,
@@ -81,43 +76,33 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): ExecuteContractProposal.Proto {
-    const { title, description, run_as, contract, execute_msg, coins } = this;
+  public toProto(): ExecuteContractProposal.Proto {
+    const { title, description, run_as, contract, msg, funds } = this;
     return ExecuteContractProposal_pb.fromPartial({
       title,
       description,
-      funds: coins.toProto(),
       contract,
       runAs: run_as,
-      msg: Buffer.from(JSON.stringify(removeNull(execute_msg)), 'utf-8'),
+      msg: Buffer.from(JSON.stringify(removeNull(msg)), 'utf-8'),
+      funds: funds.toProto(),
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.ExecuteContractProposal',
-      value: ExecuteContractProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: ExecuteContractProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): ExecuteContractProposal {
+  public static unpackAny(msgAny: Any) {
     return ExecuteContractProposal.fromProto(
-      ExecuteContractProposal_pb.decode(msgAny.value),
-      isClassic
+      ExecuteContractProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: ExecuteContractProposal.Data,
-    _?: boolean
-  ): ExecuteContractProposal {
-    const { title, description, run_as, contract, msg, funds } =
-      data as ExecuteContractProposal.Data;
+  public static fromData(data: ExecuteContractProposal.Data) {
+    const { title, description, run_as, contract, msg, funds } = data;
     return new ExecuteContractProposal(
       title,
       description,
@@ -128,16 +113,16 @@ export class ExecuteContractProposal extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): ExecuteContractProposal.Data {
-    const { title, description, run_as, contract, execute_msg, coins } = this;
+  public toData(): ExecuteContractProposal.Data {
+    const { title, description, run_as, contract, msg, funds } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.ExecuteContractProposal',
       title,
       description,
       run_as,
       contract,
-      msg: execute_msg,
-      funds: coins.toData(),
+      msg,
+      funds: funds.toData(),
     };
   }
 }

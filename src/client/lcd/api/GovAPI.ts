@@ -119,9 +119,7 @@ export class GovAPI extends BaseAPI {
         pagination: Pagination;
       }>(`/cosmos/gov/v1beta1/proposals`, params)
       .then(d => [
-        d.proposals.map(prop =>
-          Proposal.fromData(prop, this.lcd.config.isClassic)
-        ),
+        d.proposals.map(prop => Proposal.fromData(prop)),
         d.pagination,
       ]);
   }
@@ -139,7 +137,7 @@ export class GovAPI extends BaseAPI {
         `/cosmos/gov/v1beta1/proposals/${proposalId}`,
         params
       )
-      .then(d => Proposal.fromData(d.proposal, this.lcd.config.isClassic));
+      .then(d => Proposal.fromData(d.proposal));
   }
 
   /**

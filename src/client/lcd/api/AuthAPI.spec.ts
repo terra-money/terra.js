@@ -1,5 +1,5 @@
 import { AuthAPI } from './AuthAPI';
-import { BaseAccount } from '../../../core';
+import { BaseAccount } from '../../../core/auth';
 import { MnemonicKey } from '../../../key';
 import { LCDClient } from '../LCDClient';
 
