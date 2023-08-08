@@ -312,6 +312,7 @@ export namespace Msg {
       case '/cosmos.gov.v1beta1.MsgSubmitProposal':
         return MsgSubmitProposal.fromData(data, isClassic);
       case '/cosmos.gov.v1beta1.MsgVote':
+      case '/cosmos.gov.v1.MsgVote':
         return MsgVote.fromData(data, isClassic);
       case '/cosmos.gov.v1beta1.MsgVoteWeighted':
         return MsgVoteWeighted.fromData(data, isClassic);
@@ -467,6 +468,7 @@ export namespace Msg {
       case '/cosmos.gov.v1beta1.MsgSubmitProposal':
         return MsgSubmitProposal.unpackAny(proto, isClassic);
       case '/cosmos.gov.v1beta1.MsgVote':
+      case '/cosmos.gov.v1.MsgVote':
         return MsgVote.unpackAny(proto, isClassic);
 
       // market

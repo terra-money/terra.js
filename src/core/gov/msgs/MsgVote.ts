@@ -105,12 +105,21 @@ export namespace MsgVote {
     };
   }
 
-  export interface Data {
+  export interface DataV1Beta1 {
     '@type': '/cosmos.gov.v1beta1.MsgVote';
     proposal_id: string;
     voter: AccAddress;
     option: Option;
   }
+
+  export interface DataV1 {
+    '@type': '/cosmos.gov.v1.MsgVote';
+    proposal_id: string;
+    voter: AccAddress;
+    option: Option;
+  }
+
+  export type Data = DataV1Beta1 | DataV1;
 
   export type Proto = MsgVote_pb;
 }
