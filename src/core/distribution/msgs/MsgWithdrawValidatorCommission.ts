@@ -20,11 +20,7 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgWithdrawValidatorCommission.Amino,
-    _?: boolean
-  ): MsgWithdrawValidatorCommission {
-    _;
+  public static fromAmino(data: MsgWithdrawValidatorCommission.Amino) {
     const {
       value: { validator_address },
     } = data;
@@ -43,17 +39,12 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: MsgWithdrawValidatorCommission.Data,
-    _?: boolean
-  ): MsgWithdrawValidatorCommission {
-    _;
+  public static fromData(proto: MsgWithdrawValidatorCommission.Data) {
     const { validator_address } = proto;
     return new MsgWithdrawValidatorCommission(validator_address);
   }
 
-  public toData(_?: boolean): MsgWithdrawValidatorCommission.Data {
-    _;
+  public toData(): MsgWithdrawValidatorCommission.Data {
     const { validator_address } = this;
     return {
       '@type': '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
@@ -61,38 +52,27 @@ export class MsgWithdrawValidatorCommission extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgWithdrawValidatorCommission.Proto,
-    _?: boolean
-  ): MsgWithdrawValidatorCommission {
-    _;
+  public static fromProto(proto: MsgWithdrawValidatorCommission.Proto) {
     return new MsgWithdrawValidatorCommission(proto.validatorAddress);
   }
 
-  public toProto(_?: boolean): MsgWithdrawValidatorCommission.Proto {
-    _;
+  public toProto(): MsgWithdrawValidatorCommission.Proto {
     const { validator_address } = this;
     return MsgWithdrawValidatorCommission_pb.fromPartial({
       validatorAddress: validator_address,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission',
-      value: MsgWithdrawValidatorCommission_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgWithdrawValidatorCommission_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgWithdrawValidatorCommission {
+  public static unpackAny(msgAny: Any) {
     return MsgWithdrawValidatorCommission.fromProto(
-      MsgWithdrawValidatorCommission_pb.decode(msgAny.value),
-      isClassic
+      MsgWithdrawValidatorCommission_pb.decode(msgAny.value)
     );
   }
 }

@@ -17,16 +17,13 @@ export class MsgExecAuthorized extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgExecAuthorized.Amino,
-    isClassic?: boolean
-  ): MsgExecAuthorized {
+  public static fromAmino(data: MsgExecAuthorized.Amino) {
     const {
       value: { grantee, msgs },
     } = data;
     return new MsgExecAuthorized(
       grantee,
-      msgs.map(x => Msg.fromAmino(x, isClassic))
+      msgs.map(x => Msg.fromAmino(x))
     );
   }
 
@@ -43,56 +40,47 @@ export class MsgExecAuthorized extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: MsgExecAuthorized.Data,
-    isClassic?: boolean
-  ): MsgExecAuthorized {
+  public static fromData(proto: MsgExecAuthorized.Data) {
     const { grantee, msgs } = proto;
     return new MsgExecAuthorized(
       grantee,
-      msgs.map(x => Msg.fromData(x, isClassic))
+      msgs.map(x => Msg.fromData(x))
     );
   }
 
-  public toData(isClassic?: boolean): MsgExecAuthorized.Data {
+  public toData(): MsgExecAuthorized.Data {
     const { grantee, msgs } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.MsgExec',
       grantee,
-      msgs: msgs.map(msg => msg.toData(isClassic)),
+      msgs: msgs.map(msg => msg.toData()),
     };
   }
 
-  public static fromProto(
-    proto: MsgExecAuthorized.Proto,
-    isClassic?: boolean
-  ): MsgExecAuthorized {
+  public static fromProto(proto: MsgExecAuthorized.Proto) {
     return new MsgExecAuthorized(
       proto.grantee,
-      proto.msgs.map(x => Msg.fromProto(x, isClassic))
+      proto.msgs.map(x => Msg.fromProto(x))
     );
   }
 
-  public toProto(isClassic?: boolean): MsgExecAuthorized.Proto {
+  public toProto(): MsgExecAuthorized.Proto {
     const { grantee, msgs } = this;
     return MsgExec_pb.fromPartial({
       grantee,
-      msgs: msgs.map(m => m.packAny(isClassic)),
+      msgs: msgs.map(m => m.packAny()),
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgExec',
-      value: MsgExec_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgExec_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgExecAuthorized {
-    return MsgExecAuthorized.fromProto(
-      MsgExec_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgExecAuthorized.fromProto(MsgExec_pb.decode(msgAny.value));
   }
 }
 

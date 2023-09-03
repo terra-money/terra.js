@@ -3,8 +3,9 @@ import { Coins, Dec, PolicyConstraints } from '../../../core';
 import { LCDClient } from '../LCDClient';
 
 const terra = new LCDClient({
-  chainID: 'pisco-1',
-  URL: 'https://pisco-lcd.terra.dev/',
+  chainID: 'columbus-5',
+  URL: 'https://lcd.terrarebels.net/',
+  isClassic: true,
 });
 const treasury = new TreasuryAPI(terra);
 
@@ -47,6 +48,7 @@ describe('TreasuryAPI', () => {
         window_long: expect.any(Number),
         window_probation: expect.any(Number),
         burn_tax_split: expect.any(Dec),
+        min_initial_deposit_ratio: expect.any(Dec),
       });
     }
   });

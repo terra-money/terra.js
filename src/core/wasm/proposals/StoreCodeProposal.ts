@@ -18,21 +18,26 @@ export class StoreCodeProposal extends JSONSerializable<
    * @param run_as the address that is passed to the contract's environment as sender
    * @param wasm_byte_code can be raw or gzip compressed
    * @param instantiate_permission to apply on contract creation, optional
+   * @param unpin_code code on upload, optional
+   * @param source the URL where the code is hosted
+   * @param builder the docker image used to build the code deterministically, used for smart contract verification
+   * @param code_hash the SHA256 sum of the code outputted by builder, used for smart contract verification
    */
   constructor(
     public title: string,
     public description: string,
     public run_as: string,
     public wasm_byte_code: string,
-    public instantiate_permission?: AccessConfig
+    public instantiate_permission: AccessConfig | undefined,
+    public unpin_code: boolean = false,
+    public source: string,
+    public builder: string,
+    public code_hash: string
   ) {
     super();
   }
 
-  public static fromAmino(
-    data: StoreCodeProposal.Amino,
-    _?: boolean
-  ): StoreCodeProposal {
+  public static fromAmino(data: StoreCodeProposal.Amino): StoreCodeProposal {
     const {
       value: {
         title,
@@ -40,6 +45,10 @@ export class StoreCodeProposal extends JSONSerializable<
         run_as,
         wasm_byte_code,
         instantiate_permission,
+        unpin_code,
+        source,
+        builder,
+        code_hash,
       },
     } = data;
     return new StoreCodeProposal(
@@ -49,17 +58,25 @@ export class StoreCodeProposal extends JSONSerializable<
       wasm_byte_code,
       instantiate_permission
         ? AccessConfig.fromAmino(instantiate_permission)
-        : undefined
+        : undefined,
+      unpin_code,
+      source,
+      builder,
+      code_hash
     );
   }
 
-  public toAmino(_?: boolean): StoreCodeProposal.Amino {
+  public toAmino(): StoreCodeProposal.Amino {
     const {
       title,
       description,
       run_as,
       wasm_byte_code,
       instantiate_permission,
+      unpin_code,
+      source,
+      builder,
+      code_hash,
     } = this;
     return {
       type: 'wasm/StoreCodeProposal',
@@ -69,20 +86,25 @@ export class StoreCodeProposal extends JSONSerializable<
         run_as,
         wasm_byte_code,
         instantiate_permission: instantiate_permission?.toAmino(),
+        unpin_code,
+        source,
+        builder,
+        code_hash,
       },
     };
   }
 
-  public static fromData(
-    data: StoreCodeProposal.Data,
-    _?: boolean
-  ): StoreCodeProposal {
+  public static fromData(data: StoreCodeProposal.Data): StoreCodeProposal {
     const {
       title,
       description,
       run_as,
       wasm_byte_code,
       instantiate_permission,
+      unpin_code,
+      source,
+      builder,
+      code_hash,
     } = data;
     return new StoreCodeProposal(
       title,
@@ -91,17 +113,25 @@ export class StoreCodeProposal extends JSONSerializable<
       wasm_byte_code,
       instantiate_permission
         ? AccessConfig.fromData(instantiate_permission)
-        : undefined
+        : undefined,
+      unpin_code,
+      source,
+      builder,
+      code_hash
     );
   }
 
-  public toData(_?: boolean): StoreCodeProposal.Data {
+  public toData(): StoreCodeProposal.Data {
     const {
       title,
       description,
       run_as,
       wasm_byte_code,
       instantiate_permission,
+      unpin_code,
+      source,
+      builder,
+      code_hash,
     } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.StoreCodeProposal',
@@ -110,13 +140,14 @@ export class StoreCodeProposal extends JSONSerializable<
       run_as,
       wasm_byte_code,
       instantiate_permission: instantiate_permission?.toData(),
+      unpin_code,
+      source,
+      builder,
+      code_hash,
     };
   }
 
-  public static fromProto(
-    proto: StoreCodeProposal.Proto,
-    _?: boolean
-  ): StoreCodeProposal {
+  public static fromProto(proto: StoreCodeProposal.Proto): StoreCodeProposal {
     return new StoreCodeProposal(
       proto.title,
       proto.description,
@@ -124,17 +155,25 @@ export class StoreCodeProposal extends JSONSerializable<
       Buffer.from(proto.wasmByteCode).toString('base64'),
       proto.instantiatePermission
         ? AccessConfig.fromProto(proto.instantiatePermission)
-        : undefined
+        : undefined,
+      proto.unpinCode,
+      proto.source,
+      proto.builder,
+      Buffer.from(proto.codeHash).toString('base64')
     );
   }
 
-  public toProto(_?: boolean): StoreCodeProposal.Proto {
+  public toProto(): StoreCodeProposal.Proto {
     const {
       title,
       description,
       run_as,
       wasm_byte_code,
       instantiate_permission,
+      unpin_code,
+      source,
+      builder,
+      code_hash,
     } = this;
     return StoreCodeProposal_pb.fromPartial({
       title,
@@ -142,20 +181,23 @@ export class StoreCodeProposal extends JSONSerializable<
       runAs: run_as,
       wasmByteCode: Buffer.from(wasm_byte_code, 'base64'),
       instantiatePermission: instantiate_permission?.toProto(),
+      unpinCode: unpin_code,
+      source,
+      builder,
+      codeHash: Buffer.from(code_hash, 'base64'),
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.StoreCodeProposal',
-      value: StoreCodeProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: StoreCodeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): StoreCodeProposal {
+  public static unpackAny(msgAny: Any) {
     return StoreCodeProposal.fromProto(
-      StoreCodeProposal_pb.decode(msgAny.value),
-      isClassic
+      StoreCodeProposal_pb.decode(msgAny.value)
     );
   }
 }
@@ -169,6 +211,10 @@ export namespace StoreCodeProposal {
       run_as: AccAddress;
       wasm_byte_code: string;
       instantiate_permission?: AccessConfig.Amino;
+      unpin_code?: boolean;
+      source: string;
+      builder: string;
+      code_hash: string;
     };
   }
 
@@ -179,6 +225,10 @@ export namespace StoreCodeProposal {
     run_as: AccAddress;
     wasm_byte_code: string;
     instantiate_permission?: AccessConfig.Data;
+    unpin_code?: boolean;
+    source: string;
+    builder: string;
+    code_hash: string;
   }
 
   export type Proto = StoreCodeProposal_pb;

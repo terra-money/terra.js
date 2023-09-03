@@ -20,8 +20,7 @@ export class TextProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: TextProposal.Amino, _?: boolean): TextProposal {
-    _;
+  public static fromAmino(data: TextProposal.Amino) {
     const {
       value: { title, description },
     } = data;
@@ -39,14 +38,12 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: TextProposal.Data, _?: boolean): TextProposal {
-    _;
+  public static fromData(proto: TextProposal.Data) {
     const { title, description } = proto;
     return new TextProposal(title, description);
   }
 
-  public toData(_?: boolean): TextProposal.Data {
-    _;
+  public toData(): TextProposal.Data {
     const { title, description } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.TextProposal',
@@ -55,16 +52,11 @@ export class TextProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: TextProposal.Proto,
-    _?: boolean
-  ): TextProposal {
-    _;
+  public static fromProto(proto: TextProposal.Proto) {
     return new TextProposal(proto.title, proto.description);
   }
 
-  public toProto(_?: boolean): TextProposal.Proto {
-    _;
+  public toProto(): TextProposal.Proto {
     const { title, description } = this;
     return TextProposal_pb.fromPartial({
       description,
@@ -72,18 +64,15 @@ export class TextProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-      value: TextProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: TextProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): TextProposal {
-    return TextProposal.fromProto(
-      TextProposal_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return TextProposal.fromProto(TextProposal_pb.decode(msgAny.value));
   }
 }
 

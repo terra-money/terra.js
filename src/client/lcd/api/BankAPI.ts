@@ -69,9 +69,6 @@ export class BankAPI extends BaseAPI {
     address: AccAddress,
     params: Partial<PaginationOptions & APIParams> = {}
   ): Promise<[Coins, Pagination]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         balances: Coins.Data;
@@ -81,9 +78,6 @@ export class BankAPI extends BaseAPI {
   }
 
   public async parameters(params: APIParams = {}): Promise<BankParams> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ params: BankParams.Data }>(`/cosmos/bank/v1beta1/params`, params)
       .then(({ params: d }) => ({

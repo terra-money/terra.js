@@ -27,17 +27,14 @@ export class MsgGrantAllowance extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgGrantAllowance.Amino,
-    isClassic?: boolean
-  ): MsgGrantAllowance {
+  public static fromAmino(data: MsgGrantAllowance.Amino) {
     const {
       value: { granter, grantee, allowance },
     } = data;
     return new MsgGrantAllowance(
       granter,
       grantee,
-      Allowance.fromAmino(allowance, isClassic)
+      Allowance.fromAmino(allowance)
     );
   }
 
@@ -55,59 +52,52 @@ export class MsgGrantAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgGrantAllowance.Data,
-    isClassic?: boolean
-  ): MsgGrantAllowance {
+  public static fromData(data: MsgGrantAllowance.Data) {
     const { granter, grantee, allowance } = data;
     return new MsgGrantAllowance(
       granter,
       grantee,
-      Allowance.fromData(allowance, isClassic)
+      Allowance.fromData(allowance)
     );
   }
 
-  public toData(isClassic?: boolean): MsgGrantAllowance.Data {
+  public toData(): MsgGrantAllowance.Data {
     const { granter, grantee, allowance } = this;
     return {
       '@type': '/cosmos.feegrant.v1beta1.MsgGrantAllowance',
       granter,
       grantee,
-      allowance: allowance.toData(isClassic),
+      allowance: allowance.toData(),
     };
   }
 
-  public static fromProto(
-    proto: MsgGrantAllowance.Proto,
-    isClassic?: boolean
-  ): MsgGrantAllowance {
+  public static fromProto(proto: MsgGrantAllowance.Proto) {
     return new MsgGrantAllowance(
       proto.granter,
       proto.grantee,
-      Allowance.fromProto(proto.allowance as Any, isClassic)
+      Allowance.fromProto(proto.allowance as Any)
     );
   }
 
-  public toProto(isClassic?: boolean): MsgGrantAllowance.Proto {
+  public toProto(): MsgGrantAllowance.Proto {
     const { granter, grantee, allowance } = this;
     return MsgGrantAllowance_pb.fromPartial({
-      allowance: allowance.packAny(isClassic),
+      allowance: allowance.packAny(),
       grantee,
       granter,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.MsgGrantAllowance',
-      value: MsgGrantAllowance_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgGrantAllowance_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgGrantAllowance {
+  public static unpackAny(msgAny: Any) {
     return MsgGrantAllowance.fromProto(
-      MsgGrantAllowance_pb.decode(msgAny.value),
-      isClassic
+      MsgGrantAllowance_pb.decode(msgAny.value)
     );
   }
 }

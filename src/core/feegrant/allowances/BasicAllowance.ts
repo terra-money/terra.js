@@ -37,11 +37,7 @@ export class BasicAllowance extends JSONSerializable<
     }
   }
 
-  public static fromAmino(
-    data: BasicAllowance.Amino,
-    _?: boolean
-  ): BasicAllowance {
-    _;
+  public static fromAmino(data: BasicAllowance.Amino) {
     const {
       value: { spend_limit, expiration },
     } = data;
@@ -66,11 +62,7 @@ export class BasicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: BasicAllowance.Data,
-    _?: boolean
-  ): BasicAllowance {
-    _;
+  public static fromData(proto: BasicAllowance.Data) {
     const { spend_limit, expiration } = proto;
     return new BasicAllowance(
       spend_limit ? Coins.fromData(spend_limit) : undefined,
@@ -78,8 +70,7 @@ export class BasicAllowance extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): BasicAllowance.Data {
-    _;
+  public toData(): BasicAllowance.Data {
     const { spend_limit, expiration } = this;
     return {
       '@type': '/cosmos.feegrant.v1beta1.BasicAllowance',
@@ -89,19 +80,14 @@ export class BasicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: BasicAllowance.Proto,
-    _?: boolean
-  ): BasicAllowance {
-    _;
+  public static fromProto(proto: BasicAllowance.Proto) {
     return new BasicAllowance(
       Coins.fromProto(proto.spendLimit),
       proto.expiration ? (proto.expiration as Date) : undefined
     );
   }
 
-  public toProto(_?: boolean): BasicAllowance.Proto {
-    _;
+  public toProto(): BasicAllowance.Proto {
     const { spend_limit, expiration } = this;
     return BasicAllowance_pb.fromPartial({
       expiration,
@@ -109,18 +95,15 @@ export class BasicAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.BasicAllowance',
-      value: BasicAllowance_pb.encode(this.toProto(isClassic)).finish(),
+      value: BasicAllowance_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): BasicAllowance {
-    return BasicAllowance.fromProto(
-      BasicAllowance_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return BasicAllowance.fromProto(BasicAllowance_pb.decode(msgAny.value));
   }
 }
 

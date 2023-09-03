@@ -23,8 +23,7 @@ export class MsgUnjail extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: MsgUnjail.Amino, _?: boolean): MsgUnjail {
-    _;
+  public static fromAmino(data: MsgUnjail.Amino) {
     const {
       value: { address },
     } = data;
@@ -41,14 +40,12 @@ export class MsgUnjail extends JSONSerializable<
     };
   }
 
-  public static fromData(proto: MsgUnjail.Data, _?: boolean): MsgUnjail {
-    _;
+  public static fromData(proto: MsgUnjail.Data) {
     const { address } = proto;
     return new MsgUnjail(address);
   }
 
-  public toData(_?: boolean): MsgUnjail.Data {
-    _;
+  public toData(): MsgUnjail.Data {
     const { address } = this;
     return {
       '@type': '/cosmos.slashing.v1beta1.MsgUnjail',
@@ -56,28 +53,26 @@ export class MsgUnjail extends JSONSerializable<
     };
   }
 
-  public static fromProto(proto: MsgUnjail.Proto, _?: boolean): MsgUnjail {
-    _;
+  public static fromProto(proto: MsgUnjail.Proto) {
     return new MsgUnjail(proto.validatorAddr);
   }
 
-  public toProto(_?: boolean): MsgUnjail.Proto {
-    _;
+  public toProto(): MsgUnjail.Proto {
     const { address } = this;
     return MsgUnjail_pb.fromPartial({
       validatorAddr: address,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.slashing.v1beta1.MsgUnjail',
-      value: MsgUnjail_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgUnjail_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): MsgUnjail {
-    return MsgUnjail.fromProto(MsgUnjail_pb.decode(msgAny.value), isClassic);
+  public static unpackAny(msgAny: Any) {
+    return MsgUnjail.fromProto(MsgUnjail_pb.decode(msgAny.value));
   }
 }
 

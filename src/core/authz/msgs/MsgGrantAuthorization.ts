@@ -23,8 +23,7 @@ export class MsgGrantAuthorization extends JSONSerializable<
   }
 
   public static fromAmino(
-    data: MsgGrantAuthorization.Amino,
-    isClassic?: boolean
+    data: MsgGrantAuthorization.Amino
   ): MsgGrantAuthorization {
     const {
       value: { granter, grantee, grant },
@@ -32,7 +31,7 @@ export class MsgGrantAuthorization extends JSONSerializable<
     return new MsgGrantAuthorization(
       granter,
       grantee,
-      AuthorizationGrant.fromAmino(grant, isClassic)
+      AuthorizationGrant.fromAmino(grant)
     );
   }
 
@@ -49,62 +48,52 @@ export class MsgGrantAuthorization extends JSONSerializable<
   }
 
   public static fromData(
-    data: MsgGrantAuthorization.Data,
-    isClassic?: boolean
+    data: MsgGrantAuthorization.Data
   ): MsgGrantAuthorization {
     const { granter, grantee, grant } = data;
     return new MsgGrantAuthorization(
       granter,
       grantee,
-      AuthorizationGrant.fromData(grant, isClassic)
+      AuthorizationGrant.fromData(grant)
     );
   }
 
-  public toData(isClassic?: boolean): MsgGrantAuthorization.Data {
+  public toData(): MsgGrantAuthorization.Data {
     const { granter, grantee, grant } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.MsgGrant',
       granter,
       grantee,
-      grant: grant.toData(isClassic),
+      grant: grant.toData(),
     };
   }
 
-  public static fromProto(
-    data: MsgGrantAuthorization.Proto,
-    isClassic?: boolean
-  ): MsgGrantAuthorization {
+  public static fromProto(data: MsgGrantAuthorization.Proto) {
     return new MsgGrantAuthorization(
       data.granter,
       data.grantee,
-      AuthorizationGrant.fromProto(data.grant as Grant_pb, isClassic)
+      AuthorizationGrant.fromProto(data.grant as Grant_pb)
     );
   }
 
-  public toProto(isClassic?: boolean): MsgGrantAuthorization.Proto {
+  public toProto(): MsgGrantAuthorization.Proto {
     const { grant, granter, grantee } = this;
     return MsgGrant_pb.fromPartial({
-      grant: grant.toProto(isClassic),
+      grant: grant.toProto(),
       grantee,
       granter,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.MsgGrant',
-      value: MsgGrant_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgGrant_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgGrantAuthorization {
-    return MsgGrantAuthorization.fromProto(
-      MsgGrant_pb.decode(msgAny.value),
-      isClassic
-    );
+  public static unpackAny(msgAny: Any) {
+    return MsgGrantAuthorization.fromProto(MsgGrant_pb.decode(msgAny.value));
   }
 }
 

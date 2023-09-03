@@ -40,9 +40,6 @@ export class UpgradeAPI extends BaseAPI {
    * Look up the current plan
    */
   public async currentPlan(params: APIParams = {}): Promise<Plan | null> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         plan: Plan.Data | null;
@@ -56,9 +53,6 @@ export class UpgradeAPI extends BaseAPI {
   public async moduleVersions(
     params: APIParams = {}
   ): Promise<ModuleVersion[]> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{
         module_versions: ModuleVersion.Data[];

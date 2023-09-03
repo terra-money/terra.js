@@ -22,14 +22,12 @@ export class Period extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(data: Period.Amino, _?: boolean): Period {
-    _;
+  public static fromAmino(data: Period.Amino) {
     const { length, amount } = data;
     return new Period(Number.parseInt(length), Coins.fromAmino(amount));
   }
 
-  public toAmino(_?: boolean): Period.Amino {
-    _;
+  public toAmino(): Period.Amino {
     const { length, amount } = this;
 
     const res: Period.Amino = {
@@ -39,14 +37,12 @@ export class Period extends JSONSerializable<
     return res;
   }
 
-  public static fromData(data: Period.Data, _?: boolean): Period {
-    _;
+  public static fromData(data: Period.Data) {
     const { length, amount } = data;
     return new Period(Number.parseInt(length), Coins.fromData(amount));
   }
 
-  public toData(_?: boolean): Period.Data {
-    _;
+  public toData(): Period.Data {
     const { length, amount } = this;
 
     const res: Period.Amino = {
@@ -56,13 +52,11 @@ export class Period extends JSONSerializable<
     return res;
   }
 
-  public static fromProto(proto: Period.Proto, _?: boolean): Period {
-    _;
+  public static fromProto(proto: Period.Proto) {
     return new Period(proto.length.toNumber(), Coins.fromProto(proto.amount));
   }
 
-  public toProto(_?: boolean): Period.Proto {
-    _;
+  public toProto(): Period.Proto {
     const { length, amount } = this;
     return Period_pb.fromPartial({
       length: Long.fromNumber(length),

@@ -8,16 +8,16 @@ describe('MsgCreatePeriodicVestingAccount', () => {
 
   it('conversion', () => {
     const obj = MsgCreatePeriodicVestingAccount.fromData(data);
-    const p = obj.toProto(false);
+    const p = obj.toProto();
     expect(obj.from_address).toStrictEqual(p.fromAddress);
     expect(obj.start_time).toStrictEqual(p.startTime.toNumber());
     expect(obj.to_address).toStrictEqual(p.toAddress);
     expect(obj.vesting_periods.toString()).toStrictEqual(
       p.vestingPeriods.toString()
     );
-    const d = obj.toData(false);
+    const d = obj.toData();
     expect(obj).toStrictEqual(MsgCreatePeriodicVestingAccount.fromData(d));
-    const a = obj.toAmino(false);
+    const a = obj.toAmino();
     expect(obj).toStrictEqual(MsgCreatePeriodicVestingAccount.fromAmino(a));
   });
 });

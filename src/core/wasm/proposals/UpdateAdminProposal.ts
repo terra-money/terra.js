@@ -24,17 +24,14 @@ export class UpdateAdminProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: UpdateAdminProposal.Amino,
-    _?: boolean
-  ): UpdateAdminProposal {
+  public static fromAmino(data: UpdateAdminProposal.Amino) {
     const {
       value: { title, description, contract, new_admin },
-    } = data as UpdateAdminProposal.Amino;
+    } = data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toAmino(_?: boolean): UpdateAdminProposal.Amino {
+  public toAmino(): UpdateAdminProposal.Amino {
     const { title, description, contract, new_admin } = this;
     return {
       type: 'wasm/UpdateAdminProposal',
@@ -47,10 +44,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: UpdateAdminProposal.Proto,
-    _?: boolean
-  ): UpdateAdminProposal {
+  public static fromProto(proto: UpdateAdminProposal.Proto) {
     return new UpdateAdminProposal(
       proto.title,
       proto.description,
@@ -59,7 +53,7 @@ export class UpdateAdminProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): UpdateAdminProposal.Proto {
+  public toProto(): UpdateAdminProposal.Proto {
     const { title, description, contract, new_admin } = this;
     return UpdateAdminProposal_pb.fromPartial({
       title,
@@ -68,33 +62,26 @@ export class UpdateAdminProposal extends JSONSerializable<
       newAdmin: new_admin,
     });
   }
-  public packAny(isClassic?: boolean): Any {
+
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmwasm.wasm.v1.UpdateAdminProposal',
-      value: UpdateAdminProposal_pb.encode(this.toProto(isClassic)).finish(),
+      value: UpdateAdminProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): UpdateAdminProposal {
+  public static unpackAny(msgAny: Any) {
     return UpdateAdminProposal.fromProto(
-      UpdateAdminProposal_pb.decode(msgAny.value),
-      isClassic
+      UpdateAdminProposal_pb.decode(msgAny.value)
     );
   }
 
-  public static fromData(
-    data: UpdateAdminProposal.Data,
-    _?: boolean
-  ): UpdateAdminProposal {
-    const { title, description, contract, new_admin } =
-      data as UpdateAdminProposal.Data;
+  public static fromData(data: UpdateAdminProposal.Data) {
+    const { title, description, contract, new_admin } = data;
     return new UpdateAdminProposal(title, description, contract, new_admin);
   }
 
-  public toData(_?: boolean): UpdateAdminProposal.Data {
+  public toData(): UpdateAdminProposal.Data {
     const { title, description, contract, new_admin } = this;
     return {
       '@type': '/cosmwasm.wasm.v1.UpdateAdminProposal',

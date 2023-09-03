@@ -26,11 +26,7 @@ export class MsgVoteWeighted extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgVoteWeighted.Amino,
-    _?: boolean
-  ): MsgVoteWeighted {
-    _;
+  public static fromAmino(data: MsgVoteWeighted.Amino) {
     const {
       value: { proposal_id, voter, options },
     } = data;
@@ -53,11 +49,7 @@ export class MsgVoteWeighted extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgVoteWeighted.Data,
-    _?: boolean
-  ): MsgVoteWeighted {
-    _;
+  public static fromData(data: MsgVoteWeighted.Data) {
     const { proposal_id, voter, options } = data;
     return new MsgVoteWeighted(
       Number.parseInt(proposal_id),
@@ -66,8 +58,7 @@ export class MsgVoteWeighted extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgVoteWeighted.Data {
-    _;
+  public toData(): MsgVoteWeighted.Data {
     const { proposal_id, voter, options } = this;
     return {
       '@type': '/cosmos.gov.v1beta1.MsgVoteWeighted',
@@ -77,11 +68,7 @@ export class MsgVoteWeighted extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgVoteWeighted.Proto,
-    _?: boolean
-  ): MsgVoteWeighted {
-    _;
+  public static fromProto(proto: MsgVoteWeighted.Proto) {
     return new MsgVoteWeighted(
       proto.proposalId.toNumber(),
       proto.voter,
@@ -89,8 +76,7 @@ export class MsgVoteWeighted extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgVoteWeighted.Proto {
-    _;
+  public toProto(): MsgVoteWeighted.Proto {
     const { proposal_id, voter, options } = this;
     return MsgVoteWeighted_pb.fromPartial({
       options: options.map(o => o.toProto()),
@@ -99,16 +85,14 @@ export class MsgVoteWeighted extends JSONSerializable<
     });
   }
 
-  public packAny(_?: boolean): Any {
-    _;
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.gov.v1beta1.MsgVoteWeighted',
       value: MsgVoteWeighted_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, _?: boolean): MsgVoteWeighted {
-    _;
+  public static unpackAny(msgAny: Any) {
     return MsgVoteWeighted.fromProto(MsgVoteWeighted_pb.decode(msgAny.value));
   }
 }

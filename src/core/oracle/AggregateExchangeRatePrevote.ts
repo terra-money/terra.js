@@ -24,9 +24,7 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: AggregateExchangeRatePrevote.Amino
-  ): AggregateExchangeRatePrevote {
+  public static fromAmino(data: AggregateExchangeRatePrevote.Amino) {
     const { hash, voter, submit_block } = data;
     return new AggregateExchangeRatePrevote(
       hash,
@@ -44,9 +42,7 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: AggregateExchangeRatePrevote.Data
-  ): AggregateExchangeRatePrevote {
+  public static fromData(data: AggregateExchangeRatePrevote.Data) {
     const { hash, voter, submit_block } = data;
     return new AggregateExchangeRatePrevote(
       hash,
@@ -64,9 +60,7 @@ export class AggregateExchangeRatePrevote extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    data: AggregateExchangeRatePrevote.Proto
-  ): AggregateExchangeRatePrevote {
+  public static fromProto(data: AggregateExchangeRatePrevote.Proto) {
     return new AggregateExchangeRatePrevote(
       data.hash,
       data.voter,

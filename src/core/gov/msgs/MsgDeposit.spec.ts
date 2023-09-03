@@ -7,7 +7,7 @@ describe('MsgDeposit', () => {
     MsgDepositAmino.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'gov/MsgDeposit') {
-          const e = MsgDeposit.fromAmino(msg, true);
+          const e = MsgDeposit.fromAmino(msg);
           expect(e.toAmino(true)).toEqual(msg);
         }
       });
@@ -18,7 +18,7 @@ describe('MsgDeposit', () => {
     MsgDepositAminoV2.txs.forEach((txinfo: any) => {
       txinfo.tx.value.msg.forEach((msg: any) => {
         if (msg.type == 'cosmos-sdk/MsgDeposit') {
-          const e = MsgDeposit.fromAmino(msg, false);
+          const e = MsgDeposit.fromAmino(msg);
           expect(e.toAmino(false)).toEqual(msg);
         }
       });

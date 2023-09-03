@@ -20,11 +20,7 @@ export class MsgRevokeAllowance extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgRevokeAllowance.Amino,
-    _?: boolean
-  ): MsgRevokeAllowance {
-    _;
+  public static fromAmino(data: MsgRevokeAllowance.Amino) {
     const {
       value: { granter, grantee },
     } = data;
@@ -44,17 +40,12 @@ export class MsgRevokeAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: MsgRevokeAllowance.Data,
-    _?: boolean
-  ): MsgRevokeAllowance {
-    _;
+  public static fromData(proto: MsgRevokeAllowance.Data) {
     const { granter, grantee } = proto;
     return new MsgRevokeAllowance(granter, grantee);
   }
 
-  public toData(_?: boolean): MsgRevokeAllowance.Data {
-    _;
+  public toData(): MsgRevokeAllowance.Data {
     const { granter, grantee } = this;
     return {
       '@type': '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
@@ -63,16 +54,11 @@ export class MsgRevokeAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgRevokeAllowance.Proto,
-    _?: boolean
-  ): MsgRevokeAllowance {
-    _;
+  public static fromProto(proto: MsgRevokeAllowance.Proto) {
     return new MsgRevokeAllowance(proto.granter, proto.grantee);
   }
 
-  public toProto(_?: boolean): MsgRevokeAllowance.Proto {
-    _;
+  public toProto(): MsgRevokeAllowance.Proto {
     const { granter, grantee } = this;
     return MsgRevokeAllowance_pb.fromPartial({
       grantee,
@@ -80,20 +66,16 @@ export class MsgRevokeAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.MsgRevokeAllowance',
-      value: MsgRevokeAllowance_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgRevokeAllowance_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgRevokeAllowance {
+  public static unpackAny(msgAny: Any) {
     return MsgRevokeAllowance.fromProto(
-      MsgRevokeAllowance_pb.decode(msgAny.value),
-      isClassic
+      MsgRevokeAllowance_pb.decode(msgAny.value)
     );
   }
 }

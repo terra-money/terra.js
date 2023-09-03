@@ -25,11 +25,7 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: SoftwareUpgradeProposal.Amino,
-    _?: boolean
-  ): SoftwareUpgradeProposal {
-    _;
+  public static fromAmino(data: SoftwareUpgradeProposal.Amino) {
     const {
       value: { title, description, plan },
     } = data;
@@ -55,10 +51,8 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
   }
 
   public static fromData(
-    data: SoftwareUpgradeProposal.Data,
-    _?: boolean
+    data: SoftwareUpgradeProposal.Data
   ): SoftwareUpgradeProposal {
-    _;
     const { title, description, plan } = data;
     return new SoftwareUpgradeProposal(
       title,
@@ -67,8 +61,7 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): SoftwareUpgradeProposal.Data {
-    _;
+  public toData(): SoftwareUpgradeProposal.Data {
     const { title, description, plan } = this;
     return {
       '@type': '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
@@ -78,11 +71,7 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: SoftwareUpgradeProposal.Proto,
-    _?: boolean
-  ): SoftwareUpgradeProposal {
-    _;
+  public static fromProto(proto: SoftwareUpgradeProposal.Proto) {
     return new SoftwareUpgradeProposal(
       proto.title,
       proto.description,
@@ -90,8 +79,7 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): SoftwareUpgradeProposal.Proto {
-    _;
+  public toProto(): SoftwareUpgradeProposal.Proto {
     const { title, description, plan } = this;
     return SoftwareUpgradeProposal_pb.fromPartial({
       title,
@@ -100,22 +88,16 @@ export class SoftwareUpgradeProposal extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal',
-      value: SoftwareUpgradeProposal_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: SoftwareUpgradeProposal_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): SoftwareUpgradeProposal {
+  public static unpackAny(msgAny: Any) {
     return SoftwareUpgradeProposal.fromProto(
-      SoftwareUpgradeProposal_pb.decode(msgAny.value),
-      isClassic
+      SoftwareUpgradeProposal_pb.decode(msgAny.value)
     );
   }
 }

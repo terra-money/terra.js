@@ -3,17 +3,14 @@ import { AddBurnTaxExemptionAddressProposal } from './AddBurnTaxExemptionAddress
 describe('AddBurnTaxExemptionAddressProposal', () => {
   it('legacy deserializes', () => {
     const addBurnTaxExemptionAddressProposal =
-      AddBurnTaxExemptionAddressProposal.fromAmino(
-        {
-          type: 'treasury/AddBurnTaxExemptionAddressProposal',
-          value: {
-            title: `upgrade to col-5`,
-            description: `example description`,
-            addresses: ['terra1hsk6jryyqjfhp5dhc55tc9jtckygx0eph6dd02'],
-          },
+      AddBurnTaxExemptionAddressProposal.fromAmino({
+        type: 'treasury/AddBurnTaxExemptionAddressProposal',
+        value: {
+          title: `upgrade to col-5`,
+          description: `example description`,
+          addresses: ['terra1hsk6jryyqjfhp5dhc55tc9jtckygx0eph6dd02'],
         },
-        true
-      );
+      });
 
     expect(addBurnTaxExemptionAddressProposal).toMatchObject({
       title: `upgrade to col-5`,
@@ -24,15 +21,12 @@ describe('AddBurnTaxExemptionAddressProposal', () => {
 
   it('deserializes', () => {
     const addBurnTaxExemptionAddressProposal =
-      AddBurnTaxExemptionAddressProposal.fromData(
-        {
-          '@type': '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal',
-          title: `upgrade to col-5`,
-          description: `example description`,
-          addresses: ['terra1hsk6jryyqjfhp5dhc55tc9jtckygx0eph6dd02'],
-        },
-        true
-      );
+      AddBurnTaxExemptionAddressProposal.fromData({
+        '@type': '/terra.treasury.v1beta1.AddBurnTaxExemptionAddressProposal',
+        title: `upgrade to col-5`,
+        description: `example description`,
+        addresses: ['terra1hsk6jryyqjfhp5dhc55tc9jtckygx0eph6dd02'],
+      });
 
     expect(addBurnTaxExemptionAddressProposal).toMatchObject({
       title: `upgrade to col-5`,

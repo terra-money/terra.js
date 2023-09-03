@@ -1,15 +1,11 @@
 import { Params as Params_pb } from '@terra-money/terra.proto/ibc/applications/interchain_accounts/host/v1/host';
-import { JSONSerializable } from '../../../../../util/json';
+import { JSONSerializable } from '../../../../../../util/json';
 
 /**
  *  Params defines the set of on-chain interchain accounts parameters.
  *  The following parameters may be used to disable the host submodule.
  */
-export class Params extends JSONSerializable<
-  Params.Amino,
-  Params.Data,
-  Params.Proto
-> {
+export class Params extends JSONSerializable<any, Params.Data, Params.Proto> {
   /**
    * @param host_enabled host_enabled enables or disables the host submodule.
    */
@@ -17,18 +13,12 @@ export class Params extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(data: Params.Amino): Params {
-    const { host_enabled, allowed_messages } = data;
-    return new Params(host_enabled, allowed_messages);
+  public static fromAmino() {
+    throw new Error('Amino not supported');
   }
 
-  public toAmino(): Params.Amino {
-    const { host_enabled, allowed_messages } = this;
-    const res: Params.Amino = {
-      host_enabled: host_enabled,
-      allowed_messages: allowed_messages,
-    };
-    return res;
+  public toAmino() {
+    throw new Error('Amino not supported');
   }
 
   public static fromData(data: Params.Data): Params {
@@ -38,11 +28,11 @@ export class Params extends JSONSerializable<
 
   public toData(): Params.Data {
     const { host_enabled, allowed_messages } = this;
-    const res: Params.Data = {
+    return {
+      '@type': '/ibc.applications.interchain_accounts.host.v1.Params',
       host_enabled,
       allowed_messages,
     };
-    return res;
   }
 
   public static fromProto(proto: Params.Proto): Params {
@@ -59,12 +49,8 @@ export class Params extends JSONSerializable<
 }
 
 export namespace Params {
-  export interface Amino {
-    host_enabled: boolean;
-    allowed_messages: string[];
-  }
-
   export interface Data {
+    '@type': '/ibc.applications.interchain_accounts.host.v1.Params';
     host_enabled: boolean;
     allowed_messages: string[];
   }

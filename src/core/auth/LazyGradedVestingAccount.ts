@@ -44,8 +44,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     return this.base_vesting_account.base_account.public_key;
   }
 
-  public toAmino(_?: boolean): LazyGradedVestingAccount.Amino {
-    _;
+  public toAmino(): LazyGradedVestingAccount.Amino {
     const { base_vesting_account, vesting_schedules } = this;
     return {
       type: 'core/LazyGradedVestingAccount',
@@ -56,11 +55,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromAmino(
-    data: LazyGradedVestingAccount.Amino,
-    _?: boolean
-  ): LazyGradedVestingAccount {
-    _;
+  public static fromAmino(data: LazyGradedVestingAccount.Amino) {
     const base_vesting_account = BaseVestingAccount.fromAmino({
       type: 'core/BaseVestingAccount',
       value: data.value.base_vesting_account,
@@ -74,8 +69,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): LazyGradedVestingAccount.Data {
-    _;
+  public toData(): LazyGradedVestingAccount.Data {
     const { base_vesting_account, vesting_schedules } = this;
     return {
       '@type': '/terra.vesting.v1beta1.LazyGradedVestingAccount',
@@ -84,11 +78,7 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: LazyGradedVestingAccount.Data,
-    _?: boolean
-  ): LazyGradedVestingAccount {
-    _;
+  public static fromData(data: LazyGradedVestingAccount.Data) {
     const base_vesting_account = BaseVestingAccount.fromData({
       '@type': '/cosmos.vesting.v1beta1.BaseVestingAccount',
       ...data.base_vesting_account,
@@ -102,21 +92,22 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): LazyGradedVestingAccount.Proto {
-    _;
+  public toProto(): LazyGradedVestingAccount.Proto {
     const { base_vesting_account, vesting_schedules } = this;
 
     return LazyGradedVestingAccount_pb.fromPartial({
-      baseVestingAccount: base_vesting_account.toProto(),
-      vestingSchedules: vesting_schedules.map(s => s.toProto()),
+      baseVestingAccount: base_vesting_account
+        ? base_vesting_account.toProto()
+        : undefined,
+      vestingSchedules: vesting_schedules
+        ? vesting_schedules.map(s => s.toProto())
+        : undefined,
     });
   }
 
   public static fromProto(
-    lazyGradedVestingAccountProto: LazyGradedVestingAccount.Proto,
-    _?: boolean
-  ): LazyGradedVestingAccount {
-    _;
+    lazyGradedVestingAccountProto: LazyGradedVestingAccount.Proto
+  ) {
     const baseVestingAccount = BaseVestingAccount.fromProto(
       lazyGradedVestingAccountProto.baseVestingAccount as BaseVestingAccount_pb
     );
@@ -129,22 +120,16 @@ export class LazyGradedVestingAccount extends JSONSerializable<
     );
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/terra.vesting.v1beta1.LazyGradedVestingAccount',
-      value: LazyGradedVestingAccount_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: LazyGradedVestingAccount_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    pubkeyAny: Any,
-    isClassic?: boolean
-  ): LazyGradedVestingAccount {
+  public static unpackAny(pubkeyAny: Any): LazyGradedVestingAccount {
     return LazyGradedVestingAccount.fromProto(
-      LazyGradedVestingAccount_pb.decode(pubkeyAny.value),
-      isClassic
+      LazyGradedVestingAccount_pb.decode(pubkeyAny.value)
     );
   }
 }
@@ -212,7 +197,7 @@ export namespace LazyGradedVestingAccount {
       const { denom, schedules } = this;
       return VestingSchedule_pb.fromPartial({
         denom,
-        schedules: schedules.map(s => s.toProto()),
+        schedules: schedules ? schedules.map(s => s.toProto()) : undefined,
       });
     }
 
@@ -296,17 +281,17 @@ export namespace LazyGradedVestingAccount {
 
       public static fromProto(entryProto: Entry.Proto): Entry {
         return new Entry(
-          entryProto.endTime.toNumber(),
           entryProto.startTime.toNumber(),
+          entryProto.endTime.toNumber(),
           new Dec(entryProto.ratio)
         );
       }
 
       public toProto(): Entry.Proto {
         return Schedule_pb.fromPartial({
+          startTime: Long.fromNumber(this.start_time),
           endTime: Long.fromNumber(this.end_time),
           ratio: this.ratio.toString(),
-          startTime: Long.fromNumber(this.start_time),
         });
       }
     }

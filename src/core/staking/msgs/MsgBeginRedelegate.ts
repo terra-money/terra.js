@@ -29,11 +29,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: MsgBeginRedelegate.Amino,
-    _?: boolean
-  ): MsgBeginRedelegate {
-    _;
+  public static fromAmino(data: MsgBeginRedelegate.Amino) {
     const {
       value: {
         delegator_address,
@@ -70,11 +66,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgBeginRedelegate.Data,
-    _?: boolean
-  ): MsgBeginRedelegate {
-    _;
+  public static fromData(data: MsgBeginRedelegate.Data) {
     const {
       delegator_address,
       validator_src_address,
@@ -89,8 +81,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): MsgBeginRedelegate.Data {
-    _;
+  public toData(): MsgBeginRedelegate.Data {
     const {
       delegator_address,
       validator_src_address,
@@ -106,11 +97,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgBeginRedelegate.Proto,
-    _?: boolean
-  ): MsgBeginRedelegate {
-    _;
+  public static fromProto(proto: MsgBeginRedelegate.Proto) {
     return new MsgBeginRedelegate(
       proto.delegatorAddress,
       proto.validatorSrcAddress,
@@ -119,8 +106,7 @@ export class MsgBeginRedelegate extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): MsgBeginRedelegate.Proto {
-    _;
+  public toProto(): MsgBeginRedelegate.Proto {
     const {
       delegator_address,
       validator_src_address,
@@ -135,20 +121,16 @@ export class MsgBeginRedelegate extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate',
-      value: MsgBeginRedelegate_pb.encode(this.toProto(isClassic)).finish(),
+      value: MsgBeginRedelegate_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgBeginRedelegate {
+  public static unpackAny(msgAny: Any) {
     return MsgBeginRedelegate.fromProto(
-      MsgBeginRedelegate_pb.decode(msgAny.value),
-      isClassic
+      MsgBeginRedelegate_pb.decode(msgAny.value)
     );
   }
 }

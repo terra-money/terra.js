@@ -31,13 +31,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     this.amount = new Coins(amount);
   }
 
-  public static fromAmino(
-    data: MsgCreateVestingAccount.Amino,
-    isClassic?: boolean
-  ): MsgCreateVestingAccount {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromAmino(data: MsgCreateVestingAccount.Amino) {
     const {
       value: { from_address, to_address, amount, end_time, delayed },
     } = data;
@@ -50,10 +44,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     );
   }
 
-  public toAmino(isClassic?: boolean): MsgCreateVestingAccount.Amino {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toAmino(): MsgCreateVestingAccount.Amino {
     const { from_address, to_address, amount, end_time, delayed } = this;
     return {
       type: 'cosmos-sdk/MsgCreateVestingAccount',
@@ -67,13 +58,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: MsgCreateVestingAccount.Data,
-    isClassic?: boolean
-  ): MsgCreateVestingAccount {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromData(data: MsgCreateVestingAccount.Data) {
     const { from_address, to_address, amount, end_time, delayed } = data;
 
     return new MsgCreateVestingAccount(
@@ -85,10 +70,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     );
   }
 
-  public toData(isClassic?: boolean): MsgCreateVestingAccount.Data {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toData(): MsgCreateVestingAccount.Data {
     const { from_address, to_address, amount, end_time, delayed } = this;
     return {
       '@type': '/cosmos.vesting.v1beta1.MsgCreateVestingAccount',
@@ -100,13 +82,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: MsgCreateVestingAccount.Proto,
-    isClassic?: boolean
-  ): MsgCreateVestingAccount {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static fromProto(proto: MsgCreateVestingAccount.Proto) {
     return new MsgCreateVestingAccount(
       proto.fromAddress,
       proto.toAddress,
@@ -116,10 +92,7 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     );
   }
 
-  public toProto(isClassic?: boolean): MsgCreateVestingAccount.Proto {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public toProto(): MsgCreateVestingAccount.Proto {
     const { from_address, to_address, amount, end_time, delayed } = this;
     return MsgCreateVestingAccount_pb.fromPartial({
       fromAddress: from_address,
@@ -130,28 +103,16 @@ export class MsgCreateVestingAccount extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.vesting.v1beta1.MsgCreateVestingAccount',
-      value: MsgCreateVestingAccount_pb.encode(
-        this.toProto(isClassic)
-      ).finish(),
+      value: MsgCreateVestingAccount_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): MsgCreateVestingAccount {
-    if (isClassic) {
-      throw new Error('Not supported for the network');
-    }
+  public static unpackAny(msgAny: Any) {
     return MsgCreateVestingAccount.fromProto(
-      MsgCreateVestingAccount_pb.decode(msgAny.value),
-      isClassic
+      MsgCreateVestingAccount_pb.decode(msgAny.value)
     );
   }
 }

@@ -32,12 +32,12 @@ export class Tx {
     public signatures: string[]
   ) {}
 
-  public static fromAmino(data: Tx.Amino, isClassic?: boolean): Tx {
+  public static fromAmino(data: Tx.Amino): Tx {
     const signatures = data.value.signatures.map(s => SignatureV2.fromAmino(s));
 
     return new Tx(
       new TxBody(
-        data.value.msg.map(m => Msg.fromAmino(m, isClassic)),
+        data.value.msg.map(m => Msg.fromAmino(m)),
         data.value.memo,
         Number.parseInt(data.value.timeout_height)
       ),
@@ -46,48 +46,48 @@ export class Tx {
     );
   }
 
-  public static fromData(data: Tx.Data, isClassic?: boolean): Tx {
+  public static fromData(data: Tx.Data): Tx {
     return new Tx(
-      TxBody.fromData(data.body, isClassic),
+      TxBody.fromData(data.body),
       AuthInfo.fromData(data.auth_info),
       data.signatures
     );
   }
 
-  public toData(isClassic?: boolean): Tx.Data {
+  public toData(): Tx.Data {
     return {
-      body: this.body.toData(isClassic),
+      body: this.body.toData(),
       auth_info: this.auth_info.toData(),
       signatures: this.signatures,
     };
   }
 
-  public static unpackAny(anyProto: Any, isClassic?: boolean): Tx {
-    return this.fromProto(Tx_pb.decode(anyProto.value), isClassic);
+  public static unpackAny(anyProto: Any): Tx {
+    return this.fromProto(Tx_pb.decode(anyProto.value));
   }
 
-  public static fromProto(proto: Tx.Proto, isClassic?: boolean): Tx {
+  public static fromProto(proto: Tx.Proto): Tx {
     return new Tx(
-      TxBody.fromProto(proto.body as TxBody_pb, isClassic),
+      TxBody.fromProto(proto.body as TxBody_pb),
       AuthInfo.fromProto(proto.authInfo as AuthInfo_pb),
       proto.signatures.map(sig => Buffer.from(sig).toString('base64'))
     );
   }
 
-  public toProto(isClassic?: boolean): Tx.Proto {
+  public toProto(): Tx.Proto {
     return Tx_pb.fromPartial({
-      body: this.body.toProto(isClassic),
+      body: this.body.toProto(),
       authInfo: this.auth_info.toProto(),
       signatures: this.signatures.map(s => Buffer.from(s, 'base64')),
     });
   }
 
-  public toBytes(isClassic?: boolean): Uint8Array {
-    return Tx_pb.encode(this.toProto(isClassic)).finish();
+  public toBytes(): Uint8Array {
+    return Tx_pb.encode(this.toProto()).finish();
   }
 
-  public static fromBuffer(buf: Buffer, isClassic?: boolean): Tx {
-    return Tx.fromProto(Tx_pb.decode(buf), isClassic);
+  public static fromBuffer(buf: Buffer): Tx {
+    return Tx.fromProto(Tx_pb.decode(buf));
   }
 
   public appendEmptySignatures(signers: SignerData[]) {
@@ -171,40 +171,40 @@ export class TxBody {
     public timeout_height?: number
   ) {}
 
-  public static fromData(data: TxBody.Data, isClassic?: boolean): TxBody {
+  public static fromData(data: TxBody.Data): TxBody {
     return new TxBody(
-      data.messages.map(m => Msg.fromData(m, isClassic)),
+      data.messages.map(m => Msg.fromData(m)),
       data.memo,
       Number.parseInt(data.timeout_height)
     );
   }
 
-  public toData(isClassic?: boolean): TxBody.Data {
+  public toData(): TxBody.Data {
     return {
       memo: this.memo ?? '',
-      messages: this.messages.map(m => m.toData(isClassic)),
+      messages: this.messages.map(m => m.toData()),
       timeout_height: (this.timeout_height ?? 0).toFixed(),
     };
   }
 
-  public static fromProto(proto: TxBody.Proto, isClassic?: boolean): TxBody {
+  public static fromProto(proto: TxBody.Proto): TxBody {
     return new TxBody(
-      proto.messages.map(m => Msg.fromProto(m, isClassic)),
+      proto.messages.map(m => Msg.fromProto(m)),
       proto.memo,
       proto.timeoutHeight.toNumber()
     );
   }
 
-  public toProto(isClassic?: boolean): TxBody.Proto {
+  public toProto(): TxBody.Proto {
     return TxBody_pb.fromPartial({
       memo: this.memo,
-      messages: this.messages.map(m => m.packAny(isClassic)),
+      messages: this.messages.map(m => m.packAny()),
       timeoutHeight: Long.fromNumber(this.timeout_height ?? 0),
     });
   }
 
-  public toBytes(isClassic?: boolean): Uint8Array {
-    return TxBody_pb.encode(this.toProto(isClassic)).finish();
+  public toBytes(): Uint8Array {
+    return TxBody_pb.encode(this.toProto()).finish();
   }
 }
 

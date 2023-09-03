@@ -36,10 +36,7 @@ export class PeriodicAllowance extends JSONSerializable<
     this.period_can_spend = new Coins(period_can_spend);
   }
 
-  public static fromAmino(
-    data: PeriodicAllowance.Amino,
-    isClassic?: boolean
-  ): PeriodicAllowance {
+  public static fromAmino(data: PeriodicAllowance.Amino) {
     const {
       value: {
         basic,
@@ -51,7 +48,7 @@ export class PeriodicAllowance extends JSONSerializable<
     } = data;
 
     return new PeriodicAllowance(
-      BasicAllowance.fromAmino(basic, isClassic),
+      BasicAllowance.fromAmino(basic),
       Number.parseInt(period),
       Coins.fromAmino(period_spend_limit),
       Coins.fromAmino(period_can_spend),
@@ -81,11 +78,7 @@ export class PeriodicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    proto: PeriodicAllowance.Data,
-    _?: boolean
-  ): PeriodicAllowance {
-    _;
+  public static fromData(proto: PeriodicAllowance.Data) {
     const {
       basic,
       period,
@@ -102,8 +95,7 @@ export class PeriodicAllowance extends JSONSerializable<
     );
   }
 
-  public toData(_?: boolean): PeriodicAllowance.Data {
-    _;
+  public toData(): PeriodicAllowance.Data {
     const {
       basic,
       period,
@@ -121,11 +113,7 @@ export class PeriodicAllowance extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    proto: PeriodicAllowance.Proto,
-    _?: boolean
-  ): PeriodicAllowance {
-    _;
+  public static fromProto(proto: PeriodicAllowance.Proto) {
     return new PeriodicAllowance(
       BasicAllowance.fromProto(proto.basic as BasicAllowance.Proto),
       proto.period?.seconds.toNumber() as number,
@@ -135,8 +123,7 @@ export class PeriodicAllowance extends JSONSerializable<
     );
   }
 
-  public toProto(_?: boolean): PeriodicAllowance.Proto {
-    _;
+  public toProto(): PeriodicAllowance.Proto {
     const {
       basic,
       period,
@@ -154,17 +141,16 @@ export class PeriodicAllowance extends JSONSerializable<
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny() {
     return Any.fromPartial({
       typeUrl: '/cosmos.feegrant.v1beta1.PeriodicAllowance',
-      value: PeriodicAllowance_pb.encode(this.toProto(isClassic)).finish(),
+      value: PeriodicAllowance_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(msgAny: Any, isClassic?: boolean): PeriodicAllowance {
+  public static unpackAny(msgAny: Any) {
     return PeriodicAllowance.fromProto(
-      PeriodicAllowance_pb.decode(msgAny.value),
-      isClassic
+      PeriodicAllowance_pb.decode(msgAny.value)
     );
   }
 }

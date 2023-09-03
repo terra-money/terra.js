@@ -51,13 +51,10 @@ export class AuthAPI extends BaseAPI {
         | PeriodicVestingAccount.Data
         | ContinuousVestingAccount.Data;
     }>(`/cosmos/auth/v1beta1/accounts/${address}`, params);
-    return Account.fromData(account, this.lcd.config.isClassic);
+    return Account.fromData(account);
   }
 
   public async parameters(params: APIParams = {}): Promise<AuthParams> {
-    if (this.lcd.config.isClassic) {
-      throw new Error('Not supported for the network');
-    }
     return this.c
       .get<{ params: AuthParams.Data }>(`/cosmos/auth/v1beta1/params`, params)
       .then(({ params: d }) => ({

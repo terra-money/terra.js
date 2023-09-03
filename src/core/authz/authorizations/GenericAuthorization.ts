@@ -11,11 +11,7 @@ export class GenericAuthorization extends JSONSerializable<
     super();
   }
 
-  public static fromAmino(
-    data: GenericAuthorization.Amino,
-    _?: boolean
-  ): GenericAuthorization {
-    _;
+  public static fromAmino(data: GenericAuthorization.Amino) {
     return new GenericAuthorization(data.value.msg);
   }
 
@@ -31,16 +27,11 @@ export class GenericAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromData(
-    data: GenericAuthorization.Data,
-    _?: boolean
-  ): GenericAuthorization {
-    _;
+  public static fromData(data: GenericAuthorization.Data) {
     return new GenericAuthorization(data.msg);
   }
 
-  public toData(_?: boolean): GenericAuthorization.Data {
-    _;
+  public toData(): GenericAuthorization.Data {
     const { msg } = this;
     return {
       '@type': '/cosmos.authz.v1beta1.GenericAuthorization',
@@ -48,35 +39,26 @@ export class GenericAuthorization extends JSONSerializable<
     };
   }
 
-  public static fromProto(
-    data: GenericAuthorization.Proto,
-    _?: boolean
-  ): GenericAuthorization {
-    _;
+  public static fromProto(data: GenericAuthorization.Proto) {
     return new GenericAuthorization(data.msg);
   }
 
-  public toProto(_?: boolean): GenericAuthorization.Proto {
-    _;
+  public toProto(): GenericAuthorization.Proto {
     return GenericAuthorization_pb.fromPartial({
       msg: this.msg,
     });
   }
 
-  public packAny(isClassic?: boolean): Any {
+  public packAny(): Any {
     return Any.fromPartial({
       typeUrl: '/cosmos.authz.v1beta1.GenericAuthorization',
-      value: GenericAuthorization_pb.encode(this.toProto(isClassic)).finish(),
+      value: GenericAuthorization_pb.encode(this.toProto()).finish(),
     });
   }
 
-  public static unpackAny(
-    msgAny: Any,
-    isClassic?: boolean
-  ): GenericAuthorization {
+  public static unpackAny(msgAny: Any) {
     return GenericAuthorization.fromProto(
-      GenericAuthorization_pb.decode(msgAny.value),
-      isClassic
+      GenericAuthorization_pb.decode(msgAny.value)
     );
   }
 }

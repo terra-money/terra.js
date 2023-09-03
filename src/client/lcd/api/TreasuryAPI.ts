@@ -43,6 +43,12 @@ export interface TreasuryParams {
    * Factor that determines how much tax will be allocated to the community pool
    */
   burn_tax_split: Dec;
+
+  /**
+   * Factor for prevent proposal spamming
+   * i.e. min_initial_deposit = min_deposit * min_initial_deposit_ratio
+   */
+  min_initial_deposit_ratio: Dec;
 }
 
 export namespace TreasuryParams {
@@ -55,6 +61,7 @@ export namespace TreasuryParams {
     window_long: string;
     window_probation: string;
     burn_tax_split: string;
+    min_initial_deposit_ratio: string;
   }
 }
 export class TreasuryAPI extends BaseAPI {
@@ -185,6 +192,7 @@ export class TreasuryAPI extends BaseAPI {
         window_short: Number.parseInt(d.window_short),
         window_probation: Number.parseInt(d.window_probation),
         burn_tax_split: new Dec(d.burn_tax_split),
+        min_initial_deposit_ratio: new Dec(d.min_initial_deposit_ratio),
       }));
   }
 }
