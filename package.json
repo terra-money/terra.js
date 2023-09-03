@@ -1,6 +1,6 @@
 {
   "name": "@terra-money/terra.js",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "description": "The JavaScript SDK for Terra",
   "license": "MIT",
   "author": "Terraform Labs, PTE.",
@@ -28,6 +28,7 @@
     "node": ">=14"
   },
   "scripts": {
+    "buildBasic": "tsc --module commonjs",
     "build": "tsc --module commonjs && webpack --mode production",
     "test": "jest --runInBand",
     "format": "prettier --check ./src/**/*.ts",
